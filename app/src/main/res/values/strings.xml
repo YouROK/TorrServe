@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">TorrServe</string>
+
+    <string name="add">Добавить</string>
+    <string name="delete">Удалить</string>
+    <string name="remove_all">Удалить всё</string>
+    <string name="playlist">Плейлист</string>
+    <string name="donate">Пожертвование</string>
+    <string name="update">Обновление</string>
+    <string name="settings">Настройки</string>
+    <string name="exit">Выход</string>
+    <string name="restart_server">Перезапустить локальный сервер</string>
+
+    <string name="share">Поделиться</string>
+    <string name="copy">Копировать</string>
+    <string name="send">Отправить</string>
+    <string name="host">Хост</string>
+
+    <string name="torrent">Торрент</string>
+
+    <string name="server_addr">Адрес сервера</string>
+    <string name="cache_size">Размер кэша (Мбайты)</string>
+    <string name="preload_buffer_size">Размер буфера предварительной загрузки (Мбайты)</string>
+    <string name="read_ahead_prc">Упреждающее чтение %</string>
+    <string name="disable_tcp">Отключить TCP</string>
+    <string name="disable_utp">Отключить UTP</string>
+    <string name="disable_upnp">Отключить UPNP</string>
+    <string name="disable_dht">Отключить DHT</string>
+    <string name="disable_upload">Отключить отдачу</string>
+    <string name="ecnryption">Шифрование</string>
+    <string name="connections_limit">Соединений на торрент</string>
+    <string name="download_rate_limit">Ограничение скорости загрузки (Килобайты, 0-неограниченно)</string>
+    <string name="upload_rate_limit">Ограничение скорости отдачи (Килобайты, 0-неограниченно)</string>
+
+    <string name="server_settings">Настройки сервера</string>
+    <string name="start_server_on_boot">Запускать при старте ОС</string>
+    <string name="dont_start_server_on_boot">Не запускать при старте ОС</string>
+    <string name="select_player">Выбрать плеер</string>
+
+    <string name="add_play">Добавить и играть</string>
+    <string name="play">Играть</string>
+
+    <string name="yes">ДА</string>
+    <string name="no">НЕТ</string>
+
+    <string name="default_player">Плеер по умолчанию</string>
+    <string name="choose_player">Выбор плеера</string>
+
+    <string name="donate_msg">Ваше пожертвование помогает мне развиваться дальше, улучшать программу и создавать новые</string>
+    <string name="paypal" translatable="false">PayPal</string>
+    <string name="yandex_money" translatable="false">Yandex.Деньги</string>
+
+    <string name="found_new_version">Найдена новая версия</string>
+    <string name="download_apk">Скачать apk</string>
+    <string name="update_server_remotly">Обновить сервер с сети</string>
+    <string name="update_server_localy">Обновить сервер с папки Download</string>
+    <string name="version">Версия</string>
+    <string name="downloading">Скачивание...</string>
+
+    <string name="permission_storage_msg">Доступ к памяти требуется для записи настроек в файл</string>
+    <string name="permission_btn">РАЗРЕШИТЬ</string>
+
+    <string name="crash_app">"Ооооой... Во мне случилась ошибка,\nНо не волнуйтесь, Вы можете отправить отчет об ошибке разработчику, чтобы он её поскорее исправил."</string>
+
+    <string name="connects_to_torrent">Получение информации торрента</string>
+
+    <string name="buffering">Буферизация</string>
+    <string name="buffer">Буфер</string>
+    <string name="peers">Пиры</string>
+    <string name="download_speed">Скорость скачивания</string>
+    <string name="upload_speed">Скорость отдачи</string>
+
+    <string name="copy_to_clipboard">Скопировано в буфер обмена</string>
+    <string name="connecting_to_server">Соединение с сервером...</string>
+    <string name="stat_server_is_running">Сервер запущен</string>
+    <string name="server_stoped">Сервер остановлен</string>
+    <string name="server_not_responding">Сервер не отвечает</string>
+    <string name="server_not_exists">Сервер отсутствует</string>
+
+    <string name="warn_error_download_server">Ошибка скачивания сервера</string>
+    <string name="warn_no_localy_updates">Нет локальных обновлений</string>
+
+    <string name="error_add_torrent">Ошибка при добавлении торрента</string>
+    <string name="error_remove_torrent">Ошибка при удалении торрента</string>
+    <string name="error_open_torrent">Ошибка при открытии торрента</string>
+    <string name="files_not_found">Файл в торренте не найден</string>
+    <string name="error_retrieving_settings">Ошибка при получении настроек</string>
+    <string name="error_sending_settings">Ошибка при отправки настроек</string>
+    <string name="error_server_start">Ошбка при запуске сервера</string>
+
+    <string name="retrackers">Ретрекеры</string>
+    <string-array name="retracker_mode">
+        <item>Ничего не делать</item>
+        <item>Добавлять ретрекеры</item>
+        <item>Удалять ретрекеры</item>
+        <item>Заменить ретрекеры</item>
+    </string-array>
+
+    <string-array name="encryption_mode">
+        <item>Включено</item>
+        <item>Отключено</item>
+        <item>Принудительно</item>
+    </string-array>
+</resources>

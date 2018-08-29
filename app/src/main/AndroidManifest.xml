@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.yourok.torrserve">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
+
+    <application
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <receiver android:name=".services.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".services.ServerService" />
+
+        <activity android:name=".activitys.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activitys.add.AddActivity"/>
+        <activity android:name=".activitys.ACRActivity" />
+        <activity android:name=".activitys.SplashActivity" />
+        <activity
+            android:name=".activitys.play.PlayActivity"
+            android:configChanges="mcc|mnc|locale|orientation|screenLayout|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:theme="@style/MyDialog" />
+        <activity android:name=".activitys.settings.AppSettingsActivity" />
+        <activity android:name=".activitys.settings.ServerSettingsActivity" />
+        <activity android:name=".activitys.updater.UpdaterActivity" />
+
+        <activity
+            android:name=".activitys.add.AddPermanent"
+            android:label="@string/add_play"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="magnet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="application/x-bittorrent" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:mimeType="application/x-bittorrent"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:mimeType="application/x-bittorrent"
+                    android:scheme="https" />
+                <data
+                    android:host="*"
+                    android:mimeType="application/x-bittorrent"
+                    android:scheme="content" />
+                <data
+                    android:host="*"
+                    android:mimeType="application/x-bittorrent"
+                    android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:scheme="https" />
+                <data
+                    android:host="*"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:scheme="content" />
+                <data android:pathPattern=".*\.torrent" />
+                <data android:pathPattern=".*\.TORRENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="https" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="content" />
+                <data android:pathPattern=".*\.torrent" />
+                <data android:pathPattern=".*\.TORRENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="magnet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="magnet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="file" />
+                <data android:scheme="magnet" />
+                <data android:host="*" />
+                <data android:pathPattern="*.torrent" />
+                <data android:pathPattern=".*.TORRENT" />
+                <data android:pathPattern=".*.torrent" />
+                <data android:pathPattern=".*.torrent.*" />
+                <data android:pathPattern=".*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activitys.add.AddTemporary"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:label="@string/play"
+            android:icon="@drawable/ic_launcher_p">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="magnet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="application/x-bittorrent" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:mimeType="application/x-bittorrent"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:mimeType="application/x-bittorrent"
+                    android:scheme="https" />
+                <data
+                    android:host="*"
+                    android:mimeType="application/x-bittorrent"
+                    android:scheme="content" />
+                <data
+                    android:host="*"
+                    android:mimeType="application/x-bittorrent"
+                    android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:scheme="https" />
+                <data
+                    android:host="*"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:scheme="content" />
+                <data android:pathPattern=".*\.torrent" />
+                <data android:pathPattern=".*\.TORRENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="https" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="content" />
+                <data android:pathPattern=".*\.torrent" />
+                <data android:pathPattern=".*\.TORRENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="magnet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="magnet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="file" />
+                <data android:scheme="magnet" />
+                <data android:host="*" />
+                <data android:pathPattern="*.torrent" />
+                <data android:pathPattern=".*.TORRENT" />
+                <data android:pathPattern=".*.torrent" />
+                <data android:pathPattern=".*.torrent.*" />
+                <data android:pathPattern=".*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+                <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

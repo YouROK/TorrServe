@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mxn.soul.flowingdrawer_core.FlowingMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menulayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="@color/darker_gray"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:background="@drawable/header"
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp">
+
+                    <ImageView
+                        android:src="@drawable/ic_launcher"
+                        android:padding="10dp"
+                        android:layout_gravity="left|top"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+
+                    <TextView
+                        android:id="@+id/tvCurrentHost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:gravity="center|bottom"
+                        android:paddingBottom="10dp"
+                        android:text="http://localhost:8090"
+                        android:textAppearance="@android:style/TextAppearance.Medium" />
+                </FrameLayout>
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/btnAdd"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="left|center_vertical"
+                        android:src="@drawable/ic_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/lighter_gray"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingRight="10dp"
+                        android:text="@string/add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/btnRemoveAll"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="left|center_vertical"
+                        android:src="@drawable/ic_trash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/lighter_gray"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingRight="10dp"
+                        android:text="@string/remove_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/btnPlaylist"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="left|center_vertical"
+                        android:src="@drawable/ic_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/lighter_gray"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingRight="10dp"
+                        android:text="@string/playlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/btnDonate"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="left|center_vertical"
+                        android:src="@drawable/ic_donate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/lighter_gray"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingRight="10dp"
+                        android:text="@string/donate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/btnUpdate"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="left|center_vertical"
+                        android:src="@drawable/ic_sync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/lighter_gray"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingRight="10dp"
+                        android:text="@string/update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/btnSettings"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="left|center_vertical"
+                        android:src="@drawable/ic_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/lighter_gray"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingRight="10dp"
+                        android:text="@string/settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/btnExit"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="left|center_vertical"
+                        android:src="@drawable/ic_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/lighter_gray"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingRight="10dp"
+                        android:text="@string/exit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+
+                <View
+                    android:background="?android:attr/listDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:text="Status"
+            android:padding="5dp"
+            android:textColor="@android:color/white"
+            android:gravity="bottom|right"
+            android:layout_weight="5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>

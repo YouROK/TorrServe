@@ -1,0 +1,96 @@
+import java.text.SimpleDateFormat
+
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+def freeKeystorePropertiesFile = rootProject.file("free.property")
+def freeProperties = new Properties()
+freeProperties.load(new FileInputStream(freeKeystorePropertiesFile))
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "ru.yourok.torrserve"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 65
+        versionName "1.1.65"
+    }
+    signingConfigs {
+        release {
+            keyAlias freeProperties['keyAlias']
+            keyPassword freeProperties['keyPassword']
+            storeFile rootProject.file(freeProperties['storeFile'])
+            storePassword freeProperties['storePassword']
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "TorrServe_${versionName}.apk"
+                }
+            }
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+
+    implementation 'com.mxn.soul:flowingdrawer-core:2.0.0'
+    implementation 'com.nineoldandroids:library:2.4.0'
+
+    implementation 'cz.msebera.android:httpclient:4.4.1.2'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+}
+
+repositories {
+    jcenter()
+}
+
+class WriteVersion implements Plugin<Project> {
+    void apply(Project project) {
+        project.task("WriteVersion") {
+            project.gradle.projectsEvaluated {
+                println "Write: release.json"
+
+                def appId = "$project.android.defaultConfig.applicationId"
+                def version = "$project.android.defaultConfig.versionName"
+
+                println appId
+                println version
+
+                def stringsFile = new File("release.json")
+                def json = """{
+ "Name": "${appId}",
+ "Version": "${version}",
+ "BuildDate": "${new SimpleDateFormat("dd.MM.yyyy").format(new Date())}",
+ "Link": "https://github.com/YouROK/TorrServe/releases/download/${version}/TorrServe_${version}.apk"
+}
+"""
+                stringsFile.write(json)
+            }
+        }
+    }
+}
+
+apply plugin: WriteVersion
