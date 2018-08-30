@@ -17,11 +17,11 @@ import com.mxn.soul.flowingdrawer_core.FlowingDrawer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_navigation_menu.*
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.activitys.SplashActivity
 import ru.yourok.torrserve.activitys.add.AddActivity
 import ru.yourok.torrserve.activitys.play.PlayActivity
 import ru.yourok.torrserve.activitys.settings.AppSettingsActivity
 import ru.yourok.torrserve.activitys.settings.ServerSettingsActivity
+import ru.yourok.torrserve.activitys.splash.SplashActivity
 import ru.yourok.torrserve.activitys.updater.UpdaterActivity
 import ru.yourok.torrserve.adapters.TorrentAdapter
 import ru.yourok.torrserve.app.App
@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity() {
         val tvCurrHost = findViewById<TextView>(R.id.tvCurrentHost)
         tvCurrHost.text = Preferences.getCurrentHost()
 
-        findViewById<FrameLayout>(R.id.header).setOnClickListener {
+        findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
             DialogInputList.show(this, getString(R.string.host) + ":", Preferences.getHosts()) {
                 if (it.isEmpty())
                     return@show
@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddActivity::class.java))
         }
 
-        findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener {
+        findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
             thread {
                 try {
                     val torrList = Api.torrentList()
@@ -238,7 +238,7 @@ class MainActivity : AppCompatActivity() {
                 if (Api.torrentList().isNotEmpty()) {
                     val intent = Intent(Intent.ACTION_VIEW)
                     val url = Uri.parse(Net.getHostUrl("/torrent/playlist.m3u"))
-                    intent.setDataAndType(url, "audio/x-mpegurl")
+                    intent.setDataAndType(url, "video/*")
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.putExtra("title", "TorrServePlaylist")
                     intent.putExtra("name", "TorrServePlaylist")
