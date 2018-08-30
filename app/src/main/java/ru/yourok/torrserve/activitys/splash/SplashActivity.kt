@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.activitys
+package ru.yourok.torrserve.activitys.splash
 
 import android.app.Activity
 import android.os.Build
@@ -41,13 +41,7 @@ class SplashActivity : Activity() {
             if (Api.serverIsLocal() && ServerFile.serverExists())
                 ServerService.start()
 
-            var count = 0
-            while (Api.serverEcho() == "") {
-                Thread.sleep(1000)
-                count++
-                if (count > 5)
-                    break
-            }
+            ServerService.wait(60)
 
             val end = System.currentTimeMillis()
             if (end - start < 2000)
