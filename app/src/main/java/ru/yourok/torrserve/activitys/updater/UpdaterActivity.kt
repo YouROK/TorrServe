@@ -148,6 +148,7 @@ class UpdaterActivity : AppCompatActivity() {
             }
             Handler(Looper.getMainLooper()).post {
                 findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
+                findViewById<TextView>(R.id.update_info).setText("")
             }
             Thread.sleep(1000)
             checkVersion()
