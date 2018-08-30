@@ -18,8 +18,11 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.preferences.Preferences
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
+import ru.yourok.torrserve.server.net.Net
 import ru.yourok.torrserve.server.torrent.Torrent
+import ru.yourok.torrserve.serverloader.ServerFile
 import ru.yourok.torrserve.services.NotificationServer
+import ru.yourok.torrserve.services.ServerService
 import ru.yourok.torrserve.utils.ByteFmt
 import ru.yourok.torrserve.utils.Mime
 import kotlin.concurrent.thread
@@ -38,7 +41,7 @@ class PlayActivity : AppCompatActivity() {
         setFinishOnTouchOutside(false)
 
         val attr = window.attributes
-        attr.width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+        attr.width = (resources.displayMetrics.widthPixels * 0.80).toInt()
         window.attributes = attr
 
         if (intent == null) {
@@ -60,6 +63,7 @@ class PlayActivity : AppCompatActivity() {
 
         thread {
             try {
+                startServer()
                 torrent = addTorrent()
                 if (isClosed || torrent == null) {
                     finish()
@@ -86,8 +90,8 @@ class PlayActivity : AppCompatActivity() {
                 val pl = it.getString("Playlist", "")
                 if (pl.isNotEmpty()) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    val url = Uri.parse(pl)
-                    intent.setDataAndType(url, "audio/x-mpegurl")
+                    val url = Uri.parse(Net.getHostUrl(pl))
+                    intent.setDataAndType(url, "video/*")
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     val name = it.getString("Name", "")
                     if (name.isNotEmpty()) {
@@ -98,6 +102,14 @@ class PlayActivity : AppCompatActivity() {
                     finish()
                 }
             }
+        }
+    }
+
+    private fun startServer() {
+        showProgress(getString(R.string.connecting_to_server))
+        if (Api.serverIsLocal() && ServerFile.serverExists() && Api.serverEcho().isEmpty()) {
+            ServerService.start()
+            ServerService.wait(60)
         }
     }
 
