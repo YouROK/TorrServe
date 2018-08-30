@@ -114,5 +114,17 @@ class ServerService : Service() {
                 e.printStackTrace()
             }
         }
+
+        fun wait(timeout: Int) {
+            var count = 0
+            if (timeout < 0)
+                count = -3600
+            while (Api.serverEcho() == "") {
+                Thread.sleep(1000)
+                count++
+                if (count > timeout)
+                    break
+            }
+        }
     }
 }
