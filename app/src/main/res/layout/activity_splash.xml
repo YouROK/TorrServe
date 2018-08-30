@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
-    tools:context="ru.yourok.torrserve.activitys.SplashActivity">
+    tools:context="ru.yourok.torrserve.activitys.splash.SplashActivity">
 
     <TextView
         android:id="@+id/fullscreen_content"
