@@ -202,6 +202,7 @@ class PlayActivity : AppCompatActivity() {
                     finish()
                     return
                 }
+                intent.`package` = ""
             }
 
             val intentC = Intent.createChooser(intent, "")
