@@ -66,7 +66,7 @@ object Api {
         if (link.startsWith("file://", true))
             link = Uri.parse(link).path
 
-        val hashes = Upload(url, path, save)
+        val hashes = Upload(url, link, save)
         if (isRemove)
             File(link).delete()
         return hashes[0]
