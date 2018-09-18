@@ -9,6 +9,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.activitys.main.MainActivity
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.torrent.Torrent
 import ru.yourok.torrserve.utils.ByteFmt
@@ -71,7 +72,6 @@ object NotificationServer {
         }
 
         thread {
-            var isShow = false
             while (update) {
                 try {
                     val stat = Api.torrentStat(this.hash)
@@ -89,13 +89,14 @@ object NotificationServer {
                     if (uploadSpeed > 0)
                         msg += "\n" + context.getString(R.string.upload_speed) + ": " + ByteFmt.byteFmt(uploadSpeed)
 
-                    if (torrStatus == Torrent.TorrentSTPreload && !isShow && preloadSize > 0)
+                    if (torrStatus == Torrent.TorrentSTPreload && preloadSize > 0)
                         msg += "\n" + context.getString(R.string.buffer) + ": " + (preloadedBytes * 100 / preloadSize).toString() + "% " + ByteFmt.byteFmt(preloadedBytes) + "/" + ByteFmt.byteFmt(preloadSize)
                     build(context, msg)
                 } catch (e: Exception) {
                     build(context, context.getText(R.string.stat_server_is_running).toString())
                     break
                 }
+                App.wakeLock(1100)
                 Thread.sleep(1000)
             }
             build(context, context.getText(R.string.stat_server_is_running).toString())
