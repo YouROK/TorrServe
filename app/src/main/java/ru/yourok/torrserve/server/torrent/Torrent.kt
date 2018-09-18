@@ -3,6 +3,7 @@ package ru.yourok.torrserve.server.torrent
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
 import ru.yourok.torrserve.utils.Mime
+import java.io.File
 import kotlin.concurrent.thread
 
 object Torrent {
@@ -27,8 +28,17 @@ object Torrent {
         val files = getFiles(torr)
         val retList = mutableListOf<JSObject>()
         files.forEach {
-            if (Mime.getMimeType(it.getString("Name", "")) != "*/*")
+            val name = it.get("Name", "")
+            if (Mime.getMimeType(name) != "*/*") {
+                val size = it.getLong("Size", 0L)
+                if (File(name).extension.toLowerCase() == "m2ts") {
+                    if (size > 1073741824L)
+                        retList.add(it)
+                } else
+                    retList.add(it)
+            } else if (name.toLowerCase().contains("bdmv/index.bdmv")) {
                 retList.add(it)
+            }
         }
         return retList
     }
