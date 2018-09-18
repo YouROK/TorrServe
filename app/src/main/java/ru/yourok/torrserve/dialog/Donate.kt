@@ -29,11 +29,13 @@ object Donate {
                     val mon = cur.toString()
                     val link = "https://www.paypal.me/yourok/0$mon"
                     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+                    browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, browserIntent, null)
                     Preferences.setLastViewDonate(-1L)
                 }
                 .setNegativeButton(R.string.yandex_money) { _, _ ->
                     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://money.yandex.ru/to/410013733697114/100"))
+                    browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, browserIntent, null)
                     Preferences.setLastViewDonate(-1L)
                 }.show()
@@ -54,7 +56,7 @@ object Donate {
             }
 
             val snackbar = Snackbar.make(activity.findViewById(R.id.content), R.string.donate, Snackbar.LENGTH_INDEFINITE)
-            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            Handler(Looper.getMainLooper()).postDelayed({
                 snackbar
                         .setAction(android.R.string.ok) {
                             Preferences.setLastViewDonate(System.currentTimeMillis())
@@ -63,7 +65,7 @@ object Donate {
                         }
                         .show()
             }, 5000)
-            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            Handler(Looper.getMainLooper()).postDelayed({
                 if (snackbar.isShown) {
                     snackbar.dismiss()
                     Preferences.setLastViewDonate(System.currentTimeMillis() + 5 * 60 * 1000)
