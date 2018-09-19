@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/itemPlaylist"
+        android:icon="@drawable/ic_list"
+        android:title="@string/playlist"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/itemShareMagnet"
         android:icon="@drawable/ic_send"
         android:title="@string/share"
