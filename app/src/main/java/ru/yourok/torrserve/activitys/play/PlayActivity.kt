@@ -89,16 +89,8 @@ class PlayActivity : AppCompatActivity() {
             torrent?.let {
                 val pl = it.getString("Playlist", "")
                 if (pl.isNotEmpty()) {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    val url = Uri.parse(Net.getHostUrl(pl))
-                    intent.setDataAndType(url, "video/*")
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    val name = it.getString("Name", "")
-                    if (name.isNotEmpty()) {
-                        intent.putExtra("title", name)
-                        intent.putExtra("name", name)
-                    }
-                    App.getContext().startActivity(intent)
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl(pl)))
+                    App.getContext().startActivity(browserIntent)
                     finish()
                 }
             }
