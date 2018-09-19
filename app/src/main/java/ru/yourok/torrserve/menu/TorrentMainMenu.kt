@@ -44,8 +44,9 @@ class TorrentMainMenu(val activity: Activity, val adapter: TorrentAdapter) : Abs
                     val torrent = (adapter.getItem(it) as JSObject)
                     val pl = torrent.getString("Playlist", "")
                     if (pl.isNotEmpty()) {
-                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl(pl)))
-                        App.getContext().startActivity(browserIntent)
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl(pl)))
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        App.getContext().startActivity(intent)
                     }
                 }
             }

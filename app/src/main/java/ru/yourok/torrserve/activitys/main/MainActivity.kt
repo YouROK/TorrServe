@@ -237,6 +237,7 @@ class MainActivity : AppCompatActivity() {
             thread {
                 if (Api.torrentList().isNotEmpty()) {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")))
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     App.getContext().startActivity(intent)
                 }
             }
