@@ -34,6 +34,7 @@ class PlayActivity : AppCompatActivity() {
     private var torrent: JSObject? = null
     private var isClosed = false
     private var save = true
+    private var play = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,9 @@ class PlayActivity : AppCompatActivity() {
         if (intent.hasExtra("DontSave"))
             save = false
 
+        if (intent.hasExtra("DontPlay"))
+            play = false
+
         if (intent.hasExtra("Title"))
             title = intent.getStringExtra("Title")
 
@@ -65,7 +69,7 @@ class PlayActivity : AppCompatActivity() {
             try {
                 startServer()
                 torrent = addTorrent()
-                if (isClosed || torrent == null) {
+                if (isClosed || torrent == null || !play) {
                     finish()
                     return@thread
                 }
