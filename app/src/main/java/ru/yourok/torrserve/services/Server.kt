@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
-import android.support.v4.content.ContextCompat
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
@@ -90,11 +89,7 @@ class ServerService : Service() {
             try {
                 val intent = Intent(App.getContext(), ServerService::class.java)
                 intent.action = "ru.yourok.torrserve.server.action_start"
-                try {
-                    ContextCompat.startForegroundService(App.getContext(), intent)
-                } catch (e: Exception) {
-                    App.getContext().startService(intent)
-                }
+                App.getContext().startService(intent)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -104,11 +99,7 @@ class ServerService : Service() {
             try {
                 val intent = Intent(App.getContext(), ServerService::class.java)
                 intent.action = "ru.yourok.torrserve.server.action_exit"
-                try {
-                    ContextCompat.startForegroundService(App.getContext(), intent)
-                } catch (e: Exception) {
-                    App.getContext().startService(intent)
-                }
+                App.getContext().startService(intent)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
