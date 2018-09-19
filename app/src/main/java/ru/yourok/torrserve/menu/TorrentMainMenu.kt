@@ -5,6 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
@@ -15,6 +16,7 @@ import ru.yourok.torrserve.adapters.TorrentAdapter
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
+import ru.yourok.torrserve.server.net.Net
 import kotlin.concurrent.thread
 
 /**
@@ -36,6 +38,18 @@ class TorrentMainMenu(val activity: Activity, val adapter: TorrentAdapter) : Abs
 
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
+
+            R.id.itemPlaylist -> {
+                selected.first().let {
+                    val torrent = (adapter.getItem(it) as JSObject)
+                    val pl = torrent.getString("Playlist", "")
+                    if (pl.isNotEmpty()) {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl(pl)))
+                        App.getContext().startActivity(browserIntent)
+                    }
+                }
+            }
+
             R.id.itemShareMagnet -> {
                 var msg = ""
                 selected.forEach {
