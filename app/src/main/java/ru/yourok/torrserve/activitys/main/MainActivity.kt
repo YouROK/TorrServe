@@ -236,12 +236,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<FrameLayout>(R.id.btnPlaylist).setOnClickListener {
             thread {
                 if (Api.torrentList().isNotEmpty()) {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    val url = Uri.parse(Net.getHostUrl("/torrent/playlist.m3u"))
-                    intent.setDataAndType(url, "video/*")
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.putExtra("title", "TorrServePlaylist")
-                    intent.putExtra("name", "TorrServePlaylist")
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")))
                     App.getContext().startActivity(intent)
                 }
             }
