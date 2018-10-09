@@ -75,32 +75,37 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:maxWidth="305dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:padding="16dp">
 
                 <Button
                     android:id="@+id/download_apk_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:maxWidth="305dp"
                     android:layout_height="wrap_content"
                     android:text="@string/download_apk" />
 
                 <Button
                     android:id="@+id/update_remotly_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:maxWidth="305dp"
                     android:layout_height="wrap_content"
                     android:text="@string/update_server_remotly" />
 
                 <Button
                     android:id="@+id/update_local_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:maxWidth="305dp"
                     android:layout_height="wrap_content"
                     android:text="@string/update_server_localy" />
 
                 <Button
                     android:id="@+id/delete_server_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:maxWidth="305dp"
                     android:layout_height="wrap_content"
                     android:text="@string/delete" />
 
