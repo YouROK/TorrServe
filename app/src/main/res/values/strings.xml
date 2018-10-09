@@ -55,6 +55,8 @@
     <string name="update_server_remotly">Обновить сервер с сети</string>
     <string name="update_server_localy">Обновить сервер с папки Download</string>
     <string name="version">Версия</string>
+    <string name="current_version_apk">Установленная версия Apk</string>
+    <string name="current_version_server">Установленная версия Server</string>
     <string name="downloading">Скачивание...</string>
 
     <string name="permission_storage_msg">Доступ к памяти требуется для записи настроек в файл</string>
