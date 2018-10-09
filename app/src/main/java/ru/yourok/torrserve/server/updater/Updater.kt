@@ -2,7 +2,6 @@ package ru.yourok.torrserve.serverloader
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.support.design.widget.Snackbar
 import org.json.JSONObject
@@ -59,10 +58,7 @@ object Updater {
     }
 
     fun getRemoteJS(url: String): JSONObject? {
-        val http = Http(Uri.parse(url))
-        http.connect()
-        val strJS = http.getInputStream()?.bufferedReader()?.readText() ?: ""
-        http.close()
+        val strJS = Http(url).read()
         if (strJS.isNotEmpty()) {
             return JSONObject(strJS)
         }
@@ -118,20 +114,21 @@ object Updater {
         else
             url = testJS.getJSONObject("Links").getString("android-${arch}")
 
-        val http = Http(Uri.parse(url))
-        http.connect()
-        http.getInputStream().use { input ->
-            input ?: let { throw IOException("error get server: $url") }
+        val http = Http(url)
+        http.getEntity().apply {
+            this ?: let { throw IOException("error get server: $url") }
+            content ?: let { throw IOException("error get server: $url") }
+
             ServerFile.deleteServer()
             FileOutputStream(ServerFile.get()).use { fileOut ->
                 if (onProgress == null)
-                    input.copyTo(fileOut)
+                    content.copyTo(fileOut)
                 else {
                     val buffer = ByteArray(65535)
-                    val length = http.getSize()
+                    val length = contentLength + 1
                     var offset: Long = 0
                     while (true) {
-                        val readed = input.read(buffer)
+                        val readed = content.read(buffer)
                         offset += readed
                         val prc = (offset * 100 / length).toInt()
                         onProgress(prc)

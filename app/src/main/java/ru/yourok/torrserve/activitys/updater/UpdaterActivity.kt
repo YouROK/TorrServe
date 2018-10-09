@@ -2,10 +2,7 @@ package ru.yourok.torrserve.activitys.updater
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.*
@@ -73,7 +70,7 @@ class UpdaterActivity : AppCompatActivity() {
             findViewById<ProgressBar>(R.id.progress_bar).visibility = View.VISIBLE
             findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
             textViewArch.text = ("Arch: ${Updater.getArch()}")
-            textViewApkVersion.text = ("Android ${getString(R.string.version)}: ${getString(R.string.app_name)} ${BuildConfig.VERSION_NAME}")
+            textViewApkVersion.text = ("${getString(R.string.current_version_apk)}: ${getString(R.string.app_name)} ${BuildConfig.VERSION_NAME}")
         }
         thread {
 
@@ -82,7 +79,7 @@ class UpdaterActivity : AppCompatActivity() {
                     Updater.checkRemoteApk()
                     Handler(Looper.getMainLooper()).post {
                         try {
-                            textViewApkUpdate.text = ("Android ${getString(R.string.update)} :" + Updater.getJson(false, testVersion).getString("Version"))
+                            textViewApkUpdate.text = ("${getString(R.string.update)} Apk:" + Updater.getJson(false, testVersion).getString("Version"))
                         } catch (e: Exception) {
                             textViewApkUpdate.text = e.message ?: "Error get version"
                         }
@@ -98,7 +95,7 @@ class UpdaterActivity : AppCompatActivity() {
                 try {
                     Updater.checkLocalVersion()
                     Handler(Looper.getMainLooper()).post {
-                        textViewServerVersion.text = ("Server ${getString(R.string.version)} :" + Updater.getCurrVersion())
+                        textViewServerVersion.text = ("${getString(R.string.current_version_server)} :" + Updater.getCurrVersion())
                         if (Api.serverEcho().isNotEmpty())
                             findViewById<TextView>(R.id.update_info).setText(R.string.stat_server_is_running)
                     }
@@ -114,7 +111,7 @@ class UpdaterActivity : AppCompatActivity() {
                     Updater.checkRemoteServer(testVersion)
                     Handler(Looper.getMainLooper()).post {
                         try {
-                            textViewServerUpdate.text = ("Server ${getString(R.string.update)} :" + Updater.getJson(true, testVersion).getString("Version"))
+                            textViewServerUpdate.text = ("${getString(R.string.update)} Server :" + Updater.getJson(true, testVersion).getString("Version"))
                         } catch (e: Exception) {
                             textViewServerUpdate.text = e.message ?: "Error get version"
                         }
@@ -143,7 +140,10 @@ class UpdaterActivity : AppCompatActivity() {
         try {
             Updater.updateServerRemote(testVersion) { prc ->
                 Handler(Looper.getMainLooper()).post {
-                    findViewById<ProgressBar>(R.id.progress_bar).progress = prc
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        findViewById<ProgressBar>(R.id.progress_bar).setProgress(prc, true)
+                    else
+                        findViewById<ProgressBar>(R.id.progress_bar).setProgress(prc)
                 }
             }
             Handler(Looper.getMainLooper()).post {

@@ -1,145 +1,78 @@
 package ru.yourok.torrserve.utils
 
-import android.net.Uri
-import java.io.IOException
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.HttpURLConnection.*
-import java.net.URL
-import java.util.zip.GZIPInputStream
+import cz.msebera.android.httpclient.HttpEntity
+import cz.msebera.android.httpclient.client.methods.HttpGet
+import cz.msebera.android.httpclient.impl.client.HttpClients
+import cz.msebera.android.httpclient.util.EntityUtils
+import java.security.KeyManagementException
+import java.security.NoSuchAlgorithmException
+import java.security.SecureRandom
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 
 /**
  * Created by yourok on 07.11.17.
  */
 
-class Http(url: Uri) {
-    private var currUrl: String = url.toString()
-    private var isConn: Boolean = false
-    private var connection: HttpURLConnection? = null
-    private var errMsg: String = ""
-    private var inputStream: InputStream? = null
+class Http(val url: String) {
 
-    fun connect() {
-        connect(0)
-    }
+    fun read(): String {
+        val httpclient = HttpClients.custom().setSslcontext(getSslContext()).build()
+        val httpreq = HttpGet(url)
+        val response = httpclient.execute(httpreq)
 
-    fun connect(pos: Long): Long {
-        var responseCode: Int
-        var redirCount = 0
-        do {
-            val url = URL(currUrl)
-            connection = url.openConnection() as HttpURLConnection
-            connection!!.connectTimeout = 30000
-            connection!!.readTimeout = 15000
-            connection!!.setRequestMethod("GET")
-            connection!!.setDoInput(true)
-
-            connection!!.setRequestProperty("UserAgent", "DWL/1.1.0 (Linux; Android;)")
-            connection!!.setRequestProperty("Accept", "*/*")
-            connection!!.setRequestProperty("Accept-Encoding", "gzip")
-            if (pos > 0)
-                connection!!.setRequestProperty("Range", "bytes=$pos-")
-
-            connection!!.connect()
-
-            responseCode = connection!!.getResponseCode()
-            val redirected = responseCode == HTTP_MOVED_PERM || responseCode == HTTP_MOVED_TEMP || responseCode == HTTP_SEE_OTHER
-            if (redirected) {
-                currUrl = connection!!.getHeaderField("Location")
-                connection!!.disconnect()
-                redirCount++
-            }
-            if (redirCount > 5) {
-                throw IOException("Error connect to: " + currUrl + " too many redirects")
-            }
-        } while (redirected)
-
-
-        if (responseCode != HttpURLConnection.HTTP_OK && responseCode != HttpURLConnection.HTTP_PARTIAL) {
-            throw IOException("Error connect to: " + currUrl + " " + connection!!.responseMessage)
+        val status = response.statusLine?.statusCode ?: -1
+        if (status == 200) {
+            val entity = response.entity ?: return ""
+            return EntityUtils.toString(entity)
+        } else {
+            return ""
         }
-        isConn = true
-        if ((connection!!.getHeaderField("Accept-Ranges")?.toLowerCase() ?: "") == "none")
-            return -1
-        return getSize()
     }
 
-    fun isConnected(): Boolean {
-        return isConn
+    fun getEntity(): HttpEntity? {
+        val httpclient = HttpClients.custom().setSslcontext(getSslContext()).build()
+        val httpreq = HttpGet(url)
+        val response = httpclient.execute(httpreq)
+
+        val status = response.statusLine?.statusCode ?: -1
+        if (status == 200) {
+            val entity = response.entity ?: return null
+            return entity
+        } else {
+            return null
+        }
     }
 
-    fun getSize(): Long {
-        if (!isConn)
-            return 0
+    private fun getSslContext(): SSLContext? {
+        val byPassTrustManagers = arrayOf<TrustManager>(object : X509TrustManager {
+            override fun checkClientTrusted(p0: Array<out java.security.cert.X509Certificate>?, p1: String?) {
+            }
 
-        var cl = connection!!.getHeaderField("Content-Range")
+            override fun checkServerTrusted(p0: Array<out java.security.cert.X509Certificate>?, p1: String?) {
+            }
+
+            override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
+                return arrayOf<java.security.cert.X509Certificate>()
+            }
+        })
+
+        var sslContext: SSLContext? = null
+
         try {
-            if (!cl.isNullOrEmpty()) {
-                val cr = cl.split("/")
-                if (cr.isNotEmpty())
-                    cl = cr.last()
-                return cl.toLong()
-            }
-        } catch (e: Exception) {
+            sslContext = SSLContext.getInstance("TLS")
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
         }
 
-        cl = connection!!.getHeaderField("Content-Length")
         try {
-            if (!cl.isNullOrEmpty()) {
-                return cl.toLong()
-            }
-        } catch (e: Exception) {
+            sslContext?.init(null, byPassTrustManagers, SecureRandom())
+        } catch (e: KeyManagementException) {
+            e.printStackTrace()
         }
 
-        return 0
-    }
-
-    fun getUrl(): String {
-        return currUrl
-    }
-
-    fun getInputStream(): InputStream? {
-        if (inputStream == null && connection != null) {
-            if ("gzip".equals(connection?.getContentEncoding()))
-                inputStream = GZIPInputStream(connection!!.getInputStream())
-            else
-                inputStream = connection!!.getInputStream()
-        }
-
-        return inputStream
-    }
-
-    fun read(b: ByteArray): Int {
-        if (!isConn or (getInputStream() == null))
-            throw IOException("connect before read")
-        var sz = getInputStream()!!.read(b)
-        var size = sz
-        while (sz > 0 && sz < b.size / 2) {
-            try {
-                sz = getInputStream()!!.read(b, size, b.size - size)
-                if (sz > 0)
-                    size += sz
-                else
-                    break
-            } catch (e: Exception) {
-                e.printStackTrace()
-                break
-            }
-        }
-        return size
-    }
-
-    fun getErrorMessage(): String {
-        return errMsg
-    }
-
-    fun close() {
-        try {
-            inputStream?.close()
-        } catch (e: Exception) {
-        }
-        connection?.disconnect()
-        isConn = false
+        return sslContext
     }
 }
