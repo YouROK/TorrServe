@@ -34,6 +34,8 @@ object Net {
 
     fun getHostUrl(path: String): String {
         val url = Preferences.getCurrentHost()
+        if (path.isEmpty())
+            return url
         if (url.last() == '/')
             return url + path.substring(1)
         else
