@@ -21,7 +21,6 @@ import ru.yourok.torrserve.server.api.JSObject
 import ru.yourok.torrserve.server.net.Net
 import ru.yourok.torrserve.server.torrent.Torrent
 import ru.yourok.torrserve.serverloader.ServerFile
-import ru.yourok.torrserve.services.NotificationServer
 import ru.yourok.torrserve.services.ServerService
 import ru.yourok.torrserve.utils.ByteFmt
 import ru.yourok.torrserve.utils.Mime
@@ -113,7 +112,7 @@ class PlayActivity : AppCompatActivity() {
     private fun addTorrent(): JSObject {
         showProgress(getString(R.string.connects_to_torrent))
         val hash = Api.torrentAdd(torrLink, title, "", save)
-        NotificationServer.Show(this, hash)
+        ServerService.notificationSetHash(hash)
         Torrent.waitInfo(hash) {
             val activePeers = it.getInt("ActivePeers", 0)
             val totalPeers = it.getInt("TotalPeers", 0)
@@ -129,11 +128,21 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun showList(torr: JSObject, files: List<JSObject>) {
+        var lastPlayed = -1
+        for (i in files.size - 1 downTo 0) {
+            if (files[i].getBoolean("Viewed", false)) {
+                lastPlayed = i
+                break
+            }
+        }
+
         hideProgress()
         Handler(Looper.getMainLooper()).post {
             rvFileList.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this@PlayActivity)
+                if (lastPlayed > 0)
+                    layoutManager.scrollToPosition(lastPlayed)
                 adapter = TorrentFilesAdapter(files) {
                     showProgress(getString(R.string.buffering) + "...")
                     thread {
@@ -238,7 +247,7 @@ class PlayActivity : AppCompatActivity() {
             thread {
                 torrent?.let {
                     val hash = it.getString("Hash", "")
-                    NotificationServer.Show(this, "")
+                    ServerService.notificationSetHash("")
                     if (hash.isNotEmpty())
                         try {
                             Api.torrentDrop(hash)
@@ -250,7 +259,7 @@ class PlayActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         isClosed = true
+        super.onBackPressed()
     }
 }

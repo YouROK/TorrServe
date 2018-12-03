@@ -40,6 +40,7 @@
         </receiver>
 
         <service android:name=".services.ServerService" />
+        <service android:name=".services.Notification" />
 
         <activity android:name=".activitys.main.MainActivity">
             <intent-filter>

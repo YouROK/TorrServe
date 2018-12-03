@@ -17,8 +17,12 @@ class App : Application() {
             return contextApp
         }
 
-        fun wakeLock(timeout: Long) {
-            wakeLock.acquire(timeout)
+        fun wakeLockStart() {
+            wakeLock.acquire()
+        }
+
+        fun wakeLockStop() {
+            wakeLock.release()
         }
 
         fun Toast(txt: String) {

@@ -11,12 +11,20 @@ import ru.yourok.torrserve.serverloader.ServerFile
 import kotlin.concurrent.thread
 
 class ServerService : Service() {
+    private var notification = NotificationHelper()
+
     override fun onBind(p0: Intent?): IBinder? = null
+    override fun onCreate() {
+        super.onCreate()
+        notification.doBindService(this)
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // 0 - start
         // 1 - exit
         // 2 - restart
+        // 3 - set hash
+
         var cmd = 0
 
         intent?.let {
@@ -27,6 +35,9 @@ class ServerService : Service() {
                     }
                     "ru.yourok.torrserve.server.action_restart" -> {
                         cmd = 2
+                    }
+                    "ru.yourok.torrserve.server.action_set_hash" -> {
+                        cmd = 3
                     }
                 }
             }
@@ -41,6 +52,14 @@ class ServerService : Service() {
                 restartServer()
                 return START_STICKY
             }
+            3 -> {
+                intent?.let {
+                    if (it.hasExtra("hash")) {
+                        setHash(it.getStringExtra("hash"))
+                    }
+                }
+                return START_STICKY
+            }
             else -> {
                 startServer()
                 return START_STICKY
@@ -48,25 +67,31 @@ class ServerService : Service() {
         }
     }
 
+    private fun setHash(hash: String) {
+        notification.setHash(hash)
+    }
+
     private fun startServer() {
-        NotificationServer.Show(this, "")
+        notification.setHash("")
         thread {
-            if (ServerFile.serverExists() && Api.serverIsLocal() && Api.serverEcho().isEmpty())
+            if (ServerFile.serverExists() && Api.serverIsLocal() && Api.serverEcho().isEmpty()) {
                 ServerFile.run()
+            }
         }
     }
 
     private fun stopServer() {
-        if (Api.serverIsLocal() && Api.serverEcho().isNotEmpty())
+        if (Api.serverIsLocal() && Api.serverEcho().isNotEmpty()) {
             Api.serverShutdown()
+        }
 
         ServerFile.stop()
         Handler(this.getMainLooper()).post {
             App.Toast(getString(R.string.server_stoped))
         }
-        NotificationServer.Close(this)
+        notification.doUnbindService(this)
         thread {
-            Thread.sleep(100)
+            Thread.sleep(1000)
             System.exit(0)
         }
         stopSelf()
@@ -85,6 +110,17 @@ class ServerService : Service() {
     }
 
     companion object {
+        fun notificationSetHash(hash: String) {
+            try {
+                val intent = Intent(App.getContext(), ServerService::class.java)
+                intent.action = "ru.yourok.torrserve.server.action_set_hash"
+                intent.putExtra("hash", hash)
+                App.getContext().startService(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         fun start() {
             try {
                 val intent = Intent(App.getContext(), ServerService::class.java)

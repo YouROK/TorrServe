@@ -25,6 +25,7 @@ object Mime {
             "avi",
             "drc",
             "flv",
+            "iso",
             "m2v",
             "m2ts",
             "m4p",

@@ -229,16 +229,25 @@ class MainActivity : AppCompatActivity() {
                     }
                     torrAdapter.checkList()
                 } catch (e: Exception) {
+                    e.message?.let {
+                        App.Toast(it)
+                    }
                 }
             }
         }
 
         findViewById<FrameLayout>(R.id.btnPlaylist).setOnClickListener {
             thread {
-                if (Api.torrentList().isNotEmpty()) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")))
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    App.getContext().startActivity(intent)
+                try {
+                    if (Api.torrentList().isNotEmpty()) {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")))
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        App.getContext().startActivity(intent)
+                    }
+                } catch (e: Exception) {
+                    e.message?.let {
+                        App.Toast(it)
+                    }
                 }
             }
         }
