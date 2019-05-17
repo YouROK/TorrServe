@@ -115,6 +115,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:labelFor="@+id/editTextConnectionsDhtLimit"
+                android:text="@string/connections_dht_limit" />
+
+            <EditText
+                android:id="@+id/editTextConnectionsDhtLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:labelFor="@+id/editTextCacheSize"
                 android:text="@string/download_rate_limit" />
 

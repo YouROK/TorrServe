@@ -29,6 +29,7 @@
     <string name="disable_upload">Отключить раздачу</string>
     <string name="ecnryption">Шифрование</string>
     <string name="connections_limit">Соединений на торрент</string>
+    <string name="connections_dht_limit">Лимит соединений DHT (0-не ограничено)</string>
     <string name="download_rate_limit">Ограничение скорости загрузки (Килобайты, 0-неограниченно)</string>
     <string name="upload_rate_limit">Ограничение скорости отдачи (Килобайты, 0-неограниченно)</string>
 
