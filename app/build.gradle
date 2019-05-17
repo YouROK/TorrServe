@@ -61,6 +61,8 @@ dependencies {
     implementation 'cz.msebera.android:httpclient:4.4.1.2'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.google.firebase:firebase-core:16.0.9'
 }
 
 repositories {
@@ -94,3 +96,4 @@ class WriteVersion implements Plugin<Project> {
 }
 
 apply plugin: WriteVersion
+apply plugin: 'com.google.gms.google-services'
