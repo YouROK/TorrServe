@@ -74,6 +74,7 @@ class ServerSettingsActivity : AppCompatActivity() {
 
                     spinnerEncryption.setSelection(sets.getInt("Encryption", 0))
                     editTextConnectionsLimit.setText(sets.getInt("ConnectionsLimit", 0).toString())
+                    editTextConnectionsDhtLimit.setText(sets.getInt("DhtConnectionLimit", 500).toString())
                     editTextDownloadRateLimit.setText(sets.getInt("DownloadRateLimit", 0).toString())
                     editTextUploadRateLimit.setText(sets.getInt("UploadRateLimit", 0).toString())
                 }
@@ -102,6 +103,7 @@ class ServerSettingsActivity : AppCompatActivity() {
                 sets.set("DownloadRateLimit", editTextDownloadRateLimit.text.toString().toInt())
                 sets.set("UploadRateLimit", editTextUploadRateLimit.text.toString().toInt())
                 sets.set("ConnectionsLimit", editTextConnectionsLimit.text.toString().toInt())
+                sets.set("DhtConnectionLimit", editTextConnectionsDhtLimit.text.toString().toInt())
 
                 thread {
                     try {
