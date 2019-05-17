@@ -41,7 +41,7 @@ class SplashActivity : Activity() {
             if (Api.serverIsLocal() && ServerFile.serverExists())
                 ServerService.start()
 
-            ServerService.wait(60)
+            ServerService.wait(10)
 
             val end = System.currentTimeMillis()
             if (end - start < 2000)
