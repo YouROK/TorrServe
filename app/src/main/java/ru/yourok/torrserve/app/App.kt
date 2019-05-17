@@ -30,6 +30,12 @@ class App : Application() {
                 android.widget.Toast.makeText(contextApp, txt, android.widget.Toast.LENGTH_SHORT).show()
             }
         }
+
+        fun Toast(txt: Int) {
+            Handler(Looper.getMainLooper()).post {
+                android.widget.Toast.makeText(contextApp, txt, android.widget.Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreate() {
