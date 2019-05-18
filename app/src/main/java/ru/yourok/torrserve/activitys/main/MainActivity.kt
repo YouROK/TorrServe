@@ -190,6 +190,15 @@ class MainActivity : AppCompatActivity() {
                 if (Uri.parse(host).port == -1)
                     host += ":8090"
 
+                if (ServerFile.serverExists() && (host.toLowerCase().contains("localhost") || host.toLowerCase().contains("127.0.0.1"))) {
+                    val oldHost = Preferences.getCurrentHost()
+                    Preferences.setCurrentHost(host)
+                    ServerService.start()
+                    ServerService.wait(10)
+                    if (Api.serverCheck(host).isEmpty())
+                        Preferences.setCurrentHost(oldHost)
+                }
+
                 if (Api.serverCheck(host).isEmpty()) {
                     App.Toast(getString(R.string.server_not_responding))
                     return@show
@@ -198,15 +207,14 @@ class MainActivity : AppCompatActivity() {
                 Handler(Looper.getMainLooper()).post {
                     tvCurrHost.text = host
                 }
-                thread {
-                    val hosts = mutableListOf<String>()
-                    for (h in Preferences.getHosts()) {
-                        if (Api.serverCheck(h).isNotEmpty())
-                            hosts.add(h)
-                    }
-                    hosts.add(host)
-                    Preferences.setHosts(hosts)
+
+                val hosts = mutableListOf<String>()
+                for (h in Preferences.getHosts()) {
+                    if (Api.serverCheck(h).isNotEmpty())
+                        hosts.add(h)
                 }
+                hosts.add(host)
+                Preferences.setHosts(hosts)
             }
         }
         findViewById<FrameLayout>(R.id.header).setOnLongClickListener {
