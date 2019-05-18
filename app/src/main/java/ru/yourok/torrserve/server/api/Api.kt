@@ -161,7 +161,7 @@ object Api {
 
     fun serverIsLocal(): Boolean {
         val host = getHostUrl("")
-        return host.commonPrefixWith("http://localhost", true) == "http://localhost"
+        return host.toLowerCase().contains("localhost") || host.toLowerCase().contains("127.0.0.1")
     }
 
     fun searchMovies(params: List<String>): JSONArray {
