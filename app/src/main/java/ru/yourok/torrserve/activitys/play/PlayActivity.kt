@@ -11,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_play.*
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.adapters.TorrentFilesAdapter
@@ -35,10 +36,14 @@ class PlayActivity : AppCompatActivity() {
     private var save = true
     private var play = true
 
+    private var firebaseAnalytics: FirebaseAnalytics? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
         setFinishOnTouchOutside(false)
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         val attr = window.attributes
         attr.width = (resources.displayMetrics.widthPixels * 0.80).toInt()
@@ -187,6 +192,8 @@ class PlayActivity : AppCompatActivity() {
 
             val addr = Preferences.getCurrentHost() + link
             val pkg = Preferences.getPlayer()
+
+            firebaseAnalytics?.setUserProperty("play_torr", torr.toString())
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(addr))
             val mime = Mime.getMimeType(name)
