@@ -40,7 +40,10 @@ object Players {
             it.packageName == "org.xbmc.kodi" ||
                     it.packageName == "com.android.gallery3d" ||
                     it.packageName == "com.niklabs.pp" || // prefect player
-                    it.packageName == "com.lonelycoder.mediaplayer" //movian
+                    it.packageName == "com.lonelycoder.mediaplayer" || //movian
+                    it.packageName == "com.semperpax.spmc" || //spmc
+                    it.packageName == "com.newin.nplayer.pro" // nPlayer
+
         }
 
         val list = mutableListOf<Player>()
