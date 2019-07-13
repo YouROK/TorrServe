@@ -26,7 +26,7 @@ object ServerFile {
     }
 
     fun run() {
-        if (!ServerFile.serverExists())
+        if (!serverExists())
             return
         synchronized(lock) {
             if (process == null || !process!!.isRunning()) {
