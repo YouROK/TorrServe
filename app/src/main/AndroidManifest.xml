@@ -213,7 +213,6 @@
                 <data android:pathPattern=".*..*..*..*..*..*..*..*..*..*..*..*..*..*..*.torrent.*" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activitys.add.AddPermanent"
             android:label="@string/add_play"

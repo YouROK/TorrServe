@@ -193,7 +193,9 @@ class PlayActivity : AppCompatActivity() {
             val addr = Preferences.getCurrentHost() + link
             val pkg = Preferences.getPlayer()
 
-            firebaseAnalytics?.setUserProperty("play_torr", torr.toString())
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, torr.toString())
+            firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SEARCH, bundle)
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(addr))
             val mime = Mime.getMimeType(name)
