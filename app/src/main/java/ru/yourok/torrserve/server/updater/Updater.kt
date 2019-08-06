@@ -116,8 +116,8 @@ object Updater {
 
         val http = Http(url)
         http.getEntity().apply {
-            this ?: let { throw IOException("error get server: $url") }
-            content ?: let { throw IOException("error get server: $url") }
+            this ?: throw IOException("error get server: $url")
+            content ?: throw IOException("error get server: $url")
 
             ServerFile.deleteServer()
             FileOutputStream(ServerFile.get()).use { fileOut ->
