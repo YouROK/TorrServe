@@ -53,8 +53,9 @@
 
     <string name="found_new_version">Найдена новая версия</string>
     <string name="download_apk">Скачать apk</string>
-    <string name="update_server_remotly">Обновить сервер с сети</string>
-    <string name="update_server_localy">Обновить сервер с папки Download</string>
+    <string name="install_last_server_remotly">Установить последний сервер</string>
+    <string name="install_custom_server_remotly">Установить другой сервер</string>
+    <string name="install_server_localy">Уновить сервер с папки Download</string>
     <string name="version">Версия</string>
     <string name="current_version_apk">Установленная версия Apk</string>
     <string name="current_version_server">Установленная версия Server</string>

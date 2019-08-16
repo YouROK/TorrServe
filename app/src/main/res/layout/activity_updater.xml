@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout tools:context="ru.yourok.torrserve.activitys.updater.UpdaterActivity"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,9 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,18 +88,25 @@
                     android:text="@string/download_apk" />
 
                 <Button
-                    android:id="@+id/update_remotly_button"
+                    android:id="@+id/btnInstallRemotly"
                     android:layout_width="match_parent"
                     android:maxWidth="305dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/update_server_remotly" />
+                    android:text="@string/install_last_server_remotly" />
 
                 <Button
-                    android:id="@+id/update_local_button"
+                    android:id="@+id/btnInstallCustom"
                     android:layout_width="match_parent"
                     android:maxWidth="305dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/update_server_localy" />
+                    android:text="@string/install_custom_server_remotly" />
+
+                <Button
+                    android:id="@+id/btnInstallLocal"
+                    android:layout_width="match_parent"
+                    android:maxWidth="305dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/install_server_localy" />
 
                 <Button
                     android:id="@+id/delete_server_button"
