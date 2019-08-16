@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.ImageView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -39,6 +40,7 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                         }
                         if (js.ad_link.isNotEmpty()) {
                             loadImages(js.ad_link)
+                            FirebaseAnalytics.getInstance(activity).logEvent("view_ad", null)
                             Thread.sleep(5000)
                         }
                     } catch (e: Exception) {
