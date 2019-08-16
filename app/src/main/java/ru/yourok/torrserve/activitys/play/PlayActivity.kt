@@ -10,10 +10,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_play.*
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.ad.Ad
 import ru.yourok.torrserve.adapters.TorrentFilesAdapter
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.preferences.Preferences
@@ -35,6 +37,7 @@ class PlayActivity : AppCompatActivity() {
     private var isClosed = false
     private var save = true
     private var play = true
+    private var ad: Ad? = null
 
     private var firebaseAnalytics: FirebaseAnalytics? = null
 
@@ -42,6 +45,11 @@ class PlayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
         setFinishOnTouchOutside(false)
+
+        findViewById<ImageView>(R.id.ivAd)?.let {
+            ad = Ad(it, this)
+            ad?.get()
+        }
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
@@ -203,6 +211,8 @@ class PlayActivity : AppCompatActivity() {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("title", name)
 
+            ad?.waitAd()
+
             if (pkg.isEmpty() or pkg.equals("0")) {
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
@@ -265,6 +275,12 @@ class PlayActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+
+    override fun finish() {
+        ad?.waitAd()
+        super.finish()
     }
 
     override fun onBackPressed() {
