@@ -16,8 +16,8 @@ android {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 73
-        versionName "1.1.73"
+        versionCode 74
+        versionName "1.1.74"
     }
     signingConfigs {
         release {
@@ -61,6 +61,7 @@ dependencies {
     implementation 'cz.msebera.android:httpclient:4.4.1.2'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation 'com.google.firebase:firebase-core:16.0.9'
 }
