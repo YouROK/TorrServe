@@ -7,6 +7,19 @@
     tools:context="ru.yourok.torrserve.activitys.play.PlayActivity">
 
     <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivAd"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/progress"
         android:layout_margin="5dp"
         android:orientation="vertical"
