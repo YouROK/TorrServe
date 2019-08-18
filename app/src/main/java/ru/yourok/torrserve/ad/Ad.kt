@@ -10,6 +10,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.ad.model.AdJson
 import ru.yourok.torrserve.utils.Http
 import java.text.SimpleDateFormat
@@ -60,44 +61,57 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
             Handler(Looper.getMainLooper()).post {
                 iv.visibility = View.VISIBLE
             }
+
+            if (lst.size == 1) {
+                loadImg(lst[0])
+                return@thread
+            }
+
             while (!activity.isFinishing) {
                 lst.forEach {
-                    var link = it
-                    if (!link.startsWith("http"))
-                        link = ad_base + link
-
-                    val pcs = Picasso.get()
-                            .load(link)
-                            .placeholder(iv.drawable)
-                            .noFade()
-
-                    Handler(Looper.getMainLooper()).post {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            iv.animate().alpha(0f).setDuration(200)
-                                    .withEndAction {
-                                        pcs.into(iv, object : Callback {
-                                            override fun onSuccess() {
-                                                iv.animate().setDuration(200).alpha(1f).start()
-                                            }
-
-                                            override fun onError(e: java.lang.Exception?) {
-                                            }
-                                        })
-                                    }
-                                    .start()
-                        } else {
-                            pcs.into(iv)
-                        }
-                    }
+                    loadImg(it)
                     Thread.sleep(5000)
                 }
             }
         }
     }
 
+    private fun loadImg(linkImg: String) {
+        var link = linkImg
+        if (!link.startsWith("http"))
+            link = ad_base + link
+
+        val pcs = Picasso.get()
+                .load(link)
+                .placeholder(iv.drawable)
+                .noFade()
+
+        Handler(Looper.getMainLooper()).post {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                iv.animate().alpha(0f).setDuration(200)
+                        .withEndAction {
+                            pcs.into(iv, object : Callback {
+                                override fun onSuccess() {
+                                    iv.animate().setDuration(200).alpha(1f).start()
+                                }
+
+                                override fun onError(e: java.lang.Exception?) {
+                                }
+                            })
+                        }
+                        .start()
+            } else {
+                pcs.into(iv)
+            }
+        }
+    }
+
     private fun getJson(): AdJson? {
         try {
-            val http = Http("$ad_base/ad.json")
+            var link = "$ad_base/ad.json"
+            if (BuildConfig.DEBUG)
+                link = "$ad_base/ad_test.json"
+            val http = Http(link)
             val body = http.read()
 
             val gson = Gson()
