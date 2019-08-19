@@ -65,6 +65,7 @@
         <activity android:name=".activitys.settings.AppSettingsActivity" />
         <activity android:name=".activitys.settings.ServerSettingsActivity" />
         <activity android:name=".activitys.updater.UpdaterActivity" />
+        <activity android:name=".player.PlayerActivity" />
 
         <activity
             android:name=".activitys.add.AddOnly"

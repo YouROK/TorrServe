@@ -46,6 +46,7 @@
 
     <string name="default_player">Плеер по умолчанию</string>
     <string name="choose_player">Выбор плеера</string>
+    <string name="inner_player">Встроенный плеер</string>
 
     <string name="donate_msg">Ваше пожертвование помогает мне развиваться дальше, улучшать программу и создавать новые</string>
     <string name="paypal" translatable="false">PayPal</string>

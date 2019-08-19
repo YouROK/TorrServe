@@ -35,6 +35,7 @@ class AppSettingsActivity : AppCompatActivity() {
             val plist = Players.getList()
             plist.add(0, Player(getString(R.string.default_player), "0"))
             plist.add(1, Player(getString(R.string.choose_player), "1"))
+            plist.add(2, Player(getString(R.string.inner_player), "2"))
 
             val list = plist.map { it.Name }
 
@@ -59,9 +60,10 @@ class AppSettingsActivity : AppCompatActivity() {
             val plist = Players.getList()
             plist.add(0, Player(getString(R.string.default_player), "0"))
             plist.add(1, Player(getString(R.string.choose_player), "1"))
+            plist.add(2, Player(getString(R.string.inner_player), "2"))
 
             var player = getString(R.string.default_player)
-            var currPlayer = Preferences.getPlayer()
+            val currPlayer = Preferences.getPlayer()
 
             val pnames = plist.filter { it.Package == currPlayer }
             if (pnames.isNotEmpty())

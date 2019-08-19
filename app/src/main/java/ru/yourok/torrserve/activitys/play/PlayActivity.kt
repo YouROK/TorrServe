@@ -18,6 +18,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.Ad
 import ru.yourok.torrserve.adapters.TorrentFilesAdapter
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.player.PlayerActivity
 import ru.yourok.torrserve.preferences.Preferences
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
@@ -195,23 +196,32 @@ class PlayActivity : AppCompatActivity() {
         })
 
         if (!isClosed) {
+
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, torr.toString())
+            firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SEARCH, bundle)
+
+            ad?.waitAd()
+
             val link = file.getString("Link", "")
             val name = file.getString("Name", "")
 
             val addr = Preferences.getCurrentHost() + link
             val pkg = Preferences.getPlayer()
 
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, torr.toString())
-            firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SEARCH, bundle)
+            if (pkg.equals("2")) {
+                intent = Intent(this, PlayerActivity::class.java)
+                intent.data = Uri.parse(addr)
+                startActivity(intent)
+                finish()
+                return
+            }
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(addr))
             val mime = Mime.getMimeType(name)
             intent.setDataAndType(Uri.parse(addr), mime)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("title", name)
-
-            ad?.waitAd()
 
             if (pkg.isEmpty() or pkg.equals("0")) {
                 if (intent.resolveActivity(packageManager) != null) {
@@ -220,6 +230,9 @@ class PlayActivity : AppCompatActivity() {
                     return
                 }
             }
+
+
+
             if (pkg.isNotEmpty() and !pkg.equals("0") and !pkg.equals("1")) {
                 intent.`package` = pkg
                 if (intent.resolveActivity(packageManager) != null) {
