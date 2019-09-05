@@ -269,9 +269,9 @@
             android:padding="5dp"
             android:textColor="@android:color/white"
             android:gravity="bottom|right"
-            android:layout_weight="5"
+            android:layout_weight="0"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>
