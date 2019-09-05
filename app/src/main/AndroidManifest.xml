@@ -24,12 +24,12 @@
     <application
         android:name=".app.App"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:banner="@drawable/banner">
+        android:banner="@drawable/ic_banner">
 
         <receiver android:name=".services.BootCompletedReceiver">
             <intent-filter>
@@ -364,7 +364,6 @@
         <activity
             android:name=".activitys.add.AddTemporary"
             android:label="@string/play"
-            android:icon="@drawable/ic_launcher_p"
             android:configChanges="mcc|mnc|locale|orientation|screenLayout|screenSize|layoutDirection|fontScale"
             android:theme="@style/MyDialog"
             android:excludeFromRecents="true"

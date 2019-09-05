@@ -8,6 +8,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
@@ -82,7 +83,8 @@ class Notification : Service() {
 
             if (builder == null)
                 builder = NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notify))
                         .setContentTitle(getString(R.string.app_name))
                         .setAutoCancel(false)
                         .setOngoing(true)
@@ -120,7 +122,8 @@ class Notification : Service() {
 
             if (builder == null)
                 builder = NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notify))
                         .setContentTitle(getString(R.string.app_name))
                         .setAutoCancel(false)
                         .setOngoing(true)
