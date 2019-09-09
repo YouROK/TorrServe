@@ -183,8 +183,11 @@ class UpdaterActivity : AppCompatActivity() {
 
             builderSingle.setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which ->
                 dialog.dismiss()
-                showProgress(false, "")
             })
+
+            builderSingle.setOnCancelListener {
+                showProgress(false, "")
+            }
 
             builderSingle.setAdapter(arrayAdapter, DialogInterface.OnClickListener { dialog, which ->
                 try {
