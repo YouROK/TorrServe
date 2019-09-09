@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         rvTorrents.apply {
             adapter = torrAdapter
             requestFocus()
-            setOnItemClickListener { adapterView, view, i, l ->
+            setOnItemClickListener { _, _, i, _ ->
                 val torr = torrAdapter.getItem(i) as JSObject
                 val mag = torr.getString("Magnet", "")
                 if (mag.isEmpty()) {
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 App.getContext().startActivity(vintent)
             }
 
-            setOnItemLongClickListener { adapterView, view, i, l ->
+            setOnItemLongClickListener { _, _, i, _ ->
                 choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
                 setItemChecked(i, true)
                 true

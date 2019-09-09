@@ -175,10 +175,10 @@ object Updater {
         return ""
     }
 
-    fun check(onFound: (apkJS: JSObject, serverJS: JSObject) -> Unit) {
+    fun check(onFound: (apkJS: JSObject) -> Unit) {
         var found = false
 
-        val th1 = thread {
+        thread {
             try {
                 val js = getRemoteJS(apkRelease)
                 js?.let {
@@ -187,46 +187,20 @@ object Updater {
                 }
             } catch (e: Exception) {
             }
-        }
-
-        val th2 = thread {
-            try {
-                val js = getRemoteJS(serverRelease)
-                js?.let {
-                    serverJS = it
-                    found = true
-                }
-            } catch (e: Exception) {
-            }
-        }
-
-        th1.join()
-        th2.join()
+        }.join()
         if (found)
-            onFound(JSObject(apkJS), JSObject(serverJS))
+            onFound(JSObject(apkJS))
     }
 
     fun show(activity: Activity) {
         thread {
             Thread.sleep(5000)
-            check { apkJS, serverJS ->
+            check { apkJS ->
                 var isShow = false
 
                 val remoteApk = apkJS.getString("Version", "")
                 if (remoteApk.isNotEmpty() && BuildConfig.VERSION_NAME != remoteApk)
                     isShow = true
-
-                if (Api.serverIsLocal()) {
-                    var remoteServer = serverJS.getString("Version", "")
-                    if (remoteServer.isNotEmpty()) {
-                        try {
-                            checkLocalVersion()
-                        } catch (e: Exception) {
-                        }
-                        if (currServerVersion != remoteServer)
-                            isShow = true
-                    }
-                }
 
                 if (isShow) {
                     val snackbar = Snackbar.make(activity.findViewById(R.id.content), R.string.found_new_version, Snackbar.LENGTH_LONG)

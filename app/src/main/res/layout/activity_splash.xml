@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorPrimary"
     tools:context="ru.yourok.torrserve.activitys.splash.SplashActivity">
 
     <TextView
@@ -24,8 +24,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="120dp"
+        android:layout_height="220dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_logo" />
 
