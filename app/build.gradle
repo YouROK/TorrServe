@@ -16,8 +16,8 @@ android {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 75
-        versionName "1.1.75"
+        versionCode 76
+        versionName "1.1.76"
     }
     signingConfigs {
         release {
@@ -56,8 +56,8 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
 
     // ExoPlayer v2
-    implementation "com.google.android.exoplayer:exoplayer-core:2.8.4"
-    implementation "com.google.android.exoplayer:exoplayer-ui:2.8.4"
+    implementation "com.google.android.exoplayer:exoplayer-core:2.10.4"
+    implementation "com.google.android.exoplayer:exoplayer-ui:2.10.4"
 
     // ExoPlayer v2 MediaSession extension
     implementation "com.google.android.exoplayer:extension-mediasession:2.8.4"
