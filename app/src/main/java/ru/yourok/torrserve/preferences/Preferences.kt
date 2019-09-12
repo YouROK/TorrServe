@@ -10,6 +10,14 @@ import ru.yourok.torrserve.app.App
 
 object Preferences {
 
+    fun isDisableAD(): Boolean {
+        return get("DisableAD", false) as Boolean
+    }
+
+    fun disableAD(v: Boolean) {
+        set("DisableAD", v)
+    }
+
     fun getPlayer(): String {
         return get("Player", "1") as String
     }
