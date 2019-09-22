@@ -7,7 +7,6 @@
     tools:context="ru.yourok.torrserve.activitys.play.PlayActivity">
 
     <LinearLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,12 +15,16 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="150dp"
+            android:padding="10dp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/progress"
-        android:layout_margin="5dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
