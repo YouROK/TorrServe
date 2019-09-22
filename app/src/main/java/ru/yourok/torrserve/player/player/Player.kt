@@ -54,8 +54,7 @@ class PlayerHolder(private val context: Context,
     }
 
     private fun createExtractorMediaSource(uri: Uri): MediaSource {
-        return ExtractorMediaSource.Factory(DefaultDataSourceFactory(context, "exoplayer"))
-                .createMediaSource(uri)
+        return ExtractorMediaSource.Factory(DefaultDataSourceFactory(context, "exoplayer")).createMediaSource(uri)
     }
 
     // Prepare playback.

@@ -46,6 +46,13 @@ class AppSettingsActivity : AppCompatActivity() {
             }
         }
 
+        btnDisableAD.setOnClickListener {
+            var v = Preferences.isDisableAD()
+            v = !v
+            Preferences.disableAD(v)
+            updateStats()
+        }
+
         textViewVersion.text = ("YouROK " + getText(R.string.app_name) + " ${BuildConfig.VERSION_NAME}")
         updateStats()
     }
@@ -70,6 +77,12 @@ class AppSettingsActivity : AppCompatActivity() {
                 player = pnames[0].Name
 
             tvStatPlayer.text = player
+
+            if (Preferences.isDisableAD())
+                tvStatAD.text = getText(R.string.ad_disabled)
+            else
+                tvStatAD.text = getText(R.string.ad_enabled)
+
         }
     }
 }

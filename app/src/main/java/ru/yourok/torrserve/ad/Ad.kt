@@ -12,6 +12,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.ad.model.AdJson
+import ru.yourok.torrserve.preferences.Preferences
 import ru.yourok.torrserve.utils.Http
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,6 +28,10 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
     }
 
     fun get() {
+        if (Preferences.isDisableAD()) {
+            FirebaseAnalytics.getInstance(activity).logEvent("view_ad_disable", null)
+            return
+        }
         synchronized(lock) {}
         thread {
             synchronized(lock) {
