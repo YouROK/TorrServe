@@ -1,7 +1,6 @@
 package ru.yourok.torrserve.activitys.play
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -266,10 +265,6 @@ class PlayActivity : AppCompatActivity() {
                 var progressDrawable = progressBar.getProgressDrawable().mutate()
                 progressDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
                 progressBar.setProgressDrawable(progressDrawable)
-//            } else {
-//                var progressDrawable = progressBar.getIndeterminateDrawable().mutate()
-//                progressDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
-//                progressBar.setProgressDrawable(progressDrawable)
             }
         }
     }
