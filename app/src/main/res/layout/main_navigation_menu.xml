@@ -27,14 +27,14 @@
                     android:background="@drawable/header"
                     android:id="@+id/header"
                     android:layout_width="match_parent"
-                    android:layout_height="130dp">
+                    android:layout_height="120dp">
 
                     <ImageView
                         android:src="@mipmap/ic_launcher"
                         android:padding="10dp"
-                        android:layout_gravity="left|top"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp" />
+                        android:layout_gravity="center|top"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp" />
 
                     <TextView
                         android:id="@+id/tvCurrentHost"
@@ -44,6 +44,7 @@
                         android:gravity="center|bottom"
                         android:paddingBottom="10dp"
                         android:text="http://localhost:8090"
+                        android:textColor="@android:color/secondary_text_dark"
                         android:textAppearance="@android:style/TextAppearance.Medium" />
                 </FrameLayout>
 
