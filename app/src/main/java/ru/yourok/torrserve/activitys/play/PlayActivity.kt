@@ -197,10 +197,6 @@ class PlayActivity : AppCompatActivity() {
 
         if (!isClosed) {
 
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, torr.toString())
-            firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SEARCH, bundle)
-
             ad?.waitAd()
 
             val link = file.getString("Link", "")
