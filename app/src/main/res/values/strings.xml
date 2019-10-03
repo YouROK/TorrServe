@@ -85,6 +85,8 @@
     <string name="server_not_responding">Сервер не отвечает</string>
     <string name="server_not_exists">Сервер отсутствует</string>
 
+    <string name="app_install_permissions">Приложению TorrServe нужны права на установку приложений для обновления самого себя</string>
+
     <string name="warn_error_download_server">Ошибка скачивания сервера</string>
     <string name="warn_no_localy_updates">Нет локальных обновлений</string>
 
