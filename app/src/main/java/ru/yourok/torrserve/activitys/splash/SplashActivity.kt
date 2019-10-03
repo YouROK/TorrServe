@@ -38,15 +38,13 @@ class SplashActivity : Activity() {
         thread {
             val start = System.currentTimeMillis()
 
-            if (Api.serverIsLocal() && ServerFile.serverExists())
+            if (Api.serverIsLocal() && ServerFile.serverExists()) {
                 ServerService.start()
-
-            ServerService.wait(10)
-
-            val end = System.currentTimeMillis()
-            if (end - start < 2000)
-                Thread.sleep(2000)
-
+                ServerService.wait(10)
+                val end = System.currentTimeMillis()
+                if (end - start < 2000)
+                    Thread.sleep(2000)
+            }
             finish()
             overridePendingTransition(0, R.anim.splash_fade_out)
         }
