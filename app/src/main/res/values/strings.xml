@@ -56,7 +56,7 @@
     <string name="yandex_money" translatable="false">Yandex.Деньги</string>
 
     <string name="found_new_version">Найдена новая версия</string>
-    <string name="download_apk">Скачать apk</string>
+    <string name="install_apk">Установить apk</string>
     <string name="install_last_server_remotly">Установить последнюю версию сервера</string>
     <string name="install_custom_server_remotly">Установить желаемую версию сервера</string>
     <string name="install_server_localy">Установить сервер из папки Download</string>
