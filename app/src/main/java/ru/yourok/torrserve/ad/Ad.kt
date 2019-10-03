@@ -28,10 +28,6 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
     }
 
     fun get() {
-        if (Preferences.isDisableAD()) {
-            FirebaseAnalytics.getInstance(activity).logEvent("view_ad_disable", null)
-            return
-        }
         synchronized(lock) {}
         thread {
             synchronized(lock) {
@@ -41,9 +37,21 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                         if (js.ad_expired != "0") {
                             val formatter = SimpleDateFormat("dd.MM.yyyy")
                             val date = formatter.parse(js.ad_expired) as Date
-                            if (date.time < System.currentTimeMillis())
+                            if (date.time < System.currentTimeMillis()) {
+                                Preferences.disableAD(false)
                                 return@thread
+                            }
                         }
+
+                        val calendar = Calendar.getInstance()
+                        val day = calendar.get(Calendar.DAY_OF_WEEK)
+                        val forceShow = day == Calendar.FRIDAY || day == Calendar.SATURDAY || day == Calendar.SUNDAY
+
+                        if (Preferences.isDisableAD() && !forceShow) {
+                            FirebaseAnalytics.getInstance(activity).logEvent("view_ad_disable", null)
+                            return@thread
+                        }
+
                         if (js.ad_link.isNotEmpty()) {
                             loadImages(js.ad_link)
                             FirebaseAnalytics.getInstance(activity).logEvent("view_ad", null)
