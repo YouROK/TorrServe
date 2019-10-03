@@ -55,7 +55,7 @@ class Http(val url: String) {
             }
 
             override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
-                return arrayOf<java.security.cert.X509Certificate>()
+                return arrayOf()
             }
         })
 
