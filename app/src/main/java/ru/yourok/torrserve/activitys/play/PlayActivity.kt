@@ -34,6 +34,8 @@ import kotlin.concurrent.thread
 class PlayActivity : AppCompatActivity() {
 
     private var title = ""
+    private var poster = ""
+    private var info = ""
     private var torrLink = ""
     private var torrent: JSObject? = null
     private var isClosed = false
@@ -76,8 +78,12 @@ class PlayActivity : AppCompatActivity() {
         if (intent.hasExtra("DontPlay"))
             play = false
 
+        if (intent.hasExtra("Poster"))
+            poster = intent.getStringExtra("Poster")
         if (intent.hasExtra("Title"))
             title = intent.getStringExtra("Title")
+        if (intent.hasExtra("Info"))
+            info = intent.getStringExtra("Info")
 
         thread {
             try {
@@ -126,7 +132,17 @@ class PlayActivity : AppCompatActivity() {
 
     private fun addTorrent(): JSObject {
         showProgress(getString(R.string.connects_to_torrent))
-        val hash = Api.torrentAdd(torrLink, title, "", save)
+
+        if (info.isEmpty() && (poster.isNotEmpty() || title.isNotEmpty())) {
+            val lines = mutableListOf<String>()
+            if (poster.isNotEmpty())
+                lines.add(""""poster_path"="$poster"""")
+            if (title.isNotEmpty())
+                lines.add(""""title"="$title"""")
+            info = "{" + lines.joinToString(",") + "}"
+        }
+
+        val hash = Api.torrentAdd(torrLink, title, info, save)
         ServerService.notificationSetHash(hash)
         Torrent.waitInfo(hash) {
             val activePeers = it.getInt("ActivePeers", 0)

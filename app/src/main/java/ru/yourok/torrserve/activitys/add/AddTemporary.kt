@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import ru.yourok.torrserve.activitys.play.PlayActivity
 
+
 class AddTemporary : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var torrentLink = ""
         var title = ""
+        var poster = ""
+        var info = ""
 
         if (intent.action != null && intent.action.equals(Intent.ACTION_VIEW)) {
             intent.data?.let {
@@ -31,11 +34,17 @@ class AddTemporary : AppCompatActivity() {
             return
         }
 
+
+        if (intent.hasExtra("Poster"))
+            poster = intent.getStringExtra("Poster")
+        if (intent.hasExtra("poster"))
+            poster = intent.getStringExtra("poster")
         if (intent.hasExtra("Title"))
             title = intent.getStringExtra("Title")
-
         if (intent.hasExtra("title"))
             title = intent.getStringExtra("title")
+        if (intent.hasExtra("info"))
+            info = intent.getStringExtra("info")
 
         val vintent = Intent(this, PlayActivity::class.java)
         vintent.setData(Uri.parse(torrentLink))
@@ -43,6 +52,8 @@ class AddTemporary : AppCompatActivity() {
         vintent.action = Intent.ACTION_VIEW
         vintent.putExtra("DontSave", true)
         vintent.putExtra("Title", title)
+        vintent.putExtra("Poster", poster)
+        vintent.putExtra("Info", info)
         startActivity(vintent)
 
         finish()

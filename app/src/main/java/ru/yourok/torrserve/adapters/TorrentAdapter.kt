@@ -8,8 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
+import com.google.gson.Gson
+import com.squareup.picasso.Picasso
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.num.entity.Entity
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
 import ru.yourok.torrserve.utils.ByteFmt
@@ -60,8 +64,29 @@ class TorrentAdapter(private val activity: Activity) : BaseAdapter() {
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val vi: View = view ?: (activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.torrent_view, null)
         var name = torrList[position].get("Name", "")
-        var magnet = torrList[position].get("Hash", "")
+        val magnet = torrList[position].get("Hash", "")
         val length = torrList[position].get("Length", 0L)
+        val info = torrList[position].get("Info", "")
+
+        vi.findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
+
+        if (info.isNotEmpty()) {
+            val gson = Gson()
+            val ent = gson.fromJson<Entity>(info, Entity::class.java)
+
+            ent?.let {
+                it.title?.let { name = it }
+
+                ent.poster_path?.let { poster ->
+                    if (poster.isNotEmpty())
+                        vi.findViewById<ImageView>(R.id.ivPoster)?.let {
+                            val picass = Picasso.get().load(poster).placeholder(R.color.lighter_gray).fit().centerCrop()
+                            picass.into(it)
+                            it.visibility = View.VISIBLE
+                        }
+                }
+            }
+        }
 
         vi.findViewById<TextView>(R.id.tvTorrName)?.text = name
         vi.findViewById<TextView>(R.id.tvTorrMagnet)?.text = magnet.toUpperCase()

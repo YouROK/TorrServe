@@ -1,46 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:padding="5dp"
     android:minHeight="60dp"
     android:background="?android:attr/activatedBackgroundIndicator"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvTorrName"
-        android:text="Name"
-        android:textSize="16sp"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:singleLine="false"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
+    <ImageView
+        android:id="@+id/ivPoster"
+        android:visibility="gone"
+        android:paddingRight="5dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp" />
 
     <LinearLayout
-        android:layout_weight="2"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
-            android:text="hash"
-            android:id="@+id/tvTorrMagnet"
+            android:id="@+id/tvTorrName"
+            android:text="Name"
+            android:textSize="16sp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:singleLine="false"
             android:layout_weight="1"
-            android:singleLine="true"
-            android:ellipsize="middle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
 
-        <TextView
-            android:text="5GB"
-            android:id="@+id/tvTorrSize"
-            android:singleLine="true"
-            android:layout_gravity="end|center_vertical"
-            android:layout_weight="0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="hash"
+                android:id="@+id/tvTorrMagnet"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:ellipsize="middle"
+                android:layout_gravity="start|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="5GB"
+                android:id="@+id/tvTorrSize"
+                android:singleLine="true"
+                android:layout_gravity="end|center_vertical"
+                android:layout_weight="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -12,6 +12,8 @@ class AddPermanent : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         var torrentLink = ""
         var title = ""
+        var poster = ""
+        var info = ""
 
         if (intent.action != null && intent.action.equals(Intent.ACTION_VIEW)) {
             intent.data?.let {
@@ -32,16 +34,24 @@ class AddPermanent : AppCompatActivity() {
             return
         }
 
+        if (intent.hasExtra("Poster"))
+            poster = intent.getStringExtra("Poster")
+        if (intent.hasExtra("poster"))
+            poster = intent.getStringExtra("poster")
         if (intent.hasExtra("Title"))
             title = intent.getStringExtra("Title")
         if (intent.hasExtra("title"))
             title = intent.getStringExtra("title")
+        if (intent.hasExtra("info"))
+            info = intent.getStringExtra("info")
 
         val vintent = Intent(this, PlayActivity::class.java)
         vintent.setData(Uri.parse(torrentLink))
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         vintent.action = Intent.ACTION_VIEW
         vintent.putExtra("Title", title)
+        vintent.putExtra("Poster", poster)
+        vintent.putExtra("Info", info)
         startActivity(vintent)
 
         finish()
