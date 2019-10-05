@@ -289,7 +289,6 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-
     override fun finish() {
         ad?.waitAd()
         super.finish()
