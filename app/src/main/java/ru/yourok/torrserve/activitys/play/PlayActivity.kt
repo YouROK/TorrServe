@@ -228,8 +228,6 @@ class PlayActivity : AppCompatActivity() {
                 }
             }
 
-
-
             if (pkg.isNotEmpty() and !pkg.equals("0") and !pkg.equals("1")) {
                 intent.`package` = pkg
                 if (intent.resolveActivity(packageManager) != null) {
