@@ -58,7 +58,7 @@ class PlayActivity : AppCompatActivity() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         val attr = window.attributes
-        attr.width = (resources.displayMetrics.widthPixels * 0.80).toInt()
+        attr.width = (resources.displayMetrics.widthPixels * 0.90).toInt()
         window.attributes = attr
 
         if (intent == null) {
