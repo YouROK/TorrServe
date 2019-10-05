@@ -15,8 +15,18 @@ import kotlin.concurrent.thread
 class SplashActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
 
+        if (intent.getBooleanExtra("silent", false)) {
+            thread {
+                if (Api.serverIsLocal() && ServerFile.serverExists()) {
+                    ServerService.start()
+                }
+                finish()
+            }
+            return
+        }
+
+        setContentView(R.layout.activity_splash)
         val infoLabel = findViewById<TextView>(R.id.textViewInfo)
         infoLabel.text = BuildConfig.VERSION_NAME
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
