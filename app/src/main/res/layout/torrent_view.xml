@@ -10,9 +10,10 @@
     <ImageView
         android:id="@+id/ivPoster"
         android:visibility="gone"
+        android:scaleType="fitCenter"
         android:paddingRight="5dp"
         android:layout_width="80dp"
-        android:layout_height="100dp" />
+        android:layout_height="120dp" />
 
     <LinearLayout
         android:orientation="vertical"
