@@ -232,9 +232,9 @@ class UpdaterActivity : AppCompatActivity() {
             }
 
             builderSingle.setAdapter(arrayAdapter) { dialog, which ->
-                try {
-                    dialog.dismiss()
-                    thread {
+                dialog.dismiss()
+                thread {
+                    try {
                         val rel = releases[which]
                         val arch = Updater.getArch()
                         val link = rel.Links["android-${arch}"]
@@ -262,13 +262,13 @@ class UpdaterActivity : AppCompatActivity() {
                         }
                         Thread.sleep(2000)
                         checkVersion()
-                    }
-                } catch (e: Exception) {
-                    Handler(Looper.getMainLooper()).post {
-                        val msg = "Error download server: " + (e.message ?: e.cause?.toString() ?: "")
-                        findViewById<TextView>(R.id.update_info).setText(msg)
-                        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-                        findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
+                    } catch (e: Exception) {
+                        Handler(Looper.getMainLooper()).post {
+                            val msg = "Error download server: " + (e.message ?: e.cause?.toString() ?: "")
+                            findViewById<TextView>(R.id.update_info).setText(msg)
+                            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                            findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
+                        }
                     }
                 }
             }
