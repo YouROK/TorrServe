@@ -267,6 +267,10 @@ class UpdaterActivity : AppCompatActivity() {
                             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
                             browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(browserIntent)
+                            Handler(Looper.getMainLooper()).post {
+                                findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
+                                findViewById<TextView>(R.id.update_info).setText("")
+                            }
                         } catch (e: Exception) {
                             Handler(Looper.getMainLooper()).post {
                                 val msg = "Error download server: " + (e.message ?: e.cause?.toString() ?: "")
