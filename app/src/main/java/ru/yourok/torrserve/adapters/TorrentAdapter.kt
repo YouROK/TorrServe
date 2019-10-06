@@ -71,20 +71,23 @@ class TorrentAdapter(private val activity: Activity) : BaseAdapter() {
         vi.findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
 
         if (info.isNotEmpty()) {
-            val gson = Gson()
-            val ent = gson.fromJson<Entity>(info, Entity::class.java)
+            try {
+                val gson = Gson()
+                val ent = gson.fromJson<Entity>(info, Entity::class.java)
 
-            ent?.let {
-                it.title?.let { name = it }
+                ent?.let {
+                    it.title?.let { name = it }
 
-                ent.poster_path?.let { poster ->
-                    if (poster.isNotEmpty())
-                        vi.findViewById<ImageView>(R.id.ivPoster)?.let {
-                            val picass = Picasso.get().load(poster).placeholder(R.color.lighter_gray).fit().centerCrop()
-                            picass.into(it)
-                            it.visibility = View.VISIBLE
-                        }
+                    ent.poster_path?.let { poster ->
+                        if (poster.isNotEmpty())
+                            vi.findViewById<ImageView>(R.id.ivPoster)?.let {
+                                val picass = Picasso.get().load(poster).placeholder(R.color.lighter_gray).fit().centerCrop()
+                                picass.into(it)
+                                it.visibility = View.VISIBLE
+                            }
+                    }
                 }
+            } catch (e: Exception) {
             }
         }
 
