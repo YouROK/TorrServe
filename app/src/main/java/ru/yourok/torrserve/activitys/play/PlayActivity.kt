@@ -146,7 +146,7 @@ class PlayActivity : AppCompatActivity() {
         } else {
             try {
                 val gson = Gson()
-                val ent = gson.toJson(info, Entity::class.java)
+                val ent = gson.fromJson<Entity>(info, Entity::class.java)
                 info = gson.toJson(ent)
             } catch (e: Exception) {
             }
