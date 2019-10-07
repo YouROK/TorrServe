@@ -14,11 +14,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_play.*
+import org.json.JSONObject
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.Ad
 import ru.yourok.torrserve.adapters.TorrentFilesAdapter
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.num.entity.Entity
 import ru.yourok.torrserve.player.PlayerActivity
 import ru.yourok.torrserve.preferences.Preferences
 import ru.yourok.torrserve.server.api.Api
@@ -134,12 +137,19 @@ class PlayActivity : AppCompatActivity() {
         showProgress(getString(R.string.connects_to_torrent))
 
         if (info.isEmpty() && (poster.isNotEmpty() || title.isNotEmpty())) {
-            val lines = mutableListOf<String>()
+            val js = JSONObject()
             if (poster.isNotEmpty())
-                lines.add(""""poster_path"="$poster"""")
+                js.put("poster_path", poster)
             if (title.isNotEmpty())
-                lines.add(""""title"="$title"""")
-            info = "{" + lines.joinToString(",") + "}"
+                js.put("title", title)
+            info = js.toString(0)
+        } else {
+            try {
+                val gson = Gson()
+                val ent = gson.toJson(info, Entity::class.java)
+                info = gson.toJson(ent)
+            } catch (e: Exception) {
+            }
         }
 
         val hash = Api.torrentAdd(torrLink, title, info, save)
