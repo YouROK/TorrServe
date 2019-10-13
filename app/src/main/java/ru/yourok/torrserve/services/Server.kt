@@ -81,20 +81,21 @@ class ServerService : Service() {
     }
 
     private fun stopServer() {
-        if (Api.serverIsLocal() && Api.serverEcho().isNotEmpty()) {
-            Api.serverShutdown()
-        }
-
-        ServerFile.stop()
-        Handler(this.getMainLooper()).post {
-            App.Toast(getString(R.string.server_stoped))
-        }
-        notification.doUnbindService(this)
         thread {
-            Thread.sleep(1000)
-            System.exit(0)
+            if (Api.serverIsLocal() && Api.serverEcho().isNotEmpty())
+                Api.serverShutdown()
+
+            ServerFile.stop()
+            Handler(this.getMainLooper()).post {
+                App.Toast(getString(R.string.server_stoped))
+            }
+            notification.doUnbindService(this)
+            thread {
+                Thread.sleep(1000)
+                System.exit(0)
+            }
+            stopSelf()
         }
-        stopSelf()
     }
 
     private fun restartServer() {
