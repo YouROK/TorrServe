@@ -53,6 +53,13 @@ class AppSettingsActivity : AppCompatActivity() {
             updateStats()
         }
 
+        btnRootServer.setOnClickListener {
+            var v = Preferences.isExecRootServer()
+            v = !v
+            Preferences.execRootServer(v)
+            updateStats()
+        }
+
         textViewVersion.text = ("YouROK " + getText(R.string.app_name) + " ${BuildConfig.VERSION_NAME}")
         updateStats()
     }
@@ -63,6 +70,11 @@ class AppSettingsActivity : AppCompatActivity() {
                 tvStatStartBoot.setText(R.string.start_server_on_boot)
             else
                 tvStatStartBoot.setText(R.string.dont_start_server_on_boot)
+
+            if (Preferences.isExecRootServer())
+                tvStatRootServer.setText(R.string.root_server_on)
+            else
+                tvStatRootServer.setText(R.string.root_server_off)
 
             val plist = Players.getList()
             plist.add(0, Player(getString(R.string.default_player), "0"))
@@ -82,6 +94,7 @@ class AppSettingsActivity : AppCompatActivity() {
                 tvStatAD.text = getText(R.string.ad_disabled)
             else
                 tvStatAD.text = getText(R.string.ad_enabled)
+
 
         }
     }

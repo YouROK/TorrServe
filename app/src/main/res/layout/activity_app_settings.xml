@@ -78,6 +78,23 @@
                 android:layout_height="30dp"
                 android:background="@android:color/transparent" />
 
+            <Button
+                android:id="@+id/btnRootServer"
+                android:text="@string/root_server"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvStatRootServer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent" />
+
             <TextView
                 android:layout_gravity="end"
                 android:id="@+id/textViewVersion"
