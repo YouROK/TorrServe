@@ -33,7 +33,6 @@ object ServerFile {
             return
         synchronized(lock) {
             if (shell == null) {
-                //TODO проверить
                 if (Preferences.isExecRootServer())
                     shell = Shell.su("${servPath.path} -k -d ${Path.getAppPath()}")
                 else
