@@ -49,8 +49,20 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:text="10.10.2001"
+                android:visibility="gone"
+                android:id="@+id/tvTorrDate"
+                android:paddingLeft="5dp"
+                android:singleLine="true"
+                android:layout_gravity="end|center_vertical"
+                android:layout_weight="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
                 android:text="5GB"
                 android:id="@+id/tvTorrSize"
+                android:paddingLeft="5dp"
                 android:singleLine="true"
                 android:layout_gravity="end|center_vertical"
                 android:layout_weight="0"
