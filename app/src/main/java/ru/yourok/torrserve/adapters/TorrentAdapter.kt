@@ -13,10 +13,13 @@ import android.widget.TextView
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.num.entity.Entity
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
 import ru.yourok.torrserve.utils.ByteFmt
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TorrentAdapter(private val activity: Activity) : BaseAdapter() {
@@ -33,29 +36,29 @@ class TorrentAdapter(private val activity: Activity) : BaseAdapter() {
                         }
                     }
                 }
-                return
-            }
-
-            val tmpList = Api.torrentList()
-            if (tmpList.size != torrList.size) {
-                synchronized(torrList) {
-                    torrList = tmpList
-                    Handler(Looper.getMainLooper()).post {
-                        notifyDataSetChanged()
-                    }
-                }
-            } else
-                tmpList.forEachIndexed { index, js ->
-                    if (js.toString() != torrList[index].toString()) {
-                        synchronized(torrList) {
-                            torrList = tmpList
-                            Handler(Looper.getMainLooper()).post {
-                                notifyDataSetChanged()
-                            }
+            } else {
+                val tmpList = Api.torrentList()
+                if (tmpList.size != torrList.size) {
+                    synchronized(torrList) {
+                        torrList = tmpList
+                        Handler(Looper.getMainLooper()).post {
+                            notifyDataSetChanged()
                         }
-                        return@forEachIndexed
                     }
-                }
+                } else
+                    tmpList.forEachIndexed { index, js ->
+                        if (js.toString() != torrList[index].toString()) {
+                            synchronized(torrList) {
+                                torrList = tmpList
+                                Handler(Looper.getMainLooper()).post {
+                                    notifyDataSetChanged()
+                                }
+                            }
+                            return@forEachIndexed
+                        }
+                    }
+            }
+            UpdaterCards.updateCards()
         } catch (e: Exception) {
         }
     }
@@ -67,6 +70,14 @@ class TorrentAdapter(private val activity: Activity) : BaseAdapter() {
         val magnet = torrList[position].get("Hash", "")
         val length = torrList[position].get("Length", 0L)
         val info = torrList[position].get("Info", "")
+        val addTime = torrList[position].get("AddTime", 0L)
+        var addStr = ""
+
+        if (addTime > 0) {
+            val sdf = SimpleDateFormat("dd.MM.yyyy")
+            sdf.setTimeZone(TimeZone.getDefault())
+            addStr = sdf.format(Date(addTime * 1000))
+        }
 
         vi.findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
 
@@ -78,7 +89,7 @@ class TorrentAdapter(private val activity: Activity) : BaseAdapter() {
                 ent?.let {
                     it.title?.let { name = it }
 
-                    ent.poster_path?.let { poster ->
+                    it.poster_path?.let { poster ->
                         if (poster.isNotEmpty())
                             vi.findViewById<ImageView>(R.id.ivPoster)?.let {
                                 val picass = Picasso.get().load(poster).placeholder(R.color.lighter_gray).fit().centerCrop()
@@ -93,6 +104,11 @@ class TorrentAdapter(private val activity: Activity) : BaseAdapter() {
 
         vi.findViewById<TextView>(R.id.tvTorrName)?.text = name
         vi.findViewById<TextView>(R.id.tvTorrMagnet)?.text = magnet.toUpperCase()
+        if (addStr.isNotEmpty()) {
+            vi.findViewById<TextView>(R.id.tvTorrDate)?.text = addStr
+            vi.findViewById<TextView>(R.id.tvTorrDate)?.visibility = View.VISIBLE
+        } else
+            vi.findViewById<TextView>(R.id.tvTorrDate)?.visibility = View.GONE
         vi.findViewById<TextView>(R.id.tvTorrSize)?.text = ByteFmt.byteFmt(length)
 
         return vi
