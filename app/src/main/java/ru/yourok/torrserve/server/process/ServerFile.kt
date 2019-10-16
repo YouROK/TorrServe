@@ -35,8 +35,11 @@ object ServerFile {
             if (shell == null) {
                 if (Preferences.isExecRootServer())
                     shell = Shell.su("${servPath.path} -k -d ${Path.getAppPath()}")
-                else
-                    shell = Shell.sh("${servPath.path} -k -d ${Path.getAppPath()}")
+                else {
+                    val sh = Shell.newInstance("sh")
+                    shell = sh.newJob()
+                    shell?.add("${servPath.path} -k -d ${Path.getAppPath()}")
+                }
                 shell?.let {
                     val callbackList = object : CallbackList<String>() {
                         override fun onAddElement(e: String?) {
@@ -54,15 +57,10 @@ object ServerFile {
 
     fun stop() {
         synchronized(lock) {
-            shell?.let {
-                it.add("killall -9 ${servPath.path}").submit()
-                shell = null
-            } ?: let {
-                if (Preferences.isExecRootServer())
-                    Shell.su("killall -9 ${servPath.path}")
-                else
-                    Shell.sh("killall -9 ${servPath.path}")
-            }
+            if (Preferences.isExecRootServer())
+                Shell.su("killall -9 ${servPath.path}")
+            else
+                Shell.sh("killall -9 ${servPath.path}")
         }
     }
 }
