@@ -21,6 +21,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.Ad
 import ru.yourok.torrserve.adapters.TorrentFilesAdapter
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.num.entity.Entity
 import ru.yourok.torrserve.player.PlayerActivity
 import ru.yourok.torrserve.preferences.Preferences
@@ -165,6 +166,7 @@ class PlayActivity : AppCompatActivity() {
             msg += getString(R.string.peers) + ": [" + connectedSeeders.toString() + "] " + activePeers.toString() + "/" + totalPeers.toString() + "\n"
             showProgress(msg, 0)
         }
+        UpdaterCards.updateCards()
         return Api.torrentGet(hash)
     }
 

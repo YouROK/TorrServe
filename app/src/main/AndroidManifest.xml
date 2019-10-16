@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ru.yourok.torrserve">
+
+    <uses-sdk tools:overrideLibrary="android.support.media.tv" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -53,7 +56,21 @@
         <service android:name=".services.ServerService" />
         <service android:name=".services.Notification" />
 
-        <activity android:name=".activitys.main.MainActivity">
+        <activity
+            android:name=".activitys.main.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="${applicationId}"
+                    android:pathPrefix="/open_main_list"
+                    android:scheme="torrserve" />
+            </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -72,6 +89,7 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:noHistory="true"
+            android:exported="true"
             android:theme="@style/MyDialog" />
         <activity android:name=".activitys.settings.AppSettingsActivity" />
         <activity android:name=".activitys.settings.ServerSettingsActivity" />

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.IBinder
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.serverloader.ServerFile
 import kotlin.concurrent.thread
@@ -77,6 +78,7 @@ class ServerService : Service() {
             if (ServerFile.serverExists() && Api.serverIsLocal() && Api.serverEcho().isEmpty()) {
                 ServerFile.run()
             }
+            UpdaterCards.updateCards()
         }
     }
 

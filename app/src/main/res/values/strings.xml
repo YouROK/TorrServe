@@ -17,6 +17,7 @@
     <string name="host">Хост</string>
 
     <string name="torrent">Торрент</string>
+    <string name="torrents">Торренты</string>
 
     <string name="server_addr">Адрес сервера</string>
     <string name="cache_size">Размер кэша (Мбайты)</string>
