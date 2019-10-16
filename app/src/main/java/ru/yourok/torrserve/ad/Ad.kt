@@ -80,11 +80,23 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                 return@thread
             }
 
-            while (!activity.isFinishing) {
-                lst.forEach {
-                    loadImg(it)
-                    Thread.sleep(5000)
+            try {
+                var currImg = 0
+                while (!activity.isFinishing) {
+                    val img = lst[currImg]
+                    loadImg(img)
+                    currImg++
+                    if (currImg >= lst.size)
+                        currImg = 0
+
+                    for (i in 0..100) {
+                        Thread.sleep(100)
+                        if (activity.isFinishing)
+                            break
+                    }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -117,6 +129,7 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                 pcs.into(iv)
             }
         }
+
     }
 
     private fun getJson(): AdJson? {

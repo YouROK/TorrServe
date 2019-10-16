@@ -1,6 +1,6 @@
 {
- "Name": "TorrServe",
- "Version": "1.1.80",
- "BuildDate": "07.10.2019",
- "Link": "https://github.com/YouROK/TorrServe/releases/download/1.1.80/TorrServe_1.1.80.apk"
+ "Name": "ru.yourok.torrserve",
+ "Version": "1.1.80_test",
+ "BuildDate": "16.10.2019",
+ "Link": "https://github.com/YouROK/TorrServe/releases/download/1.1.80_test/TorrServe_1.1.80_test.apk"
 }
