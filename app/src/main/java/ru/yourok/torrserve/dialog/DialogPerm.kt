@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
 import android.support.design.widget.Snackbar
@@ -27,13 +29,15 @@ object DialogPerm {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val packageName = activity.getPackageName()
-                val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
-                if (!pm.isIgnoringBatteryOptimizations(packageName)) {
-                    val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-                    if (intent.resolveActivity(activity.packageManager) != null)
-                        activity.startActivity(intent)
-                }
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val packageName = activity.getPackageName()
+                    val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
+                    if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                        val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                        if (intent.resolveActivity(activity.packageManager) != null)
+                            activity.startActivity(intent)
+                    }
+                }, 2000)
             }
         }
     }
