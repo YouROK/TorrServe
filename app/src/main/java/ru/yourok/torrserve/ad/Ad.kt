@@ -43,11 +43,7 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                             }
                         }
 
-                        val calendar = Calendar.getInstance()
-                        val day = calendar.get(Calendar.DAY_OF_WEEK)
-                        val forceShow = day == Calendar.FRIDAY || day == Calendar.SATURDAY || day == Calendar.SUNDAY
-
-                        if (Preferences.isDisableAD() && !forceShow) {
+                        if (Preferences.isDisableAD()) {
                             FirebaseAnalytics.getInstance(activity).logEvent("view_ad_disable", null)
                             return@thread
                         }
