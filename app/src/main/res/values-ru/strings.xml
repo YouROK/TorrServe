@@ -99,7 +99,7 @@
     <string name="error_open_torrent">Ошибка при открытии торрента</string>
     <string name="files_not_found">Файл в торренте не найден</string>
     <string name="error_retrieving_settings">Ошибка при получении настроек</string>
-    <string name="error_sending_settings">Ошибка при отправки настроек</string>
+    <string name="error_sending_settings">Ошибка при отправке настроек</string>
     <string name="error_server_start">Ошибка при запуске сервера</string>
 
     <string name="retrackers">Ретрекеры</string>
