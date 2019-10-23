@@ -20,11 +20,13 @@ import kotlin.concurrent.thread
 
 
 class Ad(private val iv: ImageView, private val activity: Activity) {
-    private val ad_base_hosts = listOf(
-            "https://yourok.github.io/TorrServePage",
-            "http://tor-serve.surge.sh",
-            "http://torr-serve.surge.sh"
-    )
+    companion object {
+        val base_hosts = listOf(
+                "https://yourok.github.io/TorrServePage",
+                "http://tor-serve.surge.sh",
+                "http://torr-serve.surge.sh"
+        )
+    }
 
     private var ad_base = ""
     private val lock = Any()
@@ -135,7 +137,7 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
     }
 
     private fun getJson(): AdJson? {
-        ad_base_hosts.forEach { host ->
+        base_hosts.forEach { host ->
             try {
                 var link = "$host/ad.json"
                 if (BuildConfig.DEBUG)
