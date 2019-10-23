@@ -20,7 +20,15 @@ import kotlin.concurrent.thread
 
 
 class Ad(private val iv: ImageView, private val activity: Activity) {
-    private val ad_base = "http://tor-serve.surge.sh"
+    companion object {
+        val base_hosts = listOf(
+                "https://yourok.github.io/TorrServePage",
+                "http://tor-serve.surge.sh",
+                "http://torr-serve.surge.sh"
+        )
+    }
+
+    private var ad_base = ""
     private val lock = Any()
 
     init {
@@ -28,10 +36,6 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
     }
 
     fun get() {
-        if (Preferences.isDisableAD()) {
-            FirebaseAnalytics.getInstance(activity).logEvent("view_ad_disable", null)
-            return
-        }
         synchronized(lock) {}
         thread {
             synchronized(lock) {
@@ -41,9 +45,17 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                         if (js.ad_expired != "0") {
                             val formatter = SimpleDateFormat("dd.MM.yyyy")
                             val date = formatter.parse(js.ad_expired) as Date
-                            if (date.time < System.currentTimeMillis())
+                            if (date.time < System.currentTimeMillis()) {
+                                Preferences.disableAD(false)
                                 return@thread
+                            }
                         }
+
+                        if (Preferences.isDisableAD()) {
+                            FirebaseAnalytics.getInstance(activity).logEvent("view_ad_disable", null)
+                            return@thread
+                        }
+
                         if (js.ad_link.isNotEmpty()) {
                             loadImages(js.ad_link)
                             FirebaseAnalytics.getInstance(activity).logEvent("view_ad", null)
@@ -72,11 +84,23 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                 return@thread
             }
 
-            while (!activity.isFinishing) {
-                lst.forEach {
-                    loadImg(it)
-                    Thread.sleep(5000)
+            try {
+                var currImg = 0
+                while (!activity.isFinishing) {
+                    val img = lst[currImg]
+                    loadImg(img)
+                    currImg++
+                    if (currImg >= lst.size)
+                        currImg = 0
+
+                    for (i in 0..100) {
+                        Thread.sleep(100)
+                        if (activity.isFinishing)
+                            break
+                    }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -109,21 +133,28 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                 pcs.into(iv)
             }
         }
+
     }
 
     private fun getJson(): AdJson? {
-        try {
-            var link = "$ad_base/ad.json"
-            if (BuildConfig.DEBUG)
-                link = "$ad_base/ad_test.json"
-            val http = Http(link)
-            val body = http.read()
+        base_hosts.forEach { host ->
+            try {
+                var link = "$host/ad.json"
+                if (BuildConfig.DEBUG)
+                    link = "$host/ad_test.json"
+                val body = getBody(link)
+                ad_base = host
+                return Gson().fromJson(body, AdJson::class.java)
+            } catch (e: Exception) {
+                e.printStackTrace()
 
-            val gson = Gson()
-            return gson.fromJson(body, AdJson::class.java)
-        } catch (e: Exception) {
-            e.printStackTrace()
+            }
         }
         return null
+    }
+
+    private fun getBody(link: String): String {
+        val http = Http(link)
+        return http.readTimeout(2)
     }
 }

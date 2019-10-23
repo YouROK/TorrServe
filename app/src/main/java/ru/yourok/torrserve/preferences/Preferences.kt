@@ -10,6 +10,14 @@ import ru.yourok.torrserve.app.App
 
 object Preferences {
 
+    fun isExecRootServer(): Boolean {
+        return get("ExecRootServer", false) as Boolean
+    }
+
+    fun execRootServer(v: Boolean) {
+        set("ExecRootServer", v)
+    }
+
     fun isDisableAD(): Boolean {
         return get("DisableAD", false) as Boolean
     }

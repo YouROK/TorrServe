@@ -42,7 +42,8 @@ object Players {
                     it.packageName == "com.niklabs.pp" || // prefect player
                     it.packageName == "com.lonelycoder.mediaplayer" || //movian
                     it.packageName == "com.semperpax.spmc" || //spmc
-                    it.packageName == "com.newin.nplayer.pro" // nPlayer
+                    it.packageName == "com.newin.nplayer.pro" || // nPlayer
+                    it.packageName == "com.zidoo.zdmc" // zdmc
 
         }
 

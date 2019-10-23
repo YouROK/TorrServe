@@ -44,18 +44,31 @@ object Torrent {
     }
 
     fun waitInfo(hash: String, onProgress: (stat: JSObject) -> Unit) {
+        var count = 0
         while (true) {
             try {
                 val stat = Api.torrentStat(hash)
                 val stTorr = stat.getInt("TorrentStatus", -1)
                 onProgress(stat)
-                if (stTorr != TorrentSTGettingInfo)
-                    break
+
+                if (stTorr != TorrentSTGettingInfo) {
+                    if (getFileStats(stat) > 0 || count > 9)
+                        break
+                    else
+                        count++
+                }
                 Thread.sleep(100)
             } catch (e: Exception) {
                 Thread.sleep(1000)
             }
         }
+    }
+
+    fun getFileStats(stat: JSObject): Int {
+        if (!stat.js.has("FileStats"))
+            return -1
+        val arr = stat.js.getJSONArray("FileStats")
+        return arr.length()
     }
 
     fun preload(torr: JSObject, file: JSObject, onProgress: (stat: JSObject) -> Unit, onError: (msg: String) -> Unit) {

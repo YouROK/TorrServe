@@ -1,9 +1,9 @@
 package ru.yourok.torrserve.activitys.updater
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.*
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -11,6 +11,7 @@ import android.widget.*
 import kotlinx.android.synthetic.main.activity_updater.*
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.dialog.DialogList
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.updater.Releases
@@ -21,29 +22,20 @@ import kotlin.concurrent.thread
 
 class UpdaterActivity : AppCompatActivity() {
 
-    val testVersion = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_updater)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !getPackageManager().canRequestPackageInstalls()) {
+            startActivity(Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES))
+            App.Toast(R.string.app_install_permissions, true)
+        }
 
         checkVersion()
 
         findViewById<Button>(R.id.download_apk_button).setOnClickListener {
             thread {
-                try {
-                    Updater.checkRemoteApk()
-                    val link = Updater.getJson(false, testVersion).getString("Link")
-                    if (link.isNotEmpty()) {
-                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-                        browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(browserIntent)
-                    }
-                } catch (e: Exception) {
-                    Handler(Looper.getMainLooper()).post {
-                        textViewApkUpdate.text = e.message ?: "Error check version"
-                    }
-                }
+                installApk()
             }
         }
 
@@ -75,7 +67,7 @@ class UpdaterActivity : AppCompatActivity() {
         }
     }
 
-    fun checkVersion() {
+    private fun checkVersion() {
         Handler(Looper.getMainLooper()).post {
             findViewById<ProgressBar>(R.id.progress_bar).visibility = View.VISIBLE
             findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
@@ -89,7 +81,7 @@ class UpdaterActivity : AppCompatActivity() {
                     Updater.checkRemoteApk()
                     Handler(Looper.getMainLooper()).post {
                         try {
-                            textViewApkUpdate.text = ("${getString(R.string.update)} Apk:" + Updater.getJson(false, testVersion).getString("Version"))
+                            textViewApkUpdate.text = ("${getString(R.string.update)} Apk:" + Updater.getJson(false).getString("Version"))
                         } catch (e: Exception) {
                             textViewApkUpdate.text = e.message ?: "Error get version"
                         }
@@ -118,10 +110,10 @@ class UpdaterActivity : AppCompatActivity() {
 
             val thr = thread {
                 try {
-                    Updater.checkRemoteServer(testVersion)
+                    Updater.checkRemoteServer()
                     Handler(Looper.getMainLooper()).post {
                         try {
-                            textViewServerUpdate.text = ("${getString(R.string.update)} Server :" + Updater.getJson(true, testVersion).getString("Version"))
+                            textViewServerUpdate.text = ("${getString(R.string.update)} Server :" + Updater.getJson(true).getString("Version"))
                         } catch (e: Exception) {
                             textViewServerUpdate.text = e.message ?: "Error get version"
                         }
@@ -141,35 +133,85 @@ class UpdaterActivity : AppCompatActivity() {
         }
     }
 
-    fun installRemotly() {
+    private fun installApk() {
         showProgress(true, getString(R.string.downloading))
-
         try {
-            Updater.updateServerRemote(testVersion) { prc ->
+            Updater.updateApkRemote({ prc ->
                 Handler(Looper.getMainLooper()).post {
+                    findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = false
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                         findViewById<ProgressBar>(R.id.progress_bar).setProgress(prc, true)
                     else
-                        findViewById<ProgressBar>(R.id.progress_bar).setProgress(prc)
+                        findViewById<ProgressBar>(R.id.progress_bar).progress = prc
                 }
-            }
+            }, { apk ->
+                apk?.let {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                        val uri = Uri.parse("file://${it.path}")
+                        val install = Intent(Intent.ACTION_VIEW)
+                        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        install.setDataAndType(uri, "application/vnd.android.package-archive")
+                        App.getContext().startActivity(install)
+                    } else {
+                        val fileUri = FileProvider.getUriForFile(
+                                App.getContext(),
+                                BuildConfig.APPLICATION_ID + ".provider",
+                                it
+                        )
+                        val install = Intent(Intent.ACTION_VIEW, fileUri)
+                        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        install.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        App.getContext().startActivity(install)
+                    }
+                }
+            })
             Handler(Looper.getMainLooper()).post {
                 findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
-                findViewById<TextView>(R.id.update_info).setText("")
+                findViewById<TextView>(R.id.update_info).text = ""
             }
             Thread.sleep(2000)
             checkVersion()
         } catch (e: Exception) {
             Handler(Looper.getMainLooper()).post {
                 val msg = "Error download server: " + (e.message ?: "")
-                findViewById<TextView>(R.id.update_info).setText(msg)
+                findViewById<TextView>(R.id.update_info).text = msg
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                 findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
             }
         }
     }
 
-    fun installCustom() {
+    private fun installRemotly() {
+        showProgress(true, getString(R.string.downloading))
+
+        try {
+            Updater.updateServerRemote { prc ->
+                Handler(Looper.getMainLooper()).post {
+                    findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = false
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        findViewById<ProgressBar>(R.id.progress_bar).setProgress(prc, true)
+                    else
+                        findViewById<ProgressBar>(R.id.progress_bar).progress = prc
+                }
+            }
+            Handler(Looper.getMainLooper()).post {
+                findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
+                findViewById<TextView>(R.id.update_info).text = ""
+            }
+            Thread.sleep(2000)
+            checkVersion()
+        } catch (e: Exception) {
+            Handler(Looper.getMainLooper()).post {
+                val msg = "Error download server: " + (e.message ?: "")
+                findViewById<TextView>(R.id.update_info).text = msg
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
+            }
+        }
+    }
+
+    private fun installCustom() {
         try {
             showProgress(true, "")
 
@@ -181,21 +223,21 @@ class UpdaterActivity : AppCompatActivity() {
                 arrayAdapter.add(it.Version)
             }
 
-            builderSingle.setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which ->
+            builderSingle.setNegativeButton(android.R.string.cancel) { dialog, which ->
                 dialog.dismiss()
-            })
+            }
 
             builderSingle.setOnCancelListener {
                 showProgress(false, "")
             }
 
-            builderSingle.setAdapter(arrayAdapter, DialogInterface.OnClickListener { dialog, which ->
-                try {
-                    dialog.dismiss()
-                    thread {
-                        val rel = releases[which]
-                        val arch = Updater.getArch()
-                        val link = rel.Links["android-${arch}"]
+            builderSingle.setAdapter(arrayAdapter) { dialog, which ->
+                dialog.dismiss()
+                thread {
+                    val rel = releases[which]
+                    val arch = Updater.getArch()
+                    val link = rel.Links["android-${arch}"]
+                    try {
                         if (link == null) {
                             showProgress(false, getString(R.string.warn_error_download_server))
                             return@thread
@@ -220,16 +262,26 @@ class UpdaterActivity : AppCompatActivity() {
                         }
                         Thread.sleep(2000)
                         checkVersion()
-                    }
-                } catch (e: Exception) {
-                    Handler(Looper.getMainLooper()).post {
-                        val msg = "Error download server: " + (e.message ?: e.cause?.toString() ?: "")
-                        findViewById<TextView>(R.id.update_info).setText(msg)
-                        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-                        findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
+                    } catch (e: Exception) {
+                        try {
+                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+                            browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(browserIntent)
+                            Handler(Looper.getMainLooper()).post {
+                                findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
+                                findViewById<TextView>(R.id.update_info).setText("")
+                            }
+                        } catch (e: Exception) {
+                            Handler(Looper.getMainLooper()).post {
+                                val msg = "Error download server: " + (e.message ?: e.cause?.toString() ?: "")
+                                findViewById<TextView>(R.id.update_info).setText(msg)
+                                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                                findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
+                            }
+                        }
                     }
                 }
-            })
+            }
 
             Handler(Looper.getMainLooper()).post {
                 builderSingle.show()

@@ -3,6 +3,7 @@ package ru.yourok.torrserve.serverloader
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
+import android.os.Environment
 import android.support.design.widget.Snackbar
 import org.json.JSONObject
 import ru.yourok.torrserve.BuildConfig
@@ -21,7 +22,6 @@ import kotlin.concurrent.thread
 object Updater {
     private var serverJS: JSONObject = JSONObject()
     private var apkJS: JSONObject = JSONObject()
-    private var testJS: JSONObject = JSONObject()
     private var currServerVersion: String = ""
 
     private var lastCheckServer: Long = 0
@@ -29,7 +29,6 @@ object Updater {
 
     private val apkRelease = "https://raw.githubusercontent.com/YouROK/TorrServe/master/release.json"
     private val serverRelease = "https://raw.githubusercontent.com/YouROK/TorrServer/master/release.json"
-    private val serverTest = "https://raw.githubusercontent.com/YouROK/TorrServer/master/test.json"
 
     fun checkLocalVersion() {
         if (!ServerFile.serverExists())
@@ -43,12 +42,9 @@ object Updater {
         }
     }
 
-    fun getJson(server: Boolean, test: Boolean = false): JSONObject {
+    fun getJson(server: Boolean): JSONObject {
         if (server) {
-            if (!test)
-                return serverJS
-            else
-                return testJS
+            return serverJS
         } else
             return apkJS
     }
@@ -65,20 +61,15 @@ object Updater {
         return null
     }
 
-    fun checkRemoteServer(test: Boolean = false): Boolean {
+    fun checkRemoteServer(): Boolean {
         if (System.currentTimeMillis() - lastCheckServer < 60000)
             return true
 
-        var url = serverRelease
-        if (test)
-            url = serverTest
+        val url = serverRelease
 
         val js = getRemoteJS(url)
         js?.let {
-            if (!test)
-                serverJS = it
-            else
-                testJS = it
+            serverJS = it
             lastCheckServer = System.currentTimeMillis()
             return true
         }
@@ -89,7 +80,7 @@ object Updater {
         if (System.currentTimeMillis() - lastCheckApk < 60000)
             return true
 
-        var url = apkRelease
+        val url = apkRelease
 
         val js = getRemoteJS(url)
         js?.let {
@@ -100,19 +91,59 @@ object Updater {
         return false
     }
 
-    fun updateServerRemote(test: Boolean = false, onProgress: ((prc: Int) -> Unit)?) {
+    fun updateApkRemote(onProgress: ((prc: Int) -> Unit)?, onFinish: ((file: File?) -> Unit)?) {
+        if (!checkRemoteApk())
+            throw IOException("error check remote version")
+
+        val url = getJson(false).getString("Link")
+        val http = Http(url)
+        http.getEntity().apply {
+            this ?: throw IOException("error get apk: $url")
+            content ?: throw IOException("error get apk: $url")
+
+            val apkFile = File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    "TorrServe.apk")
+
+            apkFile.delete()
+
+            FileOutputStream(apkFile).use { fileOut ->
+                if (onProgress == null)
+                    content.copyTo(fileOut)
+                else {
+                    val buffer = ByteArray(65535)
+                    val length = contentLength + 1
+                    var offset: Long = 0
+                    while (true) {
+                        val readed = content.read(buffer)
+                        offset += readed
+                        val prc = (offset * 100 / length).toInt()
+                        onProgress(prc)
+                        if (readed <= 0)
+                            break
+                        fileOut.write(buffer, 0, readed)
+                    }
+                    fileOut.flush()
+                }
+                fileOut.flush()
+                fileOut.close()
+                onFinish?.invoke(apkFile)
+                return
+            }
+        }
+        onFinish?.invoke(null)
+    }
+
+    fun updateServerRemote(onProgress: ((prc: Int) -> Unit)?) {
         val arch = getArch()
         if (arch.isEmpty())
             throw IOException("error get arch")
 
-        if (!checkRemoteServer(test))
+        if (!checkRemoteServer())
             throw IOException("error check remote version")
 
         val url: String
-        if (!test)
-            url = serverJS.getJSONObject("Links").getString("android-${arch}")
-        else
-            url = testJS.getJSONObject("Links").getString("android-${arch}")
+        url = serverJS.getJSONObject("Links").getString("android-${arch}")
 
         val http = Http(url)
         http.getEntity().apply {

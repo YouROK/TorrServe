@@ -25,6 +25,7 @@ import ru.yourok.torrserve.activitys.splash.SplashActivity
 import ru.yourok.torrserve.activitys.updater.UpdaterActivity
 import ru.yourok.torrserve.adapters.TorrentAdapter
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.dialog.DialogInputList
 import ru.yourok.torrserve.dialog.DialogPerm
 import ru.yourok.torrserve.dialog.Donate
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         if (!isSplash) {
             startActivityForResult(Intent(this, SplashActivity::class.java), 22)
             isSplash = true
+        } else {
+            UpdaterCards.updateCards()
         }
 
         setupNavigator()

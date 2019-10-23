@@ -10,15 +10,20 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_play.*
+import org.json.JSONObject
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.Ad
 import ru.yourok.torrserve.adapters.TorrentFilesAdapter
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.channels.UpdaterCards
+import ru.yourok.torrserve.num.entity.Entity
 import ru.yourok.torrserve.player.PlayerActivity
 import ru.yourok.torrserve.preferences.Preferences
 import ru.yourok.torrserve.server.api.Api
@@ -34,6 +39,8 @@ import kotlin.concurrent.thread
 class PlayActivity : AppCompatActivity() {
 
     private var title = ""
+    private var poster = ""
+    private var info = ""
     private var torrLink = ""
     private var torrent: JSObject? = null
     private var isClosed = false
@@ -56,7 +63,7 @@ class PlayActivity : AppCompatActivity() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         val attr = window.attributes
-        attr.width = (resources.displayMetrics.widthPixels * 0.80).toInt()
+        attr.width = (resources.displayMetrics.widthPixels * 0.90).toInt()
         window.attributes = attr
 
         if (intent == null) {
@@ -76,8 +83,12 @@ class PlayActivity : AppCompatActivity() {
         if (intent.hasExtra("DontPlay"))
             play = false
 
+        if (intent.hasExtra("Poster"))
+            poster = intent.getStringExtra("Poster")
         if (intent.hasExtra("Title"))
             title = intent.getStringExtra("Title")
+        if (intent.hasExtra("Info"))
+            info = intent.getStringExtra("Info")
 
         thread {
             try {
@@ -126,7 +137,24 @@ class PlayActivity : AppCompatActivity() {
 
     private fun addTorrent(): JSObject {
         showProgress(getString(R.string.connects_to_torrent))
-        val hash = Api.torrentAdd(torrLink, title, "", save)
+
+        if (info.isEmpty() && (poster.isNotEmpty() || title.isNotEmpty())) {
+            val js = JSONObject()
+            if (poster.isNotEmpty())
+                js.put("poster_path", poster)
+            if (title.isNotEmpty())
+                js.put("title", title)
+            info = js.toString(0)
+        } else {
+            try {
+                val gson = Gson()
+                val ent = gson.fromJson<Entity>(info, Entity::class.java)
+                info = gson.toJson(ent)
+            } catch (e: Exception) {
+            }
+        }
+
+        val hash = Api.torrentAdd(torrLink, title, info, save)
         ServerService.notificationSetHash(hash)
         Torrent.waitInfo(hash) {
             val activePeers = it.getInt("ActivePeers", 0)
@@ -139,6 +167,7 @@ class PlayActivity : AppCompatActivity() {
             msg += getString(R.string.peers) + ": [" + connectedSeeders.toString() + "] " + activePeers.toString() + "/" + totalPeers.toString() + "\n"
             showProgress(msg, 0)
         }
+        UpdaterCards.updateCards()
         return Api.torrentGet(hash)
     }
 
@@ -157,14 +186,13 @@ class PlayActivity : AppCompatActivity() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this@PlayActivity)
                 if (lastPlayed > 0)
-                    layoutManager.scrollToPosition(lastPlayed)
+                    setFocusItem(lastPlayed)
                 adapter = TorrentFilesAdapter(files) {
                     showProgress(getString(R.string.buffering) + "...")
                     thread {
                         play(torr, it)
                     }
                 }
-                requestFocus()
                 addItemDecoration(DividerItemDecoration(this@PlayActivity, LinearLayout.VERTICAL))
             }
         }
@@ -198,10 +226,6 @@ class PlayActivity : AppCompatActivity() {
 
         if (!isClosed) {
 
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, torr.toString())
-            firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SEARCH, bundle)
-
             ad?.waitAd()
 
             val link = file.getString("Link", "")
@@ -231,8 +255,6 @@ class PlayActivity : AppCompatActivity() {
                     return
                 }
             }
-
-
 
             if (pkg.isNotEmpty() and !pkg.equals("0") and !pkg.equals("1")) {
                 intent.`package` = pkg
@@ -278,6 +300,17 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
+    private fun setFocusItem(pos: Int) {
+        Handler(Looper.getMainLooper()).post {
+            findViewById<RecyclerView>(R.id.rvFileList)?.apply {
+                layoutManager.scrollToPosition(pos)
+                postDelayed({
+                    findViewHolderForAdapterPosition(pos)?.itemView?.requestFocus()
+                }, 500)
+            }
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         if (isClosed) {
@@ -294,7 +327,6 @@ class PlayActivity : AppCompatActivity() {
             }
         }
     }
-
 
     override fun finish() {
         ad?.waitAd()

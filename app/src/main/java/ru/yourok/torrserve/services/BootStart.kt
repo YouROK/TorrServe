@@ -11,6 +11,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
         if (Preferences.isAutoStart()) {
             val intent = Intent(context, SplashActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("silent", true)
             context.startActivity(intent)
 //            val intent = Intent(context, ServerService::class.java)
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)

@@ -16,8 +16,8 @@ android {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 76
-        versionName "1.1.76"
+        versionCode 82
+        versionName "1.1.82"
     }
 //    signingConfigs {
 //        release {
@@ -46,8 +46,9 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
-    lintOptions {
-        abortOnError false
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -57,6 +58,9 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
+
+    implementation 'com.android.support:support-tv-provider:27.1.1'
+
 
     // ExoPlayer v2
     implementation "com.google.android.exoplayer:exoplayer-core:2.8.4"
@@ -74,10 +78,14 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation 'com.google.firebase:firebase-core:16.0.9'
+
+    //Root
+    implementation "com.github.topjohnwu.libsu:core:2.5.1"
 }
 
 repositories {
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 class WriteVersion implements Plugin<Project> {

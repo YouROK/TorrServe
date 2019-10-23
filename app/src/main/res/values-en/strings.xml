@@ -99,20 +99,20 @@
     <string name="error_open_torrent">Ошибка при открытии торрента</string>
     <string name="files_not_found">Файл в торренте не найден</string>
     <string name="error_retrieving_settings">Ошибка при получении настроек</string>
-    <string name="error_sending_settings">Ошибка при отправки настроек</string>
-    <string name="error_server_start">Ошибка при запуске сервера</string>
+    <string name="error_sending_settings">Error when send settings</string>
+    <string name="error_server_start">Error when start server</string>
 
-    <string name="retrackers">Ретрекеры</string>
+    <string name="retrackers">Retrackers</string>
     <string-array name="retracker_mode">
-        <item>Ничего не делать</item>
-        <item>Добавлять ретрекеры</item>
-        <item>Удалять ретрекеры</item>
-        <item>Заменить ретрекеры</item>
+        <item>Default</item>
+        <item>Add retrackers</item>
+        <item>Remove retrackers</item>
+        <item>Replace retrackers</item>
     </string-array>
 
     <string-array name="encryption_mode">
-        <item>Включено</item>
-        <item>Отключено</item>
-        <item>Принудительно</item>
+        <item>Enabled</item>
+        <item>Disabled</item>
+        <item>Force</item>
     </string-array>
 </resources>
