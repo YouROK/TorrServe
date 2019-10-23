@@ -193,7 +193,6 @@ class PlayActivity : AppCompatActivity() {
                         play(torr, it)
                     }
                 }
-                requestFocus()
                 addItemDecoration(DividerItemDecoration(this@PlayActivity, LinearLayout.VERTICAL))
             }
         }
