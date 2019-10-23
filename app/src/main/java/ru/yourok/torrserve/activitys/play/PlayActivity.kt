@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -185,7 +186,7 @@ class PlayActivity : AppCompatActivity() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this@PlayActivity)
                 if (lastPlayed > 0)
-                    layoutManager.scrollToPosition(lastPlayed)
+                    setFocusItem(lastPlayed)
                 adapter = TorrentFilesAdapter(files) {
                     showProgress(getString(R.string.buffering) + "...")
                     thread {
@@ -297,6 +298,17 @@ class PlayActivity : AppCompatActivity() {
             list.visibility = View.VISIBLE
             tvStatus.text = ""
             progressBar.isIndeterminate = true
+        }
+    }
+
+    private fun setFocusItem(pos: Int) {
+        Handler(Looper.getMainLooper()).post {
+            findViewById<RecyclerView>(R.id.rvFileList)?.apply {
+                layoutManager.scrollToPosition(pos)
+                postDelayed({
+                    findViewHolderForAdapterPosition(pos)?.itemView?.requestFocus()
+                }, 500)
+            }
         }
     }
 
