@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.server.updater
 
 import org.json.JSONArray
+import ru.yourok.torrserve.ad.Ad
 import ru.yourok.torrserve.serverloader.ServerFile
 import ru.yourok.torrserve.serverloader.Updater
 import ru.yourok.torrserve.utils.Http
@@ -11,26 +12,29 @@ data class Release(val Version: String, val Links: Map<String, String>)
 
 object Releases {
     fun get(): List<Release> {
-        val strJS = Http("http://tor-serve.surge.sh/releases.json").read()
-        if (strJS.isNotEmpty()) {
-            val js = JSONArray(strJS)
-            val ret = mutableListOf<Release>()
-            for (i in 0 until js.length()) {
-                val relJs = js.getJSONObject(i)
-                val ver = relJs.optString("Version", "")
-                val linksJs = relJs.getJSONObject("Links")
-                val links = mutableMapOf<String, String>()
-                for (i in 0 until linksJs.names().length()) {
-                    val key = linksJs.names().getString(i)
-                    val v = linksJs.getString(key)
-                    links[key] = v
-                }
 
-                if (ver.isNotEmpty() && links != null) {
-                    ret.add(Release(ver, links))
+        Ad.base_hosts.forEach { host ->
+            val strJS = Http("${host}/releases.json").read()
+            if (strJS.isNotEmpty()) {
+                val js = JSONArray(strJS)
+                val ret = mutableListOf<Release>()
+                for (i in 0 until js.length()) {
+                    val relJs = js.getJSONObject(i)
+                    val ver = relJs.optString("Version", "")
+                    val linksJs = relJs.getJSONObject("Links")
+                    val links = mutableMapOf<String, String>()
+                    for (i in 0 until linksJs.names().length()) {
+                        val key = linksJs.names().getString(i)
+                        val v = linksJs.getString(key)
+                        links[key] = v
+                    }
+
+                    if (ver.isNotEmpty() && links != null) {
+                        ret.add(Release(ver, links))
+                    }
                 }
+                return ret
             }
-            return ret
         }
         return emptyList()
     }
