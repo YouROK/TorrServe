@@ -7,8 +7,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 def freeKeystorePropertiesFile = rootProject.file("free.property")
-def freeProperties = new Properties()
-freeProperties.load(new FileInputStream(freeKeystorePropertiesFile))
+// def freeProperties = new Properties()
+// freeProperties.load(new FileInputStream(freeKeystorePropertiesFile))
 
 android {
     compileSdkVersion 27
@@ -19,18 +19,18 @@ android {
         versionCode 76
         versionName "1.1.76"
     }
-    signingConfigs {
-        release {
-            keyAlias freeProperties['keyAlias']
-            keyPassword freeProperties['keyPassword']
-            storeFile rootProject.file(freeProperties['storeFile'])
-            storePassword freeProperties['storePassword']
-        }
-    }
+//    signingConfigs {
+//        release {
+//            keyAlias freeProperties['keyAlias']
+//            keyPassword freeProperties['keyPassword']
+//            storeFile rootProject.file(freeProperties['storeFile'])
+//            storePassword freeProperties['storePassword']
+//        }
+//    }
     buildTypes {
         release {
             minifyEnabled false
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationVariants.all { variant ->
                 variant.outputs.all {
@@ -45,6 +45,9 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -104,4 +107,4 @@ class WriteVersion implements Plugin<Project> {
 }
 
 apply plugin: WriteVersion
-apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'com.google.gms.google-services'
