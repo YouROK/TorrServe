@@ -20,7 +20,13 @@ import kotlin.concurrent.thread
 
 
 class Ad(private val iv: ImageView, private val activity: Activity) {
-    private val ad_base = "http://tor-serve.surge.sh"
+    private val ad_base_hosts = listOf(
+            "https://yourok.github.io/TorrServePage",
+            "http://tor-serve.surge.sh",
+            "http://torr-serve.surge.sh"
+    )
+
+    private var ad_base = ""
     private val lock = Any()
 
     init {
@@ -129,18 +135,24 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
     }
 
     private fun getJson(): AdJson? {
-        try {
-            var link = "$ad_base/ad.json"
-            if (BuildConfig.DEBUG)
-                link = "$ad_base/ad_test.json"
-            val http = Http(link)
-            val body = http.read()
+        ad_base_hosts.forEach { host ->
+            try {
+                var link = "$host/ad.json"
+                if (BuildConfig.DEBUG)
+                    link = "$host/ad_test.json"
+                val body = getBody(link)
+                ad_base = host
+                return Gson().fromJson(body, AdJson::class.java)
+            } catch (e: Exception) {
+                e.printStackTrace()
 
-            val gson = Gson()
-            return gson.fromJson(body, AdJson::class.java)
-        } catch (e: Exception) {
-            e.printStackTrace()
+            }
         }
         return null
+    }
+
+    private fun getBody(link: String): String {
+        val http = Http(link)
+        return http.readTimeout(2)
     }
 }
