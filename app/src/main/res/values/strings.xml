@@ -70,7 +70,7 @@
     <string name="downloading">Downloading...</string>
 
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
-    <string name="permission_btn">РАЗРЕШИТЬ</string>
+    <string name="permission_btn">GRANT</string>
 
     <string name="crash_app">"Ups... Something goes wrong,\nBut don't worry, you can send a bug report to the developer so that he fixes it as soon as possible."</string>
 
