@@ -16,3 +16,5 @@ free.property
 TODO
 dist/
 app/google-services.json
+
+*.bbprojectd

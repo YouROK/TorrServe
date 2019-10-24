@@ -20,8 +20,8 @@
     <string name="torrents">Торренты</string>
 
     <string name="server_addr">Адрес сервера</string>
-    <string name="cache_size">Размер кэша (Мбайты)</string>
-    <string name="preload_buffer_size">Размер буфера предварительной загрузки (Мбайты)</string>
+    <string name="cache_size">Размер кэша (Мегабайты)</string>
+    <string name="preload_buffer_size">Размер буфера предварительной загрузки (Мегабайты)</string>
     <string name="read_ahead_prc">Упреждающее чтение %</string>
     <string name="disable_tcp">Отключить TCP</string>
     <string name="disable_utp">Отключить UTP (рекомендуется на слабых устройствах)</string>
@@ -42,7 +42,7 @@
     <string name="ad_disabled">Реклама отключена</string>
     <string name="ad_enabled">Реклама включена</string>
     <string name="root_server">Запускать сервер от рута</string>
-    <string name="root_server_on">Запускать сервер от рута чтобы система не могла убить его (требуется рут)</string>
+    <string name="root_server_on">Запускать сервер от рута, чтобы система не могла убить его (требуется root-доступ)</string>
     <string name="root_server_off">Не запускать сервер от рута</string>
 
     <string name="add_play">Добавить и играть</string>
@@ -99,20 +99,20 @@
     <string name="error_open_torrent">Ошибка при открытии торрента</string>
     <string name="files_not_found">Файл в торренте не найден</string>
     <string name="error_retrieving_settings">Ошибка при получении настроек</string>
-    <string name="error_sending_settings">Error when send settings</string>
-    <string name="error_server_start">Error when start server</string>
+    <string name="error_sending_settings">Ошибка при отправке настроек</string>
+    <string name="error_server_start">Ошибка при запуске сервера</string>
 
-    <string name="retrackers">Retrackers</string>
+    <string name="retrackers">Ретрекеры</string>
     <string-array name="retracker_mode">
-        <item>Default</item>
-        <item>Add retrackers</item>
-        <item>Remove retrackers</item>
-        <item>Replace retrackers</item>
+        <item>Ничего не делать</item>
+        <item>Добавлять ретрекеры</item>
+        <item>Удалять ретрекеры</item>
+        <item>Заменить ретрекеры</item>
     </string-array>
 
     <string-array name="encryption_mode">
-        <item>Enabled</item>
-        <item>Disabled</item>
-        <item>Force</item>
+        <item>Включено</item>
+        <item>Отключено</item>
+        <item>Принудительно</item>
     </string-array>
 </resources>
