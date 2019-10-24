@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">TorrServe</string>
+
+    <string name="add">Додати</string>
+    <string name="delete">Видалити</string>
+    <string name="remove_all">Видалити все</string>
+    <string name="playlist">Плейлист</string>
+    <string name="donate">Пожертва</string>
+    <string name="update">Оновлення</string>
+    <string name="settings">Налаштування</string>
+    <string name="exit">Вихід</string>
+    <string name="restart_server">Перезавантажити локальний сервер</string>
+
+    <string name="share">Поділитися</string>
+    <string name="copy">Копіювати</string>
+    <string name="send">Відправити</string>
+    <string name="host">Хост</string>
+
+    <string name="torrent">Торент</string>
+    <string name="torrents">Торенти</string>
+
+    <string name="server_addr">Адреса серверу</string>
+    <string name="cache_size">Размір кешу (Мбайти)</string>
+    <string name="preload_buffer_size">Размір буферу попереднього завантаження (Мбайти)</string>
+    <string name="read_ahead_prc">Попереднє читання %</string>
+    <string name="disable_tcp">Вимкнути TCP</string>
+    <string name="disable_utp">Вимкнути UTP (рекомендується на слабких пристроях)</string>
+    <string name="disable_upnp">Вимкнути UPNP</string>
+    <string name="disable_dht">Вимкнути DHT</string>
+    <string name="disable_upload">Вимкнути роздачу</string>
+    <string name="ecnryption">Кодування</string>
+    <string name="connections_limit">З\'єднань на торент (20-25 рекомендується на всіх Android пристроях)</string>
+    <string name="connections_dht_limit">Ліміт з\'єднань DHT (0-не обмежено, на версіях до 70-ї без обмежень)</string>
+    <string name="download_rate_limit">Обмеження швидкості завантаження (Кілобайти, 0-необмежено)</string>
+    <string name="upload_rate_limit">Обмеження швидкості віддачі (Кілобайти, 0-необмежено)</string>
+
+    <string name="server_settings">Налаштування серверу</string>
+    <string name="start_server_on_boot">Запускати при старті ОС</string>
+    <string name="dont_start_server_on_boot">Не запускати при старті ОС</string>
+    <string name="select_player">Вибрати плеєр</string>
+    <string name="disable_ad">Вимкнути рекламу</string>
+    <string name="ad_disabled">Реклама вимкнена</string>
+    <string name="ad_enabled">Реклама ввімкнена</string>
+    <string name="root_server">Запустити сервер від рут</string>
+    <string name="root_server_on">Запустити сервер від рут щоб система не змогла вбити його (потрібний рут)</string>
+    <string name="root_server_off">Не запускати сервер від рут</string>
+
+    <string name="add_play">Додати і грати</string>
+    <string name="play">Грати</string>
+
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+
+    <string name="default_player">Плеєр по замовчуванню</string>
+    <string name="choose_player">Вибір плеєра</string>
+    <string name="inner_player">Вбудований плеєр</string>
+
+    <string name="donate_msg">Ваша пожертва допоможе мені розвиватися дальше, покращувати програму і створювати нові</string>
+    <string name="paypal" translatable="false">PayPal</string>
+    <string name="yandex_money" translatable="false">Yandex.Гроші</string>
+
+    <string name="found_new_version">Знайдена нова версія</string>
+    <string name="install_apk">Встановити apk</string>
+    <string name="install_last_server_remotly">Встановити останню версію серверу</string>
+    <string name="install_custom_server_remotly">Встановити бажану версію серверу</string>
+    <string name="install_server_localy">Встановити сервер з папки Download</string>
+    <string name="version">Версія</string>
+    <string name="current_version_apk">Встановлена версія Apk</string>
+    <string name="current_version_server">Встановлена версія Server</string>
+    <string name="downloading">Завантаження...</string>
+
+    <string name="permission_storage_msg">Потрібний доступ до пам\'яті для запису налаштувань в файл</string>
+    <string name="permission_btn">ДОЗВОЛИТИ</string>
+
+    <string name="crash_app">"Ооооой... В мені виникла помилка,\nАле не хвилюйтесь, Ви можете відправити звіт про помилку розробнику, щоб він її поскоріше виправив."</string>
+
+    <string name="connects_to_torrent">Отримання інформації торенту</string>
+
+    <string name="buffering">Буферизація</string>
+    <string name="buffer">Буфер</string>
+    <string name="peers">Піри</string>
+    <string name="download_speed">Швидкість завантаження</string>
+    <string name="upload_speed">Швидкість віддачі</string>
+
+    <string name="copy_to_clipboard">Скопійовано в буфер обміну</string>
+    <string name="connecting_to_server">З\'єднання з сервером...</string>
+    <string name="stat_server_is_running">Сервер запущений</string>
+    <string name="server_stoped">Сервер зупинений</string>
+    <string name="server_not_responding">Сервер не відповідає</string>
+    <string name="server_not_exists">Сервер відсутній</string>
+
+    <string name="app_install_permissions">Додатку TorrServe потрібні права на встановлення додатків для оновлення самого себе</string>
+
+    <string name="warn_error_download_server">Помилка завантаження серверу</string>
+    <string name="warn_no_localy_updates">Немає локальних оновлень</string>
+
+    <string name="error_add_torrent">Помилка при додаванні торенту</string>
+    <string name="error_remove_torrent">Помилка при видаленні торенту</string>
+    <string name="error_open_torrent">Помилка при відкритті торенту</string>
+    <string name="files_not_found">Файл в торенті не знайдений</string>
+    <string name="error_retrieving_settings">Помилка при отриманні налаштувань</string>
+    <string name="error_sending_settings">Помилка при відправленні налаштувань</string>
+    <string name="error_server_start">Помилка при запуску серверу</string>
+
+    <string name="retrackers">Ретрекери</string>
+    <string-array name="retracker_mode">
+        <item>Нічого не робити</item>
+        <item>Добавляти ретрекери</item>
+        <item>Видаляти ретрекери</item>
+        <item>Змінити ретрекери</item>
+    </string-array>
+
+    <string-array name="encryption_mode">
+        <item>Ввімкнено</item>
+        <item>Вимкнено</item>
+        <item>Принудительно</item>
+    </string-array>
+</resources>
