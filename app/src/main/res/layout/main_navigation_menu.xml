@@ -198,11 +198,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <View
-                    android:background="?android:attr/listDivider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
                 <FrameLayout
                     android:clickable="true"
                     android:focusable="true"
