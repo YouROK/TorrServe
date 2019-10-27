@@ -283,10 +283,12 @@ class PlayActivity : AppCompatActivity() {
                     progressBar.setProgress(prog, true)
                 else
                     progressBar.setProgress(prog)
-                // color Progress: https://stackoverflow.com/questions/2020882/how-to-change-progress-bars-progress-color-in-android
-                var progressDrawable = progressBar.getProgressDrawable().mutate()
-                progressDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
-                progressBar.setProgressDrawable(progressDrawable)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // color Progress: https://stackoverflow.com/questions/2020882/how-to-change-progress-bars-progress-color-in-android
+                    var progressDrawable = progressBar.getProgressDrawable().mutate()
+                    progressDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
+                    progressBar.setProgressDrawable(progressDrawable)
+                }
             }
         }
     }
