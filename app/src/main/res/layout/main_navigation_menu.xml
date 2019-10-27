@@ -70,8 +70,8 @@
 
                     <TextView
                         android:textColor="@color/lighter_gray"
-                        android:layout_gravity="right|center_vertical"
-                        android:paddingRight="10dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:paddingLeft="40dp"
                         android:text="@string/add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -99,8 +99,8 @@
 
                     <TextView
                         android:textColor="@color/lighter_gray"
-                        android:layout_gravity="right|center_vertical"
-                        android:paddingRight="10dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:paddingLeft="40dp"
                         android:text="@string/remove_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -128,8 +128,8 @@
 
                     <TextView
                         android:textColor="@color/lighter_gray"
-                        android:layout_gravity="right|center_vertical"
-                        android:paddingRight="10dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:paddingLeft="40dp"
                         android:text="@string/playlist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -157,8 +157,8 @@
 
                     <TextView
                         android:textColor="@color/lighter_gray"
-                        android:layout_gravity="right|center_vertical"
-                        android:paddingRight="10dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:paddingLeft="40dp"
                         android:text="@string/donate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -186,8 +186,8 @@
 
                     <TextView
                         android:textColor="@color/lighter_gray"
-                        android:layout_gravity="right|center_vertical"
-                        android:paddingRight="10dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:paddingLeft="40dp"
                         android:text="@string/update"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -220,8 +220,8 @@
 
                     <TextView
                         android:textColor="@color/lighter_gray"
-                        android:layout_gravity="right|center_vertical"
-                        android:paddingRight="10dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:paddingLeft="40dp"
                         android:text="@string/settings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -249,8 +249,8 @@
 
                     <TextView
                         android:textColor="@color/lighter_gray"
-                        android:layout_gravity="right|center_vertical"
-                        android:paddingRight="10dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:paddingLeft="40dp"
                         android:text="@string/exit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
