@@ -37,6 +37,7 @@
                 android:id="@+id/tvStatStartBoot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <View
@@ -54,6 +55,7 @@
                 android:id="@+id/tvStatPlayer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <View
@@ -71,6 +73,7 @@
                 android:id="@+id/tvStatAD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <View
@@ -88,6 +91,7 @@
                 android:id="@+id/tvStatRootServer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <View
@@ -98,6 +102,7 @@
             <TextView
                 android:layout_gravity="end"
                 android:id="@+id/textViewVersion"
+                android:paddingEnd="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

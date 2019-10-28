@@ -11,9 +11,9 @@
         android:id="@+id/ivPoster"
         android:visibility="gone"
         android:scaleType="fitCenter"
-        android:paddingRight="5dp"
-        android:layout_width="80dp"
-        android:layout_height="120dp" />
+        android:paddingEnd="8dp"
+        android:layout_width="70dp"
+        android:layout_height="105dp" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:ellipsize="middle"
-                android:layout_gravity="start|center_vertical"
+                android:layout_gravity="start|top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -52,19 +52,23 @@
                 android:text="10.10.2001"
                 android:visibility="gone"
                 android:id="@+id/tvTorrDate"
-                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:paddingBottom="4.5dip"
                 android:singleLine="true"
-                android:layout_gravity="end|center_vertical"
+                android:layout_gravity="end|bottom"
                 android:layout_weight="0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:text="5GB"
+                android:textColor="#eee"
                 android:id="@+id/tvTorrSize"
-                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp"
                 android:singleLine="true"
-                android:layout_gravity="end|center_vertical"
+                android:layout_gravity="end|bottom"
                 android:layout_weight="0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
