@@ -18,8 +18,6 @@ object Utils {
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         vintent.action = Intent.ACTION_VIEW
         vintent.putExtra("DontSave", true)
-        vintent.putExtra("Title", torr.name)
-        vintent.putExtra("Poster", torr.poster)
         return vintent
     }
 }
