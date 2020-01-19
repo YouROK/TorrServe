@@ -45,7 +45,7 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
                         if (js.ad_expired != "0") {
                             val formatter = SimpleDateFormat("dd.MM.yyyy")
                             val date = formatter.parse(js.ad_expired) as Date
-                            if (date.time < System.currentTimeMillis()) {
+                            if (date.time <= System.currentTimeMillis()) {
                                 Preferences.disableAD(false)
                                 return@thread
                             }
@@ -155,6 +155,6 @@ class Ad(private val iv: ImageView, private val activity: Activity) {
 
     private fun getBody(link: String): String {
         val http = Http(link)
-        return http.readTimeout(2)
+        return http.readTimeout(5000)
     }
 }
