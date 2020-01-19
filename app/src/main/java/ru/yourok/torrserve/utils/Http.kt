@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.utils
 
 import cz.msebera.android.httpclient.HttpEntity
+import cz.msebera.android.httpclient.client.config.RequestConfig
 import cz.msebera.android.httpclient.client.methods.HttpGet
 import cz.msebera.android.httpclient.impl.client.HttpClients
 import cz.msebera.android.httpclient.util.EntityUtils
@@ -33,9 +34,13 @@ class Http(val url: String) {
         }
     }
 
-    fun readTimeout(timeout: Long): String {
-        val httpclient = HttpClients.custom().setConnectionTimeToLive(timeout, TimeUnit.SECONDS).setSslcontext(getSslContext()).build()
+    fun readTimeout(timeout: Int): String {
+        val httpclient = HttpClients.custom().setConnectionTimeToLive(5, TimeUnit.SECONDS).setSslcontext(getSslContext()).build()
         val httpreq = HttpGet(url)
+        httpreq.config = RequestConfig.copy(RequestConfig.DEFAULT)
+                .setConnectTimeout(timeout)
+                .build()
+
         val response = httpclient.execute(httpreq)
 
         val status = response.statusLine?.statusCode ?: -1
