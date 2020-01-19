@@ -20,13 +20,13 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.activitys.add.AddActivity
 import ru.yourok.torrserve.activitys.play.PlayActivity
 import ru.yourok.torrserve.activitys.settings.AppSettingsActivity
+import ru.yourok.torrserve.activitys.settings.ConnectionActivity
 import ru.yourok.torrserve.activitys.settings.ServerSettingsActivity
 import ru.yourok.torrserve.activitys.splash.SplashActivity
 import ru.yourok.torrserve.activitys.updater.UpdaterActivity
 import ru.yourok.torrserve.adapters.TorrentAdapter
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.channels.UpdaterCards
-import ru.yourok.torrserve.dialog.DialogInputList
 import ru.yourok.torrserve.dialog.DialogPerm
 import ru.yourok.torrserve.dialog.Donate
 import ru.yourok.torrserve.menu.TorrentMainMenu
@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         autoUpdateList()
+        tvCurrentHost.text = Preferences.getCurrentHost()
     }
 
     override fun onPause() {
@@ -182,43 +183,7 @@ class MainActivity : AppCompatActivity() {
         tvCurrHost.text = Preferences.getCurrentHost()
 
         findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
-            DialogInputList.show(this, getString(R.string.host) + ":", Preferences.getHosts()) {
-                if (it.isEmpty())
-                    return@show
-
-                var host = it
-                if (!host.startsWith("http://", true))
-                    host = "http://" + host
-
-                if (Uri.parse(host).port == -1)
-                    host += ":8090"
-
-                if (ServerFile.serverExists() && (host.toLowerCase().contains("localhost") || host.toLowerCase().contains("127.0.0.1"))) {
-                    val oldHost = Preferences.getCurrentHost()
-                    Preferences.setCurrentHost(host)
-                    ServerService.start()
-                    ServerService.wait(10)
-                    if (Api.serverCheck(host).isEmpty())
-                        Preferences.setCurrentHost(oldHost)
-                }
-
-                if (Api.serverCheck(host).isEmpty()) {
-                    App.Toast(getString(R.string.server_not_responding))
-                    return@show
-                }
-                Preferences.setCurrentHost(host)
-                Handler(Looper.getMainLooper()).post {
-                    tvCurrHost.text = host
-                }
-
-                val hosts = mutableListOf<String>()
-                for (h in Preferences.getHosts()) {
-                    if (Api.serverCheck(h).isNotEmpty())
-                        hosts.add(h)
-                }
-                hosts.add(host)
-                Preferences.setHosts(hosts)
-            }
+            startActivity(Intent(this, ConnectionActivity::class.java))
         }
         findViewById<FrameLayout>(R.id.header).setOnLongClickListener {
             startActivity(Intent(this, ServerSettingsActivity::class.java))
@@ -251,7 +216,8 @@ class MainActivity : AppCompatActivity() {
             thread {
                 try {
                     if (Api.torrentList().isNotEmpty()) {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")))
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")), "video/*")
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         App.getContext().startActivity(intent)
                     }
