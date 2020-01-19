@@ -44,7 +44,8 @@ object Players {
                     it.packageName == "com.semperpax.spmc" || //spmc
                     it.packageName == "com.newin.nplayer.pro" || // nPlayer
                     it.packageName == "com.zidoo.zdmc" || // zdmc
-                    it.packageName == "net.gtvbox.videoplayer" //vimu
+                    it.packageName == "net.gtvbox.videoplayer" || //vimu
+                    it.packageName.startsWith("tv.mrmc.mrmc") //mrmc
         }
 
         val list = mutableListOf<Player>()
