@@ -16,6 +16,11 @@
     <string name="send">Send</string>
     <string name="host">Host</string>
 
+    <string name="local_ip">Local IP</string>
+    <string name="connected_host">Connected host</string>
+    <string name="find_hosts">Find hosts</string>
+    <string name="local_server">Local server</string>
+
     <string name="torrent">Torrent</string>
     <string name="torrents">Torrents</string>
 

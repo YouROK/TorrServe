@@ -16,6 +16,11 @@
     <string name="send">Відправити</string>
     <string name="host">Хост</string>
 
+    <string name="local_ip">Локальный IP</string>
+    <string name="connected_host">Підключений (Активний) хост</string>
+    <string name="find_hosts">Пошук хости</string>
+    <string name="local_server">Локальний сервер</string>
+
     <string name="torrent">Торент</string>
     <string name="torrents">Торенти</string>
 
