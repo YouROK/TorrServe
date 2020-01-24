@@ -122,7 +122,7 @@ class PlayActivity : AppCompatActivity() {
                 val pl = it.getString("Playlist", "")
                 if (pl.isNotEmpty()) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.setDataAndType(Uri.parse(Net.getHostUrl(pl)), "audio/x-mpegurl")
+                    intent.setDataAndType(Uri.parse(Net.getHostUrl(pl)), "video/*")
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     App.getContext().startActivity(intent)
                     finish()
