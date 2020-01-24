@@ -17,7 +17,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 83
-        versionName "1.1.83"
+        versionName "1.1.83_1"
     }
     signingConfigs {
         release {
