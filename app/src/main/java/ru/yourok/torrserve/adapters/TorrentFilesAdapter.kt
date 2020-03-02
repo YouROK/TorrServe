@@ -10,13 +10,18 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.JSObject
 import ru.yourok.torrserve.utils.ByteFmt
 
-class TorrentFilesAdapter(val files: List<JSObject>, val onClick: (file: JSObject) -> Unit) : RecyclerView.Adapter<TorrentFilesAdapter.ViewHolder>() {
+class TorrentFilesAdapter(val files: List<JSObject>, val onClick: (file: JSObject) -> Unit, val onLongClick: (file: JSObject) -> Unit) : RecyclerView.Adapter<TorrentFilesAdapter.ViewHolder>() {
 
     class ViewHolder(val view: View, val adapter: TorrentFilesAdapter) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
                 val file = adapter.files[adapterPosition]
                 adapter.onClick(file)
+            }
+            view.setOnLongClickListener {
+                val file = adapter.files[adapterPosition]
+                adapter.onLongClick(file)
+                true
             }
         }
     }

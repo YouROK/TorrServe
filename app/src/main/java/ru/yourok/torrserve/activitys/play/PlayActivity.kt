@@ -191,14 +191,65 @@ class PlayActivity : AppCompatActivity() {
                 layoutManager = LinearLayoutManager(this@PlayActivity)
                 if (lastPlayed > 0)
                     setFocusItem(lastPlayed)
-                adapter = TorrentFilesAdapter(files) {
+                adapter = TorrentFilesAdapter(files, {
                     showProgress(getString(R.string.buffering) + "...")
                     thread {
                         play(torr, it)
                     }
-                }
+                }, {
+                    showProgress(getString(R.string.buffering) + "...")
+                    thread {
+                        forceOpen(torr, it)
+                    }
+                })
                 addItemDecoration(DividerItemDecoration(this@PlayActivity, LinearLayout.VERTICAL))
             }
+        }
+    }
+
+    fun forceOpen(torr: JSObject, file: JSObject) {
+        Torrent.preload(torr, file, {
+            val preloadedBytes = it.getLong("PreloadedBytes", 0L)
+            val preloadSize = it.getLong("PreloadSize", 0L)
+            val activePeers = it.getInt("ActivePeers", 0)
+            val totalPeers = it.getInt("TotalPeers", 0)
+            val connectedSeeders = it.getInt("ConnectedSeeders", 0)
+            val downloadSpeed = it.getDouble("DownloadSpeed", 0.0)
+
+            var msg = torr.getString("Name", "")
+            if (msg.isNotEmpty())
+                msg += "\n"
+            var prc = 0
+            if (preloadSize > 0) {
+                prc = (preloadedBytes * 100 / preloadSize).toInt()
+                msg += getString(R.string.buffer) + ": " + (prc).toString() + "% " + ByteFmt.byteFmt(preloadedBytes) + "/" + ByteFmt.byteFmt(preloadSize) + "\n"
+            }
+            msg += getString(R.string.peers) + ": [" + connectedSeeders.toString() + "] " + activePeers.toString() + "/" + totalPeers.toString() + "\n"
+            msg += getString(R.string.download_speed) + ": " + ByteFmt.byteFmt(downloadSpeed) + "/s"
+            showProgress(msg, prc)
+        }, {
+            App.Toast(it)
+            isClosed = true
+            finish()
+        })
+
+        if (!isClosed) {
+
+            ad?.waitAd()
+
+            val link = file.getString("Link", "")
+            val name = file.getString("Name", "")
+
+            val addr = Preferences.getCurrentHost() + link
+
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(addr))
+            intent.setDataAndType(Uri.parse(addr), "*/*")
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("title", name)
+
+            val intentC = Intent.createChooser(intent, "")
+            startActivity(intentC)
+            finish()
         }
     }
 
