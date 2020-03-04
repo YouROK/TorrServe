@@ -20,6 +20,7 @@
     <string name="connected_host">Connected host</string>
     <string name="find_hosts">Find hosts</string>
     <string name="local_server">Local server</string>
+    <string name="saved_server">Saved server</string>
 
     <string name="torrent">Torrent</string>
     <string name="torrents">Torrents</string>

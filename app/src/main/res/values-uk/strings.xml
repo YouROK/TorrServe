@@ -20,6 +20,7 @@
     <string name="connected_host">Підключений (Активний) хост</string>
     <string name="find_hosts">Пошук хости</string>
     <string name="local_server">Локальний сервер</string>
+    <string name="saved_server">Збережений сервер</string>
 
     <string name="torrent">Торент</string>
     <string name="torrents">Торенти</string>
@@ -60,7 +61,7 @@
     <string name="choose_player">Вибір плеєра</string>
     <string name="inner_player">Вбудований плеєр</string>
 
-    <string name="donate_msg">Ваша пожертва допоможе мені розвиватися дальше, покращувати програму і створювати нові</string>
+    <string name="donate_msg">Вашi пожертвування допоможуть мені розвиватися далi, покращувати програму і створювати нові</string>
     <string name="paypal" translatable="false">PayPal</string>
     <string name="yandex_money" translatable="false">Yandex.Гроші</string>
 

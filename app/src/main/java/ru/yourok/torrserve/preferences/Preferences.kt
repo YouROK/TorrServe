@@ -52,15 +52,13 @@ object Preferences {
 
     fun getHosts(): List<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.getContext())
-        val ret = prefs.getStringSet("AutoCompleteHost", mutableSetOf())
-        if (ret.isEmpty())
-            ret.add("http://localhost:8090")
+        val ret = prefs.getStringSet("SavedHosts", mutableSetOf())
         return ret.toList()
     }
 
     fun setHosts(hosts: List<String>) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.getContext())
-        prefs.edit().putStringSet("AutoCompleteHost", hosts.toMutableSet()).apply()
+        prefs.edit().putStringSet("SavedHosts", hosts.toMutableSet()).apply()
     }
 
     fun getLastViewDonate(): Long {

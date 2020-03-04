@@ -43,6 +43,7 @@ class ConnectionActivity : AppCompatActivity() {
 
         buttonOk.setOnClickListener {
             progressBar.visibility = View.VISIBLE
+
             thread {
                 var host = etHost.text.toString()
                 if (!host.startsWith("http://", true))
@@ -63,8 +64,13 @@ class ConnectionActivity : AppCompatActivity() {
                     Handler(getMainLooper()).post {
                         progressBar.visibility = View.GONE
                     }
-                    return@thread
                 }
+
+                val lst = Preferences.getHosts().toMutableList()
+                lst.add(host)
+                if (lst.size > 20)
+                    lst.removeAt(0)
+                Preferences.setHosts(lst)
 
                 finish()
             }

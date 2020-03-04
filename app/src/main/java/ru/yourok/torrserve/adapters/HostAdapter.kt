@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.preferences.Preferences
 import ru.yourok.torrserve.server.finder.FinderServer
 import ru.yourok.torrserve.server.finder.ServerIp
 import ru.yourok.torrserve.serverloader.ServerFile
@@ -44,6 +45,11 @@ class HostAdapter(val onClick: (host: String) -> Unit) : RecyclerView.Adapter<Ho
                     notifyItemInserted(0)
                 }
             }
+
+            //Add saved
+            var savedHosts = Preferences.getHosts()
+            savedHosts = savedHosts.filter { !hosts.map { it.host }.contains(it) }
+            hosts.addAll(savedHosts.map { ServerIp(it, "${App.getContext().getString(R.string.local_server)}  **") })
 
             onFinish()
         }

@@ -20,6 +20,7 @@
     <string name="connected_host">Подключенный хост</string>
     <string name="find_hosts">Поиск хостов</string>
     <string name="local_server">Локальный сервер</string>
+    <string name="saved_server">Сохраненный сервер</string>
 
     <string name="torrent">Торрент</string>
     <string name="torrents">Торренты</string>
