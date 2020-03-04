@@ -68,7 +68,7 @@ class ConnectionActivity : AppCompatActivity() {
 
                 val lst = Preferences.getHosts().toMutableList()
                 lst.add(host)
-                if (lst.size > 20)
+                if (lst.size > 10)
                     lst.removeAt(0)
                 Preferences.setHosts(lst)
 
