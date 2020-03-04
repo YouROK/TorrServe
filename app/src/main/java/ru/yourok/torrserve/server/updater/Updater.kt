@@ -12,6 +12,7 @@ import ru.yourok.torrserve.activitys.updater.UpdaterActivity
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
+import ru.yourok.torrserve.services.ServerService
 import ru.yourok.torrserve.utils.Http
 import java.io.File
 import java.io.FileInputStream
@@ -36,7 +37,7 @@ object Updater {
         try {
             currServerVersion = Api.serverEcho()
         } catch (e: Exception) {
-            ServerFile.run()
+            ServerService.start()
             Thread.sleep(1000)
             currServerVersion = Api.serverEcho()
         }
@@ -175,7 +176,7 @@ object Updater {
                     throw IOException("error set exec permission")
             }
         }
-        ServerFile.run()
+        ServerService.start()
     }
 
     fun updateServerLocal(filePath: String) {
@@ -183,11 +184,14 @@ object Updater {
         if (file.canRead()) {
             ServerFile.deleteServer()
             val input = FileInputStream(file)
-            input.copyTo(FileOutputStream(ServerFile.get()))
+            val output = FileOutputStream(ServerFile.get())
+            input.copyTo(output)
             input.close()
+            output.flush()
+            output.close()
             if (!ServerFile.get().setExecutable(true))
                 throw IOException("error set exec permission")
-            ServerFile.run()
+            ServerService.start()
         }
     }
 

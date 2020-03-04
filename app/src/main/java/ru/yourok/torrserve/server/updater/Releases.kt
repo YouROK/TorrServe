@@ -4,6 +4,7 @@ import org.json.JSONArray
 import ru.yourok.torrserve.ad.Ad
 import ru.yourok.torrserve.serverloader.ServerFile
 import ru.yourok.torrserve.serverloader.Updater
+import ru.yourok.torrserve.services.ServerService
 import ru.yourok.torrserve.utils.Http
 import java.io.FileOutputStream
 import java.io.IOException
@@ -74,6 +75,6 @@ object Releases {
                     throw IOException("error set exec permission")
             }
         }
-        ServerFile.run()
+        ServerService.start()
     }
 }

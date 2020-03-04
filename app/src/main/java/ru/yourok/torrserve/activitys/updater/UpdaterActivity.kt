@@ -26,11 +26,6 @@ class UpdaterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_updater)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !getPackageManager().canRequestPackageInstalls()) {
-            startActivity(Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES))
-            App.Toast(R.string.app_install_permissions, true)
-        }
-
         checkVersion()
 
         findViewById<Button>(R.id.download_apk_button).setOnClickListener {
