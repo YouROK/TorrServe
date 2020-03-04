@@ -1,7 +1,5 @@
 package ru.yourok.torrserve.serverloader
 
-import android.util.Log
-import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.preferences.Preferences
@@ -12,6 +10,7 @@ object ServerFile {
     private val servPath = File(App.getContext().filesDir, "torrserver")
     private var shell: Shell.Job? = null
     private val lock = Any()
+    private var error = ""
 
     fun get(): File {
         return servPath
@@ -34,23 +33,13 @@ object ServerFile {
         synchronized(lock) {
             if (shell == null) {
                 if (Preferences.isExecRootServer())
-                    shell = Shell.su("${servPath.path} -k -d ${Path.getAppPath()}")
+                    shell = Shell.su("${servPath.path} -k -d ${Path.getAppPath()} > /sdcard/torrserver.log 2>&1")
                 else {
                     val sh = Shell.newInstance("sh")
                     shell = sh.newJob()
-                    shell?.add("${servPath.path} -k -d ${Path.getAppPath()}")
+                    shell?.add("${servPath.path} -k -d ${Path.getAppPath()} > /sdcard/torrserver.log 2>&1")
                 }
-                shell?.let {
-                    val callbackList = object : CallbackList<String>() {
-                        override fun onAddElement(e: String?) {
-                            Log.i("GoLog", e)
-                        }
-                    }
-
-                    it.to(callbackList).submit {
-                        Log.i("GoLogErr", it.err.joinToString("\n"))
-                    }
-                }
+                shell?.submit()
             }
         }
     }
