@@ -46,7 +46,7 @@ class ConnectionActivity : AppCompatActivity() {
 
             thread {
                 var host = etHost.text.toString()
-                if (!host.startsWith("http://", true))
+                if (!host.matches("https?://".toRegex(RegexOption.IGNORE_CASE)))
                     host = "http://$host"
 
                 if (Uri.parse(host).port == -1)
