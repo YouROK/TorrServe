@@ -163,17 +163,19 @@ class MainActivity : AppCompatActivity() {
         //Set swipe from the center of the screen
         try {
             val mDrawerLayout = findViewById<DrawerLayout>(R.id.drawerlayout)
-            val mDragger: Field = mDrawerLayout.javaClass.getDeclaredField("mLeftDragger")
-            val display = windowManager.defaultDisplay
-            val size = Point()
-            display.getSize(size)
-            val width: Int = size.x
+            mDrawerLayout?.let {
+                val mDragger: Field = mDrawerLayout.javaClass.getDeclaredField("mLeftDragger")
+                val display = windowManager.defaultDisplay
+                val size = Point()
+                display.getSize(size)
+                val width: Int = size.x
 
-            mDragger.isAccessible = true
-            val draggerObj = mDragger.get(mDrawerLayout)
-            val mEdgeSize: Field = draggerObj.javaClass.getDeclaredField("mEdgeSize")
-            mEdgeSize.isAccessible = true
-            mEdgeSize.setInt(draggerObj, width)
+                mDragger.isAccessible = true
+                val draggerObj = mDragger.get(mDrawerLayout)
+                val mEdgeSize: Field = draggerObj.javaClass.getDeclaredField("mEdgeSize")
+                mEdgeSize.isAccessible = true
+                mEdgeSize.setInt(draggerObj, width)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
