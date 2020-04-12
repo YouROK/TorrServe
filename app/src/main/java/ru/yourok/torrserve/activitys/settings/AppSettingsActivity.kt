@@ -25,7 +25,7 @@ class AppSettingsActivity : AppCompatActivity() {
 
         btnStartServerOnBoot.setOnClickListener {
             val list = listOf(getString(R.string.yes), getString(R.string.no))
-            DialogList.show(this, getString(R.string.start_server_on_boot), list, false) { select, i ->
+            DialogList.show(this, getString(R.string.start_server_on_boot), list, false) { _, i ->
                 Preferences.setAutoStart(i[0] == 0)
                 updateStats()
             }
@@ -38,7 +38,7 @@ class AppSettingsActivity : AppCompatActivity() {
 
             val list = plist.map { it.Name }
 
-            DialogList.show(this, getString(R.string.select_player), list, false) { select, i ->
+            DialogList.show(this, getString(R.string.select_player), list, false) { _, i ->
                 val player = plist[i[0]]
                 Preferences.setPlayer(player.Package)
                 updateStats()

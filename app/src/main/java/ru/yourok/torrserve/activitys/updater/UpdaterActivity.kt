@@ -218,7 +218,7 @@ class UpdaterActivity : AppCompatActivity() {
                 arrayAdapter.add(it.Version)
             }
 
-            builderSingle.setNegativeButton(android.R.string.cancel) { dialog, which ->
+            builderSingle.setNegativeButton(android.R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
 
@@ -309,7 +309,7 @@ class UpdaterActivity : AppCompatActivity() {
                 return@post
             }
 
-            DialogList.show(this, "", files.map { it.name }, false) { selList: List<String>, selInt: List<Int> ->
+            DialogList.show(this, "", files.map { it.name }, false) { _: List<String>, selInt: List<Int> ->
                 Handler(Looper.getMainLooper()).post {
                     findViewById<ProgressBar>(R.id.progress_bar).visibility = View.VISIBLE
                     findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
