@@ -11,13 +11,13 @@ def freeProperties = new Properties()
 freeProperties.load(new FileInputStream(freeKeystorePropertiesFile))
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "ru.yourok.torrserve"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 83
-        versionName "1.1.83_1"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 84
+        versionName "1.1.84"
     }
     signingConfigs {
         release {
@@ -55,32 +55,28 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-
-    implementation 'com.android.support:support-tv-provider:27.1.1'
-
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "androidx.tvprovider:tvprovider:1.0.0"
 
     // ExoPlayer v2
-    implementation "com.google.android.exoplayer:exoplayer-core:2.8.4"
-    implementation "com.google.android.exoplayer:exoplayer-ui:2.8.4"
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.10.5'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.5'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.5'
 
     // ExoPlayer v2 MediaSession extension
-    implementation "com.google.android.exoplayer:extension-mediasession:2.8.4"
-
-    implementation 'com.mxn.soul:flowingdrawer-core:2.0.0'
-    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation "com.google.android.exoplayer:extension-mediasession:2.10.5"
 
     implementation 'cz.msebera.android:httpclient:4.5.8'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
-    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-core:17.2.3'
 
     //Root
     implementation "com.github.topjohnwu.libsu:core:2.5.1"
+    implementation 'com.google.android.material:material:1.1.0'
 }
 
 repositories {
