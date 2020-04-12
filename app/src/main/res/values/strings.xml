@@ -59,7 +59,6 @@
 
     <string name="default_player">Default Player</string>
     <string name="choose_player">Choose Player</string>
-    <string name="inner_player">Inner Player</string>
 
     <string name="donate_msg">Your donation helps me develop further, improve the program and create new ones.</string>
     <string name="paypal" translatable="false">PayPal</string>

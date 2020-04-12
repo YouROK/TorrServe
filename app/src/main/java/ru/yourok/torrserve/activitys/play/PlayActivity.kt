@@ -24,7 +24,6 @@ import ru.yourok.torrserve.adapters.TorrentFilesAdapter
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.num.entity.Entity
-import ru.yourok.torrserve.player.PlayerActivity
 import ru.yourok.torrserve.preferences.Preferences
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
@@ -288,14 +287,6 @@ class PlayActivity : AppCompatActivity() {
 
             val addr = Preferences.getCurrentHost() + link
             val pkg = Preferences.getPlayer()
-
-            if (pkg.equals("2")) {
-                intent = Intent(this, PlayerActivity::class.java)
-                intent.data = Uri.parse(addr)
-                startActivity(intent)
-                finish()
-                return
-            }
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(addr))
             val mime = Mime.getMimeType(name)
