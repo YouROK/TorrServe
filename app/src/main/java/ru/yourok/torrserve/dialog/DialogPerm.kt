@@ -2,9 +2,9 @@ package ru.yourok.torrserve.dialog
 
 import android.Manifest
 import android.app.Activity
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
 import android.view.View
+import androidx.core.app.ActivityCompat
+import com.google.android.material.snackbar.Snackbar
 import ru.yourok.torrserve.R
 import kotlin.concurrent.thread
 

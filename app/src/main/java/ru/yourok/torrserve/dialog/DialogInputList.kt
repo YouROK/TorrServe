@@ -2,13 +2,13 @@ package ru.yourok.torrserve.dialog
 
 import android.content.Context
 import android.content.DialogInterface
-import android.support.v7.app.AlertDialog
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import androidx.appcompat.app.AlertDialog
 import ru.yourok.torrserve.R
 import kotlin.concurrent.thread
 

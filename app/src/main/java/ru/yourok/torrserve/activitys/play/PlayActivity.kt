@@ -6,14 +6,14 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_play.*
@@ -360,7 +360,7 @@ class PlayActivity : AppCompatActivity() {
     private fun setFocusItem(pos: Int) {
         Handler(Looper.getMainLooper()).post {
             findViewById<RecyclerView>(R.id.rvFileList)?.apply {
-                layoutManager.scrollToPosition(pos)
+                layoutManager?.scrollToPosition(pos)
                 postDelayed({
                     findViewHolderForAdapterPosition(pos)?.itemView?.requestFocus()
                 }, 500)

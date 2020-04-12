@@ -5,15 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v7.app.AppCompatActivity
-import android.view.KeyEvent
 import android.widget.FrameLayout
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
-import com.mxn.soul.flowingdrawer_core.ElasticDrawer
-import com.mxn.soul.flowingdrawer_core.ElasticDrawer.STATE_CLOSED
-import com.mxn.soul.flowingdrawer_core.FlowingDrawer
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_navigation_menu.*
 import ru.yourok.torrserve.R
@@ -46,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var torrAdapter = TorrentAdapter(this)
-    private var mDrawer: FlowingDrawer? = null
+    private var mDrawer: DrawerLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,15 +60,6 @@ class MainActivity : AppCompatActivity() {
         setupNavigator()
 
         mDrawer = findViewById(R.id.drawerlayout)
-        mDrawer?.setTouchMode(ElasticDrawer.TOUCH_MODE_FULLSCREEN)
-        mDrawer?.setOnDrawerStateChangeListener(object : ElasticDrawer.OnDrawerStateChangeListener {
-            override fun onDrawerStateChange(oldState: Int, newState: Int) {
-                if (newState == STATE_CLOSED)
-                    rvTorrents.requestFocus()
-            }
-
-            override fun onDrawerSlide(openRatio: Float, offsetPixels: Int) {}
-        })
 
         rvTorrents.apply {
             adapter = torrAdapter
@@ -101,22 +90,10 @@ class MainActivity : AppCompatActivity() {
         DialogPerm.requestPermissionWithRationale(this)
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        mDrawer?.let {
-            if (!it.isMenuVisible && keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                it.openMenu(true)
-                header.requestFocus()
-                return true
-            }
-        }
-
-        return super.onKeyUp(keyCode, event)
-    }
-
     override fun onBackPressed() {
         mDrawer?.let {
-            if (it.isMenuVisible()) {
-                it.closeMenu()
+            if (it.isDrawerOpen(GravityCompat.START)) {
+                it.closeDrawer(GravityCompat.START)
                 return
             }
         }
@@ -141,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 Thread.sleep(1000)
                 if (torrAdapter.count == 0)
                     Handler(Looper.getMainLooper()).post {
-                        mDrawer?.openMenu(true)
+                        mDrawer?.openDrawer(GravityCompat.START)
                     }
             }
             Donate.showDonate(this)
@@ -164,13 +141,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             while (isUpdate) {
-                if (Api.serverEcho() == "") {
+                val version = Api.serverEcho()
+                if (version.isNullOrEmpty()) {
                     if (Api.serverIsLocal() && !ServerFile.serverExists())
                         setStatus(getString(R.string.server_not_exists))
                     else
                         setStatus(getString(R.string.server_not_responding))
                 } else
-                    setStatus("")
+                    setStatus(version)
 
                 torrAdapter.checkList()
                 Thread.sleep(1000)

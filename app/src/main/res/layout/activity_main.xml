@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mxn.soul.flowingdrawer_core.FlowingDrawer xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawerlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
-    android:clipToPadding="false"
-    app:edPosition="1"
-    app:edMenuSize="280dp"
-    app:edMenuBackground="@color/darker_gray">
+    android:clipToPadding="false">
 
     <!--content-->
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:id="@+id/content"
         android:padding="5dp"
         android:layout_width="match_parent"
@@ -23,10 +19,10 @@
             android:listSelector="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 
 
     <!--menu-->
     <include layout="@layout/main_navigation_menu" />
 
-</com.mxn.soul.flowingdrawer_core.FlowingDrawer>
+</androidx.drawerlayout.widget.DrawerLayout>

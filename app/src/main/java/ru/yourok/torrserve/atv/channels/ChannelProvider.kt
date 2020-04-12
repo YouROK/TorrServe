@@ -3,13 +3,11 @@ package ru.yourok.torrserve.atv.channels
 import android.content.ContentUris
 import android.graphics.BitmapFactory
 import android.media.tv.TvContract
-import android.media.tv.TvContract.PreviewPrograms.ASPECT_RATIO_2_3
-import android.media.tv.TvContract.PreviewPrograms.AVAILABILITY_AVAILABLE
 import android.net.Uri
-import android.support.media.tv.Channel
-import android.support.media.tv.ChannelLogoUtils
-import android.support.media.tv.PreviewProgram
-import android.support.media.tv.TvContractCompat
+import androidx.tvprovider.media.tv.Channel
+import androidx.tvprovider.media.tv.ChannelLogoUtils
+import androidx.tvprovider.media.tv.PreviewProgram
+import androidx.tvprovider.media.tv.TvContractCompat
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
@@ -104,7 +102,7 @@ class ChannelProvider(private val name: String) {
         val preview = PreviewProgram.Builder()
                 .setChannelId(channelId)
                 .setTitle(torr.name)
-                .setAvailability(AVAILABILITY_AVAILABLE)
+                .setAvailability(TvContractCompat.PreviewProgramColumns.AVAILABILITY_FREE)
                 .setDescription(overview)
                 .setGenre(info.joinToString(" · "))
                 .setReviewRating((vote_average.div(2)).toString())
@@ -117,7 +115,7 @@ class ChannelProvider(private val name: String) {
                 .setSearchable(true)
                 .setLive(false)
                 .setPosterArtUri(Uri.parse(poster))
-                .setPosterArtAspectRatio(ASPECT_RATIO_2_3)
+                .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
 
         return preview.build()
     }

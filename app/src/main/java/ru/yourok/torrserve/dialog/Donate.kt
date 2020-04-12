@@ -7,8 +7,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat.startActivity
+import androidx.core.content.ContextCompat.startActivity
+import com.google.android.material.snackbar.Snackbar
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.preferences.Preferences
 import java.util.*

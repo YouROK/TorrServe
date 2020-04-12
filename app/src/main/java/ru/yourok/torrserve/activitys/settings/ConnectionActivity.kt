@@ -3,11 +3,11 @@ package ru.yourok.torrserve.activitys.settings
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_connection.*
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.adapters.HostAdapter
@@ -46,10 +46,12 @@ class ConnectionActivity : AppCompatActivity() {
 
             thread {
                 var host = etHost.text.toString()
-                if (!host.startsWith("http://", true))
+                val uri = Uri.parse(host)
+
+                if (uri.scheme == null)
                     host = "http://$host"
 
-                if (Uri.parse(host).port == -1)
+                if (uri.port == -1)
                     host += ":8090"
 
                 Preferences.setCurrentHost(host)

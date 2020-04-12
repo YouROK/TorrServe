@@ -12,7 +12,7 @@ import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.activitys.main.MainActivity
 import ru.yourok.torrserve.app.App

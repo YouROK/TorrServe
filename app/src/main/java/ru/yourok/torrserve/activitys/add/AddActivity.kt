@@ -1,8 +1,8 @@
 package ru.yourok.torrserve.activitys.add
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_add.*
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
