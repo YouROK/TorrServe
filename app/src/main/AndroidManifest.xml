@@ -11,7 +11,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activitys.settings.ConnectionActivity" />
 
         <activity
@@ -56,7 +58,6 @@
         <activity android:name=".activitys.settings.AppSettingsActivity" />
         <activity android:name=".activitys.settings.ServerSettingsActivity" />
         <activity android:name=".activitys.updater.UpdaterActivity" />
-        <activity android:name=".player.PlayerActivity" />
         <activity
             android:name=".activitys.add.AddOnly"
             android:configChanges="mcc|mnc|locale|orientation|screenLayout|screenSize|layoutDirection|fontScale"
