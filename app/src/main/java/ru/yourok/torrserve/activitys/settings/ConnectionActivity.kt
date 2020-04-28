@@ -29,6 +29,7 @@ class ConnectionActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ConnectionActivity)
             adapter = HostAdapter {
                 etHost.setText(it)
+                setHost(false)
             }
             addItemDecoration(DividerItemDecoration(this@ConnectionActivity, LinearLayout.VERTICAL))
         }
@@ -43,8 +44,18 @@ class ConnectionActivity : AppCompatActivity() {
 
         buttonOk.setOnClickListener {
             progressBar.visibility = View.VISIBLE
+            setHost(true)
+        }
 
-            thread {
+        tvConnectedHost.text = Preferences.getCurrentHost()
+        etHost.setText(Preferences.getCurrentHost())
+
+        update()
+    }
+
+    private fun setHost(isFinishOnErr: Boolean) {
+        thread {
+            try {
                 var host = etHost.text.toString()
                 val uri = Uri.parse(host)
 
@@ -66,6 +77,9 @@ class ConnectionActivity : AppCompatActivity() {
                     Handler(getMainLooper()).post {
                         progressBar.visibility = View.GONE
                     }
+                    if (isFinishOnErr)
+                        finish()
+                    return@thread
                 }
 
                 val lst = Preferences.getHosts().toMutableList()
@@ -75,13 +89,17 @@ class ConnectionActivity : AppCompatActivity() {
                 Preferences.setHosts(lst)
 
                 finish()
+            } catch (e: Exception) {
+                e.message?.let {
+                    App.Toast(it)
+                }
+                Handler(getMainLooper()).post {
+                    progressBar.visibility = View.GONE
+                }
+                if (isFinishOnErr)
+                    finish()
             }
         }
-
-        tvConnectedHost.text = Preferences.getCurrentHost()
-        etHost.setText(Preferences.getCurrentHost())
-
-        update()
     }
 
     private fun update() {
