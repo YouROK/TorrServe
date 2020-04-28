@@ -25,9 +25,17 @@ class HostAdapter(val onClick: (host: String) -> Unit) : RecyclerView.Adapter<Ho
             hosts.clear()
         }
         thread {
-            for (ip in ipLst) {
-                finder.findServers(ip) {
-                    hosts.add(it)
+            if (ServerFile.serverExists()) {
+                hosts.add(0, ServerIp("http://127.0.0.1:8090", App.getContext().getString(R.string.local_server)))
+                notifyItemInserted(0)
+            }
+
+            //Add saved
+            val savedHosts = Preferences.getHosts()
+
+            savedHosts.forEach {
+                if (!hosts.contains(ServerIp(it, ""))) {
+                    hosts.add(ServerIp(it, "${App.getContext().getString(R.string.local_server)}  **"))
                     if (hosts.isEmpty())
                         notifyItemInserted(0)
                     else
@@ -35,21 +43,17 @@ class HostAdapter(val onClick: (host: String) -> Unit) : RecyclerView.Adapter<Ho
                 }
             }
 
-            if (ServerFile.serverExists()) {
-                var isLocal = false
-                for (ip in hosts)
-                    if (ip.host.contains("127.0.0.1"))
-                        isLocal = true
-                if (!isLocal) {
-                    hosts.add(0, ServerIp("http://127.0.0.1:8090", App.getContext().getString(R.string.local_server)))
-                    notifyItemInserted(0)
+            for (ip in ipLst) {
+                finder.findServers(ip) {
+                    if (!hosts.contains(it)) {
+                        hosts.add(it)
+                        if (hosts.isEmpty())
+                            notifyItemInserted(0)
+                        else
+                            notifyItemInserted(hosts.size - 1)
+                    }
                 }
             }
-
-            //Add saved
-            var savedHosts = Preferences.getHosts()
-            savedHosts = savedHosts.filter { !hosts.map { it.host }.contains(it) }
-            hosts.addAll(savedHosts.map { ServerIp(it, "${App.getContext().getString(R.string.local_server)}  **") })
 
             onFinish()
         }
