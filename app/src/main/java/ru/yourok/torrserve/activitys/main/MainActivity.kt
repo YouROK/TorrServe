@@ -1,7 +1,6 @@
 package ru.yourok.torrserve.activitys.main
 
 import android.content.Intent
-import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -36,7 +35,6 @@ import ru.yourok.torrserve.server.net.Net
 import ru.yourok.torrserve.serverloader.ServerFile
 import ru.yourok.torrserve.serverloader.Updater
 import ru.yourok.torrserve.services.ServerService
-import java.lang.reflect.Field
 import kotlin.concurrent.thread
 
 
@@ -159,28 +157,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigator() {
-
-        //Set swipe from the center of the screen
-        try {
-            val mDrawerLayout = findViewById<DrawerLayout>(R.id.drawerlayout)
-            mDrawerLayout?.let {
-                val mDragger: Field = mDrawerLayout.javaClass.getDeclaredField("mLeftDragger")
-                val display = windowManager.defaultDisplay
-                val size = Point()
-                display.getSize(size)
-                val width: Int = size.x
-
-                mDragger.isAccessible = true
-                val draggerObj = mDragger.get(mDrawerLayout)
-                val mEdgeSize: Field = draggerObj.javaClass.getDeclaredField("mEdgeSize")
-                mEdgeSize.isAccessible = true
-                mEdgeSize.setInt(draggerObj, width)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-
         val tvCurrHost = findViewById<TextView>(R.id.tvCurrentHost)
         tvCurrHost.text = Preferences.getCurrentHost()
 
