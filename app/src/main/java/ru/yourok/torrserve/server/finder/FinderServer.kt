@@ -9,7 +9,14 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
-data class ServerIp(val host: String, val version: String)
+class ServerIp(val host: String, val version: String) {
+    override fun equals(other: Any?): Boolean {
+        if (other == null)
+            return false
+        return (other as ServerIp).host == host
+    }
+}
+
 
 class FinderServer {
     private var localIpLost = listOf<InterfaceAddress>()
