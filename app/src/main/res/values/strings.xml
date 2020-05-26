@@ -81,6 +81,8 @@
 
     <string name="connects_to_torrent">Getting torrent information</string>
 
+    <string name="open_torrserve">Open TorrServe</string>
+
     <string name="buffering">Buffering</string>
     <string name="buffer">Buffer</string>
     <string name="peers">Peers</string>

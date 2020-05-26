@@ -17,7 +17,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 84
-        versionName "1.1.84"
+        versionName "1.1.84_3"
     }
     signingConfigs {
         release {
@@ -57,22 +57,15 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation "androidx.tvprovider:tvprovider:1.0.0"
-
-    // ExoPlayer v2
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.10.5'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.5'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.5'
-
-    // ExoPlayer v2 MediaSession extension
-    implementation "com.google.android.exoplayer:extension-mediasession:2.10.5"
+    implementation 'androidx.tvprovider:tvprovider:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
 
     implementation 'cz.msebera.android:httpclient:4.5.8'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    implementation 'com.google.firebase:firebase-core:17.2.3'
+    implementation 'com.google.firebase:firebase-core:17.4.0'
 
     //Root
     implementation "com.github.topjohnwu.libsu:core:2.5.1"

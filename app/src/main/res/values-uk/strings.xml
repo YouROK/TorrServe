@@ -81,6 +81,8 @@
 
     <string name="connects_to_torrent">Отримання інформації торенту</string>
 
+    <string name="open_torrserve">Запустити TorrServe</string>
+
     <string name="buffering">Буферизація</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Піри</string>

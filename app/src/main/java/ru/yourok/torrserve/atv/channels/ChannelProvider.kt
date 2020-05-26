@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.atv.channels
 
 import android.content.ContentUris
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.tv.TvContract
 import android.net.Uri
@@ -10,6 +11,7 @@ import androidx.tvprovider.media.tv.PreviewProgram
 import androidx.tvprovider.media.tv.TvContractCompat
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.activitys.main.MainActivity
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.atv.channels.providers.Torrent
@@ -57,17 +59,42 @@ class ChannelProvider(private val name: String) {
                 channel.build().toContentValues(), null, null
         )
 
-        list.forEach {
-            val prg = getProgram(channelId, it, list.size)
+        if (list.isNotEmpty())
+            list.forEachIndexed { index, torrent ->
+                val prg = getProgram(channelId, torrent, list.size - index)
+                App.getContext().contentResolver.insert(
+                        Uri.parse("content://android.media.tv/preview_program"),
+                        prg.toContentValues()
+                )
+            }
+        else
             App.getContext().contentResolver.insert(
                     Uri.parse("content://android.media.tv/preview_program"),
-                    prg.toContentValues()
+                    emptyProgram(channelId).toContentValues()
             )
-        }
+    }
+
+    private fun emptyProgram(channelId: Long): PreviewProgram {
+        val vintent = Intent(App.getContext(), MainActivity::class.java)
+        vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        val preview = PreviewProgram.Builder()
+                .setChannelId(channelId)
+                .setTitle(App.getContext().getString(R.string.app_name))
+                .setAvailability(TvContractCompat.PreviewProgramColumns.AVAILABILITY_FREE)
+                .setDescription(App.getContext().getString(R.string.open_torrserve))
+                .setReviewRating("5")
+                .setIntent(vintent)
+                .setType(TvContractCompat.PreviewPrograms.TYPE_MOVIE)
+                .setSearchable(true)
+                .setLive(false)
+                .setPosterArtUri(Uri.parse("https://yourok.github.io/TorrServePage/ep.png"))
+                .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
+
+        return preview.build()
     }
 
     private fun getProgram(channelId: Long, torr: Torrent, size: Int): PreviewProgram {
-
         val info = mutableListOf<String>()
         var overview = ""
         var id = ""
