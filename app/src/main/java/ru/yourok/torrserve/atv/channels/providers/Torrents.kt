@@ -47,7 +47,7 @@ class Torrents : VideoProvider() {
                 val length = torrJS.get("Length", 0L)
                 val info = torrJS.get("Info", "")
                 var entity: Entity? = null
-                var poster = "http://tor-serve.surge.sh/ep.png"
+                var poster = "https://yourok.github.io/TorrServePage/ep.png"
                 if (info.isNotEmpty()) {
                     try {
                         val gson = Gson()
