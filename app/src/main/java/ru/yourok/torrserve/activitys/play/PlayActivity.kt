@@ -108,7 +108,7 @@ class PlayActivity : AppCompatActivity() {
                 }
                 val files = Torrent.getPlayableFiles(torrent!!)
                 if (files.size == 1) {
-                    play(torrent!!, files[0])
+                    play(torrent!!, files[0], false)
                 } else if (files.size > 1) {
                     showList(torrent!!, files)
                 } else {
@@ -199,13 +199,13 @@ class PlayActivity : AppCompatActivity() {
                     showProgress()
                     setInfo(getString(R.string.buffering) + "...")
                     thread {
-                        play(torr, it)
+                        play(torr, it, false)
                     }
                 }, {
                     showProgress()
                     setInfo(getString(R.string.buffering) + "...")
                     thread {
-                        forceOpen(torr, it)
+                        play(torr, it, true)
                     }
                 })
                 addItemDecoration(DividerItemDecoration(this@PlayActivity, LinearLayout.VERTICAL))
@@ -213,51 +213,7 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    fun forceOpen(torr: JSObject, file: JSObject) {
-        Torrent.preload(torr, file, {
-            val preloadedBytes = it.getLong("PreloadedBytes", 0L)
-            val preloadSize = it.getLong("PreloadSize", 0L)
-            val activePeers = it.getInt("ActivePeers", 0)
-            val totalPeers = it.getInt("TotalPeers", 0)
-            val connectedSeeders = it.getInt("ConnectedSeeders", 0)
-            val downloadSpeed = it.getDouble("DownloadSpeed", 0.0)
-
-            var buffer = ""
-            var prc = 0
-            if (preloadSize > 0) {
-                prc = (preloadedBytes * 100 / preloadSize).toInt()
-                buffer = (prc).toString() + "% " + ByteFmt.byteFmt(preloadedBytes) + "/" + ByteFmt.byteFmt(preloadSize)
-            }
-            val peers = "[$connectedSeeders] $activePeers/$totalPeers"
-            val speed = ByteFmt.byteFmt(downloadSpeed) + "/s"
-            showProgress(prc)
-            setInfo("", file, buffer, peers, speed)
-        }, {
-            App.Toast(it)
-            isClosed = true
-            finish()
-        })
-
-        if (!isClosed) {
-
-            ad?.waitAd()
-
-            val link = file.getString("Link", "")
-            val name = file.getString("Name", "")
-            val addr = Preferences.getCurrentHost() + link
-
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(addr))
-            intent.setDataAndType(Uri.parse(addr), "*/*")
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.putExtra("title", name)
-
-            val intentC = Intent.createChooser(intent, "")
-            startActivity(intentC)
-            finish()
-        }
-    }
-
-    fun play(torr: JSObject, file: JSObject) {
+    fun play(torr: JSObject, file: JSObject, force: Boolean) {
         Torrent.preload(torr, file, {
             val preloadedBytes = it.getLong("PreloadedBytes", 0L)
             val preloadSize = it.getLong("PreloadSize", 0L)
@@ -297,6 +253,14 @@ class PlayActivity : AppCompatActivity() {
             intent.setDataAndType(Uri.parse(addr), mime)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("title", name)
+
+            if (force) {
+                intent.setDataAndType(Uri.parse(addr), "*/*")
+                val intentC = Intent.createChooser(intent, "")
+                startActivity(intentC)
+                finish()
+                return
+            }
 
             if (pkg.isEmpty() or pkg.equals("0")) {
                 if (intent.resolveActivity(packageManager) != null) {
