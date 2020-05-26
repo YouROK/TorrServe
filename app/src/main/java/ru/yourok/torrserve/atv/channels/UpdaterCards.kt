@@ -1,6 +1,5 @@
 package ru.yourok.torrserve.atv.channels
 
-import android.os.Build
 import ru.yourok.torrserve.atv.Utils
 import kotlin.concurrent.thread
 
@@ -20,8 +19,8 @@ object UpdaterCards {
                 isUpdate = true
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                ChannelService.updateChannels()
+            
+            ChannelService.updateChannels()
             isUpdate = false
         }
     }

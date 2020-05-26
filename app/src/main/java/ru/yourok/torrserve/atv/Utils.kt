@@ -2,6 +2,7 @@ package ru.yourok.torrserve.atv
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import ru.yourok.torrserve.activitys.play.PlayActivity
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.channels.providers.Torrent
@@ -9,7 +10,7 @@ import ru.yourok.torrserve.atv.channels.providers.Torrent
 object Utils {
 
     fun isGoogleTV(): Boolean {
-        return App.getContext().packageManager.hasSystemFeature("android.software.leanback")
+        return App.getContext().packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
     }
 
     fun buildPendingIntent(torr: Torrent): Intent {
