@@ -182,6 +182,7 @@ class MainActivity : AppCompatActivity() {
                             Api.torrentRemove(hash)
                     }
                     torrAdapter.checkList()
+                    UpdaterCards.updateCards()
                 } catch (e: Exception) {
                     e.message?.let {
                         App.Toast(it)
