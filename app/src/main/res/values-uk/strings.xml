@@ -84,6 +84,7 @@
     <string name="buffering">Буферизація</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Піри</string>
+    <string name="size">Размір</string>
     <string name="download_speed">Швидкість завантаження</string>
     <string name="upload_speed">Швидкість віддачі</string>
 

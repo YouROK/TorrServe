@@ -84,6 +84,7 @@
     <string name="buffering">Buffering</string>
     <string name="buffer">Buffer</string>
     <string name="peers">Peers</string>
+    <string name="size">Size</string>
     <string name="download_speed">Download speed</string>
     <string name="upload_speed">Upload speed</string>
 

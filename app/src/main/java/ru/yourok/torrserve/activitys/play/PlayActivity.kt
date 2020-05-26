@@ -1,14 +1,19 @@
 package ru.yourok.torrserve.activitys.play
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -33,6 +38,7 @@ import ru.yourok.torrserve.serverloader.ServerFile
 import ru.yourok.torrserve.services.ServerService
 import ru.yourok.torrserve.utils.ByteFmt
 import ru.yourok.torrserve.utils.Mime
+import java.io.File
 import kotlin.concurrent.thread
 
 class PlayActivity : AppCompatActivity() {
@@ -131,7 +137,8 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun startServer() {
-        showProgress(getString(R.string.connecting_to_server))
+        showProgress()
+        setInfo(getString(R.string.connecting_to_server))
         if (Api.serverIsLocal() && ServerFile.serverExists() && Api.serverEcho().isEmpty()) {
             ServerService.start()
             ServerService.wait(60)
@@ -139,8 +146,8 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun addTorrent(): JSObject {
-        showProgress(getString(R.string.connects_to_torrent))
-
+        showProgress()
+        setInfo(getString(R.string.connects_to_torrent))
         if (info.isEmpty() && (poster.isNotEmpty() || title.isNotEmpty())) {
             val js = JSONObject()
             if (poster.isNotEmpty())
@@ -163,12 +170,10 @@ class PlayActivity : AppCompatActivity() {
             val activePeers = it.getInt("ActivePeers", 0)
             val totalPeers = it.getInt("TotalPeers", 0)
             val connectedSeeders = it.getInt("ConnectedSeeders", 0)
-            var msg = it.getString("Name", "")
-            if (msg.isNotEmpty())
-                msg += "\n"
+            val name = it.getString("Name", "")
+            showProgress()
+            setInfo(name, null, "", "[" + connectedSeeders.toString() + "] " + activePeers.toString() + "/" + totalPeers.toString(), "")
 
-            msg += getString(R.string.peers) + ": [" + connectedSeeders.toString() + "] " + activePeers.toString() + "/" + totalPeers.toString() + "\n"
-            showProgress(msg, 0)
         }
         UpdaterCards.updateCards()
         return Api.torrentGet(hash)
@@ -191,12 +196,14 @@ class PlayActivity : AppCompatActivity() {
                 if (lastPlayed > 0)
                     setFocusItem(lastPlayed)
                 adapter = TorrentFilesAdapter(files, {
-                    showProgress(getString(R.string.buffering) + "...")
+                    showProgress()
+                    setInfo(getString(R.string.buffering) + "...")
                     thread {
                         play(torr, it)
                     }
                 }, {
-                    showProgress(getString(R.string.buffering) + "...")
+                    showProgress()
+                    setInfo(getString(R.string.buffering) + "...")
                     thread {
                         forceOpen(torr, it)
                     }
@@ -215,17 +222,16 @@ class PlayActivity : AppCompatActivity() {
             val connectedSeeders = it.getInt("ConnectedSeeders", 0)
             val downloadSpeed = it.getDouble("DownloadSpeed", 0.0)
 
-            var msg = torr.getString("Name", "")
-            if (msg.isNotEmpty())
-                msg += "\n"
+            var buffer = ""
             var prc = 0
             if (preloadSize > 0) {
                 prc = (preloadedBytes * 100 / preloadSize).toInt()
-                msg += getString(R.string.buffer) + ": " + (prc).toString() + "% " + ByteFmt.byteFmt(preloadedBytes) + "/" + ByteFmt.byteFmt(preloadSize) + "\n"
+                buffer = (prc).toString() + "% " + ByteFmt.byteFmt(preloadedBytes) + "/" + ByteFmt.byteFmt(preloadSize)
             }
-            msg += getString(R.string.peers) + ": [" + connectedSeeders.toString() + "] " + activePeers.toString() + "/" + totalPeers.toString() + "\n"
-            msg += getString(R.string.download_speed) + ": " + ByteFmt.byteFmt(downloadSpeed) + "/s"
-            showProgress(msg, prc)
+            val peers = "[$connectedSeeders] $activePeers/$totalPeers"
+            val speed = ByteFmt.byteFmt(downloadSpeed) + "/s"
+            showProgress(prc)
+            setInfo("", file, buffer, peers, speed)
         }, {
             App.Toast(it)
             isClosed = true
@@ -238,7 +244,6 @@ class PlayActivity : AppCompatActivity() {
 
             val link = file.getString("Link", "")
             val name = file.getString("Name", "")
-
             val addr = Preferences.getCurrentHost() + link
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(addr))
@@ -261,17 +266,16 @@ class PlayActivity : AppCompatActivity() {
             val connectedSeeders = it.getInt("ConnectedSeeders", 0)
             val downloadSpeed = it.getDouble("DownloadSpeed", 0.0)
 
-            var msg = torr.getString("Name", "")
-            if (msg.isNotEmpty())
-                msg += "\n"
+            var buffer = ""
             var prc = 0
             if (preloadSize > 0) {
                 prc = (preloadedBytes * 100 / preloadSize).toInt()
-                msg += getString(R.string.buffer) + ": " + (prc).toString() + "% " + ByteFmt.byteFmt(preloadedBytes) + "/" + ByteFmt.byteFmt(preloadSize) + "\n"
+                buffer = (prc).toString() + "% " + ByteFmt.byteFmt(preloadedBytes) + "/" + ByteFmt.byteFmt(preloadSize)
             }
-            msg += getString(R.string.peers) + ": [" + connectedSeeders.toString() + "] " + activePeers.toString() + "/" + totalPeers.toString() + "\n"
-            msg += getString(R.string.download_speed) + ": " + ByteFmt.byteFmt(downloadSpeed) + "/s"
-            showProgress(msg, prc)
+            val peers = "[$connectedSeeders] $activePeers/$totalPeers"
+            val speed = ByteFmt.byteFmt(downloadSpeed) + "/s"
+            showProgress(prc)
+            setInfo("", file, buffer, peers, speed)
         }, {
             App.Toast(it)
             isClosed = true
@@ -282,7 +286,7 @@ class PlayActivity : AppCompatActivity() {
 
             ad?.waitAd()
 
-            val link = file.getString("Link", "")
+            val link = file.getString("Play", "")
             val name = file.getString("Name", "")
 
             val addr = Preferences.getCurrentHost() + link
@@ -318,11 +322,10 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    private fun showProgress(msg: String, prog: Int = 0) {
+    private fun showProgress(prog: Int = 0) {
         Handler(Looper.getMainLooper()).post {
             progress.visibility = View.VISIBLE
             list.visibility = View.GONE
-            tvStatus.text = msg
             progressBar.isIndeterminate = prog == 0
             if (prog > 0) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -343,8 +346,83 @@ class PlayActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).post {
             progress.visibility = View.GONE
             list.visibility = View.VISIBLE
-            tvStatus.text = ""
+            setInfo()
             progressBar.isIndeterminate = true
+        }
+    }
+
+    private fun setInfo(info: String = "", file: JSObject? = null, buffer: String = "", peers: String = "", speed: String = "") {
+        Handler(Looper.getMainLooper()).post {
+            var title = ""
+            title = this.title
+            torrent?.let { torr ->
+                if (title.isEmpty()) {
+                    title = torr.get("Name", "")
+                    if (title.isEmpty())
+                        title = torr.getString("Title", "")
+                }
+            }
+
+            if (title.isEmpty())
+                findViewById<TextView>(R.id.tvTitle).visibility = View.GONE
+            else {
+                findViewById<TextView>(R.id.tvTitle).visibility = View.VISIBLE
+                findViewById<TextView>(R.id.tvTitle).text = title
+            }
+
+            file?.let {
+                var name = file.getString("Name", "")
+                if (name.isNotEmpty())
+                    name = File(file.getString("Name", "")).name
+
+                findViewById<TextView>(R.id.tvFileName).visibility = View.VISIBLE
+                findViewById<TextView>(R.id.tvFileSize).visibility = View.VISIBLE
+
+                findViewById<TextView>(R.id.tvFileName).setText(name)
+
+                val size = file.getLong("Size", -1)
+                if (size >= 0) {
+                    val boldText = getString(R.string.size) + ": "
+                    val s = SpannableStringBuilder(boldText + "${ByteFmt.byteFmt(size)}")
+                    s.setSpan(StyleSpan(Typeface.BOLD), 0, boldText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    findViewById<TextView>(R.id.tvFileSize).setText(s)
+                }
+            } ?: let {
+                findViewById<TextView>(R.id.tvFileName).visibility = View.GONE
+                findViewById<TextView>(R.id.tvFileSize).visibility = View.GONE
+            }
+
+            if (buffer.isNotEmpty()) {
+                val boldText = getString(R.string.buffer) + ": "
+                val s = SpannableStringBuilder(boldText + buffer)
+                s.setSpan(StyleSpan(Typeface.BOLD), 0, boldText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                findViewById<TextView>(R.id.tvBuffer).visibility = View.VISIBLE
+                findViewById<TextView>(R.id.tvBuffer).setText(s)
+            } else
+                findViewById<TextView>(R.id.tvBuffer).visibility = View.GONE
+
+            if (peers.isNotEmpty()) {
+                val boldText = getString(R.string.peers) + ": "
+                val s = SpannableStringBuilder(boldText + peers)
+                s.setSpan(StyleSpan(Typeface.BOLD), 0, boldText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                findViewById<TextView>(R.id.tvPeers).visibility = View.VISIBLE
+                findViewById<TextView>(R.id.tvPeers).setText(s)
+            } else
+                findViewById<TextView>(R.id.tvPeers).visibility = View.GONE
+
+            if (speed.isNotEmpty()) {
+                val boldText = getString(R.string.download_speed) + ": "
+                val s = SpannableStringBuilder(boldText + speed)
+                s.setSpan(StyleSpan(Typeface.BOLD), 0, boldText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                findViewById<TextView>(R.id.tvSpeed).visibility = View.VISIBLE
+                findViewById<TextView>(R.id.tvSpeed).setText(s)
+            } else
+                findViewById<TextView>(R.id.tvSpeed).visibility = View.GONE
+            if (info.isNotEmpty()) {
+                findViewById<TextView>(R.id.tvConnections).visibility = View.VISIBLE
+                findViewById<TextView>(R.id.tvConnections).setText(info)
+            } else
+                findViewById<TextView>(R.id.tvConnections).visibility = View.GONE
         }
     }
 
