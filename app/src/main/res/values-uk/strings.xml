@@ -22,6 +22,8 @@
     <string name="local_server">Локальний сервер</string>
     <string name="saved_server">Збережений сервер</string>
 
+    <string name="title">Назва</string>
+    <string name="poster_url">URL-адреса плаката</string>
     <string name="torrent">Торент</string>
     <string name="torrents">Торенти</string>
 
