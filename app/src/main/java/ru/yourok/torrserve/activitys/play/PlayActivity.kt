@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.activitys.play
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
@@ -46,11 +47,13 @@ class PlayActivity : AppCompatActivity() {
     private var title = ""
     private var poster = ""
     private var info = ""
-    private var torrLink = ""
-    private var torrent: JSObject? = null
-    private var isClosed = false
     private var save = true
     private var play = true
+    private var torrLink = ""
+    private var fileTemplate = ""
+
+    private var torrent: JSObject? = null
+    private var isClosed = false
     private var ad: Ad? = null
 
     private var firebaseAnalytics: FirebaseAnalytics? = null
@@ -75,13 +78,13 @@ class PlayActivity : AppCompatActivity() {
         window.attributes = attr
 
         if (intent == null) {
-            finish()
+            finish(false, "intent is null")
             return
         }
 
         intent.data?.let { torrLink = it.toString() }
         if (torrLink.isEmpty()) {
-            finish()
+            finish(false, "empty magnet")
             return
         }
 
@@ -98,27 +101,32 @@ class PlayActivity : AppCompatActivity() {
         if (intent.hasExtra("Info"))
             info = intent.getStringExtra("Info")
 
+        if (intent.hasExtra("FileTemplate"))
+            fileTemplate = intent.getStringExtra("FileTemplate")
+
         thread {
             try {
                 startServer()
                 torrent = addTorrent()
                 if (isClosed || torrent == null || !play) {
-                    finish()
+                    finish(false)
                     return@thread
                 }
-                val files = Torrent.getPlayableFiles(torrent!!)
+                var files = Torrent.getPlayableFiles(torrent!!)
+                files = SerialFilter.filter(intent, files)
+
                 if (files.size == 1) {
                     play(torrent!!, files[0], false)
                 } else if (files.size > 1) {
                     showList(torrent!!, files)
                 } else {
                     App.Toast(getString(R.string.files_not_found))
-                    finish()
+                    finish(false, "file not found in torrent")
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 App.Toast(e.message ?: getString(R.string.error_open_torrent))
-                finish()
+                finish(false, "error opening torrent")
             }
         }
 
@@ -130,7 +138,7 @@ class PlayActivity : AppCompatActivity() {
                     intent.setDataAndType(Uri.parse(Net.getHostUrl(pl)), "audio/x-mpegurl")
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     App.getContext().startActivity(intent)
-                    finish()
+                    finish(true)
                 }
             }
         }
@@ -235,7 +243,7 @@ class PlayActivity : AppCompatActivity() {
         }, {
             App.Toast(it)
             isClosed = true
-            finish()
+            finish(false, it)
         })
 
         if (!isClosed) {
@@ -254,18 +262,18 @@ class PlayActivity : AppCompatActivity() {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("title", name)
 
+            finish(true, "", name)
+
             if (force) {
                 intent.setDataAndType(Uri.parse(addr), "*/*")
                 val intentC = Intent.createChooser(intent, "")
                 startActivity(intentC)
-                finish()
                 return
             }
 
             if (pkg.isEmpty() or pkg.equals("0")) {
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
-                    finish()
                     return
                 }
             }
@@ -274,7 +282,6 @@ class PlayActivity : AppCompatActivity() {
                 intent.`package` = pkg
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
-                    finish()
                     return
                 }
                 intent.`package` = ""
@@ -282,7 +289,6 @@ class PlayActivity : AppCompatActivity() {
 
             val intentC = Intent.createChooser(intent, "")
             startActivity(intentC)
-            finish()
         }
     }
 
@@ -418,9 +424,17 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    override fun finish() {
+    fun finish(isStartPlay: Boolean, error: String = "", fname: String = "") {
         ad?.waitAd()
-        super.finish()
+        val intent = Intent()
+        intent.putExtra("isStartPlay", isStartPlay)
+        intent.putExtra("error", error)
+        intent.putExtra("fileName", fname)
+        torrent?.let {
+            intent.putExtra("torrent", it.js.toString(0))
+        }
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     override fun onBackPressed() {
