@@ -10,6 +10,6 @@ class AddTemporary : Add() {
             it.putExtra("DontSave", true)
             startActivity(it)
         }
-        finish()
+        startPlayActivity()
     }
 }

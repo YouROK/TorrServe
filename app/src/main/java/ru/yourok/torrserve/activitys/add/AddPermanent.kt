@@ -9,6 +9,6 @@ class AddPermanent : Add() {
         playIntent?.let {
             startActivity(it)
         }
-        finish()
+        startPlayActivity()
     }
 }

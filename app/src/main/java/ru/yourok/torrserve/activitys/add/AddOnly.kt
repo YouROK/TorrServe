@@ -9,6 +9,6 @@ class AddOnly : Add() {
             it.putExtra("DontPlay", true)
             startActivity(it)
         }
-        finish()
+        startPlayActivity()
     }
 }
