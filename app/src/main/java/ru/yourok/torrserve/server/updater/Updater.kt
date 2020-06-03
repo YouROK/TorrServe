@@ -233,8 +233,8 @@ object Updater {
             check { apkJS ->
                 var isShow = false
 
-                val remoteApk = apkJS.getString("Version", "")
-                if (remoteApk.isNotEmpty() && BuildConfig.VERSION_NAME != remoteApk)
+                val remoteApk = apkJS.getString("VersionCode", "")
+                if (remoteApk.isNotEmpty() && BuildConfig.VERSION_CODE < remoteApk.toInt(10))
                     isShow = true
 
                 if (isShow) {
