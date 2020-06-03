@@ -11,6 +11,7 @@ import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -52,7 +53,13 @@ class PlayActivity : AppCompatActivity() {
     private var torrLink = ""
     private var fileTemplate = ""
 
+    private var lastPlayed = -1
+    private var useRemote = false
+    private var selectedRemote = -1
+
     private var torrent: JSObject? = null
+    private var files: List<JSObject> = emptyList()
+
     private var isClosed = false
     private var ad: Ad? = null
 
@@ -112,8 +119,18 @@ class PlayActivity : AppCompatActivity() {
                     finish(false)
                     return@thread
                 }
-                var files = Torrent.getPlayableFiles(torrent!!)
+                files = Torrent.getPlayableFiles(torrent!!)
                 files = SerialFilter.filter(intent, files)
+
+                if (files.size > 2) {
+                    for (i in files.size - 1 downTo 0) {
+                        if (files[i].getBoolean("Viewed", false)) {
+                            lastPlayed = i
+                            break
+                        }
+                    }
+                    selectedRemote = lastPlayed
+                }
 
                 if (files.size == 1) {
                     play(torrent!!, files[0], false)
@@ -142,6 +159,72 @@ class PlayActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (!useRemote)
+            return super.onKeyDown(keyCode, event)
+
+        if (keyCode == KeyEvent.KEYCODE_MENU ||
+                keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE
+        )
+            return true
+
+        if (keyCode == KeyEvent.KEYCODE_MEDIA_PREVIOUS ||
+                keyCode == KeyEvent.KEYCODE_MEDIA_REWIND ||
+                keyCode == KeyEvent.KEYCODE_PAGE_DOWN
+        ) {
+            selectedRemote--
+            if (selectedRemote < 0)
+                selectedRemote = files.size - 1
+            setFocusItem(selectedRemote, 20)
+            return true
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_MEDIA_NEXT ||
+                keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD ||
+                keyCode == KeyEvent.KEYCODE_PAGE_UP
+        ) {
+            selectedRemote++
+            if (selectedRemote >= files.size)
+                selectedRemote = 0
+            setFocusItem(selectedRemote, 20)
+            return true
+        }
+
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        if (!useRemote)
+            return super.onKeyUp(keyCode, event)
+
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            buttonPlaylist.performClick()
+            return true
+        }
+        if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+            torrent?.let { torr ->
+                val fileInd = lastPlayed + 1
+                if (fileInd < files.size)
+                    thread {
+                        play(torr, files[fileInd], false)
+                    }
+            }
+            return true
+        }
+
+        if (
+                keyCode == KeyEvent.KEYCODE_MEDIA_PREVIOUS ||
+                keyCode == KeyEvent.KEYCODE_MEDIA_REWIND ||
+                keyCode == KeyEvent.KEYCODE_PAGE_DOWN ||
+                keyCode == KeyEvent.KEYCODE_MEDIA_NEXT ||
+                keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD ||
+                keyCode == KeyEvent.KEYCODE_PAGE_UP
+        )
+            return true
+
+        return super.onKeyUp(keyCode, event)
     }
 
     private fun startServer() {
@@ -188,14 +271,7 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun showList(torr: JSObject, files: List<JSObject>) {
-        var lastPlayed = -1
-        for (i in files.size - 1 downTo 0) {
-            if (files[i].getBoolean("Viewed", false)) {
-                lastPlayed = i
-                break
-            }
-        }
-
+        useRemote = true
         hideProgress()
         Handler(Looper.getMainLooper()).post {
             rvFileList.apply {
@@ -204,14 +280,10 @@ class PlayActivity : AppCompatActivity() {
                 if (lastPlayed > 0)
                     setFocusItem(lastPlayed)
                 adapter = TorrentFilesAdapter(files, {
-                    showProgress()
-                    setInfo(getString(R.string.buffering) + "...")
                     thread {
                         play(torr, it, false)
                     }
                 }, {
-                    showProgress()
-                    setInfo(getString(R.string.buffering) + "...")
                     thread {
                         play(torr, it, true)
                     }
@@ -222,6 +294,10 @@ class PlayActivity : AppCompatActivity() {
     }
 
     fun play(torr: JSObject, file: JSObject, force: Boolean) {
+        useRemote = false
+        showProgress()
+        setInfo(getString(R.string.buffering) + "...")
+
         Torrent.preload(torr, file, {
             val preloadedBytes = it.getLong("PreloadedBytes", 0L)
             val preloadSize = it.getLong("PreloadSize", 0L)
@@ -396,13 +472,15 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFocusItem(pos: Int) {
+    private fun setFocusItem(pos: Int, timeout: Long = 500) {
         Handler(Looper.getMainLooper()).post {
             findViewById<RecyclerView>(R.id.rvFileList)?.apply {
-                layoutManager?.scrollToPosition(pos)
                 postDelayed({
-                    findViewHolderForAdapterPosition(pos)?.itemView?.requestFocus()
-                }, 500)
+                    layoutManager?.scrollToPosition(pos)
+                    postDelayed({
+                        findViewHolderForAdapterPosition(pos)?.itemView?.requestFocus()
+                    }, timeout / 2)
+                }, timeout)
             }
         }
     }
