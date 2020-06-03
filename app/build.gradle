@@ -17,7 +17,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 84
-        versionName "1.1.84_3"
+        versionName "1.1.84_5"
     }
     signingConfigs {
         release {
@@ -85,6 +85,7 @@ class WriteVersion implements Plugin<Project> {
 
                 def appId = "$project.android.defaultConfig.applicationId"
                 def version = "$project.android.defaultConfig.versionName"
+                def versionCode = "$project.android.defaultConfig.versionCode"
 
                 println appId
                 println version
@@ -93,6 +94,7 @@ class WriteVersion implements Plugin<Project> {
                 def json = """{
  "Name": "${appId}",
  "Version": "${version}",
+ "VersionCode": "${versionCode}",
  "BuildDate": "${new SimpleDateFormat("dd.MM.yyyy").format(new Date())}",
  "Link": "https://github.com/YouROK/TorrServe/releases/download/${version}/TorrServe_${version}.apk"
 }
