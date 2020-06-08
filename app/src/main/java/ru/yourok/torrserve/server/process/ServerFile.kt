@@ -50,11 +50,6 @@ object ServerFile {
             if (Api.serverIsLocal() && serverExists())
                 Api.serverShutdown()
             shell = null
-
-//            if (Preferences.isExecRootServer())
-//                Shell.su("killall -9 torrserver")
-//            else
-//                Shell.sh("killall -9 torrserver")
         }
     }
 }
