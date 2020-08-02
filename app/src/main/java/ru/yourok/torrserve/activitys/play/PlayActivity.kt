@@ -56,6 +56,7 @@ class PlayActivity : AppCompatActivity() {
     private var lastPlayed = -1
     private var useRemote = false
     private var selectedRemote = -1
+    private var playLast = false
 
     private var torrent: JSObject? = null
     private var files: List<JSObject> = emptyList()
@@ -101,6 +102,9 @@ class PlayActivity : AppCompatActivity() {
         if (intent.hasExtra("DontPlay"))
             play = false
 
+        if (intent.hasExtra("PlayLast"))
+            playLast = true
+
         if (intent.hasExtra("Poster"))
             poster = intent.getStringExtra("Poster")
         if (intent.hasExtra("Title"))
@@ -132,8 +136,14 @@ class PlayActivity : AppCompatActivity() {
                     selectedRemote = lastPlayed
                 }
 
-                if (files.size == 1) {
-                    play(torrent!!, files[0], false)
+                if (files.size == 1 || playLast) {
+                    if (playLast) {
+                        if (lastPlayed + 1 >= files.size)
+                            lastPlayed = files.size - 1
+                        play(torrent!!, files[lastPlayed + 1], false)
+                    } else {
+                        play(torrent!!, files[0], false)
+                    }
                 } else if (files.size > 1) {
                     showList(torrent!!, files)
                 } else {
