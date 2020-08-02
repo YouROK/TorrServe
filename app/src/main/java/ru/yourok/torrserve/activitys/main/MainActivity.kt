@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.KeyEvent
 import android.widget.FrameLayout
 import android.widget.ListView
 import android.widget.TextView
@@ -88,6 +89,35 @@ class MainActivity : AppCompatActivity() {
         }
         Updater.show(this)
         DialogPerm.requestPermissionWithRationale(this)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE)
+            return true
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+            val pos = rvTorrents.selectedItemPosition
+
+            val torr = torrAdapter.getItem(pos) as JSObject
+            val mag = torr.getString("Magnet", "")
+            if (mag.isEmpty()) {
+                Toast.makeText(App.getContext(), "Magnet not found", Toast.LENGTH_SHORT).show()
+                return true
+            }
+            val vintent = Intent(App.getContext(), PlayActivity::class.java)
+            vintent.setData(Uri.parse(mag))
+            vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            vintent.action = Intent.ACTION_VIEW
+            vintent.putExtra("DontSave", true)
+            vintent.putExtra("PlayLast", true)
+            App.getContext().startActivity(vintent)
+            return true
+        }
+
+        return super.onKeyUp(keyCode, event)
     }
 
     override fun onBackPressed() {
