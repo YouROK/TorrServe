@@ -6,7 +6,7 @@
 
     <!--menu-->
     <LinearLayout
-        android:layout_width="280dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <include layout="@layout/main_navigation_menu" />

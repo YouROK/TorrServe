@@ -6,6 +6,7 @@
     <color name="colorAccent">#3fb57a</color><!--455A64-->
     <color name="lighter_gray">#CCC</color>
     <color name="darker_gray">#2B2B2B</color>
+    <color name="colorHost">#FFA724</color><!--FFCC3B-->
 </resources>
 
 
