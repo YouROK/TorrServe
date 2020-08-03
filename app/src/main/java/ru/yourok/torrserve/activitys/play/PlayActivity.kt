@@ -169,6 +169,8 @@ class PlayActivity : AppCompatActivity() {
                 }
             }
         }
+        // set initial focus on Playlist button
+        buttonPlaylist.requestFocus()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
