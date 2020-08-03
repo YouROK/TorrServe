@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.snackbar.Snackbar
 import ru.yourok.torrserve.R
@@ -64,6 +65,9 @@ object Donate {
                             Preferences.setLastViewDonate(System.currentTimeMillis() + 5 * 60 * 1000)
                         }
                         .show()
+                // set focus for TV
+                val ok = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_action) as View?
+                ok?.requestFocus()
             }, 5000)
             Handler(Looper.getMainLooper()).postDelayed({
                 if (snackbar.isShown) {
