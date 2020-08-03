@@ -17,8 +17,8 @@
     <string name="host">Хост</string>
 
     <string name="local_ip">Локальный IP</string>
-    <string name="connected_host">Подключенный хост</string>
-    <string name="find_hosts">Поиск хостов</string>
+    <string name="connected_host">Используется</string>
+    <string name="find_hosts">Поиск серверов</string>
     <string name="local_server">Локальный сервер</string>
     <string name="saved_server">Сохраненный сервер</string>
 
