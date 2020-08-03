@@ -34,7 +34,7 @@ class ChannelProvider(private val name: String) {
                 builder.build().toContentValues()
         )
         channelId = ContentUris.parseId(channelUri)
-        val bitmap = BitmapFactory.decodeResource(App.getContext().resources, R.mipmap.ic_launcher)
+        val bitmap = BitmapFactory.decodeResource(App.getContext().resources, R.drawable.ts_round)
         ChannelLogoUtils.storeChannelLogo(App.getContext(), channelId, bitmap)
         TvContractCompat.requestChannelBrowsable(App.getContext(), channelId)
         return channelId
