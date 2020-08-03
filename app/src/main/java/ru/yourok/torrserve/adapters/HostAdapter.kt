@@ -38,7 +38,7 @@ class HostAdapter(val onClick: (host: String) -> Unit) : RecyclerView.Adapter<Ho
 
             savedHosts.forEach {
                 if (!hosts.contains(ServerIp(it, ""))) {
-                    hosts.add(ServerIp(it, "${App.getContext().getString(R.string.local_server)}  **"))
+                    hosts.add(ServerIp(it, "${App.getContext().getString(R.string.saved_server)}")) // **
                     if (hosts.isEmpty())
                         notifyItemInserted(0)
                     else
