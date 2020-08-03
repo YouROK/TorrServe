@@ -29,13 +29,15 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/local_ip"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvCurrentHost"
                     android:maxLines="2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -49,12 +51,14 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/connected_host"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvConnectedHost"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <EditText
@@ -106,8 +110,9 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:indeterminate="true"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:indeterminate="true"
+        android:visibility="gone" />
 </FrameLayout>
