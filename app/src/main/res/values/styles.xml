@@ -4,6 +4,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--@null|@drawable/gradient_divider_hg|hw-->
+        <item name="android:listDivider">@drawable/gradient_divider_hg</item>
     </style>
 
     <style name="MyDialog" parent="Theme.AppCompat.Dialog">

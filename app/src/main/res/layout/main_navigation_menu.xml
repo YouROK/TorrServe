@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menulayout"
     android:layout_gravity="left"
-    android:layout_width="250dp"
+    android:layout_width="240dp"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -22,13 +22,13 @@
                 android:layout_height="match_parent">
 
                 <FrameLayout
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:background="@drawable/header"
                     android:id="@+id/header"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp">
+                    android:layout_height="120dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/action_selector"
+                    >
 
                     <ImageView
                         android:layout_width="78dp"
@@ -38,11 +38,11 @@
                         android:src="@mipmap/ic_launcher" />
 
                     <LinearLayout
-                        android:layout_gravity="center|bottom"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvCurrentHost"
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:foreground="@drawable/action_selector"
                     android:padding="15dp">
 
                     <ImageView
@@ -106,7 +106,7 @@
                     android:focusable="true"
                     android:id="@+id/btnRemoveAll"
                     android:padding="15dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:foreground="@drawable/action_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -137,7 +137,7 @@
                     android:focusable="true"
                     android:id="@+id/btnPlaylist"
                     android:padding="15dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:foreground="@drawable/action_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -168,7 +168,7 @@
                     android:focusable="true"
                     android:id="@+id/btnDonate"
                     android:padding="15dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:foreground="@drawable/action_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -199,7 +199,7 @@
                     android:focusable="true"
                     android:id="@+id/btnUpdate"
                     android:padding="15dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:foreground="@drawable/action_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -230,7 +230,7 @@
                     android:focusable="true"
                     android:id="@+id/btnSettings"
                     android:padding="15dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:foreground="@drawable/action_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -261,7 +261,7 @@
                     android:focusable="true"
                     android:id="@+id/btnExit"
                     android:padding="15dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:foreground="@drawable/action_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
