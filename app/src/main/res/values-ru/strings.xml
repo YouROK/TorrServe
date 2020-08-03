@@ -45,12 +45,12 @@
     <string name="server_settings">Настройки сервера</string>
     <string name="start_server_on_boot">Запускать при старте ОС</string>
     <string name="dont_start_server_on_boot">Не запускать при старте ОС</string>
-    <string name="select_player">Выбрать плеер</string>
+    <string name="select_player">Выбор плеера</string>
     <string name="disable_ad">Отключить рекламу</string>
     <string name="ad_disabled">Реклама отключена</string>
     <string name="ad_enabled">Реклама включена</string>
     <string name="root_server">Запускать сервер от рута</string>
-    <string name="root_server_on">Запускать сервер от рута, чтобы система не могла убить его (требуется root-доступ)</string>
+    <string name="root_server_on">Запускать сервер от рута, чтобы система не могла остановить его (требуется root-доступ)</string>
     <string name="root_server_off">Не запускать сервер от рута</string>
 
     <string name="add_play">Добавить и играть</string>
@@ -60,7 +60,7 @@
     <string name="no">НЕТ</string>
 
     <string name="default_player">Плеер по умолчанию</string>
-    <string name="choose_player">Выбор плеера</string>
+    <string name="choose_player">Всегда спрашивать</string>
 
     <string name="donate_msg">Ваше пожертвование помогает мне развиваться дальше, улучшать программу и создавать новые</string>
     <string name="paypal" translatable="false">PayPal</string>
