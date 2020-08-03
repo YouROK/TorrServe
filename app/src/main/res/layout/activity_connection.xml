@@ -24,9 +24,10 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:paddingRight="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
                     android:text="@string/local_ip"
                     android:textStyle="bold" />
 
@@ -43,9 +44,10 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:paddingRight="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
                     android:text="@string/connected_host"
                     android:textStyle="bold" />
 

@@ -15,16 +15,21 @@
     <!--content-->
     <LinearLayout
         android:id="@+id/content"
-        android:padding="5dp"
+        android:padding="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/darker_gray"
         android:orientation="vertical">
 
         <ListView
             android:id="@+id/rvTorrents"
-            android:listSelector="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="@drawable/gradient_divider_hg"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="84dp"
+            android:listSelector="@drawable/action_selector"
+            android:requiresFadingEdge="vertical" />
     </LinearLayout>
 
 </LinearLayout>
