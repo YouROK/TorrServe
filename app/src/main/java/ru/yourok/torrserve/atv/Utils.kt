@@ -13,6 +13,10 @@ object Utils {
         return App.getContext().packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
     }
 
+    fun isAmazonDev(): Boolean {
+        return App.getContext().packageManager.hasSystemFeature("amazon.hardware.fire_tv")
+    }
+
     fun buildPendingIntent(torr: Torrent): Intent {
         val vintent = Intent(App.getContext(), PlayActivity::class.java)
         vintent.setData(Uri.parse(torr.magnet))
