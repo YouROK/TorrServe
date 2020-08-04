@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.activitys.main.MainActivity
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils.isAmazonDev
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.torrent.Torrent
 import ru.yourok.torrserve.utils.ByteFmt
@@ -84,8 +85,8 @@ class Notification : Service() {
             if (builder == null)
                 builder = NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notify))
-                        .setContentTitle(getString(R.string.app_name))
+                        //.setContentTitle(getString(R.string.app_name))
+                        .setContentText(getString(R.string.stat_server_is_running))
                         .setAutoCancel(false)
                         .setOngoing(true)
                         .setContentIntent(pendingIntent)
@@ -94,7 +95,8 @@ class Notification : Service() {
                         .addAction(android.R.drawable.ic_delete, this.getText(R.string.exit), exitPendingIntent)
             else
                 builder?.setStyle(NotificationCompat.BigTextStyle().bigText(""))
-
+            if (isAmazonDev()) // only for Amazon
+                builder?.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notify))
             builder?.let {
                 startForeground(NOTIFICATION, it.build())
             }
@@ -123,8 +125,8 @@ class Notification : Service() {
             if (builder == null)
                 builder = NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notify))
-                        .setContentTitle(getString(R.string.app_name))
+                        //.setContentTitle(getString(R.string.app_name))
+                        .setContentText(getString(R.string.stat_server_is_running))
                         .setAutoCancel(false)
                         .setOngoing(true)
                         .setContentIntent(pendingIntent)
@@ -133,7 +135,8 @@ class Notification : Service() {
                         .addAction(android.R.drawable.ic_delete, this.getText(R.string.exit), exitPendingIntent)
             else
                 builder?.setStyle(NotificationCompat.BigTextStyle().bigText(msg))
-
+            if (isAmazonDev()) // only for Amazon
+                builder?.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notify))
             builder?.let {
                 mNM?.notify(NOTIFICATION, it.build())
             }
