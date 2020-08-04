@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_weight="1"
-            android:padding="10dp"
+            android:padding="8dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="5dp"
+                    android:layout_marginStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/local_ip"
                     android:textSize="16sp"
@@ -48,7 +48,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="5dp"
+                    android:layout_marginStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/connected_host"
                     android:textSize="16sp"
@@ -64,14 +64,18 @@
             <EditText
                 android:id="@+id/etHost"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp" />
 
             <Button
                 android:id="@+id/btnFindHosts"
-                android:text="@string/find_hosts"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:text="@string/find_hosts" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHosts"

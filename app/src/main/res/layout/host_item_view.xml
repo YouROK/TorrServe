@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="8dp"
     android:background="@drawable/action_selector"
     android:foreground="@drawable/action_selector"
     android:focusable="true"
@@ -11,16 +11,20 @@
 
     <TextView
         android:id="@+id/tvHost"
-        android:text="http://127.0.0.1:8090"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="2dp"
+        android:paddingTop="5dp"
+        android:text="http://127.0.0.1:8090"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
         android:id="@+id/tvVersion"
-        android:text="1.XX.XX"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="2dp"
+        android:paddingBottom="6dp"
+        android:text="1.XX.XX"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
 </LinearLayout>
