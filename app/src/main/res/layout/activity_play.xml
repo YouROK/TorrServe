@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darker_gray"
     tools:context="ru.yourok.torrserve.activitys.play.PlayActivity">
 
     <LinearLayout
@@ -94,20 +95,25 @@
 
     <LinearLayout
         android:id="@+id/list"
-        android:visibility="gone"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/buttonPlaylist"
-            android:text="@string/playlist"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/playlist"
+            android:textColor="@color/colorAccent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFileList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="50dp"
+            android:requiresFadingEdge="vertical" />
     </LinearLayout>
 </LinearLayout>

@@ -2,11 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/action_selector"
+    android:background="@null"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/action_selector"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:clipToPadding="false">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="-5.5dip"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/gradient_divider_hw" />
 
     <TextView
         android:id="@+id/tvFileName"
