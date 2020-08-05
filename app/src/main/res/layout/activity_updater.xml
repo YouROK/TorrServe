@@ -88,8 +88,8 @@
                 <Button
                     android:id="@+id/download_apk_button"
                     android:layout_width="match_parent"
-                    android:maxWidth="305dp"
                     android:layout_height="wrap_content"
+                    android:maxWidth="305dp"
                     android:text="@string/install_apk" />
 
                 <Button
