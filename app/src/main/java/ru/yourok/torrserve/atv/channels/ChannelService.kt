@@ -12,7 +12,11 @@ object ChannelService {
             Log.i("*****", "ChannelService: updateChannels")
 
         with(App.getContext()) {
-            ChannelProvider(getString(R.string.torrents)).update(Provider.get(Provider.Torrents))
+            try {
+                ChannelProvider(getString(R.string.torrents)).update(Provider.get(Provider.Torrents))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }
