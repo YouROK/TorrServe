@@ -16,8 +16,8 @@ android {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 84
-        versionName "1.1.84_7"
+        versionCode 85
+        versionName "1.1.85"
     }
     signingConfigs {
         release {
