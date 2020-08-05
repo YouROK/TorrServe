@@ -300,7 +300,7 @@ class PlayActivity : AppCompatActivity() {
                         play(torr, it, true)
                     }
                 })
-                addItemDecoration(DividerItemDecoration(this@PlayActivity, LinearLayout.VERTICAL))
+                //addItemDecoration(DividerItemDecoration(this@PlayActivity, LinearLayout.VERTICAL))
             }
         }
     }

@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_weight="1"
-            android:padding="8dp"
+            android:padding="5dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -26,7 +26,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
                     android:paddingEnd="5dp"
                     android:text="@string/local_ip"
                     android:textSize="16sp"
@@ -48,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:paddingStart="10dp"
                     android:paddingEnd="5dp"
                     android:text="@string/connected_host"
                     android:textSize="16sp"
@@ -65,11 +66,13 @@
                 android:id="@+id/etHost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp" />
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
+                android:textColor="@color/colorHost" />
 
             <Button
                 android:id="@+id/btnFindHosts"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -89,13 +92,14 @@
             style="@android:style/DeviceDefault.ButtonBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:divider="?android:attr/dividerVertical"
             android:orientation="horizontal"
-            android:showDividers="middle">
+            android:showDividers="none">
 
             <Button
                 android:id="@+id/buttonOk"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -103,7 +107,7 @@
 
             <Button
                 android:id="@+id/buttonCancel"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
