@@ -33,13 +33,14 @@ object ServerFile {
         synchronized(lock) {
             if (shell == null) {
                 val path = Path.getAppPath()
-                if (Preferences.isExecRootServer())
+                if (Preferences.isExecRootServer()) {
                     shell = Shell.su("${servPath.path} -k -d ${Path.getAppPath()} > ${path}/torrserver.log 2>&1")
-                else {
+                } else {
                     val sh = Shell.newInstance("sh")
                     shell = sh.newJob()
                     shell?.add("${servPath.path} -k -d ${Path.getAppPath()} > ${path}/torrserver.log 2>&1")
                 }
+                shell?.add("export GODEBUG=madvdontneed=1")
                 shell?.submit()
             }
         }
