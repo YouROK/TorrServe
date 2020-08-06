@@ -71,16 +71,16 @@
     <string name="install_last_server_remotly">Установить последнюю версию сервера</string>
     <string name="install_custom_server_remotly">Установить желаемую версию сервера</string>
     <string name="install_server_localy">Установить сервер из папки Download</string>
-    <string name="arch">Архитектура</string>
+    <string name="arch">Архитектура ОС</string>
     <string name="version">Версия</string>
     <string name="current_version_apk">Установленная версия Apk</string>
-    <string name="current_version_server">Установленная версия Server</string>
-    <string name="downloading">Скачивание...</string>
+    <string name="current_version_server">Версия Server</string>
+    <string name="downloading">Скачивание…</string>
 
     <string name="permission_storage_msg">Доступ к памяти требуется для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
 
-    <string name="crash_app">"Ооооой... Во мне случилась ошибка,\nНо не волнуйтесь, Вы можете отправить отчет об ошибке разработчику, чтобы он её поскорее исправил."</string>
+    <string name="crash_app">"Ооооой… Во мне случилась ошибка,\nНо не волнуйтесь, Вы можете отправить отчет об ошибке разработчику, чтобы он её поскорее исправил."</string>
 
     <string name="connects_to_torrent">Получение информации торрента</string>
 
@@ -94,7 +94,7 @@
     <string name="upload_speed">Скорость отдачи</string>
 
     <string name="copy_to_clipboard">Скопировано в буфер обмена</string>
-    <string name="connecting_to_server">Соединение с сервером...</string>
+    <string name="connecting_to_server">Соединение с сервером…</string>
     <string name="stat_server_is_running">Сервер запущен</string>
     <string name="server_stoped">Сервер остановлен</string>
     <string name="server_not_responding">Сервер не отвечает</string>

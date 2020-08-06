@@ -74,13 +74,13 @@
     <string name="arch">Arch</string>
     <string name="version">Version</string>
     <string name="current_version_apk">Installed Apk Version</string>
-    <string name="current_version_server">Installed Server Version</string>
-    <string name="downloading">Downloading...</string>
+    <string name="current_version_server">Server Version</string>
+    <string name="downloading">Downloading…</string>
 
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>
 
-    <string name="crash_app">"Ups... Something goes wrong,\nBut don't worry, you can send a bug report to the developer so that he fixes it as soon as possible."</string>
+    <string name="crash_app">"Ups… Something goes wrong,\nBut don't worry, you can send a bug report to the developer so that he fixes it as soon as possible."</string>
 
     <string name="connects_to_torrent">Getting torrent information</string>
 
@@ -94,7 +94,7 @@
     <string name="upload_speed">Upload speed</string>
 
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="connecting_to_server">Server connection...</string>
+    <string name="connecting_to_server">Server connection…</string>
     <string name="stat_server_is_running">Server is running</string>
     <string name="server_stoped">Server stopped</string>
     <string name="server_not_responding">Server is not responding</string>

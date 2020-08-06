@@ -73,13 +73,13 @@
     <string name="install_server_localy">Встановити сервер з папки Download</string>
     <string name="version">Версія</string>
     <string name="current_version_apk">Встановлена версія Apk</string>
-    <string name="current_version_server">Встановлена версія Server</string>
-    <string name="downloading">Завантаження...</string>
+    <string name="current_version_server">Версія Server</string>
+    <string name="downloading">Завантаження…</string>
 
     <string name="permission_storage_msg">Потрібний доступ до пам\'яті для запису налаштувань в файл</string>
     <string name="permission_btn">ДОЗВОЛИТИ</string>
 
-    <string name="crash_app">"Ооооой... В мені виникла помилка,\nАле не хвилюйтесь, Ви можете відправити звіт про помилку розробнику, щоб він її поскоріше виправив."</string>
+    <string name="crash_app">"Ооооой… В мені виникла помилка,\nАле не хвилюйтесь, Ви можете відправити звіт про помилку розробнику, щоб він її поскоріше виправив."</string>
 
     <string name="connects_to_torrent">Отримання інформації торенту</string>
 
@@ -93,7 +93,7 @@
     <string name="upload_speed">Швидкість віддачі</string>
 
     <string name="copy_to_clipboard">Скопійовано в буфер обміну</string>
-    <string name="connecting_to_server">З\'єднання з сервером...</string>
+    <string name="connecting_to_server">З\'єднання з сервером…</string>
     <string name="stat_server_is_running">Сервер запущений</string>
     <string name="server_stoped">Сервер зупинений</string>
     <string name="server_not_responding">Сервер не відповідає</string>
