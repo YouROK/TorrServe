@@ -110,6 +110,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/install_last_server_remotly"
                     android:textAlignment="viewStart"
+                    android:textColor="@color/colorHost"
                     android:textSize="16sp" />
 
                 <Button
@@ -121,6 +122,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/install_custom_server_remotly"
                     android:textAlignment="viewStart"
+                    android:textColor="@color/colorHost"
                     android:textSize="16sp" />
 
                 <Button
@@ -132,6 +134,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/install_server_localy"
                     android:textAlignment="viewStart"
+                    android:textColor="@color/colorHost"
                     android:textSize="16sp" />
 
                 <Button
@@ -143,6 +146,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/delete"
                     android:textAlignment="viewStart"
+                    android:textColor="@color/colorHost"
                     android:textSize="16sp" />
 
                 <ProgressBar

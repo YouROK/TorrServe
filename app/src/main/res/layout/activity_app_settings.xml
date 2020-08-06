@@ -38,10 +38,35 @@
                 android:layout_height="wrap_content"
                 android:text="@string/start_server_on_boot"
                 android:textAlignment="viewStart"
+                android:textColor="@color/colorHost"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvStatStartBoot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent" />
+
+
+            <Button
+                android:id="@+id/btnRootServer"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/root_server"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorHost"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvStatRootServer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="12dp"
@@ -86,28 +111,6 @@
 
             <TextView
                 android:id="@+id/tvStatAD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent" />
-
-            <Button
-                android:id="@+id/btnRootServer"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/root_server"
-                android:textAlignment="viewStart"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvStatRootServer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="12dp"
