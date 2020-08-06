@@ -71,6 +71,7 @@
     <string name="install_last_server_remotly">Установить последнюю версию сервера</string>
     <string name="install_custom_server_remotly">Установить желаемую версию сервера</string>
     <string name="install_server_localy">Установить сервер из папки Download</string>
+    <string name="arch">Архитектура</string>
     <string name="version">Версия</string>
     <string name="current_version_apk">Установленная версия Apk</string>
     <string name="current_version_server">Установленная версия Server</string>

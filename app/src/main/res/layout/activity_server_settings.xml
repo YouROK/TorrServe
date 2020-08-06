@@ -9,7 +9,10 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="50dp"
+        android:requiresFadingEdge="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,11 +21,15 @@
             android:padding="10dp">
 
             <Button
-                android:focusableInTouchMode="true"
                 android:id="@+id/btnServerAddr"
-                android:textAllCaps="false"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:fontFamily="sans-serif"
+                android:textAllCaps="false"
+                android:textColor="@color/colorHost"
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -59,34 +66,34 @@
                 android:inputType="numberSigned" />
 
             <CheckBox
-                android:text="@string/disable_tcp"
                 android:id="@+id/checkBoxDisableTCP"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/disable_tcp" />
 
             <CheckBox
-                android:text="@string/disable_utp"
                 android:id="@+id/checkBoxDisableUTP"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/disable_utp" />
 
             <CheckBox
-                android:text="@string/disable_upnp"
                 android:id="@+id/checkBoxDisableUPNP"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/disable_upnp" />
 
             <CheckBox
-                android:text="@string/disable_dht"
                 android:id="@+id/checkBoxDisableDHT"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/disable_dht" />
 
             <CheckBox
-                android:text="@string/disable_upload"
                 android:id="@+id/checkBoxDisableUpload"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/disable_upload" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -176,22 +183,21 @@
                 android:background="@android:color/transparent" />
 
             <TextView
-                android:layout_gravity="end"
                 android:id="@+id/tvVersion"
-                android:paddingEnd="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="5dp" />
 
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
-        android:background="?android:colorBackground"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout">
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textViewStatus"
@@ -203,9 +209,10 @@
             style="@android:style/DeviceDefault.ButtonBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:divider="?android:attr/dividerVertical"
             android:orientation="horizontal"
-            android:showDividers="middle">
+            android:showDividers="none">
 
             <Button
                 android:id="@+id/buttonOk"
