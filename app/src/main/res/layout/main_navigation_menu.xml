@@ -94,7 +94,7 @@
                         android:text="@string/add"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </FrameLayout>
 
                 <View
@@ -125,7 +125,7 @@
                         android:text="@string/remove_all"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </FrameLayout>
 
                 <View
@@ -156,7 +156,7 @@
                         android:text="@string/playlist"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </FrameLayout>
 
                 <View
@@ -187,7 +187,7 @@
                         android:text="@string/donate"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </FrameLayout>
 
                 <View
@@ -218,7 +218,7 @@
                         android:text="@string/update"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </FrameLayout>
 
                 <View
@@ -249,7 +249,7 @@
                         android:text="@string/settings"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </FrameLayout>
 
                 <View
@@ -280,7 +280,7 @@
                         android:text="@string/exit"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </FrameLayout>
 
                 <View
