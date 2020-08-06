@@ -68,6 +68,16 @@
                 android:paddingEnd="12dp"
                 android:singleLine="false" />
 
+            <Button
+                android:id="@+id/download_apk_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/install_apk"
+                android:textAlignment="viewStart"
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/textViewServerVersion"
                 android:layout_width="match_parent"
@@ -90,17 +100,6 @@
                 android:layout_height="wrap_content"
                 android:maxWidth="305dp"
                 android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/download_apk_button"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:maxWidth="305dp"
-                    android:text="@string/install_apk"
-                    android:textAlignment="viewStart"
-                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/btnInstallRemotly"
