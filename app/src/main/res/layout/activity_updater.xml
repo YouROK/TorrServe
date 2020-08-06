@@ -8,13 +8,13 @@
     android:orientation="vertical"
     tools:context="ru.yourok.torrserve.activitys.updater.UpdaterActivity">
 
-    <!--ScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"-->
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                     android:paddingEnd="5dp"
                     android:singleLine="false"
                     android:text="@string/app_name"
-                    android:textSize="42sp" />
+                    android:textSize="40sp" />
 
                 <ImageButton
                     android:id="@+id/buttonCheckUpdate"
@@ -36,9 +36,10 @@
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="1dp"
+                    android:contentDescription="@string/update"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_sync"
-                    android:contentDescription="@string/update" />
+                    app:srcCompat="@drawable/ic_sync" />
             </LinearLayout>
 
             <TextView
@@ -163,12 +164,12 @@
                 android:id="@+id/update_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="10dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:singleLine="false" />
 
-        <!--/LinearLayout>
-    </ScrollView-->
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
