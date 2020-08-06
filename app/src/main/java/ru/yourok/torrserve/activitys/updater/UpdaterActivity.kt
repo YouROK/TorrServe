@@ -66,7 +66,7 @@ class UpdaterActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).post {
             findViewById<ProgressBar>(R.id.progress_bar).visibility = View.VISIBLE
             findViewById<ProgressBar>(R.id.progress_bar).isIndeterminate = true
-            textViewArch.text = ("Arch: ${Updater.getArch()}")
+            textViewArch.text = ("${getString(R.string.arch)}: ${Updater.getArch()}")
             textViewApkVersion.text = ("${getString(R.string.current_version_apk)}: ${getString(R.string.app_name)} ${BuildConfig.VERSION_NAME}")
         }
         thread {
@@ -76,7 +76,7 @@ class UpdaterActivity : AppCompatActivity() {
                     Updater.checkRemoteApk()
                     Handler(Looper.getMainLooper()).post {
                         try {
-                            textViewApkUpdate.text = ("${getString(R.string.update)} Apk:" + Updater.getJson(false).getString("Version"))
+                            textViewApkUpdate.text = ("${getString(R.string.update)} Apk: ${getString(R.string.app_name)} " + Updater.getJson(false).getString("Version"))
                         } catch (e: Exception) {
                             textViewApkUpdate.text = e.message ?: "Error get version"
                         }
@@ -92,7 +92,7 @@ class UpdaterActivity : AppCompatActivity() {
                 try {
                     Updater.checkLocalVersion()
                     Handler(Looper.getMainLooper()).post {
-                        textViewServerVersion.text = ("${getString(R.string.current_version_server)} :" + Updater.getCurrVersion())
+                        textViewServerVersion.text = ("${getString(R.string.current_version_server)}: " + Updater.getCurrVersion())
                         if (Api.serverEcho().isNotEmpty())
                             findViewById<TextView>(R.id.update_info).setText(R.string.stat_server_is_running)
                     }
@@ -108,7 +108,7 @@ class UpdaterActivity : AppCompatActivity() {
                     Updater.checkRemoteServer()
                     Handler(Looper.getMainLooper()).post {
                         try {
-                            textViewServerUpdate.text = ("${getString(R.string.update)} Server :" + Updater.getJson(true).getString("Version"))
+                            textViewServerUpdate.text = ("${getString(R.string.update)} Server: " + Updater.getJson(true).getString("Version"))
                         } catch (e: Exception) {
                             textViewServerUpdate.text = e.message ?: "Error get version"
                         }

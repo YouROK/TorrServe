@@ -4,23 +4,27 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context="ru.yourok.torrserve.activitys.settings.AppSettingsActivity">
 
-    <ScrollView
+    <!--ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:padding="10dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"-->
 
             <Button
                 android:id="@+id/btnServerSettings"
-                android:text="@string/server_settings"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/server_settings"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorHost"
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -29,15 +33,19 @@
 
             <Button
                 android:id="@+id/btnStartServerOnBoot"
-                android:text="@string/start_server_on_boot"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/start_server_on_boot"
+                android:textAlignment="viewStart"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvStatStartBoot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="5dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <View
@@ -47,15 +55,19 @@
 
             <Button
                 android:id="@+id/btnSelectPlayer"
-                android:text="@string/select_player"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/select_player"
+                android:textAlignment="viewStart"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvStatPlayer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="5dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <View
@@ -65,15 +77,19 @@
 
             <Button
                 android:id="@+id/btnDisableAD"
-                android:text="@string/disable_ad"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/disable_ad"
+                android:textAlignment="viewStart"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvStatAD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="5dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <View
@@ -83,15 +99,19 @@
 
             <Button
                 android:id="@+id/btnRootServer"
-                android:text="@string/root_server"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/root_server"
+                android:textAlignment="viewStart"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvStatRootServer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="5dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <View
@@ -100,11 +120,13 @@
                 android:background="@android:color/transparent" />
 
             <TextView
-                android:layout_gravity="end"
                 android:id="@+id/textViewVersion"
-                android:paddingEnd="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp" />
+
+        <!--/LinearLayout>
+    </ScrollView-->
 </LinearLayout>
