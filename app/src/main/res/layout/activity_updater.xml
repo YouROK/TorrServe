@@ -100,7 +100,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/install_apk"
                     android:textAlignment="viewStart"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/btnInstallRemotly"
@@ -111,7 +111,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/install_last_server_remotly"
                     android:textAlignment="viewStart"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/btnInstallCustom"
@@ -122,7 +122,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/install_custom_server_remotly"
                     android:textAlignment="viewStart"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/btnInstallLocal"
@@ -133,7 +133,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/install_server_localy"
                     android:textAlignment="viewStart"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/delete_server_button"
@@ -144,7 +144,7 @@
                     android:maxWidth="305dp"
                     android:text="@string/delete"
                     android:textAlignment="viewStart"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
