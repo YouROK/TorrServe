@@ -122,8 +122,12 @@
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_height="64dp"
+        android:layout_gravity="center|top"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="91dp"
+        android:layout_marginEnd="10dp"
         android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/circle_progress"
         android:visibility="gone" />
 </FrameLayout>
