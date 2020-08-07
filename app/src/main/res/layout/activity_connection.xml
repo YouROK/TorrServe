@@ -73,12 +73,15 @@
             <Button
                 android:id="@+id/btnFindHosts"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="1dp"
                 android:layout_marginEnd="1dp"
-                android:text="@string/find_hosts" />
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="@string/find_hosts"
+                android:textSize="16sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHosts"
