@@ -19,12 +19,16 @@
             <Button
                 android:id="@+id/btnServerSettings"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:text="@string/server_settings"
-                android:textAlignment="viewStart"
+                android:textAlignment="center"
                 android:textColor="@color/colorHost"
-                android:textSize="16sp" />
+                android:textSize="16sp">
+                <requestFocus />
+            </Button>
 
             <View
                 android:layout_width="match_parent"
