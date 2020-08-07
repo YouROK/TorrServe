@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_margin="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,6 +64,7 @@
                 android:id="@+id/textViewApkUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:singleLine="false" />
@@ -73,6 +74,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:fontFamily="sans-serif"
                 android:text="@string/install_apk"
                 android:textAlignment="viewStart"
@@ -90,7 +92,7 @@
                 android:id="@+id/textViewServerUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="12dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:singleLine="false" />
@@ -98,7 +100,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="305dp"
+                android:maxWidth="300dp"
                 android:orientation="vertical">
 
                 <Button
@@ -107,10 +109,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:maxWidth="305dp"
+                    android:maxWidth="300dp"
                     android:text="@string/install_last_server_remotly"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/colorHost"
                     android:textSize="16sp" />
 
                 <Button
@@ -119,10 +120,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:maxWidth="305dp"
+                    android:maxWidth="300dp"
                     android:text="@string/install_custom_server_remotly"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/colorHost"
                     android:textSize="16sp" />
 
                 <Button
@@ -131,10 +131,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:maxWidth="305dp"
+                    android:maxWidth="300dp"
                     android:text="@string/install_server_localy"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/colorHost"
                     android:textSize="16sp" />
 
                 <Button
@@ -143,10 +142,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:maxWidth="305dp"
+                    android:maxWidth="300dp"
                     android:text="@string/delete"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/colorHost"
                     android:textSize="16sp" />
 
                 <ProgressBar
