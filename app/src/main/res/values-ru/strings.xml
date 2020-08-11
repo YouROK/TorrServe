@@ -76,6 +76,7 @@
     <string name="current_version_apk">Установленная версия Apk</string>
     <string name="current_version_server">Версия Server</string>
     <string name="downloading">Скачивание…</string>
+    <string name="remote_server">внешний</string>
 
     <string name="permission_storage_msg">Доступ к памяти требуется для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
