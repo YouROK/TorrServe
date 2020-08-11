@@ -65,9 +65,6 @@ object Donate {
                             Preferences.setLastViewDonate(System.currentTimeMillis() + 5 * 60 * 1000)
                         }
                         .show()
-                // set focus for TV
-                val ok = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_action) as View?
-                ok?.requestFocus()
             }, 5000)
             Handler(Looper.getMainLooper()).postDelayed({
                 if (snackbar.isShown) {
