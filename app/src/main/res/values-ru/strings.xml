@@ -21,6 +21,7 @@
     <string name="find_hosts">Поиск серверов</string>
     <string name="local_server">Локальный сервер</string>
     <string name="saved_server">Сохраненный сервер</string>
+    <string name="on_device">На устройстве</string>
 
     <string name="title">Название</string>
     <string name="poster_url">URL постера</string>
@@ -76,7 +77,7 @@
     <string name="current_version_apk">Установленная версия Apk</string>
     <string name="current_version_server">Версия Server</string>
     <string name="downloading">Скачивание…</string>
-    <string name="remote_server">внешний</string>
+    <string name="remote_server">Внешний</string>
 
     <string name="permission_storage_msg">Доступ к памяти требуется для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
