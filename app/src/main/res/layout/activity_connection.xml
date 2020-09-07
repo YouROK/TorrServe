@@ -86,7 +86,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHosts"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:fadingEdgeLength="20dp"
+                android:requiresFadingEdge="vertical" />
 
         </LinearLayout>
 

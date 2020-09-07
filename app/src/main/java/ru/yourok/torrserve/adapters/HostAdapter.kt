@@ -83,7 +83,7 @@ class HostAdapter(val onClick: (host: String) -> Unit) : RecyclerView.Adapter<Ho
         var version = hosts[position].version
 
         if (hosts[position].host.indexOf("127.0.0.1") != -1) {
-            version += "  *"
+            version += " · ${App.getContext().getString(R.string.on_device)}"
         }
 
         holder.view.findViewById<TextView>(R.id.tvVersion).text = version

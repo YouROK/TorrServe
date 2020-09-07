@@ -21,6 +21,7 @@
     <string name="find_hosts">Find hosts</string>
     <string name="local_server">Local server</string>
     <string name="saved_server">Saved server</string>
+    <string name="on_device">On Device</string>
 
     <string name="title">Title</string>
     <string name="poster_url">Poster url</string>
@@ -76,6 +77,7 @@
     <string name="current_version_apk">Installed Apk Version</string>
     <string name="current_version_server">Server Version</string>
     <string name="downloading">Downloading…</string>
+    <string name="remote_server">Remote</string>
 
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>

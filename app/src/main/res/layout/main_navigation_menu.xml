@@ -31,11 +31,11 @@
                     >
 
                     <ImageView
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
                         android:layout_gravity="center|top"
-                        android:layout_marginTop="3dp"
-                        android:padding="6dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="5dp"
                         android:src="@mipmap/ic_launcher" />
 
                     <LinearLayout

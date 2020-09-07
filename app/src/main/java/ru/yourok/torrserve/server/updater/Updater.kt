@@ -35,11 +35,17 @@ object Updater {
         if (!ServerFile.serverExists())
             throw IOException(App.getContext().getString(R.string.server_not_exists))
         try {
-            currServerVersion = Api.serverEcho()
+            if (Api.serverIsLocal())
+                currServerVersion = Api.serverEcho()
+            else
+                currServerVersion = Api.serverEcho() + " · ${App.getContext().getString(R.string.remote_server)}"
         } catch (e: Exception) {
             ServerService.start()
             Thread.sleep(1000)
-            currServerVersion = Api.serverEcho()
+            if (Api.serverIsLocal())
+                currServerVersion = Api.serverEcho()
+            else
+                currServerVersion = Api.serverEcho() + " · ${App.getContext().getString(R.string.remote_server)}"
         }
     }
 
