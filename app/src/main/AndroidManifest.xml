@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme">
 
         <activity android:name=".activitys.settings.ConnectionActivity" />
