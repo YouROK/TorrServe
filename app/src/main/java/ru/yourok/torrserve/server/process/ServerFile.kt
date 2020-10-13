@@ -1,13 +1,15 @@
 package ru.yourok.torrserve.serverloader
 
-import android.util.Log
+import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.preferences.Preferences
+import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.utils.Path
 import java.io.File
 
 object ServerFile {
     private val servPath = File(App.getContext().filesDir, "torrserver")
-    private var process: Process? = null
+    private var shell: Shell.Job? = null
     private val lock = Any()
 
     fun get(): File {
@@ -21,36 +23,34 @@ object ServerFile {
     fun deleteServer(): Boolean {
         if (!serverExists())
             return true
-        process?.stop()
+        stop()
         return servPath.delete()
     }
 
     fun run() {
-        if (!ServerFile.serverExists())
+        if (!serverExists())
             return
         synchronized(lock) {
-            if (process == null || !process!!.isRunning()) {
-                process = Process(servPath.path, "-k", "-d", Path.getAppPath())
-                process?.onOutput {
-                    Log.i("GoLog", it)
+            if (shell == null) {
+                val path = Path.getAppPath()
+                if (Preferences.isExecRootServer()) {
+                    shell = Shell.su("${servPath.path} -k -d ${Path.getAppPath()} > ${path}/torrserver.log 2>&1")
+                } else {
+                    val sh = Shell.newInstance("sh")
+                    shell = sh.newJob()
+                    shell?.add("${servPath.path} -k -d ${Path.getAppPath()} > ${path}/torrserver.log 2>&1")
                 }
-
-                process?.onError {
-                    Log.i("GoLogErr", it)
-                }
-                try {
-                    process?.exec()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                shell?.add("export GODEBUG=madvdontneed=1")
+                shell?.submit()
             }
         }
     }
 
     fun stop() {
         synchronized(lock) {
-            process?.stop()
-            process = null
+            if (Api.serverIsLocal() && serverExists())
+                Api.serverShutdown()
+            shell = null
         }
     }
 }

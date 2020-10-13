@@ -25,9 +25,23 @@ class App : Application() {
             wakeLock.release()
         }
 
-        fun Toast(txt: String) {
+        fun Toast(txt: String, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
-                android.widget.Toast.makeText(contextApp, txt, android.widget.Toast.LENGTH_SHORT).show()
+                val show = if (long)
+                    android.widget.Toast.LENGTH_LONG
+                else
+                    android.widget.Toast.LENGTH_SHORT
+                android.widget.Toast.makeText(contextApp, txt, show).show()
+            }
+        }
+
+        fun Toast(txt: Int, long: Boolean = false) {
+            Handler(Looper.getMainLooper()).post {
+                val show = if (long)
+                    android.widget.Toast.LENGTH_LONG
+                else
+                    android.widget.Toast.LENGTH_SHORT
+                android.widget.Toast.makeText(contextApp, txt, show).show()
             }
         }
     }

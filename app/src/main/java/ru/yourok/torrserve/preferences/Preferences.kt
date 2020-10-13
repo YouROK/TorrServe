@@ -10,6 +10,22 @@ import ru.yourok.torrserve.app.App
 
 object Preferences {
 
+    fun isExecRootServer(): Boolean {
+        return get("ExecRootServer", false) as Boolean
+    }
+
+    fun execRootServer(v: Boolean) {
+        set("ExecRootServer", v)
+    }
+
+    fun isDisableAD(): Boolean {
+        return get("DisableAD", false) as Boolean
+    }
+
+    fun disableAD(v: Boolean) {
+        set("DisableAD", v)
+    }
+
     fun getPlayer(): String {
         return get("Player", "1") as String
     }
@@ -36,15 +52,13 @@ object Preferences {
 
     fun getHosts(): List<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.getContext())
-        val ret = prefs.getStringSet("AutoCompleteHost", mutableSetOf())
-        if (ret.isEmpty())
-            ret.add("http://localhost:8090")
+        val ret = prefs.getStringSet("SavedHosts", mutableSetOf())
         return ret.toList()
     }
 
     fun setHosts(hosts: List<String>) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.getContext())
-        prefs.edit().putStringSet("AutoCompleteHost", hosts.toMutableSet()).apply()
+        prefs.edit().putStringSet("SavedHosts", hosts.toMutableSet()).apply()
     }
 
     fun getLastViewDonate(): Long {

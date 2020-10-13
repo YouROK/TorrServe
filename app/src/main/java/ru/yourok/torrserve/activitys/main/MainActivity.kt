@@ -5,27 +5,27 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.widget.FrameLayout
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
-import com.mxn.soul.flowingdrawer_core.ElasticDrawer
-import com.mxn.soul.flowingdrawer_core.ElasticDrawer.STATE_CLOSED
-import com.mxn.soul.flowingdrawer_core.FlowingDrawer
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_navigation_menu.*
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.activitys.add.AddActivity
 import ru.yourok.torrserve.activitys.play.PlayActivity
 import ru.yourok.torrserve.activitys.settings.AppSettingsActivity
+import ru.yourok.torrserve.activitys.settings.ConnectionActivity
 import ru.yourok.torrserve.activitys.settings.ServerSettingsActivity
 import ru.yourok.torrserve.activitys.splash.SplashActivity
 import ru.yourok.torrserve.activitys.updater.UpdaterActivity
 import ru.yourok.torrserve.adapters.TorrentAdapter
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.dialog.DialogInputList
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.dialog.DialogPerm
 import ru.yourok.torrserve.dialog.Donate
 import ru.yourok.torrserve.menu.TorrentMainMenu
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var torrAdapter = TorrentAdapter(this)
-    private var mDrawer: FlowingDrawer? = null
+    private var mDrawer: DrawerLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,25 +54,18 @@ class MainActivity : AppCompatActivity() {
         if (!isSplash) {
             startActivityForResult(Intent(this, SplashActivity::class.java), 22)
             isSplash = true
+        } else {
+            UpdaterCards.updateCards()
         }
 
         setupNavigator()
 
         mDrawer = findViewById(R.id.drawerlayout)
-        mDrawer?.setTouchMode(ElasticDrawer.TOUCH_MODE_FULLSCREEN)
-        mDrawer?.setOnDrawerStateChangeListener(object : ElasticDrawer.OnDrawerStateChangeListener {
-            override fun onDrawerStateChange(oldState: Int, newState: Int) {
-                if (newState == STATE_CLOSED)
-                    rvTorrents.requestFocus()
-            }
-
-            override fun onDrawerSlide(openRatio: Float, offsetPixels: Int) {}
-        })
 
         rvTorrents.apply {
             adapter = torrAdapter
             requestFocus()
-            setOnItemClickListener { adapterView, view, i, l ->
+            setOnItemClickListener { _, _, i, _ ->
                 val torr = torrAdapter.getItem(i) as JSObject
                 val mag = torr.getString("Magnet", "")
                 if (mag.isEmpty()) {
@@ -87,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 App.getContext().startActivity(vintent)
             }
 
-            setOnItemLongClickListener { adapterView, view, i, l ->
+            setOnItemLongClickListener { _, _, i, _ ->
                 choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
                 setItemChecked(i, true)
                 true
@@ -98,13 +91,30 @@ class MainActivity : AppCompatActivity() {
         DialogPerm.requestPermissionWithRationale(this)
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE)
+            return true
+        return super.onKeyDown(keyCode, event)
+    }
+
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        mDrawer?.let {
-            if (!it.isMenuVisible && keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                it.openMenu(true)
-                header.requestFocus()
+        if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+            val pos = rvTorrents.selectedItemPosition
+
+            val torr = torrAdapter.getItem(pos) as JSObject
+            val mag = torr.getString("Magnet", "")
+            if (mag.isEmpty()) {
+                Toast.makeText(App.getContext(), "Magnet not found", Toast.LENGTH_SHORT).show()
                 return true
             }
+            val vintent = Intent(App.getContext(), PlayActivity::class.java)
+            vintent.setData(Uri.parse(mag))
+            vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            vintent.action = Intent.ACTION_VIEW
+            vintent.putExtra("DontSave", true)
+            vintent.putExtra("PlayLast", true)
+            App.getContext().startActivity(vintent)
+            return true
         }
 
         return super.onKeyUp(keyCode, event)
@@ -112,8 +122,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         mDrawer?.let {
-            if (it.isMenuVisible()) {
-                it.closeMenu()
+            if (it.isDrawerOpen(GravityCompat.START)) {
+                it.closeDrawer(GravityCompat.START)
                 return
             }
         }
@@ -123,6 +133,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         autoUpdateList()
+        tvCurrentHost.text = Preferences.getCurrentHost()
     }
 
     override fun onPause() {
@@ -137,7 +148,7 @@ class MainActivity : AppCompatActivity() {
                 Thread.sleep(1000)
                 if (torrAdapter.count == 0)
                     Handler(Looper.getMainLooper()).post {
-                        mDrawer?.openMenu(true)
+                        mDrawer?.openDrawer(GravityCompat.START)
                     }
             }
             Donate.showDonate(this)
@@ -160,13 +171,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             while (isUpdate) {
-                if (Api.serverEcho() == "") {
+                val version = Api.serverEcho()
+                if (version.isNullOrEmpty()) {
                     if (Api.serverIsLocal() && !ServerFile.serverExists())
                         setStatus(getString(R.string.server_not_exists))
                     else
                         setStatus(getString(R.string.server_not_responding))
                 } else
-                    setStatus("")
+                    setStatus(version)
 
                 torrAdapter.checkList()
                 Thread.sleep(1000)
@@ -179,35 +191,7 @@ class MainActivity : AppCompatActivity() {
         tvCurrHost.text = Preferences.getCurrentHost()
 
         findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
-            DialogInputList.show(this, getString(R.string.host) + ":", Preferences.getHosts()) {
-                if (it.isEmpty())
-                    return@show
-
-                var host = it
-                if (!host.startsWith("http://", true))
-                    host = "http://" + host
-
-                if (Uri.parse(host).port == -1)
-                    host += ":8090"
-
-                if (Api.serverCheck(host).isEmpty()) {
-                    App.Toast(getString(R.string.server_not_responding))
-                    return@show
-                }
-                Preferences.setCurrentHost(host)
-                Handler(Looper.getMainLooper()).post {
-                    tvCurrHost.text = host
-                }
-                thread {
-                    val hosts = mutableListOf<String>()
-                    for (h in Preferences.getHosts()) {
-                        if (Api.serverCheck(h).isNotEmpty())
-                            hosts.add(h)
-                    }
-                    hosts.add(host)
-                    Preferences.setHosts(hosts)
-                }
-            }
+            startActivity(Intent(this, ConnectionActivity::class.java))
         }
         findViewById<FrameLayout>(R.id.header).setOnLongClickListener {
             startActivity(Intent(this, ServerSettingsActivity::class.java))
@@ -228,6 +212,7 @@ class MainActivity : AppCompatActivity() {
                             Api.torrentRemove(hash)
                     }
                     torrAdapter.checkList()
+                    UpdaterCards.updateCards()
                 } catch (e: Exception) {
                     e.message?.let {
                         App.Toast(it)
@@ -240,7 +225,8 @@ class MainActivity : AppCompatActivity() {
             thread {
                 try {
                     if (Api.torrentList().isNotEmpty()) {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")))
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")), "video/*")
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         App.getContext().startActivity(intent)
                     }

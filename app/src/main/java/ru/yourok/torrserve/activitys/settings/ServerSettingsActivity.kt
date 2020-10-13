@@ -1,15 +1,15 @@
 package ru.yourok.torrserve.activitys.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_server_settings.*
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.dialog.DialogInputList
 import ru.yourok.torrserve.preferences.Preferences
 import ru.yourok.torrserve.server.api.Api
 import kotlin.concurrent.thread
@@ -31,15 +31,7 @@ class ServerSettingsActivity : AppCompatActivity() {
 
         btnServerAddr.requestFocus()
         btnServerAddr.setOnClickListener {
-            DialogInputList.show(this, getString(R.string.host) + ":", Preferences.getHosts()) {
-                if (it.isEmpty())
-                    return@show
-                val hosts = Preferences.getHosts().toMutableList()
-                hosts.add(it)
-                Preferences.setHosts(hosts)
-                Preferences.setCurrentHost(it)
-                loadSettings()
-            }
+            startActivity(Intent(this, ConnectionActivity::class.java))
         }
 
         val adpEnc = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.encryption_mode))
@@ -74,6 +66,7 @@ class ServerSettingsActivity : AppCompatActivity() {
 
                     spinnerEncryption.setSelection(sets.getInt("Encryption", 0))
                     editTextConnectionsLimit.setText(sets.getInt("ConnectionsLimit", 0).toString())
+                    editTextConnectionsDhtLimit.setText(sets.getInt("DhtConnectionLimit", 500).toString())
                     editTextDownloadRateLimit.setText(sets.getInt("DownloadRateLimit", 0).toString())
                     editTextUploadRateLimit.setText(sets.getInt("UploadRateLimit", 0).toString())
                 }
@@ -102,6 +95,7 @@ class ServerSettingsActivity : AppCompatActivity() {
                 sets.set("DownloadRateLimit", editTextDownloadRateLimit.text.toString().toInt())
                 sets.set("UploadRateLimit", editTextUploadRateLimit.text.toString().toInt())
                 sets.set("ConnectionsLimit", editTextConnectionsLimit.text.toString().toInt())
+                sets.set("DhtConnectionLimit", editTextConnectionsDhtLimit.text.toString().toInt())
 
                 thread {
                     try {
@@ -123,6 +117,7 @@ class ServerSettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        loadSettings()
         checkServer()
     }
 

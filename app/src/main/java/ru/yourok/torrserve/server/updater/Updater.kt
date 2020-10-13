@@ -3,7 +3,8 @@ package ru.yourok.torrserve.serverloader
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import android.support.design.widget.Snackbar
+import android.os.Environment
+import com.google.android.material.snackbar.Snackbar
 import org.json.JSONObject
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
@@ -11,6 +12,7 @@ import ru.yourok.torrserve.activitys.updater.UpdaterActivity
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.JSObject
+import ru.yourok.torrserve.services.ServerService
 import ru.yourok.torrserve.utils.Http
 import java.io.File
 import java.io.FileInputStream
@@ -21,7 +23,6 @@ import kotlin.concurrent.thread
 object Updater {
     private var serverJS: JSONObject = JSONObject()
     private var apkJS: JSONObject = JSONObject()
-    private var testJS: JSONObject = JSONObject()
     private var currServerVersion: String = ""
 
     private var lastCheckServer: Long = 0
@@ -29,26 +30,28 @@ object Updater {
 
     private val apkRelease = "https://raw.githubusercontent.com/YouROK/TorrServe/master/release.json"
     private val serverRelease = "https://raw.githubusercontent.com/YouROK/TorrServer/master/release.json"
-    private val serverTest = "https://raw.githubusercontent.com/YouROK/TorrServer/master/test.json"
 
     fun checkLocalVersion() {
         if (!ServerFile.serverExists())
             throw IOException(App.getContext().getString(R.string.server_not_exists))
         try {
-            currServerVersion = Api.serverEcho()
+            if (Api.serverIsLocal())
+                currServerVersion = Api.serverEcho()
+            else
+                currServerVersion = Api.serverEcho() + " · ${App.getContext().getString(R.string.remote_server)}"
         } catch (e: Exception) {
-            ServerFile.run()
+            ServerService.start()
             Thread.sleep(1000)
-            currServerVersion = Api.serverEcho()
+            if (Api.serverIsLocal())
+                currServerVersion = Api.serverEcho()
+            else
+                currServerVersion = Api.serverEcho() + " · ${App.getContext().getString(R.string.remote_server)}"
         }
     }
 
-    fun getJson(server: Boolean, test: Boolean = false): JSONObject {
+    fun getJson(server: Boolean): JSONObject {
         if (server) {
-            if (!test)
-                return serverJS
-            else
-                return testJS
+            return serverJS
         } else
             return apkJS
     }
@@ -65,20 +68,15 @@ object Updater {
         return null
     }
 
-    fun checkRemoteServer(test: Boolean = false): Boolean {
+    fun checkRemoteServer(): Boolean {
         if (System.currentTimeMillis() - lastCheckServer < 60000)
             return true
 
-        var url = serverRelease
-        if (test)
-            url = serverTest
+        val url = serverRelease
 
         val js = getRemoteJS(url)
         js?.let {
-            if (!test)
-                serverJS = it
-            else
-                testJS = it
+            serverJS = it
             lastCheckServer = System.currentTimeMillis()
             return true
         }
@@ -89,7 +87,7 @@ object Updater {
         if (System.currentTimeMillis() - lastCheckApk < 60000)
             return true
 
-        var url = apkRelease
+        val url = apkRelease
 
         val js = getRemoteJS(url)
         js?.let {
@@ -100,24 +98,64 @@ object Updater {
         return false
     }
 
-    fun updateServerRemote(test: Boolean = false, onProgress: ((prc: Int) -> Unit)?) {
+    fun updateApkRemote(onProgress: ((prc: Int) -> Unit)?, onFinish: ((file: File?) -> Unit)?) {
+        if (!checkRemoteApk())
+            throw IOException("error check remote version")
+
+        val url = getJson(false).getString("Link")
+        val http = Http(url)
+        http.getEntity().apply {
+            this ?: throw IOException("error get apk: $url")
+            content ?: throw IOException("error get apk: $url")
+
+            val apkFile = File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    "TorrServe.apk")
+
+            apkFile.delete()
+
+            FileOutputStream(apkFile).use { fileOut ->
+                if (onProgress == null)
+                    content.copyTo(fileOut)
+                else {
+                    val buffer = ByteArray(65535)
+                    val length = contentLength + 1
+                    var offset: Long = 0
+                    while (true) {
+                        val readed = content.read(buffer)
+                        offset += readed
+                        val prc = (offset * 100 / length).toInt()
+                        onProgress(prc)
+                        if (readed <= 0)
+                            break
+                        fileOut.write(buffer, 0, readed)
+                    }
+                    fileOut.flush()
+                }
+                fileOut.flush()
+                fileOut.close()
+                onFinish?.invoke(apkFile)
+                return
+            }
+        }
+        onFinish?.invoke(null)
+    }
+
+    fun updateServerRemote(onProgress: ((prc: Int) -> Unit)?) {
         val arch = getArch()
         if (arch.isEmpty())
             throw IOException("error get arch")
 
-        if (!checkRemoteServer(test))
+        if (!checkRemoteServer())
             throw IOException("error check remote version")
 
         val url: String
-        if (!test)
-            url = serverJS.getJSONObject("Links").getString("android-${arch}")
-        else
-            url = testJS.getJSONObject("Links").getString("android-${arch}")
+        url = serverJS.getJSONObject("Links").getString("android-${arch}")
 
         val http = Http(url)
         http.getEntity().apply {
-            this ?: let { throw IOException("error get server: $url") }
-            content ?: let { throw IOException("error get server: $url") }
+            this ?: throw IOException("error get server: $url")
+            content ?: throw IOException("error get server: $url")
 
             ServerFile.deleteServer()
             FileOutputStream(ServerFile.get()).use { fileOut ->
@@ -144,7 +182,7 @@ object Updater {
                     throw IOException("error set exec permission")
             }
         }
-        ServerFile.run()
+        ServerService.start()
     }
 
     fun updateServerLocal(filePath: String) {
@@ -152,11 +190,14 @@ object Updater {
         if (file.canRead()) {
             ServerFile.deleteServer()
             val input = FileInputStream(file)
-            input.copyTo(FileOutputStream(ServerFile.get()))
+            val output = FileOutputStream(ServerFile.get())
+            input.copyTo(output)
             input.close()
+            output.flush()
+            output.close()
             if (!ServerFile.get().setExecutable(true))
                 throw IOException("error set exec permission")
-            ServerFile.run()
+            ServerService.start()
         }
     }
 
@@ -175,10 +216,10 @@ object Updater {
         return ""
     }
 
-    fun check(onFound: (apkJS: JSObject, serverJS: JSObject) -> Unit) {
+    fun check(onFound: (apkJS: JSObject) -> Unit) {
         var found = false
 
-        val th1 = thread {
+        thread {
             try {
                 val js = getRemoteJS(apkRelease)
                 js?.let {
@@ -187,46 +228,20 @@ object Updater {
                 }
             } catch (e: Exception) {
             }
-        }
-
-        val th2 = thread {
-            try {
-                val js = getRemoteJS(serverRelease)
-                js?.let {
-                    serverJS = it
-                    found = true
-                }
-            } catch (e: Exception) {
-            }
-        }
-
-        th1.join()
-        th2.join()
+        }.join()
         if (found)
-            onFound(JSObject(apkJS), JSObject(serverJS))
+            onFound(JSObject(apkJS))
     }
 
     fun show(activity: Activity) {
         thread {
             Thread.sleep(5000)
-            check { apkJS, serverJS ->
+            check { apkJS ->
                 var isShow = false
 
-                val remoteApk = apkJS.getString("Version", "")
-                if (remoteApk.isNotEmpty() && BuildConfig.VERSION_NAME != remoteApk)
+                val remoteApk = apkJS.getString("VersionCode", "")
+                if (remoteApk.isNotEmpty() && BuildConfig.VERSION_CODE < remoteApk.toInt(10))
                     isShow = true
-
-                if (Api.serverIsLocal()) {
-                    var remoteServer = serverJS.getString("Version", "")
-                    if (remoteServer.isNotEmpty()) {
-                        try {
-                            checkLocalVersion()
-                        } catch (e: Exception) {
-                        }
-                        if (currServerVersion != remoteServer)
-                            isShow = true
-                    }
-                }
 
                 if (isShow) {
                     val snackbar = Snackbar.make(activity.findViewById(R.id.content), R.string.found_new_version, Snackbar.LENGTH_LONG)

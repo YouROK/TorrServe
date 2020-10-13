@@ -116,7 +116,9 @@ object Net {
         val response = httpclient.execute(httpreq)
         val status = response.statusLine?.statusCode ?: -1
         if (status == 200) {
-            val entity = response.entity ?: return ""
+            val entity = response.entity ?: let {
+                return ""
+            }
             return EntityUtils.toString(entity)
         } else if (status == 302) {
             return ""

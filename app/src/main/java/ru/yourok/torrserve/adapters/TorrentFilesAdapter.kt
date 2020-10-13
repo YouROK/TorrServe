@@ -1,22 +1,27 @@
 package ru.yourok.torrserve.adapters
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.JSObject
 import ru.yourok.torrserve.utils.ByteFmt
 
-class TorrentFilesAdapter(val files: List<JSObject>, val onClick: (file: JSObject) -> Unit) : RecyclerView.Adapter<TorrentFilesAdapter.ViewHolder>() {
+class TorrentFilesAdapter(val files: List<JSObject>, val onClick: (file: JSObject) -> Unit, val onLongClick: (file: JSObject) -> Unit) : RecyclerView.Adapter<TorrentFilesAdapter.ViewHolder>() {
 
     class ViewHolder(val view: View, val adapter: TorrentFilesAdapter) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
                 val file = adapter.files[adapterPosition]
                 adapter.onClick(file)
+            }
+            view.setOnLongClickListener {
+                val file = adapter.files[adapterPosition]
+                adapter.onLongClick(file)
+                true
             }
         }
     }

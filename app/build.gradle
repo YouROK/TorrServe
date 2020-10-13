@@ -11,13 +11,13 @@ def freeProperties = new Properties()
 freeProperties.load(new FileInputStream(freeKeystorePropertiesFile))
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "ru.yourok.torrserve"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 71
-        versionName "1.1.71"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 85
+        versionName "1.1.85"
     }
     signingConfigs {
         release {
@@ -46,25 +46,35 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.tvprovider:tvprovider:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
 
-    implementation 'com.mxn.soul:flowingdrawer-core:2.0.0'
-    implementation 'com.nineoldandroids:library:2.4.0'
-
-    implementation 'cz.msebera.android:httpclient:4.4.1.2'
+    implementation 'cz.msebera.android:httpclient:4.5.8'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation 'com.google.firebase:firebase-core:17.4.0'
+
+    //Root
+    implementation "com.github.topjohnwu.libsu:core:2.5.1"
+    implementation 'com.google.android.material:material:1.2.1'
 }
 
 repositories {
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 class WriteVersion implements Plugin<Project> {
@@ -75,6 +85,7 @@ class WriteVersion implements Plugin<Project> {
 
                 def appId = "$project.android.defaultConfig.applicationId"
                 def version = "$project.android.defaultConfig.versionName"
+                def versionCode = "$project.android.defaultConfig.versionCode"
 
                 println appId
                 println version
@@ -83,6 +94,7 @@ class WriteVersion implements Plugin<Project> {
                 def json = """{
  "Name": "${appId}",
  "Version": "${version}",
+ "VersionCode": "${versionCode}",
  "BuildDate": "${new SimpleDateFormat("dd.MM.yyyy").format(new Date())}",
  "Link": "https://github.com/YouROK/TorrServe/releases/download/${version}/TorrServe_${version}.apk"
 }
@@ -94,3 +106,4 @@ class WriteVersion implements Plugin<Project> {
 }
 
 apply plugin: WriteVersion
+apply plugin: 'com.google.gms.google-services'

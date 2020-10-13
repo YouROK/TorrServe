@@ -60,18 +60,8 @@ func main() {
 type Release struct {
 	Name      string
 	Version   string
+	VersionCode string
 	BuildDate string
 	Link     string
 }
 
-//"update": {
-//"name": "TorrServer",
-//"version": "1.0.61",
-//"build_date": "20.07.2018",
-//"links":[
-//{"android-386":"https://github.com/YouROK/TorrServe/releases/download/1.0.61/TorrServer-android-386"},
-//{"android-amd64":"https://github.com/YouROK/TorrServe/releases/download/1.0.61/TorrServer-android-amd64"},
-//{"android-arm7":"https://github.com/YouROK/TorrServe/releases/download/1.0.61/TorrServer-android-arm7"},
-//{"android-arm64":"https://github.com/YouROK/TorrServe/releases/download/1.0.61/TorrServer-android-arm64"},
-//]
-//}

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="darkBrown">#2a2122</color>
     <color name="colorPrimary">#3fb57a</color>
-    <color name="colorPrimaryDark">#309f99</color>
-    <color name="colorAccent">#848383</color>
-    <color name="lighter_gray">#ccc</color>
+    <color name="colorPrimaryDark">#1a1a1a</color><!-- mobile status bar -->
+    <color name="colorAccent">#3fb57a</color>
+    <color name="lighter_gray">#CCC</color>
     <color name="darker_gray">#2B2B2B</color>
+    <color name="colorHost">#FFA724</color>
 </resources>
 
 

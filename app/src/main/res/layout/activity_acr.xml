@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context=".activitys.ACRActivity">
 
     <ScrollView
         android:layout_weight="1"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -24,9 +24,11 @@
 
     <Button
         android:id="@+id/buttonSendReport"
-        android:layout_weight="0"
-        android:text="@string/send"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="0"
+        android:text="@string/send" />
 
 </LinearLayout>

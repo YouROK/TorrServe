@@ -7,8 +7,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat.startActivity
+import android.view.View
+import androidx.core.content.ContextCompat.startActivity
+import com.google.android.material.snackbar.Snackbar
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.preferences.Preferences
 import java.util.*
@@ -31,13 +32,13 @@ object Donate {
                     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
                     browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, browserIntent, null)
-                    Preferences.setLastViewDonate(-1L)
+                    Preferences.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
                 }
                 .setNegativeButton(R.string.yandex_money) { _, _ ->
                     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://money.yandex.ru/to/410013733697114/100"))
                     browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(context, browserIntent, null)
-                    Preferences.setLastViewDonate(-1L)
+                    Preferences.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
                 }.show()
     }
 
@@ -50,7 +51,7 @@ object Donate {
                 if (!isShowDonate())
                     return@thread
                 val last: Long = Preferences.getLastViewDonate()
-                if (last == -1L || System.currentTimeMillis() < last || showDonate)
+                if (System.currentTimeMillis() < last || showDonate)
                     return@thread
                 showDonate = true
             }

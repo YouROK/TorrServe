@@ -1,46 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:padding="5dp"
-    android:minHeight="60dp"
+    android:minHeight="84dp"
+    android:baselineAligned="false"
     android:background="?android:attr/activatedBackgroundIndicator"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvTorrName"
-        android:text="Name"
-        android:textSize="16sp"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:singleLine="false"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
+    <ImageView
+        android:id="@+id/ivPoster"
+        android:layout_width="76dp"
+        android:layout_height="114dp"
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
 
     <LinearLayout
-        android:layout_weight="2"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
 
         <TextView
-            android:text="hash"
-            android:id="@+id/tvTorrMagnet"
+            android:id="@+id/tvTorrName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:singleLine="true"
-            android:ellipsize="middle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-condensed"
+            android:maxLines="3"
+            android:singleLine="false"
+            android:text="Name"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textSize="18sp" />
 
-        <TextView
-            android:text="5GB"
-            android:id="@+id/tvTorrSize"
-            android:singleLine="true"
-            android:layout_gravity="end|center_vertical"
-            android:layout_weight="0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTorrMagnet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|top"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:ellipsize="middle"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:text="hash" />
+
+            <TextView
+                android:id="@+id/tvTorrDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_weight="0"
+                android:paddingStart="5dp"
+                android:paddingBottom="5dp"
+                android:singleLine="true"
+                android:text="10.10.2001"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvTorrSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_weight="0"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp"
+                android:singleLine="true"
+                android:text="5GB"
+                android:textColor="#eee"
+                android:textSize="22sp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

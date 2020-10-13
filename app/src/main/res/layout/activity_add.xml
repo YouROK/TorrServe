@@ -6,7 +6,6 @@
     android:animateLayoutChanges="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context=".activitys.add.AddActivity">
 
     <ScrollView
@@ -23,16 +22,61 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="14dp"
+                android:text="@string/title" />
+
+            <EditText
+                android:id="@+id/editTextTorrTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:gravity="top|left"
+                android:inputType="textMultiLine|textWebEditText"
+                android:minLines="1"
+                android:selectAllOnFocus="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/poster_url" />
+
+            <EditText
+                android:id="@+id/editTextTorrPoster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:gravity="top|left"
+                android:inputType="textMultiLine|textWebEditText"
+                android:minLines="1"
+                android:selectAllOnFocus="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/torrent" />
 
             <EditText
                 android:id="@+id/editTextTorrLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:ems="10"
+                android:gravity="top|left"
                 android:inputType="textMultiLine|textWebEditText"
                 android:minLines="1"
-                android:gravity="top|left"
                 android:selectAllOnFocus="true" />
         </LinearLayout>
     </ScrollView>
@@ -42,9 +86,10 @@
         style="@android:style/DeviceDefault.ButtonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:divider="?android:attr/dividerVertical"
         android:orientation="horizontal"
-        android:showDividers="middle">
+        android:showDividers="none">
 
         <Button
             android:id="@+id/buttonAdd"
