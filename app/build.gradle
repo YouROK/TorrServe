@@ -14,7 +14,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "ru.yourok.torrserve"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 85
         versionName "1.1.85"
