@@ -3,6 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ru.yourok.torrserve">
 
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    
+    <uses-permission android:name="android.permission.ACCESS_ALL_DOWNLOADS"/>
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -11,8 +20,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
         <activity android:name=".activitys.settings.ConnectionActivity" />
 
@@ -518,13 +527,6 @@
         <service android:name=".services.Notification" />
     </application>
 
-    <uses-feature
-        android:name="android.software.leanback"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.touchscreen"
-        android:required="false" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -537,6 +539,6 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
-    <uses-sdk tools:overrideLibrary="android.support.media.tv" />
+    <uses-sdk tools:overrideLibrary="android.support.media.tv, androidx.tvprovider" />
 
 </manifest>
