@@ -231,7 +231,10 @@ class UpdaterActivity : AppCompatActivity() {
                 thread {
                     val rel = releases[which]
                     val arch = Updater.getArch()
-                    val link = rel.Links["android-${arch}"]
+                    var androidVer = ""
+                    if (android.os.Build.VERSION.SDK_INT >= 29)
+                        androidVer = "-10"
+                    val link = rel.Links["android$androidVer-${arch}"]
                     try {
                         if (link == null) {
                             showProgress(false, getString(R.string.warn_error_download_server))
