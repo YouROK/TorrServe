@@ -9,6 +9,8 @@
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
+    
+    <uses-permission android:name="android.permission.ACCESS_ALL_DOWNLOADS"/>
 
     <application
         android:name=".app.App"

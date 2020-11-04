@@ -146,11 +146,15 @@ object Updater {
         if (arch.isEmpty())
             throw IOException("error get arch")
 
+        var androidVer = ""
+        if (android.os.Build.VERSION.SDK_INT >= 29)
+            androidVer = "-10"
+
         if (!checkRemoteServer())
             throw IOException("error check remote version")
 
         val url: String
-        url = serverJS.getJSONObject("Links").getString("android-${arch}")
+        url = serverJS.getJSONObject("Links").getString("android$androidVer-$arch")
 
         val http = Http(url)
         http.getEntity().apply {
