@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.atv.channels
 
+import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -77,7 +78,13 @@ class ChannelProvider(private val name: String) {
     private fun emptyProgram(channelId: Long): PreviewProgram {
         val vintent = Intent(App.getContext(), MainActivity::class.java)
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-
+        val resourceId = R.drawable.emptyposter // R.raw.beep; R.mipmap.yourmipmap; R.drawable.yourdrawable
+        val ep = Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(App.getContext().resources.getResourcePackageName(resourceId))
+                .appendPath(App.getContext().resources.getResourceTypeName(resourceId))
+                .appendPath(App.getContext().resources.getResourceEntryName(resourceId))
+                .build()
         val preview = PreviewProgram.Builder()
                 .setChannelId(channelId)
                 .setTitle(App.getContext().getString(R.string.app_name))
@@ -88,7 +95,7 @@ class ChannelProvider(private val name: String) {
                 .setType(TvContractCompat.PreviewPrograms.TYPE_MOVIE)
                 .setSearchable(true)
                 .setLive(false)
-                .setPosterArtUri(Uri.parse("https://yourok.github.io/TorrServePage/ep.png"))
+                .setPosterArtUri(ep)
                 .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
 
         return preview.build()
