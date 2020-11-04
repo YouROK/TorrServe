@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.utils
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import ru.yourok.torrserve.app.App
 
@@ -22,7 +23,7 @@ object Players {
     private fun getList(mime: String): List<Player> {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(Uri.parse("http://127.0.0.1:8090/torrent/file.mp4"), mime)
-        val apps = App.getContext().getPackageManager().queryIntentActivities(intent, 0)
+        val apps = App.getContext().packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         val list = mutableListOf<Player>()
         for (a in apps) {
             val name = a.loadLabel(App.getContext().packageManager)?.toString() ?: a.activityInfo.packageName

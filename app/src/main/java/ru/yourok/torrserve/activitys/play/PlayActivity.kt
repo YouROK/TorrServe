@@ -349,7 +349,6 @@ class PlayActivity : AppCompatActivity() {
             intent.setDataAndType(Uri.parse(addr), mime)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("title", name)
-            intent.putExtra("forcename", name)
 
             finish(true, "", name)
 
