@@ -1,207 +1,121 @@
 package ru.yourok.torrserve.server.api
 
-import android.net.Uri
-import org.json.JSONArray
-import org.json.JSONObject
-import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.server.net.Net.Get
-import ru.yourok.torrserve.server.net.Net.Post
-import ru.yourok.torrserve.server.net.Net.Upload
-import ru.yourok.torrserve.server.net.Net.fixLink
-import ru.yourok.torrserve.server.net.Net.getHostUrl
-import ru.yourok.torrserve.server.net.Net.joinHostUrl
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import com.google.gson.Gson
+import org.jsoup.Connection
+import org.jsoup.Jsoup
+import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.settings.BTSets
+import ru.yourok.torrserve.utils.Net
 
 object Api {
+    class ApiException(msg: String, val code: Int) : Exception(msg)
 
-    fun torrentAdd(link: String, title: String, info: String, save: Boolean): String {
-        if (link.startsWith("magnet:", true))
-            return torrentAddLink(fixLink(link), title, info, save)
-        else if (
-                link.startsWith("http:", true) ||
-                link.startsWith("https:", true))
-            return torrentAddLink(link, title, info, save)
-        else
-            return torrentUploadFile(link, save)
-    }
-
-    fun torrentAddLink(link: String, title: String, info: String, save: Boolean): String {
-        var rlink = link
-        if (link.startsWith("magnet:", true))
-            rlink = fixLink(link)
-
-        val url = getHostUrl("/torrent/add")
-        val js = JSONObject()
-        js.put("Link", rlink)
-        if (title.isNotEmpty())
-            js.put("Title", title)
-        if (info.isNotEmpty())
-            js.put("Info", info)
-        js.put("DontSave", !save)
-        val req = js.toString(0)
-        return Post(url, req)
-    }
-
-    fun torrentUploadFile(path: String, save: Boolean): String {
-        val url = getHostUrl("/torrent/upload")
-        var link = path
-        var isRemove = false
-        if (link.startsWith("content://", true)) {
-            val outputDir = App.getContext().getCacheDir()
-            val outputFile = File.createTempFile("tmp", ".torr", outputDir)
-            val fd = App.getContext().contentResolver.openFileDescriptor(Uri.parse(link), "r")
-            val inStream = FileInputStream(fd.fileDescriptor)
-            val outStream = FileOutputStream(outputFile)
-            val inChannel = inStream.getChannel()
-            val outChannel = outStream.getChannel()
-            inChannel.transferTo(0, inChannel.size(), outChannel)
-            inStream.close()
-            outStream.close()
-            link = outputFile.path
-            isRemove = true
-        }
-
-        if (link.startsWith("file://", true))
-            link = Uri.parse(link).path
-
-        val hashes = Upload(url, link, save)
-        if (isRemove)
-            File(link).delete()
-        return hashes[0]
-    }
-
-    fun torrentGet(hash: String): JSObject {
-        val url = getHostUrl("/torrent/get")
-        val js = JSONObject()
-        js.put("Hash", hash)
-        val req = js.toString(0)
-        return JSObject(JSONObject(Post(url, req)))
-    }
-
-    fun torrentList(): List<JSObject> {
-        val url = getHostUrl("/torrent/list")
-        val torjs = JSONArray(Post(url, ""))
-        val list = mutableListOf<JSObject>()
-        for (i in 0 until torjs.length())
-            list.add(JSObject(torjs.getJSONObject(i)))
-        return list.toList()
-    }
-
-    fun torrentRemove(hash: String) {
-        val url = getHostUrl("/torrent/rem")
-        val js = JSONObject()
-        js.put("Hash", hash)
-        val req = js.toString(0)
-        Post(url, req)
-    }
-
-    fun torrentStat(hash: String): JSObject {
-        val url = getHostUrl("/torrent/stat")
-        val js = JSONObject()
-        js.put("Hash", hash)
-        val req = js.toString(0)
-        return JSObject(JSONObject(Post(url, req)))
-    }
-
-    fun torrentDrop(hash: String) {
-        val url = getHostUrl("/torrent/drop")
-        val js = JSONObject()
-        js.put("Hash", hash)
-        val req = js.toString(0)
-        Post(url, req)
-    }
-
-    fun torrentPreload(preloadLink: String) {
-        val url = getHostUrl(preloadLink)
-        Get(url)
-    }
-
-    fun torrentRestart() {
-        val url = getHostUrl("/torrent/restart")
-        Get(url)
-    }
-
-    fun serverEcho(): String {
+    /// Server
+    fun echo(): String {
         try {
-            val url = getHostUrl("/echo")
-            return Get(url)
+            val host = Net.getHostUrl("/echo")
+            val resp = Jsoup.connect(host)
+                .method(Connection.Method.GET)
+                .execute()
+            return resp.body()
         } catch (e: Exception) {
+            println(e.message)
             return ""
         }
     }
 
-    fun serverCheck(host: String): String {
+    fun shutdown(): String {
         try {
-            val url = joinHostUrl(host, "/echo")
-            return Get(url)
+            val host = Net.getHostUrl("/shutdown")
+            val resp = Jsoup.connect(host)
+                .method(Connection.Method.GET)
+                .execute()
+            return resp.body()
         } catch (e: Exception) {
+            println(e.message)
             return ""
         }
     }
 
-    fun serverReadSettings(): JSObject {
-        val url = getHostUrl("/settings/read")
-        return JSObject(JSONObject(Post(url, "")))
+    /// Torrents
+    fun addTorrent(link: String, title: String, poster: String): Torrent {
+        val host = Net.getHostUrl("/torrents")
+        val req = TorrentReq("add", link = link, title = title, poster = poster).toString()
+        val resp = postJson(host, req)
+        return Gson().fromJson(resp, Torrent::class.java)
     }
 
-    fun serverWriteSettings(sets: JSObject) {
-        val url = getHostUrl("/settings/write")
-        Post(url, sets.toString())
+    fun getTorrent(hash: String): Torrent {
+        val host = Net.getHostUrl("/torrents")
+        val req = TorrentReq("get", hash).toString()
+        val resp = postJson(host, req)
+        return Gson().fromJson(resp, Torrent::class.java)
     }
 
-    fun serverShutdown() {
-        val url = getHostUrl("/shutdown")
-        try {
-            Post(url, "")
-        } catch (e: Exception) {
-        }
+    fun remTorrent(hash: String) {
+        val host = Net.getHostUrl("/torrents")
+        val req = TorrentReq("rem", hash).toString()
+        postJson(host, req)
     }
 
-    fun serverIsLocal(): Boolean {
-        val host = getHostUrl("")
-        return host.toLowerCase().contains("localhost") || host.toLowerCase().contains("127.0.0.1")
+    fun listTorrent(): List<Torrent> {
+        val host = Net.getHostUrl("/torrents")
+        val req = TorrentReq("list").toString()
+        val resp = postJson(host, req)
+        return Gson().fromJson(resp, Array<Torrent>::class.java).toList()
     }
 
-    fun searchMovies(params: List<String>): JSONArray {
-        var url = getHostUrl("/search/movie?")
-        url += params.joinToString("&")
-        return JSONArray(Get(fixLink(url)))
+    fun dropTorrent(hash: String) {
+        val host = Net.getHostUrl("/torrents")
+        val req = TorrentReq("drop", hash).toString()
+        postJson(host, req)
     }
 
-    fun getMovie(id: String): JSObject {
-        var url = getHostUrl("/search/movie/$id")
-        return JSObject(Get(fixLink(url)))
+    // Settings
+    fun getSettings(): BTSets {
+        val host = Net.getHostUrl("/settings")
+        val req = Request("get").toString()
+        val resp = postJson(host, req)
+        return Gson().fromJson(resp, BTSets::class.java)
     }
 
-    fun searchShows(params: List<String>): JSONArray {
-        var url = getHostUrl("/search/show?")
-        url += params.joinToString("&")
-        return JSONArray(Get(fixLink(url)))
+    fun setSettings(sets: BTSets) {
+        val host = Net.getHostUrl("/settings")
+        val req = SettingsReq("set", sets).toString()
+        postJson(host, req)
     }
 
-    fun getShow(id: String): JSObject {
-        var url = getHostUrl("/search/show/$id")
-        return JSObject(Get(fixLink(url)))
+    // Viewed
+    fun listViewed(hash: String): List<Viewed> {
+        val host = Net.getHostUrl("/viewed")
+        val req = ViewedReq("list", hash).toString()
+        val resp = postJson(host, req)
+        return Gson().fromJson(resp, Array<Viewed>::class.java).toList()
     }
 
-    fun searchTorrent(query: String, filter: List<String>): JSONArray {
-        var url = getHostUrl("/search/torrent")
-        url += "?query=$query"
-        if (filter.isNotEmpty())
-            url += "&ft=" + filter.joinToString("&ft=")
-        return JSONArray(Get(fixLink(url)))
+    fun setViewed(hash: String, index: Int) {
+        val host = Net.getHostUrl("/viewed")
+        val req = ViewedReq("set", hash, index).toString()
+        postJson(host, req)
     }
 
-    fun searchConfig(): JSONObject {
-        var url = getHostUrl("/search/config?type=config")
-        val cfg = JSONObject(Get(url))
-        url = getHostUrl("/search/config?type=genres")
-        val genres = JSONObject(Get(url))
-        val js = JSONObject()
-        js.put("Config", cfg)
-        js.put("Genres", genres)
-        return js
+    fun remViewed(hash: String) {
+        val host = Net.getHostUrl("/viewed")
+        val req = ViewedReq("rem", hash).toString()
+        postJson(host, req)
+    }
+
+    private fun postJson(url: String, json: String): String {
+        val resp = Jsoup.connect(url)
+            .header("Content-Type", "application/json")
+            .header("Accept", "application/json")
+            .ignoreContentType(true)
+            .method(Connection.Method.POST)
+            .requestBody(json)
+            .execute()
+
+//        if (resp.statusCode() != 200)
+//            throw ApiException("error send request: ${resp.body()} ${resp.statusMessage()}", resp.statusCode())
+        return resp.body()
     }
 }
