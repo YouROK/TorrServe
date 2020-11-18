@@ -35,7 +35,6 @@ object Settings {
     }
 
     fun getHost(): String {
-        return "http://10.42.0.1:8090"
         return get(HOST, "http://127.0.0.1:8090")
     }
 
