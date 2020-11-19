@@ -9,9 +9,9 @@ import ru.yourok.torrserve.settings.Settings
 class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (Settings.isBootStart()) {
-            val intent = Intent(context, MainActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
+            val mintent = Intent(context, MainActivity::class.java)
+            mintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(mintent)
         }
     }
 }

@@ -57,21 +57,17 @@ class TorrService : Service() {
                 App.Toast(getString(R.string.server_stoped))
             }
             notification.doUnbindService(this)
-            thread {
-                Thread.sleep(1000)
-                System.exit(0)
-            }
             stopSelf()
         }
     }
 
     companion object {
-        const val ActionStart = "ru.yourok.torrserve.server.action_start"
-        const val ActionStop = "ru.yourok.torrserve.server.action_stop"
+        private const val ActionStart = "ru.yourok.torrserve.server.action_start"
+        private const val ActionStop = "ru.yourok.torrserve.server.action_stop"
 
         fun start() {
             try {
-                val intent = Intent(App.context, Service::class.java)
+                val intent = Intent(App.context, TorrService::class.java)
                 intent.action = ActionStart
                 App.context.startService(intent)
             } catch (e: Exception) {
@@ -81,7 +77,7 @@ class TorrService : Service() {
 
         fun stop() {
             try {
-                val intent = Intent(App.context, Service::class.java)
+                val intent = Intent(App.context, TorrService::class.java)
                 intent.action = ActionStop
                 App.context.startService(intent)
             } catch (e: Exception) {

@@ -15,11 +15,11 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         synchronized(lock) {
             if (shell == null) {
                 if (Settings.isRootStart()) {
-                    shell = Shell.su("${path} -k -d ${Settings.getTorrPath()} > ${path}/torrserver.log 2>&1")
+                    shell = Shell.su("${path} -k -d ${Settings.getTorrPath()} > ${path}.log 2>&1")
                 } else {
                     val sh = Shell.newInstance("sh")
                     shell = sh.newJob()
-                    shell?.add("${path} -k -d ${Settings.getTorrPath()} > ${path}/torrserver.log 2>&1")
+                    shell?.add("${path} -k -d ${Settings.getTorrPath()} > ${path}.log 2>&1")
                 }
                 shell?.add("export GODEBUG=madvdontneed=1")
                 shell?.submit()

@@ -25,7 +25,6 @@ class Notification : Service() {
 
     private val channelId = "ru.yourok.torrserve"
     private val channelName = "ru.yourok.torrserve"
-    private var update = false
     private val lock = Any()
 
     inner class LocalBinder : Binder() {
@@ -44,7 +43,6 @@ class Notification : Service() {
 
     override fun onDestroy() {
         synchronized(lock) {
-            update = false
             stopForeground(true)
         }
     }
@@ -55,10 +53,6 @@ class Notification : Service() {
 
     private fun startForeground() {
         synchronized(lock) {
-            val restartIntent = Intent(this, Service::class.java)
-            restartIntent.setAction("ru.yourok.torrserve.server.action_restart")
-            val restartPendingIntent = PendingIntent.getService(this, 0, restartIntent, 0)
-
             val exitIntent = Intent(this, Service::class.java)
             exitIntent.setAction("ru.yourok.torrserve.server.action_exit")
             val exitPendingIntent = PendingIntent.getService(this, 0, exitIntent, 0)
@@ -83,11 +77,6 @@ class Notification : Service() {
                     .setContentIntent(pendingIntent)
                     .setStyle(NotificationCompat.BigTextStyle().bigText(""))
                     .addAction(
-                        android.R.drawable.stat_notify_sync,
-                        this.getText(R.string.restart_server),
-                        restartPendingIntent
-                    )
-                    .addAction(
                         android.R.drawable.ic_delete,
                         this.getText(R.string.exit),
                         exitPendingIntent
@@ -102,10 +91,6 @@ class Notification : Service() {
 
     private fun showNotification(msg: String) {
         synchronized(lock) {
-            val restartIntent = Intent(this, Service::class.java)
-            restartIntent.setAction("ru.yourok.torrserve.server.action_restart")
-            val restartPendingIntent = PendingIntent.getService(this, 0, restartIntent, 0)
-
             val exitIntent = Intent(this, Service::class.java)
             exitIntent.setAction("ru.yourok.torrserve.server.action_exit")
             val exitPendingIntent = PendingIntent.getService(this, 0, exitIntent, 0)
@@ -130,11 +115,6 @@ class Notification : Service() {
                     .setOngoing(true)
                     .setContentIntent(pendingIntent)
                     .setStyle(NotificationCompat.BigTextStyle().bigText(msg))
-                    .addAction(
-                        android.R.drawable.stat_notify_sync,
-                        this.getText(R.string.restart_server),
-                        restartPendingIntent
-                    )
                     .addAction(
                         android.R.drawable.ic_delete,
                         this.getText(R.string.exit),

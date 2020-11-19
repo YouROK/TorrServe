@@ -64,11 +64,11 @@ object Settings {
     /////////////////////////////////////////////////////////
 
     private fun <T> get(name: Preferences.Key<T>, def: T): T {
-        val v = dataStore.data.map { preferences ->
-            preferences[name]
-        } as T?
-            ?: return def
-        return v
+        var v: T? = null
+        dataStore.data.map { preferences ->
+            v = preferences[name] ?: def
+        }
+        return v ?: def
     }
 
     private suspend fun <T> set(name: Preferences.Key<T>, value: T?) {
