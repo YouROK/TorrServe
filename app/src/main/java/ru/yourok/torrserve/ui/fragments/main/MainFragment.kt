@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.ui.main
+package ru.yourok.torrserve.ui.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.ui.fragments.fragManager
 
 
 class MainFragment : Fragment() {
@@ -40,8 +41,9 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(TorrentsViewModel::class.java)
         val data = viewModel.getData()
-        data.observe(this) { torrents ->
-            torrentAdapter?.update(torrents)
+        data.observe(this) { data ->
+            view?.findViewById<TextView>(R.id.tvStatus)?.text = data.status
+            torrentAdapter?.update(data.torrents)
         }
     }
 
@@ -59,7 +61,7 @@ class MainFragment : Fragment() {
             }
 
             findViewById<FrameLayout>(R.id.btnAdd).setOnClickListener {
-//                startActivity(Intent(this, AddActivity::class.java))
+                fragManager.setAddFragment()
             }
 
             findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->

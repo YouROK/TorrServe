@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.ui.main
+package ru.yourok.torrserve.ui.fragments.main
 
 
 import android.app.Activity

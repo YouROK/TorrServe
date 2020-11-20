@@ -30,7 +30,7 @@ class TorrService : Service() {
                         return START_STICKY
                     }
                     ActionStop -> {
-                        stopServer()
+                        stopServer(intent.hasExtra("forceclose"))
                         return START_NOT_STICKY
                     }
                 }
@@ -47,7 +47,7 @@ class TorrService : Service() {
         }
     }
 
-    private fun stopServer() {
+    private fun stopServer(forceClose: Boolean) {
         thread {
             if (isLocal() && Api.echo().isNotEmpty())
                 Api.shutdown()
@@ -57,13 +57,19 @@ class TorrService : Service() {
                 App.Toast(getString(R.string.server_stoped))
             }
             notification.doUnbindService(this)
+            if (forceClose) {
+                thread {
+                    Thread.sleep(200)
+                    Runtime.getRuntime().exit(0)
+                }
+            }
             stopSelf()
         }
     }
 
     companion object {
-        private const val ActionStart = "ru.yourok.torrserve.server.action_start"
-        private const val ActionStop = "ru.yourok.torrserve.server.action_stop"
+        const val ActionStart = "ru.yourok.torrserve.server.action_start"
+        const val ActionStop = "ru.yourok.torrserve.server.action_stop"
 
         fun start() {
             try {

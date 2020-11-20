@@ -3,8 +3,8 @@ package ru.yourok.torrserve.server.local.services
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import ru.yourok.torrserve.MainActivity
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.ui.activities.MainActivity
 
 class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

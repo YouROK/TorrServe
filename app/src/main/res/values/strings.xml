@@ -24,6 +24,8 @@
 
     <string name="server_stoped">Server stopped</string>
     <string name="stat_server_is_running">Server is running</string>
+    <string name="server_not_responding">Server is not responding</string>
+    <string name="server_not_exists">No server</string>
 
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>

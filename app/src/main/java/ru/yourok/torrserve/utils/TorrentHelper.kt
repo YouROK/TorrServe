@@ -62,7 +62,7 @@ object TorrentHelper {
         return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${file.id}&play")
     }
 
-    fun getTorrentPlayPreloadLink(torr: Torrent, file: FileStat): String {
-        return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${file.id}&play&preload")
+    fun getTorrentPlayPreloadLink(torr: Torrent, index: Int): String {
+        return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${index}&play&preload")
     }
 }
