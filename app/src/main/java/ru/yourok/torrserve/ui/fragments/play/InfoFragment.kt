@@ -1,15 +1,19 @@
 package ru.yourok.torrserve.ui.fragments.play
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.FileStat
@@ -68,6 +72,23 @@ class InfoFragment(val cmd: String) : Fragment() {
             }
             info.torrent?.let { torr ->
                 view?.apply {
+                    if (poster != torr.poster) {
+                        poster = torr.poster
+                        if (poster.isNotEmpty())
+                            findViewById<ImageView>(R.id.ivPoster)?.let {
+                                it.visibility = View.VISIBLE
+                                Glide.with(this)
+                                    .asBitmap()
+                                    .load(poster)
+                                    .fitCenter()
+                                    .placeholder(ColorDrawable(0x3c000000))
+                                    .transition(BitmapTransitionOptions.withCrossFade())
+                                    .into(it)
+                            }
+                        else
+                            findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
+                    }
+
                     val title = torr.title
                     if (title.isEmpty())
                         findViewById<TextView>(R.id.tvTitle).visibility = View.GONE
