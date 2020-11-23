@@ -10,8 +10,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
-import ru.yourok.torrserve.ui.fragments.fragManager
 
 class AddFragment : Fragment() {
 
@@ -43,10 +43,10 @@ class AddFragment : Fragment() {
                     intent.putExtra("poster", poster.toString())
                     startActivity(intent)
                 }
-                fragManager.popBackStack()
+                popBackStackFragment()
             }
             findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
-                fragManager.popBackStack()
+                popBackStackFragment()
             }
         }
     }

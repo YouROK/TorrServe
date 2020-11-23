@@ -14,9 +14,18 @@ import java.io.File
 object Settings {
     private val dataStore: DataStore<Preferences> = App.context.createDataStore("settings")
 
+    private val CHOOSER_ACTION = preferencesKey<Int>("chooser_action")
     private val BOOTSTART = preferencesKey<Boolean>("boot_start")
     private val ROOT = preferencesKey<Boolean>("root")
     private val HOST = preferencesKey<String>("host")
+
+    fun getChooserAction(): Int {
+        return get(CHOOSER_ACTION, 0)
+    }
+
+    suspend fun setChooserAction(v: Int) {
+        set(CHOOSER_ACTION, v)
+    }
 
     fun isBootStart(): Boolean {
         return get(BOOTSTART, false)

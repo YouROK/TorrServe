@@ -3,8 +3,9 @@ package ru.yourok.torrserve.ui.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.ext.clearStackFragmnet
 import ru.yourok.torrserve.services.TorrService
-import ru.yourok.torrserve.ui.fragments.fragManager
+import ru.yourok.torrserve.ui.fragments.main.MainFragment
 import ru.yourok.torrserve.utils.Premissions
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,9 @@ class MainActivity : AppCompatActivity() {
 
         TorrService.start()
 
-        if (savedInstanceState == null)
-            fragManager.setMainFragment()
+        if (savedInstanceState == null) {
+            clearStackFragmnet()
+            MainFragment().show(this, R.id.container)
+        }
     }
 }

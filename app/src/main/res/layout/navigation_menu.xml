@@ -80,7 +80,7 @@
                     android:padding="15dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_add" />
@@ -112,8 +112,8 @@
 
                     <ImageView
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_trash"
-                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_remove"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -144,7 +144,7 @@
                     <ImageView
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_list"
-                        android:layout_width="wrap_content"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -174,8 +174,8 @@
 
                     <ImageView
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_donate"
-                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_thumb_up"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -205,8 +205,8 @@
 
                     <ImageView
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_sync"
-                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_refresh"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -236,8 +236,8 @@
 
                     <ImageView
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_sync"
-                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_refresh"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -268,7 +268,7 @@
                     <ImageView
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_settings"
-                        android:layout_width="wrap_content"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -299,7 +299,7 @@
                     <ImageView
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_cancel"
-                        android:layout_width="wrap_content"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content" />
 
                     <TextView

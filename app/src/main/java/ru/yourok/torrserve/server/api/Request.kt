@@ -19,7 +19,8 @@ class TorrentReq(
     val hash: String = "",
     val link: String = "",
     val title: String = "",
-    val poster: String = ""
+    val poster: String = "",
+    val save_to_db: Boolean = false,
 ) : Request(action)
 
 class ViewedReq(

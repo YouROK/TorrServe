@@ -7,10 +7,12 @@ import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.services.TorrService
+import ru.yourok.torrserve.ui.fragments.play.InfoFragment
 
 
 class PlayActivity : AppCompatActivity() {
@@ -19,12 +21,13 @@ class PlayActivity : AppCompatActivity() {
     var torrentHash: String = ""
     var torrentTitle: String = ""
     var torrentPoster: String = ""
-    var torrentFileIndex: Int = 0 // from 1 to end
+    var torrentSave: Boolean = false
+    var torrentFileIndex: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        setContentView(R.layout.play_activity)
         setWindow()
 
         if (intent == null) {
@@ -35,7 +38,9 @@ class PlayActivity : AppCompatActivity() {
         TorrService.start()
 
         readArgs()
-        processIntent()
+        runBlocking {
+            processIntent()
+        }
     }
 
     private fun setWindow() {
@@ -48,7 +53,7 @@ class PlayActivity : AppCompatActivity() {
         window.attributes = attr
     }
 
-    private fun processIntent() {
+    private suspend fun processIntent() {
         if (command.isNotEmpty()) {
             //// Commands
             when (command.toLowerCase()) {
@@ -85,7 +90,7 @@ class PlayActivity : AppCompatActivity() {
                 if (torrentHash.isNotEmpty())
                     torrent = Api.getTorrent(torrentHash)
                 if (torrent == null && torrentLink.isNotEmpty())
-                    torrent = Api.addTorrent(torrentLink, torrentTitle, torrentPoster)
+                    torrent = Api.addTorrent(torrentLink, torrentTitle, torrentPoster, false)
                 if (torrent != null) {
                     val intent = Intent()
                     intent.putExtra("result", Gson().toJson(torrent))
@@ -112,46 +117,11 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    private fun processPlay() {
-
-
-    }
-
-    private fun readArgs() {
-        intent.data?.let {
-            torrentLink = it.toString()
-        }
-        if (intent.action?.equals(Intent.ACTION_SEND) == true) {
-            if (intent.getStringExtra(Intent.EXTRA_TEXT) != null)
-                torrentLink = intent.getStringExtra(Intent.EXTRA_TEXT)
-            if (intent.extras?.get(Intent.EXTRA_STREAM) != null)
-                torrentLink = intent.extras?.get(Intent.EXTRA_STREAM)?.toString() ?: ""
-        }
-
-        intent?.extras?.apply {
-            keySet().forEach { key ->
-                when (key.toLowerCase()) {
-                    "cmd" -> torrentTitle = this.getString(key) ?: ""
-                    "hash" -> torrentHash = this.getString(key) ?: ""
-                    "title" -> torrentTitle = this.getString(key) ?: ""
-                    "poster" -> torrentPoster = this.getString(key) ?: ""
-                    "fileindex" -> torrentFileIndex = this.getInt(key) ?: 0
-                }
+    private suspend fun processPlay() {
+        processTorrent {
+            it?.let { torr ->
+                InfoFragment(torr.hash).show(this, R.id.top_container)
             }
         }
     }
-
-    private fun successful(intent: Intent) {
-        setResult(RESULT_OK, intent)
-        finish()
-    }
-
-    private fun error(err: ReturnError) {
-        val ret = Intent()
-        ret.putExtra("errCode", err.errCode)
-        ret.putExtra("errMessage", err.errMessage)
-        setResult(RESULT_CANCELED, ret)
-        finish()
-    }
-
 }

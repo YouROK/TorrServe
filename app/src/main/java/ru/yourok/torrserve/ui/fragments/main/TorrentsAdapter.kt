@@ -48,6 +48,7 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
         val hash = list[position].hash
         val size = list[position].torrent_size
         val addTime = list[position].timestamp
+        val speed = list[position].download_speed
 
         var addStr = ""
 
@@ -78,7 +79,12 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
             vi.findViewById<TextView>(R.id.tvTorrDate)?.visibility = View.VISIBLE
         } else
             vi.findViewById<TextView>(R.id.tvTorrDate)?.visibility = View.GONE
-        vi.findViewById<TextView>(R.id.tvTorrSize)?.text = ByteFmt.byteFmt(size)
+
+        if (size > 0.0) {
+            vi.findViewById<TextView>(R.id.tvTorrSize)?.text = ByteFmt.byteFmt(size)
+            vi.findViewById<TextView>(R.id.tvTorrSize)?.visibility = View.VISIBLE
+        } else
+            vi.findViewById<TextView>(R.id.tvTorrSize)?.visibility = View.GONE
 
         return vi
     }

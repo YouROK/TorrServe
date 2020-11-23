@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -19,16 +18,11 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
+import ru.yourok.torrserve.ui.fragments.ResultFragment
 import ru.yourok.torrserve.utils.ByteFmt
 import java.io.File
 
-class InfoFragment(val cmd: String) : Fragment() {
-
-    companion object {
-        fun newInstance(cmd: String) = InfoFragment(cmd)
-    }
-
-    private lateinit var viewModel: InfoViewModel
+class InfoFragment(private val hash: String) : ResultFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,22 +36,11 @@ class InfoFragment(val cmd: String) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
-        when (cmd) {
-            "add" -> {
-                val link = (requireActivity() as PlayActivity).torrentLink
-                val title = (requireActivity() as PlayActivity).torrentTitle
-                val poster = (requireActivity() as PlayActivity).torrentPoster
-                val data = viewModel.addTorrent(link, title, poster)
-                data.observe(this) { updateUI(it, -1) }
-            }
-            "play" -> {
-                val index = (requireActivity() as PlayActivity).torrentFileIndex
-                val link = (requireActivity() as PlayActivity).torrentLink
-                val title = (requireActivity() as PlayActivity).torrentTitle
-                val poster = (requireActivity() as PlayActivity).torrentPoster
-                val data = viewModel.addTorrent(link, title, poster)
-                viewModel.preloadTorrent(index)
-                data.observe(this) { updateUI(it, index) }
+        val data = (viewModel as InfoViewModel).setTorrent(hash)
+        data.observe(this) {
+            updateUI(it, (requireActivity() as PlayActivity).torrentFileIndex)
+            lifecycleScope.launch {
+                onResult?.invoke(it.torrent)
             }
         }
     }

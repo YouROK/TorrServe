@@ -11,6 +11,11 @@
     <string name="settings">Settings</string>
     <string name="exit">Exit</string>
 
+    <string name="add_play">Add &amp; Play</string>
+    <string name="play">Play</string>
+
+    <string name="make_as_def">Make as default</string>
+
     <string name="torrent">Torrent</string>
     <string name="title">Title</string>
     <string name="poster_link">Poster link</string>

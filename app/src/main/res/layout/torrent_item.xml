@@ -86,5 +86,6 @@
             android:paddingBottom="5dp"
             android:singleLine="true"
             android:text="10.10.2001" />
+
     </LinearLayout>
 </LinearLayout>
