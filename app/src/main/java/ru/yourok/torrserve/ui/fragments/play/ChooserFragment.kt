@@ -9,10 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.services.TorrService
-import ru.yourok.torrserve.ui.fragments.ResultFragment
+import ru.yourok.torrserve.ui.fragments.TSFragment
 
 
-class ChooserFragment : ResultFragment() {
+class ChooserFragment : TSFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

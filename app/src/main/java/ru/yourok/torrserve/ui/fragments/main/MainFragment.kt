@@ -16,11 +16,11 @@ import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
-import ru.yourok.torrserve.ui.fragments.ResultFragment
+import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
 
 
-class MainFragment : ResultFragment() {
+class MainFragment : TSFragment() {
 
     private var torrentAdapter: TorrentsAdapter? = null
 

@@ -2,7 +2,6 @@ package ru.yourok.torrserve.ui.fragments.main
 
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -41,14 +40,13 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-        val vi: View = view ?: (activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.torrent_item, null)
+        val vi = view ?: LayoutInflater.from(parent?.context).inflate(R.layout.torrent_item, parent, false)
 
         val title = list[position].title
         val poster = list[position].poster
         val hash = list[position].hash
         val size = list[position].torrent_size
         val addTime = list[position].timestamp
-        val speed = list[position].download_speed
 
         var addStr = ""
 

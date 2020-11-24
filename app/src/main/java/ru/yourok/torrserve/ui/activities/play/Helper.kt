@@ -5,11 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.Api
-import ru.yourok.torrserve.server.models.torrent.Torrent
-import ru.yourok.torrserve.settings.Settings
-import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 
 fun PlayActivity.readArgs() {
     intent.data?.let {
@@ -49,65 +45,9 @@ fun PlayActivity.error(err: ReturnError) {
     finish()
 }
 
-suspend fun PlayActivity.processTorrent(onTorrent: suspend (Torrent?) -> Unit) {
-    if (intent.hasExtra("action") && intent.getStringExtra("action") == "play") {
-        onTorrent(getTorrent(false))
-        return
-    }
-
-    when (Settings.getChooserAction()) {
-        1 -> {//play
-            onTorrent(getTorrent(false))
-            return
-        }
-        2 -> {//add & play
-            onTorrent(getTorrent(true))
-            return
-        }
-        3 -> {//add
-            getTorrent(true)
-            finish()
-            return
-        }
-    }
-
-    val chFrag = ChooserFragment()
-    chFrag.setOnResult {
-        val action = (it as Int)
-        if (action < 1 || action > 3) {
-            onTorrent(null)
-            return@setOnResult
-        }
-
-        when (action) {
-            1 -> {//play
-                onTorrent(getTorrent(false))
-            }
-            2 -> {//add & play
-                onTorrent(getTorrent(true))
-            }
-            3 -> {//add
-                getTorrent(true)
-                finish()
-            }
-        }
-    }
-
-    chFrag.show(this, R.id.top_container)
-}
-
-suspend fun PlayActivity.getTorrent(save: Boolean): Torrent? {
-    var torr: Torrent? = null
+fun PlayActivity.addAndExit() {
     lifecycleScope.launch(Dispatchers.IO) {
-        if (torrentHash.isNotEmpty()) {
-            torr = Api.getTorrent(torrentHash)
-            return@launch
-        }
-        if (torrentLink.isNotEmpty()) {
-            torr = Api.addTorrent(torrentLink, torrentTitle, torrentPoster, save)
-            torrentHash = torr?.hash ?: return@launch
-            return@launch
-        }
-    }.join()
-    return torr
+        Api.addTorrent(torrentLink, torrentTitle, torrentPoster, true)
+        finish()
+    }
 }

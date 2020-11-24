@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/action_selector"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="5dp"
+    android:clipToPadding="false">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="-5.5dip"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/gradient_divider_hw" />
+
+    <TextView
+        android:id="@+id/tvFileName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center"
+        android:layout_toStartOf="@+id/tvFileSize"
+        android:layout_toLeftOf="@+id/tvFileSize"
+        android:gravity="center_vertical"
+        android:minHeight="64dp"
+        android:paddingStart="5dp"
+        android:text="Name" />
+
+    <ImageView
+        android:id="@+id/ivViewed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center|end"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/ic_circle_viewed" />
+
+    <TextView
+        android:id="@+id/tvFileSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvFileName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="3dp"
+        android:text="5 MB" />
+
+</RelativeLayout>

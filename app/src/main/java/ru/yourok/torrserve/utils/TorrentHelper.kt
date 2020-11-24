@@ -38,20 +38,18 @@ object TorrentHelper {
     }
 
 
-    fun waitInfo(hash: String, onProgress: (stat: Torrent) -> Unit) {
+    fun waitInfo(hash: String) {
         var count = 0
         while (true) {
             try {
                 val torr = Api.getTorrent(hash)
-                onProgress(torr)
-
-                if (torr.stat != TorrentSTGettingInfo && torr.stat != TorrentSTAdded) {
+                if (torr.file_stats != null) {
                     if ((torr.file_stats?.size ?: 0) > 0 || count > 9)
                         break
                     else
                         count++
                 }
-                Thread.sleep(100)
+                Thread.sleep(1000)
             } catch (e: Exception) {
                 Thread.sleep(1000)
             }
@@ -65,6 +63,6 @@ object TorrentHelper {
     fun getTorrentPlayPreloadLink(torr: Torrent, index: Int): String {
         return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${index}&play&preload")
     }
-    
+
 
 }

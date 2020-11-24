@@ -16,6 +16,8 @@
 
     <string name="make_as_def">Make as default</string>
 
+    <string name="playlist_continue">Playlist continue</string>
+
     <string name="torrent">Torrent</string>
     <string name="title">Title</string>
     <string name="poster_link">Poster link</string>

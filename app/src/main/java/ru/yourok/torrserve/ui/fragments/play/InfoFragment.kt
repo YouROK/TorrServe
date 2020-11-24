@@ -13,16 +13,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
-import ru.yourok.torrserve.ui.fragments.ResultFragment
+import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.ByteFmt
 import java.io.File
 
-class InfoFragment(private val hash: String) : ResultFragment() {
+open class InfoFragment : TSFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,15 +35,11 @@ class InfoFragment(private val hash: String) : ResultFragment() {
         return vi
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
+    suspend fun startInfo(hash: String) = withContext(Dispatchers.Main) {
+        viewModel = ViewModelProvider(this@InfoFragment).get(InfoViewModel::class.java)
         val data = (viewModel as InfoViewModel).setTorrent(hash)
-        data.observe(this) {
+        data.observe(this@InfoFragment) {
             updateUI(it, (requireActivity() as PlayActivity).torrentFileIndex)
-            lifecycleScope.launch {
-                onResult?.invoke(it.torrent)
-            }
         }
     }
 
@@ -124,7 +122,7 @@ class InfoFragment(private val hash: String) : ResultFragment() {
                         findViewById<ProgressBar>(R.id.progressBar).isIndeterminate = false
                         findViewById<ProgressBar>(R.id.progressBar).progress = prc
                     } else
-                        findViewById<ProgressBar>(R.id.progressBar).isIndeterminate = false
+                        findViewById<ProgressBar>(R.id.progressBar).isIndeterminate = true
 
                     val peers = "[${torr.connected_seeders}] ${torr.active_peers}/${torr.total_peers}"
                     if (peers.isNotEmpty()) {

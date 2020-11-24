@@ -30,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#eee" />
 
@@ -57,39 +56,33 @@
                     android:layout_width="match_parent"
                     android:maxLines="2"
                     android:ellipsize="start"
-                    android:layout_height="wrap_content"
-                    android:text="FileName" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tvFileSize"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="FileSize" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tvBuffer"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Buffer" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tvPeers"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Peers" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tvSpeed"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Speed" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tvConnections"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Connections" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btnPlaylist"
+            android:text="@string/playlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btnPlaylistContinue"
+            android:text="@string/playlist_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvTorrentFiles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

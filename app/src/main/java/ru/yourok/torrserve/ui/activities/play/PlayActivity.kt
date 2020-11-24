@@ -1,18 +1,14 @@
 package ru.yourok.torrserve.ui.activities.play
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.server.api.Api
-import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.services.TorrService
-import ru.yourok.torrserve.ui.fragments.play.InfoFragment
+import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentInfo
+import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentList
+import ru.yourok.torrserve.ui.activities.play.Commands.processViewed
+import ru.yourok.torrserve.ui.activities.play.Play.play
 
 
 class PlayActivity : AppCompatActivity() {
@@ -53,7 +49,7 @@ class PlayActivity : AppCompatActivity() {
         window.attributes = attr
     }
 
-    private suspend fun processIntent() {
+    private fun processIntent() {
         if (command.isNotEmpty()) {
             //// Commands
             when (command.toLowerCase()) {
@@ -65,62 +61,22 @@ class PlayActivity : AppCompatActivity() {
             return
         } else {
             //// Play torrent
-            processPlay()
+            processTorrent()
         }
     }
 
-    private fun processViewed() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val viewed = Api.listViewed(torrentHash)
-                val intent = Intent()
-                intent.putExtra("result", Gson().toJson(viewed))
-                successful(intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                error(ErrProcessCmd)
-            }
-        }
-    }
 
-    private fun processTorrentInfo() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                var torrent: Torrent? = null
-                if (torrentHash.isNotEmpty())
-                    torrent = Api.getTorrent(torrentHash)
-                if (torrent == null && torrentLink.isNotEmpty())
-                    torrent = Api.addTorrent(torrentLink, torrentTitle, torrentPoster, false)
-                if (torrent != null) {
-                    val intent = Intent()
-                    intent.putExtra("result", Gson().toJson(torrent))
-                    successful(intent)
+    private fun processTorrent() {
+        if (intent.hasExtra("action") && intent.getStringExtra("action") == "play")
+            play(false)
+        else Chooser.show(this) {
+            when (it) {
+                1, 2 -> {
+                    play(it == 2)
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                error(ErrProcessCmd)
-            }
-        }
-    }
-
-    private fun processTorrentList() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val list = Api.listTorrent()
-                val intent = Intent()
-                intent.putExtra("result", Gson().toJson(list))
-                successful(intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                error(ErrProcessCmd)
-            }
-        }
-    }
-
-    private suspend fun processPlay() {
-        processTorrent {
-            it?.let { torr ->
-                InfoFragment(torr.hash).show(this, R.id.top_container)
+                3 -> {
+                    addAndExit()
+                }
             }
         }
     }
