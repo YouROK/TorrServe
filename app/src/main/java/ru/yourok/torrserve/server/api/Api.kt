@@ -90,6 +90,8 @@ object Api {
         val host = Net.getHostUrl("/viewed")
         val req = ViewedReq("list", hash).toString()
         val resp = postJson(host, req)
+        if (resp.isNullOrBlank())
+            return emptyList()
         return Gson().fromJson(resp, Array<Viewed>::class.java).toList()
     }
 

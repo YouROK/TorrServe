@@ -25,11 +25,11 @@ class TorrentReq(
 
 class ViewedReq(
     action: String,
-    val Hash: String = "",
-    val FileIndex: Int = 0
+    val hash: String = "",
+    val file_index: Int = 0
 ) : Request(action)
 
 data class Viewed(
-    val Hash: String,
-    val FileIndex: Int
+    val hash: String,
+    val file_index: Int
 )

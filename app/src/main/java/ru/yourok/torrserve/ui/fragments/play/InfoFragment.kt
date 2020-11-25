@@ -43,12 +43,20 @@ open class InfoFragment : TSFragment() {
         }
     }
 
+    suspend fun hideProgress() = withContext(Dispatchers.Main) {
+        view?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.GONE
+    }
+
+    suspend fun showProgress() = withContext(Dispatchers.Main) {
+        view?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.VISIBLE
+    }
+
     private var poster = ""
 
     private fun updateUI(info: InfoTorrent, index: Int) {
         lifecycleScope.launch {
             if (info.torrent == null && info.error.isNotEmpty()) {
-                view?.findViewById<TextView>(R.id.tvConnections)?.text = info.error
+                view?.findViewById<TextView>(R.id.tvInfo)?.text = info.error
                 return@launch
             }
             info.torrent?.let { torr ->
@@ -144,6 +152,8 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvSpeed).text = txt
                     }
 
+                    view?.findViewById<TextView>(R.id.tvInfo)?.text = torr.stat_string
+                    
                 }
             }
         }
