@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.Viewed
+import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.fragments.TSFragment
@@ -29,11 +30,14 @@ class TorrentFilesFragment : TSFragment() {
     private val torrFilesAdapter = TorrentFilesAdapter()
     private lateinit var torrent: Torrent
     private var viewed: List<Viewed>? = null
+    private var onClickItem: ((file: FileStat) -> Unit)? = null
 
-    suspend fun showTorrent(activity: FragmentActivity, torr: Torrent, viewed: List<Viewed>?) = withContext(Dispatchers.Main) {
-        show(activity, R.id.bottom_container)
+    suspend fun showTorrent(activity: FragmentActivity, torr: Torrent, viewed: List<Viewed>?, onClickItem: (file: FileStat) -> Unit) = withContext(Dispatchers.Main) {
         torrent = torr
         this@TorrentFilesFragment.viewed = viewed
+        this@TorrentFilesFragment.onClickItem = onClickItem
+        torrFilesAdapter.update(torrent, viewed)
+        show(activity, R.id.bottom_container)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -43,7 +47,10 @@ class TorrentFilesFragment : TSFragment() {
             findViewById<Button>(R.id.btnPlaylistContinue).setOnClickListener { }
             findViewById<ListView>(R.id.lvTorrentFiles).apply {
                 adapter = torrFilesAdapter
-                torrFilesAdapter.update(torrent, viewed)
+                setOnItemClickListener { parent, view, position, id ->
+                    val file = torrent.file_stats?.get(position) ?: return@setOnItemClickListener
+                    onClickItem?.invoke(file)
+                }
             }
         }
     }

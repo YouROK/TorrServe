@@ -22,7 +22,6 @@ class TorrentFilesAdapter : BaseAdapter() {
         files = TorrentHelper.getPlayableFiles(torrent)
         if (viewed != null)
             this.viewed = viewed
-        notifyDataSetChanged()
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
@@ -47,9 +46,9 @@ class TorrentFilesAdapter : BaseAdapter() {
     }
 
     override fun getItem(p0: Int): Any? {
-        if (p0 < 0 || p0 >= torrent?.file_stats?.size ?: 0)
+        if (p0 < 0 || p0 >= files.size)
             return null
-        return torrent?.file_stats?.get(p0)
+        return files[p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -57,6 +56,6 @@ class TorrentFilesAdapter : BaseAdapter() {
     }
 
     override fun getCount(): Int {
-        return torrent?.file_stats?.size ?: 0
+        return files.size
     }
 }

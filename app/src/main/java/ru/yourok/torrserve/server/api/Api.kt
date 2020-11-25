@@ -114,6 +114,7 @@ object Api {
             .ignoreContentType(true)
             .method(Connection.Method.POST)
             .requestBody(json)
+            .timeout(0)
             .execute()
 
 //        if (resp.statusCode() != 200)

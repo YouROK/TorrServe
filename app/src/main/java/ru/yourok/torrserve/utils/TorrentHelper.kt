@@ -1,5 +1,9 @@
 package ru.yourok.torrserve.utils
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.jsoup.Connection
+import org.jsoup.Jsoup
 import ru.yourok.torrserve.ext.urlEncode
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.FileStat
@@ -38,14 +42,14 @@ object TorrentHelper {
     }
 
 
-    fun waitFiles(hash: String) {
+    fun waitFiles(hash: String): Torrent? {
         var count = 0
         while (true) {
             try {
                 val torr = Api.getTorrent(hash)
                 if (torr.file_stats != null) {
-                    if ((torr.file_stats?.size ?: 0) > 0 || count > 9)
-                        break
+                    if ((torr.file_stats?.size ?: 0) > 0 || count > 59)
+                        return torr
                     else
                         count++
                 }
@@ -56,13 +60,21 @@ object TorrentHelper {
         }
     }
 
-    fun getTorrentPlayLink(torr: Torrent, file: FileStat): String {
-        return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${file.id}&play")
+    fun getTorrentPlayLink(torr: Torrent, index: Int): String {
+        return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${index}&play")
     }
 
     fun getTorrentPlayPreloadLink(torr: Torrent, index: Int): String {
         return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${index}&play&preload")
     }
 
+    suspend fun preloadTorrent(torr: Torrent, index: Int) = withContext(Dispatchers.IO) {
+        val link = getTorrentPlayPreloadLink(torr, index)
+        Jsoup.connect(link)
+            .method(Connection.Method.GET)
+            .ignoreContentType(true)
+            .timeout(0)
+            .execute()
+    }
 
 }

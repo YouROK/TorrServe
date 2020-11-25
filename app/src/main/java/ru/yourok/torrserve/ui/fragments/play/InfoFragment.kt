@@ -22,6 +22,7 @@ import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.ByteFmt
+import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
 
 open class InfoFragment : TSFragment() {
@@ -43,15 +44,7 @@ open class InfoFragment : TSFragment() {
         }
     }
 
-    suspend fun hideProgress() = withContext(Dispatchers.Main) {
-        view?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.GONE
-    }
-
-    suspend fun showProgress() = withContext(Dispatchers.Main) {
-        view?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.VISIBLE
-    }
-
-    private var poster = ""
+    private var poster = " "
 
     private fun updateUI(info: InfoTorrent, index: Int) {
         lifecycleScope.launch {
@@ -112,10 +105,14 @@ open class InfoFragment : TSFragment() {
                     }
 
                     var buffer = ""
-                    var prc = 0
-                    if (torr.preload_size > 0) {
-                        prc = (torr.preload_size * 100 / torr.preloaded_bytes).toInt()
-                        buffer = (prc).toString() + "% " + ByteFmt.byteFmt(torr.preloaded_bytes) + "/" + ByteFmt.byteFmt(torr.preload_size)
+                    var prc = 0.0
+                    if (torr.preload_size > 0 && torr.preloaded_bytes > 0) {
+                        prc = torr.preloaded_bytes.toDouble() * 100.0 / torr.preload_size.toDouble()
+                        if (prc < 100.0)
+                            buffer = "%.02f".format(prc) + "% "
+                        buffer += ByteFmt.byteFmt(torr.preloaded_bytes)
+                        if (prc < 100.0)
+                            buffer += "/" + ByteFmt.byteFmt(torr.preload_size)
                     }
 
                     if (buffer.isNotEmpty()) {
@@ -128,9 +125,18 @@ open class InfoFragment : TSFragment() {
 
                     if (prc > 0 && prc < 100) {
                         findViewById<ProgressBar>(R.id.progressBar).isIndeterminate = false
-                        findViewById<ProgressBar>(R.id.progressBar).progress = prc
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+                            findViewById<ProgressBar>(R.id.progressBar).setProgress(prc.toInt(), true)
+                        else
+                            findViewById<ProgressBar>(R.id.progressBar).setProgress(prc.toInt())
+
                     } else
                         findViewById<ProgressBar>(R.id.progressBar).isIndeterminate = true
+
+                    if (torr.stat < TorrentHelper.TorrentSTWorking)
+                        findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
+                    else
+                        findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
 
                     val peers = "[${torr.connected_seeders}] ${torr.active_peers}/${torr.total_peers}"
                     if (peers.isNotEmpty()) {
@@ -153,7 +159,7 @@ open class InfoFragment : TSFragment() {
                     }
 
                     view?.findViewById<TextView>(R.id.tvInfo)?.text = torr.stat_string
-                    
+
                 }
             }
         }

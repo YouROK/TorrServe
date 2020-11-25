@@ -38,7 +38,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity">
+        <activity
+            android:theme="@style/PlayDialog"
+            android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

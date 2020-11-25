@@ -22,7 +22,12 @@ object Play {
                 result?.first?.let { torr ->
                     //TODO logic for one or more pl files
                     TorrentFilesFragment().apply {
-                        showTorrent(this@play, torr, result.second)
+                        showTorrent(this@play, torr, result.second) { file ->
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                TorrentHelper.preloadTorrent(torr, file.id)
+                                
+                            }
+                        }
                     }
                 }
             }
@@ -37,7 +42,6 @@ object Play {
                 // show info
                 val info = InfoFragment()
                 info.show(this@apply, R.id.top_container)
-                info.showProgress()
                 // get torrent
                 torr = loadTorrent(torrentLink, torrentHash, torrentTitle, torrentPoster, torrentSave)
                 torr?.let {
@@ -48,9 +52,8 @@ object Play {
                     list = Api.listViewed(it.hash)
                     // wait torr info and change fragment
                     lifecycleScope.launch(Dispatchers.IO) {
-                        TorrentHelper.waitFiles(torrentHash)
+                        torr = TorrentHelper.waitFiles(torrentHash) ?: return@launch
                     }.join()
-                    info.hideProgress()
                 }
             }.join()
         }
@@ -62,15 +65,10 @@ object Play {
     }
 
     private fun loadTorrent(link: String, hash: String, title: String, poster: String, save: Boolean): Torrent? {
-        val magnet =
-            if (hash.isNotEmpty())
-                hash
-            else if (link.isNotEmpty())
-                link
-            else
-                return null
-
-        val torr = Api.addTorrent(magnet, title, poster, save)
-        return torr
+        if (hash.isNotEmpty())
+            return Api.getTorrent(hash)
+        else if (link.isNotEmpty())
+            return Api.addTorrent(link, title, poster, save)
+        return null
     }
 }
