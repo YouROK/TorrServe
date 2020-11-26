@@ -10,9 +10,9 @@ object Mime {
     fun getMimeType(filepath: String): String {
         val ext = File(filepath).extension.toLowerCase()
         if (extVideo.contains(ext))
-            return "video/*"
+            return "video/mp4"
         if (extAudio.contains(ext))
-            return "audio/*"
+            return "audio/mp3"
         return "*/*"
     }
 
@@ -75,5 +75,6 @@ object Mime {
             "sid",
             "wav",
             "wma",
-            "xm")
+            "xm"
+    )
 }

@@ -16,6 +16,6 @@ object Chooser {
             if (action in 1..3)
                 onChoose(action)
         }
-        chFrag.show(activity, R.id.top_container)
+        chFrag.show(activity, R.id.bottom_container)
     }
 }

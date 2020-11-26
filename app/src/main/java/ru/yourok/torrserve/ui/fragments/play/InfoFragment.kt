@@ -21,6 +21,8 @@ import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.ui.fragments.TSFragment
+import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoTorrent
+import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoViewModel
 import ru.yourok.torrserve.utils.ByteFmt
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File

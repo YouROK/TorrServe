@@ -14,10 +14,15 @@ import java.io.File
 object Settings {
     private val dataStore: DataStore<Preferences> = App.context.createDataStore("settings")
 
+    private val PLAYER = preferencesKey<String>("player")
     private val CHOOSER_ACTION = preferencesKey<Int>("chooser_action")
     private val BOOTSTART = preferencesKey<Boolean>("boot_start")
     private val ROOT = preferencesKey<Boolean>("root")
     private val HOST = preferencesKey<String>("host")
+
+    fun getPlayer(): String {
+        return get(PLAYER, "")
+    }
 
     fun getChooserAction(): Int {
         return get(CHOOSER_ACTION, 0)
@@ -44,8 +49,8 @@ object Settings {
     }
 
     fun getHost(): String {
-        return "http://10.0.0.10:8090"
-//        return "http://192.168.43.46:8090"
+//        return "http://10.0.0.10:8090"
+        return "http://192.168.43.46:8090"
 //        return get(HOST, "http://127.0.0.1:8090")
     }
 

@@ -61,15 +61,17 @@ object TorrentHelper {
     }
 
     fun getTorrentPlayLink(torr: Torrent, index: Int): String {
-        return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${index}&play")
+        val file = findFile(torr, index)
+        val name = file?.path ?: torr.title
+        return Net.getHostUrl("/stream/${name.urlEncode()}?link=${torr.hash}&index=${index}&play")
     }
 
-    fun getTorrentPlayPreloadLink(torr: Torrent, index: Int): String {
-        return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${index}&play&preload")
+    fun getTorrentPreloadLink(torr: Torrent, index: Int): String {
+        return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${index}&preload")
     }
 
     suspend fun preloadTorrent(torr: Torrent, index: Int) = withContext(Dispatchers.IO) {
-        val link = getTorrentPlayPreloadLink(torr, index)
+        val link = getTorrentPreloadLink(torr, index)
         Jsoup.connect(link)
             .method(Connection.Method.GET)
             .ignoreContentType(true)
@@ -77,4 +79,11 @@ object TorrentHelper {
             .execute()
     }
 
+    fun findFile(torrent: Torrent, index: Int): FileStat? {
+        torrent.file_stats?.forEach {
+            if (it.id == index)
+                return it
+        }
+        return null
+    }
 }

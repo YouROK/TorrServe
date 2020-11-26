@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.ui.fragments.play
+package ru.yourok.torrserve.ui.fragments.play.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

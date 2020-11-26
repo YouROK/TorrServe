@@ -8,7 +8,7 @@
     tools:context=".ui.activities.play.PlayActivity">
 
     <FrameLayout
-        android:id="@+id/top_container"
+        android:id="@+id/info_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

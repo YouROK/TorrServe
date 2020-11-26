@@ -16,6 +16,8 @@ import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.adapters.TorrentFilesAdapter
+import ru.yourok.torrserve.utils.TorrentHelper
+import kotlin.math.max
 
 class TorrentFilesFragment : TSFragment() {
     override fun onCreateView(
@@ -40,9 +42,22 @@ class TorrentFilesFragment : TSFragment() {
         show(activity, R.id.bottom_container)
     }
 
+    suspend fun disableList() = withContext(Dispatchers.Main) {
+        view?.findViewById<ListView>(R.id.lvTorrentFiles)?.isEnabled = false
+    }
+
+    suspend fun enableList() = withContext(Dispatchers.Main) {
+        view?.findViewById<ListView>(R.id.lvTorrentFiles)?.isEnabled = true
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         view?.apply {
+            var last = 0
+            viewed?.forEach { last = max(last, it.file_index) }
+            val file = TorrentHelper.findFile(torrent, last + 1)
+            val next = file?.id ?: last
+
             findViewById<Button>(R.id.btnPlaylist).setOnClickListener { }
             findViewById<Button>(R.id.btnPlaylistContinue).setOnClickListener { }
             findViewById<ListView>(R.id.lvTorrentFiles).apply {
@@ -51,6 +66,9 @@ class TorrentFilesFragment : TSFragment() {
                     val file = torrent.file_stats?.get(position) ?: return@setOnItemClickListener
                     onClickItem?.invoke(file)
                 }
+                postDelayed({
+                    setSelection(next)
+                }, 500)
             }
         }
     }

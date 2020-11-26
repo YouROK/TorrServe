@@ -9,6 +9,7 @@ import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentInfo
 import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentList
 import ru.yourok.torrserve.ui.activities.play.Commands.processViewed
 import ru.yourok.torrserve.ui.activities.play.Play.play
+import ru.yourok.torrserve.ui.fragments.play.InfoFragment
 
 
 class PlayActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class PlayActivity : AppCompatActivity() {
     var torrentSave: Boolean = false
     var torrentFileIndex: Int = 0
 
+    val infoFragment = InfoFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +69,7 @@ class PlayActivity : AppCompatActivity() {
 
 
     private fun processTorrent() {
+        infoFragment.show(this, R.id.info_container)
         if (intent.hasExtra("action") && intent.getStringExtra("action") == "play")
             play(false)
         else Chooser.show(this) {
