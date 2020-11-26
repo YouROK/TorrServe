@@ -10,9 +10,9 @@ object Mime {
     fun getMimeType(filepath: String): String {
         val ext = File(filepath).extension.toLowerCase()
         if (extVideo.contains(ext))
-            return "video/mp4"
+            return "video/*"
         if (extAudio.contains(ext))
-            return "audio/mp3"
+            return "audio/*"
         return "*/*"
     }
 

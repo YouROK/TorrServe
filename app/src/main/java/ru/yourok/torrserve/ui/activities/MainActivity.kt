@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ext.clearStackFragmnet
 import ru.yourok.torrserve.services.TorrService
-import ru.yourok.torrserve.ui.fragments.main.MainFragment
+import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
 import ru.yourok.torrserve.utils.Premissions
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             clearStackFragmnet()
-            MainFragment().show(this, R.id.container)
+            TorrentsFragment().show(this, R.id.container)
         }
     }
 }

@@ -37,4 +37,26 @@
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>
 
+    <!--    Settings    -->
+    <string name="app_settings">App Settings</string>
+    <string name="torserver_title">Torrserver settings</string>
+    <string name="torserver_summary">Torrserver settings</string>
+
+    <string name="remove_action_title">Remove action by default</string>
+    <string name="remove_action_summary">Remove action by default</string>
+
+    <string name="boot_start_title">Start server on boot</string>
+    <string name="boot_start_sum_on">Enable start server on boot</string>
+    <string name="boot_start_sum_off">Disable start server on boot</string>
+
+    <string name="root_start_title">Start server on boot</string>
+    <string name="root_start_sum_on">Enable start server on boot</string>
+    <string name="root_start_sum_off">Disable start server on boot</string>
+
+    <string name="choose_player_title">Choose player</string>
+
+    <string name="show_banner_title">Show banner</string>
+    <string name="show_banner_sum_on">Show banner on load torrent</string>
+    <string name="show_banner_sum_off">Don\'t show banner on load torrent</string>
+
 </resources>

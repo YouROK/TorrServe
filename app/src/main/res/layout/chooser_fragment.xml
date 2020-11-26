@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:padding="10dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,10 +13,14 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvPlay"
-            android:focusable="true"
             android:clickable="true"
-            android:background="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="4dp"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="1dp"
+            card_view:cardUseCompatPadding="true"
+            android:layout_gravity="center"
+            android:layout_margin="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -42,11 +47,14 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvAddPlay"
-            android:focusable="true"
             android:clickable="true"
-            android:background="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="4dp"
-            android:layout_marginLeft="5dp"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="1dp"
+            card_view:cardUseCompatPadding="true"
+            android:layout_gravity="center"
+            android:layout_margin="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -57,21 +65,21 @@
                 android:layout_height="50dp">
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:src="@drawable/ic_play"
+                        android:src="@drawable/ic_video"
                         android:layout_gravity="center|top"
                         android:layout_width="24dp"
                         android:layout_height="24dp" />
 
                     <ImageView
                         android:src="@drawable/ic_plus"
-                        android:layout_gravity="center"
-                        android:paddingRight="5dp"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp" />
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp" />
                 </FrameLayout>
 
                 <TextView
@@ -85,11 +93,14 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvAdd"
-            android:focusable="true"
             android:clickable="true"
-            android:background="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="4dp"
-            android:layout_marginLeft="5dp"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="1dp"
+            card_view:cardUseCompatPadding="true"
+            android:layout_gravity="center"
+            android:layout_margin="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

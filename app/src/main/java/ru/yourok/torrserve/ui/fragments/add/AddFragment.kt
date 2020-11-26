@@ -8,16 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
+import ru.yourok.torrserve.ui.fragments.TSFragment
 
-class AddFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = AddFragment()
-    }
+class AddFragment : TSFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

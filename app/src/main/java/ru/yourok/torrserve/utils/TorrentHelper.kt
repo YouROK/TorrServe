@@ -62,7 +62,7 @@ object TorrentHelper {
 
     fun getTorrentPlayLink(torr: Torrent, index: Int): String {
         val file = findFile(torr, index)
-        val name = file?.path ?: torr.title
+        val name = file?.let { File(it.path).name } ?: torr.title
         return Net.getHostUrl("/stream/${name.urlEncode()}?link=${torr.hash}&index=${index}&play")
     }
 
@@ -85,5 +85,13 @@ object TorrentHelper {
                 return it
         }
         return null
+    }
+
+    fun findIndex(torrent: Torrent, file: FileStat): Int {
+        torrent.file_stats?.forEachIndexed { index, fileStat ->
+            if (fileStat.id == index)
+                return index
+        }
+        return -1
     }
 }

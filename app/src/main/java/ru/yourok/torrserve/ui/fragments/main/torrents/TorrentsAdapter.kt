@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.ui.fragments.main
+package ru.yourok.torrserve.ui.fragments.main.torrents
 
 
 import android.app.Activity

@@ -19,7 +19,6 @@ object Players {
 
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(Uri.parse(link), mime)
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra("title", torrent.title)
         intent.putExtra("poster", torrent.poster)
 
@@ -30,11 +29,10 @@ object Players {
             intent.`package` = pkg
             if (intent.resolveActivity(App.context.packageManager) != null)
                 return intent
+            intent.`package` = ""
         }
-        intent.`package` = ""
+
         val cIntent = Intent.createChooser(intent, "")
-        cIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        cIntent.setDataAndType(Uri.parse(link), mime)
         return cIntent
     }
 

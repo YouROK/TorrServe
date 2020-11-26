@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -17,11 +18,12 @@ class TorrentViewModel : ViewModel() {
 
     private val data: MutableLiveData<TorrentVMData> = MutableLiveData()
 
-    fun loadTorrent(link: String, hash: String, title: String, poster: String, save: Boolean): LiveData<TorrentVMData> {
+    fun loadTorrent(link: String, hash: String, title: String, poster: String, save: Boolean): LiveData<TorrentVMData>? {
         if (hash.isNotEmpty())
             loadHash(hash)
         else if (link.isNotEmpty())
             loadLink(link, title, poster, save)
+        else return null
         return data
     }
 
@@ -39,9 +41,11 @@ class TorrentViewModel : ViewModel() {
         }
     }
 
-    private fun load(torr: Torrent) {
+    private suspend fun load(torr: Torrent) {
         val updViewed = Api.listViewed(torr.hash)
         val updTorr = TorrentHelper.waitFiles(torr.hash)
-        data.value = TorrentVMData(updTorr ?: torr, updViewed)
+        withContext(Dispatchers.Main) {
+            data.value = TorrentVMData(updTorr ?: torr, updViewed)
+        }
     }
 }

@@ -9,6 +9,7 @@ import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentInfo
 import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentList
 import ru.yourok.torrserve.ui.activities.play.Commands.processViewed
 import ru.yourok.torrserve.ui.activities.play.Play.play
+import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
 
 
@@ -69,10 +70,9 @@ class PlayActivity : AppCompatActivity() {
 
 
     private fun processTorrent() {
-        infoFragment.show(this, R.id.info_container)
         if (intent.hasExtra("action") && intent.getStringExtra("action") == "play")
             play(false)
-        else Chooser.show(this) {
+        else ChooserFragment().show(this) {
             when (it) {
                 1, 2 -> {
                     play(it == 2)

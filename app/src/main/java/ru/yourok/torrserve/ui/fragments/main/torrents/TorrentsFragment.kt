@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.ui.fragments.main
+package ru.yourok.torrserve.ui.fragments.main.torrents
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,18 +9,22 @@ import android.widget.FrameLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.ext.commitFragment
+import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
+import ru.yourok.torrserve.ui.fragments.main.settings.SettingsFragment
 
 
-class MainFragment : TSFragment() {
+class TorrentsFragment : TSFragment() {
 
     private var torrentAdapter: TorrentsAdapter? = null
 
@@ -53,7 +57,7 @@ class MainFragment : TSFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(TorrentsViewModel::class.java)
         val data = (viewModel as TorrentsViewModel).getData()
-        data.observe(this) { data ->
+        data.observe(this@TorrentsFragment) { data ->
             view?.findViewById<TextView>(R.id.tvStatus)?.text = data.status
             torrentAdapter?.update(data.torrents)
         }
@@ -73,29 +77,16 @@ class MainFragment : TSFragment() {
             }
 
             findViewById<FrameLayout>(R.id.btnAdd).setOnClickListener {
-                requireActivity().commitFragment {
-                    replace(R.id.container, AddFragment.newInstance())
-                    addToBackStack("TorrserveMain")
-                }
+                AddFragment().show(requireActivity(), R.id.container, true)
             }
 
             findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
-//                thread {
-//                    try {
-//                        val torrList = Api.torrentList()
-//                        torrList.forEach {
-//                            val hash = it.getString("Hash", "")
-//                            if (hash.isNotEmpty())
-//                                Api.torrentRemove(hash)
-//                        }
-//                        torrAdapter.checkList()
-//                        UpdaterCards.updateCards()
-//                    } catch (e: Exception) {
-//                        e.message?.let {
-//                            App.Toast(it)
-//                        }
-//                    }
-//                }
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val list = Api.listTorrent()
+                    list.forEach {
+                        Api.remTorrent(it.hash)
+                    }
+                }
             }
 
             findViewById<FrameLayout>(R.id.btnPlaylist).setOnClickListener {
@@ -124,7 +115,7 @@ class MainFragment : TSFragment() {
             }
 
             findViewById<FrameLayout>(R.id.btnSettings).setOnClickListener {
-//                startActivity(Intent(this, AppSettingsActivity::class.java))
+                SettingsFragment().show(requireActivity(), R.id.container)
             }
 
             findViewById<FrameLayout>(R.id.btnExit).setOnClickListener {

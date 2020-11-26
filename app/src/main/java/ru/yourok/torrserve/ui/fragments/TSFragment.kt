@@ -9,9 +9,10 @@ abstract class TSFragment : Fragment() {
     var onResult: (suspend (Any?) -> Unit)? = null
     protected lateinit var viewModel: ViewModel
 
-    fun show(activity: FragmentActivity, id: Int) {
+    fun show(activity: FragmentActivity, id: Int, back: Boolean = false) {
         activity.commitFragment {
             replace(id, this@TSFragment)
+            addToBackStack(this.toString())
         }
     }
 }

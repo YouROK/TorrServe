@@ -55,8 +55,11 @@ class TorrentFilesFragment : TSFragment() {
         view?.apply {
             var last = 0
             viewed?.forEach { last = max(last, it.file_index) }
-            val file = TorrentHelper.findFile(torrent, last + 1)
-            val next = file?.id ?: last
+            val file = TorrentHelper.findFile(torrent, last)
+            val next = if (file != null)
+                TorrentHelper.findIndex(torrent, file) + 1
+            else
+                last
 
             findViewById<Button>(R.id.btnPlaylist).setOnClickListener { }
             findViewById<Button>(R.id.btnPlaylistContinue).setOnClickListener { }
@@ -68,6 +71,7 @@ class TorrentFilesFragment : TSFragment() {
                 }
                 postDelayed({
                     setSelection(next)
+                    requestFocus()
                 }, 500)
             }
         }

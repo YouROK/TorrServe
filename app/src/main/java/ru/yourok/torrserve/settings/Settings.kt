@@ -1,62 +1,29 @@
 package ru.yourok.torrserve.settings
 
 import android.os.Environment
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.preferencesKey
-import androidx.datastore.preferences.core.remove
-import androidx.datastore.preferences.createDataStore
-import kotlinx.coroutines.flow.map
+import android.preference.PreferenceManager
 import ru.yourok.torrserve.app.App
 import java.io.File
 
 object Settings {
-    private val dataStore: DataStore<Preferences> = App.context.createDataStore("settings")
 
-    private val PLAYER = preferencesKey<String>("player")
-    private val CHOOSER_ACTION = preferencesKey<Int>("chooser_action")
-    private val BOOTSTART = preferencesKey<Boolean>("boot_start")
-    private val ROOT = preferencesKey<Boolean>("root")
-    private val HOST = preferencesKey<String>("host")
+    fun getPlayer(): String = get("player", "")
+    fun getPlayer(v: String) = set("player", v)
 
-    fun getPlayer(): String {
-        return get(PLAYER, "")
-    }
+    fun getChooserAction(): Int = get("chooser_action", 0)
+    fun setChooserAction(v: Int) = set("chooser_action", v)
 
-    fun getChooserAction(): Int {
-        return get(CHOOSER_ACTION, 0)
-    }
+    fun isBootStart(): Boolean = get("boot_start", false)
+    fun setBootStart(v: Boolean) = set("boot_start", v)
 
-    suspend fun setChooserAction(v: Int) {
-        set(CHOOSER_ACTION, v)
-    }
+    fun isRootStart(): Boolean = get("root_start", false)
+    fun setRootStart(v: Boolean) = set("root_start", v)
 
-    fun isBootStart(): Boolean {
-        return get(BOOTSTART, false)
-    }
+    // "http://192.168.43.46:8090"
+    // get("host", "http://127.0.0.1:8090")
+    fun getHost(): String = "http://10.0.0.10:8090"
+    fun setHost(host: String) = set("host", host)
 
-    suspend fun setBootStart(v: Boolean) {
-        set(BOOTSTART, v)
-    }
-
-    fun isRootStart(): Boolean {
-        return get(ROOT, false)
-    }
-
-    suspend fun setRootStart(v: Boolean) {
-        set(ROOT, v)
-    }
-
-    fun getHost(): String {
-//        return "http://10.0.0.10:8090"
-        return "http://192.168.43.46:8090"
-//        return get(HOST, "http://127.0.0.1:8090")
-    }
-
-    suspend fun setHost(host: String) {
-        set(HOST, host)
-    }
 
     /////////////////////////////////////////////////////////
     fun getTorrPath(): String {
@@ -77,24 +44,29 @@ object Settings {
             filesDir.mkdirs()
         return filesDir.path
     }
-    /////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-    private fun <T> get(name: Preferences.Key<T>, def: T): T {
-        var v: T? = null
-        dataStore.data.map { preferences ->
-            v = preferences[name] ?: def
+    fun <T> get(name: String, def: T): T {
+        try {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
+            if (prefs.all.containsKey(name))
+                return prefs.all[name] as T
+            return def
+        } catch (e: Exception) {
+            return def
         }
-        return v ?: def
     }
 
-    private suspend fun <T> set(name: Preferences.Key<T>, value: T?) {
-        if (value == null)
-            dataStore.edit { preferences ->
-                preferences.remove(name)
-            }
-        else
-            dataStore.edit { preferences ->
-                preferences[name] = value
-            }
+    private fun set(name: String, value: Any?) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
+        when (value) {
+            is String -> prefs.edit().putString(name, value).apply()
+            is Boolean -> prefs.edit().putBoolean(name, value).apply()
+            is Float -> prefs.edit().putFloat(name, value).apply()
+            is Int -> prefs.edit().putInt(name, value).apply()
+            is Long -> prefs.edit().putLong(name, value).apply()
+            is MutableSet<*>? -> prefs.edit().putStringSet(name, value as MutableSet<String>?).apply()
+            else -> prefs.edit().putString(name, value.toString()).apply()
+        }
     }
 }

@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.ui.fragments.main
+package ru.yourok.torrserve.ui.fragments.main.torrents
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,9 +11,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
-import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.models.torrent.Torrent
-import ru.yourok.torrserve.services.TorrService
 
 data class TorrentState(val status: String, val torrents: List<Torrent>)
 
@@ -44,14 +42,13 @@ class TorrentsViewModel : ViewModel() {
             while (isWork) {
                 try {
                     var diff = false
-                    var ver = Api.echo()
+                    val ver = Api.echo()
+                    var status = ""
 
                     if (ver.isNullOrEmpty()) {
-                        if (TorrService.isLocal() && !ServerFile().exists())
-                            ver = App.context.getString(R.string.server_not_exists)
-                        else
-                            ver = App.context.getString(R.string.server_not_responding)
-                    }
+                        status = App.context.getString(R.string.server_not_responding)
+                    } else
+                        status = ver
 
                     var list = emptyList<Torrent>()
 
@@ -74,7 +71,7 @@ class TorrentsViewModel : ViewModel() {
                     }
 
                     if (diff)
-                        withContext(Dispatchers.Main) { data?.value = TorrentState(ver, list) }
+                        withContext(Dispatchers.Main) { data?.value = TorrentState(status, list) }
                     delay(1000)
                 } catch (e: Exception) {
                     delay(2000)
