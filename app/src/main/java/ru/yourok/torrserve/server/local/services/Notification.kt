@@ -13,7 +13,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.ui.activities.MainActivity
+import ru.yourok.torrserve.ui.activities.main.MainActivity
 
 
 class Notification : Service() {

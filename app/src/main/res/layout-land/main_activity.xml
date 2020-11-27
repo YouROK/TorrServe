@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawerlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <include layout="@layout/navigation_menu" />
 
-    <ListView
-        android:id="@+id/lvTorrents"
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="vertical"
-        android:fadingEdgeLength="84dp"
-        android:requiresFadingEdge="vertical" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

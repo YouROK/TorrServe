@@ -39,6 +39,9 @@ object Play {
                         else if (files.size == 1) {
                             streamTorrent(torr, files.first().id)
                             successful(Intent())
+                        } else if (torrentFileIndex != -1) {
+                            streamTorrent(torr, torrentFileIndex)
+                            successful(Intent())
                         } else {
                             TorrentFilesFragment().showTorrent(this@play, torr, viewed) { file ->
                                 lifecycleScope.launch {
@@ -52,7 +55,7 @@ object Play {
         }
     }
 
-    suspend fun streamTorrent(torrent: Torrent, index: Int) {
+    suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
         var torr = torrent
         TorrentHelper.preloadTorrent(torr, index)
         delay(200)
@@ -63,6 +66,7 @@ object Play {
             }
         }
 
+        ad?.waitAd()
         val intent = Players.getIntent(torr, index)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         App.context.startActivity(intent)

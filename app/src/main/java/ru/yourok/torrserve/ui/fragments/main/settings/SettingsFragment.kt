@@ -2,9 +2,16 @@ package ru.yourok.torrserve.ui.fragments.main.settings
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
-import androidx.preference.PreferenceFragmentCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.preference.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.ad.ADManager
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.commitFragment
+import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.ui.activities.play.players.Players
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -17,5 +24,36 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference, rootKey)
+        val ps = findPreference<PreferenceScreen>("prefs")
+
+        val bannerPref = findPreference<SwitchPreferenceCompat>("show_banner")
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (ADManager.expired())
+                ps?.removePreference(bannerPref)
+        }
+
+        findPreference<EditTextPreference>("host")?.apply {
+            summary = Settings.getHost()
+        }
+
+        findPreference<Preference>("remove_action")?.setOnPreferenceClickListener {
+            Settings.setChooserAction(0)
+            App.Toast(R.string.make_as_def)
+            true
+        }
+
+        val choosePlayerPref = findPreference<ListPreference>("choose_player")
+        choosePlayerPref?.apply {
+            val pList = Players.getList()
+            val player = Settings.getPlayer()
+            this.entryValues = pList.map { it.first }.toTypedArray()
+            this.entries = pList.map {
+                if (it.first.isNotEmpty() && it.first != "0")
+                    it.second + " - " + it.first
+                else
+                    it.second
+            }.toTypedArray()
+            this.summary = pList.find { it.first == player }?.second ?: player
+        }
     }
 }

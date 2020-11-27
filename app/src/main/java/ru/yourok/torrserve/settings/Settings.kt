@@ -19,9 +19,13 @@ object Settings {
     fun isRootStart(): Boolean = get("root_start", false)
     fun setRootStart(v: Boolean) = set("root_start", v)
 
+    fun showBanner(): Boolean = get("show_banner", true)
+    fun setShowBanner(v: Boolean) = set("show_banner", v)
+
     // "http://192.168.43.46:8090"
-    // get("host", "http://127.0.0.1:8090")
-    fun getHost(): String = "http://10.0.0.10:8090"
+    // "http://127.0.0.1:8090"
+    // "http://10.0.0.10:8090"
+    fun getHost(): String = "http://127.0.0.1:8090"
     fun setHost(host: String) = set("host", host)
 
 

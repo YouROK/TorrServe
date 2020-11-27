@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
@@ -19,6 +20,9 @@ class TorrService : Service() {
     override fun onCreate() {
         super.onCreate()
         notification.doBindService(this)
+        thread {
+            ADManager.get()
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

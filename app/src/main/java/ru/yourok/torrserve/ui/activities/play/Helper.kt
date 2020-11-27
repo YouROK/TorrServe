@@ -25,8 +25,8 @@ fun PlayActivity.readArgs() {
                 "hash" -> torrentHash = this.getString(key) ?: ""
                 "title" -> torrentTitle = this.getString(key) ?: ""
                 "poster" -> torrentPoster = this.getString(key) ?: ""
-                "fileindex" -> torrentFileIndex = this.getInt(key) ?: 0
-                "save" -> torrentSave = this.getBoolean(key) ?: false
+                "fileindex" -> torrentFileIndex = this.getInt(key, -1)
+                "save" -> torrentSave = this.getBoolean(key)
             }
         }
     }

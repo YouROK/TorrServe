@@ -16,6 +16,7 @@ object Api {
             val host = Net.getHostUrl("/echo")
             val resp = Jsoup.connect(host)
                 .method(Connection.Method.GET)
+                .timeout(1000)
                 .execute()
             return resp.body()
         } catch (e: Exception) {

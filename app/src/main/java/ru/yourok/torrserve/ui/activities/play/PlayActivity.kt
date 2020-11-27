@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.runBlocking
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.ad.AD
+import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentInfo
 import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentList
@@ -11,6 +13,7 @@ import ru.yourok.torrserve.ui.activities.play.Commands.processViewed
 import ru.yourok.torrserve.ui.activities.play.Play.play
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
+import kotlin.concurrent.thread
 
 
 class PlayActivity : AppCompatActivity() {
@@ -22,6 +25,7 @@ class PlayActivity : AppCompatActivity() {
     var torrentSave: Boolean = false
     var torrentFileIndex: Int = 0
 
+    var ad: AD? = null
     val infoFragment = InfoFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,13 +46,21 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        error(ErrUserStop)
+        thread {
+            Api.dropTorrent(torrentHash)
+        }
+        super.onDestroy()
+    }
+
     private fun setWindow() {
         setFinishOnTouchOutside(false)
         val attr = window.attributes
         if (resources.displayMetrics.widthPixels <= resources.displayMetrics.heightPixels)
             attr.width = (resources.displayMetrics.widthPixels * 0.90).toInt()
         else if (resources.displayMetrics.widthPixels > resources.displayMetrics.heightPixels)
-            attr.width = (resources.displayMetrics.widthPixels * 0.50).toInt()
+            attr.width = (resources.displayMetrics.widthPixels * 0.70).toInt()
         window.attributes = attr
     }
 
@@ -63,6 +75,8 @@ class PlayActivity : AppCompatActivity() {
             }
             return
         } else {
+            ad = AD(findViewById(R.id.ivAd), this)
+            ad?.get()
             //// Play torrent
             processTorrent()
         }

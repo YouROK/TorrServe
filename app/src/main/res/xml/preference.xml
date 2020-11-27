@@ -6,6 +6,11 @@
         android:title="@string/app_settings"
         android:key="data" />
 
+    <EditTextPreference
+        app:key="host"
+        app:title="@string/host_title"
+        app:summary="@string/host_title" />
+
     <Preference
         app:key="server_settings"
         app:title="@string/torserver_title"

@@ -7,6 +7,18 @@
     android:layout_height="wrap_content"
     tools:context=".ui.activities.play.PlayActivity">
 
+    <ImageView
+        android:id="@+id/ivAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="50dp"
+        android:layout_gravity="top"
+        android:adjustViewBounds="true"
+        android:paddingStart="12dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="12dp"
+        android:scaleType="fitCenter" />
+
     <FrameLayout
         android:id="@+id/info_container"
         android:layout_width="match_parent"

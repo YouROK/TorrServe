@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="50dp"
+        android:requiresFadingEdge="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btnServerAddr"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:fontFamily="sans-serif"
+                android:textAllCaps="false"
+                android:textColor="@color/colorHost"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editTextCacheSize"
+                android:paddingStart="5dp"
+                android:text="@string/cache_size" />
+
+            <EditText
+                android:id="@+id/editTextCacheSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editTextCacheSize"
+                android:paddingStart="5dp"
+                android:text="@string/preload_buffer_size" />
+
+            <EditText
+                android:id="@+id/editTextPreloadBufferSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDisableTCP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_tcp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDisableUTP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_utp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDisableUPNP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_upnp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDisableDHT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_dht" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDisableUpload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_upload" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editTextCacheSize"
+                android:paddingStart="5dp"
+                android:text="@string/ecnryption" />
+
+            <Spinner
+                android:id="@+id/spinnerEncryption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editTextCacheSize"
+                android:paddingStart="5dp"
+                android:text="@string/connections_limit" />
+
+            <EditText
+                android:id="@+id/editTextConnectionsLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editTextConnectionsDhtLimit"
+                android:paddingStart="5dp"
+                android:text="@string/connections_dht_limit" />
+
+            <EditText
+                android:id="@+id/editTextConnectionsDhtLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editTextCacheSize"
+                android:paddingStart="5dp"
+                android:text="@string/download_rate_limit" />
+
+            <EditText
+                android:id="@+id/editTextDownloadRateLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editTextCacheSize"
+                android:paddingStart="5dp"
+                android:text="@string/upload_rate_limit" />
+
+            <EditText
+                android:id="@+id/editTextUploadRateLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/spinnerRetracker"
+                android:paddingStart="5dp"
+                android:text="@string/retrackers" />
+
+            <Spinner
+                android:id="@+id/spinnerRetracker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/tvVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="5dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/footer"
+            style="@android:style/DeviceDefault.ButtonBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:divider="?android:attr/dividerVertical"
+            android:orientation="horizontal"
+            android:showDividers="none">
+
+            <Button
+                android:id="@+id/buttonOk"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/ok" />
+
+            <Button
+                android:id="@+id/buttonCancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/cancel" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

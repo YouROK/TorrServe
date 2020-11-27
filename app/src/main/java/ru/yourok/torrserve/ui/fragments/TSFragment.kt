@@ -12,7 +12,8 @@ abstract class TSFragment : Fragment() {
     fun show(activity: FragmentActivity, id: Int, back: Boolean = false) {
         activity.commitFragment {
             replace(id, this@TSFragment)
-            addToBackStack(this.toString())
+            if (back)
+                addToBackStack(this.toString())
         }
     }
 }

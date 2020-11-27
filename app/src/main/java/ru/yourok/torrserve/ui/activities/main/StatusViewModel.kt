@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.ui.fragments.main.torrents
+package ru.yourok.torrserve.ui.activities.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,23 +9,17 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.server.api.Api
-import ru.yourok.torrserve.server.models.torrent.Torrent
 
-class TorrentsViewModel : ViewModel() {
+class StatusViewModel : ViewModel() {
     private var isWork = false
-    var data: MutableLiveData<List<Torrent>>? = null
+    var data: MutableLiveData<String>? = null
 
-    fun getData(): LiveData<List<Torrent>> {
+    fun get(): LiveData<String> {
         if (data == null) {
             data = MutableLiveData()
             update()
         }
         return data!!
-    }
-
-    override fun onCleared() {
-        isWork = false
-        super.onCleared()
     }
 
     private fun update() {
@@ -37,10 +31,10 @@ class TorrentsViewModel : ViewModel() {
             isWork = true
             while (isWork) {
                 try {
-                    val list = Api.listTorrent()
-                    val oldList = data?.value
-                    if (oldList == null || list != oldList)
-                        withContext(Dispatchers.Main) { data?.value = list }
+                    val st = Api.echo()
+                    val old = data?.value
+                    if (old == null || st != old)
+                        withContext(Dispatchers.Main) { data?.value = st }
                     delay(1000)
                 } catch (e: Exception) {
                     delay(2000)

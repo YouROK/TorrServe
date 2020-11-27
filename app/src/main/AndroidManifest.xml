@@ -31,7 +31,7 @@
         android:networkSecurityConfig="@xml/net_security"
         android:supportsRtl="true"
         android:theme="@style/Theme.TorrServer">
-        <activity android:name="ru.yourok.torrserve.ui.activities.MainActivity">
+        <activity android:name="ru.yourok.torrserve.ui.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
