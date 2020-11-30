@@ -10,12 +10,16 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.commitFragment
+import ru.yourok.torrserve.ext.getLastFragment
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.players.Players
+import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     fun show(activity: FragmentActivity, id: Int) {
+        if (activity.getLastFragment()?.javaClass?.name == this.javaClass.name)
+            return
         activity.commitFragment {
             replace(id, this@SettingsFragment)
             addToBackStack("Settings")
@@ -34,6 +38,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<EditTextPreference>("host")?.apply {
             summary = Settings.getHost()
+            setOnPreferenceChangeListener { preference, newValue ->
+                //TODO сделать окно поиска
+                val host = newValue.toString()
+                Settings.setHost(host)
+                summary = Settings.getHost()
+                true
+            }
+        }
+
+        findPreference<Preference>("server_settings")?.setOnPreferenceClickListener {
+            ServerSettingsFragment().show(requireActivity(), R.id.container, true)
+            true
         }
 
         findPreference<Preference>("remove_action")?.setOnPreferenceClickListener {

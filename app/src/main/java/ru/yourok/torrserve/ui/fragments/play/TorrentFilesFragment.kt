@@ -1,5 +1,7 @@
 package ru.yourok.torrserve.ui.fragments.play
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +12,15 @@ import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.adapters.TorrentFilesAdapter
+import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.TorrentHelper
 import kotlin.math.max
 
@@ -61,8 +66,34 @@ class TorrentFilesFragment : TSFragment() {
             else
                 last
 
-            findViewById<Button>(R.id.btnPlaylist).setOnClickListener { }
-            findViewById<Button>(R.id.btnPlaylistContinue).setOnClickListener { }
+            findViewById<Button>(R.id.btnPlaylist).setOnClickListener {
+                try {
+                    if (Api.listTorrent().isNotEmpty()) {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist?hash=${torrent.hash}")), "video/*")
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        App.context.startActivity(intent)
+                    }
+                } catch (e: Exception) {
+                    e.message?.let {
+                        App.Toast(it)
+                    }
+                }
+            }
+            findViewById<Button>(R.id.btnPlaylistContinue).setOnClickListener {
+                try {
+                    if (Api.listTorrent().isNotEmpty()) {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist?hash=${torrent.hash}&fromlast")), "video/*")
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        App.context.startActivity(intent)
+                    }
+                } catch (e: Exception) {
+                    e.message?.let {
+                        App.Toast(it)
+                    }
+                }
+            }
             findViewById<ListView>(R.id.lvTorrentFiles).apply {
                 adapter = torrFilesAdapter
                 setOnItemClickListener { parent, view, position, id ->

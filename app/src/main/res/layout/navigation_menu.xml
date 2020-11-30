@@ -52,7 +52,7 @@
                             android:text="http://localhost:8090"
                             android:textAppearance="@android:style/TextAppearance.Medium"
                             android:textColor="@color/colorHost"
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/tvStatus"
@@ -60,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="Status"
-                            android:textSize="12sp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                 </FrameLayout>
@@ -80,10 +80,10 @@
                     android:padding="15dp">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="wrap_content"
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_add" />
+                        android:src="@drawable/ic_add"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                         android:text="@string/add"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
                 </FrameLayout>
 
                 <View
@@ -114,7 +114,7 @@
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_remove"
                         android:layout_width="24dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                         android:text="@string/remove_all"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
                 </FrameLayout>
 
                 <View
@@ -145,7 +145,7 @@
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_list"
                         android:layout_width="24dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
                         android:text="@string/playlist"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
                 </FrameLayout>
 
                 <View
@@ -176,7 +176,7 @@
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_thumb_up"
                         android:layout_width="24dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
                         android:text="@string/donate"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
                 </FrameLayout>
 
                 <View
@@ -207,7 +207,7 @@
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_refresh"
                         android:layout_width="24dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -217,38 +217,7 @@
                         android:text="@string/update"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
-                </FrameLayout>
-
-                <View
-                    android:background="?android:attr/listDivider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <FrameLayout
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:id="@+id/btnServer"
-                    android:padding="15dp"
-                    android:foreground="@drawable/action_selector"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_refresh"
-                        android:layout_width="24dp"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="40dp"
-                        android:text="@string/server"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
                 </FrameLayout>
 
                 <View
@@ -269,7 +238,7 @@
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_settings"
                         android:layout_width="24dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -279,7 +248,7 @@
                         android:text="@string/settings"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
                 </FrameLayout>
 
                 <View
@@ -300,7 +269,7 @@
                         android:layout_gravity="left|center_vertical"
                         android:src="@drawable/ic_cancel"
                         android:layout_width="24dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -310,7 +279,7 @@
                         android:text="@string/exit"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
                 </FrameLayout>
 
                 <View

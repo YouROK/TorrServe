@@ -16,6 +16,13 @@ fun FragmentActivity.commitFragment(block: FragmentTransaction.() -> Unit) {
     transact.commit()
 }
 
+fun FragmentActivity.getLastFragment(): Fragment? {
+    if (supportFragmentManager.backStackEntryCount > 0)
+        return supportFragmentManager.fragments.last()
+    return null
+}
+
+fun Fragment.getLastFragment() = requireActivity().getLastFragment()
 
 fun FragmentActivity.clearStackFragmnet() {
     if (supportFragmentManager.backStackEntryCount > 0)

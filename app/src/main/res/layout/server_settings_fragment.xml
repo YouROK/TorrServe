@@ -20,16 +20,12 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <Button
-                android:id="@+id/btnServerAddr"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <TextView
+                android:id="@+id/tvServerAddr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
-                android:fontFamily="sans-serif"
-                android:textAllCaps="false"
-                android:textColor="@color/colorHost"
-                android:textSize="18sp" />
+                android:paddingStart="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <View
                 android:layout_width="match_parent"
@@ -39,12 +35,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/editTextCacheSize"
+                android:labelFor="@+id/etCacheSize"
                 android:paddingStart="5dp"
                 android:text="@string/cache_size" />
 
             <EditText
-                android:id="@+id/editTextCacheSize"
+                android:id="@+id/etCacheSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -54,43 +50,91 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/editTextCacheSize"
+                android:labelFor="@+id/etPreloadBufferSize"
                 android:paddingStart="5dp"
                 android:text="@string/preload_buffer_size" />
 
             <EditText
-                android:id="@+id/editTextPreloadBufferSize"
+                android:id="@+id/etPreloadBufferSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberSigned" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etDisconnectTimeout"
+                android:paddingStart="5dp"
+                android:text="@string/torrent_disconnect_timeout" />
+
+            <EditText
+                android:id="@+id/etDisconnectTimeout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
             <CheckBox
-                android:id="@+id/checkBoxDisableTCP"
+                android:id="@+id/cbSaveOnDisk"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_on_disk" />
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etContentPath"
+                android:paddingStart="5dp"
+                android:text="@string/save_content_path" />
+
+            <EditText
+                android:id="@+id/etContentPath"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textUri" />
+
+            <CheckBox
+                android:id="@+id/cbEnableIPv6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enable_ipv6" />
+
+            <CheckBox
+                android:id="@+id/cbDisableTCP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_tcp" />
 
             <CheckBox
-                android:id="@+id/checkBoxDisableUTP"
+                android:id="@+id/cbDisableUTP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_utp" />
 
             <CheckBox
-                android:id="@+id/checkBoxDisableUPNP"
+                android:id="@+id/cbDisableUPNP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_upnp" />
 
             <CheckBox
-                android:id="@+id/checkBoxDisableDHT"
+                android:id="@+id/cbDisableDHT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_dht" />
 
             <CheckBox
-                android:id="@+id/checkBoxDisableUpload"
+                android:id="@+id/cbDisableUpload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_upload" />
@@ -98,26 +142,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/editTextCacheSize"
-                android:paddingStart="5dp"
-                android:text="@string/ecnryption" />
-
-            <Spinner
-                android:id="@+id/spinnerEncryption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberSigned" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/editTextCacheSize"
+                android:labelFor="@+id/etConnectionsLimit"
                 android:paddingStart="5dp"
                 android:text="@string/connections_limit" />
 
             <EditText
-                android:id="@+id/editTextConnectionsLimit"
+                android:id="@+id/etConnectionsLimit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -126,12 +156,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/editTextConnectionsDhtLimit"
+                android:labelFor="@+id/etConnectionsDhtLimit"
                 android:paddingStart="5dp"
                 android:text="@string/connections_dht_limit" />
 
             <EditText
-                android:id="@+id/editTextConnectionsDhtLimit"
+                android:id="@+id/etConnectionsDhtLimit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -140,12 +170,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/editTextCacheSize"
+                android:labelFor="@+id/etDownloadRateLimit"
                 android:paddingStart="5dp"
                 android:text="@string/download_rate_limit" />
 
             <EditText
-                android:id="@+id/editTextDownloadRateLimit"
+                android:id="@+id/etDownloadRateLimit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -154,12 +184,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/editTextCacheSize"
+                android:labelFor="@+id/etUploadRateLimit"
                 android:paddingStart="5dp"
                 android:text="@string/upload_rate_limit" />
 
             <EditText
-                android:id="@+id/editTextUploadRateLimit"
+                android:id="@+id/etUploadRateLimit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -176,6 +206,20 @@
                 android:id="@+id/spinnerRetracker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etPeersListenPort"
+                android:paddingStart="5dp"
+                android:text="@string/peers_listen_port" />
+
+            <EditText
+                android:id="@+id/etPeersListenPort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
 
             <View
                 android:layout_width="match_parent"
@@ -215,7 +259,7 @@
             android:showDividers="none">
 
             <Button
-                android:id="@+id/buttonOk"
+                android:id="@+id/btnOk"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
@@ -223,7 +267,7 @@
                 android:text="@android:string/ok" />
 
             <Button
-                android:id="@+id/buttonCancel"
+                android:id="@+id/btnCancel"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"

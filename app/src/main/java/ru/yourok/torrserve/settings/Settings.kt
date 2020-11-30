@@ -1,11 +1,15 @@
 package ru.yourok.torrserve.settings
 
+import android.net.Uri
 import android.os.Environment
 import android.preference.PreferenceManager
 import ru.yourok.torrserve.app.App
 import java.io.File
 
 object Settings {
+
+    fun getLastViewDonate() = get("last_view_donate", 0L)
+    fun setLastViewDonate(l: Long) = set("last_view_donate", l)
 
     fun getPlayer(): String = get("player", "")
     fun getPlayer(v: String) = set("player", v)
@@ -25,8 +29,19 @@ object Settings {
     // "http://192.168.43.46:8090"
     // "http://127.0.0.1:8090"
     // "http://10.0.0.10:8090"
-    fun getHost(): String = "http://127.0.0.1:8090"
-    fun setHost(host: String) = set("host", host)
+    fun getHost(): String = get("host", "http://127.0.0.1:8090")
+    fun setHost(host: String) {
+        var hst = host
+        if (hst.isEmpty())
+            hst = "http://127.0.0.1:8090"
+        val url = Uri.parse(hst)
+        if (url.scheme.isNullOrBlank())
+            hst = "http://$hst"
+        if (url.port == -1)
+            hst = "$hst:8090"
+
+        set("host", hst)
+    }
 
 
     /////////////////////////////////////////////////////////

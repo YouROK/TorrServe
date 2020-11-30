@@ -1,5 +1,7 @@
 package ru.yourok.torrserve.ui.activities.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -10,14 +12,17 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.clearStackFragmnet
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.Updater
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
+import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.settings.SettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
+import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.Premissions
 
 class MainActivity : AppCompatActivity() {
@@ -60,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 //                startActivity(Intent(this, ConnectionActivity::class.java))
         }
         findViewById<FrameLayout>(R.id.header).setOnLongClickListener {
-//                startActivity(Intent(this, ServerSettingsActivity::class.java))
+            ServerSettingsFragment().show(this, R.id.container, true)
             true
         }
 
@@ -80,20 +85,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<FrameLayout>(R.id.btnPlaylist).setOnClickListener {
-//                thread {
-//                    try {
-//                        if (Api.torrentList().isNotEmpty()) {
-//                            val intent = Intent(Intent.ACTION_VIEW)
-//                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/torrent/playlist.m3u")), "video/*")
-//                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                            App.getContext().startActivity(intent)
-//                        }
-//                    } catch (e: Exception) {
-//                        e.message?.let {
-//                            App.Toast(it)
-//                        }
-//                    }
-//                }
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    if (Api.listTorrent().isNotEmpty()) {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/all.m3u")), "video/*")
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        App.context.startActivity(intent)
+                    }
+                } catch (e: Exception) {
+                    e.message?.let {
+                        App.Toast(it)
+                    }
+                }
+            }
             closeMenu()
         }
 
