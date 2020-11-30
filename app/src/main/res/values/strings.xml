@@ -73,6 +73,15 @@
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>
 
+    <string name="donation">Donation</string>
+    <string name="link">Link</string>
+    <string name="donation_msg">Donation to support projects</string>
+    <string name="yandex_money_msg">Yandex.Money card:</string>
+    <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
+    <string name="paypal_msg">Email to donate in PayPal:</string>
+    <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
+    <string name="telegram_msg" translatable="false">Telegram:</string>
+
     <!---->
     <!--    Settings    -->
     <string name="app_settings">App Settings</string>

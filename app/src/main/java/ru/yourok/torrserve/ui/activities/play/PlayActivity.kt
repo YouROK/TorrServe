@@ -23,7 +23,7 @@ class PlayActivity : AppCompatActivity() {
     var torrentTitle: String = ""
     var torrentPoster: String = ""
     var torrentSave: Boolean = false
-    var torrentFileIndex: Int = 0
+    var torrentFileIndex: Int = -1
 
     var ad: AD? = null
     val infoFragment = InfoFragment()

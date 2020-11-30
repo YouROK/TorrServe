@@ -39,7 +39,7 @@ object Play {
                         else if (files.size == 1) {
                             streamTorrent(torr, files.first().id)
                             successful(Intent())
-                        } else if (torrentFileIndex != -1) {
+                        } else if (torrentFileIndex > 0) {
                             streamTorrent(torr, torrentFileIndex)
                             successful(Intent())
                         } else {

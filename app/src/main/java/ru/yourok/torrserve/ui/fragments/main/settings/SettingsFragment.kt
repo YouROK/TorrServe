@@ -38,13 +38,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<EditTextPreference>("host")?.apply {
             summary = Settings.getHost()
+            text = Settings.getHost()
             setOnPreferenceChangeListener { preference, newValue ->
                 //TODO сделать окно поиска
                 val host = newValue.toString()
                 Settings.setHost(host)
                 summary = Settings.getHost()
+                text = Settings.getHost()
+
                 true
             }
+            setOnBindEditTextListener { }
         }
 
         findPreference<Preference>("server_settings")?.setOnPreferenceClickListener {

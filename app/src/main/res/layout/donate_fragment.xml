@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:baselineAligned="false">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:paddingTop="10dp"
+        android:text="@string/yandex_money_msg" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/yandex"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:paddingRight="10dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/yandex_money_card"
+            android:src="@drawable/ya_money" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:text="@string/yandex_money_card" />
+
+        <Button
+            android:id="@+id/btnYandex"
+            android:text="@string/link"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:paddingTop="12dp"
+        android:text="@string/paypal_msg" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/paypal"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:paddingRight="10dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/paypal_card"
+            android:src="@drawable/paypal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:text="@string/paypal_card" />
+
+        <Button
+            android:id="@+id/btnPayPal"
+            android:text="@string/link"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:paddingRight="10dp"
+            android:text="@string/telegram_msg" />
+
+        <ImageView
+            android:id="@+id/ivTelegram"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_gravity="left"
+            android:adjustViewBounds="true"
+            android:focusable="true"
+            android:clickable="true"
+            android:src="@drawable/telegram" />
+
+    </LinearLayout>
+</LinearLayout>

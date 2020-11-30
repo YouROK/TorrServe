@@ -49,6 +49,14 @@ class AD(private val iv: ImageView, private val activity: AppCompatActivity) {
         synchronized(lock) {}
     }
 
+    suspend fun hideAd() = withContext(Dispatchers.Main) {
+        iv.visibility = View.GONE
+    }
+
+    suspend fun showAd() = withContext(Dispatchers.Main) {
+        iv.visibility = View.VISIBLE
+    }
+
     private fun loadImages(lst: List<Image>) {
         activity.lifecycleScope.launch {
             withContext(Dispatchers.Main) { iv.visibility = View.VISIBLE }
@@ -67,7 +75,7 @@ class AD(private val iv: ImageView, private val activity: AppCompatActivity) {
                     if (currImg >= lst.size)
                         currImg = 0
 
-                    delay(img.wait)
+                    delay(img.wait * 1000)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

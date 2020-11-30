@@ -9,14 +9,15 @@
 
     <ImageView
         android:id="@+id/ivAd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
         android:maxHeight="50dp"
-        android:layout_gravity="top"
+        android:visibility="gone"
+        android:layout_gravity="top|center"
         android:adjustViewBounds="true"
-        android:paddingStart="12dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="12dp"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
         android:scaleType="fitCenter" />
 
     <FrameLayout

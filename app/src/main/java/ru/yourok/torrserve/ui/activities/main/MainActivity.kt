@@ -19,6 +19,8 @@ import ru.yourok.torrserve.server.local.Updater
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
+import ru.yourok.torrserve.ui.fragments.donate.DonateFragment
+import ru.yourok.torrserve.ui.fragments.donate.DonateMessage
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.settings.SettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigator()
 
         //TODO remove
-        Updater.updateFromFile("/sdcard/Download/TorrServer-linux-arm64")
+        Updater.updateFromFile("/sdcard/Download/TorrServer-linux-${Updater.getArch()}")
 
         TorrService.start()
 
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             TorrentsFragment().apply {
                 show(this@MainActivity, R.id.container)
             }
+            DonateMessage.showDonate(this)
         }
     }
 
@@ -89,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     if (Api.listTorrent().isNotEmpty()) {
                         val intent = Intent(Intent.ACTION_VIEW)
-                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/all.m3u")), "video/*")
+                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlistall/all.m3u")), "video/*")
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         App.context.startActivity(intent)
                     }
@@ -103,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<FrameLayout>(R.id.btnDonate).setOnClickListener {
-//                Donate.donateDialog(this)
+            DonateFragment().show(this, R.id.container, true)
             closeMenu()
         }
 

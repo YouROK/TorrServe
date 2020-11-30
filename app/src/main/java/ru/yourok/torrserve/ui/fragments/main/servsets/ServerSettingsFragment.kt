@@ -115,7 +115,6 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked ?: false,
                     findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked ?: false,
                     findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked ?: false,
-                    0,
                     findViewById<EditText>(R.id.etDownloadRateLimit)?.text?.toString()?.toInt() ?: 0,
                     findViewById<EditText>(R.id.etUploadRateLimit)?.text?.toString()?.toInt() ?: 0,
                     findViewById<EditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 20,

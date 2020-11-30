@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.server.local
 
+import android.os.Build
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -20,5 +21,20 @@ object Updater {
             if (!serverFile.setExecutable(true))
                 throw IOException("error set server exec permission")
         }
+    }
+
+    fun getArch(): String {
+        val arch = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            Build.SUPPORTED_ABIS[0]
+        else
+            Build.CPU_ABI
+
+        when (arch) {
+            "arm64-v8a" -> return "arm64"
+            "armeabi-v7a" -> return "arm7"
+            "x86_64" -> return "amd64"
+            "x86" -> return "386"
+        }
+        return ""
     }
 }

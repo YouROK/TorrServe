@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ListView
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
@@ -67,30 +69,34 @@ class TorrentFilesFragment : TSFragment() {
                 last
 
             findViewById<Button>(R.id.btnPlaylist).setOnClickListener {
-                try {
-                    if (Api.listTorrent().isNotEmpty()) {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist?hash=${torrent.hash}")), "video/*")
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        App.context.startActivity(intent)
-                    }
-                } catch (e: Exception) {
-                    e.message?.let {
-                        App.Toast(it)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try {
+                        if (Api.listTorrent().isNotEmpty()) {
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name}.m3u?hash=${torrent.hash}")), "video/*")
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            App.context.startActivity(intent)
+                        }
+                    } catch (e: Exception) {
+                        e.message?.let {
+                            App.Toast(it)
+                        }
                     }
                 }
             }
             findViewById<Button>(R.id.btnPlaylistContinue).setOnClickListener {
-                try {
-                    if (Api.listTorrent().isNotEmpty()) {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist?hash=${torrent.hash}&fromlast")), "video/*")
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        App.context.startActivity(intent)
-                    }
-                } catch (e: Exception) {
-                    e.message?.let {
-                        App.Toast(it)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try {
+                        if (Api.listTorrent().isNotEmpty()) {
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name}?hash=${torrent.hash}&fromlast")), "video/*")
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            App.context.startActivity(intent)
+                        }
+                    } catch (e: Exception) {
+                        e.message?.let {
+                            App.Toast(it)
+                        }
                     }
                 }
             }
