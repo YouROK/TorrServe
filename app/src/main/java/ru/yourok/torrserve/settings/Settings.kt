@@ -8,6 +8,17 @@ import java.io.File
 
 object Settings {
 
+    fun getHosts(): List<String> {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
+        val ret = prefs.getStringSet("saved_hosts", mutableSetOf())
+        return ret.toList()
+    }
+
+    fun setHosts(hosts: List<String>) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
+        prefs.edit().putStringSet("saved_hosts", hosts.toMutableSet()).apply()
+    }
+
     fun getLastViewDonate() = get("last_view_donate", 0L)
     fun setLastViewDonate(l: Long) = set("last_view_donate", l)
 

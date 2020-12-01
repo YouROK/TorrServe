@@ -2,8 +2,6 @@ package ru.yourok.torrserve.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.jsoup.Connection
-import org.jsoup.Jsoup
 import ru.yourok.torrserve.ext.urlEncode
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.FileStat
@@ -72,11 +70,7 @@ object TorrentHelper {
 
     suspend fun preloadTorrent(torr: Torrent, index: Int) = withContext(Dispatchers.IO) {
         val link = getTorrentPreloadLink(torr, index)
-        Jsoup.connect(link)
-            .method(Connection.Method.GET)
-            .ignoreContentType(true)
-            .timeout(0)
-            .execute()
+        Net.get(link)
     }
 
     fun findFile(torrent: Torrent, index: Int): FileStat? {
@@ -89,7 +83,7 @@ object TorrentHelper {
 
     fun findIndex(torrent: Torrent, file: FileStat): Int {
         torrent.file_stats?.forEachIndexed { index, fileStat ->
-            if (fileStat.id == index)
+            if (fileStat.id == file.id)
                 return index
         }
         return -1

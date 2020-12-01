@@ -6,7 +6,7 @@
         android:title="@string/app_settings"
         android:key="data" />
 
-    <EditTextPreference
+    <Preference
         app:key="host"
         app:title="@string/host_title"
         app:summary="@string/host_title" />

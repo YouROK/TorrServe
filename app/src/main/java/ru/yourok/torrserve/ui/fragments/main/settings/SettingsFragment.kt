@@ -13,6 +13,7 @@ import ru.yourok.torrserve.ext.commitFragment
 import ru.yourok.torrserve.ext.getLastFragment
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.players.Players
+import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -36,19 +37,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 ps?.removePreference(bannerPref)
         }
 
-        findPreference<EditTextPreference>("host")?.apply {
+        findPreference<Preference>("host")?.apply {
             summary = Settings.getHost()
-            text = Settings.getHost()
-            setOnPreferenceChangeListener { preference, newValue ->
-                //TODO сделать окно поиска
-                val host = newValue.toString()
-                Settings.setHost(host)
-                summary = Settings.getHost()
-                text = Settings.getHost()
-
+            setOnPreferenceClickListener {
+                ServerFinderFragment().show(requireActivity(), R.id.container, true)
                 true
             }
-            setOnBindEditTextListener { }
         }
 
         findPreference<Preference>("server_settings")?.setOnPreferenceClickListener {

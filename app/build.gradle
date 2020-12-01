@@ -10,7 +10,7 @@ android {
         applicationId "ru.yourok.torrserve_new"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
+        versionCode 86
         versionName "1.2.86_1"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
     }

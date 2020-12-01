@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.clearStackFragmnet
@@ -21,9 +22,12 @@ import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
 import ru.yourok.torrserve.ui.fragments.donate.DonateFragment
 import ru.yourok.torrserve.ui.fragments.donate.DonateMessage
+import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.settings.SettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
+import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
+import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.Premissions
 
@@ -51,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                 show(this@MainActivity, R.id.container)
             }
             DonateMessage.showDonate(this)
+            checkUpdate()
         }
     }
 
@@ -70,12 +75,21 @@ class MainActivity : AppCompatActivity() {
         findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
     }
 
+    private fun checkUpdate() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (UpdaterApk.check())
+                withContext(Dispatchers.Main) {
+                    App.Toast(R.string.found_new_app_update)
+                }
+        }
+    }
+
     private fun setupNavigator() {
         val tvCurrHost = findViewById<TextView>(R.id.tvCurrentHost)
         tvCurrHost.text = Settings.getHost()
 
         findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
-//                startActivity(Intent(this, ConnectionActivity::class.java))
+            ServerFinderFragment().show(this, R.id.container, true)
         }
         findViewById<FrameLayout>(R.id.header).setOnLongClickListener {
             ServerSettingsFragment().show(this, R.id.container, true)
@@ -121,6 +135,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<FrameLayout>(R.id.btnUpdate).setOnClickListener {
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (UpdaterApk.check())
+                    withContext(Dispatchers.Main) {
+                        ApkUpdateFragment().show(this@MainActivity, R.id.container, true)
+                    }
+                //TODO run server updater
+            }
+
 //                startActivity(Intent(this, UpdaterActivity::class.java))
             closeMenu()
         }
