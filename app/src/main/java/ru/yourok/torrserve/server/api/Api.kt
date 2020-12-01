@@ -1,8 +1,6 @@
 package ru.yourok.torrserve.server.api
 
 import com.google.gson.Gson
-import org.jsoup.Connection
-import org.jsoup.Jsoup
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.utils.Net
@@ -14,11 +12,7 @@ object Api {
     fun echo(): String {
         try {
             val host = Net.getHostUrl("/echo")
-            val resp = Jsoup.connect(host)
-                .method(Connection.Method.GET)
-                .timeout(1000)
-                .execute()
-            return resp.body()
+            return Net.get(host)
         } catch (e: Exception) {
             println(e.message)
             return ""
@@ -28,10 +22,7 @@ object Api {
     fun shutdown(): String {
         try {
             val host = Net.getHostUrl("/shutdown")
-            val resp = Jsoup.connect(host)
-                .method(Connection.Method.GET)
-                .execute()
-            return resp.body()
+            return Net.get(host)
         } catch (e: Exception) {
             println(e.message)
             return ""
@@ -72,6 +63,11 @@ object Api {
         postJson(host, req)
     }
 
+    fun uploadTorrent(filepath: String, save: Boolean) {
+        val host = Net.getHostUrl("/torrent/upload")
+        Net.upload(host, filepath, save)
+    }
+
     // Settings
     fun getSettings(): BTSets {
         val host = Net.getHostUrl("/settings")
@@ -109,17 +105,6 @@ object Api {
     }
 
     private fun postJson(url: String, json: String): String {
-        val resp = Jsoup.connect(url)
-            .header("Content-Type", "application/json")
-            .header("Accept", "application/json")
-            .ignoreContentType(true)
-            .method(Connection.Method.POST)
-            .requestBody(json)
-            .timeout(0)
-            .execute()
-
-//        if (resp.statusCode() != 200)
-//            throw ApiException("error send request: ${resp.body()} ${resp.statusMessage()}", resp.statusCode())
-        return resp.body()
+        return Net.post(url, json)
     }
 }

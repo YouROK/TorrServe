@@ -1,10 +1,9 @@
 package ru.yourok.torrserve.ad
 
 import com.google.gson.Gson
-import org.jsoup.Connection
-import org.jsoup.Jsoup
 import ru.yourok.torrserve.ad.model.ADData
 import ru.yourok.torrserve.app.Consts
+import ru.yourok.torrserve.utils.Net
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,12 +27,7 @@ object ADManager {
         }
         try {
             val link = Consts.ad_link + "/ad.json"
-            val buf = Jsoup.connect(link)
-                .method(Connection.Method.GET)
-                .ignoreContentType(true)
-                .execute()
-                .body()
-
+            val buf = Net.get(link)
             val data = Gson().fromJson(buf, ADData::class.java)
             addata = data
             return data
