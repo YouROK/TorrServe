@@ -8,6 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 
 class StatusViewModel : ViewModel() {
@@ -22,6 +24,11 @@ class StatusViewModel : ViewModel() {
         return data!!
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        isWork = false
+    }
+
     private fun update() {
         viewModelScope.launch(Dispatchers.IO) {
             synchronized(isWork) {
@@ -31,8 +38,12 @@ class StatusViewModel : ViewModel() {
             isWork = true
             while (isWork) {
                 try {
-                    val st = Api.echo()
+                    var st = Api.echo()
                     val old = data?.value
+
+                    if (st.isEmpty())
+                        st = App.context.getString(R.string.server_not_responding)
+
                     if (old == null || st != old)
                         withContext(Dispatchers.Main) { data?.value = st }
                     delay(1000)

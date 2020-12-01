@@ -29,10 +29,14 @@ import ru.yourok.torrserve.utils.Premissions
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: StatusViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Premissions.requestPermissionWithRationale(this)
         setContentView(R.layout.main_activity)
+
+        viewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
 
         setupNavigator()
 
@@ -41,18 +45,24 @@ class MainActivity : AppCompatActivity() {
 
         TorrService.start()
 
-        val viewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
-        val data = viewModel.get()
-        data.observe(this) {
-            findViewById<TextView>(R.id.tvStatus)?.text = it
-        }
-
         if (savedInstanceState == null) {
             clearStackFragmnet()
             TorrentsFragment().apply {
                 show(this@MainActivity, R.id.container)
             }
             DonateMessage.showDonate(this)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateStatus()
+    }
+
+    private fun updateStatus() {
+        val data = viewModel.get()
+        data.observe(this) {
+            findViewById<TextView>(R.id.tvStatus)?.text = it
         }
     }
 
