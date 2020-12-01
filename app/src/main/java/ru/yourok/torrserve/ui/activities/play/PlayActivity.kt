@@ -47,10 +47,12 @@ class PlayActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        error(ErrUserStop)
-        thread {
-            Api.dropTorrent(torrentHash)
-        }
+        if (command.isNotEmpty())
+            error(ErrUserStop)
+
+        if (torrentHash.isNotEmpty())
+            thread { Api.dropTorrent(torrentHash) }
+        
         super.onDestroy()
     }
 

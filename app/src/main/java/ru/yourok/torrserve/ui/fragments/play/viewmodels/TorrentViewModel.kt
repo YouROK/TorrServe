@@ -8,17 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.server.api.Api
-import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.Torrent
-import ru.yourok.torrserve.utils.TorrentHelper
-
-data class TorrentVMData(val torr: Torrent, val viewed: List<Viewed>)
 
 class TorrentViewModel : ViewModel() {
+    private val data: MutableLiveData<Torrent> = MutableLiveData()
 
-    private val data: MutableLiveData<TorrentVMData> = MutableLiveData()
-
-    fun loadTorrent(link: String, hash: String, title: String, poster: String, save: Boolean): LiveData<TorrentVMData>? {
+    fun loadTorrent(link: String, hash: String, title: String, poster: String, save: Boolean): LiveData<Torrent>? {
         if (hash.isNotEmpty())
             loadHash(hash)
         else if (link.isNotEmpty())
@@ -30,22 +25,18 @@ class TorrentViewModel : ViewModel() {
     private fun loadHash(hash: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val torr = Api.getTorrent(hash)
-            load(torr)
+            withContext(Dispatchers.Main) {
+                data.value = torr
+            }
         }
     }
 
     private fun loadLink(link: String, title: String, poster: String, save: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val torr = Api.addTorrent(link, title, poster, save)
-            load(torr)
-        }
-    }
-
-    private suspend fun load(torr: Torrent) {
-        val updViewed = Api.listViewed(torr.hash)
-        val updTorr = TorrentHelper.waitFiles(torr.hash)
-        withContext(Dispatchers.Main) {
-            data.value = TorrentVMData(updTorr ?: torr, updViewed)
+            withContext(Dispatchers.Main) {
+                data.value = torr
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.ext.urlEncode
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.FileStat
@@ -73,7 +74,7 @@ class TorrentFilesFragment : TSFragment() {
                     try {
                         if (Api.listTorrent().isNotEmpty()) {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name}.m3u?hash=${torrent.hash}")), "video/*")
+                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name.urlEncode()}.m3u?hash=${torrent.hash}")), "video/*")
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             App.context.startActivity(intent)
                         }
@@ -89,7 +90,7 @@ class TorrentFilesFragment : TSFragment() {
                     try {
                         if (Api.listTorrent().isNotEmpty()) {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name}?hash=${torrent.hash}&fromlast")), "video/*")
+                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name.urlEncode()}?hash=${torrent.hash}&fromlast")), "video/*")
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             App.context.startActivity(intent)
                         }

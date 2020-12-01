@@ -22,30 +22,33 @@ object Play {
         lifecycleScope.launch(Dispatchers.IO) {
             torrentSave = save
 
-            val tvmData = TorrentViewModel().loadTorrent(torrentLink, torrentHash, torrentTitle, torrentPoster, torrentSave)
-            if (tvmData == null) {
-                error(ErrLoadTorrent)
-                return@launch
-            }
+            val dataTorr = TorrentViewModel().loadTorrent(torrentLink, torrentHash, torrentTitle, torrentPoster, torrentSave)
             withContext(Dispatchers.Main) {
-                tvmData.observe(this@play) { torrData ->
-                    val torr = torrData.torr
-                    val viewed = torrData.viewed
-                    val files = TorrentHelper.getPlayableFiles(torr)
-                    lifecycleScope.launch {
-                        infoFragment.startInfo(torr.hash)
-                        if (files.isEmpty())
-                            error(ErrLoadTorrentInfo)
-                        else if (files.size == 1) {
-                            streamTorrent(torr, files.first().id)
-                            successful(Intent())
-                        } else if (torrentFileIndex > 0) {
-                            streamTorrent(torr, torrentFileIndex)
-                            successful(Intent())
-                        } else {
-                            TorrentFilesFragment().showTorrent(this@play, torr, viewed) { file ->
-                                lifecycleScope.launch {
-                                    streamTorrent(torr, file.id)
+                dataTorr?.observe(this@play) { tr ->
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        infoFragment.startInfo(tr.hash)
+
+                        val viewed = Api.listViewed(tr.hash)
+                        val torr = TorrentHelper.waitFiles(tr.hash) ?: let {
+                            //TODO msg
+                            return@launch
+                        }
+
+                        val files = TorrentHelper.getPlayableFiles(torr)
+                        lifecycleScope.launch {
+                            if (files.isEmpty())
+                                error(ErrLoadTorrentInfo)
+                            else if (files.size == 1) {
+                                streamTorrent(torr, files.first().id)
+                                successful(Intent())
+                            } else if (torrentFileIndex > 0) {
+                                streamTorrent(torr, torrentFileIndex)
+                                successful(Intent())
+                            } else {
+                                TorrentFilesFragment().showTorrent(this@play, torr, viewed) { file ->
+                                    lifecycleScope.launch {
+                                        streamTorrent(torr, file.id)
+                                    }
                                 }
                             }
                         }
