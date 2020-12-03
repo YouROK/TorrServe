@@ -90,7 +90,7 @@ class TorrentFilesFragment : TSFragment() {
                     try {
                         if (Api.listTorrent().isNotEmpty()) {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name.urlEncode()}?hash=${torrent.hash}&fromlast")), "video/*")
+                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name.urlEncode()}.m3u?hash=${torrent.hash}&fromlast")), "video/*")
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             App.context.startActivity(intent)
                         }
