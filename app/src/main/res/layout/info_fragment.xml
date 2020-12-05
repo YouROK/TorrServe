@@ -15,15 +15,6 @@
         android:layout_marginBottom="6dp"
         android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/colorAccent"
-            android:indeterminateTintMode="src_atop" />
-
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -33,35 +24,40 @@
             android:textColor="#eee" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/ivPoster"
                 android:layout_width="76dp"
                 android:layout_height="114dp"
-                android:layout_margin="5dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginBottom="6dp"
                 android:scaleType="centerCrop" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="6dp"
+                android:gravity="top"
+                android:orientation="vertical">
 
 
                 <TextView
                     android:id="@+id/tvFileName"
                     android:layout_width="match_parent"
-                    android:maxLines="2"
+                    android:layout_height="wrap_content"
                     android:ellipsize="start"
-                    android:layout_height="wrap_content" />
+                    android:maxLines="2" />
 
                 <TextView
                     android:id="@+id/tvFileSize"
-                    android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
 
                 <TextView
                     android:id="@+id/tvBuffer"
@@ -84,5 +80,15 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorAccent"
+            android:indeterminateTintMode="src_atop" />
+
     </LinearLayout>
 </LinearLayout>
