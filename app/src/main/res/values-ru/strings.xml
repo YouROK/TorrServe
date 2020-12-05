@@ -74,14 +74,14 @@
     <string name="permission_storage_msg">Доступ к памяти необходим для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
     <string name="donation">Пожертвование</string>
-    <string name="link">Ссылка</string>
+    <string name="link">Перейти</string>
     <string name="donation_msg">Пожертвование на поддержку проектов</string>
     <string name="yandex_money_msg">Yandex.Money:</string>
     <string name="paypal_msg">PayPal:</string>
     <string name="app_settings">Настройки приложения</string>
     <string name="host_title">Установить URL-адрес TorrServer</string>
-    <string name="torserver_title">TorrServer</string>
-    <string name="torserver_summary">Настройки TorrServer</string>
+    <string name="torserver_title">Настройки TorrServer</string>
+    <string name="torserver_summary">Настройки параметров TorrServer</string>
     <string name="remove_action_title">Удалить действие по умолчанию</string>
     <string name="remove_action_summary">Сброс действия по умолчанию при открытии торрента</string>
     <string name="boot_start_title">Запускать сервер при загрузке</string>
