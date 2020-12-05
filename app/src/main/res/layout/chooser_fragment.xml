@@ -1,85 +1,92 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <LinearLayout
-        android:layout_gravity="center"
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:selectableItemBackground"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="1dp"
-            card_view:cardUseCompatPadding="true"
-            android:layout_gravity="center"
-            android:layout_margin="1dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            card_view:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="84dp"
                 android:gravity="center"
-                android:layout_width="100dp"
-                android:layout_height="50dp">
+                android:minWidth="110dp"
+                android:orientation="vertical"
+                android:paddingTop="5dp">
 
                 <ImageView
-                    android:src="@drawable/ic_video"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center|top"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
+                    android:src="@drawable/ic_video" />
 
                 <TextView
                     android:id="@+id/tvNamePlay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal|bottom"
+                    android:padding="5dp"
+                    android:singleLine="true"
                     android:text="@string/play" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvAddPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:selectableItemBackground"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="1dp"
-            card_view:cardUseCompatPadding="true"
-            android:layout_gravity="center"
-            android:layout_margin="1dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            card_view:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="84dp"
                 android:gravity="center"
-                android:layout_width="100dp"
-                android:layout_height="50dp">
+                android:minWidth="110dp"
+                android:orientation="vertical"
+                android:paddingTop="5dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:src="@drawable/ic_video"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_gravity="center|top"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp" />
+                        android:src="@drawable/ic_video" />
 
                     <ImageView
-                        android:src="@drawable/ic_plus"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="bottom|center"
                         android:layout_marginLeft="16dp"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp" />
+                        android:src="@drawable/ic_plus" />
                 </FrameLayout>
 
                 <TextView
@@ -87,40 +94,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal|bottom"
+                    android:padding="5dp"
+                    android:singleLine="true"
                     android:text="@string/add_play" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:selectableItemBackground"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="1dp"
-            card_view:cardUseCompatPadding="true"
-            android:layout_gravity="center"
-            android:layout_margin="1dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            card_view:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="84dp"
                 android:gravity="center"
-                android:layout_width="100dp"
-                android:layout_height="50dp">
+                android:minWidth="110dp"
+                android:orientation="vertical"
+                android:paddingTop="5dp">
 
                 <ImageView
-                    android:src="@drawable/ic_add"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center|top"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
+                    android:src="@drawable/ic_add" />
 
                 <TextView
                     android:id="@+id/tvNameAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal|bottom"
+                    android:padding="5dp"
+                    android:singleLine="true"
                     android:text="@string/add" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -128,9 +141,9 @@
 
     <CheckBox
         android:id="@+id/cbSaveChooseAction"
-        android:layout_gravity="center"
-        android:text="@string/make_as_def"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/make_as_def" />
 
 </LinearLayout>
