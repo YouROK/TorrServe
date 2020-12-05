@@ -37,5 +37,5 @@ data class Torrent(
 data class FileStat(
     var id: Int,
     var path: String,
-    var length: Int
+    var length: Long
 )
