@@ -42,6 +42,7 @@
     <string name="add_play">Добавить и играть</string>
     <string name="play">Играть</string>
     <string name="make_as_def">Запомнить действие</string>
+    <string name="reset_def">Действие сброшено</string>
     <string name="playlist_continue">Плейлист (продолжить)</string>
     <string name="torrent">Торрент</string>
     <string name="title">Название</string>
@@ -76,10 +77,7 @@
     <string name="link">Ссылка</string>
     <string name="donation_msg">Пожертвование на поддержку проектов</string>
     <string name="yandex_money_msg">Yandex.Money:</string>
-    <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
     <string name="paypal_msg">PayPal:</string>
-    <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
-    <string name="telegram_msg" translatable="false">Telegram:</string>
     <string name="app_settings">Настройки приложения</string>
     <string name="host_title">Установить URL-адрес TorrServer</string>
     <string name="torserver_title">TorrServer</string>
@@ -88,7 +86,7 @@
     <string name="remove_action_summary">Сброс действия по умолчанию при открытии торрента</string>
     <string name="boot_start_title">Запускать сервер при загрузке</string>
     <string name="boot_start_sum_on">Запускать сервер при загрузке устройства</string>
-    <string name="boot_start_sum_off">Не запускать при загрузке устройства</string>
+    <string name="boot_start_sum_off">Не запускать сервер при загрузке устройства</string>
     <string name="root_start_title">Запускать сервер от root</string>
     <string name="root_start_sum_on">Запускать сервер от root, чтобы система не могла остановить его</string>
     <string name="root_start_sum_off">Не запускать сервер от root</string>

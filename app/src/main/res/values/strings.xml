@@ -49,6 +49,7 @@
     <string name="play">Play</string>
 
     <string name="make_as_def">Make as default</string>
+    <string name="reset_def">Defaults cleared</string>
 
     <string name="playlist_continue">Playlist continue</string>
 
@@ -105,8 +106,8 @@
     <string name="torserver_title">TorrServer settings</string>
     <string name="torserver_summary">TorrServer settings</string>
 
-    <string name="remove_action_title">Remove action by default</string>
-    <string name="remove_action_summary">Remove action by default</string>
+    <string name="remove_action_title">Clear actions defaults</string>
+    <string name="remove_action_summary">Reset default torrent action</string>
 
     <string name="boot_start_title">Start server on boot</string>
     <string name="boot_start_sum_on">Enable start server on boot</string>

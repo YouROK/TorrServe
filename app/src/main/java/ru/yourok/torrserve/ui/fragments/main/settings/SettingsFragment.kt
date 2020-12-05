@@ -52,7 +52,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("remove_action")?.setOnPreferenceClickListener {
             Settings.setChooserAction(0)
-            App.Toast(R.string.make_as_def)
+            App.Toast(R.string.reset_def)
             true
         }
 
