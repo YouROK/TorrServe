@@ -7,7 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:gravity="center"
         android:text="@string/found_new_app_update"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -68,7 +70,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fadingEdgeLength="10dp"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="30dp"
             android:requiresFadingEdge="vertical">
 
             <TextView
@@ -85,28 +88,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
         android:divider="?android:attr/dividerVertical"
         android:gravity="end"
         android:orientation="horizontal"
+        android:padding="10dp"
         android:showDividers="none">
 
         <Button
             android:id="@+id/btnUpdate"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="140dp"
+            android:layout_marginStart="20dp"
             android:text="@string/update">
-
             <requestFocus />
         </Button>
 
         <Button
             android:id="@+id/btnCancel"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="140dp"
+            android:layout_marginStart="20dp"
             android:text="@android:string/cancel" />
     </LinearLayout>
 </FrameLayout>

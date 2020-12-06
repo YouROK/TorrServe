@@ -24,7 +24,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
 
-        <item name="android:listDivider">@drawable/gradient_divider_hg</item>
+        <item name="android:listDivider">@null</item>
         <item name="android:windowBackground">@color/darker_gray</item>
 
         <!-- Primary brand color. -->

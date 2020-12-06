@@ -4,6 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/gradient_divider_hw" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -12,7 +18,7 @@
         <Button
             android:layout_weight="1"
             android:id="@+id/btnPlaylist"
-            android:text="@string/playlist"
+            android:text="@string/playlist_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle" />
@@ -24,11 +30,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle" />
+
     </LinearLayout>
 
     <ListView
         android:id="@+id/lvTorrentFiles"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" /><!--297dp-->
 
 </LinearLayout>

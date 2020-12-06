@@ -43,7 +43,8 @@
     <string name="play">Играть</string>
     <string name="make_as_def">Запомнить действие</string>
     <string name="reset_def">Действие сброшено</string>
-    <string name="playlist_continue">Плейлист (продолжить)</string>
+    <string name="playlist_all">Играть все</string>
+    <string name="playlist_continue">Продолжить</string>
     <string name="torrent">Торрент</string>
     <string name="title">Название</string>
     <string name="poster_link">URL постера</string>
