@@ -39,7 +39,7 @@
     </string-array>
     <string name="default_player">Плеер по умолчанию</string>
     <string name="choose_player">Всегда спрашивать</string>
-    <string name="add_play">Добавить и играть</string>
+    <string name="add_play">Доб. и играть</string>
     <string name="play">Играть</string>
     <string name="make_as_def">Запомнить действие</string>
     <string name="reset_def">Действие сброшено</string>

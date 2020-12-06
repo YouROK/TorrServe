@@ -27,9 +27,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="84dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:minWidth="110dp"
+                android:minWidth="100dp"
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
@@ -45,8 +45,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal|bottom"
                     android:padding="5dp"
-                    android:singleLine="true"
-                    android:text="@string/play" />
+                    android:text="@string/play"
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -65,9 +65,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="84dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:minWidth="110dp"
+                android:minWidth="100dp"
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
@@ -95,8 +95,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal|bottom"
                     android:padding="5dp"
-                    android:singleLine="true"
-                    android:text="@string/add_play" />
+                    android:text="@string/add_play"
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -115,9 +115,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="84dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:minWidth="110dp"
+                android:minWidth="100dp"
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
@@ -133,8 +133,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal|bottom"
                     android:padding="5dp"
-                    android:singleLine="true"
-                    android:text="@string/add" />
+                    android:text="@string/add"
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
