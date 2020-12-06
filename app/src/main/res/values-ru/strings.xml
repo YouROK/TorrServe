@@ -75,7 +75,7 @@
     <string name="permission_storage_msg">Доступ к памяти необходим для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
     <string name="donation">Пожертвование</string>
-    <string name="link">Перейти</string>
+    <string name="link">URL</string>
     <string name="donation_msg">Пожертвование на поддержку проектов</string>
     <string name="yandex_money_msg">Yandex.Money:</string>
     <string name="paypal_msg">PayPal:</string>
