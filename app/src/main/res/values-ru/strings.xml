@@ -63,7 +63,7 @@
     <string name="loading">Загрузка</string>
     <string name="found_new_app_update">Найдено обновление приложения</string>
     <string name="not_found_new_app_update">Нет обновлений приложения</string>
-    <string name="current_version">Текущая версия</string>
+    <string name="current_version">Установленная версия</string>
     <string name="new_version">Новая версия</string>
     <string name="server_stoped">Сервер остановлен</string>
     <string name="stat_server_is_running">Сервер запущен</string>
