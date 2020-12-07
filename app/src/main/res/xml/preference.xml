@@ -4,7 +4,8 @@
 
     <PreferenceCategory
         android:title="@string/app_settings"
-        android:key="data" />
+        android:key="data"
+        style="@style/HeadPreferenceCategory" />
 
     <Preference
         app:key="host"
@@ -46,5 +47,4 @@
         android:summaryOff="@string/show_banner_sum_off"
         android:defaultValue="true" />
 
-    <PreferenceCategory />
 </PreferenceScreen>
