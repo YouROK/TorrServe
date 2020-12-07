@@ -89,10 +89,14 @@ class MainActivity : AppCompatActivity() {
         tvCurrHost.text = Settings.getHost()
 
         findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
-            clearStackFragmnet()
-            TorrentsFragment().show(this, R.id.container)
+            val currFragment = supportFragmentManager?.findFragmentById(R.id.container)
+            if (currFragment is TorrentsFragment)
+                ServerFinderFragment().show(this, R.id.container, true)
+            else {
+                clearStackFragmnet()
+                TorrentsFragment().show(this, R.id.container)
+            }
             closeMenu()
-            //ServerFinderFragment().show(this, R.id.container, true)
         }
         findViewById<FrameLayout>(R.id.header).setOnLongClickListener {
             ServerSettingsFragment().show(this, R.id.container, true)
