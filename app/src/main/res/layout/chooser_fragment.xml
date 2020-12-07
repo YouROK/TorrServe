@@ -98,6 +98,7 @@
                     android:text="@string/add_play"
                     android:textColor="@color/colorPrimary" />
             </LinearLayout>
+            <requestFocus />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
