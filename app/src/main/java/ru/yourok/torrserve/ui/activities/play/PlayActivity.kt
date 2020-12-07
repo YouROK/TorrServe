@@ -84,7 +84,6 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-
     private fun processTorrent() {
         if (intent.hasExtra("action") && intent.getStringExtra("action") == "play")
             play(false)

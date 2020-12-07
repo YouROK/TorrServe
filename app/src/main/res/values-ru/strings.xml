@@ -58,7 +58,7 @@
     <string name="buffer">Буфер</string>
     <string name="peers">Пиры</string>
     <string name="size">Размер</string>
-    <string name="download_speed">Скорость скачивания</string>
+    <string name="download_speed">Скорость загрузки</string>
     <string name="upload_speed">Скорость отдачи</string>
     <string name="loading">Загрузка</string>
     <string name="found_new_app_update">Найдено обновление приложения</string>
