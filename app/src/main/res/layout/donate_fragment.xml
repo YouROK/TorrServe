@@ -3,88 +3,103 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_marginTop="30dp"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <TextView
+    <!--TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="@string/yandex_money_msg" />
+        android:text="@string/yandex_money_msg" /-->
+
+    <ImageView
+        android:id="@+id/yandex"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_gravity="start"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/yandex_money_card"
+        android:src="@drawable/ya_money" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/yandex"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:paddingRight="10dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/yandex_money_card"
-            android:src="@drawable/ya_money" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:layout_gravity="center"
-            android:text="@string/yandex_money_card" />
+            android:text="@string/yandex_money_card"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnYandex"
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/link" />
+            android:layout_marginTop="4dp"
+            android:text="@string/link"
+            android:textSize="14sp" />
+
     </LinearLayout>
 
-    <TextView
+    <!--TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="@string/paypal_msg" />
+        android:text="@string/paypal_msg" /-->
+
+    <ImageView
+        android:id="@+id/paypal"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/paypal_card"
+        android:src="@drawable/paypal" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-
-        <ImageView
-            android:id="@+id/paypal"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:paddingRight="10dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/paypal_card"
-            android:src="@drawable/paypal" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:layout_gravity="center"
-            android:text="@string/paypal_card" />
+            android:text="@string/paypal_card"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnPayPal"
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/link" />
+            android:layout_marginTop="4dp"
+            android:text="@string/link"
+            android:textSize="14sp" />
+
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/ivTelegram"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:contentDescription="@string/telegram_msg"
+        android:focusable="true"
+        app:srcCompat="@drawable/telegram" />
+
     <LinearLayout
-        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -92,19 +107,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="18sp"
-            android:paddingRight="10dp"
-            android:text="@string/telegram_msg" />
+            android:text="@string/telegram_msg"
+            android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/ivTelegram"
+        <Button
+            android:id="@+id/btnTelegram"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:layout_gravity="left"
-            android:adjustViewBounds="true"
-            android:focusable="true"
-            android:clickable="true"
-            app:srcCompat="@drawable/telegram" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/link"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </LinearLayout>

@@ -1,5 +1,7 @@
 package ru.yourok.torrserve.ui.fragments.donate
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -31,10 +33,11 @@ class DonateFragment : TSFragment() {
         Settings.setLastViewDonate(System.currentTimeMillis() + 12 * 60 * 60 * 1000)
 
         vi.findViewById<Button>(R.id.btnYandex)?.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://money.yandex.ru/to/410013733697114/200"))
+            val link="https://money.yandex.ru/to/410013733697114/200"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            App.context.startActivity(intent)
+            startActivitySafely(intent)
             Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
         }
 
@@ -43,8 +46,16 @@ class DonateFragment : TSFragment() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            App.context.startActivity(intent)
+            startActivitySafely(intent)
             Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
+        }
+
+        vi.findViewById<Button>(R.id.btnTelegram)?.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_VIEW
+            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+            intent.data = Uri.parse("https://t.me/torrserve")
+            startActivitySafely(intent)
         }
 
         vi.findViewById<ImageView>(R.id.ivTelegram)?.apply {
@@ -60,10 +71,22 @@ class DonateFragment : TSFragment() {
                 intent.action = Intent.ACTION_VIEW
                 intent.addCategory(Intent.CATEGORY_BROWSABLE)
                 intent.data = Uri.parse("https://t.me/torrserve")
-                startActivity(intent)
+                startActivitySafely(intent)
             }
         }
         return vi
+    }
+    fun startActivitySafely(intent: Intent): Boolean {
+        try {
+            if (intent.resolveActivity(App.context.packageManager) != null) {
+                App.context.startActivity(intent)
+                return true
+            }
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+        }
+        // Maybe will be added a Toast to notify user
+        return false
     }
 
 }

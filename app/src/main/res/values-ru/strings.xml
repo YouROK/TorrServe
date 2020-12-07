@@ -75,7 +75,7 @@
     <string name="permission_storage_msg">Доступ к памяти необходим для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
     <string name="donation">Пожертвование</string>
-    <string name="link">URL</string>
+    <string name="link">Открыть</string>
     <string name="donation_msg">Пожертвование на поддержку проектов</string>
     <string name="yandex_money_msg">Yandex.Money:</string>
     <string name="paypal_msg">PayPal:</string>
@@ -95,4 +95,5 @@
     <string name="show_banner_title">Отключить баннер</string>
     <string name="show_banner_sum_on">Показывать баннер при загрузке торрента</string>
     <string name="show_banner_sum_off">Не показывать баннер при загрузке торрента</string>
+    <string name="telegram_msg">Канал в Telegram</string>
 </resources>

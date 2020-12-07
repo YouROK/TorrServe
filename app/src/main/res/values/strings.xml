@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TorrServe New</string>
+    <string name="app_name" translatable="false">TorrServe β</string>
 
     <string name="add">Add</string>
     <string name="delete">Delete</string>
@@ -92,13 +92,12 @@
     <string name="donation">Donation</string>
     <string name="link">Link</string>
     <string name="donation_msg">Donation to support projects</string>
-    <string name="yandex_money_msg">Yandex.Money card:</string>
+    <string name="yandex_money_msg">Yandex.Money card</string>
     <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
-    <string name="paypal_msg">Email to donate in PayPal:</string>
+    <string name="paypal_msg">Email to donate in PayPal</string>
     <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
-    <string name="telegram_msg" translatable="false">Telegram:</string>
+    <string name="telegram_msg">Telegram Channel</string>
 
-    <!---->
     <!--    Settings    -->
     <string name="app_settings">App Settings</string>
 
