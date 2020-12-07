@@ -41,6 +41,9 @@
         android:id="@+id/lvTorrentFiles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:listSelector="@drawable/action_selector" />
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="50dp"
+        android:listSelector="@drawable/action_selector"
+        android:requiresFadingEdge="vertical" />
 
 </LinearLayout>

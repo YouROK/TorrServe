@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
+    android:padding="5dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="horizontal">
@@ -18,19 +17,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
+            android:layout_margin="3dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:selectableItemBackground"
-            card_view:cardCornerRadius="5dp"
+            android:layout_weight="1"
+            card_view:cardCornerRadius="6dp"
             card_view:cardElevation="1dp"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:minWidth="100dp"
+                android:minWidth="95dp"
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
@@ -56,19 +56,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
+            android:layout_margin="3dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:selectableItemBackground"
-            card_view:cardCornerRadius="5dp"
+            android:layout_weight="1"
+            card_view:cardCornerRadius="6dp"
             card_view:cardElevation="1dp"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:minWidth="100dp"
+                android:minWidth="95dp"
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
@@ -107,19 +108,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:selectableItemBackground"
-            card_view:cardCornerRadius="5dp"
+            card_view:cardCornerRadius="6dp"
             card_view:cardElevation="1dp"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:minWidth="100dp"
+                android:minWidth="95dp"
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
@@ -146,6 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:paddingEnd="10dp"
         android:text="@string/make_as_def" />
 
 </LinearLayout>
