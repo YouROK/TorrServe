@@ -93,7 +93,7 @@
                         android:paddingLeft="40dp"
                         android:text="@string/add"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
                 </FrameLayout>
 
@@ -124,7 +124,7 @@
                         android:paddingLeft="40dp"
                         android:text="@string/remove_all"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
                 </FrameLayout>
 
@@ -155,7 +155,7 @@
                         android:paddingLeft="40dp"
                         android:text="@string/playlist"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
                 </FrameLayout>
 
@@ -186,7 +186,7 @@
                         android:paddingLeft="40dp"
                         android:text="@string/donate"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
                 </FrameLayout>
 
@@ -217,7 +217,7 @@
                         android:paddingLeft="40dp"
                         android:text="@string/update"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
                 </FrameLayout>
 
@@ -248,7 +248,7 @@
                         android:paddingLeft="40dp"
                         android:text="@string/settings"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
                 </FrameLayout>
 
@@ -279,7 +279,7 @@
                         android:paddingLeft="40dp"
                         android:text="@string/exit"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
                 </FrameLayout>
 

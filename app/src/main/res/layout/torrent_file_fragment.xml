@@ -16,12 +16,14 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_weight="1"
             android:id="@+id/btnPlaylist"
-            android:text="@string/playlist_all"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?android:attr/borderlessButtonStyle" />
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="3dp"
+            android:layout_weight="1"
+            android:text="@string/playlist_all" />
 
         <Button
             android:layout_weight="1"
@@ -29,13 +31,15 @@
             android:text="@string/playlist_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?android:attr/borderlessButtonStyle" />
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="6dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
     </LinearLayout>
 
     <ListView
         android:id="@+id/lvTorrentFiles"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" /><!--297dp-->
+        android:layout_height="match_parent" />
 
 </LinearLayout>
