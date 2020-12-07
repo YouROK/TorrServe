@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="fill_parent"
@@ -11,9 +11,9 @@
         android:background="@drawable/gradient_divider_hw" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnPlaylist"
@@ -26,20 +26,21 @@
             android:text="@string/playlist_all" />
 
         <Button
-            android:layout_weight="1"
             android:id="@+id/btnPlaylistContinue"
-            android:text="@string/playlist_continue"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginEnd="6dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+            android:layout_weight="1"
+            android:text="@string/playlist_continue" />
 
     </LinearLayout>
 
     <ListView
         android:id="@+id/lvTorrentFiles"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:listSelector="@drawable/action_selector" />
 
 </LinearLayout>
