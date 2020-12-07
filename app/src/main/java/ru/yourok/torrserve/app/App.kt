@@ -5,9 +5,10 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
+import androidx.multidex.MultiDexApplication
 
 
-class App : Application() {
+class App : MultiDexApplication() {
     companion object {
         lateinit var context: Context
 

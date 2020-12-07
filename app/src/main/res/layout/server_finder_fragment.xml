@@ -67,11 +67,9 @@
 
         <Button
             android:id="@+id/btnFindHosts"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
             android:layout_gravity="center"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
@@ -99,17 +97,21 @@
 
         <Button
             android:id="@+id/buttonOk"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:text="@android:string/ok" />
 
         <Button
             android:id="@+id/buttonCancel"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:text="@android:string/cancel" />
     </LinearLayout>

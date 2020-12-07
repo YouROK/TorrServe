@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -37,7 +38,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="center|top"
-                    android:src="@drawable/ic_video" />
+                    app:srcCompat="@drawable/ic_video" />
 
                 <TextView
                     android:id="@+id/tvNamePlay"
@@ -79,14 +80,14 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center|top"
-                        android:src="@drawable/ic_video" />
+                        app:srcCompat="@drawable/ic_video" />
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="bottom|center"
                         android:layout_marginLeft="16dp"
-                        android:src="@drawable/ic_plus" />
+                        app:srcCompat="@drawable/ic_plus" />
                 </FrameLayout>
 
                 <TextView
@@ -126,7 +127,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="center|top"
-                    android:src="@drawable/ic_add" />
+                    app:srcCompat="@drawable/ic_add" />
 
                 <TextView
                     android:id="@+id/tvNameAdd"

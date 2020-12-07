@@ -94,17 +94,21 @@
 
         <Button
             android:id="@+id/btnOK"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:text="@android:string/ok" />
 
         <Button
             android:id="@+id/btnCancel"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:text="@android:string/cancel" />
     </LinearLayout>

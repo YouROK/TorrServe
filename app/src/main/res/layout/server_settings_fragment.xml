@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -82,26 +82,26 @@
 
             <CheckBox
                 android:id="@+id/cbSaveOnDisk"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/save_on_disk" />
+                android:text="@string/save_on_disk"
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:labelFor="@+id/etContentPath"
                 android:paddingStart="5dp"
-                android:text="@string/save_content_path" />
+                android:text="@string/save_content_path"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/etContentPath"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textUri" />
+                android:inputType="textUri"
+                android:visibility="gone" />
 
             <CheckBox
                 android:id="@+id/cbEnableIPv6"
@@ -260,17 +260,21 @@
 
             <Button
                 android:id="@+id/btnOk"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text="@android:string/ok" />
 
             <Button
                 android:id="@+id/btnCancel"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:text="@android:string/cancel" />
         </LinearLayout>
