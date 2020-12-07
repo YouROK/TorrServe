@@ -35,7 +35,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:listDivider">@null</item>
-        <item name="android:windowBackground">@color/darker_gray</item>
+        <item name="android:windowBackground">@drawable/rc_background</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
