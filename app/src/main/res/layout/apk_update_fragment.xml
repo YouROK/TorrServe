@@ -90,7 +90,7 @@
         android:divider="?android:attr/dividerVertical"
         android:gravity="end"
         android:orientation="horizontal"
-        android:padding="10dp"
+        android:layout_margin="10dp"
         android:showDividers="none">
 
         <Button

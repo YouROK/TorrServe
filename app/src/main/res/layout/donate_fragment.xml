@@ -39,10 +39,10 @@
 
         <Button
             android:id="@+id/btnYandex"
-            android:text="@string/link"
-            style="?android:attr/borderlessButtonStyle"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/link" />
     </LinearLayout>
 
     <TextView
@@ -77,10 +77,10 @@
 
         <Button
             android:id="@+id/btnPayPal"
-            android:text="@string/link"
-            style="?android:attr/borderlessButtonStyle"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/link" />
     </LinearLayout>
 
     <LinearLayout
