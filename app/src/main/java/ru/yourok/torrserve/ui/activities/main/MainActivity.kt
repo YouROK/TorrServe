@@ -89,10 +89,14 @@ class MainActivity : AppCompatActivity() {
         tvCurrHost.text = Settings.getHost()
 
         findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
-            ServerFinderFragment().show(this, R.id.container, true)
+            clearStackFragmnet()
+            TorrentsFragment().show(this, R.id.container)
+            closeMenu()
+            //ServerFinderFragment().show(this, R.id.container, true)
         }
         findViewById<FrameLayout>(R.id.header).setOnLongClickListener {
             ServerSettingsFragment().show(this, R.id.container, true)
+            closeMenu()
             true
         }
 
