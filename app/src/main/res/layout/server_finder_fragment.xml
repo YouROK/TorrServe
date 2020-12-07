@@ -92,7 +92,7 @@
         style="@android:style/DeviceDefault.ButtonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:divider="?android:attr/dividerVertical"
         android:orientation="horizontal"
         android:showDividers="none">

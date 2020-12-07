@@ -82,7 +82,6 @@
         </ScrollView>
     </LinearLayout>
 
-
     <LinearLayout
         style="@android:style/DeviceDefault.ButtonBar"
         android:layout_width="match_parent"
@@ -96,7 +95,7 @@
 
         <Button
             android:id="@+id/btnUpdate"
-            style="?android:attr/buttonBarButtonStyle"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="140dp"
@@ -107,7 +106,7 @@
 
         <Button
             android:id="@+id/btnCancel"
-            style="?android:attr/buttonBarButtonStyle"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="140dp"

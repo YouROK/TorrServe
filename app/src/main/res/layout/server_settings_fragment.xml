@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/tvServerAddr"
@@ -243,24 +243,24 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <TextView
+        <!--TextView
             android:id="@+id/textViewStatus"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" /-->
 
         <LinearLayout
             android:id="@+id/footer"
             style="@android:style/DeviceDefault.ButtonBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:divider="?android:attr/dividerVertical"
             android:orientation="horizontal"
             android:showDividers="none">
 
             <Button
                 android:id="@+id/btnOk"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -268,7 +268,7 @@
 
             <Button
                 android:id="@+id/btnCancel"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
