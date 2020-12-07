@@ -1,91 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    android:id="@+id/torrent"
     android:layout_width="match_parent"
-    android:padding="5dp"
-    android:minHeight="84dp"
-    android:baselineAligned="false"
+    android:layout_height="wrap_content"
     android:background="?android:attr/activatedBackgroundIndicator"
-    android:layout_height="wrap_content">
+    android:baselineAligned="false"
+    android:minHeight="84dp">
 
     <ImageView
         android:id="@+id/ivPoster"
         android:layout_width="76dp"
         android:layout_height="114dp"
-        android:layout_margin="5dp"
-        android:scaleType="centerCrop" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvTorrName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_weight="1"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/tvTorrName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="12dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:maxLines="3"
+        android:singleLine="false"
+        android:text="Name"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTorrHash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tvTorrSize"
+        app:layout_constraintStart_toEndOf="@+id/ivPoster"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTorrHash"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="middle"
+        android:fontFamily="sans-serif-condensed"
+        android:singleLine="false"
+        android:text="hash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/ivPoster"
+        app:layout_constraintStart_toEndOf="@+id/ivPoster"
+        app:layout_constraintTop_toBottomOf="@+id/tvTorrName" />
+
+
+    <TextView
+        android:id="@+id/tvTorrSize"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="right"
+        android:singleLine="true"
+        android:text="5GB"
+        android:textColor="#eee"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTorrDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/ivPoster" />
 
-        <TextView
-            android:id="@+id/tvTorrName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-condensed"
-            android:maxLines="3"
-            android:singleLine="false"
-            android:text="Name"
-            android:textAppearance="@android:style/TextAppearance.Medium"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toRightOf="@+id/tvTorrSize"
-            app:layout_constraintStart_toEndOf="@+id/ivPoster"
-            tools:layout_editor_absoluteY="5dp" />
-
-        <TextView
-            android:id="@+id/tvTorrHash"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|top"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:ellipsize="middle"
-            android:fontFamily="sans-serif-condensed"
-            android:singleLine="true"
-            android:text="hash"
-            app:layout_constraintLeft_toRightOf="@+id/tvTorrSize"
-            app:layout_constraintStart_toEndOf="@+id/ivPoster"
-            app:layout_constraintTop_toBottomOf="@+id/tvTorrName" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:gravity="bottom"
+    <TextView
+        android:id="@+id/tvTorrDate"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="right"
+        android:singleLine="true"
+        android:text="10.10.2001"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvTorrHash" />
 
-        <TextView
-            android:id="@+id/tvTorrSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:paddingBottom="5dp"
-            android:singleLine="true"
-            android:text="5GB"
-            android:textColor="#eee"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/tvTorrDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:paddingStart="5dp"
-            android:paddingBottom="5dp"
-            android:singleLine="true"
-            android:text="10.10.2001" />
-
-    </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
