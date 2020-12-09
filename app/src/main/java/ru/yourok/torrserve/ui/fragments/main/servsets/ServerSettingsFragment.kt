@@ -102,8 +102,8 @@ class ServerSettingsFragment : TSFragment() {
         try {
             view?.apply {
                 btsets = BTSets(
-                    findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 200L * 1024 * 1024,
-                    findViewById<EditText>(R.id.etPreloadBufferSize)?.text?.toString()?.toLong() ?: 40L * 1024 * 1024,
+                    (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 200L ) * 1024 * 1024,
+                    (findViewById<EditText>(R.id.etPreloadBufferSize)?.text?.toString()?.toLong() ?: 40L ) * 1024 * 1024,
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
                     findViewById<EditText>(R.id.etContentPath)?.text?.toString() ?: "",
                     findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
