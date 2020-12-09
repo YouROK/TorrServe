@@ -3,7 +3,6 @@
     <style name="Theme.TorrServer" parent="Theme.MaterialComponents">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:listDivider">@drawable/gradient_divider_hg</item>
         <item name="android:windowBackground">@color/darker_gray</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -16,12 +15,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
         <!-- Customize your theme here. -->
+        <item name="android:listDivider">@drawable/gradient_divider_hg</item>
     </style>
-
     <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
         <item name="android:layout">@layout/head_preference_category</item>
     </style>
-
     <style name="HeadPreferenceCategoryText" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textAllCaps">true</item>
@@ -34,7 +32,7 @@
     <style name="PlayDialog" parent="Theme.MaterialComponents.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:listDivider">@null</item>
+        <item name="android:listDivider">@drawable/gradient_divider_hw</item>
         <item name="android:windowBackground">@drawable/rc_background</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
