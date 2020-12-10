@@ -16,7 +16,6 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.clearStackFragmnet
 import ru.yourok.torrserve.server.api.Api
-import ru.yourok.torrserve.server.local.Updater
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigator()
 
         //TODO remove
-        Updater.updateFromFile("/sdcard/Download/TorrServer-linux-${Updater.getArch()}")
+//        Updater.updateFromFile("/sdcard/Download/TorrServer-linux-${Updater.getArch()}")
 
         TorrService.start()
 

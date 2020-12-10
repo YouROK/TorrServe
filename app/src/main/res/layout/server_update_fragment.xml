@@ -11,7 +11,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
-        android:text="@string/found_new_app_update"
+        android:text="@string/found_new_server_update"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <LinearLayout
@@ -25,25 +25,30 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tvCurrentVersion"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvArch"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/current_version"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-
-        <TextView
-            android:id="@+id/tvNewVersion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_version"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:layout_marginTop="16dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:singleLine="false" />
 
         <TextView
-            android:id="@+id/tvUpdateInfo"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvRemoteVersion"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:singleLine="false" />
+
+        <TextView
+            android:id="@+id/tvLocalVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:singleLine="false" />
 
         <ProgressBar
             android:id="@+id/pbUpdate"
@@ -55,65 +60,40 @@
             android:progressTint="@color/colorAccent"
             android:progressTintMode="src_atop"
             android:visibility="gone" />
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="200dp"
         android:layout_marginBottom="70dp"
         android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fadingEdge="vertical"
-            android:fadingEdgeLength="30dp"
-            android:requiresFadingEdge="vertical">
-
-            <TextView
-                android:id="@+id/tvOverview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        </ScrollView>
-    </LinearLayout>
-
-    <LinearLayout
-        style="@android:style/DeviceDefault.ButtonBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="400dp"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
         <Button
             android:id="@+id/btnUpdate"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="8dp"
-            android:minWidth="140dp"
-            android:text="@string/update">
+            android:text="@string/install_server_latest">
 
             <requestFocus />
         </Button>
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnUpdateDownload"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_weight="1"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/install_server_localy" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="5dp"
-            android:minWidth="140dp"
-            android:text="@android:string/cancel" />
+            android:text="@string/delete" />
     </LinearLayout>
 </FrameLayout>

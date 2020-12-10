@@ -37,4 +37,18 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
             shell = null
         }
     }
+
+    fun version(): String {
+        if (exists()) {
+            val sh = Shell.newInstance("sh")
+            sh.newJob().also { shell ->
+                shell.add("${path} --version")
+                shell.exec().also { res ->
+                    if (res.isSuccess || res.out.isNotEmpty())
+                        return res.out.first()
+                }
+            }
+        }
+        return ""
+    }
 }

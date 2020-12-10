@@ -78,6 +78,11 @@
     <string name="current_version">Current version</string>
     <string name="new_version">New version</string>
 
+    <string name="found_new_server_update">Serve update found</string>
+    <string name="install_server_latest">Install latest server</string>
+    <string name="install_server_localy">Install server from the Download folder</string>
+    <string name="delete_local_server">Delete local server</string>
+
     <string name="server_stoped">Server stopped</string>
     <string name="stat_server_is_running">Server is running</string>
     <string name="server_not_responding">Server is not responding</string>
