@@ -13,6 +13,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         if (!exists())
             return
         synchronized(lock) {
+            Shell.Config.verboseLogging(true)
             if (shell == null) {
                 if (Settings.isRootStart()) {
                     shell = Shell.su("${path} -k -d ${Settings.getTorrPath()} > ${path}.log 2>&1")
@@ -27,14 +28,19 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         }
     }
 
-    fun stop() {
+    fun stop() : Boolean {
+        if (!exists())
+            return false
         synchronized(lock) {
+            Shell.Config.verboseLogging(true)
+            var result: Boolean
             if (Settings.isRootStart())
-                Shell.su("killall -9 torrserver")
+                result = Shell.su("killall -9 torrserver > ${path}.log 2>&1").exec().isSuccess
             else
-                Shell.sh("killall -9 torrserver")
+                result = Shell.sh("killall -9 torrserver > ${path}.log 2>&1").exec().isSuccess
             //TODO проверить
             shell = null
+            return result
         }
     }
 
