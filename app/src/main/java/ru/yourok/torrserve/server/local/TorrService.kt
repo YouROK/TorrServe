@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
+import android.util.Log
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
@@ -46,6 +47,7 @@ class TorrService : Service() {
     private fun startServer() {
         thread {
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
+                Log.d("TorrService", "startServer()")
                 serverFile.run()
             }
         }
@@ -53,13 +55,13 @@ class TorrService : Service() {
 
     private fun stopServer(forceClose: Boolean) {
         thread {
+            Log.d("TorrService", "stopServer(forceClose:" + forceClose + ")")
             if (isLocal() && Api.echo().isNotEmpty())
                 Api.shutdown()
-
-            serverFile.stop()
-            Handler(this.getMainLooper()).post {
-                App.Toast(getString(R.string.server_stoped))
-            }
+            if (serverFile.stop())
+                Handler(this.getMainLooper()).post {
+                    App.Toast(getString(R.string.server_stoped))
+                }
             notification.doUnbindService(this)
             if (forceClose) {
                 thread {
