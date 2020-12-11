@@ -7,7 +7,6 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.app.Consts
 import ru.yourok.torrserve.server.local.ServerFile
-import ru.yourok.torrserve.ui.fragments.main.update.apk.Versions
 import ru.yourok.torrserve.utils.Net
 import java.io.File
 import java.io.FileInputStream
@@ -15,8 +14,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 object UpdaterServer {
-    private var versions: Versions? = null
-    private var version: Version? = null
+    private var versions: ServVersions? = null
+    private var version: ServVersion? = null
 
     fun getLocalVersion(): String {
         var ver = App.context.getString(R.string.server_not_exists)
@@ -64,7 +63,7 @@ object UpdaterServer {
         try {
             val body = Net.get(Consts.updateServerPath)
             val gson = Gson()
-            versions = gson.fromJson(body, Versions::class.java)
+            versions = gson.fromJson(body, ServVersions::class.java)
             versions?.let { vers ->
                 vers
                     .filter { it.version.startsWith("1.2.") }

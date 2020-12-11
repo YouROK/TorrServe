@@ -17,14 +17,14 @@ import java.io.File
 import java.io.FileOutputStream
 
 object UpdaterApk {
-    private var versions: Versions? = null
-    private var newVersion: Version? = null
+    private var versions: ApkVersions? = null
+    private var newVersion: ApkVersion? = null
 
     fun check(): Boolean {
         try {
             val body = Net.get(Consts.updateApkPath)
             val gson = Gson()
-            versions = gson.fromJson(body, Versions::class.java)
+            versions = gson.fromJson(body, ApkVersions::class.java)
             versions?.let {
                 it.forEach { ver ->
                     if (ver.versionInt > BuildConfig.VERSION_CODE) {
