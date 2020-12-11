@@ -1,6 +1,5 @@
 package ru.yourok.torrserve.ui.fragments.donate
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -33,7 +32,7 @@ class DonateFragment : TSFragment() {
         Settings.setLastViewDonate(System.currentTimeMillis() + 12 * 60 * 60 * 1000)
 
         vi.findViewById<Button>(R.id.btnYandex)?.setOnClickListener {
-            val link="https://money.yandex.ru/to/410013733697114/200"
+            val link = "https://money.yandex.ru/to/410013733697114/200"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -76,6 +75,7 @@ class DonateFragment : TSFragment() {
         }
         return vi
     }
+
     fun startActivitySafely(intent: Intent): Boolean {
         try {
             if (intent.resolveActivity(App.context.packageManager) != null) {
@@ -107,7 +107,7 @@ object DonateMessage {
             Handler(Looper.getMainLooper()).postDelayed({
                 snackbar
                     .setAction(android.R.string.ok) {
-                        DonateFragment().show(activity, R.id.container)
+                        DonateFragment().show(activity, R.id.container, true)
                     }
                     .show()
             }, 5000)

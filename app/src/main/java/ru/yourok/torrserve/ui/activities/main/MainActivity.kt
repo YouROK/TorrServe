@@ -27,6 +27,8 @@ import ru.yourok.torrserve.ui.fragments.main.settings.SettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
+import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
+import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
 import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.Premissions
 
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigator()
 
         //TODO remove
-//        Updater.updateFromFile("/sdcard/Download/TorrServer-linux-${Updater.getArch()}")
+//        UpdaterServer.updateFromFile("/sdcard/Download/TorrServer-linux-${UpdaterServer.getArch()}")
 
         TorrService.start()
 
@@ -80,6 +82,9 @@ class MainActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     App.Toast(R.string.found_new_app_update)
                 }
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            UpdaterServer.check()
         }
     }
 
@@ -148,10 +153,11 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         ApkUpdateFragment().show(this@MainActivity, R.id.container, true)
                     }
-                //TODO run server updater
+                else
+                    withContext(Dispatchers.Main) {
+                        ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
+                    }
             }
-
-//                startActivity(Intent(this, UpdaterActivity::class.java))
             closeMenu()
         }
 

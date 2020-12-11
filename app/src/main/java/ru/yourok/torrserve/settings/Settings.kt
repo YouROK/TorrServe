@@ -1,7 +1,6 @@
 package ru.yourok.torrserve.settings
 
 import android.net.Uri
-import android.os.Environment
 import android.preference.PreferenceManager
 import ru.yourok.torrserve.app.App
 import java.io.File
@@ -23,7 +22,7 @@ object Settings {
     fun setLastViewDonate(l: Long) = set("last_view_donate", l)
 
     fun getPlayer(): String = get("player", "")
-    fun getPlayer(v: String) = set("player", v)
+    fun setPlayer(v: String) = set("player", v)
 
     fun getChooserAction(): Int = get("chooser_action", 0)
     fun setChooserAction(v: Int) = set("chooser_action", v)
@@ -57,15 +56,11 @@ object Settings {
 
     /////////////////////////////////////////////////////////
     fun getTorrPath(): String {
-        val state = Environment.getExternalStorageState()
         var filesDir: File?
-        if (Environment.MEDIA_MOUNTED == state)
-            filesDir = App.context.getExternalFilesDir(null)
-        else
-            filesDir = App.context.filesDir
+        filesDir = App.context.getExternalFilesDir(null)
 
         if (filesDir == null)
-            filesDir = App.context.cacheDir
+            filesDir = App.context.filesDir
 
         if (filesDir == null)
             filesDir = File("/sdcard/Torrserve")

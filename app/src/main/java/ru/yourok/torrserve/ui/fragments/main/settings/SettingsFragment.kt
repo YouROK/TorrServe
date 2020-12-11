@@ -67,7 +67,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 else
                     it.second
             }.toTypedArray()
+            this.value = player
             this.summary = pList.find { it.first == player }?.second ?: player
+            setOnPreferenceChangeListener { preference, newValue ->
+                Settings.setPlayer(newValue.toString())
+                true
+            }
         }
 
         findPreference<Preference>("show_battery_save")?.apply {

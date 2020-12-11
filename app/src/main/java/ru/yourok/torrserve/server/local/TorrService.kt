@@ -97,16 +97,6 @@ class TorrService : Service() {
             }
         }
 
-        fun wait(timeout: Int = 30) {
-            var count = 0
-            if (timeout < 0)
-                count = -30
-            while (Api.echo() == "" || count > timeout) {
-                Thread.sleep(1000)
-                count++
-            }
-        }
-
         fun isLocal(): Boolean {
             val host = Settings.getHost()
             return host.contains("://127.0.0.1") || host.contains("://localhost")
