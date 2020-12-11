@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.main.settings
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -56,8 +57,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
-        val choosePlayerPref = findPreference<ListPreference>("choose_player")
-        choosePlayerPref?.apply {
+        findPreference<ListPreference>("choose_player")?.apply {
             val pList = Players.getList()
             val player = Settings.getPlayer()
             this.entryValues = pList.map { it.first }.toTypedArray()
@@ -69,5 +69,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }.toTypedArray()
             this.summary = pList.find { it.first == player }?.second ?: player
         }
+
+        findPreference<Preference>("show_battery_save")?.apply {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                val intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                if (intent.resolveActivity(requireActivity().packageManager) == null)
+                    ps?.removePreference(this)
+                setOnPreferenceClickListener {
+                    requireActivity().startActivity(intent)
+                    true
+                }
+            } else {
+                ps?.removePreference(this)
+            }
+        }
+
     }
 }
