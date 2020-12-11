@@ -45,9 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         setupNavigator()
 
-        //TODO remove
-//        UpdaterServer.updateFromFile("/sdcard/Download/TorrServer-linux-${UpdaterServer.getArch()}")
-
         TorrService.start()
 
         if (savedInstanceState == null) {
