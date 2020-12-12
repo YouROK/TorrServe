@@ -14,6 +14,8 @@
         <item name="colorOnSecondary">@color/colorAccent</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
+        <!-- Bottom bar color. -->
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
         <!-- Customize your theme here. -->
         <item name="android:listDivider">@drawable/gradient_divider_hg</item>
     </style>
@@ -44,5 +46,7 @@
         <item name="colorOnSecondary">@color/colorAccent</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
+        <!-- Bottom bar color. -->
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
     </style>
 </resources>
