@@ -13,7 +13,7 @@
 
     <string name="cache_size">Cache size (Megabytes)</string>
     <string name="preload_buffer_size">Preload Buffer Size (Megabytes)</string>
-    <string name="torrent_disconnect_timeout">Torrent disconnect timeout</string>
+    <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to save content</string>
     <string name="save_on_disk">Save on disk</string>
     <string name="enable_ipv6">Enable IPv6</string>
@@ -24,12 +24,12 @@
     <string name="disable_upload">Disable Upload</string>
     <string name="ecnryption">Ecnryption</string>
     <string name="connections_limit">Torrent connections (20–25 recommended on all Android devices)</string>
-    <string name="connections_dht_limit">Limit of DHT connections (0-unlimited, on versions up to 70th unlimited)</string>
+    <string name="connections_dht_limit">Limit of DHT connections (0-unlimited)</string>
     <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0-unlimited)</string>
     <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0-unlimited)</string>
     <string name="retrackers">Retrackers</string>
     <string name="strategy">Request Strategy</string>
-    <string name="peers_listen_port">Peers listen port</string>
+    <string name="peers_listen_port">Peers listen port (0-default)</string>
     <string-array name="retracker_mode">
         <item>Default</item>
         <item>Add retrackers</item>
