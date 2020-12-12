@@ -33,7 +33,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:listDivider">@drawable/gradient_divider_hw</item>
-        <item name="android:windowBackground">@drawable/rc_background</item>
+        <item name="android:windowBackground">@drawable/rc_inset_dialog</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
