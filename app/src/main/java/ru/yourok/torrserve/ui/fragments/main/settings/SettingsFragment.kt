@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
+import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
@@ -105,6 +106,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 this.summary = (pList.find { it.first == newValue }?.second ?: newValue).toString()
                 true
             }
+        }
+
+        findPreference<SwitchPreferenceCompat>("root_start")?.apply {
+            if (!Shell.rootAccess())
+                ps?.removePreference(this)
         }
 
         findPreference<Preference>("show_battery_save")?.apply {
