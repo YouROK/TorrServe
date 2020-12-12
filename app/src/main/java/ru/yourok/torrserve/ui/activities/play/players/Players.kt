@@ -23,17 +23,17 @@ object Players {
         intent.setDataAndType(Uri.parse(link), mime)
         intent.putExtra("title", torrent.title)
         intent.putExtra("poster", torrent.poster)
-
+        // default player
         if (pkg == "0" && intent.resolveActivity(App.context.packageManager) != null)
             return intent
-
+        // user defined player
         if (pkg.isNotEmpty()) {
             intent.`package` = pkg
             if (intent.resolveActivity(App.context.packageManager) != null)
                 return intent
-            intent.`package` = ""
+            intent.`package` = null
         }
-
+        // always ask / wrong package set
         val cIntent = Intent.createChooser(intent, "")
         return cIntent
     }
