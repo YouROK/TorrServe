@@ -102,9 +102,9 @@
     <string name="root_start_sum_on">Запускать сервер от root, чтобы система не могла остановить его</string>
     <string name="root_start_sum_off">Не запускать сервер от root</string>
     <string name="choose_player_title">Выбор плеера</string>
-    <string name="show_banner_title">Отключить баннер</string>
-    <string name="show_banner_sum_on">Не показывать баннер при загрузке торрента</string>
-    <string name="show_banner_sum_off">Показывать баннер при загрузке торрента</string>
+    <string name="show_banner_title">Показывать баннер</string>
+    <string name="show_banner_sum_on">Показывать баннер при загрузке торрента</string>
+    <string name="show_banner_sum_off">Не показывать баннер при загрузке торрента</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
 </resources>

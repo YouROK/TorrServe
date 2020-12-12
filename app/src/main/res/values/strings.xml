@@ -134,8 +134,8 @@
     <string name="choose_player_title">Choose player</string>
 
     <string name="show_banner_title">Show banner</string>
-    <string name="show_banner_sum_on">Don\'t Show banner on load torrent</string>
-    <string name="show_banner_sum_off">Show banner on load torrent</string>
+    <string name="show_banner_sum_on">Show banner on load torrent</string>
+    <string name="show_banner_sum_off">Don\'t show banner on load torrent</string>
 
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
