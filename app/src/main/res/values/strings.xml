@@ -92,8 +92,8 @@
     <string name="warn_error_download_server">Server Download Error</string>
     <string name="warn_no_localy_updates">No local updates</string>
 
+    <string name="stat_running">Service is running</string>
     <string name="server_stoped">Server stopped</string>
-    <string name="stat_server_is_running">Server is running</string>
     <string name="server_not_responding">Server is not responding</string>
     <string name="server_not_exists">No server</string>
     <string name="error_retrieving_settings">Error getting settings</string>

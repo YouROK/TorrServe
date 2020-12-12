@@ -74,8 +74,8 @@
     <string name="update_server">Обновление сервера</string>
     <string name="warn_error_download_server">Ошибка загрузки сервера</string>
     <string name="warn_no_localy_updates">Нет обновлений</string>
+    <string name="stat_running">Служба запущена</string>
     <string name="server_stoped">Сервер остановлен</string>
-    <string name="stat_server_is_running">Сервер запущен</string>
     <string name="server_not_responding">Сервер не отвечает</string>
     <string name="server_not_exists">Сервер отсутствует</string>
     <string name="error_retrieving_settings">Ошибка при получении настроек</string>
