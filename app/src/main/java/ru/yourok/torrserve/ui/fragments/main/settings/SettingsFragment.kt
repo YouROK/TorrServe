@@ -62,15 +62,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val player = Settings.getPlayer()
             this.entryValues = pList.map { it.first }.toTypedArray()
             this.entries = pList.map {
-                if (it.first.isNotEmpty() && it.first != "0")
-                    it.second + " - " + it.first
-                else
+            //    if (it.first.isNotEmpty() && it.first != "0")
+            //        it.second + "\n" + it.first
+            //    else
                     it.second
             }.toTypedArray()
             this.value = player
             this.summary = pList.find { it.first == player }?.second ?: player
             setOnPreferenceChangeListener { preference, newValue ->
                 Settings.setPlayer(newValue.toString())
+                this.summary = (pList.find { it.first == newValue }?.second ?: newValue).toString()
                 true
             }
         }
