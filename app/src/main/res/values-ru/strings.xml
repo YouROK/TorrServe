@@ -25,7 +25,8 @@
     <string name="download_rate_limit">Ограничение скорости загрузки (Килобайты, 0 - без ограничений)</string>
     <string name="upload_rate_limit">Ограничение скорости отдачи (Килобайты, 0 - без ограничений)</string>
     <string name="retrackers">Ретрекеры</string>
-    <string name="peers_listen_port">Порт для входящих подключений</string>
+    <string name="strategy">Стратегия загрузки</string>
+    <string name="peers_listen_port">Порт для входящих подключений (0 - по умолчанию)</string>
     <string-array name="retracker_mode">
         <item>Ничего не делать</item>
         <item>Добавлять</item>
@@ -65,6 +66,14 @@
     <string name="not_found_new_app_update">Нет обновлений приложения</string>
     <string name="current_version">Установленная версия</string>
     <string name="new_version">Новая версия</string>
+    <string name="server_update">Обновление сервера</string>
+    <string name="install_server_latest">Установить последнюю версию сервера</string>
+    <string name="install_server_localy">Установить сервер из папки Download</string>
+    <string name="delete_local_server">Удалить локальный сервер</string>
+    <string name="arch">Архитектура ОС</string>
+    <string name="update_server">Обновление сервера</string>
+    <string name="warn_error_download_server">Ошибка загрузки сервера</string>
+    <string name="warn_no_localy_updates">Нет обновлений</string>
     <string name="server_stoped">Сервер остановлен</string>
     <string name="stat_server_is_running">Сервер запущен</string>
     <string name="server_not_responding">Сервер не отвечает</string>
@@ -79,7 +88,8 @@
     <string name="donation_msg">Пожертвование на поддержку проектов</string>
     <string name="yandex_money_msg">Yandex.Money:</string>
     <string name="paypal_msg">PayPal:</string>
-    <string name="app_settings">Настройки приложения</string>
+	<string name="telegram_msg">Канал в Telegram</string>
+	<string name="app_settings">Настройки приложения</string>
     <string name="host_title">Установить URL-адрес TorrServer</string>
     <string name="torserver_title">Настройки TorrServer</string>
     <string name="torserver_summary">Настройки параметров TorrServer</string>
@@ -95,5 +105,6 @@
     <string name="show_banner_title">Отключить баннер</string>
     <string name="show_banner_sum_on">Показывать баннер при загрузке торрента</string>
     <string name="show_banner_sum_off">Не показывать баннер при загрузке торрента</string>
-    <string name="telegram_msg">Канал в Telegram</string>
+    <string name="show_battery_save_title">Показать настройки энергосбережения</string>
+    <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
 </resources>

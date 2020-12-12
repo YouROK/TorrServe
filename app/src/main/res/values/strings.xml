@@ -28,6 +28,7 @@
     <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0-unlimited)</string>
     <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0-unlimited)</string>
     <string name="retrackers">Retrackers</string>
+    <string name="strategy">Request Strategy</string>
     <string name="peers_listen_port">Peers listen port</string>
     <string-array name="retracker_mode">
         <item>Default</item>
@@ -35,11 +36,15 @@
         <item>Remove retrackers</item>
         <item>Replace retrackers</item>
     </string-array>
-
     <string-array name="encryption_mode">
         <item>Enabled</item>
         <item>Disabled</item>
         <item>Force</item>
+    </string-array>
+    <string-array name="strategy_mode">
+        <item>DuplicateRequestTimeout</item>
+        <item>Fuzzing</item>
+        <item>Fastest</item>
     </string-array>
 
     <string name="default_player">Default Player</string>

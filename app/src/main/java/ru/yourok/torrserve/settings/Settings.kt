@@ -53,8 +53,6 @@ object Settings {
         set("host", hst)
     }
 
-
-    /////////////////////////////////////////////////////////
     fun getTorrPath(): String {
         var filesDir: File?
         filesDir = App.context.getExternalFilesDir(null)
@@ -69,7 +67,6 @@ object Settings {
             filesDir.mkdirs()
         return filesDir.path
     }
-/////////////////////////////////////////////////////////
 
     fun <T> get(name: String, def: T): T {
         try {

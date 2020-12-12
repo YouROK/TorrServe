@@ -19,5 +19,6 @@ data class BTSets(
     var ConnectionsLimit: Int,
     var DhtConnectionLimit: Int,
     var PeersListenPort: Int,
+    var Strategy: Int,
 )
 
