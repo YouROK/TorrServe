@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 
@@ -33,9 +34,16 @@ class TorrentViewModel : ViewModel() {
 
     private fun loadLink(link: String, title: String, poster: String, save: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            val torr = Api.addTorrent(link, title, poster, save)
-            withContext(Dispatchers.Main) {
-                data.value = torr
+            try {
+                val torr = Api.addTorrent(link, title, poster, save)
+                withContext(Dispatchers.Main) {
+                    data.value = torr
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    //TODO message
+                    App.Toast(e.message ?: return@withContext)
+                }
             }
         }
     }
