@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.play
 
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -125,15 +127,23 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvBuffer).text = txt
                     }
 
+                    val progress = findViewById<ProgressBar>(R.id.progressBar)
+                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        progress?.progressDrawable?.setColorFilter(
+                            ContextCompat.getColor(this.context, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                        progress?.indeterminateDrawable?.setColorFilter(
+                            ContextCompat.getColor(this.context, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                    }
                     if (prc > 0 && prc < 100) {
-                        findViewById<ProgressBar>(R.id.progressBar).isIndeterminate = false
+                        progress?.isIndeterminate = false
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            findViewById<ProgressBar>(R.id.progressBar).setProgress(prc.toInt(), true)
+                            progress?.setProgress(prc.toInt(), true)
                         else
-                            findViewById<ProgressBar>(R.id.progressBar).setProgress(prc.toInt())
-
+                            progress?.setProgress(prc.toInt())
                     } else
-                        findViewById<ProgressBar>(R.id.progressBar).isIndeterminate = true
+                        progress?.isIndeterminate = true
 
                     if (torr.stat < TorrentHelper.TorrentSTWorking)
                         findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE

@@ -72,7 +72,7 @@ class Notification : Service() {
             if (builder == null)
                 builder = NotificationCompat.Builder(this, channelId)
                     .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentText(getString(R.string.stat_server_is_running))
+                    .setContentText(getString(R.string.stat_running))
                     .setAutoCancel(false)
                     .setOngoing(true)
                     .setContentIntent(pendingIntent)

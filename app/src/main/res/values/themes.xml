@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme. https://material.io/develop/android/docs/getting-started -->
     <style name="Theme.TorrServer" parent="Theme.MaterialComponents">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -14,6 +14,8 @@
         <item name="colorOnSecondary">@color/colorAccent</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
+        <!-- Bottom bar color. -->
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
         <!-- Customize your theme here. -->
         <item name="android:listDivider">@drawable/gradient_divider_hg</item>
     </style>
@@ -33,7 +35,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:listDivider">@drawable/gradient_divider_hw</item>
-        <item name="android:windowBackground">@drawable/rc_background</item>
+        <item name="android:windowBackground">@drawable/rc_inset_dialog</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -44,5 +46,7 @@
         <item name="colorOnSecondary">@color/colorAccent</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
+        <!-- Bottom bar color. -->
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
     </style>
 </resources>

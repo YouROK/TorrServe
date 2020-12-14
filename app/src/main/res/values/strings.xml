@@ -13,7 +13,7 @@
 
     <string name="cache_size">Cache size (Megabytes)</string>
     <string name="preload_buffer_size">Preload Buffer Size (Megabytes)</string>
-    <string name="torrent_disconnect_timeout">Torrent disconnect timeout</string>
+    <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to save content</string>
     <string name="save_on_disk">Save on disk</string>
     <string name="enable_ipv6">Enable IPv6</string>
@@ -24,22 +24,27 @@
     <string name="disable_upload">Disable Upload</string>
     <string name="ecnryption">Ecnryption</string>
     <string name="connections_limit">Torrent connections (20–25 recommended on all Android devices)</string>
-    <string name="connections_dht_limit">Limit of DHT connections (0-unlimited, on versions up to 70th unlimited)</string>
+    <string name="connections_dht_limit">Limit of DHT connections (0-unlimited)</string>
     <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0-unlimited)</string>
     <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0-unlimited)</string>
     <string name="retrackers">Retrackers</string>
-    <string name="peers_listen_port">Peers listen port</string>
+    <string name="strategy">Request Strategy</string>
+    <string name="peers_listen_port">Peers listen port (0-default)</string>
     <string-array name="retracker_mode">
         <item>Default</item>
         <item>Add retrackers</item>
         <item>Remove retrackers</item>
         <item>Replace retrackers</item>
     </string-array>
-
     <string-array name="encryption_mode">
         <item>Enabled</item>
         <item>Disabled</item>
         <item>Force</item>
+    </string-array>
+    <string-array name="strategy_mode">
+        <item>DuplicateRequestTimeout</item>
+        <item>Fuzzing</item>
+        <item>Fastest</item>
     </string-array>
 
     <string name="default_player">Default Player</string>
@@ -87,8 +92,8 @@
     <string name="warn_error_download_server">Server Download Error</string>
     <string name="warn_no_localy_updates">No local updates</string>
 
+    <string name="stat_running">Service is running</string>
     <string name="server_stoped">Server stopped</string>
-    <string name="stat_server_is_running">Server is running</string>
     <string name="server_not_responding">Server is not responding</string>
     <string name="server_not_exists">No server</string>
     <string name="error_retrieving_settings">Error getting settings</string>

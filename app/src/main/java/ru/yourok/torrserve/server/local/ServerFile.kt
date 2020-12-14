@@ -34,11 +34,12 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
             return false
         synchronized(lock) {
             Shell.Config.verboseLogging(true)
+            val setspath = Settings.getTorrPath()
             val result: Boolean
             if (Settings.isRootStart())
-                result = Shell.su("killall -9 torrserver > ${path}.log 2>&1").exec().isSuccess
+                result = Shell.su("killall -9 torrserver > ${File(setspath, "torrserver.log").path} 2>&1").exec().isSuccess
             else
-                result = Shell.sh("killall -9 torrserver > ${path}.log 2>&1").exec().isSuccess
+                result = Shell.sh("killall -9 torrserver > ${File(setspath, "torrserver.log").path} 2>&1").exec().isSuccess
             //TODO проверить
             shell = null
             return result
