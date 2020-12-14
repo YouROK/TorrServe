@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
 
         setupNavigator()
-
         TorrService.start()
 
         if (savedInstanceState == null) {
