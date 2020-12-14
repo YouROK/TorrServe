@@ -34,7 +34,10 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView1"
-                tools:layout_editor_absoluteX="16dp" />
+                tools:layout_editor_absoluteX="16dp">
+
+                <requestFocus />
+            </EditText>
 
             <TextView
                 android:id="@+id/textView2"
