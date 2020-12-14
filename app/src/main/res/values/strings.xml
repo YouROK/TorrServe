@@ -11,6 +11,8 @@
     <string name="settings">Settings</string>
     <string name="exit">Exit</string>
 
+    <string name="share">Share</string>
+
     <string name="cache_size">Cache size (Megabytes)</string>
     <string name="preload_buffer_size">Preload Buffer Size (Megabytes)</string>
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
@@ -92,6 +94,7 @@
     <string name="warn_error_download_server">Server Download Error</string>
     <string name="warn_no_localy_updates">No local updates</string>
 
+    <string name="copy_to_clipboard">Copied to clipboard</string>
     <string name="stat_running">Service is running</string>
     <string name="server_stoped">Server stopped</string>
     <string name="server_not_responding">Server is not responding</string>

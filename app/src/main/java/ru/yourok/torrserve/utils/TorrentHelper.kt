@@ -58,6 +58,10 @@ object TorrentHelper {
         }
     }
 
+    fun getTorrentMagnet(torr: Torrent): String {
+        return "magnet:?xt=urn:btih:${torr.hash}&dn=${torr.title.urlEncode()}"
+    }
+
     fun getTorrentPlayLink(torr: Torrent, index: Int): String {
         val file = findFile(torr, index)
         val name = file?.let { File(it.path).name } ?: torr.title

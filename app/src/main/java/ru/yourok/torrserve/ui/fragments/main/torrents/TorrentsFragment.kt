@@ -41,6 +41,8 @@ class TorrentsFragment : TSFragment() {
                 vintent.putExtra("action", "play")
                 App.context.startActivity(vintent)
             }
+            lvTorrents.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
+            lvTorrents.setMultiChoiceModeListener(TorrentsActionBar(lvTorrents))
         }
         return vi
     }
