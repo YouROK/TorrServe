@@ -48,6 +48,7 @@ fun PlayActivity.error(err: ReturnError) {
 fun PlayActivity.addAndExit() {
     lifecycleScope.launch(Dispatchers.IO) {
         Api.addTorrent(torrentLink, torrentTitle, torrentPoster, true)
-        finish()
     }
+    torrentHash = ""
+    finish()
 }
