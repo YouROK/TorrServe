@@ -20,11 +20,9 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
             val logfile = File(setspath, "torrserver.log").path
             if (shell == null) {
                 if (Settings.isRootStart()) {
-                    shell = Shell.su("$path -k -d ${setspath} 1>${logfile} 2>&1")
+                    shell = Shell.su("$path -k -d ${setspath} 1>${logfile} 2>&1 &")
                 } else {
-                    val sh = Shell.newInstance("sh")
-                    shell = sh.newJob()
-                    shell?.add("$path -k -d ${setspath} 1>${logfile} 2>&1")
+                    shell = Shell.sh("$path -k -d ${setspath} 1>${logfile} 2>&1 &")
                 }
                 shell?.add("export GODEBUG=madvdontneed=1")
                 if (shell?.exec()!!.isSuccess)
