@@ -27,8 +27,6 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
                 shell?.add("export GODEBUG=madvdontneed=1")
                 if (shell?.exec()!!.isSuccess)
                     App.Toast(App.context.getString(R.string.server_started))
-                //TODO проверить
-                shell = null
             }
         }
     }
