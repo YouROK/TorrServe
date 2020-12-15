@@ -128,14 +128,14 @@ open class InfoFragment : TSFragment() {
                     }
 
                     val progress = findViewById<ProgressBar>(R.id.progressBar)
-                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    //if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
                         progress?.progressDrawable?.setColorFilter(
                             ContextCompat.getColor(this.context, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
                         )
                         progress?.indeterminateDrawable?.setColorFilter(
                             ContextCompat.getColor(this.context, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
                         )
-                    }
+                    //}
                     if (prc > 0 && prc < 100) {
                         progress?.isIndeterminate = false
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
