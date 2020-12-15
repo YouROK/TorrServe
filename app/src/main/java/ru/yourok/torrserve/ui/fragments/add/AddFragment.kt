@@ -35,7 +35,11 @@ class AddFragment : TSFragment() {
 
                 if (!link.isNullOrBlank())
                     lifecycleScope.launch(Dispatchers.IO) {
-                        Api.addTorrent(link, title, poster, true)
+                        try {
+                            Api.addTorrent(link, title, poster, true)
+                        } catch (e: Exception) {
+                            // TODO: notify user
+                        }
                     }
                 popBackStackFragment()
             }

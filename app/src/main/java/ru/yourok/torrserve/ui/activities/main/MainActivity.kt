@@ -111,9 +111,13 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
             lifecycleScope.launch(Dispatchers.IO) {
-                val list = Api.listTorrent()
-                list.forEach {
-                    Api.remTorrent(it.hash)
+                try {
+                    val list = Api.listTorrent()
+                    list.forEach {
+                        Api.remTorrent(it.hash)
+                    }
+                } catch (e: Exception) {
+                    // TODO: notify user
                 }
             }
             closeMenu()
