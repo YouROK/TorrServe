@@ -109,4 +109,5 @@
     <string name="show_banner_sum_off">Не показывать баннер при загрузке торрента</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
+    <string name="server_started">Сервер запущен</string>
 </resources>

@@ -56,7 +56,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     // root shell
-    implementation "com.github.topjohnwu.libsu:core:2.5.1"
+    implementation "com.github.topjohnwu.libsu:core:3.0.2"
+    implementation "com.github.topjohnwu.libsu:io:3.0.2"
 
     // glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'

@@ -29,6 +29,7 @@ class TorrService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.let {
             if (it.action != null) {
+                App.Toast(it.action, false)
                 when (it.action) {
                     ActionStart -> {
                         startServer()
@@ -55,13 +56,10 @@ class TorrService : Service() {
 
     private fun stopServer(forceClose: Boolean) {
         thread {
-            Log.d("TorrService", "stopServer(forceClose:" + forceClose + ")")
+            Log.d("TorrService", "stopServer(forceClose:$forceClose)")
             if (isLocal() && Api.echo().isNotEmpty())
                 Api.shutdown()
-            if (serverFile.stop())
-                Handler(this.getMainLooper()).post {
-                    App.Toast(getString(R.string.server_stoped))
-                }
+            serverFile.stop()
             notification.doUnbindService(this)
             if (forceClose) {
                 thread {

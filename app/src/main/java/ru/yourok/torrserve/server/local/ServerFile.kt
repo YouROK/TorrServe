@@ -1,6 +1,8 @@
 package ru.yourok.torrserve.server.local
 
 import com.topjohnwu.superuser.Shell
+import ru.yourok.torrserve.BuildConfig
+import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.settings.Settings
 import java.io.File
@@ -13,36 +15,40 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         if (!exists())
             return
         synchronized(lock) {
-            Shell.Config.verboseLogging(true)
+            Shell.Config.verboseLogging(BuildConfig.DEBUG)
             val setspath = Settings.getTorrPath()
+            val logfile = File(setspath, "torrserver.log").path
             if (shell == null) {
                 if (Settings.isRootStart()) {
-                    shell = Shell.su("${path} -k -d ${setspath} > ${File(setspath, "torrserver.log").path} 2>&1")
+                    shell = Shell.su("$path -k -d ${setspath} 1>${logfile} 2>&1")
                 } else {
                     val sh = Shell.newInstance("sh")
                     shell = sh.newJob()
-                    shell?.add("${path} -k -d ${setspath} > ${File(setspath, "torrserver.log").path} 2>&1")
+                    shell?.add("$path -k -d ${setspath} 1>${logfile} 2>&1")
                 }
                 shell?.add("export GODEBUG=madvdontneed=1")
-                shell?.submit()
+                if (shell?.exec()!!.isSuccess)
+                    App.Toast(App.context.getString(R.string.server_started))
             }
         }
     }
 
-    fun stop(): Boolean {
+    fun stop() {
         if (!exists())
-            return false
+            return
         synchronized(lock) {
-            Shell.Config.verboseLogging(true)
+            Shell.Config.verboseLogging(BuildConfig.DEBUG)
             val setspath = Settings.getTorrPath()
-            val result: Boolean
-            if (Settings.isRootStart())
-                result = Shell.su("killall -9 torrserver > ${File(setspath, "torrserver.log").path} 2>&1").exec().isSuccess
+            val logfile = File(setspath, "torrserver.log").path
+            val result: Shell.Result = if (Settings.isRootStart())
+                Shell.su("killall -9 torrserver 1>${logfile} 2>&1").exec()
             else
-                result = Shell.sh("killall -9 torrserver > ${File(setspath, "torrserver.log").path} 2>&1").exec().isSuccess
+                Shell.sh("killall -9 torrserver 1>${logfile} 2>&1").exec()
+            if (result.isSuccess)
+                App.Toast(App.context.getString(R.string.server_stoped))
             //TODO проверить
             shell = null
-            return result
         }
     }
+
 }
