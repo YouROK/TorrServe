@@ -25,6 +25,7 @@ object UpdaterServer {
         var version = ""
         var host = ""
         if (TorrService.isLocal()) {
+            TorrService.stop()
             TorrService.start()
             withContext(Dispatchers.IO) {
                 version = Api.echo()

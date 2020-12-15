@@ -29,7 +29,7 @@ class TorrService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.let {
             if (it.action != null) {
-                App.Toast(it.action, false)
+                //App.Toast(it.action, false)
                 when (it.action) {
                     ActionStart -> {
                         startServer()
