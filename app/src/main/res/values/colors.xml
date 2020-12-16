@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="darkBrown">#2a2122</color>
+    <color name="tv_white">#eeeeee</color>
     <color name="colorPrimary">#ffa724</color><!--3fb57a-->
     <color name="colorPrimaryDark">#ff7e00</color>
     <color name="colorAccent">#3fb57a</color>

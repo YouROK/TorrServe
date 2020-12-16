@@ -63,6 +63,7 @@
 
     <string name="torrent">Torrent</string>
     <string name="title">Title</string>
+    <string name="poster">Poster</string>
     <string name="poster_link">Poster link</string>
 
     <string name="local_ip">Local IP</string>
