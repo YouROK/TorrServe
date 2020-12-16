@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         val data = viewModel.get()
         data.observe(this) {
             findViewById<TextView>(R.id.tvStatus)?.text = it
+            findViewById<TextView>(R.id.tvCurrentHost)?.text = Settings.getHost()
         }
     }
 
@@ -85,9 +86,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigator() {
-        val tvCurrHost = findViewById<TextView>(R.id.tvCurrentHost)
-        tvCurrHost.text = Settings.getHost()
-
         findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
             val currFragment = supportFragmentManager?.findFragmentById(R.id.container)
             if (currFragment is TorrentsFragment)
