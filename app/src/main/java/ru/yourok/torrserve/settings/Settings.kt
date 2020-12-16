@@ -36,6 +36,9 @@ object Settings {
     fun showBanner(): Boolean = get("show_banner", true)
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
+    fun getTheme(): String = get("theme", "dark")
+    fun setTheme(v: String) = set("theme", v)
+
     // "http://192.168.43.46:8090"
     // "http://127.0.0.1:8090"
     // "http://10.0.0.10:8090"

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="tv_white">#eeeeee</color>
+    <color name="tv_white">#EEE</color>
     <color name="colorPrimary">#ffa724</color><!--3fb57a-->
     <color name="colorPrimaryDark">#ff7e00</color>
     <color name="colorAccent">#3fb57a</color>
-    <color name="lighter_gray">#ccc</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorScrimWhite">#22ffffff</color>
+    <color name="lighter_gray">#CCC</color>
     <color name="darker_gray">#2b2b2b</color>
     <color name="colorHost">#ffa724</color>
 </resources>
-
-

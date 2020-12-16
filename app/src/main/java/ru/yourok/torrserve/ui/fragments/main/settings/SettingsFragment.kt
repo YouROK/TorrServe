@@ -113,6 +113,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 ps?.removePreference(this)
         }
 
+        findPreference<ListPreference>("app_theme")?.apply {
+            summary = Settings.getTheme()
+            setOnPreferenceChangeListener { preference, newValue ->
+                Settings.setTheme(newValue.toString())
+                this.summary = newValue.toString()
+                true
+            }
+        }
+
         findPreference<Preference>("show_battery_save")?.apply {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 val intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)

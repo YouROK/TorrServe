@@ -52,6 +52,18 @@
     <string name="default_player">Default Player</string>
     <string name="choose_player">Choose Player</string>
 
+    <string name="app_theme_title">App Theme</string>
+    <string-array name="app_theme">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Black</item>
+    </string-array>
+    <string-array name="app_theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>black</item>
+    </string-array>
+
     <string name="add_play">Add &amp; Play</string>
     <string name="play">Play</string>
 

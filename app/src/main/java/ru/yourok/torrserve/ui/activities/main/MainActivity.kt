@@ -31,14 +31,18 @@ import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
 import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.Premissions
+import ru.yourok.torrserve.utils.ThemeUtil
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StatusViewModel
+    private val themeUtil = ThemeUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Premissions.requestPermissionWithRationale(this)
+        themeUtil.onCreate(this)
         setContentView(R.layout.main_activity)
 
         viewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
@@ -58,6 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        themeUtil.onResume(this)
         updateStatus()
     }
 

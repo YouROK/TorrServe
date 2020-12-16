@@ -47,6 +47,12 @@
         android:summaryOff="@string/show_banner_sum_off"
         android:defaultValue="true" />
 
+    <ListPreference
+        app:key="app_theme"
+        app:title="@string/app_theme_title"
+        app:entries="@array/app_theme"
+        app:entryValues="@array/app_theme_values"/>
+
     <Preference
         app:key="show_battery_save"
         app:title="@string/show_battery_save_title"
