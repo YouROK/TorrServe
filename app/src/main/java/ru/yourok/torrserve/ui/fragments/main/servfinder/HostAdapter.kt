@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.adapters
+package ru.yourok.torrserve.ui.fragments.main.servfinder
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerIp
 
 class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     val hosts = mutableListOf<ServerIp>()
@@ -52,7 +51,7 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HostAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val vi = LayoutInflater.from(parent.context).inflate(R.layout.host_item, parent, false)
         return ViewHolder(vi, this)
     }
