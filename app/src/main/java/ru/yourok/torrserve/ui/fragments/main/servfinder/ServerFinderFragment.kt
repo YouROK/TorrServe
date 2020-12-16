@@ -120,10 +120,12 @@ class ServerFinderFragment : TSFragment() {
         viewModel = ViewModelProvider(this@ServerFinderFragment).get(ServerFinderViewModel::class.java)
         (viewModel as ServerFinderViewModel).start().observe(this@ServerFinderFragment) {
             if (it.stat == 0) {
+                view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.VISIBLE
                 view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it.servIP.host
             } else if (it.stat == 1) {
                 hostAdapter.add(it.servIP)
             } else {
+                view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.INVISIBLE
                 view?.findViewById<TextView>(R.id.tvFindHosts)?.text = ""
                 view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = true
                 lifecycleScope.launch {

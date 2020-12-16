@@ -61,13 +61,15 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvFindHostsPrefix"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
                 android:paddingEnd="6dp"
                 android:text="@string/find"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvFindHosts"
@@ -78,12 +80,12 @@
 
         <EditText
             android:id="@+id/etHost"
-            android:inputType="textUri"
-            android:hint="http://127.0.0.1:8090"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="6dp"
+            android:hint="http://127.0.0.1:8090"
+            android:inputType="textUri"
             android:textColor="@color/colorHost" />
 
         <Button
