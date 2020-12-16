@@ -131,6 +131,7 @@ class ServerSettingsFragment : TSFragment() {
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {
                         Api.setSettings(sets)
+                        App.Toast(R.string.done_sending_settings)
                     }
                 }
             }
