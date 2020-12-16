@@ -19,9 +19,9 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#eee" />
+            android:textColor="@color/tv_white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,18 +33,18 @@
                 android:layout_width="76dp"
                 android:layout_height="114dp"
                 android:layout_marginTop="6dp"
-                android:layout_marginRight="6dp"
+                android:layout_marginEnd="6dp"
                 android:layout_marginBottom="6dp"
+                android:contentDescription="@string/poster"
                 android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginBottom="6dp"
                 android:gravity="top"
                 android:orientation="vertical">
-
 
                 <TextView
                     android:id="@+id/tvFileName"
@@ -60,9 +60,11 @@
                     android:layout_marginTop="5dp" />
 
                 <TextView
-                    android:id="@+id/tvBuffer"
+                    android:id="@+id/tvInfo"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvPeers"
@@ -75,10 +77,11 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:id="@+id/tvInfo"
+                    android:id="@+id/tvBuffer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
         </LinearLayout>
 
         <ProgressBar
@@ -86,9 +89,8 @@
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/colorAccent"
-            android:indeterminateTintMode="src_atop" />
+            android:indeterminate="true" />
 
     </LinearLayout>
+
 </LinearLayout>
