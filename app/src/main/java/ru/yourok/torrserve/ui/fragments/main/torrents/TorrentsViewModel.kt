@@ -44,6 +44,7 @@ class TorrentsViewModel : ViewModel() {
                     delay(1000)
                 } catch (e: Exception) {
                     delay(2000)
+                    withContext(Dispatchers.Main) { data?.value = emptyList() }
                 }
             }
         }
