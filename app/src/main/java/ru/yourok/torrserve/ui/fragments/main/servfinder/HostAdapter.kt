@@ -7,66 +7,46 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.server.finder.FinderServer
-import ru.yourok.torrserve.server.finder.ServerIp
-import ru.yourok.torrserve.server.local.ServerFile
-import ru.yourok.torrserve.settings.Settings
-import kotlin.concurrent.thread
+import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerIp
 
-class HostAdapter(val onClick: (host: String) -> Unit) : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
-
-    val finder = FinderServer()
+class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     val hosts = mutableListOf<ServerIp>()
 
-    fun update(onFinish: () -> Unit): List<String> {
-        val ipLst = finder.getLocalIPs()
-        if (hosts.isNotEmpty()) {
-            notifyItemRangeRemoved(0, hosts.size)
-            hosts.clear()
+    var onClick: ((String) -> Unit)? = null
+
+    fun insert(servIp: ServerIp) {
+        try {
+            if (hosts.find { it.host == servIp.host } == null) {
+                hosts.add(0, servIp)
+                notifyItemInserted(0)
+            }
+        } catch (e: Exception) {
         }
-        thread {
-            if (ServerFile().exists()) {
-                hosts.add(0, ServerIp("http://127.0.0.1:8090", App.context.getString(R.string.local_server)))
-                try {
-                    notifyItemInserted(0)
-                } catch (e: Exception) {
-                }
-            }
-
-            //Add saved
-            val savedHosts = Settings.getHosts()
-
-            savedHosts.forEach {
-                if (!hosts.contains(ServerIp(it, ""))) {
-                    hosts.add(ServerIp(it, "${App.context.getString(R.string.saved_server)}")) // **
-                    if (hosts.isEmpty())
-                        notifyItemInserted(0)
-                    else
-                        notifyItemInserted(hosts.size - 1)
-                }
-            }
-
-            for (ip in ipLst) {
-                finder.findServers(ip) {
-                    if (!hosts.contains(it)) {
-                        hosts.add(it)
-                        if (hosts.isEmpty())
-                            notifyItemInserted(0)
-                        else
-                            notifyItemInserted(hosts.size - 1)
-                    }
-                }
-            }
-
-            onFinish()
-        }
-        return ipLst.map { it.address.hostAddress }
     }
+
+    fun add(servIp: ServerIp) {
+        try {
+            if (hosts.find { it.host == servIp.host } == null) {
+                hosts.add(servIp)
+                notifyItemInserted(hosts.size - 1)
+            }
+        } catch (e: Exception) {
+        }
+    }
+
+    fun clear() {
+        try {
+            hosts.clear()
+            notifyDataSetChanged()
+        } catch (e: Exception) {
+        }
+    }
+
 
     class ViewHolder(val view: View, val adapter: HostAdapter) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
-                adapter.onClick(adapter.hosts[adapterPosition].host)
+                adapter.onClick?.invoke(adapter.hosts[adapterPosition].host)
             }
         }
     }

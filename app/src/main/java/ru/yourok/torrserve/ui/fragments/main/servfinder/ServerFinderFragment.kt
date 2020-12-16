@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,31 +25,30 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
+import java.net.Inet4Address
+import java.net.InterfaceAddress
+import java.net.NetworkInterface
+import java.util.*
 
 class ServerFinderFragment : TSFragment() {
+
+    private val hostAdapter = HostAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        lifecycleScope.launch {
-            showProgress()
-        }
-
         val vi = inflater.inflate(R.layout.server_finder_fragment, container, false)
 
         vi.findViewById<RecyclerView>(R.id.rvHosts)?.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = HostAdapter {
-                vi.findViewById<EditText>(R.id.etHost)?.setText(it)
-                setHost()
-            }
+            adapter = hostAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
 
         vi.findViewById<Button>(R.id.btnFindHosts)?.setOnClickListener {
-            lifecycleScope.launch {
+            lifecycleScope.launch(Dispatchers.Default) {
                 update()
             }
         }
@@ -68,7 +68,7 @@ class ServerFinderFragment : TSFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Default) {
             update()
         }
     }
@@ -106,15 +106,47 @@ class ServerFinderFragment : TSFragment() {
     }
 
     private suspend fun update() = withContext(Dispatchers.Main) {
-        showProgress()
         view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
-        val currHosts = (view?.findViewById<RecyclerView>(R.id.rvHosts)?.adapter as HostAdapter?)?.update {
-            lifecycleScope.launch(Dispatchers.Main) {
-                hideProgress()
+        showProgress()
+        view?.findViewById<TextView>(R.id.tvCurrentHost)?.text = getLocalIP()
+        hostAdapter.clear()
+        // add local
+        hostAdapter.add(ServerIp("http://127.0.0.1:8090", App.context.getString(R.string.local_server)))
+        // add saved
+        Settings.getHosts().forEach {
+            hostAdapter.add(ServerIp(it, "${App.context.getString(R.string.saved_server)}"))
+        }
+        // find all
+        viewModel = ViewModelProvider(this@ServerFinderFragment).get(ServerFinderViewModel::class.java)
+        (viewModel as ServerFinderViewModel).start().observe(this@ServerFinderFragment) {
+            if (it.stat == 0) {
+                view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it.servIP.host
+            } else if (it.stat == 1) {
+                hostAdapter.add(it.servIP)
+            } else {
+                view?.findViewById<TextView>(R.id.tvFindHosts)?.text = ""
                 view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = true
+                lifecycleScope.launch {
+                    this@ServerFinderFragment.hideProgress()
+                }
             }
         }
+    }
 
-        view?.findViewById<TextView>(R.id.tvCurrentHost)?.text = currHosts?.joinToString(", ") ?: return@withContext
+    private fun getLocalIP(): String {
+        val interfaces: Enumeration<NetworkInterface> = NetworkInterface.getNetworkInterfaces()
+        val ret = mutableListOf<InterfaceAddress>()
+        while (interfaces.hasMoreElements()) {
+            val networkInterface: NetworkInterface = interfaces.nextElement()
+            if (networkInterface.isLoopback())
+                continue
+            for (interfaceAddress in networkInterface.getInterfaceAddresses()) {
+                val ip = interfaceAddress.getAddress()
+                if (ip is Inet4Address) {
+                    ret.add(interfaceAddress)
+                }
+            }
+        }
+        return ret.map { it.address.hostAddress }.joinToString(", ")
     }
 }
