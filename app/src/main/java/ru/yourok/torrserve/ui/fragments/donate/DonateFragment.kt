@@ -53,6 +53,7 @@ class DonateFragment : TSFragment() {
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.data = Uri.parse("https://t.me/torrserve")
             startActivitySafely(intent)
         }
@@ -70,6 +71,7 @@ class DonateFragment : TSFragment() {
                 intent.action = Intent.ACTION_VIEW
                 intent.addCategory(Intent.CATEGORY_BROWSABLE)
                 intent.data = Uri.parse("https://t.me/torrserve")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivitySafely(intent)
             }
         }
