@@ -14,7 +14,7 @@
     <string name="share">Share</string>
 
     <string name="cache_size">Cache size (Megabytes)</string>
-    <string name="preload_buffer_size">Preload Buffer Size (Megabytes)</string>
+    <string name="preload_size">Preload size (Megabytes)</string>
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to save content</string>
     <string name="save_on_disk">Save on disk</string>

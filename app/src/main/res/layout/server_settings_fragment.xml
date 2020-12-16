@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:labelFor="@+id/etPreloadBufferSize"
                 android:paddingStart="5dp"
-                android:text="@string/preload_buffer_size" />
+                android:text="@string/preload_size" />
 
             <EditText
                 android:id="@+id/etPreloadBufferSize"

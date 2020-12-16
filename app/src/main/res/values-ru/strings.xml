@@ -10,7 +10,7 @@
     <string name="exit">Выход</string>
     <string name="share">Отправить</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
-    <string name="preload_buffer_size">Размер буфера предварительной загрузки (Мегабайты)</string>
+    <string name="preload_size">Размер буфера предварительной загрузки (Мегабайты)</string>
     <string name="torrent_disconnect_timeout">Тайм-аут отключения торрента (секунды)</string>
     <string name="save_content_path">Путь для сохранения содержимого</string>
     <string name="save_on_disk">Сохранить на диске</string>
