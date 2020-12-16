@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. https://material.io/develop/android/docs/getting-started -->
-    <style name="Theme.TorrServer" parent="Theme.MaterialComponents">
+    <style name="Theme.TorrServe.Dark" parent="Theme.MaterialComponents">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/darker_gray</item>
@@ -12,6 +12,9 @@
         <item name="colorSecondary">@color/colorPrimary</item>
         <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnSecondary">@color/colorAccent</item>
+        <!-- Accent Override -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent" tools:targetApi="l">@color/colorAccent</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
         <!-- Bottom bar color. -->
@@ -19,37 +22,43 @@
         <!-- Customize your theme here. -->
         <item name="android:listDivider">@drawable/gradient_divider_hg</item>
     </style>
-    <style name="Theme.TorrServer.Black" parent="Theme.TorrServer">
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+    <!-- Black Theme -->
+    <style name="Theme.TorrServe.Black" parent="Theme.TorrServe.Dark">
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorBlack</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent" tools:targetApi="l">@color/colorPrimaryDark</item>
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar</item>
         <item name="android:strokeColor" tools:targetApi="l">@color/colorScrimWhite</item>
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:colorBackground">@color/colorBlack</item>
-        <item name="colorBackgroundFloating">@color/colorBlack</item>
+        <item name="colorBackgroundFloating">@color/colorBlackOpaque</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorBlackOpaque</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/colorBlackOpaque</item>
     </style>
-    <style name="Theme.TorrServer.Light" parent="Theme.MaterialComponents.Light">
+    <!-- Light Theme -->
+    <style name="Theme.TorrServe.Light" parent="Theme.MaterialComponents.Light">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowBackground">@color/lighter_gray</item>
-        <!-- Primary brand color. -->
+        <item name="android:windowBackground">@color/tv_white</item>
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/colorAccent</item>
-        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorPrimaryDark</item>
         <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnSecondary">@color/colorAccent</item>
-        <!-- Status bar color. -->
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent" tools:targetApi="l">@color/colorPrimaryDark</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
-        <!-- Bottom bar color. -->
         <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
     </style>
+    <!-- DayNight Theme -->
+    <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
 
     <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
         <item name="android:layout">@layout/head_preference_category</item>
     </style>
+
     <style name="HeadPreferenceCategoryText" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textAllCaps">true</item>

@@ -24,10 +24,10 @@ class ThemeUtil {
             get() {
                 val theme = getTheme()
                 return when (theme) {
-                    "light" -> R.style.Theme_TorrServer_Light
-                    "dark" -> R.style.Theme_TorrServer
-                    "black" -> R.style.Theme_TorrServer_Black
-                    else -> R.style.Theme_TorrServer
+                    "light" -> R.style.Theme_TorrServe_Light
+                    "dark" -> R.style.Theme_TorrServe_Dark
+                    "black" -> R.style.Theme_TorrServe_Black
+                    else -> R.style.Theme_TorrServe_DayNight
                 }
             }
         val isLightTheme: Boolean

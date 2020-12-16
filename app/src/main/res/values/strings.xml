@@ -54,11 +54,13 @@
 
     <string name="app_theme_title">App Theme</string>
     <string-array name="app_theme">
+        <item>Auto</item>
         <item>Light</item>
         <item>Dark</item>
         <item>Black</item>
     </string-array>
     <string-array name="app_theme_values">
+        <item>auto</item>
         <item>light</item>
         <item>dark</item>
         <item>black</item>

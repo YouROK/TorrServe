@@ -43,6 +43,7 @@
     <string name="choose_player">Всегда спрашивать</string>
     <string name="app_theme_title">Тема приложения</string>
     <string-array name="app_theme">
+        <item>Системная</item>
         <item>Светлая</item>
         <item>Тёмная</item>
         <item>Чёрная</item>

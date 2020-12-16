@@ -24,16 +24,16 @@
         android:required="false" />
 
     <application
+        android:name=".app.App"
         android:allowBackup="true"
+        android:banner="@drawable/ic_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
-        android:banner="@drawable/ic_banner"
-        android:name=".app.App"
         android:networkSecurityConfig="@xml/net_security"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TorrServer">
-        <activity android:name="ru.yourok.torrserve.ui.activities.main.MainActivity">
+        android:theme="@style/Theme.TorrServe.DayNight">
+        <activity android:name="ru.yourok.torrserve.ui.activities.main.MainActivity" android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -56,8 +56,8 @@
         </activity>
 
         <activity
-            android:theme="@style/PlayDialog"
-            android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity">
+            android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity"
+            android:theme="@style/PlayDialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
