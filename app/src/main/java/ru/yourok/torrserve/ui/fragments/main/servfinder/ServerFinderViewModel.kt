@@ -9,17 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.utils.Http
-import java.net.Inet4Address
-import java.net.InterfaceAddress
-import java.net.NetworkInterface
+import java.net.*
 import java.nio.charset.Charset
 import java.util.*
-
-////////
-// stat
-// 0 - check
-// 1 - found
-data class SFStat(val stat: Int, val servIP: ServerIp)
 
 data class ServerIp(val host: String, val version: String) {
     override fun equals(other: Any?): Boolean {
@@ -31,16 +23,30 @@ data class ServerIp(val host: String, val version: String) {
 
 class ServerFinderViewModel : ViewModel() {
     private var isWork = false
-    var data: MutableLiveData<SFStat>? = null
+    private var stats: MutableLiveData<String>? = null
+    private var servers: MutableLiveData<ServerIp>? = null
+    private var onFinish: MutableLiveData<Boolean>? = null
 
-    fun start(): LiveData<SFStat> {
-        if (data == null) {
-            data = MutableLiveData()
-        }
-        viewModelScope.launch {
-            update()
-        }
-        return data!!
+    fun getStats(): LiveData<String> {
+        if (stats == null)
+            stats = MutableLiveData()
+        return stats!!
+    }
+
+    fun getServers(): MutableLiveData<ServerIp> {
+        if (servers == null)
+            servers = MutableLiveData()
+        return servers!!
+    }
+
+    fun getOnFinish(): MutableLiveData<Boolean> {
+        if (onFinish == null)
+            onFinish = MutableLiveData()
+        return onFinish!!
+    }
+
+    fun find() {
+        update()
     }
 
     override fun onCleared() {
@@ -55,6 +61,9 @@ class ServerFinderViewModel : ViewModel() {
                     return@launch
             }
             isWork = true
+            withContext(Dispatchers.Main) {
+                onFinish?.value = false
+            }
             try {
                 val ifaces = getIFaces()
                 ifaces.forEach { iface ->
@@ -69,10 +78,10 @@ class ServerFinderViewModel : ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            withContext(Dispatchers.Main) {
-                data?.value = SFStat(3, ServerIp("", ""))
-            }
             isWork = false
+            withContext(Dispatchers.Main) {
+                onFinish?.value = true
+            }
         }
     }
 
@@ -85,19 +94,25 @@ class ServerFinderViewModel : ViewModel() {
 
                 if ("$ipRange$i" == local)
                     continue
-                try {
-                    withContext(Dispatchers.Main) {
-                        data?.value = SFStat(0, ServerIp(checkHost, ""))
-                    }
-                    val conn = Http(Uri.parse("$checkHost/echo"))
-                    conn.setTimeout(1000)
-                    val version = conn.getInputStream()?.bufferedReader(Charset.defaultCharset())?.readText() ?: ""
-                    if (version.isNotEmpty() && version.startsWith("1.2."))
-                        withContext(Dispatchers.Main) {
-                            data?.value = SFStat(1, ServerIp(checkHost, version))
+                withContext(Dispatchers.Main) {
+                    stats?.value = checkHost
+                }
+                viewModelScope.launch(Dispatchers.IO) {
+                    try {
+                        val conn = Http(Uri.parse("$checkHost/echo"))
+                        conn.setTimeout(1000)
+                        conn.connect()
+                        conn.getInputStream()?.apply {
+                            val version = bufferedReader(Charset.defaultCharset())?.readText() ?: ""
+                            if (version.isNotEmpty() && version.startsWith("1.2."))
+                                withContext(Dispatchers.Main) {
+                                    servers?.value = ServerIp(checkHost, version)
+                                }
+
+                            close()
                         }
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                    } catch (e: Exception) {
+                    }
                 }
             }
         }

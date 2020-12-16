@@ -73,8 +73,11 @@ object TorrentHelper {
     }
 
     suspend fun preloadTorrent(torr: Torrent, index: Int) = withContext(Dispatchers.IO) {
-        val link = getTorrentPreloadLink(torr, index)
-        Net.get(link)
+        try {
+            val link = getTorrentPreloadLink(torr, index)
+            Net.get(link)
+        } catch (e: Exception) {
+        }
     }
 
     fun findFile(torrent: Torrent, index: Int): FileStat? {

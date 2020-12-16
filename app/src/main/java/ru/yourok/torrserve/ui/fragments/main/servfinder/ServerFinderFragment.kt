@@ -18,7 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.adapters.HostAdapter
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.local.ServerFile
@@ -47,6 +46,10 @@ class ServerFinderFragment : TSFragment() {
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
 
+        hostAdapter.onClick = {
+            vi.findViewById<EditText>(R.id.etHost)?.setText(it)
+        }
+
         vi.findViewById<Button>(R.id.btnFindHosts)?.setOnClickListener {
             lifecycleScope.launch(Dispatchers.Default) {
                 update()
@@ -70,6 +73,13 @@ class ServerFinderFragment : TSFragment() {
         super.onActivityCreated(savedInstanceState)
         lifecycleScope.launch(Dispatchers.Default) {
             update()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        lifecycleScope.launch {
+            hideProgress()
         }
     }
 
@@ -118,13 +128,15 @@ class ServerFinderFragment : TSFragment() {
         }
         // find all
         viewModel = ViewModelProvider(this@ServerFinderFragment).get(ServerFinderViewModel::class.java)
-        (viewModel as ServerFinderViewModel).start().observe(this@ServerFinderFragment) {
-            if (it.stat == 0) {
-                view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.VISIBLE
-                view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it.servIP.host
-            } else if (it.stat == 1) {
-                hostAdapter.add(it.servIP)
-            } else {
+        (viewModel as ServerFinderViewModel).getStats().observe(this@ServerFinderFragment) {
+            view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.VISIBLE
+            view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it
+        }
+        (viewModel as ServerFinderViewModel).getServers().observe(this@ServerFinderFragment) {
+            hostAdapter.add(it)
+        }
+        (viewModel as ServerFinderViewModel).getOnFinish().observe(this@ServerFinderFragment) {
+            if (it) {
                 view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.INVISIBLE
                 view?.findViewById<TextView>(R.id.tvFindHosts)?.text = ""
                 view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = true
@@ -133,6 +145,7 @@ class ServerFinderFragment : TSFragment() {
                 }
             }
         }
+        (viewModel as ServerFinderViewModel).find()
     }
 
     private fun getLocalIP(): String {
