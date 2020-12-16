@@ -13,7 +13,7 @@ android {
         // for older androids
         multiDexEnabled true
         versionCode 86
-        versionName "1.2.86_7"
+        versionName "1.2.86_8"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
