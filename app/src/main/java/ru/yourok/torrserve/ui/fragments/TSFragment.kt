@@ -2,7 +2,6 @@ package ru.yourok.torrserve.ui.fragments
 
 import android.view.View
 import android.widget.ProgressBar
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -32,12 +31,12 @@ abstract class TSFragment : Fragment() {
         if (activity != null && isActive) {
             val progress = activity?.findViewById<ProgressBar>(R.id.progressBar)
             //if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-                progress?.progressDrawable?.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
-                )
-                progress?.indeterminateDrawable?.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
-                )
+            progress?.progressDrawable?.setColorFilter(
+                ContextCompat.getColor(requireContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
+            )
+            progress?.indeterminateDrawable?.setColorFilter(
+                ContextCompat.getColor(requireContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
+            )
             //}
             progress?.visibility = View.VISIBLE
         }
