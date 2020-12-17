@@ -53,13 +53,13 @@
     <string name="choose_player">Choose Player</string>
 
     <string name="app_theme_title">App Theme</string>
-    <string-array name="app_theme">
+    <string-array name="app_theme_entries">
         <item>Auto</item>
         <item>Light</item>
         <item>Dark</item>
         <item>Black</item>
     </string-array>
-    <string-array name="app_theme_values">
+    <string-array name="app_theme_entries_values">
         <item>auto</item>
         <item>light</item>
         <item>dark</item>

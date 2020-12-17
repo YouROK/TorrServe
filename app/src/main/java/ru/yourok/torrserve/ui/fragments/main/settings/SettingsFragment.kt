@@ -114,10 +114,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<ListPreference>("app_theme")?.apply {
-            summary = Settings.getTheme()
             setOnPreferenceChangeListener { preference, newValue ->
                 Settings.setTheme(newValue.toString())
-                //this.summary = newValue.toString()
                 requireActivity().recreate()
                 true
             }
