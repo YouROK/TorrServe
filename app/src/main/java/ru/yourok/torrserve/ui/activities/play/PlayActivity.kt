@@ -2,7 +2,6 @@ package ru.yourok.torrserve.ui.activities.play
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.coroutines.runBlocking
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.AD
@@ -32,12 +31,13 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //// DayNight Theme
+        //// DayNight Theme // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         val apptheme = Settings.getTheme()
         when (apptheme) {
-            "dark", "black" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            "dark" -> setTheme(R.style.PlayDialog_Dark)
+            "light" -> setTheme(R.style.PlayDialog_Light)
+            "black" -> setTheme(R.style.PlayDialog_Black)
+            else -> setTheme(R.style.PlayDialog_DayNight)
         }
         setContentView(R.layout.play_activity)
         setWindow()

@@ -61,17 +61,54 @@
     </style>
     <!-- DayNight Theme -->
     <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
-
-    <style name="MainMenuTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
+    <!-- Dark Style -->
+    <style name="PlayDialog.Dark" parent="Theme.MaterialComponents.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:listDivider">@drawable/gradient_divider_hw</item>
+        <item name="android:windowBackground">@drawable/rc_inset_dialog</item>
+        <!-- attr colors -->
+        <item name="colorBG">@color/darker_gray</item>
+        <!-- colors -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnSecondary">@color/colorAccent</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
     </style>
-
+    <!-- Light Style -->
+    <style name="PlayDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:listDivider">@drawable/gradient_divider_hw</item>
+        <item name="android:windowBackground">@drawable/rc_inset_dialog</item>
+        <!-- attr colors -->
+        <item name="colorBG">@color/tv_white</item>
+        <!-- colors -->
+        <item name="colorPrimary">@color/wine_red</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/colorAccent</item>
+        <item name="colorSecondary">@color/wine_red</item>
+        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnSecondary">@color/colorAccent</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
+    </style>
+    <!-- Black Style -->
+    <style name="PlayDialog.Black" parent="PlayDialog.Dark">
+        <!-- attr colors -->
+        <item name="colorBG">@color/colorBlackOpaque</item>
+    </style>
+    <!-- DayNight Style -->
+    <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
+    <!-- Head Preference Category -->
     <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
         <item name="android:layout">@layout/head_preference_category</item>
     </style>
-
+    <!-- Head Preference Category Text -->
     <style name="HeadPreferenceCategoryText" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textAllCaps">true</item>
@@ -80,41 +117,10 @@
         <item name="android:paddingStart">16.0dip</item>
         <item name="android:paddingBottom">16.0dip</item>
     </style>
-
-    <style name="PlayDialog.Dark" parent="Theme.MaterialComponents.Dialog">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:listDivider">@drawable/gradient_divider_hw</item>
-        <item name="android:windowBackground">@drawable/rc_inset_dialog</item>
-        <!-- attr colors -->
-        <item name="colorBG">@color/darker_gray</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorAccent</item>
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnSecondary">@color/colorAccent</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
+    <!-- Main Menu -->
+    <style name="MainMenuTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
-
-    <style name="PlayDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:listDivider">@drawable/gradient_divider_hw</item>
-        <item name="android:windowBackground">@drawable/rc_inset_dialog</item>
-        <!-- attr colors -->
-        <item name="colorBG">@color/tv_white</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorAccent</item>
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnSecondary">@color/colorAccent</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
-    </style>
-    <!-- DayNight Style -->
-    <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
-
 </resources>
