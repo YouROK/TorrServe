@@ -64,6 +64,20 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:labelFor="@+id/etPreloadTorrent"
+                android:paddingStart="5dp"
+                android:text="@string/torrent_preload" />
+
+            <EditText
+                android:id="@+id/etPreloadTorrent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:labelFor="@+id/etDisconnectTimeout"
                 android:paddingStart="5dp"
                 android:text="@string/torrent_disconnect_timeout" />

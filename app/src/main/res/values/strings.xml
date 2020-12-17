@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">TorrServe β</string>
+    <string name="app_name" translatable="false">TorrServe Θ</string>
 
     <string name="add">Add</string>
     <string name="delete">Delete</string>
@@ -14,7 +14,8 @@
     <string name="share">Share</string>
 
     <string name="cache_size">Cache size (Megabytes)</string>
-    <string name="preload_size">Preload size (Megabytes)</string>
+    <string name="preload_size">Preload before start (Megabytes)</string>
+    <string name="torrent_preload">Preload torrent (32%-100%)</string>
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to save content</string>
     <string name="save_on_disk">Save on disk</string>

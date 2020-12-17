@@ -3,6 +3,7 @@ package ru.yourok.torrserve.settings
 data class BTSets(
     var CacheSize: Long,
     var PreloadBufferSize: Long,
+    var ReaderPreload: Int,
     var SaveOnDisk: Boolean,
     var ContentPath: String,
     var RetrackersMode: Int,
