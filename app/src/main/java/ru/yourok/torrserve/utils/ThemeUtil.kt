@@ -13,9 +13,7 @@ class ThemeUtil {
 
     fun onResume(activity: AppCompatActivity) {
         if (currentTheme != selectedTheme) {
-            val intent = activity.intent
-            activity.finish()
-            activity.startActivity(intent)
+            activity.recreate()
         }
     }
 
