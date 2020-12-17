@@ -79,6 +79,7 @@ class ServerSettingsFragment : TSFragment() {
                 btsets?.let { sets ->
                     findViewById<EditText>(R.id.etCacheSize)?.setText((sets.CacheSize / (1024 * 1024)).toString())
                     findViewById<EditText>(R.id.etPreloadBufferSize)?.setText((sets.PreloadBufferSize / (1024 * 1024)).toString())
+                    findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderPreload.toString())
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.SaveOnDisk
                     findViewById<EditText>(R.id.etContentPath)?.setText(sets.ContentPath)
                     findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
@@ -107,8 +108,9 @@ class ServerSettingsFragment : TSFragment() {
         try {
             view?.apply {
                 btsets = BTSets(
-                    (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 200L ) * 1024 * 1024,
-                    (findViewById<EditText>(R.id.etPreloadBufferSize)?.text?.toString()?.toLong() ?: 40L ) * 1024 * 1024,
+                    (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 200L) * 1024 * 1024,
+                    (findViewById<EditText>(R.id.etPreloadBufferSize)?.text?.toString()?.toLong() ?: 40L) * 1024 * 1024,
+                    findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 32,
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
                     findViewById<EditText>(R.id.etContentPath)?.text?.toString() ?: "",
                     findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
