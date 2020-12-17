@@ -33,7 +33,7 @@
         <item name="android:windowBackground">@color/tv_white</item>
         <!-- attr colors -->
         <item name="colorHost">@color/colorPrimaryDark</item>
-        <item name="colorBG">@color/tv_white</item>
+        <item name="colorBG">@color/lighter_gray</item>
         <!-- colors -->
         <item name="colorPrimary">@color/wine_red</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -47,6 +47,9 @@
     </style>
     <!-- Black Theme -->
     <style name="Theme.TorrServe.Black" parent="Theme.TorrServe.Dark">
+        <!-- attr colors -->
+        <item name="colorBG">@color/colorBlack</item>
+        <!-- colors -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorBlack</item>
         <item name="colorOnPrimary">@color/colorAccent</item>
