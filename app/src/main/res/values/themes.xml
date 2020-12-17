@@ -1,9 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <attr name="colorHost" format="reference" />
     <!-- Base application theme. https://material.io/develop/android/docs/getting-started -->
     <style name="Theme.TorrServe.Dark" parent="Theme.MaterialComponents">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/darker_gray</item>
+        <!-- attr colors -->
+        <item name="colorHost">@color/colorAccent</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -12,9 +15,10 @@
         <item name="colorSecondary">@color/colorPrimary</item>
         <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnSecondary">@color/colorAccent</item>
+        <item name="colorOnSurface">@color/colorPrimary</item>
         <!-- Accent Override -->
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorAccent" tools:targetApi="l">@color/colorAccent</item>
+        <!--item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent" tools:targetApi="l">@color/colorAccent</item-->
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
         <!-- Bottom bar color. -->
@@ -41,26 +45,36 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/tv_white</item>
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <!-- attr colors -->
+        <item name="colorHost">@color/colorPrimaryDark</item>
+        <!-- colors -->
+        <item name="colorPrimary">@color/wine_red</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/colorAccent</item>
-        <item name="colorSecondary">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/wine_red</item>
         <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnSecondary">@color/colorAccent</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
-        <item name="android:colorAccent" tools:targetApi="l">@color/colorPrimaryDark</item>
+        <item name="colorSurface">@color/colorPrimaryDark</item>
+        <item name="colorOnSurface">@color/wine_red</item>
+        <!-- bars -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
     </style>
     <!-- DayNight Theme -->
     <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
 
+    <style name="MainMenuTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
     <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
         <item name="android:layout">@layout/head_preference_category</item>
     </style>
 
-    <style name="HeadPreferenceCategoryText" parent="@android:style/Widget.TextView">
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="HeadPreferenceCategoryText" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">16sp</item>
         <item name="android:paddingTop">32.0dip</item>

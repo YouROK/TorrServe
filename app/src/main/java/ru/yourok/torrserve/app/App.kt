@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 
 
@@ -38,6 +39,8 @@ class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "TorrServe:WakeLock")

@@ -2,15 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:clipToPadding="false">
-
-    <!--ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="-5dip"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/gradient_divider_hw" /-->
+    android:clipToPadding="false"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/tvFileName"
@@ -34,7 +27,7 @@
         android:layout_gravity="center|end"
         android:layout_marginEnd="5dp"
         android:background="@drawable/ic_circle_viewed" />
-
+    <!-- can't use app:srcCompat with ?attr on 4.4 -->
     <TextView
         android:id="@+id/tvFileSize"
         android:layout_width="wrap_content"
