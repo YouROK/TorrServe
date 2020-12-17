@@ -39,6 +39,7 @@ object Play {
                             if (files.isEmpty())
                                 error(ErrLoadTorrentInfo)
                             else if (files.size == 1) {
+                                torrentFileIndex = 0
                                 streamTorrent(torr, files.first().id)
                                 successful(Intent())
                             } else if (torrentFileIndex > 0) {
@@ -46,6 +47,7 @@ object Play {
                                 successful(Intent())
                             } else {
                                 TorrentFilesFragment().showTorrent(this@play, torr, viewed) { file ->
+                                    torrentFileIndex = TorrentHelper.findIndex(torr, file)
                                     lifecycleScope.launch {
                                         streamTorrent(torr, file.id)
                                     }
