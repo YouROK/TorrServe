@@ -2,11 +2,13 @@ package ru.yourok.torrserve.ui.activities.play
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.coroutines.runBlocking
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.AD
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.services.TorrService
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentInfo
 import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentList
 import ru.yourok.torrserve.ui.activities.play.Commands.processViewed
@@ -30,6 +32,13 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //// DayNight Theme
+        val apptheme = Settings.getTheme()
+        when (apptheme) {
+            "dark", "black" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
         setContentView(R.layout.play_activity)
         setWindow()
 
@@ -52,7 +61,7 @@ class PlayActivity : AppCompatActivity() {
 
         if (torrentHash.isNotEmpty())
             thread { Api.dropTorrent(torrentHash) }
-        
+
         super.onDestroy()
     }
 

@@ -34,6 +34,7 @@
         android:singleLine="false"
         android:text="Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/tvTorrHash"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,5 @@
 package ru.yourok.torrserve.app
 
-import android.app.Application
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -39,7 +38,7 @@ class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-
+        //// DayNight Theme
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
