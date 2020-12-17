@@ -2,4 +2,5 @@
 <resources>
     <!-- DayNight Theme -->
     <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Dark" />
+    <style name="PlayDialog.DayNight" parent="PlayDialog.Dark" />
 </resources>

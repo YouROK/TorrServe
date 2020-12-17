@@ -57,7 +57,7 @@
 
         <activity
             android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity"
-            android:theme="@style/PlayDialog">
+            android:theme="@style/PlayDialog.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
