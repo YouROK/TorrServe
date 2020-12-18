@@ -41,9 +41,9 @@
     </string-array>
     <string name="default_player">Плеер по умолчанию</string>
     <string name="choose_player">Всегда спрашивать</string>
-    <string name="app_theme_title">Тема приложения</string>
+    <string name="app_theme_title">Тема оформления</string>
     <string-array name="app_theme_entries">
-        <item>Системная</item>
+        <item>Как в системе</item>
         <item>Светлая</item>
         <item>Тёмная</item>
         <item>Чёрная</item>
