@@ -14,11 +14,12 @@
     <string name="share">Share</string>
 
     <string name="cache_size">Cache size (Megabytes)</string>
-    <string name="preload_size">Preload before start (Megabytes)</string>
-    <string name="torrent_preload">Preload torrent (32%-100%)</string>
+    <string name="preload_before_start">Preload before start</string>
+    <string name="torrent_preload">Preload torrent (5%-100%) def. 70%</string>
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to save content</string>
     <string name="save_on_disk">Save on disk</string>
+    <string name="force_encrypt">Froce ecrypt</string>
     <string name="enable_ipv6">Enable IPv6</string>
     <string name="disable_tcp">Disable TCP</string>
     <string name="disable_utp">Disable UTP (recommended on weak devices)</string>

@@ -10,7 +10,7 @@
     <string name="exit">Выход</string>
     <string name="share">Отправить</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
-    <string name="preload_size">Загружать перед стартом (Мегабайты)</string>
+    <string name="preload_before_start">Загружать перед стартом</string>
     <string name="torrent_disconnect_timeout">Тайм-аут отключения торрента (секунды)</string>
     <string name="save_content_path">Путь для сохранения содержимого</string>
     <string name="save_on_disk">Сохранить на диске</string>
@@ -120,5 +120,6 @@
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
     <string name="server_started">Сервер запущен</string>
-    <string name="torrent_preload">Предзагрузка торрента (32%-100%)</string>
+    <string name="torrent_preload">Предзагрузка торрента (5%-100%) рек. 70%</string>
+    <string name="force_encrypt">Принудительное шифрование</string>
 </resources>

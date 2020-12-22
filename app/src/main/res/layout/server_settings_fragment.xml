@@ -46,20 +46,11 @@
                 android:ems="10"
                 android:inputType="numberSigned" />
 
-
-            <TextView
+            <CheckBox
+                android:id="@+id/cbPreloadBuffer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/etPreloadBufferSize"
-                android:paddingStart="5dp"
-                android:text="@string/preload_size" />
-
-            <EditText
-                android:id="@+id/etPreloadBufferSize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberSigned" />
+                android:text="@string/preload_before_start" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -116,6 +107,12 @@
                 android:ems="10"
                 android:inputType="textUri"
                 android:visibility="gone" />
+
+            <CheckBox
+                android:id="@+id/cbForceEncrypt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/force_encrypt" />
 
             <CheckBox
                 android:id="@+id/cbEnableIPv6"

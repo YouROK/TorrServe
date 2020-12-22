@@ -78,12 +78,13 @@ class ServerSettingsFragment : TSFragment() {
             view?.apply {
                 btsets?.let { sets ->
                     findViewById<EditText>(R.id.etCacheSize)?.setText((sets.CacheSize / (1024 * 1024)).toString())
-                    findViewById<EditText>(R.id.etPreloadBufferSize)?.setText((sets.PreloadBufferSize / (1024 * 1024)).toString())
-                    findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderPreload.toString())
+                    findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
+                    findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.SaveOnDisk
                     findViewById<EditText>(R.id.etContentPath)?.setText(sets.ContentPath)
                     findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
+                    findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
                     findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked = sets.EnableIPv6
                     findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked = sets.DisableTCP
                     findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked = sets.DisableUTP
@@ -109,10 +110,11 @@ class ServerSettingsFragment : TSFragment() {
             view?.apply {
                 btsets = BTSets(
                     (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 200L) * 1024 * 1024,
-                    (findViewById<EditText>(R.id.etPreloadBufferSize)?.text?.toString()?.toLong() ?: 40L) * 1024 * 1024,
+                    findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: true,
                     findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 32,
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
                     findViewById<EditText>(R.id.etContentPath)?.text?.toString() ?: "",
+                    findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
                     findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
                     false,
@@ -128,8 +130,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
                     findViewById<EditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
                     findViewById<Spinner>(R.id.spinnerStrategy)?.selectedItemPosition ?: 0,
-
-                    )
+                )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {
                         Api.setSettings(sets)

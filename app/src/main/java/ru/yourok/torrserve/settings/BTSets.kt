@@ -1,14 +1,19 @@
 package ru.yourok.torrserve.settings
 
 data class BTSets(
+    // Cache
     var CacheSize: Long,
-    var PreloadBufferSize: Long,
-    var ReaderPreload: Int,
+    var PreloadBuffer: Boolean,
+    var ReaderReadAHead: Int,
+    // Storage
     var SaveOnDisk: Boolean,
     var ContentPath: String,
+    // Torrent
+    var ForceEncrypt: Boolean,
     var RetrackersMode: Int,
     var TorrentDisconnectTimeout: Int,
     var EnableDebug: Boolean,
+    // BT Config
     var EnableIPv6: Boolean,
     var DisableTCP: Boolean,
     var DisableUTP: Boolean,
@@ -22,4 +27,3 @@ data class BTSets(
     var PeersListenPort: Int,
     var Strategy: Int,
 )
-
