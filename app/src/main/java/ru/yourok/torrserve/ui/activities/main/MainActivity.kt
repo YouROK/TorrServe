@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -76,6 +77,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun closeMenu() {
         findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
+    }
+
+    override fun onBackPressed() {
+        if (findViewById<DrawerLayout>(R.id.drawerLayout)?.isDrawerOpen(GravityCompat.START) == true)
+            closeMenu()
+        else
+            super.onBackPressed()
     }
 
     private fun checkUpdate() {
