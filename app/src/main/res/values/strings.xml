@@ -15,7 +15,7 @@
 
     <string name="cache_size">Cache size (Megabytes)</string>
     <string name="preload_before_start">Preload before start</string>
-    <string name="torrent_preload">Preload torrent (5%-100%) def. 70%</string>
+    <string name="torrent_preload">Preload torrent (5%-100%, def. 70%) </string>
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to save content</string>
     <string name="save_on_disk">Save on disk</string>
