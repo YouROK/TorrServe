@@ -10,7 +10,7 @@
     <string name="exit">Выход</string>
     <string name="share">Отправить</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
-    <string name="preload_before_start">Загружать перед стартом</string>
+    <string name="preload_before_start">Наполнять кеш перед стартом</string>
     <string name="torrent_preload">Предзагрузка торрента (5%-100%, рек. 70%)</string>
     <string name="torrent_disconnect_timeout">Тайм-аут отключения торрента (секунды)</string>
     <string name="save_content_path">Путь для сохранения содержимого</string>
