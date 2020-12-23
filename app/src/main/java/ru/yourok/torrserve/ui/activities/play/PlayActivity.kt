@@ -71,7 +71,13 @@ class PlayActivity : AppCompatActivity() {
                 error(ErrUserStop)
 
             if (torrentHash.isNotEmpty())
-                thread { Api.dropTorrent(torrentHash) }
+                thread {
+                    try {
+                        Api.dropTorrent(torrentHash)
+                    } catch (e: Exception) {
+                        // TODO: notify user
+                    }
+                }
         }
 
         super.onDestroy()
