@@ -35,6 +35,9 @@ object UpdaterServer {
     }
 
     fun updateFromFile(filePath: String) {
+        if (TorrService.isLocal()) {
+            TorrService.stop()
+        }
         val file = File(filePath)
         if (file.canRead()) {
             val serverFile = ServerFile()
