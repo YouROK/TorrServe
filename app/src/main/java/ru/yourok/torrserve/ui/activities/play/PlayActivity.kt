@@ -57,7 +57,7 @@ class PlayActivity : AppCompatActivity() {
 
         readArgs()
         lifecycleScope.launch(Dispatchers.IO) {
-            if (!TorrService.wait()) {
+            if (!TorrService.wait(5)) {
                 App.Toast(R.string.server_not_responding)
                 error(ErrTorrServerNotResponding)
             }
