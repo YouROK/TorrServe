@@ -2,9 +2,12 @@ package ru.yourok.torrserve.ui.activities.play
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.runBlocking
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.AD
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
@@ -44,6 +47,7 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.play_activity)
         setWindow()
 
+
         if (intent == null) {
             error(ErrIntentNull)
             return
@@ -52,7 +56,11 @@ class PlayActivity : AppCompatActivity() {
         TorrService.start()
 
         readArgs()
-        runBlocking {
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (!TorrService.wait()) {
+                App.Toast(R.string.server_not_responding)
+                error(ErrTorrServerNotResponding)
+            }
             processIntent()
         }
     }
@@ -116,4 +124,6 @@ class PlayActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }
