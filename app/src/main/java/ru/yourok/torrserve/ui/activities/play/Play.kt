@@ -8,7 +8,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.players.Players
@@ -19,7 +18,6 @@ import ru.yourok.torrserve.utils.TorrentHelper
 object Play {
 
     fun PlayActivity.play(save: Boolean) {
-        UpdaterCards.updateCards()
         infoFragment.show(this, R.id.info_container)
         lifecycleScope.launch(Dispatchers.IO) {
             torrentSave = save
