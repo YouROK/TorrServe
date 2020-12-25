@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.ext.clearStackFragmnet
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.services.TorrService
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         themeUtil.onResume(this)
         updateStatus()
+    }
+
+    override fun onDestroy() {
+        UpdaterCards.updateCards()
+        super.onDestroy()
     }
 
     private fun updateStatus() {
