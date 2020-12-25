@@ -6,6 +6,7 @@ import android.os.IBinder
 import android.util.Log
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.settings.Settings
@@ -48,6 +49,7 @@ class TorrService : Service() {
                 Log.d("TorrService", "startServer()")
                 serverFile.run()
             }
+            UpdaterCards.updateCards()
         }
     }
 
