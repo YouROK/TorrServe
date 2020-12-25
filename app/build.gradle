@@ -13,7 +13,7 @@ android {
         // for older androids
         multiDexEnabled true
         versionCode 86
-        versionName "1.2.86_14"
+        versionName "1.2.86_15"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
@@ -42,6 +42,7 @@ dependencies {
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.tvprovider:tvprovider:1.0.0'
 
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
