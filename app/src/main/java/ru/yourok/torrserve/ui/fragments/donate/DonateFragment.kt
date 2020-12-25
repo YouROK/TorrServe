@@ -116,10 +116,10 @@ object DonateMessage {
             Handler(Looper.getMainLooper()).postDelayed({
                 if (snackbar.isShown) {
                     snackbar.dismiss()
-                    Settings.setLastViewDonate(System.currentTimeMillis() + 5 * 60 * 1000)
+                    Settings.setLastViewDonate(System.currentTimeMillis() + 3 * 60 * 60 * 1000)
                 }
                 showDonate = false
-            }, 15000)
+            }, 10000)
         }
     }
 }
