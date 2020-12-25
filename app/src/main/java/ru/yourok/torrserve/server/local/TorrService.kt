@@ -49,8 +49,8 @@ class TorrService : Service() {
                 Log.d("TorrService", "startServer()")
                 serverFile.run()
             }
-            UpdaterCards.updateCards()
         }
+        UpdaterCards.updateCards()
     }
 
     private fun stopServer(forceClose: Boolean) {
