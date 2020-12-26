@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 
 fun PlayActivity.readArgs() {
@@ -48,6 +49,7 @@ fun PlayActivity.error(err: ReturnError) {
 fun PlayActivity.addAndExit() {
     lifecycleScope.launch(Dispatchers.IO) {
         Api.addTorrent(torrentLink, torrentTitle, torrentPoster, true)
+        UpdaterCards.updateCards()
     }
     torrentHash = ""
     finish()
