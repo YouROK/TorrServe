@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- drawable is a reference to your 'real' dialog background -->
-<!-- insetTop and insetBottom add the margins -->
-<inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/rc_background"
-    android:insetTop="16dp"
-    android:insetBottom="16dp" />

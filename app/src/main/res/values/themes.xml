@@ -69,9 +69,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:listDivider">@drawable/gradient_divider_hw</item>
-        <item name="android:windowBackground">@drawable/rc_inset_dialog</item>
-        <!-- attr colors -->
-        <item name="colorBG">@color/darker_gray</item>
+        <item name="android:windowBackground">@drawable/rc_background_dark</item>
         <!-- colors -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -87,9 +85,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:listDivider">@drawable/gradient_divider_hw</item>
-        <item name="android:windowBackground">@drawable/rc_inset_dialog</item>
-        <!-- attr colors -->
-        <item name="colorBG">@color/tv_white</item>
+        <item name="android:windowBackground">@drawable/rc_background_light</item>
         <!-- colors -->
         <item name="colorPrimary">@color/wine_red</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -102,8 +98,7 @@
     </style>
     <!-- Black Style -->
     <style name="PlayDialog.Black" parent="PlayDialog.Dark">
-        <!-- attr colors -->
-        <item name="colorBG">@color/colorBlackOpaque</item>
+        <item name="android:windowBackground">@drawable/rc_background_black</item>
     </style>
     <!-- DayNight Style -->
     <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
