@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -40,12 +41,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StatusViewModel
     private val themeUtil = ThemeUtil()
+    private var firebaseAnalytics: FirebaseAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Premissions.requestPermissionWithRationale(this)
         themeUtil.onCreate(this)
         setContentView(R.layout.main_activity)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         viewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
 

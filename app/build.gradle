@@ -1,13 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "ru.yourok.torrserve_new"
+        applicationId "ru.yourok.torrserve"
         minSdkVersion 17
         targetSdkVersion 28
         // for older androids
@@ -67,6 +68,7 @@ dependencies {
 
     // firebase
     implementation 'com.google.firebase:firebase-core:18.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
 
     // multidex
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -76,3 +78,6 @@ repositories {
     jcenter()
     maven { url 'https://jitpack.io' }
 }
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'

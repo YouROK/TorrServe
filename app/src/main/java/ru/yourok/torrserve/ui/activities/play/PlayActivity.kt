@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.activities.play
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
@@ -34,6 +35,8 @@ class PlayActivity : AppCompatActivity() {
     var ad: AD? = null
     val infoFragment = InfoFragment()
 
+    private var firebaseAnalytics: FirebaseAnalytics? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //// DayNight Theme // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -47,6 +50,7 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.play_activity)
         setWindow()
 
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         if (intent == null) {
             error(ErrIntentNull)
