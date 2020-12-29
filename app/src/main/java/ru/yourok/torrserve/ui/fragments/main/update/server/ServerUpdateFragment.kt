@@ -17,6 +17,7 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.dialogs.DialogList
 import ru.yourok.torrserve.ui.fragments.TSFragment
+import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer.updateFromNet
 
 class ServerUpdateFragment : TSFragment() {
 
@@ -27,9 +28,17 @@ class ServerUpdateFragment : TSFragment() {
         val vi = inflater.inflate(R.layout.server_update_fragment, container, false)
         vi.findViewById<Button>(R.id.btnUpdate).setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                showProgress()
-                //TODO server remotly update
-                hideProgress()
+                try {
+                    showProgress()
+                    updateFromNet {
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            showProgress(it)
+                        }
+                    }
+                    hideProgress()
+                } catch (e: Exception) {
+                    App.Toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
+                }
             }
         }
 

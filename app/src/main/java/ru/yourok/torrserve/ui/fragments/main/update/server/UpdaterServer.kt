@@ -1,15 +1,16 @@
 package ru.yourok.torrserve.ui.fragments.main.update.server
 
+import android.net.Uri
 import android.os.Build
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.app.Consts
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
 import java.io.File
 import java.io.FileInputStream
@@ -17,7 +18,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 object UpdaterServer {
-    private var versions: ServVersions? = null
     private var version: ServVersion? = null
     private var error: String = ""
 
@@ -32,6 +32,45 @@ object UpdaterServer {
             }
         }
         return "$host $version"
+    }
+
+    fun updateFromNet(onProgress: ((prc: Int) -> Unit)?) {
+        val url = getLink()
+        val http = Http(Uri.parse(url))
+        http.connect()
+        TorrService.stop()
+        http.getInputStream().also { content ->
+            content ?: throw IOException("error connect server, url: $url")
+
+            val serverFile = ServerFile()
+            val contentLength = http.getSize()
+
+            serverFile.delete()
+            FileOutputStream(serverFile).use { fileOut ->
+                if (onProgress == null)
+                    content.copyTo(fileOut)
+                else {
+                    val buffer = ByteArray(65535)
+                    val length = contentLength + 1
+                    var offset: Long = 0
+                    while (true) {
+                        val readed = content.read(buffer)
+                        offset += readed
+                        val prc = (offset * 100 / length).toInt()
+                        onProgress(prc)
+                        if (readed <= 0)
+                            break
+                        fileOut.write(buffer, 0, readed)
+                    }
+                    fileOut.flush()
+                }
+                fileOut.flush()
+                fileOut.close()
+                if (!serverFile.setExecutable(true))
+                    throw IOException("error set exec permission")
+            }
+        }
+        TorrService.start()
     }
 
     fun updateFromFile(filePath: String) {
@@ -72,21 +111,8 @@ object UpdaterServer {
         try {
             val body = Net.get(Consts.updateServerPath)
             val gson = Gson()
-            versions = gson.fromJson(body, ServVersions::class.java)
-            versions?.let { vers ->
-                vers
-                    .filter { it.version.startsWith("1.2.") }
-                    .sortedBy { it.version.substringAfter("1.2.").toIntOrNull() ?: Int.MAX_VALUE }
-                    .also {
-                        if (it.isNotEmpty()) {
-                            if ((it.first().version.substringAfter("1.2.").toIntOrNull() ?: -1) > BuildConfig.VERSION_CODE) {
-                                version = it.first()
-                                return true
-                            }
-                        }
-                    }
-            }
-            return false
+            version = gson.fromJson(body, ServVersion::class.java)
+            return true
         } catch (e: Exception) {
             e.printStackTrace()
             error = e.message ?: ""
@@ -103,6 +129,17 @@ object UpdaterServer {
     fun getLink(): String {
         if (version == null)
             check()
-        return version?.version ?: ""
+        if (version == null)
+            return ""
+        version?.let { ver ->
+            val arch = getArch()
+            if (arch.isEmpty())
+                throw IOException("error get arch")
+
+            // may be need android 10 version
+
+            return ver.links["linux-$arch"] ?: ""
+        }
+        return ""
     }
 }

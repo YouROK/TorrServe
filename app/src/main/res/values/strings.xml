@@ -113,7 +113,7 @@
     <string name="delete_local_server">Delete local server</string>
     <string name="arch">Arch</string>
     <string name="update_server">Update server</string>
-    <string name="warn_error_download_server">Server Download Error</string>
+    <string name="warn_error_download_server">Server download error</string>
     <string name="warn_no_localy_updates">No local updates</string>
 
     <string name="copy_to_clipboard">Copied to clipboard</string>
