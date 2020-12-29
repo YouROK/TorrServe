@@ -57,11 +57,10 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
         }
 
         vi.findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
-
         if (poster.isNotEmpty())
             vi.findViewById<ImageView>(R.id.ivPoster)?.let {
                 it.visibility = View.VISIBLE
-                Glide.with(view?.context ?: return@let)
+                val gld = Glide.with(activity)
                     .asBitmap()
                     .load(poster)
                     .fitCenter()
