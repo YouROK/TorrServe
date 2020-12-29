@@ -35,6 +35,7 @@
         android:networkSecurityConfig="@xml/net_security"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/Theme.TorrServe.DayNight">
         <activity
             android:name="ru.yourok.torrserve.ui.activities.main.MainActivity"
