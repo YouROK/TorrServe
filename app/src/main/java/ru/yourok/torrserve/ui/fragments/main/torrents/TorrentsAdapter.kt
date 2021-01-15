@@ -42,7 +42,7 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val vi = view ?: LayoutInflater.from(parent?.context).inflate(R.layout.torrent_item, parent, false)
 
-        val title = list[position].title
+        var title = list[position].title
         val poster = list[position].poster
         val hash = list[position].hash
         val size = list[position].torrent_size
@@ -56,11 +56,14 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
             addStr = sdf.format(Date(addTime * 1000))
         }
 
+        if (title.isBlank())
+            title = list[position].name
+
         vi.findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
         if (poster.isNotEmpty())
             vi.findViewById<ImageView>(R.id.ivPoster)?.let {
                 it.visibility = View.VISIBLE
-                val gld = Glide.with(activity)
+                Glide.with(activity)
                     .asBitmap()
                     .load(poster)
                     .fitCenter()
