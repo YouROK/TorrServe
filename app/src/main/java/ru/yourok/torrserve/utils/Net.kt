@@ -1,21 +1,14 @@
 package ru.yourok.torrserve.utils
 
 import android.net.Uri
-import cz.msebera.android.httpclient.client.methods.HttpEntityEnclosingRequestBase
-import cz.msebera.android.httpclient.client.methods.HttpGet
-import cz.msebera.android.httpclient.client.methods.HttpPost
-import cz.msebera.android.httpclient.entity.ContentType
-import cz.msebera.android.httpclient.entity.StringEntity
-import cz.msebera.android.httpclient.entity.mime.HttpMultipartMode
-import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder
-import cz.msebera.android.httpclient.entity.mime.content.FileBody
-import cz.msebera.android.httpclient.entity.mime.content.StringBody
-import cz.msebera.android.httpclient.impl.client.HttpClients.custom
-import cz.msebera.android.httpclient.util.EntityUtils
+import org.jsoup.Connection
+import org.jsoup.Jsoup
 import ru.yourok.torrserve.settings.Settings
 import java.io.File
+import java.io.FileInputStream
 import java.net.URI
 import java.net.URLEncoder
+
 
 object Net {
 
@@ -58,57 +51,50 @@ object Net {
     }
 
     fun upload(url: String, path: String, save: Boolean): String {
-        val file = File(path)
+        val file1 = File(path)
+        val fs1 = FileInputStream(file1)
+        val req = Jsoup.connect(url)
+            .data("file1", "filename", fs1)
+            .method(Connection.Method.POST)
 
-        val httpclient = custom().build()
-        val httppost = HttpPost(url)
-
-        val mpEntity = MultipartEntityBuilder.create()
-        mpEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
-        mpEntity.addPart(file.name, FileBody(file))
         if (save)
-            mpEntity.addPart("save", StringBody("true", ContentType.DEFAULT_TEXT))
-
-        val entity = mpEntity.build()
-        httppost.setEntity(entity)
-        val response = httpclient.execute(httppost)
-        return EntityUtils.toString(response.getEntity())
+            req.data("save", "true")
+        val resp = req.execute()
+        return resp.body()
     }
 
     fun post(url: String, req: String): String {
-        val httpclient = custom().disableRedirectHandling().build()
-        val httpreq = HttpPost(url)
-        if (req.isNotEmpty())
-            (httpreq as HttpEntityEnclosingRequestBase).setEntity(StringEntity(req, ContentType.APPLICATION_JSON))
+        val response = Jsoup.connect(url)
+            .requestBody(req)
+            .ignoreHttpErrors(true)
+            .ignoreContentType(true)
+            .method(Connection.Method.POST)
+            .execute()
 
-
-        val response = httpclient.execute(httpreq)
-        val status = response.statusLine?.statusCode ?: -1
+        val status = response.statusCode()
         if (status == 200) {
-            val entity = response.entity ?: return ""
-            return EntityUtils.toString(entity)
+            return response.body()
         } else if (status == 302) {
             return ""
         } else {
-            throw Exception(response.statusLine.reasonPhrase)
+            throw Exception(response.statusMessage())
         }
     }
 
     fun get(url: String): String {
-        val httpclient = custom().disableRedirectHandling().build()
+        val response = Jsoup.connect(url)
+            .ignoreHttpErrors(true)
+            .ignoreContentType(true)
+            .timeout(2000)
+            .execute()
 
-        val httpreq = HttpGet(url)
-        val response = httpclient.execute(httpreq)
-        val status = response.statusLine?.statusCode ?: -1
+        val status = response.statusCode()
         if (status == 200) {
-            val entity = response.entity ?: let {
-                return ""
-            }
-            return EntityUtils.toString(entity)
+            return response.body()
         } else if (status == 302) {
             return ""
         } else {
-            throw Exception(response.statusLine.reasonPhrase)
+            throw Exception(response.statusMessage())
         }
     }
 }
