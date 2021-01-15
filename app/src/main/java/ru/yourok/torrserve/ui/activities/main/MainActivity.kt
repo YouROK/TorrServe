@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateStatus() {
+        findViewById<TextView>(R.id.tvCurrentHost)?.text = Settings.getHost()
         val data = viewModel.get()
         data.observe(this) {
             findViewById<TextView>(R.id.tvStatus)?.text = it
