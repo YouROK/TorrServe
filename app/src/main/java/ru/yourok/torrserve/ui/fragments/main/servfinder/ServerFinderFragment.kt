@@ -56,11 +56,11 @@ class ServerFinderFragment : TSFragment() {
             }
         }
 
-        vi.findViewById<Button>(R.id.buttonCancel)?.setOnClickListener {
+        vi.findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
             popBackStackFragment()
         }
 
-        vi.findViewById<Button>(R.id.buttonOk)?.setOnClickListener {
+        vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
             setHost()
         }
 

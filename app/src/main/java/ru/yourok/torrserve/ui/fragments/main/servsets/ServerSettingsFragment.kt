@@ -29,7 +29,7 @@ class ServerSettingsFragment : TSFragment() {
 
         val vi = inflater.inflate(R.layout.server_settings_fragment, container, false)
 
-        vi.findViewById<Button>(R.id.btnOk)?.setOnClickListener {
+        vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 showProgress()
                 saveSettings()
