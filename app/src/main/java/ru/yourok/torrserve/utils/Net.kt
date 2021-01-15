@@ -4,8 +4,7 @@ import android.net.Uri
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import ru.yourok.torrserve.settings.Settings
-import java.io.File
-import java.io.FileInputStream
+import java.io.InputStream
 import java.net.URI
 import java.net.URLEncoder
 
@@ -50,11 +49,9 @@ object Net {
             return url + URLEncoder.encode(path, "utf8")
     }
 
-    fun upload(url: String, path: String, save: Boolean): String {
-        val file1 = File(path)
-        val fs1 = FileInputStream(file1)
+    fun upload(url: String, file: InputStream, save: Boolean): String {
         val req = Jsoup.connect(url)
-            .data("file1", "filename", fs1)
+            .data("file1", "filename", file)
             .method(Connection.Method.POST)
 
         if (save)

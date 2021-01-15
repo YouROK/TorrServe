@@ -1,5 +1,7 @@
 package ru.yourok.torrserve.ui.fragments.play.viewmodels
 
+import android.content.ContentResolver
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,7 +37,12 @@ class TorrentViewModel : ViewModel() {
     private fun loadLink(link: String, title: String, poster: String, save: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val torr = Api.addTorrent(link, title, poster, save)
+                val scheme = Uri.parse(link).scheme
+                val torr = if (ContentResolver.SCHEME_ANDROID_RESOURCE == scheme || ContentResolver.SCHEME_FILE == scheme) {
+                    uploadFile(link, save)//TODO title & poster
+                    throw Exception("not released")
+                } else
+                    Api.addTorrent(link, title, poster, save)
                 withContext(Dispatchers.Main) {
                     data.value = torr
                 }
@@ -46,5 +53,10 @@ class TorrentViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    private fun uploadFile(link: String, save: Boolean) {
+        val fis = App.context.contentResolver.openInputStream(Uri.parse(link))
+        Api.uploadTorrent(fis, save)
     }
 }
