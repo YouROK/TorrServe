@@ -124,4 +124,5 @@
     <string name="server_started">Сервер запущен</string>
     <string name="open_torrserve">Запустить TorrServe</string>
     <string name="torrents">Торренты</string>
+    <string name="apply">Применить</string>
 </resources>

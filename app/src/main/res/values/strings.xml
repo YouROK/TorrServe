@@ -16,6 +16,7 @@
     <string name="open_torrserve">Open TorrServe</string>
     <string name="torrents">Torrents</string>
 
+    <string name="apply">Apply</string>
 
     <string name="cache_size">Cache size (Megabytes)</string>
     <string name="preload_before_start">Preload cache before start</string>
