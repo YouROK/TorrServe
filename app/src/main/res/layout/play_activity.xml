@@ -2,23 +2,23 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".ui.activities.play.PlayActivity">
 
     <ImageView
         android:id="@+id/ivAd"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:maxHeight="50dp"
-        android:visibility="gone"
         android:layout_gravity="top|center"
         android:adjustViewBounds="true"
+        android:maxHeight="50dp"
         android:paddingStart="5dp"
         android:paddingTop="5dp"
         android:paddingEnd="5dp"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/info_container"
@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="6dp"
         android:indeterminate="true"
