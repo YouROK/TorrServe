@@ -57,6 +57,11 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.play_activity)
         setWindow()
 
+        findViewById<ProgressBar>(R.id.progressBar)?.apply {
+            progressDrawable?.setColorFilter(ContextCompat.getColor(this@PlayActivity, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
+            indeterminateDrawable?.setColorFilter(ContextCompat.getColor(this@PlayActivity, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
+        }
+
         lifecycleScope.launch { showProgress() }
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
