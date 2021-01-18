@@ -19,11 +19,11 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
             val setspath = Settings.getTorrPath()
             val logfile = File(setspath, "torrserver.log").path
             if (shell == null) {
-                if (Settings.isRootStart()) {
-                    shell = Shell.su("$path -k -d ${setspath} 1>${logfile} 2>&1 &")
-                } else {
-                    shell = Shell.sh("$path -k -d ${setspath} 1>${logfile} 2>&1 &")
-                }
+                if (Settings.isRootStart())
+                    shell = Shell.su("$path -k -d ${setspath} -l ${logfile} &")
+                else
+                    shell = Shell.sh("$path -k -d ${setspath} -l ${logfile} &")
+
                 shell?.add("export GODEBUG=madvdontneed=1")
                 if (shell?.exec()!!.isSuccess)
                     App.Toast(App.context.getString(R.string.server_started))
@@ -36,15 +36,12 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         //    return
         synchronized(lock) {
             Shell.Config.verboseLogging(BuildConfig.DEBUG)
-            val setspath = Settings.getTorrPath()
-            val logfile = File(setspath, "torrserver.log").path
             val result: Shell.Result = if (Settings.isRootStart())
-                Shell.su("killall -9 torrserver 1>${logfile} 2>&1").exec()
+                Shell.su("killall -9 torrserver &").exec()
             else
-                Shell.sh("killall -9 torrserver 1>${logfile} 2>&1").exec()
+                Shell.sh("killall -9 torrserver &").exec()
             if (result.isSuccess)
                 App.Toast(App.context.getString(R.string.server_stoped))
-            //TODO проверить
             shell = null
         }
     }
