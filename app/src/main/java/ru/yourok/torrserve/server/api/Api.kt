@@ -66,8 +66,7 @@ object Api {
 
     fun uploadTorrent(file: InputStream, title: String, poster: String, save: Boolean) {
         val host = Net.getHostUrl("/torrent/upload")
-        Net.upload(host, file, save)
-        //TODO set one file and get torrent with title and poster
+        Net.upload(host, title, poster, file, save)
     }
 
     // Settings
