@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -126,26 +124,13 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvBuffer).text = txt
                     }
 
-                    val progress = findViewById<ProgressBar>(R.id.progressBar)
-                    progress?.progressDrawable?.setColorFilter(
-                        ContextCompat.getColor(this.context, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
-                    )
-                    progress?.indeterminateDrawable?.setColorFilter(
-                        ContextCompat.getColor(this.context, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
-                    )
-                    if (prc > 0 && prc < 100) {
-                        progress?.isIndeterminate = false
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            progress?.setProgress(prc.toInt(), true)
+                    if (torr.stat < TorrentHelper.TorrentSTWorking) {
+                        if (prc > 0 && prc < 100)
+                            (activity as PlayActivity?)?.showProgress(prc.toInt())
                         else
-                            progress?.setProgress(prc.toInt())
+                            (activity as PlayActivity?)?.showProgress(-1)
                     } else
-                        progress?.isIndeterminate = true
-
-                    if (torr.stat < TorrentHelper.TorrentSTWorking)
-                        findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
-                    else
-                        findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
+                        (activity as PlayActivity?)?.hideProgress()
 
                     val peers = "[${torr.connected_seeders}] ${torr.active_peers}/${torr.total_peers}"
                     if (peers.isNotEmpty()) {
