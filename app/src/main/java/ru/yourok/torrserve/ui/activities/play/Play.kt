@@ -71,7 +71,8 @@ object Play {
         withContext(Dispatchers.IO) {
             torr = Api.getTorrent(torr.hash)
             while (torr.stat == TorrentHelper.TorrentSTPreload) {
-                delay(200)
+                delay(1000)
+                torr = Api.getTorrent(torr.hash)
             }
         }
 
