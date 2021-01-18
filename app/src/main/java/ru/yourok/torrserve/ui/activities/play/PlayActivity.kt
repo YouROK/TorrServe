@@ -172,6 +172,6 @@ class PlayActivity : AppCompatActivity() {
 
     suspend fun hideProgress() = withContext(Dispatchers.Main) {
         if (isActive)
-            findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.GONE
+            findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.INVISIBLE
     }
 }
