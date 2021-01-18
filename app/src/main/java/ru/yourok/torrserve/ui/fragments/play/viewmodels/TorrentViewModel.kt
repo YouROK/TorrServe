@@ -39,7 +39,7 @@ class TorrentViewModel : ViewModel() {
             try {
                 val scheme = Uri.parse(link).scheme
                 val torr = if (ContentResolver.SCHEME_ANDROID_RESOURCE == scheme || ContentResolver.SCHEME_FILE == scheme) {
-                    uploadFile(link, save)//TODO title & poster
+                    uploadFile(link, title, poster, save)
                     throw Exception("not released")
                 } else
                     Api.addTorrent(link, title, poster, save)
@@ -55,8 +55,8 @@ class TorrentViewModel : ViewModel() {
         }
     }
 
-    private fun uploadFile(link: String, save: Boolean) {
+    private fun uploadFile(link: String, title: String, poster: String, save: Boolean) {
         val fis = App.context.contentResolver.openInputStream(Uri.parse(link))
-        Api.uploadTorrent(fis, save)
+        Api.uploadTorrent(fis, title, poster, save)
     }
 }
