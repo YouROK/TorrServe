@@ -1,11 +1,18 @@
 package ru.yourok.torrserve.ui.activities.play
 
+import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.AD
 import ru.yourok.torrserve.app.App
@@ -50,6 +57,8 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.play_activity)
         setWindow()
 
+        lifecycleScope.launch { showProgress() }
+
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         if (intent == null) {
@@ -65,6 +74,7 @@ class PlayActivity : AppCompatActivity() {
                 App.Toast(R.string.server_not_responding)
                 error(ErrTorrServerNotResponding)
             }
+            hideProgress()
             processIntent()
         }
     }
@@ -135,5 +145,28 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
+    suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
+        if (isActive) {
+            val progress = findViewById<ProgressBar>(R.id.progressBar)
+            progress?.progressDrawable?.setColorFilter(
+                ContextCompat.getColor(this@PlayActivity, R.color.colorAccent), PorterDuff.Mode.SRC_IN
+            )
+            progress?.indeterminateDrawable?.setColorFilter(
+                ContextCompat.getColor(this@PlayActivity, R.color.colorAccent), PorterDuff.Mode.SRC_IN
+            )
+            progress?.apply {
+                visibility = View.VISIBLE
+                isIndeterminate = prog < 0
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    setProgress(prog, true)
+                else
+                    setProgress(prog)
+            }
+        }
+    }
 
+    suspend fun hideProgress() = withContext(Dispatchers.Main) {
+        if (isActive)
+            findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.GONE
+    }
 }
