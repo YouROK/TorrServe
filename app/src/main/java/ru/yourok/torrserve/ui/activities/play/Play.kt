@@ -35,6 +35,10 @@ object Play {
                         }
 
                         val files = TorrentHelper.getPlayableFiles(torr)
+
+                        if (intent.hasExtra("FileTemplate") && torrentFileIndex == -1) // For lostfilm app
+                            torrentFileIndex = SerialFilter.filter(intent, files)
+
                         lifecycleScope.launch {
                             if (files.isEmpty())
                                 error(ErrLoadTorrentInfo)
