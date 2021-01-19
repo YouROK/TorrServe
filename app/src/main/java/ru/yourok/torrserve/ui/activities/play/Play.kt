@@ -22,7 +22,7 @@ object Play {
         lifecycleScope.launch(Dispatchers.IO) {
             torrentSave = save
 
-            val dataTorr = TorrentViewModel().loadTorrent(torrentLink, torrentHash, torrentTitle, torrentPoster, torrentSave)
+            val dataTorr = TorrentViewModel().loadTorrent(torrentLink, torrentHash, torrentTitle, torrentPoster, torrentData, torrentSave)
             withContext(Dispatchers.Main) {
                 dataTorr?.observe(this@play) { tr ->
                     lifecycleScope.launch(Dispatchers.IO) {

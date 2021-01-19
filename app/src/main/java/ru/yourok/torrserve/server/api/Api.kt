@@ -31,9 +31,9 @@ object Api {
     }
 
     /// Torrents
-    fun addTorrent(link: String, title: String, poster: String, save: Boolean): Torrent {
+    fun addTorrent(link: String, title: String, poster: String, data: String, save: Boolean): Torrent {
         val host = Net.getHostUrl("/torrents")
-        val req = TorrentReq("add", link = link, title = title, poster = poster, save_to_db = save).toString()
+        val req = TorrentReq("add", link = link, title = title, poster = poster, data = data, save_to_db = save).toString()
         val resp = postJson(host, req)
         return Gson().fromJson(resp, Torrent::class.java)
     }
@@ -64,9 +64,9 @@ object Api {
         postJson(host, req)
     }
 
-    fun uploadTorrent(file: InputStream, title: String, poster: String, save: Boolean) {
+    fun uploadTorrent(file: InputStream, title: String, poster: String, data: String, save: Boolean) {
         val host = Net.getHostUrl("/torrent/upload")
-        Net.upload(host, title, poster, file, save)
+        Net.upload(host, title, poster, data, file, save)
     }
 
     // Settings

@@ -22,10 +22,11 @@ fun PlayActivity.readArgs() {
     intent?.extras?.apply {
         keySet().forEach { key ->
             when (key.toLowerCase()) {
-                "cmd" -> torrentTitle = this.getString(key) ?: ""
                 "hash" -> torrentHash = this.getString(key) ?: ""
                 "title" -> torrentTitle = this.getString(key) ?: ""
                 "poster" -> torrentPoster = this.getString(key) ?: ""
+                "info" -> torrentData = this.getString(key) ?: ""
+                "data" -> torrentData = this.getString(key) ?: ""
                 "fileindex" -> torrentFileIndex = this.getInt(key, -1)
                 "save" -> torrentSave = this.getBoolean(key)
             }
@@ -48,7 +49,7 @@ fun PlayActivity.error(err: ReturnError) {
 
 fun PlayActivity.addAndExit() {
     lifecycleScope.launch(Dispatchers.IO) {
-        Api.addTorrent(torrentLink, torrentTitle, torrentPoster, true)
+        Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, true)
         UpdaterCards.updateCards()
     }
     torrentHash = ""

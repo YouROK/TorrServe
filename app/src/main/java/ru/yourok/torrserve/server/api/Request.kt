@@ -20,6 +20,7 @@ class TorrentReq(
     val link: String = "",
     val title: String = "",
     val poster: String = "",
+    val data: String = "",
     val save_to_db: Boolean = false,
 ) : Request(action)
 

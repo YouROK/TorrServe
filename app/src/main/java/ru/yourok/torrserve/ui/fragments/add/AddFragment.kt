@@ -36,7 +36,7 @@ class AddFragment : TSFragment() {
                 if (!link.isNullOrBlank())
                     lifecycleScope.launch(Dispatchers.IO) {
                         try {
-                            Api.addTorrent(link, title, poster, true)
+                            Api.addTorrent(link, title, poster, "", true)
                         } catch (e: Exception) {
                             // TODO: notify user
                         }

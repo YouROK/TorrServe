@@ -49,7 +49,7 @@ object Net {
             return url + URLEncoder.encode(path, "utf8")
     }
 
-    fun upload(url: String, title: String, poster: String, file: InputStream, save: Boolean): String {
+    fun upload(url: String, title: String, poster: String, data: String, file: InputStream, save: Boolean): String {
         val req = Jsoup.connect(url)
             .data("file1", "filename", file)
             .method(Connection.Method.POST)
@@ -58,6 +58,7 @@ object Net {
             req.data("save", "true")
         req.data("title", title)
         req.data("poster", poster)
+        req.data("data", data)
         val resp = req.execute()
         return resp.body()
     }
