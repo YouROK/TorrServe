@@ -144,7 +144,7 @@ open class InfoFragment : TSFragment() {
 
                     val speed = ByteFmt.byteFmt(torr.download_speed) + "/s"
 
-                    if (speed.isNotEmpty() && !speed.equals("0.0 B/s", true)) {
+                    if (speed.isNotEmpty() && torr.download_speed > 50.0) {
                         val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
                             Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> ${speed}", Html.FROM_HTML_MODE_COMPACT)
                         else
