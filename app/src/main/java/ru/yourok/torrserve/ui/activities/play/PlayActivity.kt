@@ -19,9 +19,6 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
-import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentInfo
-import ru.yourok.torrserve.ui.activities.play.Commands.processTorrentList
-import ru.yourok.torrserve.ui.activities.play.Commands.processViewed
 import ru.yourok.torrserve.ui.activities.play.Play.play
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
@@ -29,11 +26,11 @@ import kotlin.concurrent.thread
 
 
 class PlayActivity : AppCompatActivity() {
-    var command: String = ""
     var torrentLink: String = ""
     var torrentHash: String = ""
     var torrentTitle: String = ""
     var torrentPoster: String = ""
+    var torrentData: String = ""
     var torrentSave: Boolean = false
     var torrentFileIndex: Int = -1
 
@@ -86,9 +83,6 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         if (userClose) {
-            if (command.isNotEmpty())
-                error(ErrUserStop)
-
             if (torrentHash.isNotEmpty())
                 thread {
                     try {
@@ -118,36 +112,23 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun processIntent() {
-        if (command.isNotEmpty()) {
-            //// Commands
-            when (command.toLowerCase()) {
-                "viewed" -> processViewed()
-                "torrentinfo" -> processTorrentInfo()
-                "torrentlist" -> processTorrentList()
-                else -> error(ErrUnknownCmd)
-            }
-            return
-        } else {
-            ad = AD(findViewById(R.id.ivAd), this)
-            ad?.get()
-            //// Play torrent
-            processTorrent()
-        }
-    }
+        ad = AD(findViewById(R.id.ivAd), this)
+        ad?.get()
 
-    private fun processTorrent() {
+        //// Play torrent
         if (intent.hasExtra("action") && intent.getStringExtra("action") == "play")
             play(false)
-        else ChooserFragment().show(this) {
-            when (it) {
-                1, 2 -> {
-                    play(it == 2)
-                }
-                3 -> {
-                    addAndExit()
+        else
+            ChooserFragment().show(this) {
+                when (it) {
+                    1, 2 -> {
+                        play(it == 2)
+                    }
+                    3 -> {
+                        addAndExit()
+                    }
                 }
             }
-        }
     }
 
     suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
