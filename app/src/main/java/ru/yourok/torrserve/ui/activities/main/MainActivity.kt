@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             if (UpdaterApk.check())
                 withContext(Dispatchers.Main) {
-                    App.Toast(R.string.found_new_app_update)
+                    App.Toast(R.string.found_new_app_update, true)
                 }
         }
         lifecycleScope.launch(Dispatchers.IO) {
