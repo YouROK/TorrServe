@@ -23,7 +23,7 @@
         android:layout_gravity="start"
         android:adjustViewBounds="true"
         android:contentDescription="@string/yandex_money_card"
-        android:src="@drawable/ya_money" />
+        app:srcCompat="@drawable/io" />
 
     <LinearLayout
         android:layout_width="wrap_content"
