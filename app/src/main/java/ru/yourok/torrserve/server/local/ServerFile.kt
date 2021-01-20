@@ -32,8 +32,8 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
     }
 
     fun stop() {
-        //if (!exists())
-        //    return
+        if (!exists())
+            return
         synchronized(lock) {
             Shell.Config.verboseLogging(BuildConfig.DEBUG)
             val result: Shell.Result = if (Settings.isRootStart())
