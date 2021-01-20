@@ -41,7 +41,6 @@
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:text="@string/link"
             android:textSize="14sp" />
 
@@ -63,7 +62,7 @@
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/paypal_card"
-        android:src="@drawable/paypal" />
+        app:srcCompat="@drawable/paypal" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -81,7 +80,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="3dp"
             android:text="@string/link"
             android:textSize="14sp" />
 
@@ -115,7 +114,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="3dp"
             android:text="@string/link"
             android:textSize="14sp" />
 
