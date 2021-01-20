@@ -1,3 +1,0 @@
-<resources>
-    <item name="activity_main" type="layout">@layout/activity_main_large</item>
-</resources>

@@ -1,131 +1,128 @@
 <resources>
-    <string name="app_name">TorrServe</string>
-
     <string name="add">Добавить</string>
     <string name="delete">Удалить</string>
-    <string name="remove_all">Удалить всё</string>
+    <string name="remove_all">Удалить все</string>
     <string name="playlist">Плейлист</string>
     <string name="donate">Пожертвование</string>
     <string name="update">Обновление</string>
+    <string name="server">Сервер</string>
     <string name="settings">Настройки</string>
     <string name="exit">Выход</string>
-    <string name="restart_server">Перезапустить локальный сервер</string>
-
-    <string name="share">Поделиться</string>
-    <string name="copy">Копировать</string>
-    <string name="send">Отправить</string>
-    <string name="host">Хост</string>
-
-    <string name="local_ip">Локальный IP</string>
-    <string name="connected_host">Используется</string>
-    <string name="find_hosts">Поиск серверов</string>
-    <string name="local_server">Локальный сервер</string>
-    <string name="saved_server">Сохраненный сервер</string>
-    <string name="on_device">На устройстве</string>
-
-    <string name="title">Название</string>
-    <string name="poster_url">URL постера</string>
-    <string name="torrent">Торрент</string>
-    <string name="torrents">Торренты</string>
-
-    <string name="server_addr">Адрес сервера</string>
+    <string name="share">Отправить</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
-    <string name="preload_buffer_size">Размер буфера предварительной загрузки (Мегабайты)</string>
-    <string name="read_ahead_prc">Упреждающее чтение %</string>
+    <string name="preload_before_start">Наполнять кеш перед стартом</string>
+    <string name="torrent_preload">Предзагрузка кеша (5%-100%, рек. 70%)</string>
+    <string name="torrent_disconnect_timeout">Тайм-аут отключения торрента (секунды)</string>
+    <string name="save_content_path">Путь для сохранения содержимого</string>
+    <string name="save_on_disk">Сохранить на диске</string>
+    <string name="force_encrypt">Принудительное шифрование</string>
+    <string name="enable_ipv6">Включить IPv6</string>
     <string name="disable_tcp">Отключить TCP</string>
     <string name="disable_utp">Отключить UTP (рекомендуется на слабых устройствах)</string>
     <string name="disable_upnp">Отключить UPNP</string>
     <string name="disable_dht">Отключить DHT</string>
-    <string name="disable_upload">Отключить раздачу</string>
+    <string name="disable_upload">Отключить Отдачу</string>
     <string name="ecnryption">Шифрование</string>
-    <string name="connections_limit">Соединений на торрент (20-25 рекомендуется на всех Android устройствах)</string>
-    <string name="connections_dht_limit">Лимит соединений DHT (0-не ограничено, на версиях до 70-й без ограничений)</string>
-    <string name="download_rate_limit">Ограничение скорости загрузки (Килобайты, 0-неограниченно)</string>
-    <string name="upload_rate_limit">Ограничение скорости отдачи (Килобайты, 0-неограниченно)</string>
-
-    <string name="server_settings">Настройки сервера</string>
-    <string name="start_server_on_boot">Запускать при старте ОС</string>
-    <string name="dont_start_server_on_boot">Не запускать при старте ОС</string>
-    <string name="select_player">Выбор плеера</string>
-    <string name="disable_ad">Отключить баннеры</string>
-    <string name="ad_disabled">Баннеры отключены</string>
-    <string name="ad_enabled">Баннеры включены</string>
-    <string name="root_server">Запускать сервер от рута</string>
-    <string name="root_server_on">Запускать сервер от рута, чтобы система не могла остановить его (требуется root-доступ)</string>
-    <string name="root_server_off">Не запускать сервер от рута</string>
-
-    <string name="add_play">Добавить и играть</string>
-    <string name="play">Играть</string>
-
-    <string name="yes">ДА</string>
-    <string name="no">НЕТ</string>
-
-    <string name="default_player">Плеер по умолчанию</string>
-    <string name="choose_player">Всегда спрашивать</string>
-
-    <string name="donate_msg">Ваше пожертвование помогает мне развиваться дальше, улучшать программу и создавать новые</string>
-    <string name="paypal" translatable="false">PayPal</string>
-    <string name="yandex_money" translatable="false">Yandex.Деньги</string>
-
-    <string name="found_new_version">Найдена новая версия</string>
-    <string name="install_apk">Установить apk</string>
-    <string name="install_last_server_remotly">Установить последнюю версию сервера</string>
-    <string name="install_custom_server_remotly">Установить желаемую версию сервера</string>
-    <string name="install_server_localy">Установить сервер из папки Download</string>
-    <string name="arch">Архитектура ОС</string>
-    <string name="version">Версия</string>
-    <string name="current_version_apk">Установленная версия Apk</string>
-    <string name="current_version_server">Версия Server</string>
-    <string name="downloading">Скачивание…</string>
-    <string name="remote_server">Внешний</string>
-
-    <string name="permission_storage_msg">Доступ к памяти требуется для записи настроек в файл</string>
-    <string name="permission_btn">РАЗРЕШИТЬ</string>
-
-    <string name="crash_app">"Ооооой… Во мне случилась ошибка,\nНо не волнуйтесь, Вы можете отправить отчет об ошибке разработчику, чтобы он её поскорее исправил."</string>
-
-    <string name="connects_to_torrent">Получение информации торрента</string>
-
-    <string name="open_torrserve">Запустить TorrServe</string>
-
-    <string name="buffering">Буферизация</string>
-    <string name="buffer">Буфер</string>
-    <string name="peers">Пиры</string>
-    <string name="size">Размер</string>
-    <string name="download_speed">Скорость скачивания</string>
-    <string name="upload_speed">Скорость отдачи</string>
-
-    <string name="copy_to_clipboard">Скопировано в буфер обмена</string>
-    <string name="connecting_to_server">Соединение с сервером…</string>
-    <string name="stat_server_is_running">Сервер запущен</string>
-    <string name="server_stoped">Сервер остановлен</string>
-    <string name="server_not_responding">Сервер не отвечает</string>
-    <string name="server_not_exists">Сервер отсутствует</string>
-
-    <string name="app_install_permissions">Приложению TorrServe нужны права на установку приложений для обновления самого себя</string>
-
-    <string name="warn_error_download_server">Ошибка скачивания сервера</string>
-    <string name="warn_no_localy_updates">Нет локальных обновлений</string>
-
-    <string name="error_add_torrent">Ошибка при добавлении торрента</string>
-    <string name="error_remove_torrent">Ошибка при удалении торрента</string>
-    <string name="error_open_torrent">Ошибка при открытии торрента</string>
-    <string name="files_not_found">Файл в торренте не найден</string>
-    <string name="error_retrieving_settings">Ошибка при получении настроек</string>
-    <string name="error_sending_settings">Ошибка при отправке настроек</string>
-    <string name="error_server_start">Ошибка при запуске сервера</string>
-
+    <string name="connections_limit">Торрент-соединения (рекомендуется 20–25 на всех устройствах Android)</string>
+    <string name="connections_dht_limit">Лимит подключений DHT (0 - безлимит)</string>
+    <string name="download_rate_limit">Ограничение скорости загрузки (Килобайты, 0 - без ограничений)</string>
+    <string name="upload_rate_limit">Ограничение скорости отдачи (Килобайты, 0 - без ограничений)</string>
     <string name="retrackers">Ретрекеры</string>
+    <string name="strategy">Стратегия загрузки</string>
+    <string name="peers_listen_port">Порт для входящих подключений (0 - по умолчанию)</string>
     <string-array name="retracker_mode">
         <item>Ничего не делать</item>
-        <item>Добавлять ретрекеры</item>
-        <item>Удалять ретрекеры</item>
-        <item>Заменить ретрекеры</item>
+        <item>Добавлять</item>
+        <item>Удалять</item>
+        <item>Заменять</item>
     </string-array>
-
     <string-array name="encryption_mode">
         <item>Включено</item>
         <item>Отключено</item>
         <item>Принудительно</item>
     </string-array>
+    <string name="default_player">Плеер по умолчанию</string>
+    <string name="choose_player">Всегда спрашивать</string>
+    <string name="app_theme_title">Тема оформления</string>
+    <string-array name="app_theme_entries">
+        <item>Как в системе</item>
+        <item>Светлая</item>
+        <item>Тёмная</item>
+        <item>Чёрная</item>
+    </string-array>
+    <string name="add_play">Доб. и играть</string>
+    <string name="play">Играть</string>
+    <string name="make_as_def">Запомнить действие</string>
+    <string name="reset_def">Действие сброшено</string>
+    <string name="playlist_all">Играть все</string>
+    <string name="playlist_continue">Продолжить</string>
+    <string name="torrent">Торрент</string>
+    <string name="title">Название</string>
+    <string name="poster">Постер</string>
+    <string name="poster_link">URL постера</string>
+    <string name="local_ip">Локальный IP</string>
+    <string name="connected_host">Используется</string>
+    <string name="find">Поиск</string>
+    <string name="find_hosts">Поиск серверов</string>
+    <string name="local_server">Локальный сервер</string>
+    <string name="saved_server">Сохраненный сервер</string>
+    <string name="on_device">На устройстве</string>
+    <string name="buffering">Буферизация</string>
+    <string name="buffer">Буфер</string>
+    <string name="peers">Пиры</string>
+    <string name="size">Размер</string>
+    <string name="download_speed">Скорость загрузки</string>
+    <string name="upload_speed">Скорость отдачи</string>
+    <string name="loading">Загрузка</string>
+    <string name="found_new_app_update">Найдено обновление приложения</string>
+    <string name="not_found_new_app_update">Нет обновлений приложения</string>
+    <string name="current_version">Установленная версия</string>
+    <string name="new_version">Новая версия</string>
+    <string name="server_update">Обновление сервера</string>
+    <string name="install_server_latest">Установить последнюю версию сервера</string>
+    <string name="install_server_localy">Установить сервер из папки Download</string>
+    <string name="delete_local_server">Удалить локальный сервер</string>
+    <string name="arch">Архитектура ОС</string>
+    <string name="update_server">Обновление сервера</string>
+    <string name="warn_error_download_server">Ошибка загрузки сервера</string>
+    <string name="warn_no_localy_updates">Нет обновлений</string>
+    <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
+    <string name="stat_running">Служба запущена</string>
+    <string name="server_stoped">Сервер остановлен</string>
+    <string name="server_not_responding">Сервер не отвечает</string>
+    <string name="server_not_exists">Сервер отсутствует</string>
+    <string name="error_retrieving_settings">Ошибка при получении настроек</string>
+    <string name="error_sending_settings">Ошибка при отправке настроек</string>
+    <string name="error_app_not_found">Подходящих приложений не найдено</string>
+    <string name="done_sending_settings">Настройки сохранены</string>
+    <string name="permission_storage_msg">Доступ к памяти необходим для записи настроек в файл</string>
+    <string name="permission_btn">РАЗРЕШИТЬ</string>
+    <string name="donation">Пожертвование</string>
+    <string name="link">Открыть</string>
+    <string name="donation_msg">Пожертвование на поддержку проектов</string>
+    <string name="yandex_money_msg">Yandex.Money:</string>
+    <string name="paypal_msg">PayPal:</string>
+    <string name="telegram_msg">Канал в Telegram</string>
+    <string name="app_settings">Настройки приложения</string>
+    <string name="host_title">Установить URL-адрес TorrServer</string>
+    <string name="torserver_title">Настройки TorrServer</string>
+    <string name="torserver_summary">Настройки параметров TorrServer</string>
+    <string name="remove_action_title">Удалить действие по умолчанию</string>
+    <string name="remove_action_summary">Сброс действия по умолчанию при открытии торрента</string>
+    <string name="boot_start_title">Запускать сервер при загрузке</string>
+    <string name="boot_start_sum_on">Запускать сервер при загрузке устройства</string>
+    <string name="boot_start_sum_off">Не запускать сервер при загрузке устройства</string>
+    <string name="root_start_title">Запускать сервер от root</string>
+    <string name="root_start_sum_on">Запускать сервер от root, чтобы система не могла остановить его</string>
+    <string name="root_start_sum_off">Не запускать сервер от root</string>
+    <string name="choose_player_title">Выбор плеера</string>
+    <string name="show_banner_title">Показывать баннер</string>
+    <string name="show_banner_sum_on">Показывать баннер при загрузке торрента</string>
+    <string name="show_banner_sum_off">Не показывать баннер при загрузке торрента</string>
+    <string name="show_battery_save_title">Показать настройки энергосбережения</string>
+    <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
+    <string name="server_started">Сервер запущен</string>
+    <string name="open_torrserve">Запустить TorrServe</string>
+    <string name="torrents">Торренты</string>
+    <string name="apply">Применить</string>
 </resources>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="50dp"
+        android:requiresFadingEdge="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvServerAddr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etCacheSize"
+                android:paddingStart="5dp"
+                android:text="@string/cache_size" />
+
+            <EditText
+                android:id="@+id/etCacheSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etPreloadTorrent"
+                android:paddingStart="5dp"
+                android:text="@string/torrent_preload" />
+
+            <EditText
+                android:id="@+id/etPreloadTorrent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <CheckBox
+                android:id="@+id/cbPreloadBuffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/preload_before_start" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etDisconnectTimeout"
+                android:paddingStart="5dp"
+                android:text="@string/torrent_disconnect_timeout" />
+
+            <EditText
+                android:id="@+id/etDisconnectTimeout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
+            <CheckBox
+                android:id="@+id/cbSaveOnDisk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_on_disk"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etContentPath"
+                android:paddingStart="5dp"
+                android:text="@string/save_content_path"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/etContentPath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textUri"
+                android:visibility="gone" />
+
+            <CheckBox
+                android:id="@+id/cbForceEncrypt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/force_encrypt" />
+
+            <CheckBox
+                android:id="@+id/cbEnableIPv6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enable_ipv6" />
+
+            <CheckBox
+                android:id="@+id/cbDisableTCP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_tcp" />
+
+            <CheckBox
+                android:id="@+id/cbDisableUTP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_utp" />
+
+            <CheckBox
+                android:id="@+id/cbDisableUPNP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_upnp" />
+
+            <CheckBox
+                android:id="@+id/cbDisableDHT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_dht" />
+
+            <CheckBox
+                android:id="@+id/cbDisableUpload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_upload" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etConnectionsLimit"
+                android:paddingStart="5dp"
+                android:text="@string/connections_limit" />
+
+            <EditText
+                android:id="@+id/etConnectionsLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etConnectionsDhtLimit"
+                android:paddingStart="5dp"
+                android:text="@string/connections_dht_limit" />
+
+            <EditText
+                android:id="@+id/etConnectionsDhtLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etDownloadRateLimit"
+                android:paddingStart="5dp"
+                android:text="@string/download_rate_limit" />
+
+            <EditText
+                android:id="@+id/etDownloadRateLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etUploadRateLimit"
+                android:paddingStart="5dp"
+                android:text="@string/upload_rate_limit" />
+
+            <EditText
+                android:id="@+id/etUploadRateLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/spinnerRetracker"
+                android:paddingStart="5dp"
+                android:text="@string/retrackers" />
+
+            <Spinner
+                android:id="@+id/spinnerRetracker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/spinnerStrategy"
+                android:paddingStart="5dp"
+                android:text="@string/strategy" />
+
+            <Spinner
+                android:id="@+id/spinnerStrategy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/etPeersListenPort"
+                android:paddingStart="5dp"
+                android:text="@string/peers_listen_port" />
+
+            <EditText
+                android:id="@+id/etPeersListenPort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/tvVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="5dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <!--TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" /-->
+
+        <LinearLayout
+            android:id="@+id/footer"
+            style="@android:style/DeviceDefault.ButtonBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:divider="?android:attr/dividerVertical"
+            android:orientation="horizontal"
+            android:showDividers="none">
+
+            <Button
+                android:id="@+id/btnApply"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="@string/apply" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:text="@android:string/cancel" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

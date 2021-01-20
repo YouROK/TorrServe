@@ -1,98 +1,166 @@
 package ru.yourok.torrserve.utils
 
-import cz.msebera.android.httpclient.HttpEntity
-import cz.msebera.android.httpclient.client.config.RequestConfig
-import cz.msebera.android.httpclient.client.methods.HttpGet
-import cz.msebera.android.httpclient.impl.client.HttpClients
-import cz.msebera.android.httpclient.util.EntityUtils
-import java.security.KeyManagementException
-import java.security.NoSuchAlgorithmException
-import java.security.SecureRandom
-import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
+import android.net.Uri
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.HttpURLConnection.*
+import java.net.URL
+import java.util.zip.GZIPInputStream
 
 
 /**
  * Created by yourok on 07.11.17.
  */
 
-class Http(val url: String) {
+class Http(url: Uri) {
+    private var currUrl: String = url.toString()
+    private var isConn: Boolean = false
+    private var connection: HttpURLConnection? = null
+    private var errMsg: String = ""
+    private var inputStream: InputStream? = null
 
-    fun read(): String {
-        val httpclient = HttpClients.custom().setConnectionTimeToLive(5, TimeUnit.SECONDS).setSslcontext(getSslContext()).build()
-        val httpreq = HttpGet(url)
-        val response = httpclient.execute(httpreq)
+    private var timeout = 30000
 
-        val status = response.statusLine?.statusCode ?: -1
-        if (status == 200) {
-            val entity = response.entity ?: return ""
-            return EntityUtils.toString(entity)
-        } else {
-            return ""
-        }
+    fun connect() {
+        connect(0)
     }
 
-    fun readTimeout(timeout: Int): String {
-        val httpclient = HttpClients.custom().setConnectionTimeToLive(5, TimeUnit.SECONDS).setSslcontext(getSslContext()).build()
-        val httpreq = HttpGet(url)
-        httpreq.config = RequestConfig.copy(RequestConfig.DEFAULT)
-                .setConnectTimeout(timeout)
-                .build()
+    fun connect(pos: Long): Long {
 
-        val response = httpclient.execute(httpreq)
+        var responseCode: Int
+        var redirCount = 0
+        do {
+            if (!currUrl.contains("://"))
+                currUrl = currUrl.replace(":/", "://")
 
-        val status = response.statusLine?.statusCode ?: -1
-        if (status == 200) {
-            val entity = response.entity ?: return ""
-            return EntityUtils.toString(entity)
-        } else {
-            return ""
+            val url = URL(currUrl)
+            connection = url.openConnection() as HttpURLConnection
+            connection!!.connectTimeout = timeout
+            connection!!.readTimeout = 15000
+            connection!!.setRequestMethod("GET")
+            connection!!.setDoInput(true)
+
+            connection!!.setRequestProperty("UserAgent", "DWL/1.1.0 (Linux; Android;)")
+            connection!!.setRequestProperty("Accept", "*/*")
+            connection!!.setRequestProperty("Accept-Encoding", "gzip")
+            if (pos > 0)
+                connection!!.setRequestProperty("Range", "bytes=$pos-")
+
+            connection!!.connect()
+
+            responseCode = connection!!.getResponseCode()
+            var redirected =
+                responseCode == HTTP_MOVED_PERM || responseCode == HTTP_MOVED_TEMP || responseCode == HTTP_SEE_OTHER
+            if (redirected) {
+                currUrl = connection!!.getHeaderField("Location")
+                connection!!.disconnect()
+                redirCount++
+            }
+
+            if (responseCode == 429) {
+                var retry = connection!!.getHeaderField("Retry-After")
+                if (retry.isNullOrEmpty() || retry == "0")
+                    retry = "1"
+                redirCount++
+                redirected = true
+                Thread.sleep(retry.toLong() * 1000L)
+            }
+
+            if (redirCount > 5) {
+                throw IOException("Error connect to: " + currUrl + " too many redirects")
+            }
+        } while (redirected)
+
+
+        if (responseCode != HttpURLConnection.HTTP_OK && responseCode != HttpURLConnection.HTTP_PARTIAL) {
+            throw IOException("Error connect to: " + currUrl + " " + connection!!.responseMessage)
         }
+        isConn = true
+        if ((connection!!.getHeaderField("Accept-Ranges")?.toLowerCase() ?: "") == "none")
+            return -1
+        return getSize()
     }
 
-    fun getEntity(): HttpEntity? {
-        val httpclient = HttpClients.custom().setConnectionTimeToLive(5, TimeUnit.SECONDS).setSslcontext(getSslContext()).build()
-        val httpreq = HttpGet(url)
-        val response = httpclient.execute(httpreq)
-
-        val status = response.statusLine?.statusCode ?: -1
-        if (status == 200) {
-            val entity = response.entity ?: return null
-            return entity
-        } else {
-            return null
-        }
+    fun setTimeout(timeout: Int) {
+        this.timeout = timeout
     }
 
-    private fun getSslContext(): SSLContext? {
-        val byPassTrustManagers = arrayOf<TrustManager>(object : X509TrustManager {
-            override fun checkClientTrusted(p0: Array<out java.security.cert.X509Certificate>?, p1: String?) {
-            }
+    fun isConnected(): Boolean {
+        return isConn
+    }
 
-            override fun checkServerTrusted(p0: Array<out java.security.cert.X509Certificate>?, p1: String?) {
-            }
+    fun getSize(): Long {
+        if (!isConn)
+            return 0
 
-            override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
-                return arrayOf()
-            }
-        })
-
-        var sslContext: SSLContext? = null
-
+        var cl = connection!!.getHeaderField("Content-Range")
         try {
-            sslContext = SSLContext.getInstance("TLS")
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
+            if (!cl.isNullOrEmpty()) {
+                val cr = cl.split("/")
+                if (cr.isNotEmpty())
+                    cl = cr.last()
+                return cl.toLong()
+            }
+        } catch (e: Exception) {
         }
 
+        cl = connection!!.getHeaderField("Content-Length")
         try {
-            sslContext?.init(null, byPassTrustManagers, SecureRandom())
-        } catch (e: KeyManagementException) {
-            e.printStackTrace()
+            if (!cl.isNullOrEmpty()) {
+                return cl.toLong()
+            }
+        } catch (e: Exception) {
         }
 
-        return sslContext
+        return 0
+    }
+
+    fun getUrl(): String {
+        return currUrl
+    }
+
+    fun getInputStream(): InputStream? {
+        if (inputStream == null && connection != null) {
+            if ("gzip".equals(connection?.getContentEncoding()))
+                inputStream = GZIPInputStream(connection!!.getInputStream())
+            else
+                inputStream = connection!!.getInputStream()
+        }
+
+        return inputStream
+    }
+
+    fun read(b: ByteArray): Int {
+        if (!isConn or (getInputStream() == null))
+            throw IOException("connect before read")
+        var sz = getInputStream()!!.read(b)
+        var size = sz
+        while (sz > 0 && sz < b.size / 2) {
+            try {
+                sz = getInputStream()!!.read(b, size, b.size - size)
+                if (sz > 0)
+                    size += sz
+                else
+                    break
+            } catch (e: Exception) {
+                e.printStackTrace()
+                break
+            }
+        }
+        return size
+    }
+
+    fun getErrorMessage(): String {
+        return errMsg
+    }
+
+    fun close() {
+        try {
+            inputStream?.close()
+        } catch (e: Exception) {
+        }
+        connection?.disconnect()
+        isConn = false
     }
 }

@@ -1,0 +1,62 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:key="prefs">
+
+    <PreferenceCategory
+        android:title="@string/app_settings"
+        android:key="data"
+        style="@style/HeadPreferenceCategory" />
+
+    <Preference
+        app:key="host"
+        app:title="@string/host_title"
+        app:summary="@string/host_title" />
+
+    <Preference
+        app:key="server_settings"
+        app:title="@string/torserver_title"
+        app:summary="@string/torserver_summary" />
+
+    <Preference
+        app:key="remove_action"
+        app:title="@string/remove_action_title"
+        app:summary="@string/remove_action_summary" />
+
+    <SwitchPreferenceCompat
+        app:key="boot_start"
+        app:title="@string/boot_start_title"
+        android:summaryOn="@string/boot_start_sum_on"
+        android:summaryOff="@string/boot_start_sum_off"
+        android:defaultValue="false" />
+
+    <SwitchPreferenceCompat
+        app:key="root_start"
+        app:title="@string/root_start_title"
+        android:summaryOn="@string/root_start_sum_on"
+        android:summaryOff="@string/root_start_sum_off"
+        android:defaultValue="false" />
+
+    <ListPreference
+        app:key="choose_player"
+        app:title="@string/choose_player_title" />
+
+    <SwitchPreferenceCompat
+        app:key="show_banner"
+        app:title="@string/show_banner_title"
+        android:summaryOn="@string/show_banner_sum_on"
+        android:summaryOff="@string/show_banner_sum_off"
+        android:defaultValue="true" />
+
+    <ListPreference
+        app:key="app_theme"
+        app:title="@string/app_theme_title"
+        app:summary="%s"
+        app:entries="@array/app_theme_entries"
+        app:entryValues="@array/app_theme_entries_values"/>
+
+    <Preference
+        app:key="show_battery_save"
+        app:title="@string/show_battery_save_title"
+        app:summary="@string/show_battery_save_summary" />
+
+</PreferenceScreen>

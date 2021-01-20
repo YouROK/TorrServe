@@ -75,5 +75,6 @@ object Mime {
             "sid",
             "wav",
             "wma",
-            "xm")
+            "xm"
+    )
 }
