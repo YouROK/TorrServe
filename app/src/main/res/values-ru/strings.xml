@@ -119,6 +119,9 @@
     <string name="show_banner_title">Показывать баннер</string>
     <string name="show_banner_sum_on">Показывать баннер при загрузке торрента</string>
     <string name="show_banner_sum_off">Не показывать баннер при загрузке торрента</string>
+    <string name="show_cover_title">Показывать обложки</string>
+    <string name="show_cover_sum_on">Показывать обложки торрентов</string>
+    <string name="show_cover_sum_off">Не показывать обложки торрентов</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
     <string name="server_started">Сервер запущен</string>

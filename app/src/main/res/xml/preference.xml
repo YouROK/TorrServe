@@ -47,6 +47,13 @@
         android:summaryOff="@string/show_banner_sum_off"
         android:defaultValue="true" />
 
+    <SwitchPreferenceCompat
+        app:key="show_cover"
+        app:title="@string/show_cover_title"
+        android:summaryOn="@string/show_cover_sum_on"
+        android:summaryOff="@string/show_cover_sum_off"
+        android:defaultValue="true" />
+
     <ListPreference
         app:key="app_theme"
         app:title="@string/app_theme_title"

@@ -18,6 +18,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.services.TorrService
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoTorrent
@@ -57,7 +58,7 @@ open class InfoFragment : TSFragment() {
                 view?.apply {
                     if (poster != torr.poster) {
                         poster = torr.poster
-                        if (poster.isNotEmpty())
+                        if (poster.isNotEmpty() && Settings.showCover())
                             findViewById<ImageView>(R.id.ivPoster)?.let {
                                 it.visibility = View.VISIBLE
                                 Glide.with(this)
@@ -138,12 +139,10 @@ open class InfoFragment : TSFragment() {
                             Html.fromHtml("<b>${getString(R.string.peers)}:</b> ${peers}", Html.FROM_HTML_MODE_COMPACT)
                         else
                             Html.fromHtml("<b>${getString(R.string.peers)}:</b> ${peers}")
-
                         findViewById<TextView>(R.id.tvPeers).text = txt
                     }
 
                     val speed = ByteFmt.byteFmt(torr.download_speed) + "/s"
-
                     if (speed.isNotEmpty() && torr.download_speed > 50.0) {
                         val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
                             Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> ${speed}", Html.FROM_HTML_MODE_COMPACT)

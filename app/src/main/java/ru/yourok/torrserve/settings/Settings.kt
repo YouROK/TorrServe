@@ -36,6 +36,8 @@ object Settings {
     fun showBanner(): Boolean = get("show_banner", true)
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
+    fun showCover(): Boolean = get("show_cover", true)
+
     fun getTheme(): String = get("theme", "dark")
     fun setTheme(v: String) = set("theme", v)
 

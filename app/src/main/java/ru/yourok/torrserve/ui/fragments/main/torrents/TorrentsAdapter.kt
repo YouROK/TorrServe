@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.ByteFmt
 import java.text.SimpleDateFormat
 import java.util.*
@@ -60,7 +61,7 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
             title = list[position].name
 
         vi.findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
-        if (poster.isNotEmpty())
+        if (poster.isNotEmpty() && Settings.showCover())
             vi.findViewById<ImageView>(R.id.ivPoster)?.let {
                 it.visibility = View.VISIBLE
                 Glide.with(activity)

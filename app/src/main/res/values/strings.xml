@@ -165,6 +165,10 @@
     <string name="show_banner_sum_on">Show banner on load torrent</string>
     <string name="show_banner_sum_off">Don\'t show banner on load torrent</string>
 
+    <string name="show_cover_title">Show poster</string>
+    <string name="show_cover_sum_on">Show torrent poster</string>
+    <string name="show_cover_sum_off">Don\'t show torrent poster</string>
+
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
