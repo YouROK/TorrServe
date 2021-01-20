@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.fragments.main.settings
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -58,6 +59,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             replace(id, this@SettingsFragment)
             addToBackStack("Settings")
         }
+    }
+
+    // PreferenceFragment class
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val rv = listView // This holds the PreferenceScreen's items
+        rv.setPadding(0, 0, 0, 56) // (left, top, right, bottom)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
