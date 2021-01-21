@@ -1,6 +1,8 @@
 package ru.yourok.torrserve.ui.activities.play
 
+import android.content.ContentResolver
 import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -12,7 +14,6 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.players.Players
 import ru.yourok.torrserve.ui.fragments.play.TorrentFilesFragment
-import ru.yourok.torrserve.ui.fragments.play.viewmodels.TorrentViewModel
 import ru.yourok.torrserve.utils.TorrentHelper
 
 object Play {
@@ -22,41 +23,52 @@ object Play {
         lifecycleScope.launch(Dispatchers.IO) {
             torrentSave = save
 
-            val dataTorr = TorrentViewModel().loadTorrent(torrentLink, torrentHash, torrentTitle, torrentPoster, torrentData, torrentSave)
-            withContext(Dispatchers.Main) {
-                dataTorr?.observe(this@play) { tr ->
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        infoFragment.startInfo(tr.hash)
+            val torrent: Torrent
 
-                        val viewed = Api.listViewed(tr.hash)
-                        val torr = TorrentHelper.waitFiles(tr.hash) ?: let {
-                            //TODO msg
-                            return@launch
-                        }
+            try {
+                if (torrentHash.isNotEmpty())
+                    torrent = Api.getTorrent(torrentHash)
+                else if (torrentLink.isNotEmpty()) {
+                    val torr = loadLink(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
+                    torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
+                        App.Toast(getString(R.string.error_retrieve_torrent_info))
+                        finish()
+                        return@launch
+                    }
+                } else {
+                    App.Toast(getString(R.string.error_retrieve_data))
+                    finish()
+                    return@launch
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                App.Toast(e.message ?: getString(R.string.error_retrieve_data))
+                finish()
+                return@launch
+            }
 
-                        val files = TorrentHelper.getPlayableFiles(torr)
+            infoFragment.startInfo(torrent.hash)
+            val viewed = Api.listViewed(torrent.hash)
+            val files = TorrentHelper.getPlayableFiles(torrent)
 
-                        if (intent.hasExtra("FileTemplate") && torrentFileIndex == -1) // For lostfilm app
-                            torrentFileIndex = SerialFilter.filter(intent, files)
+            if (intent.hasExtra("FileTemplate") && torrentFileIndex == -1) // For lostfilm app
+                torrentFileIndex = SerialFilter.filter(intent, files)
 
+            lifecycleScope.launch {
+                if (files.isEmpty())
+                    error(ErrLoadTorrentInfo)
+                else if (files.size == 1) {
+                    torrentFileIndex = 0
+                    streamTorrent(torrent, files.first().id)
+                    successful(Intent())
+                } else if (torrentFileIndex > 0) {
+                    streamTorrent(torrent, torrentFileIndex)
+                    successful(Intent())
+                } else {
+                    TorrentFilesFragment().showTorrent(this@play, torrent, viewed) { file ->
+                        torrentFileIndex = TorrentHelper.findIndex(torrent, file)
                         lifecycleScope.launch {
-                            if (files.isEmpty())
-                                error(ErrLoadTorrentInfo)
-                            else if (files.size == 1) {
-                                torrentFileIndex = 0
-                                streamTorrent(torr, files.first().id)
-                                successful(Intent())
-                            } else if (torrentFileIndex > 0) {
-                                streamTorrent(torr, torrentFileIndex)
-                                successful(Intent())
-                            } else {
-                                TorrentFilesFragment().showTorrent(this@play, torr, viewed) { file ->
-                                    torrentFileIndex = TorrentHelper.findIndex(torr, file)
-                                    lifecycleScope.launch {
-                                        streamTorrent(torr, file.id)
-                                    }
-                                }
-                            }
+                            streamTorrent(torrent, file.id)
                         }
                     }
                 }
@@ -80,5 +92,18 @@ object Play {
         val intent = Players.getIntent(torr, index)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         App.context.startActivity(intent)
+    }
+
+    private fun loadLink(link: String, title: String, poster: String, data: String, save: Boolean): Torrent {
+        val scheme = Uri.parse(link).scheme
+        if (ContentResolver.SCHEME_ANDROID_RESOURCE == scheme || ContentResolver.SCHEME_FILE == scheme) {
+            return uploadFile(link, title, poster, data, save)
+        } else
+            return Api.addTorrent(link, title, poster, data, save)
+    }
+
+    private fun uploadFile(link: String, title: String, poster: String, data: String, save: Boolean): Torrent {
+        val fis = App.context.contentResolver.openInputStream(Uri.parse(link))
+        return Api.uploadTorrent(fis, title, poster, data, save)
     }
 }

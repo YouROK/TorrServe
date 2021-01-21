@@ -128,6 +128,9 @@
     <string name="error_app_not_found">No suitable applications found</string>
     <string name="done_sending_settings">Settings saved</string>
 
+    <string name="error_retrieve_data">Error retrieve data</string>
+    <string name="error_retrieve_torrent_info">Error retrieve torrent info</string>
+
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>
 
