@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
@@ -39,10 +40,16 @@ open class InfoFragment : TSFragment() {
     }
 
     suspend fun startInfo(hash: String) = withContext(Dispatchers.Main) {
-        viewModel = ViewModelProvider(this@InfoFragment).get(InfoViewModel::class.java)
-        val data = (viewModel as InfoViewModel).setTorrent(hash)
-        data.observe(this@InfoFragment) {
-            updateUI(it, (requireActivity() as PlayActivity).torrentFileIndex)
+        try {
+            viewModel = ViewModelProvider(this@InfoFragment).get(InfoViewModel::class.java)
+            if (isActive) {
+                val data = (viewModel as InfoViewModel).setTorrent(hash)
+                data.observe(this@InfoFragment) {
+                    updateUI(it, (requireActivity() as PlayActivity).torrentFileIndex)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
