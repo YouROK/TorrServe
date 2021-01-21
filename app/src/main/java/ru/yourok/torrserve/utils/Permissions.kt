@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.PowerManager
 import android.provider.Settings
-import android.view.View
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import ru.yourok.torrserve.R
@@ -18,7 +17,7 @@ object Premissions {
     fun requestPermissionWithRationale(activity: Activity) {
         thread {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Snackbar.make(activity.findViewById<View>(R.id.content), R.string.permission_storage_msg, Snackbar.LENGTH_INDEFINITE)
+                Snackbar.make(activity.findViewById(android.R.id.content) ?: return@thread, R.string.permission_storage_msg, Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.permission_btn, {
                         ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
                     })
