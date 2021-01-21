@@ -35,6 +35,10 @@ open class InfoFragment : TSFragment() {
         savedInstanceState: Bundle?
     ): View {
         val vi = inflater.inflate(R.layout.info_fragment, container, false)
+        lifecycleScope.launch {
+            (activity as PlayActivity?)?.showProgress()
+            vi.findViewById<TextView>(R.id.tvTitle).setText(R.string.loading_torrent)
+        }
         TorrService.start()
         return vi
     }

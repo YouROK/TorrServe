@@ -76,7 +76,6 @@ class PlayActivity : AppCompatActivity() {
                 App.Toast(R.string.server_not_responding)
                 error(ErrTorrServerNotResponding)
             }
-            hideProgress()
             processIntent()
         }
     }
@@ -118,7 +117,8 @@ class PlayActivity : AppCompatActivity() {
         //// Play torrent
         if (intent.hasExtra("action") && intent.getStringExtra("action") == "play")
             play(false)
-        else
+        else {
+            lifecycleScope.launch { hideProgress() }
             ChooserFragment().show(this) {
                 when (it) {
                     1, 2 -> {
@@ -129,6 +129,7 @@ class PlayActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
     }
 
     suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {

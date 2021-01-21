@@ -130,4 +130,5 @@
     <string name="apply">Применить</string>
     <string name="error_retrieve_data">Ошибка при получении данных</string>
     <string name="error_retrieve_torrent_info">Ошибка при загрузке данных торрента</string>
+    <string name="loading_torrent">Загрузка информации о торренте…</string>
 </resources>
