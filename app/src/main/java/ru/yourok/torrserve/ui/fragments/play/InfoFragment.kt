@@ -111,7 +111,7 @@ open class InfoFragment : TSFragment() {
                     if (torr.preload_size > 0 && torr.preloaded_bytes > 0) {
                         prc = torr.preloaded_bytes.toDouble() * 100.0 / torr.preload_size.toDouble()
                         if (prc < 100.0)
-                            buffer = "%.02f".format(prc) + "% "
+                            buffer = "%.1f".format(prc) + "% "
                         buffer += ByteFmt.byteFmt(torr.preloaded_bytes)
                         if (prc < 100.0)
                             buffer += "/" + ByteFmt.byteFmt(torr.preload_size)
