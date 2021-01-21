@@ -23,6 +23,8 @@ object Players {
         intent.setDataAndType(Uri.parse(link), mime)
         intent.putExtra("title", torrent.title)
         intent.putExtra("poster", torrent.poster)
+        intent.putExtra("forcename", torrent.title) // ViMu
+        intent.putExtra("forceresume", true) // ViMu
         // default player
         if (pkg == "0" && intent.resolveActivity(App.context.packageManager) != null)
             return intent
