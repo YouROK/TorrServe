@@ -128,4 +128,6 @@
     <string name="open_torrserve">Запустить TorrServe</string>
     <string name="torrents">Торренты</string>
     <string name="apply">Применить</string>
+    <string name="error_retrieve_data">Ошибка при получении данных</string>
+    <string name="error_retrieve_torrent_info">Ошибка при загрузке данных торрента</string>
 </resources>

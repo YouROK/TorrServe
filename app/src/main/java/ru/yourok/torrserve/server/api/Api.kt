@@ -64,9 +64,10 @@ object Api {
         postJson(host, req)
     }
 
-    fun uploadTorrent(file: InputStream, title: String, poster: String, data: String, save: Boolean) {
+    fun uploadTorrent(file: InputStream, title: String, poster: String, data: String, save: Boolean): Torrent {
         val host = Net.getHostUrl("/torrent/upload")
-        Net.upload(host, title, poster, data, file, save)
+        val resp = Net.upload(host, title, poster, data, file, save)
+        return Gson().fromJson(resp, Torrent::class.java)
     }
 
     // Settings
