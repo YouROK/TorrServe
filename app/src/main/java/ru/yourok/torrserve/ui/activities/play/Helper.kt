@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 
@@ -49,8 +51,15 @@ fun PlayActivity.error(err: ReturnError) {
 
 fun PlayActivity.addAndExit() {
     lifecycleScope.launch(Dispatchers.IO) {
-        Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, true)
-        UpdaterCards.updateCards()
+        try {
+            Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, true)
+            UpdaterCards.updateCards()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            App.Toast(e.message ?: getString(R.string.error_retrieve_data))
+            finish()
+            return@launch
+        }
     }
     torrentHash = ""
     finish()
