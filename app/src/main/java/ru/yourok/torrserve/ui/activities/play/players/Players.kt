@@ -23,10 +23,15 @@ object Players {
         intent.setDataAndType(Uri.parse(link), mime)
         intent.putExtra("title", torrent.title)
         intent.putExtra("poster", torrent.poster)
-        intent.putExtra("forceresume", true) // resume in ViMu: https://www.vimu.tv/player-api
         // default player
         if (pkg == "0" && intent.resolveActivity(App.context.packageManager) != null)
             return intent
+        // vimu player
+        if (pkg == "net.gtvbox.videoplayer") {
+            val vimuIntent = Vimu.getIntent(torrent, index)
+            if (vimuIntent.resolveActivity(App.context.packageManager) != null)
+                return vimuIntent
+        }
         // user defined player
         if (pkg.isNotEmpty()) {
             intent.`package` = pkg
