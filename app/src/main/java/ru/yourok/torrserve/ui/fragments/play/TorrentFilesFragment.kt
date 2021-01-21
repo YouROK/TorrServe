@@ -38,7 +38,7 @@ class TorrentFilesFragment : TSFragment() {
     }
 
     private val torrFilesAdapter = TorrentFilesAdapter()
-    private lateinit var torrent: Torrent
+    private var torrent: Torrent? = null
     private var viewed: List<Viewed>? = null
     private var onClickItem: ((file: FileStat) -> Unit)? = null
 
@@ -46,16 +46,8 @@ class TorrentFilesFragment : TSFragment() {
         torrent = torr
         this@TorrentFilesFragment.viewed = viewed
         this@TorrentFilesFragment.onClickItem = onClickItem
-        torrFilesAdapter.update(torrent, viewed)
+        torrFilesAdapter.update(torr, viewed)
         show(activity, R.id.bottom_container)
-    }
-
-    suspend fun disableList() = withContext(Dispatchers.Main) {
-        view?.findViewById<ListView>(R.id.lvTorrentFiles)?.isEnabled = false
-    }
-
-    suspend fun enableList() = withContext(Dispatchers.Main) {
-        view?.findViewById<ListView>(R.id.lvTorrentFiles)?.isEnabled = true
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -63,40 +55,44 @@ class TorrentFilesFragment : TSFragment() {
         view?.apply {
             var last = 0
             viewed?.forEach { last = max(last, it.file_index) }
-            val file = TorrentHelper.findFile(torrent, last)
+            val file = TorrentHelper.findFile(torrent ?: return, last)
             val next = if (file != null)
-                TorrentHelper.findIndex(torrent, file) + 1
+                TorrentHelper.findIndex(torrent ?: return, file) + 1
             else
                 last
 
             findViewById<Button>(R.id.btnPlaylist).setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    try {
-                        if (Api.listTorrent().isNotEmpty()) {
-                            val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name.urlEncode()}.m3u?hash=${torrent.hash}")), "video/*")
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            App.context.startActivity(intent)
-                        }
-                    } catch (e: Exception) {
-                        e.message?.let {
-                            App.Toast(it)
+                    torrent?.let { torr ->
+                        try {
+                            if (Api.listTorrent().isNotEmpty()) {
+                                val intent = Intent(Intent.ACTION_VIEW)
+                                intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torr.name.urlEncode()}.m3u?hash=${torr.hash}")), "video/*")
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                App.context.startActivity(intent)
+                            }
+                        } catch (e: Exception) {
+                            e.message?.let {
+                                App.Toast(it)
+                            }
                         }
                     }
                 }
             }
             findViewById<Button>(R.id.btnPlaylistContinue).setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    try {
-                        if (Api.listTorrent().isNotEmpty()) {
-                            val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torrent.name.urlEncode()}.m3u?hash=${torrent.hash}&fromlast")), "video/*")
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            App.context.startActivity(intent)
-                        }
-                    } catch (e: Exception) {
-                        e.message?.let {
-                            App.Toast(it)
+                    torrent?.let { torr ->
+                        try {
+                            if (Api.listTorrent().isNotEmpty()) {
+                                val intent = Intent(Intent.ACTION_VIEW)
+                                intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torr.name.urlEncode()}.m3u?hash=${torr.hash}&fromlast")), "video/*")
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                App.context.startActivity(intent)
+                            }
+                        } catch (e: Exception) {
+                            e.message?.let {
+                                App.Toast(it)
+                            }
                         }
                     }
                 }
