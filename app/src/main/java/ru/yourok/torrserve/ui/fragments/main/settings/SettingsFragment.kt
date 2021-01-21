@@ -65,7 +65,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val rv = listView // This holds the PreferenceScreen's items
-        rv.setPadding(0, 0, 0, 56) // (left, top, right, bottom)
+        rv?.setPadding(0, 0, 0, 56) // (left, top, right, bottom)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
