@@ -176,4 +176,11 @@
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
+    <string name="stat_string_added">Torrent added</string>
+    <string name="stat_string_info">Getting torrent info</string>
+    <string name="stat_string_preload">Preload torrent cache</string>
+    <string name="stat_string_working">Torrent working</string>
+    <string name="stat_string_closed">Torrent closed</string>
+    <string name="stat_string_in_db">Torrent in DB</string>
+
 </resources>

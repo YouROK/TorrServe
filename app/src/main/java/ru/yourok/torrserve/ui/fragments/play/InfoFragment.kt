@@ -162,7 +162,18 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvSpeed).text = txt
                     }
 
-                    view?.findViewById<TextView>(R.id.tvInfo)?.text = torr.stat_string
+                    //view?.findViewById<TextView>(R.id.tvInfo)?.text = torr.stat_string
+                    view?.findViewById<TextView>(R.id.tvInfo)?.apply {
+                        when (torr.stat_string.toLowerCase()) {
+                            "torrent added" -> text = getString(R.string.stat_string_added)
+                            "torrent getting info" -> text = getString(R.string.stat_string_info)
+                            "torrent preload" -> text = getString(R.string.stat_string_preload)
+                            "torrent working" -> text = getString(R.string.stat_string_working)
+                            "torrent closed" -> text = getString(R.string.stat_string_closed)
+                            "torrent in db" -> text = getString(R.string.stat_string_in_db)
+                            else -> text = torr.stat_string
+                        }
+                    }
 
                 }
             }
