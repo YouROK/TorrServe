@@ -57,7 +57,7 @@
     <ImageView
         android:id="@+id/paypal"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
+        android:layout_height="30dp"
         android:layout_gravity="start"
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
@@ -93,9 +93,7 @@
         android:layout_gravity="start"
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
-        android:clickable="true"
         android:contentDescription="@string/telegram_msg"
-        android:focusable="true"
         app:srcCompat="@drawable/telegram" />
 
     <LinearLayout
