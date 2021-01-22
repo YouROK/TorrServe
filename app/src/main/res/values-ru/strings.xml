@@ -133,7 +133,7 @@
     <string name="loading_torrent">Загрузка информации о торренте…</string>
     <string name="stat_string_added">Торрент добавлен</string>
     <string name="stat_string_info">Получение информации</string>
-    <string name="stat_string_preload">Предзагрузка данных</string>
+    <string name="stat_string_preload">Предзагрузка</string>
     <string name="stat_string_working">Торрент активен</string>
     <string name="stat_string_closed">Торрент закрыт</string>
     <string name="stat_string_in_db">Торрент в БД</string>
