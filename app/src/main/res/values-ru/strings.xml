@@ -137,4 +137,7 @@
     <string name="stat_string_working">Торрент активен</string>
     <string name="stat_string_closed">Торрент закрыт</string>
     <string name="stat_string_in_db">Торрент в БД</string>
+    <string name="fmt_p">КМГТПЭ</string>
+    <string name="fmt_b">Б</string>
+    <string name="fmt_s">/c</string>
 </resources>

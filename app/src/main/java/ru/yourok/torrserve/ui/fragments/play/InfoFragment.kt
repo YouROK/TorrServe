@@ -153,7 +153,7 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvPeers).text = txt
                     }
 
-                    val speed = ByteFmt.byteFmt(torr.download_speed) + "/s"
+                    val speed = ByteFmt.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
                     if (speed.isNotEmpty() && torr.download_speed > 50.0) {
                         val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
                             Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> ${speed}", Html.FROM_HTML_MODE_COMPACT)
