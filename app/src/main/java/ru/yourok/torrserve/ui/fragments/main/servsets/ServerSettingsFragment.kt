@@ -110,8 +110,8 @@ class ServerSettingsFragment : TSFragment() {
             view?.apply {
                 btsets = BTSets(
                     (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 200L) * 1024 * 1024,
-                    findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: true,
-                    findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 32,
+                    findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: false,
+                    findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 70,
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
                     findViewById<EditText>(R.id.etContentPath)?.text?.toString() ?: "",
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
