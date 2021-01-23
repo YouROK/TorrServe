@@ -55,9 +55,10 @@ object Play {
                 torrentFileIndex = SerialFilter.filter(intent, files)
 
             lifecycleScope.launch {
-                if (files.isEmpty())
+                if (files.isEmpty()) {
+                    App.Toast(getString(R.string.error_retrieve_torrent_file))
                     error(ErrLoadTorrentInfo)
-                else if (files.size == 1) {
+                } else if (files.size == 1) {
                     torrentFileIndex = 0
                     streamTorrent(torrent, files.first().id)
                     successful(Intent())
