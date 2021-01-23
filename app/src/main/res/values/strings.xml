@@ -183,7 +183,10 @@
     <string name="stat_string_working">Torrent working</string>
     <string name="stat_string_closed">Torrent closed</string>
     <string name="stat_string_in_db">Torrent in DB</string>
+
     <string name="fmt_p">KMGTPE</string>
     <string name="fmt_b">B</string>
     <string name="fmt_s">/s</string>
+
+    <string name="no_torrents">No Torrents</string>
 </resources>

@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lvTorrents"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fadingEdge="vertical"
-    android:fadingEdgeLength="84dp"
-    android:divider="@drawable/gradient_divider_hg"
-    android:listSelector="@drawable/action_selector"
-    android:requiresFadingEdge="vertical" />
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lvTorrents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/gradient_divider_hg"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="84dp"
+        android:listSelector="@drawable/action_selector"
+        android:requiresFadingEdge="vertical" />
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_torrents"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+</FrameLayout>

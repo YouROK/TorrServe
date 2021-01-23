@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,7 @@ import ru.yourok.torrserve.ui.fragments.TSFragment
 class TorrentsFragment : TSFragment() {
 
     private var torrentAdapter: TorrentsAdapter? = null
+    private lateinit var emptyView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +30,7 @@ class TorrentsFragment : TSFragment() {
     ): View {
         val vi = inflater.inflate(R.layout.main_fragment, container, false)
         torrentAdapter = TorrentsAdapter(requireActivity())
+        emptyView = vi.findViewById(R.id.empty_view)
         vi.findViewById<ListView>(R.id.lvTorrents)?.let { lvTorrents ->
             lvTorrents.adapter = torrentAdapter
             lvTorrents.setOnItemClickListener { _, _, i, _ ->
@@ -54,12 +57,12 @@ class TorrentsFragment : TSFragment() {
         }
     }
 
-
     suspend fun start() = withContext(Dispatchers.Main) {
         viewModel = ViewModelProvider(this@TorrentsFragment).get(TorrentsViewModel::class.java)
         val data = (viewModel as TorrentsViewModel).getData()
         data.observe(this@TorrentsFragment) {
             torrentAdapter?.update(it)
+            emptyView?.visibility = (if (torrentAdapter?.count == 0) View.VISIBLE else View.GONE)
         }
     }
 }

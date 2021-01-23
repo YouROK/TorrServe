@@ -141,4 +141,5 @@
     <string name="fmt_p">КМГТПЭ</string>
     <string name="fmt_b">Б</string>
     <string name="fmt_s">/c</string>
+    <string name="no_torrents">Нет торрентов</string>
 </resources>
