@@ -21,13 +21,18 @@ import java.io.IOException
 object UpdaterServer {
     private var version: ServVersion? = null
     private var error: String = ""
+    private val serverFile = ServerFile()
 
     suspend fun getLocalVersion(): String {
         var version = ""
         if (TorrService.isLocal()) {
-            TorrService.start()
-            withContext(Dispatchers.IO) {
-                version = Api.echo()
+            if (!serverFile.exists()) {
+                version = App.context.getString(R.string.not_installed)
+            } else {
+                TorrService.start()
+                withContext(Dispatchers.IO) {
+                    version = Api.echo()
+                }
             }
         } else {
             version = App.context.getString(R.string.not_used)

@@ -36,6 +36,8 @@ class ServerUpdateFragment : TSFragment() {
                         }
                     }
                     hideProgress()
+                    Thread.sleep(500)
+                    updateUI()
                 } catch (e: Exception) {
                     App.Toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
                 }
@@ -62,6 +64,7 @@ class ServerUpdateFragment : TSFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Thread.sleep(500)
         updateUI()
     }
 
@@ -87,7 +90,6 @@ class ServerUpdateFragment : TSFragment() {
             else
                 false
         }
-
 
         if (files.isNullOrEmpty()) {
             App.Toast(R.string.warn_no_localy_updates)

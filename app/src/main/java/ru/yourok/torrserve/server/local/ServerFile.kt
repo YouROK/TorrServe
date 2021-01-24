@@ -4,6 +4,7 @@ import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
 import java.io.File
 
@@ -32,7 +33,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
     }
 
     fun stop() {
-        if (!exists())
+        if (!exists() || !TorrService.isLocal())
             return
         synchronized(lock) {
             Shell.Config.verboseLogging(BuildConfig.DEBUG)

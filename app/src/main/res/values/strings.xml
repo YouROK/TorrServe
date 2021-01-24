@@ -190,5 +190,6 @@
 
     <string name="no_torrents">No Torrents</string>
     <string name="not_used">Not Used</string>
+    <string name="not_installed">Not Installed</string>
 
 </resources>

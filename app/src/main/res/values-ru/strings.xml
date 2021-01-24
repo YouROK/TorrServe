@@ -143,4 +143,5 @@
     <string name="fmt_s">/c</string>
     <string name="no_torrents">Нет торрентов</string>
     <string name="not_used">Не используется</string>
+    <string name="not_installed">Не установлен</string>
 </resources>
