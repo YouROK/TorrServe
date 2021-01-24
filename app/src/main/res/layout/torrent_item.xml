@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/ivPoster"
-        android:layout_width="76dp"
-        android:layout_height="114dp"
+        android:layout_width="60dp"
+        android:layout_height="90dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
