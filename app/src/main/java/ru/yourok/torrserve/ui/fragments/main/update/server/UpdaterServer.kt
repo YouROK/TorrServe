@@ -5,11 +5,12 @@ import android.os.Build
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.app.Consts
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.services.TorrService
-import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
 import java.io.File
@@ -23,15 +24,15 @@ object UpdaterServer {
 
     suspend fun getLocalVersion(): String {
         var version = ""
-        var host = ""
         if (TorrService.isLocal()) {
             TorrService.start()
             withContext(Dispatchers.IO) {
                 version = Api.echo()
-                host = Settings.getHost()
             }
+        } else {
+            version = App.context.getString(R.string.not_used)
         }
-        return "$host $version"
+        return "$version"
     }
 
     fun updateFromNet(onProgress: ((prc: Int) -> Unit)?) {

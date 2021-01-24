@@ -142,4 +142,5 @@
     <string name="fmt_b">Б</string>
     <string name="fmt_s">/c</string>
     <string name="no_torrents">Нет торрентов</string>
+    <string name="not_used">Не используется</string>
 </resources>

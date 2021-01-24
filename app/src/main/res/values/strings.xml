@@ -189,4 +189,6 @@
     <string name="fmt_s">/s</string>
 
     <string name="no_torrents">No Torrents</string>
+    <string name="not_used">Not Used</string>
+
 </resources>
