@@ -16,7 +16,7 @@ import java.io.File
 
 class TorrentFilesAdapter : BaseAdapter() {
     private var files: List<FileStat> = listOf()
-    private var viewed = listOf<Viewed>()
+    var viewed = listOf<Viewed>()
 
     fun update(torrent: Torrent, viewed: List<Viewed>?) {
         files = TorrentHelper.getPlayableFiles(torrent)

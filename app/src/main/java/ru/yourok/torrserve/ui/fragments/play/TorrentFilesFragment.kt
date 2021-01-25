@@ -50,6 +50,18 @@ class TorrentFilesFragment : TSFragment() {
         show(activity, R.id.bottom_container)
     }
 
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val viewed = Api.listViewed(torrent?.hash ?: return@launch)
+            if (viewed.size != torrFilesAdapter.viewed.size)
+                withContext(Dispatchers.Main) {
+                    torrFilesAdapter.update(torrent ?: return@withContext, viewed)
+                    torrFilesAdapter.notifyDataSetChanged()
+                }
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         view?.apply {
