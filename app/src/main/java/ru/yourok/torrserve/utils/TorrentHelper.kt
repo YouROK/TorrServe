@@ -39,7 +39,6 @@ object TorrentHelper {
         return retList
     }
 
-
     fun waitFiles(hash: String): Torrent? {
         var count = 0
         while (true) {
