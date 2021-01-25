@@ -21,22 +21,24 @@ object Play {
     fun PlayActivity.play(save: Boolean) {
         infoFragment.show(this, R.id.info_container)
         lifecycleScope.launch(Dispatchers.IO) {
+            showProgress(-1)
             torrentSave = save
 
             val torrent: Torrent
 
             try {
-                if (torrentHash.isNotEmpty())
-                    torrent = Api.getTorrent(torrentHash)
-                else if (torrentLink.isNotEmpty()) {
-                    val torr = loadLink(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
-                    torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
-                        App.Toast(getString(R.string.error_retrieve_torrent_info))
-                        finish()
-                        return@launch
-                    }
-                } else {
+                val torr = if (torrentHash.isNotEmpty())
+                    Api.getTorrent(torrentHash)
+                else if (torrentLink.isNotEmpty())
+                    loadLink(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
+                else {
                     App.Toast(getString(R.string.error_retrieve_data))
+                    finish()
+                    return@launch
+                }
+                infoFragment.startInfo(torr.hash)
+                torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
+                    App.Toast(getString(R.string.error_retrieve_torrent_info))
                     finish()
                     return@launch
                 }
@@ -47,7 +49,6 @@ object Play {
                 return@launch
             }
 
-            infoFragment.startInfo(torrent.hash)
             val viewed = Api.listViewed(torrent.hash)
             val files = TorrentHelper.getPlayableFiles(torrent)
 
@@ -66,6 +67,7 @@ object Play {
                     streamTorrent(torrent, torrentFileIndex)
                     successful(Intent())
                 } else {
+                    hideProgress()
                     TorrentFilesFragment().showTorrent(this@play, torrent, viewed) { file ->
                         torrentFileIndex = TorrentHelper.findIndex(torrent, file)
                         lifecycleScope.launch {
