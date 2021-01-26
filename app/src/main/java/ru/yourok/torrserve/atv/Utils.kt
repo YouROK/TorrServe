@@ -14,10 +14,6 @@ object Utils {
         return App.context.packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
     }
 
-    fun isFireTV(): Boolean {
-        return App.context.packageManager.hasSystemFeature("amazon.hardware.fire_tv")
-    }
-
     fun buildPendingIntent(torr: Torrent): Intent {
         val vintent = Intent(App.context, PlayActivity::class.java)
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -27,6 +23,7 @@ object Utils {
         vintent.putExtra("hash", torr.hash)
         vintent.putExtra("title", torr.title)
         vintent.putExtra("poster", torr.poster)
+        vintent.putExtra("data", torr.data)
         vintent.putExtra("save", false)
         return vintent
     }
