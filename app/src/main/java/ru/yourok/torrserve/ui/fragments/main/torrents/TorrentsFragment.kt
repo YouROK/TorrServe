@@ -2,11 +2,13 @@ package ru.yourok.torrserve.ui.fragments.main.torrents
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +25,7 @@ class TorrentsFragment : TSFragment() {
 
     private var torrentAdapter: TorrentsAdapter? = null
     private lateinit var emptyView: TextView
+    private var isOpened = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +65,14 @@ class TorrentsFragment : TSFragment() {
         val data = (viewModel as TorrentsViewModel).getData()
         data.observe(this@TorrentsFragment) {
             torrentAdapter?.update(it)
-            emptyView?.visibility = (if (torrentAdapter?.count == 0) View.VISIBLE else View.GONE)
+            if (it.isEmpty()) {
+                emptyView.visibility = View.VISIBLE
+                if (!isOpened) {
+                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.openDrawer(Gravity.START)
+                    isOpened = true
+                }
+            } else
+                emptyView.visibility = View.GONE
         }
     }
 }
