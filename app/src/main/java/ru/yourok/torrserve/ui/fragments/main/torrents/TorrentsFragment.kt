@@ -68,7 +68,7 @@ class TorrentsFragment : TSFragment() {
             if (it.isEmpty()) {
                 emptyView.visibility = View.VISIBLE
                 if (!isOpened) {
-                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.openDrawer(Gravity.START)
+                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.openDrawer(Gravity.LEFT)
                     isOpened = true
                 }
             } else
