@@ -53,7 +53,10 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
 
         setupNavigator()
-        TorrService.start()
+        lifecycleScope.launch(Dispatchers.IO) {
+            TorrService.start()
+            UpdaterCards.updateCards()
+        }
 
         if (savedInstanceState == null) {
             clearStackFragmnet()
@@ -69,11 +72,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         themeUtil.onResume(this)
         updateStatus()
-    }
-
-    override fun onDestroy() {
-        UpdaterCards.updateCards()
-        super.onDestroy()
     }
 
     private fun updateStatus() {
@@ -137,6 +135,7 @@ class MainActivity : AppCompatActivity() {
                     list.forEach {
                         Api.remTorrent(it.hash)
                     }
+                    UpdaterCards.updateCards()
                 } catch (e: Exception) {
                     // TODO: notify user
                 }

@@ -12,6 +12,7 @@ import android.widget.AbsListView
 import android.widget.AbsListView.MultiChoiceModeListener
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.utils.TorrentHelper.getTorrentMagnet
@@ -67,6 +68,7 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
                     selected.forEach {
                         try {
                             Api.remTorrent(it.hash)
+                            UpdaterCards.updateCards()
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
