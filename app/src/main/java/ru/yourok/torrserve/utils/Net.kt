@@ -1,36 +1,12 @@
 package ru.yourok.torrserve.utils
 
-import android.net.Uri
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import ru.yourok.torrserve.settings.Settings
 import java.io.InputStream
-import java.net.URI
-import java.net.URLEncoder
 
 
 object Net {
-
-    fun fixLink(link: String): String {
-        try {
-            if (link.isNotEmpty()) {
-                val url = Uri.parse(link)
-                val uri = URI(
-                    url.scheme,
-                    url.userInfo,
-                    url.host,
-                    url.port,
-                    url.path,
-                    url.query,
-                    url.fragment
-                )
-                return uri.toASCIIString()
-            }
-        } catch (e: Exception) {
-        }
-        return link
-    }
-
     fun getHostUrl(path: String): String {
         val url = Settings.getHost()
         if (path.isEmpty())
@@ -40,13 +16,6 @@ object Net {
             return url + path.substring(1)
         else
             return url + path
-    }
-
-    fun joinHostUrl(url: String, path: String): String {
-        if (url.last() == '/')
-            return url + URLEncoder.encode(path.substring(1), "utf8")
-        else
-            return url + URLEncoder.encode(path, "utf8")
     }
 
     fun upload(url: String, title: String, poster: String, data: String, file: InputStream, save: Boolean): String {
@@ -69,6 +38,7 @@ object Net {
             .requestBody(req)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
+            .timeout(5000)
             .method(Connection.Method.POST)
             .execute()
 
