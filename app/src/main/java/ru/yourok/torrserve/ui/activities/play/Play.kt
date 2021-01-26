@@ -1,8 +1,6 @@
 package ru.yourok.torrserve.ui.activities.play
 
-import android.content.ContentResolver
 import android.content.Intent
-import android.net.Uri
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -27,15 +25,12 @@ object Play {
             val torrent: Torrent
 
             try {
-                val torr = if (torrentHash.isNotEmpty())
-                    Api.getTorrent(torrentHash)
-                else if (torrentLink.isNotEmpty())
-                    loadLink(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
-                else {
-                    App.Toast(getString(R.string.error_retrieve_data))
-                    finish()
-                    return@launch
-                }
+                val torr = addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
+                    ?: let {
+                        App.Toast(getString(R.string.error_retrieve_data))
+                        finish()
+                        return@launch
+                    }
                 infoFragment.startInfo(torr.hash)
                 torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
                     App.Toast(getString(R.string.error_retrieve_torrent_info))
@@ -95,18 +90,5 @@ object Play {
         val intent = Players.getIntent(torr, index)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         App.context.startActivity(intent)
-    }
-
-    private fun loadLink(link: String, title: String, poster: String, data: String, save: Boolean): Torrent {
-        val scheme = Uri.parse(link).scheme
-        if (ContentResolver.SCHEME_ANDROID_RESOURCE == scheme || ContentResolver.SCHEME_FILE == scheme) {
-            return uploadFile(link, title, poster, data, save)
-        } else
-            return Api.addTorrent(link, title, poster, data, save)
-    }
-
-    private fun uploadFile(link: String, title: String, poster: String, data: String, save: Boolean): Torrent {
-        val fis = App.context.contentResolver.openInputStream(Uri.parse(link))
-        return Api.uploadTorrent(fis, title, poster, data, save)
     }
 }

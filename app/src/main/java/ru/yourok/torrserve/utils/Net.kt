@@ -52,6 +52,7 @@ object Net {
     fun upload(url: String, title: String, poster: String, data: String, file: InputStream, save: Boolean): String {
         val req = Jsoup.connect(url)
             .data("file1", "filename", file)
+            .ignoreContentType(true)
             .method(Connection.Method.POST)
 
         if (save)

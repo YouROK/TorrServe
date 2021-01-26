@@ -1,6 +1,8 @@
 package ru.yourok.torrserve.ui.activities.play
 
+import android.content.ContentResolver
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -9,6 +11,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.server.models.torrent.Torrent
 
 fun PlayActivity.readArgs() {
     intent.data?.let {
@@ -52,8 +55,7 @@ fun PlayActivity.error(err: ReturnError) {
 fun PlayActivity.addAndExit() {
     lifecycleScope.launch(Dispatchers.IO) {
         try {
-            Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, true)
-            UpdaterCards.updateCards()
+            addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, true)
         } catch (e: Exception) {
             e.printStackTrace()
             App.Toast(e.message ?: getString(R.string.error_retrieve_data))
@@ -63,4 +65,21 @@ fun PlayActivity.addAndExit() {
     }
     torrentHash = ""
     finish()
+}
+
+fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, torrentPoster: String, torrentData: String, torrentSave: Boolean): Torrent? {
+    var torrent: Torrent? = null
+    if (torrentHash.isNotEmpty())
+        torrent = Api.getTorrent(torrentHash)
+    else if (torrentLink.isNotEmpty()) {
+        val scheme = Uri.parse(torrentLink).scheme
+        if (ContentResolver.SCHEME_CONTENT == scheme || ContentResolver.SCHEME_FILE == scheme) {
+            val fis = App.context.contentResolver.openInputStream(Uri.parse(torrentLink))
+            torrent = Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave)
+        } else
+            torrent = Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
+        UpdaterCards.updateCards()
+    } else
+        return null
+    return torrent
 }
