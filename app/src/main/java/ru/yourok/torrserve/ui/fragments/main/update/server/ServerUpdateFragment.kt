@@ -18,6 +18,8 @@ import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.dialogs.DialogList
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer.updateFromNet
+import java.util.*
+import kotlin.concurrent.timerTask
 
 class ServerUpdateFragment : TSFragment() {
 
@@ -57,6 +59,7 @@ class ServerUpdateFragment : TSFragment() {
                 updateUI()
                 hideProgress()
             }
+            clickOnMenu()
         }
 
         return vi
@@ -80,6 +83,22 @@ class ServerUpdateFragment : TSFragment() {
                 view?.findViewById<TextView>(R.id.tvRemoteVersion)?.text = ver
             }
         }
+    }
+
+    private var countClick = 0
+    private var timer: Timer? = null
+
+    private fun clickOnMenu() {
+        if (timer != null)
+            timer?.cancel()
+        timer = Timer()
+        timer?.schedule(timerTask {
+            countClick = 0
+        }, 3000)
+
+        countClick++
+        if (countClick > 10)
+            view?.findViewById<Button>(R.id.btnUpdateDownload)?.visibility = View.VISIBLE
     }
 
     private fun installFromDownload() {
@@ -118,4 +137,5 @@ class ServerUpdateFragment : TSFragment() {
             }
         }
     }
+
 }
