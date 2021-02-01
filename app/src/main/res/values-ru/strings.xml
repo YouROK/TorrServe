@@ -18,7 +18,7 @@
     <string name="force_encrypt">Принудительное шифрование</string>
     <string name="enable_ipv6">Включить IPv6</string>
     <string name="disable_tcp">Отключить TCP</string>
-    <string name="disable_utp">Отключить UTP (рекомендуется на слабых устройствах)</string>
+    <string name="disable_utp">Отключить UTP (рекомендуется)</string>
     <string name="disable_upnp">Отключить UPNP</string>
     <string name="disable_dht">Отключить DHT</string>
     <string name="disable_upload">Отключить Отдачу</string>
@@ -79,7 +79,7 @@
     <string name="current_version">Установленная версия</string>
     <string name="new_version">Новая версия</string>
     <string name="server_update">Обновление сервера</string>
-    <string name="install_server_latest">Установить последнюю версию сервера</string>
+    <string name="install_server_latest">Установить / обновить сервер</string>
     <string name="install_server_localy">Установить сервер из папки Download</string>
     <string name="delete_local_server">Удалить локальный сервер</string>
     <string name="arch">Архитектура ОС</string>

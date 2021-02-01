@@ -27,7 +27,7 @@
     <string name="force_encrypt">Force ecrypt</string>
     <string name="enable_ipv6">Enable IPv6</string>
     <string name="disable_tcp">Disable TCP</string>
-    <string name="disable_utp">Disable UTP (recommended on weak devices)</string>
+    <string name="disable_utp">Disable UTP (recommended)</string>
     <string name="disable_upnp">Disable UPNP</string>
     <string name="disable_dht">Disable DHT</string>
     <string name="disable_upload">Disable Upload</string>
@@ -109,7 +109,7 @@
     <string name="new_version">New version</string>
 
     <string name="server_update">Server update</string>
-    <string name="install_server_latest">Install latest server</string>
+    <string name="install_server_latest">Install / Update latest server</string>
     <string name="install_server_localy">Install server from the Download folder</string>
     <string name="delete_local_server">Delete local server</string>
     <string name="arch">Arch</string>
