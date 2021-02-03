@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -32,19 +31,15 @@ class ApkUpdateFragment : TSFragment() {
             lifecycleScope.launch(Dispatchers.IO) {
                 UpdaterApk.installNewVersion {
                     lifecycleScope.launch(Dispatchers.Main) {
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            vi.findViewById<ProgressBar>(R.id.pbUpdate).setProgress(it, true)
-                        else
-                            vi.findViewById<ProgressBar>(R.id.pbUpdate).setProgress(it)
+                        showProgress(it)
                     }
                 }
+                hideProgress()
             }
         }
 
         vi?.findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
-            //popBackStackFragment()
             ServerUpdateFragment().show(requireActivity(), R.id.container, true)
-
         }
         return vi
     }
