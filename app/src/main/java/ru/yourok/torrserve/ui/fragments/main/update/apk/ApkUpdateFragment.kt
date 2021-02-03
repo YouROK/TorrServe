@@ -16,6 +16,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.ui.fragments.TSFragment
+import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 
 class ApkUpdateFragment : TSFragment() {
 
@@ -41,7 +42,9 @@ class ApkUpdateFragment : TSFragment() {
         }
 
         vi?.findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
-            popBackStackFragment()
+            //popBackStackFragment()
+            ServerUpdateFragment().show(requireActivity(), R.id.container, true)
+
         }
         return vi
     }
