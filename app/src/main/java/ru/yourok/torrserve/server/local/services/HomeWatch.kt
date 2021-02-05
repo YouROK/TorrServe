@@ -35,7 +35,7 @@ class HomeWatch : BroadcastReceiver() {
                     GlobalScope.launch(Dispatchers.IO) {
                         try {
                             Api.remTorrent(hash)
-                            UpdaterCards.updateCards()
+                            // UpdaterCards.updateCards()
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
