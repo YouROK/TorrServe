@@ -55,7 +55,16 @@ class MainActivity : AppCompatActivity() {
         setupNavigator()
         lifecycleScope.launch(Dispatchers.IO) {
             TorrService.start()
-            UpdaterCards.updateCards()
+            if (TorrService.wait(5)) {
+                if (TorrService.isLocal()) {
+                    val ver = Api.echo()
+                    if (ver.startsWith("1.1.")) {
+                        ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
+                        App.Toast(R.string.need_update_server, true)
+                    }
+                }
+                UpdaterCards.updateCards()
+            }
         }
 
         if (savedInstanceState == null) {
