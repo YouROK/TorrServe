@@ -103,16 +103,16 @@ class ChannelProvider(private val name: String) {
 
     private fun getProgram(channelId: Long, torr: Torrent, size: Int): PreviewProgram {
         val info = mutableListOf<String>()
-        val resourceId = R.drawable.emptyposter
-        val ep = Uri.Builder()
-            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(App.context.resources.getResourcePackageName(resourceId))
-            .appendPath(App.context.resources.getResourceTypeName(resourceId))
-            .appendPath(App.context.resources.getResourceEntryName(resourceId))
-            .build()
         var posterUri = Uri.parse(torr.poster)
-        if (posterUri.toString().isNullOrEmpty())
-            posterUri = ep
+        if (posterUri.toString().isNullOrEmpty()) {
+            val resourceId = R.drawable.emptyposter
+            posterUri = Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(App.context.resources.getResourcePackageName(resourceId))
+                .appendPath(App.context.resources.getResourceTypeName(resourceId))
+                .appendPath(App.context.resources.getResourceEntryName(resourceId))
+                .build()
+        }
         val preview = PreviewProgram.Builder()
             .setChannelId(channelId)
             .setTitle(torr.title)
