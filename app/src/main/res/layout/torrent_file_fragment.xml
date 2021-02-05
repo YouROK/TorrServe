@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
+    <!--ImageView
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/gradient_divider_hw" />
+        android:background="@drawable/gradient_divider_hw" /-->
 
     <LinearLayout
         android:layout_width="match_parent"
