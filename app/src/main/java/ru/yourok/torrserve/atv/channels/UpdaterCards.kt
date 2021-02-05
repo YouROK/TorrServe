@@ -19,7 +19,6 @@ object UpdaterCards {
                 isUpdate = true
             }
 
-            
             ChannelService.updateChannels()
             isUpdate = false
         }
