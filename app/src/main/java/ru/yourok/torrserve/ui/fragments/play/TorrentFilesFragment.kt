@@ -69,7 +69,7 @@ class TorrentFilesFragment : TSFragment() {
             viewed?.forEach { last = max(last, it.file_index) }
             val file = TorrentHelper.findFile(torrent ?: return, last)
             val next = if (file != null)
-                TorrentHelper.findIndex(torrent ?: return, file) + 1
+                TorrentHelper.findIndex(torrent ?: return, file)
             else
                 last
 
