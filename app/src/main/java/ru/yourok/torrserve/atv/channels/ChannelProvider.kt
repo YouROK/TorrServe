@@ -93,8 +93,6 @@ class ChannelProvider(private val name: String) {
             if (it.moveToFirst())
                 do {
                     val program = PreviewProgram.fromCursor(it)
-//                    Log.d("*****", "id: " + program.id)
-//                    Log.d("*****", "desc: " + program.description)
                     if (id.equals(program.id)) {
                         cursor.close()
                         return program.description

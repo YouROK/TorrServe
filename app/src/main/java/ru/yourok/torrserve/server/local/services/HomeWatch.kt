@@ -27,9 +27,6 @@ class HomeWatch : BroadcastReceiver() {
         when (action) {
             TvContractCompat.ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED -> {
                 val previewProgramId = intent.getLongExtra(TvContractCompat.EXTRA_PREVIEW_PROGRAM_ID, -1L)
-                val previewInternalId = intent.getLongExtra(TvContractCompat.EXTRA_WATCH_NEXT_PROGRAM_ID, -1L)
-                if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onReceive: ACTION_WATCH_NEXT_PROGRAM_BROWSABLE_DISABLED, $previewProgramId, $previewInternalId")
                 val hash = ChannelProvider(App.context.getString(R.string.torrents)).findProgramHashById(previewProgramId)
                 if (hash.isNotBlank()) {
                     GlobalScope.launch(Dispatchers.IO) {
@@ -43,10 +40,9 @@ class HomeWatch : BroadcastReceiver() {
                 }
             }
             TvContractCompat.ACTION_WATCH_NEXT_PROGRAM_BROWSABLE_DISABLED -> {
-                val watchNextProgramId = intent.getLongExtra(TvContractCompat.EXTRA_PREVIEW_PROGRAM_ID, -1L)
                 val watchNextInternalId = intent.getLongExtra(TvContractCompat.EXTRA_WATCH_NEXT_PROGRAM_ID, -1L)
                 if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onReceive: ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED, $watchNextProgramId, $watchNextInternalId")
+                    Log.d(TAG, "onReceive: ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED, $watchNextInternalId")
             }
         }
     }
