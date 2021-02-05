@@ -145,4 +145,5 @@
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
     <string name="need_update_server">Нужно обновить сервер</string>
+    <string name="need_update_server_remote">Нобходима версия сервера не ниже 1.2.x</string>
 </resources>

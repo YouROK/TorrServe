@@ -117,6 +117,7 @@
     <string name="warn_error_download_server">Server download error</string>
     <string name="warn_no_localy_updates">No local updates</string>
     <string name="need_update_server">Server needs to be updated</string>
+    <string name="need_update_server_remote">Remote Server must be 1.2.x version</string>
 
     <string name="copy_to_clipboard">Copied to clipboard</string>
     <string name="stat_running">Service is running</string>
