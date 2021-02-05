@@ -1,10 +1,10 @@
 package ru.yourok.torrserve.atv.channels
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.tv.TvContract
 import android.net.Uri
 import androidx.tvprovider.media.tv.Channel
 import androidx.tvprovider.media.tv.ChannelLogoUtils
@@ -75,6 +75,36 @@ class ChannelProvider(private val name: String) {
             )
     }
 
+    private val PROGRAMS_PROJECTION = arrayOf(
+        TvContractCompat.PreviewPrograms._ID,
+        TvContractCompat.PreviewPrograms.COLUMN_SHORT_DESCRIPTION
+    )
+
+    @SuppressLint("RestrictedApi")
+    fun findProgramHashById(id: Long): String {
+        val cursor = App.context.contentResolver.query(
+            TvContractCompat.PreviewPrograms.CONTENT_URI,
+            PROGRAMS_PROJECTION,
+            null,
+            null,
+            null
+        )
+        cursor?.let {
+            if (it.moveToFirst())
+                do {
+                    val program = PreviewProgram.fromCursor(it)
+//                    Log.d("*****", "id: " + program.id)
+//                    Log.d("*****", "desc: " + program.description)
+                    if (id.equals(program.id)) {
+                        cursor.close()
+                        return program.description
+                    }
+                } while (it.moveToNext())
+            cursor.close()
+        }
+        return ""
+    }
+
     private fun emptyProgram(channelId: Long): PreviewProgram {
         val vintent = Intent(App.context, MainActivity::class.java)
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -125,13 +155,14 @@ class ChannelProvider(private val name: String) {
             .setLive(false)
             .setPosterArtUri(posterUri)
             .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
+            .setDescription(torr.hash)
 
         return preview.build()
     }
 
     private val CHANNELS_PROJECTION = arrayOf(
         TvContractCompat.Channels._ID,
-        TvContract.Channels.COLUMN_DISPLAY_NAME,
+        TvContractCompat.Channels.COLUMN_DISPLAY_NAME,
         TvContractCompat.Channels.COLUMN_BROWSABLE
     )
 
