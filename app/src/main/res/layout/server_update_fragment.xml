@@ -135,14 +135,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:visibility="gone"
-                android:text="@string/install_server_localy" />
+                android:text="@string/install_server_local" />
 
             <Button
                 android:id="@+id/btnDeleteServer"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/delete" />
+                android:text="@string/delete_local_server" />
 
         </LinearLayout>
     </ScrollView>
