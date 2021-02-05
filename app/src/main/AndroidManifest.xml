@@ -32,10 +32,10 @@
         android:banner="@drawable/ic_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:networkSecurityConfig="@xml/net_security"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/Theme.TorrServe.DayNight">
         <activity
             android:name="ru.yourok.torrserve.ui.activities.main.MainActivity"
@@ -204,12 +204,25 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <receiver android:name=".server.local.services.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".server.local.services.HomeWatch"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.tv.action.WATCH_NEXT_PROGRAM_BROWSABLE_DISABLED" />
+                <action android:name="android.media.tv.action.PREVIEW_PROGRAM_BROWSABLE_DISABLED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </receiver>
 
         <service android:name=".services.TorrService" />
