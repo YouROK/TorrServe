@@ -42,7 +42,9 @@ class ServerUpdateFragment : TSFragment() {
                     updateUI()
                     hideProgress()
                 } catch (e: Exception) {
-                    App.Toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
+                    withContext(Dispatchers.Main) {
+                        App.Toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
+                    }
                 }
             }
         }
