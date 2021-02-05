@@ -60,16 +60,7 @@ class MainActivity : AppCompatActivity() {
                     val ver = Api.echo()
                     if (ver.startsWith("1.1.")) {
                         ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            App.Toast(R.string.need_update_server, true)
-                        }
-                    }
-                } else {
-                    val ver = Api.echo()
-                    if (ver.startsWith("1.1.")) {
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            App.Toast(R.string.need_update_server_remote, true)
-                        }
+                        App.Toast(R.string.need_update_server, true)
                     }
                 }
                 UpdaterCards.updateCards()
