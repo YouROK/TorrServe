@@ -28,13 +28,5 @@ class ThemeUtil {
                     else -> R.style.Theme_TorrServe_DayNight
                 }
             }
-        val isLightTheme: Boolean
-            get() {
-                val theme = getTheme()
-                return when (theme) {
-                    "dark", "black" -> false
-                    else -> true
-                }
-            }
     }
 }
