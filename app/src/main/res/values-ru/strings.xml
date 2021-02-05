@@ -9,6 +9,9 @@
     <string name="settings">Настройки</string>
     <string name="exit">Выход</string>
     <string name="share">Отправить</string>
+    <string name="open_torrserve">Запустить TorrServe</string>
+    <string name="torrents">Торренты</string>
+    <string name="apply">Применить</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
     <string name="preload_before_start">Наполнять кеш перед стартом</string>
     <string name="torrent_preload">Предзагрузка кеша (5%-100%, рек. 70%)</string>
@@ -86,8 +89,11 @@
     <string name="update_server">Обновление сервера</string>
     <string name="warn_error_download_server">Ошибка загрузки сервера</string>
     <string name="warn_no_localy_updates">Нет обновлений</string>
+    <string name="need_update_server">Нужно обновить сервер</string>
+    <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
     <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
     <string name="stat_running">Служба запущена</string>
+    <string name="server_started">Сервер запущен</string>
     <string name="server_stoped">Сервер остановлен</string>
     <string name="server_not_responding">Сервер не отвечает</string>
     <string name="server_not_exists">Сервер отсутствует</string>
@@ -95,6 +101,10 @@
     <string name="error_sending_settings">Ошибка при отправке настроек</string>
     <string name="error_app_not_found">Подходящих приложений не найдено</string>
     <string name="done_sending_settings">Настройки сохранены</string>
+    <string name="loading_torrent">Загрузка информации о торренте…</string>
+    <string name="error_retrieve_data">Ошибка при получении данных</string>
+    <string name="error_retrieve_torrent_info">Ошибка при загрузке данных торрента</string>
+    <string name="error_retrieve_torrent_file">Ошибка получения файлов торрента</string>
     <string name="permission_storage_msg">Доступ к памяти необходим для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
     <string name="donation">Пожертвование</string>
@@ -124,14 +134,6 @@
     <string name="show_cover_sum_off">Не показывать обложки торрентов</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
-    <string name="server_started">Сервер запущен</string>
-    <string name="open_torrserve">Запустить TorrServe</string>
-    <string name="torrents">Торренты</string>
-    <string name="apply">Применить</string>
-    <string name="error_retrieve_data">Ошибка при получении данных</string>
-    <string name="error_retrieve_torrent_info">Ошибка при загрузке данных торрента</string>
-    <string name="error_retrieve_torrent_file">Ошибка получения файлов торрента</string>
-    <string name="loading_torrent">Загрузка информации о торренте…</string>
     <string name="stat_string_added">Торрент добавлен</string>
     <string name="stat_string_info">Получение информации</string>
     <string name="stat_string_preload">Предзагрузка</string>
@@ -144,6 +146,4 @@
     <string name="no_torrents">Нет торрентов</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
-    <string name="need_update_server">Нужно обновить сервер</string>
-    <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
 </resources>
