@@ -44,7 +44,9 @@ object UpdaterServer {
         val url = getLink()
         val http = Http(Uri.parse(url))
         http.connect()
-        TorrService.stop()
+        if (TorrService.isLocal()) {
+            TorrService.stop()
+        }
         http.getInputStream().also { content ->
             content ?: throw IOException("error connect server, url: $url")
 
@@ -76,7 +78,9 @@ object UpdaterServer {
                     throw IOException("error set exec permission")
             }
         }
-        TorrService.start()
+        if (TorrService.isLocal()) {
+            TorrService.start()
+        }
     }
 
     fun updateFromFile(filePath: String) {
@@ -95,6 +99,9 @@ object UpdaterServer {
             output.close()
             if (!serverFile.setExecutable(true))
                 throw IOException("error set server exec permission")
+        }
+        if (TorrService.isLocal()) {
+            TorrService.start()
         }
     }
 

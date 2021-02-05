@@ -37,9 +37,9 @@ class ServerUpdateFragment : TSFragment() {
                             showProgress(it)
                         }
                     }
-                    hideProgress()
-                    Thread.sleep(500)
+                    Thread.sleep(1000)
                     updateUI()
+                    hideProgress()
                 } catch (e: Exception) {
                     App.Toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
                 }
