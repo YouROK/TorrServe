@@ -21,6 +21,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.ext.popBackStackFragment
+import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
@@ -96,7 +97,16 @@ class ServerFinderFragment : TSFragment() {
                 if (uri.port == -1)
                     host += ":8090"
 
+                val oldHost = Settings.getHost()
                 Settings.setHost(host)
+
+                if (Api.echo().startsWith("1.1.")) {
+                    App.Toast(R.string.not_support_old_server, true)
+                    if (!TorrService.isLocal()) {
+                        Settings.setHost(oldHost)
+                        return@launch
+                    }
+                }
 
                 if (ServerFile().exists() && (host.toLowerCase().contains("localhost") || host.toLowerCase().contains("127.0.0.1")))
                     TorrService.start()

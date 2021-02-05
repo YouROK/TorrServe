@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
@@ -37,7 +38,7 @@ class ServerUpdateFragment : TSFragment() {
                             showProgress(it)
                         }
                     }
-                    Thread.sleep(1000)
+                    delay(1000)
                     updateUI()
                     hideProgress()
                 } catch (e: Exception) {
