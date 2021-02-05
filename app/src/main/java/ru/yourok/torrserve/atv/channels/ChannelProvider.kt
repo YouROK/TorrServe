@@ -78,7 +78,7 @@ class ChannelProvider(private val name: String) {
     private fun emptyProgram(channelId: Long): PreviewProgram {
         val vintent = Intent(App.context, MainActivity::class.java)
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        val resourceId = R.drawable.emptyposter // R.raw.beep; R.mipmap.yourmipmap; R.drawable.yourdrawable
+        val resourceId = R.drawable.emptyposter
         val ep = Uri.Builder()
             .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
             .authority(App.context.resources.getResourcePackageName(resourceId))
@@ -103,7 +103,16 @@ class ChannelProvider(private val name: String) {
 
     private fun getProgram(channelId: Long, torr: Torrent, size: Int): PreviewProgram {
         val info = mutableListOf<String>()
-
+        val resourceId = R.drawable.emptyposter
+        val ep = Uri.Builder()
+            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+            .authority(App.context.resources.getResourcePackageName(resourceId))
+            .appendPath(App.context.resources.getResourceTypeName(resourceId))
+            .appendPath(App.context.resources.getResourceEntryName(resourceId))
+            .build()
+        var posterUri = Uri.parse(torr.poster)
+        if (posterUri.toString().isNullOrEmpty())
+            posterUri = ep
         val preview = PreviewProgram.Builder()
             .setChannelId(channelId)
             .setTitle(torr.title)
@@ -114,7 +123,7 @@ class ChannelProvider(private val name: String) {
             .setType(TvContractCompat.PreviewPrograms.TYPE_MOVIE)
             .setSearchable(true)
             .setLive(false)
-            .setPosterArtUri(Uri.parse(torr.poster))
+            .setPosterArtUri(posterUri)
             .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
 
         return preview.build()
