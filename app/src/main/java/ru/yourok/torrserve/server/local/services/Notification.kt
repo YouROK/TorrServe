@@ -106,12 +106,12 @@ class NotificationHelper {
     }
 
     fun doBindService(context: Context) {
-        if (context.bindService(
+        if (!mShouldUnbind) {
+            context.bindService(
                 Intent(context, Notification::class.java),
                 mConnection,
                 Context.BIND_AUTO_CREATE
             )
-        ) {
             mShouldUnbind = true
         }
     }

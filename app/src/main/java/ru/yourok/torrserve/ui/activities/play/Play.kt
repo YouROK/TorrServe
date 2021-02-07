@@ -88,7 +88,9 @@ object Play {
 
         ad?.waitAd()
         val intent = Players.getIntent(torr, index)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        App.context.startActivity(intent)
+        intent?.let {
+            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            App.context.startActivity(it)
+        }
     }
 }
