@@ -24,23 +24,30 @@ class HomeWatch : BroadcastReceiver() {
         val action = intent.action
         if (action == null || !Utils.isGoogleTV()) return
 
+        val previewProgramId = intent.getLongExtra(TvContractCompat.EXTRA_PREVIEW_PROGRAM_ID, -1L)
+        val watchNextInternalId = intent.getLongExtra(TvContractCompat.EXTRA_WATCH_NEXT_PROGRAM_ID, -1L)
+
         when (action) {
+
+            TvContractCompat.ACTION_INITIALIZE_PROGRAMS -> {
+                UpdaterCards.updateCards()
+            }
+
             TvContractCompat.ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED -> {
-                val previewProgramId = intent.getLongExtra(TvContractCompat.EXTRA_PREVIEW_PROGRAM_ID, -1L)
                 val hash = ChannelProvider(App.context.getString(R.string.torrents)).findProgramHashById(previewProgramId)
                 if (hash.isNotBlank()) {
                     GlobalScope.launch(Dispatchers.IO) {
                         try {
                             Api.remTorrent(hash)
-                            // UpdaterCards.updateCards()
+
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
                     }
                 }
             }
+
             TvContractCompat.ACTION_WATCH_NEXT_PROGRAM_BROWSABLE_DISABLED -> {
-                val watchNextInternalId = intent.getLongExtra(TvContractCompat.EXTRA_WATCH_NEXT_PROGRAM_ID, -1L)
                 if (BuildConfig.DEBUG)
                     Log.d(TAG, "onReceive: ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED, $watchNextInternalId")
             }

@@ -177,7 +177,7 @@ class ChannelProvider(private val name: String) {
             if (it.moveToFirst())
                 do {
                     val channel = Channel.fromCursor(it)
-                    if (name.equals(channel.displayName)) {
+                    if (name == channel.displayName) {
                         cursor.close()
                         return channel.id
                     }
