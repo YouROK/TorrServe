@@ -23,7 +23,8 @@
     <FrameLayout
         android:id="@+id/info_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:minHeight="6dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -33,13 +34,13 @@
         android:layout_gravity="top"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="6dp"
         android:indeterminate="true"
         android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/bottom_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:minHeight="6dp" />
 
 </LinearLayout>
