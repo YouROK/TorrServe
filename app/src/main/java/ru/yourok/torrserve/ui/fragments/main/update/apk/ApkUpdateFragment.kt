@@ -27,14 +27,20 @@ class ApkUpdateFragment : TSFragment() {
         val vi = inflater.inflate(R.layout.apk_update_fragment, container, false)
         vi.findViewById<TextView>(R.id.tvCurrentVersion)?.text = getString(R.string.current_version) + ": " + BuildConfig.VERSION_NAME
 
-        vi.findViewById<Button>(R.id.btnUpdate)?.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                UpdaterApk.installNewVersion {
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        showProgress(it)
+        vi.findViewById<Button>(R.id.btnUpdate)?.also { btn ->
+            btn.setOnClickListener {
+                btn.isEnabled = false
+                lifecycleScope.launch(Dispatchers.IO) {
+                    UpdaterApk.installNewVersion {
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            showProgress(it)
+                        }
+                    }
+                    hideProgress()
+                    withContext(Dispatchers.Main) {
+                        btn.isEnabled = true
                     }
                 }
-                hideProgress()
             }
         }
 
