@@ -30,8 +30,8 @@ class ServerUpdateFragment : TSFragment() {
     ): View {
         val vi = inflater.inflate(R.layout.server_update_fragment, container, false)
         vi.findViewById<Button>(R.id.btnUpdate)?.also { btn ->
-            btn.isEnabled = false
             btn.setOnClickListener {
+                btn.isEnabled = false
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
                         showProgress()
