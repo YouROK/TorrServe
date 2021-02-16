@@ -148,10 +148,7 @@ object UpdaterServer {
             val arch = getArch()
             if (arch.isEmpty())
                 throw IOException("error get arch")
-
-            // may be need android 10 version
-
-            return ver.links["linux-$arch"] ?: ""
+            return ver.links["android-$arch"] ?: ""
         }
         return ""
     }
