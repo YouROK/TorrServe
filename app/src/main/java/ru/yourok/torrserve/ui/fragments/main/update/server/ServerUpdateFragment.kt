@@ -29,21 +29,27 @@ class ServerUpdateFragment : TSFragment() {
         savedInstanceState: Bundle?
     ): View {
         val vi = inflater.inflate(R.layout.server_update_fragment, container, false)
-        vi.findViewById<Button>(R.id.btnUpdate).setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                try {
-                    showProgress()
-                    updateFromNet {
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            showProgress(it)
+        vi.findViewById<Button>(R.id.btnUpdate)?.also { btn ->
+            btn.isEnabled = false
+            btn.setOnClickListener {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try {
+                        showProgress()
+                        updateFromNet {
+                            lifecycleScope.launch(Dispatchers.Main) {
+                                showProgress(it)
+                            }
                         }
-                    }
-                    delay(1000)
-                    updateUI()
-                    hideProgress()
-                } catch (e: Exception) {
-                    withContext(Dispatchers.Main) {
-                        App.Toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
+                        delay(1000)
+                        updateUI()
+                        hideProgress()
+                        withContext(Dispatchers.Main) {
+                            btn.isEnabled = true
+                        }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            App.Toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
+                        }
                     }
                 }
             }
