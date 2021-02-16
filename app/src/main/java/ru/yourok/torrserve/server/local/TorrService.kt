@@ -19,7 +19,6 @@ class TorrService : Service() {
     override fun onBind(p0: Intent?): IBinder? = null
     override fun onCreate() {
         super.onCreate()
-        notification.doBindService(this)
         thread {
             ADManager.get()
         }
@@ -48,6 +47,7 @@ class TorrService : Service() {
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
                 Log.d("TorrService", "startServer()")
                 serverFile.run()
+                notification.doBindService(this)
             }
         }
         UpdaterCards.updateCards()
