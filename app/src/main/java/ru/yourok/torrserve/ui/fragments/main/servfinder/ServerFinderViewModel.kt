@@ -104,7 +104,7 @@ class ServerFinderViewModel : ViewModel() {
                         conn.connect()
                         conn.getInputStream()?.apply {
                             val version = bufferedReader(Charset.defaultCharset())?.readText() ?: ""
-                            if (version.isNotEmpty() && version.startsWith("1.2."))
+                            if (version.isNotEmpty() && (version.startsWith("1.2.") || version.startsWith("MatriX")))
                                 withContext(Dispatchers.Main) {
                                     servers?.value = ServerIp(checkHost, version)
                                 }
