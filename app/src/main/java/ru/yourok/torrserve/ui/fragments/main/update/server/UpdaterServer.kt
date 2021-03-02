@@ -148,7 +148,10 @@ object UpdaterServer {
             val arch = getArch()
             if (arch.isEmpty())
                 throw IOException("error get arch")
-            return ver.links["android-$arch"] ?: ""
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                return ver.links["linux-$arch"] ?: ""
+            else
+                return ver.links["android-$arch"] ?: ""
         }
         return ""
     }
