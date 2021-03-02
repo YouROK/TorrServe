@@ -1,12 +1,14 @@
 package ru.yourok.torrserve.utils
 
 import android.net.Uri
+import info.guardianproject.netcipher.NetCipher
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.HttpURLConnection.*
 import java.net.URL
 import java.util.zip.GZIPInputStream
+import javax.net.ssl.HttpsURLConnection
 
 
 /**
@@ -16,7 +18,7 @@ import java.util.zip.GZIPInputStream
 class Http(url: Uri) {
     private var currUrl: String = url.toString()
     private var isConn: Boolean = false
-    private var connection: HttpURLConnection? = null
+    private var connection: HttpsURLConnection? = null
     private var errMsg: String = ""
     private var inputStream: InputStream? = null
 
@@ -35,7 +37,10 @@ class Http(url: Uri) {
                 currUrl = currUrl.replace(":/", "://")
 
             val url = URL(currUrl)
-            connection = url.openConnection() as HttpURLConnection
+
+            //connection = url.openConnection() as HttpURLConnection
+            // use NetCipher to configure HttpsURLConnection on old Androids
+            connection = NetCipher.getHttpsURLConnection(url) as HttpsURLConnection
             connection!!.connectTimeout = timeout
             connection!!.readTimeout = 15000
             connection!!.setRequestMethod("GET")
