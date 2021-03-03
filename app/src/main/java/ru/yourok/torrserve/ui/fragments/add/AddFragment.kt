@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ext.popBackStackFragment
-import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
 
 class AddFragment : TSFragment() {
@@ -36,7 +36,7 @@ class AddFragment : TSFragment() {
                 if (!link.isNullOrBlank())
                     lifecycleScope.launch(Dispatchers.IO) {
                         try {
-                            Api.addTorrent(link, title, poster, "", true)
+                            addTorrent("", link, title, poster, "", true)
                         } catch (e: Exception) {
                             // TODO: notify user
                         }
