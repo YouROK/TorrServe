@@ -11,6 +11,8 @@
     <string name="settings">Settings</string>
     <string name="exit">Exit</string>
 
+    <string name="remove_all_warn">Do you want to delete all torrents?</string>
+
     <string name="share">Share</string>
 
     <string name="open_torrserve">Open TorrServe</string>

@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -147,17 +148,26 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
-            lifecycleScope.launch(Dispatchers.IO) {
-                try {
-                    val list = Api.listTorrent()
-                    list.forEach {
-                        Api.remTorrent(it.hash)
+            AlertDialog.Builder(this)
+                .setTitle(R.string.remove_all_warn)
+                .setPositiveButton(android.R.string.yes) { dialog, which ->
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        try {
+                            val list = Api.listTorrent()
+                            list.forEach {
+                                Api.remTorrent(it.hash)
+                            }
+                            UpdaterCards.updateCards()
+                            withContext(Dispatchers.Main) { dialog.dismiss() }
+                        } catch (e: Exception) {
+                            // TODO: notify user
+                        }
                     }
-                    UpdaterCards.updateCards()
-                } catch (e: Exception) {
-                    // TODO: notify user
                 }
-            }
+                .setNegativeButton(android.R.string.no) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
             closeMenu()
         }
 
