@@ -7,6 +7,8 @@ import java.io.File
 
 object Settings {
 
+    fun getServerAuth() = get("server_auth", "")
+
     fun getHosts(): List<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         val ret = prefs.getStringSet("saved_hosts", mutableSetOf())
@@ -19,7 +21,7 @@ object Settings {
     }
 
     fun getLastViewDonate() = get("last_view_donate", 0L)
-    fun setLastViewDonate(l: Long) = set("last_view_donate", l)
+    fun setLastViewDonate(v: Long) = set("last_view_donate", v)
 
     fun getPlayer(): String = get("player", "")
     fun setPlayer(v: String) = set("player", v)
@@ -41,9 +43,6 @@ object Settings {
     fun getTheme(): String = get("theme", "dark")
     fun setTheme(v: String) = set("theme", v)
 
-    // "http://192.168.43.46:8090"
-    // "http://127.0.0.1:8090"
-    // "http://10.0.0.10:8090"
     fun getHost(): String = get("host", "http://127.0.0.1:8090")
     fun setHost(host: String) {
         var hst = host

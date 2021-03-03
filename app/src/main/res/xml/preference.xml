@@ -12,6 +12,11 @@
         app:title="@string/host_title"
         app:summary="@string/host_title" />
 
+    <EditTextPreference
+        app:key="server_auth"
+        app:title="@string/host_authorization"
+        app:summary="@string/host_authorization_desc" />
+
     <Preference
         app:key="server_settings"
         app:title="@string/torserver_title"

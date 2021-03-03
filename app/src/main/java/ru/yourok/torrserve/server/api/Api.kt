@@ -13,7 +13,7 @@ object Api {
     fun echo(): String {
         try {
             val host = Net.getHostUrl("/echo")
-            return Net.get(host)
+            return Net.getAuth(host)
         } catch (e: Exception) {
             println(e.message)
             return ""
@@ -23,7 +23,7 @@ object Api {
     fun shutdown(): String {
         try {
             val host = Net.getHostUrl("/shutdown")
-            return Net.get(host)
+            return Net.getAuth(host)
         } catch (e: Exception) {
             println(e.message)
             return ""
@@ -66,7 +66,7 @@ object Api {
 
     fun uploadTorrent(file: InputStream, title: String, poster: String, data: String, save: Boolean): Torrent {
         val host = Net.getHostUrl("/torrent/upload")
-        val resp = Net.upload(host, title, poster, data, file, save)
+        val resp = Net.uploadAuth(host, title, poster, data, file, save)
         return Gson().fromJson(resp, Torrent::class.java)
     }
 
@@ -107,6 +107,6 @@ object Api {
     }
 
     private fun postJson(url: String, json: String): String {
-        return Net.post(url, json)
+        return Net.postAuth(url, json)
     }
 }

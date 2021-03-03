@@ -152,6 +152,9 @@
 
     <string name="host_title">Set TorrServer url address</string>
 
+    <string name="host_authorization">Authorization on server</string>
+    <string name="host_authorization_desc">Enter username and password via \':\' (user: pass)</string>
+
     <string name="torserver_title">TorrServer settings</string>
     <string name="torserver_summary">TorrServer settings</string>
 
