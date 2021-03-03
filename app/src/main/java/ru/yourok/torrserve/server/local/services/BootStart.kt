@@ -14,7 +14,8 @@ class BootCompletedReceiver : BroadcastReceiver() {
 //            mintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 //            context.startActivity(mintent)
             TorrService.start()
+            if (TorrService.wait(60))
+                UpdaterCards.updateCards()
         }
-        UpdaterCards.updateCards()
     }
 }
