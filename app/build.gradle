@@ -72,6 +72,9 @@ dependencies {
 
     // multidex
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    // SSL
+    implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
 }
 
 repositories {
