@@ -101,17 +101,15 @@ object Net {
     fun get(url: String): String {
         val link = Uri.parse(url)
         if (link.scheme.equals("https", true)) {
-            val trustAllHostnames: HostnameVerifier = object : HostnameVerifier {
-                override fun verify(hostname: String?, session: SSLSession?): Boolean {
-                    return true // Just allow them all
-                }
+            val trustAllHostnames = HostnameVerifier { _, _ ->
+                true // Just allow them all
             }
             HttpsURLConnection.setDefaultHostnameVerifier(trustAllHostnames)
         }
         val response = Jsoup.connect(url)
-            .sslSocketFactory(insecureTlsSocketFactory())
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
+            .sslSocketFactory(insecureTlsSocketFactory())
             .timeout(2000)
             .execute()
 
