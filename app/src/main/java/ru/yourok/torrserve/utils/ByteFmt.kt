@@ -9,7 +9,7 @@ import ru.yourok.torrserve.app.App
 object ByteFmt {
     fun byteFmt(bytes: Double): String {
         if (bytes < 1024)
-            return bytes.toString() + " " + App.context.getString(R.string.fmt_b)
+            return "%.1f".format(bytes) + " " + App.context.getString(R.string.fmt_b)
         val exp = (Math.log(bytes) / Math.log(1024.0)).toInt()
         val pre = App.context.getString(R.string.fmt_p)[exp - 1].toString()
         return "%.1f %s".format(bytes / Math.pow(1024.0, exp.toDouble()), pre) + App.context.getString(R.string.fmt_b)
