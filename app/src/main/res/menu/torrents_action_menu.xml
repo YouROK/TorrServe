@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/itemRemove"
+        android:id="@+id/itemRemoveViewed"
+        android:icon="@drawable/ic_cancel"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/itemRemoveTorrent"
         android:icon="@drawable/ic_remove"
         android:title="@string/delete"
         app:showAsAction="ifRoom" />

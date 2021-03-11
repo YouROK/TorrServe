@@ -63,12 +63,23 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
                     App.Toast(App.context.getString(R.string.copy_to_clipboard))
                 }
             }
-            R.id.itemRemove -> {
+            R.id.itemRemoveTorrent -> {
                 thread {
                     selected.forEach {
                         try {
                             Api.remTorrent(it.hash)
                             UpdaterCards.updateCards()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            }
+            R.id.itemRemoveViewed -> {
+                thread {
+                    selected.forEach {
+                        try {
+                            Api.remViewed(it.hash)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
