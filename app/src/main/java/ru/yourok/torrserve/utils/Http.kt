@@ -8,7 +8,6 @@ import java.net.HttpURLConnection
 import java.net.HttpURLConnection.*
 import java.net.URL
 import java.util.zip.GZIPInputStream
-import javax.net.ssl.HttpsURLConnection
 
 
 /**
@@ -18,7 +17,7 @@ import javax.net.ssl.HttpsURLConnection
 class Http(url: Uri) {
     private var currUrl: String = url.toString()
     private var isConn: Boolean = false
-    private var connection: HttpsURLConnection? = null
+    private var connection: HttpURLConnection? = null
     private var errMsg: String = ""
     private var inputStream: InputStream? = null
 
@@ -38,9 +37,10 @@ class Http(url: Uri) {
 
             val url = URL(currUrl)
 
-            //connection = url.openConnection() as HttpURLConnection
-            // use NetCipher to configure HttpsURLConnection on old Androids
-            connection = NetCipher.getHttpsURLConnection(url) as HttpsURLConnection
+            if (currUrl.startsWith("https"))
+                connection = NetCipher.getHttpsURLConnection(url)
+            else
+                connection = NetCipher.getHttpURLConnection(url)
             connection!!.connectTimeout = timeout
             connection!!.readTimeout = 15000
             connection!!.setRequestMethod("GET")
