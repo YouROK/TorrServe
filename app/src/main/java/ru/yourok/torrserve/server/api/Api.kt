@@ -84,6 +84,12 @@ object Api {
         postJson(host, req)
     }
 
+    fun defSettings() {
+        val host = Net.getHostUrl("/settings")
+        val req = Request("def").toString()
+        postJson(host, req)
+    }
+
     // Viewed
     fun listViewed(hash: String): List<Viewed> {
         val host = Net.getHostUrl("/viewed")

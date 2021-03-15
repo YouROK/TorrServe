@@ -46,9 +46,18 @@ class ServerSettingsFragment : TSFragment() {
         adpRetracker.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         vi.findViewById<Spinner>(R.id.spinnerRetracker)?.setAdapter(adpRetracker)
 
-        val adpStrategy = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.strategy_mode))
-        adpStrategy.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        vi.findViewById<Spinner>(R.id.spinnerStrategy)?.setAdapter(adpStrategy)
+//        val adpStrategy = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.strategy_mode))
+//        adpStrategy.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        vi.findViewById<Spinner>(R.id.spinnerStrategy)?.setAdapter(adpStrategy)
+
+        vi.findViewById<Button>(R.id.btnDefaultSets)?.let {
+            it.setOnClickListener {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    Api.defSettings()
+                    load()
+                }
+            }
+        }
 
         return vi
     }
@@ -96,7 +105,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etConnectionsLimit)?.setText(sets.ConnectionsLimit.toString())
                     findViewById<EditText>(R.id.etConnectionsDhtLimit)?.setText(sets.DhtConnectionLimit.toString())
                     findViewById<EditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
-                    findViewById<Spinner>(R.id.spinnerStrategy)?.setSelection(sets.Strategy)
+//                    findViewById<Spinner>(R.id.spinnerStrategy)?.setSelection(sets.Strategy)
                 }
             }
         } catch (e: Exception) {
@@ -129,7 +138,8 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 20,
                     findViewById<EditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
                     findViewById<EditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
-                    findViewById<Spinner>(R.id.spinnerStrategy)?.selectedItemPosition ?: 0,
+                    0
+//                    findViewById<Spinner>(R.id.spinnerStrategy)?.selectedItemPosition ?: 0,
                 )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {

@@ -12,9 +12,10 @@
     <string name="open_torrserve">Запустить TorrServe</string>
     <string name="torrents">Торренты</string>
     <string name="apply">Применить</string>
+    <string name="default_sets">По Умолчанию</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
     <string name="preload_before_start">Наполнять кеш перед стартом</string>
-    <string name="torrent_preload">Предзагрузка кеша (5%-100%, рек. 70%)</string>
+    <string name="torrent_preload">Предзагрузка кеша (5%-100%, рек. 95%)</string>
     <string name="torrent_disconnect_timeout">Тайм-аут отключения торрента (секунды)</string>
     <string name="save_content_path">Путь для сохранения содержимого</string>
     <string name="save_on_disk">Сохранить на диске</string>

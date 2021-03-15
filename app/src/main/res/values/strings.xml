@@ -21,10 +21,11 @@
     <string name="torrents">Torrents</string>
 
     <string name="apply">Apply</string>
+    <string name="default_sets">Default</string>
 
     <string name="cache_size">Cache size (Megabytes)</string>
     <string name="preload_before_start">Preload cache before start</string>
-    <string name="torrent_preload">Cache Readahead (5%-100%, def. 70%) </string>
+    <string name="torrent_preload">Cache Readahead (5%-100%, def. 95%) </string>
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to save content</string>
     <string name="save_on_disk">Save on disk</string>
