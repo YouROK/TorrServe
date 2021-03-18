@@ -1,0 +1,202 @@
+<resources>
+
+    <string name="add">Додати</string>
+    <string name="delete">Видалити</string>
+    <string name="remove_all">Видалите все</string>
+    <string name="playlist">Плейліст</string>
+    <string name="donate">Пожертва</string>
+    <string name="update">Оновлення</string>
+    <string name="server">Сервер</string>
+    <string name="settings">Налаштування</string>
+    <string name="exit">Вихід</string>
+
+    <string name="remove_all_viewed">Видалите все переглянуте</string>
+
+    <string name="remove_all_warn">Ви хочете видалити всі торренти?</string>
+
+    <string name="share">Поділитись</string>
+
+    <string name="open_torrserve">Відкрити TorrServe</string>
+    <string name="torrents">Торренти</string>
+
+    <string name="apply">Застосувати</string>
+    <string name="default_sets">За замовчуванням</string>
+
+    <string name="cache_size">Розмір кешу (Мегабайти)</string>
+    <string name="preload_before_start">Заповнювати кеш перед стартом</string>
+    <string name="torrent_preload">Попереднє наповнення кешу (5%-100%, рек. 95%) </string>
+    <string name="torrent_disconnect_timeout">Таймаут відключення торрента (секунд)</string>
+    <string name="save_content_path">Шлях до збереження вмісту</string>
+    <string name="save_on_disk">Зберігати на диск</string>
+    <string name="force_encrypt">Примусове шифрування</string>
+    <string name="enable_ipv6">Включити IPv6</string>
+    <string name="disable_tcp">Відключити TCP</string>
+    <string name="disable_utp">Відключити UTP (рекомендовано)</string>
+    <string name="disable_upnp">Відключити UPNP</string>
+    <string name="disable_dht">Відключити DHT</string>
+    <string name="disable_upload">Відключити відвантаження</string>
+    <string name="ecnryption">Шифрування</string>
+    <string name="connections_limit">Торрент-з\'єднання (рекомендовано 20-25  для всіх Android пристроїв)</string>
+    <string name="connections_dht_limit">Ліміт DHT з\'єднаннь (0-без обмежень)</string>
+    <string name="download_rate_limit">Обмеження швидкості завантаження (Кілобайти, 0-без обмежень)</string>
+    <string name="upload_rate_limit">Обмеження швидкості відвантаження (Кілобайти, 0-без обмежень)</string>
+    <string name="retrackers">Ретрекери</string>
+    <string name="strategy">Стратегія завантаження</string>
+    <string name="peers_listen_port">Порт для вхідних підключень (0-по замовчуванню)</string>
+    <string-array name="retracker_mode">
+        <item>По замовчуванню</item>
+        <item>Додавати</item>
+        <item>Видаляти</item>
+        <item>Заміняти</item>
+    </string-array>
+    <string-array name="encryption_mode">
+        <item>Включено</item>
+        <item>Виключено</item>
+        <item>Примусово</item>
+    </string-array>
+    <string-array name="strategy_mode">
+        <item>DuplicateRequestTimeout</item>
+        <item>Fuzzing</item>
+        <item>Fastest</item>
+    </string-array>
+
+    <string name="default_player">Програвач по замовчуванню</string>
+    <string name="choose_player">Вибрати програвач</string>
+
+    <string name="app_theme_title">Тема</string>
+    <string-array name="app_theme_entries">
+        <item>Авто</item>
+        <item>Світла</item>
+        <item>Темна</item>
+        <item>Чорна</item>
+    </string-array>
+    <string-array name="app_theme_entries_values">
+        <item>авто</item>
+        <item>світла</item>
+        <item>темна</item>
+        <item>чорна</item>
+    </string-array>
+
+    <string name="add_play">Додати і програти</string>
+    <string name="play">Програти</string>
+
+    <string name="make_as_def">Запам\'ятати вибір</string>
+    <string name="reset_def">Дія скинута</string>
+
+    <string name="playlist_all">Програти все</string>
+    <string name="playlist_continue">Продовжити</string>
+
+    <string name="torrent">Торрент</string>
+    <string name="title">Назва</string>
+    <string name="poster">Постер</string>
+    <string name="poster_link">Посилання на постер</string>
+
+    <string name="local_ip">Локальна IP</string>
+    <string name="connected_host">Підключено до</string>
+    <string name="find">Пошук</string>
+    <string name="find_hosts">Пошук серверів</string>
+    <string name="local_server">Локальний сервер</string>
+    <string name="saved_server">Збережений сервер</string>
+    <string name="on_device">На пристрої</string>
+
+    <string name="buffering">Буферизація</string>
+    <string name="buffer">Буфер</string>
+    <string name="peers">Піри</string>
+    <string name="size">Розмір</string>
+    <string name="download_speed">Швидкість завантаження</string>
+    <string name="upload_speed">Швидкість відвантаження</string>
+
+    <string name="loading">Завантаження</string>
+    <string name="found_new_app_update">Знайдено оновлення додатку</string>
+    <string name="not_found_new_app_update">Оновлення додатку не знайдено</string>
+    <string name="current_version">Поточна версія</string>
+    <string name="new_version">Нова версія</string>
+
+    <string name="server_update">Оновлення сервера</string>
+    <string name="install_server_latest">Встановити / оновити сервер</string>
+    <string name="install_server_local">Встановити сервер з папки Download</string>
+    <string name="delete_local_server">Видалити локальний сервер</string>
+    <string name="arch">Архітектура ОС</string>
+    <string name="update_server">Оновлення сервера</string>
+    <string name="warn_error_download_server">Помилка при завантаженні сервера</string>
+    <string name="warn_no_localy_updates">Немає локальних оновлень</string>
+    <string name="need_update_server">Потрібно оновити сервер</string>
+    <string name="not_support_old_server">Сервер версії 1.1.x не підтримується. Оновіть сервер або користується клієнтом версії 1.1.x.</string>
+
+    <string name="copy_to_clipboard">Скопійовано до буферу обміну</string>
+    <string name="stat_running">Службу запущено</string>
+    <string name="server_started">Сервер запущено</string>
+    <string name="server_stoped">Сервер зупинено</string>
+    <string name="server_not_responding">Сервер не відповідає</string>
+    <string name="server_not_exists">Сервер відсутній</string>
+    <string name="error_retrieving_settings">Помилка при отриманні налаштувань</string>
+    <string name="error_sending_settings">Помилка при відправці налаштуваннь</string>
+    <string name="error_app_not_found">Підходящих додатків не знайдено</string>
+    <string name="done_sending_settings">Налаштування збережено</string>
+
+    <string name="loading_torrent">Отримання інформації торренту…</string>
+    <string name="error_retrieve_data">Помилка отримання данних</string>
+    <string name="error_retrieve_torrent_info">Помилка отримання інформації торренту</string>
+    <string name="error_retrieve_torrent_file">Помилка отримання торрент файлу</string>
+
+    <string name="permission_storage_msg">Вимагається доступ до внутрішньої пам\'яті для можливості запису файлу налаштувань</string>
+    <string name="permission_btn">ДОЗВОЛИТИ</string>
+
+    <string name="donation">Пожертва</string>
+    <string name="link">Посилання</string>
+    <string name="donation_msg">Пожертва на підтримку проєкту</string>
+    <string name="yandex_money_msg">Картка Yandex.Money</string>
+    <string name="paypal_msg">E-mail для пожертв через PayPal</string>
+    <string name="telegram_msg">Канал у Telegram</string>
+
+    <!--    Settings    -->
+    <string name="app_settings">Налаштування додатку</string>
+
+    <string name="host_title">Встановити URL-адресу TorrServer</string>
+
+    <string name="host_authorization">Авторизація на сервері</string>
+    <string name="host_authorization_desc">Введіть логін та пароль через \':\' (user: pass)</string>
+
+    <string name="torserver_title">Налаштування TorrServer</string>
+    <string name="torserver_summary">Налаштування параметрів TorrServer</string>
+
+    <string name="remove_action_title">Очистити дії за замовчуванням</string>
+    <string name="remove_action_summary">Скинути дію за замовчуванням при відкритті торрента</string>
+
+    <string name="boot_start_title">Запускати сервер при завантаженні</string>
+    <string name="boot_start_sum_on">Включити запуск сервера при завантаженні пристрою</string>
+    <string name="boot_start_sum_off">Відключити запуск сервера при завантаженні пристрою</string>
+
+    <string name="root_start_title">Запускати сервер від користувача root</string>
+    <string name="root_start_sum_on">Запускати від імені root для уникнення вигрузки системою</string>
+    <string name="root_start_sum_off">Не запускати від імені root</string>
+
+    <string name="choose_player_title">Вибір програвача</string>
+
+    <string name="show_banner_title">Показувати банер</string>
+    <string name="show_banner_sum_on">Показувати банер при завантаженні торрента</string>
+    <string name="show_banner_sum_off">Не показувати банер при завантаженні торрента</string>
+
+    <string name="show_cover_title">Відображати постери</string>
+    <string name="show_cover_sum_on">Відображати постери торрентів</string>
+    <string name="show_cover_sum_off">Не відображати постери торрентів</string>
+
+    <string name="show_battery_save_title">Показати налаштування енергозбереження</string>
+    <string name="show_battery_save_summary">Відкрити налаштування енергозбереження</string>
+
+    <string name="stat_string_added">Торрент додано</string>
+    <string name="stat_string_info">Отримання інформації</string>
+    <string name="stat_string_preload">Попереднє завантаження</string>
+    <string name="stat_string_working">Торрент активний</string>
+    <string name="stat_string_closed">Торрент закрито</string>
+    <string name="stat_string_in_db">Торрент у БД</string>
+
+    <string name="fmt_p">КМГТПЕ</string>
+    <string name="fmt_b">Б</string>
+    <string name="fmt_s">/с</string>
+
+    <string name="no_torrents">Немає торрентів</string>
+    <string name="not_used">Не використовується</string>
+    <string name="not_installed">Не встановленно</string>
+
+</resources>
