@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,18 +45,13 @@ class ServerSettingsFragment : TSFragment() {
         adpRetracker.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         vi.findViewById<Spinner>(R.id.spinnerRetracker)?.setAdapter(adpRetracker)
 
-//        val adpStrategy = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.strategy_mode))
-//        adpStrategy.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        vi.findViewById<Spinner>(R.id.spinnerStrategy)?.setAdapter(adpStrategy)
-
         vi.findViewById<Button>(R.id.btnDefaultSets)?.let {
             it.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
                     Api.defSettings()
-                    //load() // it doesn't reload here
                     withContext(Dispatchers.Main) {
+                        App.Toast(R.string.default_sets_applied)
                         popBackStackFragment()
-                        App.Toast(R.string.default_sets_applied, true)
                     }
                 }
             }
@@ -75,15 +69,9 @@ class ServerSettingsFragment : TSFragment() {
 
     private suspend fun load() = withContext(Dispatchers.Main) {
         showProgress()
-        viewModel = ViewModelProvider(this@ServerSettingsFragment).get(ServSetsViewModel::class.java)
-        val data = (viewModel as ServSetsViewModel).loadSettings()
-        data.observe(viewLifecycleOwner) {
-            btsets = it
-            lifecycleScope.launch {
-                updateUI()
-                hideProgress()
-            }
-        }
+        withContext(Dispatchers.IO) { btsets = loadSettings() }
+        updateUI()
+        hideProgress()
     }
 
     private suspend fun updateUI() = withContext(Dispatchers.Main) {
@@ -147,7 +135,7 @@ class ServerSettingsFragment : TSFragment() {
                 )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {
-                        Api.setSettings(sets)
+                        saveSettings(sets)
                         App.Toast(R.string.done_sending_settings)
                     }
                 }
@@ -156,5 +144,22 @@ class ServerSettingsFragment : TSFragment() {
             e.printStackTrace()
             App.Toast(R.string.error_sending_settings)
         }
+    }
+
+    private fun saveSettings(sets: BTSets) {
+        try {
+            Api.setSettings(sets)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun loadSettings(): BTSets? {
+        try {
+            return Api.getSettings()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
     }
 }
