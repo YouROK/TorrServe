@@ -9,7 +9,7 @@ import ru.yourok.torrserve.atv.channels.providers.Provider
 object ChannelService {
     fun updateChannels() {
         if (BuildConfig.DEBUG)
-            Log.i("*****", "ChannelService: updateChannels")
+            Log.i("*****", "ChannelService: updateChannels()")
 
         with(App.context) {
             try {

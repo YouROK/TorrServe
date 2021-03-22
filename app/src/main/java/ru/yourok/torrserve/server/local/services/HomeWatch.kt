@@ -52,7 +52,7 @@ class HomeWatch : BroadcastReceiver() {
 
             TvContractCompat.ACTION_WATCH_NEXT_PROGRAM_BROWSABLE_DISABLED -> {
                 if (BuildConfig.DEBUG)
-                    Log.d(TAG, "onReceive: ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED, $watchNextInternalId")
+                    Log.d(TAG, "onReceive: ACTION_WATCH_NEXT_PROGRAM_BROWSABLE_DISABLED, $watchNextInternalId")
             }
         }
     }

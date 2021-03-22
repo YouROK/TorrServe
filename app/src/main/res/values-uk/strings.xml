@@ -155,7 +155,7 @@
     <string name="host_title">Встановити URL-адресу TorrServer</string>
 
     <string name="host_authorization">Авторизація на сервері</string>
-    <string name="host_authorization_desc">Введіть логін та пароль через \':\' (user: pass)</string>
+    <string name="host_authorization_desc">Введіть логін та пароль через «:» (user:pass)</string>
 
     <string name="torserver_title">Налаштування TorrServer</string>
     <string name="torserver_summary">Налаштування параметрів TorrServer</string>

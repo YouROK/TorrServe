@@ -148,7 +148,7 @@
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
     <string name="host_authorization">Авторизация на сервере</string>
-    <string name="host_authorization_desc">Введите имя и пароль через \':\' (user:pass)</string>
+    <string name="host_authorization_desc">Введите имя и пароль через «:» (user:pass)</string>
     <string name="remove_all_warn">Вы хотите удалить все торренты?</string>
-    <string name="remove_all_viewed">Удалить все метки</string>
+    <string name="remove_all_viewed">Удалить все метки просмотра</string>
 </resources>
