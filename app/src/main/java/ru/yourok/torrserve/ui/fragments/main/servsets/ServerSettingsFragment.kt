@@ -54,7 +54,11 @@ class ServerSettingsFragment : TSFragment() {
             it.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
                     Api.defSettings()
-                    load()
+                    //load() // it doesn't reload here
+                    withContext(Dispatchers.Main) {
+                        popBackStackFragment()
+                        App.Toast(R.string.default_sets_applied, true)
+                    }
                 }
             }
         }
@@ -73,7 +77,7 @@ class ServerSettingsFragment : TSFragment() {
         showProgress()
         viewModel = ViewModelProvider(this@ServerSettingsFragment).get(ServSetsViewModel::class.java)
         val data = (viewModel as ServSetsViewModel).loadSettings()
-        data.observe(this@ServerSettingsFragment) {
+        data.observe(viewLifecycleOwner) {
             btsets = it
             lifecycleScope.launch {
                 updateUI()
