@@ -4,27 +4,26 @@
 
     <item
         android:id="@+id/itemRemoveViewed"
-        android:icon="@drawable/ic_cancel"
+        android:icon="@drawable/ic_outline_visibility_off"
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/itemRemoveTorrent"
-        android:icon="@drawable/ic_remove"
+        android:icon="@drawable/ic_outline_remove"
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/itemShareMagnet"
-        android:icon="@drawable/ic_share_android"
+        android:icon="@drawable/ic_outline_share"
         android:title="@string/share"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/itemCopyMagnet"
-        android:icon="@drawable/ic_copy"
+        android:icon="@drawable/ic_outline_content_copy"
         android:title="@string/copy"
         app:showAsAction="ifRoom" />
-
 
 </menu>

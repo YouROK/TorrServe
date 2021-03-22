@@ -84,7 +84,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_add" />
+                        app:srcCompat="@drawable/ic_outline_add" />
 
                     <TextView
                         style="@style/MainMenuTextAppearance"
@@ -113,7 +113,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_remove" />
+                        app:srcCompat="@drawable/ic_outline_remove" />
 
                     <TextView
                         style="@style/MainMenuTextAppearance"
@@ -142,7 +142,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_list" />
+                        app:srcCompat="@drawable/ic_outline_playlist_play" />
 
                     <TextView
                         style="@style/MainMenuTextAppearance"
@@ -258,7 +258,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_cancel" />
+                        app:srcCompat="@drawable/ic_outline_exit_to_app" />
 
                     <TextView
                         style="@style/MainMenuTextAppearance"
