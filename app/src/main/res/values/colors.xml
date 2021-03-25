@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="tv_white">#EEE</color>
-    <color name="colorPrimary">#ffa724</color>
-    <color name="colorPrimaryDark">#ff7e00</color>
-    <color name="colorAccent">#3fb57a</color>
-    <color name="colorBlack">#000</color>
-    <color name="colorBlackOpaque">#030303</color>
-    <color name="colorScrimWhite">#22ffffff</color>
-    <color name="lighter_gray">#CCC</color>
+    <color name="tv_white">#eee</color>
+    <color name="orange">#ffa724</color>
+    <color name="orange_dark">#ff7e00</color>
+    <color name="green">#3fb57a</color>
+    <color name="black">#000</color>
+    <color name="black_opaque">#030303</color>
+    <color name="white_10">#1affffff</color>
+    <color name="lighter_gray">#ccc</color>
     <color name="darker_gray">#2b2b2b</color>
     <color name="wine_red">#c00000</color>
     <color name="orange_10">#1affa724</color>

@@ -8,7 +8,7 @@
         android:id="@+id/lvTorrents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@drawable/gradient_divider_hg"
+        android:divider="@drawable/gradient_divider_green"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="84dp"
         android:listSelector="@drawable/action_selector"

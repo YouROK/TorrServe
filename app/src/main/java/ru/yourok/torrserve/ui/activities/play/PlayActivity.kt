@@ -55,8 +55,8 @@ class PlayActivity : AppCompatActivity() {
         setWindow()
 
         findViewById<ProgressBar>(R.id.progressBar)?.apply {
-            progressDrawable?.setColorFilter(ContextCompat.getColor(this@PlayActivity, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
-            indeterminateDrawable?.setColorFilter(ContextCompat.getColor(this@PlayActivity, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
+            progressDrawable?.setColorFilter(ContextCompat.getColor(this@PlayActivity, R.color.green), android.graphics.PorterDuff.Mode.SRC_IN)
+            indeterminateDrawable?.setColorFilter(ContextCompat.getColor(this@PlayActivity, R.color.green), android.graphics.PorterDuff.Mode.SRC_IN)
         }
 
         lifecycleScope.launch { showProgress() }
@@ -136,10 +136,10 @@ class PlayActivity : AppCompatActivity() {
         if (isActive) {
             val progress = findViewById<ProgressBar>(R.id.progressBar)
             progress?.progressDrawable?.setColorFilter(
-                ContextCompat.getColor(this@PlayActivity, R.color.colorAccent), PorterDuff.Mode.SRC_IN
+                ContextCompat.getColor(this@PlayActivity, R.color.green), PorterDuff.Mode.SRC_IN
             )
             progress?.indeterminateDrawable?.setColorFilter(
-                ContextCompat.getColor(this@PlayActivity, R.color.colorAccent), PorterDuff.Mode.SRC_IN
+                ContextCompat.getColor(this@PlayActivity, R.color.green), PorterDuff.Mode.SRC_IN
             )
             progress?.apply {
                 visibility = View.VISIBLE

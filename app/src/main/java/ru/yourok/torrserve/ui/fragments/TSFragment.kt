@@ -31,10 +31,10 @@ abstract class TSFragment : Fragment() {
         if (activity != null && isActive) {
             val progress = activity?.findViewById<ProgressBar>(R.id.progressBar)
             progress?.progressDrawable?.setColorFilter(
-                ContextCompat.getColor(requireContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
+                ContextCompat.getColor(requireContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN
             )
             progress?.indeterminateDrawable?.setColorFilter(
-                ContextCompat.getColor(requireContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN
+                ContextCompat.getColor(requireContext(), R.color.green), android.graphics.PorterDuff.Mode.SRC_IN
             )
             progress?.apply {
                 visibility = View.VISIBLE

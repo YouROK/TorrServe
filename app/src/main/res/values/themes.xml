@@ -7,16 +7,16 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/darker_gray</item>
         <!-- attr colors -->
-        <item name="colorHost">@color/colorAccent</item>
+        <item name="colorHost">@color/green</item>
         <item name="colorBG">@color/darker_gray</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorAccent</item>
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/green</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnSecondary">@color/colorAccent</item>
+        <item name="colorSecondary">@color/orange</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorOnSecondary">@color/green</item>
         <!-- Accent Override -->
         <!--item name="colorAccent">@color/colorAccent</item-->
         <!-- Status bar color. -->
@@ -24,7 +24,7 @@
         <!-- Bottom bar color. -->
         <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
         <!-- Customize your theme here. -->
-        <item name="android:listDivider">@drawable/gradient_divider_hg</item>
+        <item name="android:listDivider">@drawable/gradient_divider_green</item>
     </style>
     <!-- Light Theme -->
     <style name="Theme.TorrServe.Light" parent="Theme.MaterialComponents.Light">
@@ -32,15 +32,15 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/tv_white</item>
         <!-- attr colors -->
-        <item name="colorHost">@color/colorPrimaryDark</item>
+        <item name="colorHost">@color/orange_dark</item>
         <item name="colorBG">@color/lighter_gray</item>
         <!-- colors -->
         <item name="colorPrimary">@color/wine_red</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/green</item>
         <item name="colorSecondary">@color/wine_red</item>
-        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorOnSecondary">@color/green</item>
         <!-- bars -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
@@ -48,19 +48,19 @@
     <!-- Black Theme -->
     <style name="Theme.TorrServe.Black" parent="Theme.TorrServe.Dark">
         <!-- attr colors -->
-        <item name="colorBG">@color/colorBlack</item>
+        <item name="colorBG">@color/black</item>
         <!-- colors -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorBlack</item>
-        <item name="colorOnPrimary">@color/colorAccent</item>
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorOnPrimary">@color/green</item>
         <!--item name="colorAccent">@color/colorPrimary</item-->
         <!--item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar</item-->
-        <item name="android:strokeColor" tools:targetApi="l">@color/colorScrimWhite</item>
-        <item name="android:windowBackground">@color/colorBlack</item>
-        <item name="android:colorBackground">@color/colorBlack</item>
-        <item name="colorBackgroundFloating">@color/colorBlackOpaque</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/colorBlackOpaque</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">@color/colorBlackOpaque</item>
+        <item name="android:strokeColor" tools:targetApi="l">@color/white_10</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="colorBackgroundFloating">@color/black_opaque</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black_opaque</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/black_opaque</item>
     </style>
     <!-- DayNight Theme -->
     <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
@@ -68,15 +68,15 @@
     <style name="PlayDialog.Dark" parent="Theme.MaterialComponents.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:listDivider">@drawable/gradient_divider_hw</item>
+        <item name="android:listDivider">@drawable/gradient_divider_white</item>
         <item name="android:windowBackground">@drawable/rc_background_dark</item>
         <!-- colors -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorAccent</item>
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnSecondary">@color/colorAccent</item>
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/green</item>
+        <item name="colorSecondary">@color/orange</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorOnSecondary">@color/green</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
     </style>
@@ -84,15 +84,15 @@
     <style name="PlayDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:listDivider">@drawable/gradient_divider_hw</item>
+        <item name="android:listDivider">@drawable/gradient_divider_white</item>
         <item name="android:windowBackground">@drawable/rc_background_light</item>
         <!-- colors -->
         <item name="colorPrimary">@color/wine_red</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/green</item>
         <item name="colorSecondary">@color/wine_red</item>
-        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorOnSecondary">@color/green</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
     </style>
