@@ -12,6 +12,8 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import java.lang.Thread.sleep
+import kotlin.concurrent.thread
 
 fun PlayActivity.readArgs() {
     intent.data?.let {
@@ -78,8 +80,11 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
             torrent = Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave)
         } else
             torrent = Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
-        UpdaterCards.updateCards()
     } else
         return null
+    thread {
+        sleep(15000) // wait torrent info before channel update
+        UpdaterCards.updateCards()
+    }
     return torrent
 }

@@ -49,8 +49,9 @@ class TorrService : Service() {
                 serverFile.run()
                 notification.doBindService(this)
             }
+            if (TorrService.wait(10))
+                UpdaterCards.updateCards()
         }
-        UpdaterCards.updateCards()
     }
 
     private fun stopServer(forceClose: Boolean) {
