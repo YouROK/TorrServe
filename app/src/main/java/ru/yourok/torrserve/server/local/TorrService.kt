@@ -80,11 +80,19 @@ class TorrService : Service() {
                     return
                 updateStarted = true
             }
-            var lastList = Api.listTorrent()
+            var lastList = emptyList<Torrent>()
+            try {
+                lastList = Api.listTorrent()
+            } catch (e: Exception) {
+            }
             UpdaterCards.updateCards()
             thread {
                 while (updateStarted) {
-                    val torrs = Api.listTorrent()
+                    var torrs = emptyList<Torrent>()
+                    try {
+                        torrs = Api.listTorrent()
+                    } catch (e: Exception) {
+                    }
                     if (!equalTorrs(lastList, torrs)) {
                         lastList = torrs
                         UpdaterCards.updateCards()
