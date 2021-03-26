@@ -85,9 +85,7 @@ class TorrentFilesFragment : TSFragment() {
                             }
                         } catch (e: Exception) {
                             e.message?.let {
-                                withContext(Dispatchers.Main) {
-                                    App.Toast(it)
-                                }
+                                App.Toast(it)
                             }
                         }
                     }
@@ -105,9 +103,7 @@ class TorrentFilesFragment : TSFragment() {
                             }
                         } catch (e: Exception) {
                             e.message?.let {
-                                withContext(Dispatchers.Main) {
-                                    App.Toast(it)
-                                }
+                                App.Toast(it)
                             }
                         }
                     }
