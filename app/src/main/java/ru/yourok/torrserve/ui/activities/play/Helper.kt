@@ -9,11 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
-import java.lang.Thread.sleep
-import kotlin.concurrent.thread
 
 fun PlayActivity.readArgs() {
     intent.data?.let {
@@ -71,9 +68,9 @@ fun PlayActivity.addAndExit() {
 
 fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, torrentPoster: String, torrentData: String, torrentSave: Boolean): Torrent? {
     var torrent: Torrent? = null
-    if (torrentHash.isNotEmpty())
+    if (torrentHash.isNotEmpty()) {
         torrent = Api.getTorrent(torrentHash)
-    else if (torrentLink.isNotEmpty()) {
+    } else if (torrentLink.isNotEmpty()) {
         val scheme = Uri.parse(torrentLink).scheme
         if (ContentResolver.SCHEME_CONTENT == scheme || ContentResolver.SCHEME_FILE == scheme) {
             val fis = App.context.contentResolver.openInputStream(Uri.parse(torrentLink))
@@ -82,9 +79,5 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
             torrent = Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
     } else
         return null
-    thread {
-        sleep(15000) // wait torrent info before channel update
-        UpdaterCards.updateCards()
-    }
     return torrent
 }

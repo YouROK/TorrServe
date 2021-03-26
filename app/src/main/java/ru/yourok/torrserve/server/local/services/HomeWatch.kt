@@ -15,7 +15,6 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.atv.channels.ChannelProvider
-import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 
 @TargetApi(Build.VERSION_CODES.O)
@@ -32,7 +31,6 @@ class HomeWatch : BroadcastReceiver() {
             TvContractCompat.ACTION_INITIALIZE_PROGRAMS -> {
                 if (BuildConfig.DEBUG)
                     Log.d(TAG, "onReceive: ACTION_INITIALIZE_PROGRAMS")
-                UpdaterCards.updateCards()
             }
 
             TvContractCompat.ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED -> {

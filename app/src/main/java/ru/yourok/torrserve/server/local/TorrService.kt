@@ -6,9 +6,11 @@ import android.os.IBinder
 import android.util.Log
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
+import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import kotlin.concurrent.thread
 
@@ -49,8 +51,7 @@ class TorrService : Service() {
                 serverFile.run()
                 notification.doBindService(this)
             }
-            if (TorrService.wait(10))
-                UpdaterCards.updateCards()
+            updateAtvCards()
         }
     }
 
@@ -69,6 +70,43 @@ class TorrService : Service() {
             }
             stopSelf()
         }
+    }
+
+    private var updateStarted = false
+    private fun updateAtvCards() {
+        if (Utils.isGoogleTV()) {
+            synchronized(updateStarted) {
+                if (updateStarted)
+                    return
+                updateStarted = true
+            }
+            var lastList = Api.listTorrent()
+            UpdaterCards.updateCards()
+            thread {
+                while (updateStarted) {
+                    val torrs = Api.listTorrent()
+                    if (!equalTorrs(lastList, torrs)) {
+                        lastList = torrs
+                        UpdaterCards.updateCards()
+                        Thread.sleep(1000)
+                    } else
+                        Thread.sleep(5000)
+                }
+            }
+        }
+    }
+
+    private fun equalTorrs(lst1: List<Torrent>, lst2: List<Torrent>): Boolean {
+        if (lst1.size != lst2.size)
+            return false
+        lst1.forEachIndexed { index, torr ->
+            if (torr.hash != lst2[index].hash ||
+                torr.title != lst2[index].title ||
+                torr.poster != lst2[index].poster
+            )
+                return false
+        }
+        return true
     }
 
     companion object {

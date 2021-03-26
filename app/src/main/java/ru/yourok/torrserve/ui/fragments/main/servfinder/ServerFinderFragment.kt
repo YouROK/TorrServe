@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
@@ -116,7 +115,6 @@ class ServerFinderFragment : TSFragment() {
                 if (lst.size > 10)
                     lst.removeAt(0)
                 Settings.setHosts(lst)
-                UpdaterCards.updateCards()
                 popBackStackFragment()
             } catch (e: Exception) {
                 e.message?.let {

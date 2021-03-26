@@ -12,11 +12,9 @@ import android.widget.AbsListView
 import android.widget.AbsListView.MultiChoiceModeListener
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.utils.TorrentHelper.getTorrentMagnet
-import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
 
@@ -73,8 +71,6 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
                             e.printStackTrace()
                         }
                     }
-                    sleep(1000)
-                    UpdaterCards.updateCards()
                 }
             }
             R.id.itemRemoveViewed -> {

@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.ext.clearStackFragmnet
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.services.TorrService
@@ -73,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                UpdaterCards.updateCards()
             }
         }
 
@@ -157,7 +155,6 @@ class MainActivity : AppCompatActivity() {
                             list.forEach {
                                 Api.remTorrent(it.hash)
                             }
-                            UpdaterCards.updateCards()
                             withContext(Dispatchers.Main) { dialog.dismiss() }
                         } catch (e: Exception) {
                             // TODO: notify user
