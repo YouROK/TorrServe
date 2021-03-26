@@ -5,6 +5,7 @@ import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.media.tv.TvContract
 import android.net.Uri
 import androidx.tvprovider.media.tv.Channel
 import androidx.tvprovider.media.tv.ChannelLogoUtils
@@ -16,9 +17,10 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.main.MainActivity
+import java.nio.charset.Charset
 
 
-class ChannelProvider(private val name: String) {
+class ChannelProvider(private val iName: String, private val dName: String) {
 
     fun create(): Long {
         var channelId = findChannel()
@@ -27,7 +29,8 @@ class ChannelProvider(private val name: String) {
 
         val builder = Channel.Builder()
         builder.setType(TvContractCompat.Channels.TYPE_PREVIEW)
-            .setDisplayName(name)
+            .setDisplayName(dName)
+            .setInternalProviderData(iName)
             .setAppLinkIntentUri(Uri.parse("torrserve://${BuildConfig.APPLICATION_ID}/open_main_list"))
 
         val channelUri = App.context.contentResolver.insert(
@@ -43,6 +46,10 @@ class ChannelProvider(private val name: String) {
 
     fun update(list: List<Torrent>) {
         val channelId = create()
+        //remove with null data
+        list().filter { it.internalProviderDataByteArray == null }.forEach {
+            rem(it)
+        }
         App.context.contentResolver.delete(
             TvContractCompat.buildPreviewProgramsUriForChannel(channelId),
             null,
@@ -50,8 +57,9 @@ class ChannelProvider(private val name: String) {
         )
 
         val channel = Channel.Builder()
-        channel.setDisplayName(name)
-            .setType(TvContractCompat.Channels.TYPE_PREVIEW)
+        channel.setType(TvContractCompat.Channels.TYPE_PREVIEW)
+            .setDisplayName(dName)
+            .setInternalProviderData(iName)
             .setAppLinkIntentUri(Uri.parse("torrserve://${BuildConfig.APPLICATION_ID}/open_main_list"))
             .build()
 
@@ -161,6 +169,7 @@ class ChannelProvider(private val name: String) {
     private val CHANNELS_PROJECTION = arrayOf(
         TvContractCompat.Channels._ID,
         TvContractCompat.Channels.COLUMN_DISPLAY_NAME,
+        TvContractCompat.Channels.COLUMN_INTERNAL_PROVIDER_DATA,
         TvContractCompat.Channels.COLUMN_BROWSABLE
     )
 
@@ -177,7 +186,7 @@ class ChannelProvider(private val name: String) {
             if (it.moveToFirst())
                 do {
                     val channel = Channel.fromCursor(it)
-                    if (name == channel.displayName) {
+                    if (iName == channel.internalProviderDataByteArray?.toString(Charset.defaultCharset())) {
                         cursor.close()
                         return channel.id
                     }
@@ -185,5 +194,31 @@ class ChannelProvider(private val name: String) {
             cursor.close()
         }
         return -1
+    }
+
+    private fun list(): List<Channel> {
+        val chnl = mutableListOf<Channel>()
+
+        val cursor = App.context.contentResolver.query(
+            TvContractCompat.Channels.CONTENT_URI,
+            CHANNELS_PROJECTION,
+            null,
+            null,
+            null
+        )
+
+        cursor?.let {
+            if (it.moveToFirst())
+                do {
+                    val channel = Channel.fromCursor(it)
+                    chnl.add(channel)
+                } while (it.moveToNext())
+            cursor.close()
+        }
+        return chnl
+    }
+
+    private fun rem(ch: Channel) {
+        App.context.contentResolver.delete(TvContractCompat.buildChannelUri(ch.id), null, null)
     }
 }

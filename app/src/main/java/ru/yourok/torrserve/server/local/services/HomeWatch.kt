@@ -38,7 +38,7 @@ class HomeWatch : BroadcastReceiver() {
             TvContractCompat.ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED -> {
                 if (BuildConfig.DEBUG)
                     Log.d(TAG, "onReceive: ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED, $previewProgramId")
-                val hash = ChannelProvider(App.context.getString(R.string.torrents)).findProgramHashById(previewProgramId)
+                val hash = ChannelProvider("Torrents", App.context.getString(R.string.torrents)).findProgramHashById(previewProgramId)
                 if (hash.isNotBlank()) {
                     GlobalScope.launch(Dispatchers.IO) {
                         try {

@@ -13,7 +13,7 @@ object ChannelService {
 
         with(App.context) {
             try {
-                ChannelProvider(getString(R.string.torrents)).update(Provider.get(Provider.Torrents))
+                ChannelProvider("Torrents", getString(R.string.torrents)).update(Provider.get(Provider.Torrents))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
