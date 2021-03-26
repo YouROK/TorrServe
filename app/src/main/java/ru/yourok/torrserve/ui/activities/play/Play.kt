@@ -82,7 +82,10 @@ object Play {
             torr = Api.getTorrent(torr.hash)
             while (torr.stat == TorrentHelper.TorrentSTPreload) {
                 delay(1000)
-                torr = Api.getTorrent(torr.hash)
+                try {
+                    torr = Api.getTorrent(torr.hash)
+                } catch (e: Exception) {
+                }
             }
         }
 
