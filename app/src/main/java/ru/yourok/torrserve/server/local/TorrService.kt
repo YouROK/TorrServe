@@ -80,25 +80,25 @@ class TorrService : Service() {
                     return
                 updateStarted = true
             }
+
+            wait(5)
+
             var lastList = emptyList<Torrent>()
-            try {
-                lastList = Api.listTorrent()
-            } catch (e: Exception) {
-            }
             UpdaterCards.updateCards()
             thread {
                 while (updateStarted) {
-                    var torrs = emptyList<Torrent>()
                     try {
-                        torrs = Api.listTorrent()
+                        val torrs = Api.listTorrent()
+
+                        if (!equalTorrs(lastList, torrs)) {
+                            lastList = torrs
+                            UpdaterCards.updateCards()
+                            Thread.sleep(1000)
+                        } else
+                            Thread.sleep(5000)
                     } catch (e: Exception) {
-                    }
-                    if (!equalTorrs(lastList, torrs)) {
-                        lastList = torrs
-                        UpdaterCards.updateCards()
                         Thread.sleep(1000)
-                    } else
-                        Thread.sleep(5000)
+                    }
                 }
             }
         }
