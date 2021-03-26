@@ -157,7 +157,11 @@ class MainActivity : AppCompatActivity() {
                             }
                             withContext(Dispatchers.Main) { dialog.dismiss() }
                         } catch (e: Exception) {
-                            // TODO: notify user
+                            e.message?.let {
+                                withContext(Dispatchers.Main) {
+                                    App.Toast(it)
+                                }
+                            }
                         }
                     }
                 }
@@ -179,7 +183,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     e.message?.let {
-                        App.Toast(it)
+                        withContext(Dispatchers.Main) {
+                            App.Toast(it)
+                        }
                     }
                 }
             }
