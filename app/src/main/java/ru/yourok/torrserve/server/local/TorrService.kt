@@ -80,6 +80,7 @@ class TorrService : Service() {
                     return
                 updateStarted = true
             }
+            wait(5)
             var lastList = emptyList<Torrent>()
             try {
                 lastList = Api.listTorrent()
