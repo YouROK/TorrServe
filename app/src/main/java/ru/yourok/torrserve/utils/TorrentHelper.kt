@@ -79,7 +79,7 @@ object TorrentHelper {
     suspend fun preloadTorrent(torr: Torrent, index: Int) = withContext(Dispatchers.IO) {
         try {
             val link = getTorrentPreloadLink(torr, index)
-            Net.get(link)
+            Net.getAuth(link)
         } catch (e: Exception) {
         }
     }
