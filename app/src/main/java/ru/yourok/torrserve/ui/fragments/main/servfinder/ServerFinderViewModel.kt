@@ -13,7 +13,7 @@ import java.net.*
 import java.nio.charset.Charset
 import java.util.*
 
-data class ServerIp(val host: String, val version: String) {
+data class ServerIp(val host: String, var version: String) {
     override fun equals(other: Any?): Boolean {
         if (other == null)
             return false

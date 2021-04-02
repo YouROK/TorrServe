@@ -20,6 +20,16 @@ object Api {
         }
     }
 
+    fun remoteEcho(url: String): String {
+        try {
+            val host = "$url/echo"
+            return Net.getAuth(host)
+        } catch (e: Exception) {
+            println(e.message)
+            return ""
+        }
+    }
+
     fun shutdown(): String {
         try {
             val host = Net.getHostUrl("/shutdown")

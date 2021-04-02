@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -155,6 +152,31 @@ class ServerFinderFragment : TSFragment() {
             }
         }
         (viewModel as ServerFinderViewModel).find()
+        checkOnline()
+    }
+
+    private suspend fun checkOnline() = withContext(Dispatchers.Default) {
+        var onlineIDs = arrayListOf<Int>()
+        hostAdapter.hosts.forEach {
+            val ver = Api.remoteEcho(it.host)
+            if (ver.isNotEmpty()) {
+                it.version += " · $ver"
+                onlineIDs.add(hostAdapter.hosts.indexOf(it))
+            }
+        }
+        withContext(Dispatchers.Main) {
+            view?.findViewById<RecyclerView>(R.id.rvHosts)?.let {
+                for (pos in 0 until hostAdapter.itemCount) {
+                    val item = it.findViewHolderForAdapterPosition(pos)?.itemView
+                    if (onlineIDs.contains(pos)) {
+                        item?.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
+                    } else {
+                        item?.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.INVISIBLE
+                    }
+                }
+            }
+            hostAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun getLocalIP(): String {
