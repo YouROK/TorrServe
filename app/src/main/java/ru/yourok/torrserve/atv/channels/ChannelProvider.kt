@@ -46,16 +46,11 @@ class ChannelProvider(private val iName: String, private val dName: String) {
 
     fun update(list: List<Torrent>) {
         val channelId = create()
-        //remove with null data
-        list().filter { it.internalProviderDataByteArray == null }.forEach {
-            rem(it)
-        }
         App.context.contentResolver.delete(
             TvContractCompat.buildPreviewProgramsUriForChannel(channelId),
             null,
             null
         )
-
         val channel = Channel.Builder()
         channel.setType(TvContractCompat.Channels.TYPE_PREVIEW)
             .setDisplayName(dName)
@@ -81,6 +76,12 @@ class ChannelProvider(private val iName: String, private val dName: String) {
                 Uri.parse("content://android.media.tv/preview_program"),
                 emptyProgram(channelId).toContentValues()
             )
+
+        //remove stale channels with null data
+        list().filter { it.internalProviderDataByteArray == null }.forEach {
+            rem(it)
+        }
+
     }
 
     private val PROGRAMS_PROJECTION = arrayOf(
