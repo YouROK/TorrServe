@@ -156,25 +156,13 @@ class ServerFinderFragment : TSFragment() {
     }
 
     private suspend fun checkOnline() = withContext(Dispatchers.Default) {
-        var onlineIDs = arrayListOf<Int>()
         hostAdapter.hosts.forEach {
             val ver = Api.remoteEcho(it.host)
             if (ver.isNotEmpty()) {
                 it.version += " · $ver"
-                onlineIDs.add(hostAdapter.hosts.indexOf(it))
             }
         }
         withContext(Dispatchers.Main) {
-            view?.findViewById<RecyclerView>(R.id.rvHosts)?.let {
-                for (pos in 0 until hostAdapter.itemCount) {
-                    val item = it.findViewHolderForAdapterPosition(pos)?.itemView
-                    if (onlineIDs.contains(pos)) {
-                        item?.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
-                    } else {
-                        item?.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.INVISIBLE
-                    }
-                }
-            }
             hostAdapter.notifyDataSetChanged()
         }
     }

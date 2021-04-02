@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.fragments.main.servfinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
@@ -64,6 +65,11 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
         if (hosts[position].host.indexOf("127.0.0.1") != -1) {
             version += " · ${App.context.getString(R.string.on_device)}"
         }
+        // set online badge by version name
+        if (version.contains("MatriX", true))
+            holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
+        else
+            holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.INVISIBLE
 
         holder.view.findViewById<TextView>(R.id.tvVersion).text = version
     }
