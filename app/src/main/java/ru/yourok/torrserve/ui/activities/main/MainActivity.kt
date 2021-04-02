@@ -20,7 +20,6 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.clearStackFragmnet
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.services.TorrService
-import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
 import ru.yourok.torrserve.ui.fragments.donate.DonateFragment
 import ru.yourok.torrserve.ui.fragments.donate.DonateMessage
@@ -92,11 +91,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateStatus() {
-        findViewById<TextView>(R.id.tvCurrentHost)?.text = Settings.getHost()
+        val host = viewModel.getHost()
+        host.observe(this) {
+            findViewById<TextView>(R.id.tvCurrentHost)?.text = it
+        }
         val data = viewModel.get()
         data.observe(this) {
             findViewById<TextView>(R.id.tvStatus)?.text = it
-            findViewById<TextView>(R.id.tvCurrentHost)?.text = Settings.getHost()
         }
     }
 

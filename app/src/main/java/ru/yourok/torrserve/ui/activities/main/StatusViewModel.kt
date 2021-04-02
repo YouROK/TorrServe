@@ -11,10 +11,13 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.settings.Settings
 
 class StatusViewModel : ViewModel() {
     private var isWork = false
+    private var isWorkHost = false
     var data: MutableLiveData<String>? = null
+    var host: MutableLiveData<String>? = null
 
     fun get(): LiveData<String> {
         if (data == null) {
@@ -24,9 +27,18 @@ class StatusViewModel : ViewModel() {
         return data!!
     }
 
+    fun getHost(): LiveData<String> {
+        if (host == null) {
+            host = MutableLiveData()
+            updateHost()
+        }
+        return host!!
+    }
+
     override fun onCleared() {
         super.onCleared()
         isWork = false
+        isWorkHost = false
     }
 
     private fun update() {
@@ -50,6 +62,23 @@ class StatusViewModel : ViewModel() {
                 } catch (e: Exception) {
                     delay(2000)
                 }
+            }
+        }
+    }
+
+    private fun updateHost() {
+        viewModelScope.launch(Dispatchers.Main) {
+            synchronized(isWorkHost) {
+                if (isWorkHost)
+                    return@launch
+            }
+            isWorkHost = true
+            while (isWorkHost) {
+                val sv = Settings.getHost()
+                val old = host?.value
+                if (old == null || sv != old)
+                    host?.value = sv
+                delay(1000)
             }
         }
     }
