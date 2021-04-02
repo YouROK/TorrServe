@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.app.App
 
 class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     val hosts = mutableListOf<ServerIp>()
@@ -60,11 +59,10 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.view.findViewById<TextView>(R.id.tvHost).text = hosts[position].host
 
-        var version = hosts[position].version
-
-        if (hosts[position].host.indexOf("127.0.0.1") != -1) {
-            version += " · ${App.context.getString(R.string.on_device)}"
-        }
+        val version = hosts[position].version
+//        if (hosts[position].host.indexOf("127.0.0.1") != -1) {
+//            version += " · ${App.context.getString(R.string.on_device)}"
+//        }
         // set online badge by version name
         if (version.contains("MatriX", true))
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
