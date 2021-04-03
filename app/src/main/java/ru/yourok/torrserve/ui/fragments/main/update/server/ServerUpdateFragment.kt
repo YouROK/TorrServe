@@ -16,9 +16,9 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.services.TorrService
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.dialogs.DialogList
 import ru.yourok.torrserve.ui.fragments.TSFragment
-import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer.updateFromNet
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -35,7 +35,8 @@ class ServerUpdateFragment : TSFragment() {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
                         showProgress()
-                        updateFromNet {
+                        Settings.setHost("") // revert to local server
+                        UpdaterServer.updateFromNet {
                             lifecycleScope.launch(Dispatchers.Main) {
                                 showProgress(it)
                             }
@@ -131,8 +132,9 @@ class ServerUpdateFragment : TSFragment() {
                 val file = files[pos]
                 showProgress()
                 try {
+                    Settings.setHost("") // revert to local server
                     UpdaterServer.updateFromFile(file.path)
-                    Thread.sleep(1000)
+                    delay(1000)
                     updateUI()
                     hideProgress()
                 } catch (e: Exception) {
