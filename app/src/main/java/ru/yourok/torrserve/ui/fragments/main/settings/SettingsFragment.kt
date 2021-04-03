@@ -79,7 +79,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("host")?.apply {
-            summary = Settings.getHost()
             setOnPreferenceClickListener {
                 ServerFinderFragment().show(requireActivity(), R.id.container, true)
                 true
@@ -143,6 +142,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        findPreference<Preference>("host")?.apply {
+            summary = Settings.getHost()
+        }
     }
 
 }
