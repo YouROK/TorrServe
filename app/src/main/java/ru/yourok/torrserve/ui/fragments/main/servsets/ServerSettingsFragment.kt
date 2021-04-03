@@ -14,6 +14,7 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.settings.BTSets
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
 
 class ServerSettingsFragment : TSFragment() {
@@ -27,6 +28,8 @@ class ServerSettingsFragment : TSFragment() {
         }
 
         val vi = inflater.inflate(R.layout.server_settings_fragment, container, false)
+
+        vi.findViewById<TextView>(R.id.tvServerAddr)?.text = Settings.getHost()
 
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {

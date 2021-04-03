@@ -12,11 +12,11 @@
     <string name="open_torrserve">Запустить TorrServe</string>
     <string name="torrents">Торренты</string>
     <string name="apply">Применить</string>
-    <string name="default_sets">По Умолчанию</string>
+    <string name="default_sets">Настройки по умолчанию</string>
     <string name="default_sets_applied">Установлены настройки по умолчанию</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
     <string name="preload_before_start">Наполнять кеш перед стартом</string>
-    <string name="torrent_preload">Предзагрузка кеша (5%-100%, рек. 95%)</string>
+    <string name="torrent_preload">Кеш предзагрузки (5%-100%, рек. 95%)</string>
     <string name="torrent_disconnect_timeout">Тайм-аут отключения торрента (секунды)</string>
     <string name="save_content_path">Путь для сохранения содержимого</string>
     <string name="save_on_disk">Сохранить на диске</string>
@@ -94,7 +94,7 @@
     <string name="need_update_server">Нужно обновить сервер</string>
     <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
     <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
-    <string name="stat_running">Служба запущена</string>
+    <string name="stat_running">Сервер запущен</string>
     <string name="server_started">Сервер запущен</string>
     <string name="server_stoped">Сервер остановлен</string>
     <string name="server_not_responding">Сервер не отвечает</string>

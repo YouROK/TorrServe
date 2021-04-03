@@ -21,11 +21,22 @@
             android:padding="16dp">
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16.0dip"
+                android:text="@string/torserver_title"
+                android:textAllCaps="true"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp" />
+
+            <TextView
                 android:id="@+id/tvServerAddr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="5dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:paddingBottom="16.0dip"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="?attr/colorHost"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -46,6 +57,12 @@
                 android:ems="10"
                 android:inputType="numberSigned" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,6 +82,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/preload_before_start" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -150,6 +172,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/disable_upload" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -163,6 +190,11 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberSigned" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -178,6 +210,11 @@
                 android:ems="10"
                 android:inputType="numberSigned" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,6 +229,11 @@
                 android:ems="10"
                 android:inputType="numberSigned" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -205,6 +247,11 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberSigned" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -230,6 +277,11 @@
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="wrap_content" />-->
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -254,21 +306,19 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="8dp"
                 android:text="@string/default_sets" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="10dp"
                 android:background="@android:color/transparent" />
 
-            <TextView
+            <!--TextView
                 android:id="@+id/tvVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:paddingEnd="5dp" />
+                android:paddingEnd="5dp" /-->
 
         </LinearLayout>
     </ScrollView>
