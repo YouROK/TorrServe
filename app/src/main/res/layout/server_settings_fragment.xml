@@ -33,7 +33,6 @@
                 android:id="@+id/tvServerAddr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="16.0dip"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="?attr/colorHost"
                 android:textSize="16sp" />

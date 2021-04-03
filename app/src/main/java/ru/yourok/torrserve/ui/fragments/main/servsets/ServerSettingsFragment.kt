@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.main.servsets
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,14 @@ class ServerSettingsFragment : TSFragment() {
 
         val vi = inflater.inflate(R.layout.server_settings_fragment, container, false)
 
-        vi.findViewById<TextView>(R.id.tvServerAddr)?.text = Settings.getHost()
+        vi.findViewById<TextView>(R.id.tvServerAddr).let {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+                it.visibility = View.INVISIBLE
+            else {
+                it.visibility = View.VISIBLE
+                it.text = Settings.getHost()
+            }
+        }
 
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
