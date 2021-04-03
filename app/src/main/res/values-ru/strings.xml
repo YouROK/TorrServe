@@ -122,8 +122,8 @@
     <string name="remove_action_title">Удалить действие по умолчанию</string>
     <string name="remove_action_summary">Сброс действия по умолчанию при открытии торрента</string>
     <string name="boot_start_title">Запускать сервер при загрузке</string>
-    <string name="boot_start_sum_on">Запускать сервер при загрузке устройства</string>
-    <string name="boot_start_sum_off">Не запускать сервер при загрузке устройства</string>
+    <string name="boot_start_sum_on">Запускать локальный сервер при загрузке устройства</string>
+    <string name="boot_start_sum_off">Не запускать локальный сервер при загрузке устройства</string>
     <string name="root_start_title">Запускать сервер от root</string>
     <string name="root_start_sum_on">Запускать сервер от root, чтобы система не могла остановить его</string>
     <string name="root_start_sum_off">Не запускать сервер от root</string>
