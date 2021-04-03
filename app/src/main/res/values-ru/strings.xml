@@ -94,7 +94,7 @@
     <string name="need_update_server">Нужно обновить сервер</string>
     <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
     <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
-    <string name="stat_running">Сервер запущен</string>
+    <string name="stat_running">Локальный сервер запущен</string>
     <string name="server_started">Сервер запущен</string>
     <string name="server_stoped">Сервер остановлен</string>
     <string name="server_not_responding">Сервер не отвечает</string>
