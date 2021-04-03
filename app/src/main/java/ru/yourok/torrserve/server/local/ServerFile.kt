@@ -33,7 +33,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
     }
 
     fun stop() {
-        if (!exists() || !TorrService.isLocal())
+        if (!exists())
             return
         synchronized(lock) {
             Shell.Config.verboseLogging(BuildConfig.DEBUG)
@@ -41,8 +41,8 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
                 Shell.su("killall -9 torrserver &").exec()
             else
                 Shell.sh("killall -9 torrserver &").exec()
-            if (result.isSuccess)
-                App.Toast(App.context.getString(R.string.server_stoped))
+//            if (result.isSuccess)
+//                App.Toast(App.context.getString(R.string.server_stoped))
             shell = null
         }
     }

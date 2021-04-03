@@ -104,8 +104,10 @@ class ServerFinderFragment : TSFragment() {
                     }
                 }
 
-                if (ServerFile().exists() && (host.toLowerCase().contains("localhost") || host.toLowerCase().contains("127.0.0.1")))
+                if (ServerFile().exists() && TorrService.isLocal())
                     TorrService.start()
+                else
+                    TorrService.stop()
 
                 val lst = Settings.getHosts().toMutableList()
                 lst.add(host)
