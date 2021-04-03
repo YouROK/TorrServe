@@ -124,7 +124,7 @@ class ServerFinderFragment : TSFragment() {
     private suspend fun update() = withContext(Dispatchers.Main) {
         view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
         showProgress()
-        view?.findViewById<TextView>(R.id.tvCurrentHost)?.text = getLocalIP()
+        view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = getLocalIP()
         hostAdapter.clear()
         // add local
         hostAdapter.add(ServerIp("http://127.0.0.1:8090", App.context.getString(R.string.local_server)))
