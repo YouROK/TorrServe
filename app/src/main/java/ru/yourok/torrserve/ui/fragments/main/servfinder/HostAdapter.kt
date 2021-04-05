@@ -60,11 +60,8 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
         holder.view.findViewById<TextView>(R.id.tvHost).text = hosts[position].host
 
         val version = hosts[position].version
-//        if (hosts[position].host.indexOf("127.0.0.1") != -1) {
-//            version += " · ${App.context.getString(R.string.on_device)}"
-//        }
-        // set online badge by version name
-        if (version.contains("MatriX", true))
+        // set online badge by added version
+        if (version.contains("·", true))
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
         else
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.INVISIBLE

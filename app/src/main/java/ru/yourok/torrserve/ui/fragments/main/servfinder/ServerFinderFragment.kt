@@ -161,7 +161,7 @@ class ServerFinderFragment : TSFragment() {
         hostAdapter.hosts.forEach {
             val ver = Api.remoteEcho(it.host)
             if (ver.isNotEmpty()) {
-                it.version += " · $ver"
+                it.version += " · $ver" // dot as online flag in HostAdapter
             }
         }
         withContext(Dispatchers.Main) {
