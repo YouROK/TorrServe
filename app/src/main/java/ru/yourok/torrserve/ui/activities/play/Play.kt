@@ -8,7 +8,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.app.App.Companion.Toast
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.players.Players
@@ -95,7 +94,7 @@ object Play {
         try {
             intent = Players.getIntent(torr, index)
         } catch (e: Exception) {
-            e.message?.let { Toast(it, true) }
+            e.message?.let { App.Toast(it) }
         }
         intent?.let {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
