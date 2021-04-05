@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
@@ -38,7 +39,8 @@ class AddFragment : TSFragment() {
                         try {
                             addTorrent("", link, title, poster, "", true)
                         } catch (e: Exception) {
-                            // TODO: notify user
+                            e.printStackTrace()
+                            App.Toast(e.message ?: getString(R.string.error_retrieve_data))
                         }
                     }
                 popBackStackFragment()
