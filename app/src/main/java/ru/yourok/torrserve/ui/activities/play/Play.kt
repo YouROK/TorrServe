@@ -51,22 +51,27 @@ object Play {
                 torrentFileIndex = SerialFilter.filter(intent, files)
 
             lifecycleScope.launch {
-                if (files.isEmpty()) {
-                    App.Toast(getString(R.string.error_retrieve_torrent_file))
-                    error(ErrLoadTorrentInfo)
-                } else if (files.size == 1) {
-                    torrentFileIndex = 0
-                    streamTorrent(torrent, files.first().id)
-                    successful(Intent())
-                } else if (torrentFileIndex > 0) {
-                    streamTorrent(torrent, torrentFileIndex)
-                    successful(Intent())
-                } else {
-                    hideProgress()
-                    TorrentFilesFragment().showTorrent(this@play, torrent, viewed) { file ->
-                        torrentFileIndex = TorrentHelper.findIndex(torrent, file)
-                        lifecycleScope.launch {
-                            streamTorrent(torrent, file.id)
+                when {
+                    files.isEmpty() -> {
+                        App.Toast(getString(R.string.error_retrieve_torrent_file))
+                        error(ErrLoadTorrentInfo)
+                    }
+                    files.size == 1 -> {
+                        torrentFileIndex = 0
+                        streamTorrent(torrent, files.first().id)
+                        successful(Intent())
+                    }
+                    torrentFileIndex > 0 -> {
+                        streamTorrent(torrent, torrentFileIndex)
+                        successful(Intent())
+                    }
+                    else -> {
+                        hideProgress()
+                        TorrentFilesFragment().showTorrent(this@play, torrent, viewed) { file ->
+                            torrentFileIndex = TorrentHelper.findIndex(torrent, file)
+                            lifecycleScope.launch {
+                                streamTorrent(torrent, file.id)
+                            }
                         }
                     }
                 }
@@ -74,7 +79,7 @@ object Play {
         }
     }
 
-    suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
+    private suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
         var torr = torrent
         TorrentHelper.preloadTorrent(torr, index)
         delay(200)
