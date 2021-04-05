@@ -13,8 +13,8 @@ android {
         targetSdkVersion 28
         // for older androids
         multiDexEnabled true
-        versionCode 96
-        versionName "MatriX.96"
+        versionCode 97
+        versionName "MatriX.97"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
@@ -41,15 +41,15 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.palette:palette-ktx:1.0.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
 
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 
     // http client/parser
     implementation 'org.jsoup:jsoup:1.13.1'
@@ -62,13 +62,13 @@ dependencies {
     implementation "com.github.topjohnwu.libsu:io:3.0.2"
 
     // glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'jp.wasabeef:glide-transformations:4.0.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     // firebase
-    implementation 'com.google.firebase:firebase-core:18.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
+    implementation 'com.google.firebase:firebase-core:18.0.2'
+    implementation 'com.google.firebase:firebase-crashlytics:17.4.1'
 
     // multidex
     implementation 'androidx.multidex:multidex:2.0.1'
