@@ -79,7 +79,10 @@ object Play {
         TorrentHelper.preloadTorrent(torr, index)
         delay(200)
         withContext(Dispatchers.IO) {
-            torr = Api.getTorrent(torr.hash)
+            try {
+                torr = Api.getTorrent(torr.hash)
+            } catch (e: Exception) {
+            }
             while (torr.stat == TorrentHelper.TorrentSTPreload) {
                 delay(1000)
                 try {
@@ -88,7 +91,6 @@ object Play {
                 }
             }
         }
-
         ad?.waitAd()
         var intent: Intent? = null
         try {
