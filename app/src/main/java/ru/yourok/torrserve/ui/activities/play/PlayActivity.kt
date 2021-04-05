@@ -76,7 +76,9 @@ class PlayActivity : AppCompatActivity() {
                 App.Toast(R.string.server_not_responding)
                 error(ErrTorrServerNotResponding)
             }
-            processIntent()
+            withContext(Dispatchers.Main) {
+                processIntent()
+            }
         }
     }
 
