@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.app.App.Companion.Toast
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.players.Players
@@ -90,7 +91,12 @@ object Play {
         }
 
         ad?.waitAd()
-        val intent = Players.getIntent(torr, index)
+        var intent: Intent? = null
+        try {
+            intent = Players.getIntent(torr, index)
+        } catch (e: Exception) {
+            e.message?.let { Toast(it, true) }
+        }
         intent?.let {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             App.context.startActivity(it)
