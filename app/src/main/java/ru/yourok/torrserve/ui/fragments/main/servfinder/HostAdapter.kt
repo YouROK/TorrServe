@@ -71,7 +71,7 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
 
         val version = hosts[position].version
         // set online badge by added version
-        if (version.contains("·", true))
+        if (version.contains("·", true) || version.startsWith("1.2.") || version.startsWith("MatriX"))
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
         else
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.INVISIBLE
