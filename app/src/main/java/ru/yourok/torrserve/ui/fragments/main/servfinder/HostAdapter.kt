@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.settings.Settings
 
 class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     val hosts = mutableListOf<ServerIp>()
@@ -47,6 +49,14 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
             view.setOnClickListener {
                 adapter.onClick?.invoke(adapter.hosts[adapterPosition].host)
             }
+            view.setOnLongClickListener {
+                val lst = Settings.getHosts().toMutableList()
+                if(lst.remove(adapter.hosts[adapterPosition].host)) {
+                    Settings.setHosts(lst)
+                    rem(adapter, adapter.hosts[adapterPosition])
+                }
+                true
+            }
         }
     }
 
@@ -70,4 +80,18 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     }
 
     override fun getItemCount() = hosts.size
+
+    companion object {
+        fun rem(hostAdapter: HostAdapter, servIp: ServerIp) {
+            try {
+                val pos = hostAdapter.hosts.indexOf(servIp)
+                if (pos != -1) {
+                    hostAdapter.hosts.removeAt(pos)
+                    hostAdapter.notifyItemRemoved(pos)
+                }
+            } catch (e: Exception) {
+            }
+        }
+    }
+
 }

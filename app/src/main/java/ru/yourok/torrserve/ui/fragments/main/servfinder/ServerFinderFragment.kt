@@ -111,8 +111,8 @@ class ServerFinderFragment : TSFragment() {
 
                 val lst = Settings.getHosts().toMutableList()
                 lst.add(host)
-                if (lst.size > 10)
-                    lst.removeAt(0)
+//                if (lst.size > 10)
+//                    lst.removeAt(0)
                 Settings.setHosts(lst)
                 popBackStackFragment()
             } catch (e: Exception) {
