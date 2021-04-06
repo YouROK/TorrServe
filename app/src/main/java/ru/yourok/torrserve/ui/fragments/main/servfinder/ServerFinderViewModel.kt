@@ -1,6 +1,5 @@
 package ru.yourok.torrserve.ui.fragments.main.servfinder
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,9 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.yourok.torrserve.utils.Http
+import ru.yourok.torrserve.server.api.Api
 import java.net.*
-import java.nio.charset.Charset
 import java.util.*
 
 data class ServerIp(val host: String, var version: String) {
@@ -98,21 +96,11 @@ class ServerFinderViewModel : ViewModel() {
                     stats?.value = checkHost
                 }
                 viewModelScope.launch(Dispatchers.IO) {
-                    try {
-                        val conn = Http(Uri.parse("$checkHost/echo"))
-                        conn.setTimeout(1000)
-                        conn.connect()
-                        conn.getInputStream()?.apply {
-                            val version = bufferedReader(Charset.defaultCharset())?.readText() ?: ""
-                            if (version.isNotEmpty() && (version.startsWith("1.2.") || version.startsWith("MatriX")))
-                                withContext(Dispatchers.Main) {
-                                    servers?.value = ServerIp(checkHost, version)
-                                }
-
-                            close()
+                    val version = Api.remoteEcho(checkHost)
+                    if (version.isNotEmpty() && (version.startsWith("1.2.") || version.startsWith("MatriX")))
+                        withContext(Dispatchers.Main) {
+                            servers?.value = ServerIp(checkHost, version)
                         }
-                    } catch (e: Exception) {
-                    }
                 }
             }
         }

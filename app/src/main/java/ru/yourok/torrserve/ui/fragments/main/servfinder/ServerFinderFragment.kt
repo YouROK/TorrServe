@@ -154,18 +154,21 @@ class ServerFinderFragment : TSFragment() {
             }
         }
         (viewModel as ServerFinderViewModel).find()
-        checkOnline()
+        // online check for saved list
+        checkSetVersion()
     }
 
-    private suspend fun checkOnline() = withContext(Dispatchers.Default) {
-        hostAdapter.hosts.forEach {
-            val ver = Api.remoteEcho(it.host)
-            if (ver.isNotEmpty()) {
-                it.version += " · $ver" // dot as online flag in HostAdapter
+    private fun checkSetVersion() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            hostAdapter.hosts.forEach {
+                val ver = Api.remoteEcho(it.host)
+                if (ver.isNotEmpty()) {
+                    it.version += " · $ver" // dot as online flag in HostAdapter
+                }
             }
-        }
-        withContext(Dispatchers.Main) {
-            hostAdapter.notifyDataSetChanged()
+            withContext(Dispatchers.Main) {
+                hostAdapter.notifyDataSetChanged()
+            }
         }
     }
 
