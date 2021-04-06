@@ -129,10 +129,25 @@ class ServerFinderFragment : TSFragment() {
         view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = getLocalIP()
         hostAdapter.clear()
         // add local
-        hostAdapter.add(ServerIp("http://127.0.0.1:8090", App.context.getString(R.string.local_server)))
+        var host = "http://127.0.0.1:8090"
+        var version = App.context.getString(R.string.local_server)
+        withContext(Dispatchers.IO) {
+            val v = Api.remoteEcho(host)
+            if (v.isNotEmpty()) {
+                version += " · $v"
+            }
+        }
+        hostAdapter.add(ServerIp(host, version))
         // add saved
         Settings.getHosts().forEach {
-            hostAdapter.add(ServerIp(it, "${App.context.getString(R.string.saved_server)}"))
+            version = App.context.getString(R.string.saved_server)
+            withContext(Dispatchers.IO) {
+                val v = Api.remoteEcho(it)
+                if (v.isNotEmpty()) {
+                    version += " · $v"
+                }
+            }
+            hostAdapter.add(ServerIp(it, version))
         }
         // find all
         viewModel = ViewModelProvider(this@ServerFinderFragment).get(ServerFinderViewModel::class.java)
@@ -154,22 +169,6 @@ class ServerFinderFragment : TSFragment() {
             }
         }
         (viewModel as ServerFinderViewModel).find()
-        // online check for saved list
-        checkSetVersion()
-    }
-
-    private fun checkSetVersion() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            hostAdapter.hosts.forEach {
-                val ver = Api.remoteEcho(it.host)
-                if (ver.isNotEmpty()) {
-                    it.version += " · $ver" // dot as online flag in HostAdapter
-                }
-            }
-            withContext(Dispatchers.Main) {
-                hostAdapter.notifyDataSetChanged()
-            }
-        }
     }
 
     private fun getLocalIP(): String {
@@ -177,10 +176,10 @@ class ServerFinderFragment : TSFragment() {
         val ret = mutableListOf<InterfaceAddress>()
         while (interfaces.hasMoreElements()) {
             val networkInterface: NetworkInterface = interfaces.nextElement()
-            if (networkInterface.isLoopback())
+            if (networkInterface.isLoopback)
                 continue
-            for (interfaceAddress in networkInterface.getInterfaceAddresses()) {
-                val ip = interfaceAddress.getAddress()
+            for (interfaceAddress in networkInterface.interfaceAddresses) {
+                val ip = interfaceAddress.address
                 if (ip is Inet4Address) {
                     ret.add(interfaceAddress)
                 }

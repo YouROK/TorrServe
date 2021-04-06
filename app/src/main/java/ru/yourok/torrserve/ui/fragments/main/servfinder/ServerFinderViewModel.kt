@@ -11,7 +11,7 @@ import ru.yourok.torrserve.server.api.Api
 import java.net.*
 import java.util.*
 
-data class ServerIp(val host: String, var version: String) {
+data class ServerIp(val host: String, val version: String) {
     override fun equals(other: Any?): Boolean {
         if (other == null)
             return false
