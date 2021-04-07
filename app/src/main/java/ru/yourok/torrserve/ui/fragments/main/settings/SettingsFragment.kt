@@ -1,9 +1,13 @@
 package ru.yourok.torrserve.ui.fragments.main.settings
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -32,22 +36,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
     @SuppressLint("RestrictedApi")
     internal class CustomPreferenceAdapter @SuppressLint("RestrictedApi")
     constructor(preferenceGroup: PreferenceGroup?) : PreferenceGroupAdapter(preferenceGroup) {
-        @SuppressLint("RestrictedApi")
         override fun onBindViewHolder(holder: PreferenceViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
             val currentPreference = getItem(position)
-            //For a preference category we want the divider shown above.
-            //if (position != 0 && currentPreference is PreferenceCategory) {
-            //holder.isDividerAllowedAbove = true
-            //holder.isDividerAllowedBelow = false
-            //} else {
-            //For other dividers we do not want to show divider above
-            //but allow dividers below for CategoryPreference dividers.
-            //holder.isDividerAllowedAbove = false
-            //holder.isDividerAllowedBelow = true
-            //}
             if (currentPreference is Preference) {
                 holder.itemView.background = ContextCompat.getDrawable(App.context, R.drawable.action_selector)
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    holder.itemView.backgroundTintList = ColorStateList.valueOf(holder.itemView.context.getColorFromAttr(R.attr.colorAccent))
+//                    holder.itemView.backgroundTintMode = PorterDuff.Mode.MULTIPLY
+//                }
             }
         }
     }
@@ -100,12 +97,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val pList = Players.getList()
             val player = Settings.getPlayer()
             this.entryValues = pList.map { it.first }.toTypedArray()
-            this.entries = pList.map {
-                //if (it.first.isNotEmpty() && it.first != "0")
-                //    it.second + "\n" + it.first
-                //else
-                it.second
-            }.toTypedArray()
+            this.entries = pList.map { it.second }.toTypedArray()
             this.value = player
             this.summary = pList.find { it.first == player }?.second ?: player
             setOnPreferenceChangeListener { preference, newValue ->
@@ -151,4 +143,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+}
+
+@ColorInt
+fun Context.getColorFromAttr(
+    @AttrRes attrColor: Int,
+    typedValue: TypedValue = TypedValue(),
+    resolveRefs: Boolean = true
+): Int {
+    theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+    return typedValue.data
 }

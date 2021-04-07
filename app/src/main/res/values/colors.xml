@@ -10,6 +10,6 @@
     <color name="lighter_gray">#ccc</color>
     <color name="darker_gray">#2b2b2b</color>
     <color name="wine_red">#c00000</color>
-    <color name="orange_10">#1affa724</color>
-    <color name="orange_25">#40ffa724</color>
+    <color name="scrim_10">#1a777777</color>
+    <color name="scrim_20">#33777777</color>
 </resources>
