@@ -9,7 +9,7 @@
     <color name="white_10">#1affffff</color>
     <color name="lighter_gray">#ccc</color>
     <color name="darker_gray">#2b2b2b</color>
-    <color name="wine_red">#c00000</color>
+    <color name="dark_brown">#2a2122</color>
     <color name="scrim_10">#1a777777</color>
     <color name="scrim_20">#33777777</color>
 </resources>

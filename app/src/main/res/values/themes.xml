@@ -35,10 +35,10 @@
         <item name="colorHost">@color/orange_dark</item>
         <item name="colorBG">@color/lighter_gray</item>
         <!-- colors -->
-        <item name="colorPrimary">@color/wine_red</item>
+        <item name="colorPrimary">@color/dark_brown</item>
         <item name="colorPrimaryVariant">@color/orange_dark</item>
         <item name="colorOnPrimary">@color/green</item>
-        <item name="colorSecondary">@color/wine_red</item>
+        <item name="colorSecondary">@color/dark_brown</item>
         <item name="colorSecondaryVariant">@color/orange_dark</item>
         <item name="colorOnSecondary">@color/green</item>
         <!-- bars -->
@@ -87,10 +87,10 @@
         <item name="android:listDivider">@drawable/gradient_divider_white</item>
         <item name="android:windowBackground">@drawable/rc_background_light</item>
         <!-- colors -->
-        <item name="colorPrimary">@color/wine_red</item>
+        <item name="colorPrimary">@color/dark_brown</item>
         <item name="colorPrimaryVariant">@color/orange_dark</item>
         <item name="colorOnPrimary">@color/green</item>
-        <item name="colorSecondary">@color/wine_red</item>
+        <item name="colorSecondary">@color/dark_brown</item>
         <item name="colorSecondaryVariant">@color/orange_dark</item>
         <item name="colorOnSecondary">@color/green</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
