@@ -230,6 +230,16 @@
 
         <service android:name=".services.TorrService" />
         <service android:name=".services.Notification" />
+        <service
+            android:name=".server.local.services.GlobalTorrServeService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/global_torrserve_service" />
+        </service>
     </application>
 
 </manifest>
