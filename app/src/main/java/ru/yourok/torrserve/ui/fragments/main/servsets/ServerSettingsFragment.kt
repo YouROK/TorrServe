@@ -98,11 +98,11 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
                     findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked = sets.EnableIPv6
-                    findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked = sets.DisableTCP
-                    findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked = sets.DisableUTP
-                    findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked = sets.DisableUPNP
-                    findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked = sets.DisableDHT
-                    findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked = sets.DisableUpload
+                    findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked = !sets.DisableTCP
+                    findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked = !sets.DisableUTP
+                    findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked = !sets.DisableUPNP
+                    findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked = !sets.DisableDHT
+                    findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked = !sets.DisableUpload
                     findViewById<EditText>(R.id.etDownloadRateLimit)?.setText(sets.DownloadRateLimit.toString())
                     findViewById<EditText>(R.id.etUploadRateLimit)?.setText(sets.UploadRateLimit.toString())
                     findViewById<EditText>(R.id.etConnectionsLimit)?.setText(sets.ConnectionsLimit.toString())
@@ -121,9 +121,9 @@ class ServerSettingsFragment : TSFragment() {
         try {
             view?.apply {
                 btsets = BTSets(
-                    (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 200L) * 1024 * 1024,
+                    (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 96L) * 1024 * 1024,
                     findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: false,
-                    findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 70,
+                    findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 95,
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
                     findViewById<EditText>(R.id.etContentPath)?.text?.toString() ?: "",
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
@@ -131,14 +131,14 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
                     false,
                     findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked ?: true,
-                    findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked ?: false,
+                    findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked != true ?: false,
+                    findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked != true ?: true,
+                    findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked != true ?: false,
+                    findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked != true ?: false,
+                    findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked != true ?: false,
                     findViewById<EditText>(R.id.etDownloadRateLimit)?.text?.toString()?.toInt() ?: 0,
                     findViewById<EditText>(R.id.etUploadRateLimit)?.text?.toString()?.toInt() ?: 0,
-                    findViewById<EditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 20,
+                    findViewById<EditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 23,
                     findViewById<EditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
                     findViewById<EditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
                     0
