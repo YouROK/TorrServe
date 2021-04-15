@@ -131,12 +131,6 @@
                 android:visibility="gone" />
 
             <CheckBox
-                android:id="@+id/cbForceEncrypt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/force_encrypt" />
-
-            <CheckBox
                 android:id="@+id/cbEnableIPv6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,6 +159,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_upload" />
+
+            <CheckBox
+                android:id="@+id/cbForceEncrypt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/force_encrypt" />
 
             <View
                 android:layout_width="match_parent"
@@ -242,6 +242,11 @@
                 android:ems="10"
                 android:inputType="numberSigned" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -284,11 +289,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberSigned" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
 
             <CheckBox
                 android:id="@+id/cbDisableUPNP"
