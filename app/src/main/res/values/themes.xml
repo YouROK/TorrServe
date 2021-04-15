@@ -50,12 +50,13 @@
     <!-- Black Theme -->
     <style name="Theme.TorrServe.Black" parent="Theme.TorrServe.Dark">
         <!-- attr colors -->
+        <item name="colorHost">@color/orange</item>
         <item name="colorBG">@color/black</item>
         <!-- colors -->
-        <item name="colorPrimary">@color/semi_red</item>
+        <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorOnPrimary">@color/green</item>
-        <item name="colorSecondary">@color/semi_red</item>
+        <item name="colorOnPrimary">@color/orange</item>
+        <item name="colorSecondary">@color/green</item>
         <item name="android:strokeColor" tools:targetApi="l">@color/white_10</item>
         <item name="android:windowBackground">@color/black</item>
         <item name="android:colorBackground">@color/black</item>
@@ -101,8 +102,8 @@
     <!-- Black Style -->
     <style name="PlayDialog.Black" parent="PlayDialog.Dark">
         <item name="android:windowBackground">@drawable/rc_background_black</item>
-        <item name="colorPrimary">@color/semi_red</item>
-        <item name="colorSecondary">@color/semi_red</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorSecondary">@color/green</item>
     </style>
     <!-- DayNight Style -->
     <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
