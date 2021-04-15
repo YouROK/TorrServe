@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <attr name="colorHost" format="reference" />
     <attr name="colorBG" format="reference" />
+
     <!-- Base application theme. https://material.io/develop/android/docs/getting-started -->
     <style name="Theme.TorrServe.Dark" parent="Theme.MaterialComponents">
         <item name="windowNoTitle">true</item>
@@ -9,22 +10,21 @@
         <!-- attr colors -->
         <item name="colorHost">@color/green</item>
         <item name="colorBG">@color/darker_gray</item>
-        <!-- Primary brand color. -->
+        <!-- Primary brand color -->
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryVariant">@color/orange_dark</item>
         <item name="colorOnPrimary">@color/green</item>
-        <!-- Secondary brand color. -->
+        <!-- Secondary brand color -->
         <item name="colorSecondary">@color/orange</item>
         <item name="colorSecondaryVariant">@color/orange_dark</item>
         <item name="colorOnSecondary">@color/green</item>
-        <!-- Accent Override -->
-        <!--item name="colorAccent">@color/colorAccent</item-->
-        <!-- Status bar color. -->
+        <!-- Status bar color -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
-        <!-- Bottom bar color. -->
+        <!-- Bottom bar color -->
         <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
-        <!-- Customize your theme here. -->
+        <!-- Customize -->
         <item name="android:listDivider">@drawable/gradient_divider_green</item>
+        <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
     </style>
     <!-- Light Theme -->
     <style name="Theme.TorrServe.Light" parent="Theme.MaterialComponents.Light">
@@ -44,6 +44,8 @@
         <!-- bars -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
+        <!-- Customize -->
+        <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
     </style>
     <!-- Black Theme -->
     <style name="Theme.TorrServe.Black" parent="Theme.TorrServe.Dark">
@@ -54,8 +56,6 @@
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorOnPrimary">@color/green</item>
         <item name="colorSecondary">@color/semi_red</item>
-        <!--item name="colorAccent">@color/colorPrimary</item-->
-        <!--item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar</item-->
         <item name="android:strokeColor" tools:targetApi="l">@color/white_10</item>
         <item name="android:windowBackground">@color/black</item>
         <item name="android:colorBackground">@color/black</item>
@@ -65,6 +65,7 @@
     </style>
     <!-- DayNight Theme -->
     <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
+
     <!-- Dark Style -->
     <style name="PlayDialog.Dark" parent="Theme.MaterialComponents.Dialog">
         <item name="windowNoTitle">true</item>
@@ -103,6 +104,7 @@
     </style>
     <!-- DayNight Style -->
     <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
+
     <!-- Head Preference Category -->
     <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
         <item name="android:layout">@layout/head_preference_category</item>
@@ -116,10 +118,16 @@
         <item name="android:paddingStart">16.0dip</item>
         <item name="android:paddingBottom">16.0dip</item>
     </style>
+
     <!-- Main Menu -->
     <style name="MainMenuTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <!-- Checkboxes Text -->
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 </resources>
