@@ -33,7 +33,7 @@
     <string name="force_encrypt">Force ecrypt headers</string>
     <string name="enable_ipv6">IPv6 (enable only if supported)</string>
     <string name="disable_tcp">TCP (don\'t disable without UTP enabled)</string>
-    <string name="disable_utp">UTP (not recommended to enable on weak devices)</string>
+    <string name="disable_utp">UTP (not recommended on weak devices)</string>
     <string name="disable_upnp">UPNP (auto open port on router)</string>
     <string name="disable_dht">DHT (disable if there is no network after starting the server)</string>
     <string name="disable_upload">Upload (not recommended to disable)</string>

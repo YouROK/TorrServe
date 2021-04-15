@@ -132,5 +132,7 @@
     <!-- Checkboxes Text -->
     <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
     </style>
 </resources>
