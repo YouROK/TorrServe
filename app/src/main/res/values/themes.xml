@@ -50,9 +50,10 @@
         <!-- attr colors -->
         <item name="colorBG">@color/black</item>
         <!-- colors -->
-        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimary">@color/semi_red</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorOnPrimary">@color/green</item>
+        <item name="colorSecondary">@color/semi_red</item>
         <!--item name="colorAccent">@color/colorPrimary</item-->
         <!--item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar</item-->
         <item name="android:strokeColor" tools:targetApi="l">@color/white_10</item>
