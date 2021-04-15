@@ -155,12 +155,6 @@
                 android:text="@string/disable_utp" />
 
             <CheckBox
-                android:id="@+id/cbDisableUPNP"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/disable_upnp" />
-
-            <CheckBox
                 android:id="@+id/cbDisableDHT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -248,11 +242,6 @@
                 android:ems="10"
                 android:inputType="numberSigned" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -295,6 +284,17 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberSigned" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
+            <CheckBox
+                android:id="@+id/cbDisableUPNP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_upnp" />
 
             <View
                 android:layout_width="match_parent"
