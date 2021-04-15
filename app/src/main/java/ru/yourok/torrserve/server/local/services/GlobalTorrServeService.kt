@@ -20,7 +20,7 @@ class GlobalTorrServeService : AccessibilityService() {
     private val serverFile = ServerFile()
 
     override fun onServiceConnected() {
-        super.onServiceConnected()
+//        super.onServiceConnected()
         if (serverFile.exists() && TorrService.isLocal() && Api.echo().isEmpty()) {
             Log.d("TorrService", "startServer()")
             serverFile.run()
