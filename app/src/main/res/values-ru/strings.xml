@@ -26,7 +26,7 @@
     <string name="disable_utp">UTP (не рекомендуется включать на слабых устройствах)</string>
     <string name="disable_upnp">UPNP (автооткрытие порта на роутере)</string>
     <string name="disable_dht">DHT (отключите при отсутствии сети после запуска сервера)</string>
-    <string name="disable_upload">Отдача</string>
+    <string name="disable_upload">Отдача (не рекомендуется отключать)</string>
     <string name="ecnryption">Шифрование</string>
     <string name="connections_limit">Торрент-соединения (рекомендуется 20–25)</string>
     <string name="connections_dht_limit">Лимит подключений DHT (0 - без ограничений)</string>
