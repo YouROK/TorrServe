@@ -149,18 +149,6 @@
                 android:text="@string/disable_utp" />
 
             <CheckBox
-                android:id="@+id/cbDisableDHT"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/disable_dht" />
-
-            <CheckBox
-                android:id="@+id/cbDisableUpload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/disable_upload" />
-
-            <CheckBox
                 android:id="@+id/cbForceEncrypt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -189,6 +177,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@android:color/transparent" />
+
+            <CheckBox
+                android:id="@+id/cbDisableDHT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_dht" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -227,6 +221,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@android:color/transparent" />
+
+            <CheckBox
+                android:id="@+id/cbDisableUpload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_upload" />
 
             <TextView
                 android:layout_width="match_parent"
