@@ -101,6 +101,8 @@
     <!-- Black Style -->
     <style name="PlayDialog.Black" parent="PlayDialog.Dark">
         <item name="android:windowBackground">@drawable/rc_background_black</item>
+        <item name="colorPrimary">@color/semi_red</item>
+        <item name="colorSecondary">@color/semi_red</item>
     </style>
     <!-- DayNight Style -->
     <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
