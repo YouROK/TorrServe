@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
@@ -132,6 +133,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             } else {
                 ps?.removePreference(this)
             }
+        }
+
+        findPreference<Preference>("version")?.apply {
+            this.summary = BuildConfig.VERSION_NAME
         }
 
     }

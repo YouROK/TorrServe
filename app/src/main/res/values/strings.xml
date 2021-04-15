@@ -155,6 +155,7 @@
 
     <!--    Settings    -->
     <string name="app_settings">App Settings</string>
+    <string name="app_version">App Version</string>
 
     <string name="host_title">Set TorrServer url address</string>
 

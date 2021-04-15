@@ -71,4 +71,8 @@
         app:title="@string/show_battery_save_title"
         app:summary="@string/show_battery_save_summary" />
 
+    <Preference
+        app:key="version"
+        app:title="@string/app_version" />
+
 </PreferenceScreen>

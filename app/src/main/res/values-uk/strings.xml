@@ -151,6 +151,7 @@
 
     <!--    Settings    -->
     <string name="app_settings">Налаштування додатку</string>
+    <string name="app_version">Версія додатка</string>
 
     <string name="host_title">Встановити URL-адресу TorrServer</string>
 
