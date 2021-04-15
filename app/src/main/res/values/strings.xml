@@ -33,18 +33,18 @@
     <string name="force_encrypt">Force ecrypt</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="disable_tcp">TCP</string>
-    <string name="disable_utp">UTP</string>
-    <string name="disable_upnp">UPNP</string>
-    <string name="disable_dht">DHT</string>
+    <string name="disable_utp">UTP (not recommended to enable on weak devices)</string>
+    <string name="disable_upnp">UPNP (auto open port on router)</string>
+    <string name="disable_dht">DHT (disable if there is no network after starting the torrent)</string>
     <string name="disable_upload">Upload</string>
     <string name="ecnryption">Ecnryption</string>
     <string name="connections_limit">Torrent connections (20–25 recommended)</string>
-    <string name="connections_dht_limit">Limit of DHT connections (0-unlimited)</string>
-    <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0-unlimited)</string>
-    <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0-unlimited)</string>
+    <string name="connections_dht_limit">Limit of DHT connections (0 - unlimited)</string>
+    <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0 - unlimited)</string>
+    <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0 - unlimited)</string>
     <string name="retrackers">Retrackers</string>
     <string name="strategy">Request Strategy</string>
-    <string name="peers_listen_port">Peers listen port (0-default)</string>
+    <string name="peers_listen_port">Peers listen port (0 - default)</string>
     <string-array name="retracker_mode">
         <item>Default</item>
         <item>Add retrackers</item>

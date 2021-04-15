@@ -15,7 +15,7 @@
     <string name="default_sets">Настройки по умолчанию</string>
     <string name="default_sets_applied">Установлены настройки по умолчанию</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
-    <string name="preload_before_start">Наполнять кеш перед стартом</string>
+    <string name="preload_before_start">Наполнять кеш перед началом воспроизведения</string>
     <string name="torrent_preload">Кеш предзагрузки (5%-100%, рек. 95%)</string>
     <string name="torrent_disconnect_timeout">Тайм-аут отключения торрента (секунды)</string>
     <string name="save_content_path">Путь для сохранения содержимого</string>
@@ -23,13 +23,13 @@
     <string name="force_encrypt">Принудительное шифрование</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="disable_tcp">TCP</string>
-    <string name="disable_utp">UTP</string>
-    <string name="disable_upnp">UPNP</string>
-    <string name="disable_dht">DHT</string>
+    <string name="disable_utp">UTP (не рекомендуется включать на слабых устройствах)</string>
+    <string name="disable_upnp">UPNP (автооткрытие порта на роутере)</string>
+    <string name="disable_dht">DHT (отключите при отсутствии сети после запуска торрента)</string>
     <string name="disable_upload">Отдача</string>
     <string name="ecnryption">Шифрование</string>
     <string name="connections_limit">Торрент-соединения (рекомендуется 20–25)</string>
-    <string name="connections_dht_limit">Лимит подключений DHT (0 - безлимит)</string>
+    <string name="connections_dht_limit">Лимит подключений DHT (0 - без ограничений)</string>
     <string name="download_rate_limit">Ограничение скорости загрузки (Килобайты, 0 - без ограничений)</string>
     <string name="upload_rate_limit">Ограничение скорости отдачи (Килобайты, 0 - без ограничений)</string>
     <string name="retrackers">Ретрекеры</string>

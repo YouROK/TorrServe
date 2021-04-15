@@ -31,9 +31,9 @@
     <string name="force_encrypt">Примусове шифрування</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="disable_tcp">TCP</string>
-    <string name="disable_utp">UTP</string>
-    <string name="disable_upnp">UPNP</string>
-    <string name="disable_dht">DHT</string>
+    <string name="disable_utp">UTP (не рекомендується включати на слабких пристроях)</string>
+    <string name="disable_upnp">UPNP (автовідкриття порту на роутері)</string>
+    <string name="disable_dht">DHT (відключіть при відсутності мережі після запуску торрента)</string>
     <string name="disable_upload">Відвантаження</string>
     <string name="ecnryption">Шифрування</string>
     <string name="connections_limit">Торрент-з\'єднання (рекомендовано 20-25)</string>
