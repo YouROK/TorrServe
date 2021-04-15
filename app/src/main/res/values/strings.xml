@@ -38,7 +38,7 @@
     <string name="disable_dht">DHT</string>
     <string name="disable_upload">Upload</string>
     <string name="ecnryption">Ecnryption</string>
-    <string name="connections_limit">Torrent connections (20–25 recommended on all Android devices)</string>
+    <string name="connections_limit">Torrent connections (20–25 recommended)</string>
     <string name="connections_dht_limit">Limit of DHT connections (0-unlimited)</string>
     <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0-unlimited)</string>
     <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0-unlimited)</string>

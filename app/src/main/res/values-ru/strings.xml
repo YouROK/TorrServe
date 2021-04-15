@@ -28,7 +28,7 @@
     <string name="disable_dht">DHT</string>
     <string name="disable_upload">Отдача</string>
     <string name="ecnryption">Шифрование</string>
-    <string name="connections_limit">Торрент-соединения (рекомендуется 20–25 на всех устройствах Android)</string>
+    <string name="connections_limit">Торрент-соединения (рекомендуется 20–25)</string>
     <string name="connections_dht_limit">Лимит подключений DHT (0 - безлимит)</string>
     <string name="download_rate_limit">Ограничение скорости загрузки (Килобайты, 0 - без ограничений)</string>
     <string name="upload_rate_limit">Ограничение скорости отдачи (Килобайты, 0 - без ограничений)</string>
