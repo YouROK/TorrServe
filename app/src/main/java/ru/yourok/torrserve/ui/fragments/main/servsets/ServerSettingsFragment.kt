@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
@@ -97,11 +98,13 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
+                    findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked = sets.EnableDebug
                     findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked = sets.EnableIPv6
                     findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked = !sets.DisableTCP
                     findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked = !sets.DisableUTP
                     findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked = !sets.DisableUPNP
                     findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked = !sets.DisableDHT
+                    findViewById<CheckBox>(R.id.cbDisablePEX)?.isChecked = !sets.DisablePEX
                     findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked = !sets.DisableUpload
                     findViewById<EditText>(R.id.etDownloadRateLimit)?.setText(sets.DownloadRateLimit.toString())
                     findViewById<EditText>(R.id.etUploadRateLimit)?.setText(sets.UploadRateLimit.toString())
@@ -110,6 +113,8 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
 //                    findViewById<Spinner>(R.id.spinnerStrategy)?.setSelection(sets.Strategy)
                 }
+                if (BuildConfig.DEBUG)
+                    findViewById<CheckBox>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -129,13 +134,14 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
                     findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
-                    false,
+                    findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked ?:false,
                     findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked != true ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked != true ?: true,
-                    findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked != true ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked != true ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked != true ?: false,
+                    findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked != true,
+                    findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked != true,
+                    findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked != true,
+                    findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked != true,
+                    findViewById<CheckBox>(R.id.cbDisablePEX)?.isChecked != true,
+                    findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked != true,
                     findViewById<EditText>(R.id.etDownloadRateLimit)?.text?.toString()?.toInt() ?: 0,
                     findViewById<EditText>(R.id.etUploadRateLimit)?.text?.toString()?.toInt() ?: 0,
                     findViewById<EditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 23,

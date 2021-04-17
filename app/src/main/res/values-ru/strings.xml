@@ -23,6 +23,7 @@
     <string name="force_encrypt">Принудительное шифрование заголовков</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">(включите только если поддерживается)</string>
+    <string name="enable_debug">Подробный лог сервера</string>
     <string name="disable_tcp">TCP</string>
     <string name="disable_tcp_desc">(не отключайте без включенного UTP)</string>
     <string name="disable_utp">UTP</string>
@@ -31,6 +32,8 @@
     <string name="disable_upnp_desc">(автооткрытие порта на роутере)</string>
     <string name="disable_dht">DHT</string>
     <string name="disable_dht_desc">(отключите при отсутствии сети после запуска сервера)</string>
+    <string name="disable_pex">PEX</string>
+    <string name="disable_pex_desc">(не рекомендуется отключать)</string>
     <string name="disable_upload">Отдача</string>
     <string name="disable_upload_desc">(не рекомендуется отключать)</string>
     <string name="ecnryption">Шифрование</string>

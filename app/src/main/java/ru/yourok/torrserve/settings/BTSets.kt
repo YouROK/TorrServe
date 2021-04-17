@@ -19,6 +19,7 @@ data class BTSets(
     var DisableUTP: Boolean,
     var DisableUPNP: Boolean,
     var DisableDHT: Boolean,
+    var DisablePEX: Boolean,
     var DisableUpload: Boolean,
     var DownloadRateLimit: Int,
     var UploadRateLimit: Int,

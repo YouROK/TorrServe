@@ -173,10 +173,31 @@
                 android:text="@string/disable_utp_desc" />
 
             <CheckBox
+                android:id="@+id/cbDisablePEX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disable_pex" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/cbDisablePEX"
+                android:paddingStart="6dp"
+                android:paddingBottom="10dp"
+                android:text="@string/disable_pex_desc" />
+
+            <CheckBox
                 android:id="@+id/cbForceEncrypt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/force_encrypt" />
+
+            <CheckBox
+                android:id="@+id/cbEnableDebug"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enable_debug"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"

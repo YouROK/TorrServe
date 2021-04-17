@@ -33,6 +33,7 @@
     <string name="force_encrypt">Force ecrypt headers</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">(enable only if supported</string>
+    <string name="enable_debug">Debug server logging</string>
     <string name="disable_tcp">TCP</string>
     <string name="disable_tcp_desc">(don\'t disable without UTP enabled)</string>
     <string name="disable_utp">UTP</string>
@@ -41,6 +42,8 @@
     <string name="disable_upnp_desc">(auto open port on router)</string>
     <string name="disable_dht">DHT</string>
     <string name="disable_dht_desc">(disable if there is no network after starting the server)</string>
+    <string name="disable_pex">PEX</string>
+    <string name="disable_pex_desc">(better leave enabled)</string>
     <string name="disable_upload">Upload</string>
     <string name="disable_upload_desc">(not recommended to disable)</string>
     <string name="ecnryption">Ecnryption</string>
