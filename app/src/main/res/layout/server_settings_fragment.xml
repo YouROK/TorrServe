@@ -136,17 +136,41 @@
                 android:layout_height="wrap_content"
                 android:text="@string/enable_ipv6" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/cbEnableIPv6"
+                android:paddingStart="6dp"
+                android:paddingBottom="10dp"
+                android:text="@string/enable_ipv6_desc" />
+
             <CheckBox
                 android:id="@+id/cbDisableTCP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_tcp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/cbDisableTCP"
+                android:paddingStart="6dp"
+                android:paddingBottom="10dp"
+                android:text="@string/disable_tcp_desc" />
+
             <CheckBox
                 android:id="@+id/cbDisableUTP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_utp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/cbDisableUTP"
+                android:paddingStart="6dp"
+                android:paddingBottom="10dp"
+                android:text="@string/disable_utp_desc" />
 
             <CheckBox
                 android:id="@+id/cbForceEncrypt"
@@ -183,6 +207,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_dht" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/cbDisableDHT"
+                android:paddingStart="6dp"
+                android:paddingBottom="10dp"
+                android:text="@string/disable_dht_desc" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -227,6 +259,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_upload" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/cbDisableUpload"
+                android:paddingStart="6dp"
+                android:paddingBottom="10dp"
+                android:text="@string/disable_upload_desc" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -295,6 +335,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_upnp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/cbDisableUPNP"
+                android:paddingStart="6dp"
+                android:paddingBottom="10dp"
+                android:text="@string/disable_upnp_desc" />
 
             <View
                 android:layout_width="match_parent"
