@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.server.local.services
 
 import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import ru.yourok.torrserve.server.api.Api
@@ -26,5 +27,11 @@ class GlobalTorrServeService : AccessibilityService() {
             serverFile.run()
             notification.doBindService(this)
         }
+        // https://developer.android.com/guide/topics/ui/accessibility/service
+        var info = AccessibilityServiceInfo()
+        info.apply {
+            packageNames = arrayOf("ru.yourok.torrserve")
+        }
+        this.serviceInfo = info
     }
 }
