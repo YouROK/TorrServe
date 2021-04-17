@@ -29,6 +29,7 @@
     <string name="save_content_path">Шлях до збереження вмісту</string>
     <string name="save_on_disk">Зберігати на диск</string>
     <string name="force_encrypt">Примусове шифрування заголовків</string>
+    <string name="force_encrypt_desc">(може допомогти з блокуючими торрент провайдерами)</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">(включите якщо підтримується)</string>
     <string name="enable_debug">Докладний лог сервера</string>

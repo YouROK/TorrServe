@@ -192,6 +192,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/force_encrypt" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/cbForceEncrypt"
+                android:paddingStart="6dp"
+                android:paddingBottom="10dp"
+                android:text="@string/force_encrypt_desc" />
+
             <CheckBox
                 android:id="@+id/cbEnableDebug"
                 android:layout_width="match_parent"

@@ -31,6 +31,7 @@
     <string name="save_content_path">Path to save content</string>
     <string name="save_on_disk">Save on disk</string>
     <string name="force_encrypt">Force ecrypt headers</string>
+    <string name="force_encrypt_desc">(can help with torrent blocking providers)</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">(enable only if supported</string>
     <string name="enable_debug">Debug server logging</string>
