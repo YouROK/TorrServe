@@ -147,6 +147,7 @@
     <string name="show_cover_sum_off">Не показывать обложки торрентов</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
+    <string name="accessibility_service_description">Включение этого сервиса может предотвратить завершение локального TorrServer системой при воспрозведении</string>
     <string name="show_accessibility_title">Настройки специальных возможностей</string>
     <string name="show_accessibility_summary">Открыть для включения или отключения сервиса TorrServer</string>
     <string name="stat_string_added">Торрент добавлен</string>

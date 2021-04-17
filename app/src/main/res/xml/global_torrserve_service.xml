@@ -3,5 +3,6 @@
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
     android:accessibilityFeedbackType="feedbackAudible"
     android:accessibilityFlags="flagReportViewIds"
+    android:description="@string/accessibility_service_description"
     android:packageNames="ru.yourok.torrserve"
     android:settingsActivity="ru.yourok.torrserve.ui.activities.main.MainActivity" />

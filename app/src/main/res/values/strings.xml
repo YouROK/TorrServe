@@ -199,6 +199,7 @@
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
+    <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
     <string name="show_accessibility_title">Show accessibility settings</string>
     <string name="show_accessibility_summary">Open to enable or disable TorrServer service</string>
 
