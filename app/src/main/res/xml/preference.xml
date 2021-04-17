@@ -72,6 +72,11 @@
         app:summary="@string/show_battery_save_summary" />
 
     <Preference
+        app:key="show_accessibility"
+        app:title="@string/show_accessibility_title"
+        app:summary="@string/show_accessibility_summary" />
+
+    <Preference
         app:key="version"
         app:title="@string/app_version" />
 

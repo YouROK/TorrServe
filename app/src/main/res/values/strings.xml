@@ -199,6 +199,9 @@
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
+    <string name="show_accessibility_title">Show accessibility settings</string>
+    <string name="show_accessibility_summary">Open to enable or disable TorrServer service</string>
+
     <string name="stat_string_added">Torrent added</string>
     <string name="stat_string_info">Getting torrent info</string>
     <string name="stat_string_preload">Preload torrent</string>

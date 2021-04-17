@@ -195,6 +195,9 @@
     <string name="show_battery_save_title">Показати налаштування енергозбереження</string>
     <string name="show_battery_save_summary">Відкрити налаштування енергозбереження</string>
 
+    <string name="show_accessibility_title">Налаштування спеціальних можливостей</string>
+    <string name="show_accessibility_summary">Відкрити для включення або відключення сервісу TorrServer</string>
+
     <string name="stat_string_added">Торрент додано</string>
     <string name="stat_string_info">Отримання інформації</string>
     <string name="stat_string_preload">Попереднє завантаження</string>

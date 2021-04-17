@@ -127,14 +127,30 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("show_battery_save")?.apply {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 val intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-                if (intent.resolveActivity(requireActivity().packageManager) == null)
+                val cmp = intent.resolveActivity(requireActivity().packageManager)
+                if (cmp == null)
                     ps?.removePreference(this)
+                else {
+                    setOnPreferenceClickListener {
+                        requireActivity().startActivity(intent)
+                        true
+                    }
+                }
+            } else {
+                ps?.removePreference(this)
+            }
+        }
+
+        findPreference<Preference>("show_accessibility")?.apply {
+            val intent = Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            val cmp = intent.resolveActivity(requireActivity().packageManager)
+            if (cmp == null) {
+                ps?.removePreference(this)
+            } else {
                 setOnPreferenceClickListener {
                     requireActivity().startActivity(intent)
                     true
                 }
-            } else {
-                ps?.removePreference(this)
             }
         }
 
