@@ -21,12 +21,12 @@
             android:padding="16dp">
 
             <TextView
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16.0dip"
                 android:text="@string/torserver_title"
                 android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="16sp" />
 
@@ -75,12 +75,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned" />
+                android:inputType="numberSigned"
+                android:nextFocusDown="@id/cbPreloadBuffer" />
 
             <CheckBox
                 android:id="@+id/cbPreloadBuffer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etDisconnectTimeout"
                 android:text="@string/preload_before_start" />
 
             <View
@@ -100,7 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned" />
+                android:inputType="numberSigned"
+                android:nextFocusDown="@id/cbEnableIPv6" />
 
             <View
                 android:layout_width="match_parent"
@@ -134,6 +137,7 @@
                 android:id="@+id/cbEnableIPv6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusUp="@id/etDisconnectTimeout"
                 android:text="@string/enable_ipv6" />
 
             <TextView
@@ -204,6 +208,7 @@
                 android:id="@+id/cbEnableDebug"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etConnectionsLimit"
                 android:text="@string/enable_debug"
                 android:visibility="gone" />
 
@@ -224,7 +229,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned" />
+                android:inputType="numberSigned"
+                android:nextFocusDown="@id/cbDisableDHT" />
 
             <View
                 android:layout_width="match_parent"
@@ -235,6 +241,8 @@
                 android:id="@+id/cbDisableDHT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etConnectionsDhtLimit"
+                android:nextFocusUp="@id/etConnectionsLimit"
                 android:text="@string/disable_dht" />
 
             <TextView
@@ -276,7 +284,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned" />
+                android:inputType="numberSigned"
+                android:nextFocusDown="@id/cbDisableUpload" />
 
             <View
                 android:layout_width="match_parent"
@@ -287,6 +296,7 @@
                 android:id="@+id/cbDisableUpload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etUploadRateLimit"
                 android:text="@string/disable_upload" />
 
             <TextView
@@ -326,7 +336,8 @@
             <Spinner
                 android:id="@+id/spinnerRetracker"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etPeersListenPort" />
 
             <!--            <TextView-->
             <!--                android:layout_width="match_parent"-->
@@ -357,12 +368,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned" />
+                android:inputType="numberSigned"
+                android:nextFocusDown="@id/cbDisableUPNP" />
 
             <CheckBox
                 android:id="@+id/cbDisableUPNP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusUp="@id/etPeersListenPort"
                 android:text="@string/disable_upnp" />
 
             <TextView
