@@ -35,15 +35,15 @@
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">(enable only if supported</string>
     <string name="enable_debug">Debug server logging</string>
-    <string name="disable_tcp">TCP</string>
-    <string name="disable_tcp_desc">(don\'t disable without UTP enabled)</string>
-    <string name="disable_utp">UTP</string>
+    <string name="disable_tcp">TCP - Transmission Control Protocol</string>
+    <string name="disable_tcp_desc">(don\'t disable without μTP enabled)</string>
+    <string name="disable_utp">μTP - Micro Transport Protocol</string>
     <string name="disable_utp_desc">(not recommended to enable on weak devices)</string>
-    <string name="disable_upnp">UPNP</string>
+    <string name="disable_upnp">UPnP - Universal Plug and Play</string>
     <string name="disable_upnp_desc">(auto open port on router)</string>
-    <string name="disable_dht">DHT</string>
+    <string name="disable_dht">DHT - Distributed Hash Table</string>
     <string name="disable_dht_desc">(disable if there is no network after starting the server)</string>
-    <string name="disable_pex">PEX</string>
+    <string name="disable_pex">PEX - Peer Exchange</string>
     <string name="disable_pex_desc">(better leave enabled)</string>
     <string name="disable_upload">Upload</string>
     <string name="disable_upload_desc">(not recommended to disable)</string>
@@ -201,7 +201,7 @@
 
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
     <string name="show_accessibility_title">Show accessibility settings</string>
-    <string name="show_accessibility_summary">Open to enable or disable TorrServer service</string>
+    <string name="show_accessibility_summary">Open to enable or disable TorrServe service</string>
 
     <string name="stat_string_added">Torrent added</string>
     <string name="stat_string_info">Getting torrent info</string>
