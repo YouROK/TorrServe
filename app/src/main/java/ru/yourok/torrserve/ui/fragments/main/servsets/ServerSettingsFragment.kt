@@ -60,11 +60,19 @@ class ServerSettingsFragment : TSFragment() {
         vi.findViewById<Button>(R.id.btnDefaultSets)?.let {
             it.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    Api.defSettings()
-                    withContext(Dispatchers.Main) {
-                        App.Toast(R.string.default_sets_applied)
-                        popBackStackFragment()
+                    try {
+                        Api.defSettings()
+                        withContext(Dispatchers.Main) {
+                            App.Toast(R.string.default_sets_applied)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        withContext(Dispatchers.Main) {
+                            //e.message?.let { msg -> App.Toast(msg) }
+                            App.Toast(R.string.error_sending_settings)
+                        }
                     }
+                    popBackStackFragment()
                 }
             }
         }
