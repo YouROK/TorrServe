@@ -241,8 +241,8 @@
                 android:id="@+id/cbDisableDHT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nextFocusDown="@id/etConnectionsDhtLimit"
                 android:nextFocusUp="@id/etConnectionsLimit"
+                android:nextFocusDown="@id/etConnectionsDhtLimit"
                 android:text="@string/disable_dht" />
 
             <TextView
@@ -337,6 +337,7 @@
                 android:id="@+id/spinnerRetracker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusUp="@id/etUploadRateLimit"
                 android:nextFocusDown="@id/etPeersListenPort" />
 
             <!--            <TextView-->
