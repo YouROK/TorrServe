@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity() {
                 if (TorrService.isLocal()) {
                     val ver = Api.echo()
                     if (ver.startsWith("1.1.")) {
-                        ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
                         withContext(Dispatchers.Main) {
+                            ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
                             App.Toast(R.string.need_update_server, true)
                         }
                     }

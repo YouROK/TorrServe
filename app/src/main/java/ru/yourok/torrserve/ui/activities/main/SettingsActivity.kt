@@ -1,7 +1,6 @@
 package ru.yourok.torrserve.ui.activities.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -34,8 +33,8 @@ class SettingsActivity : AppCompatActivity() {
                 if (TorrService.isLocal()) {
                     val ver = Api.echo()
                     if (ver.startsWith("1.1.")) {
-                        ServerUpdateFragment().show(this@SettingsActivity, R.id.container, true)
                         withContext(Dispatchers.Main) {
+                            ServerUpdateFragment().show(this@SettingsActivity, R.id.container, true)
                             App.Toast(R.string.need_update_server, true)
                         }
                     }
@@ -46,6 +45,11 @@ class SettingsActivity : AppCompatActivity() {
                             App.Toast(R.string.not_support_old_server, true)
                         }
                     }
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    ServerUpdateFragment().show(this@SettingsActivity, R.id.container, true)
+                    App.Toast(R.string.need_update_server, true)
                 }
             }
         }

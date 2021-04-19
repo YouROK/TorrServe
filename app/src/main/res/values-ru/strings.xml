@@ -101,7 +101,7 @@
     <string name="update_server">Обновление сервера</string>
     <string name="warn_error_download_server">Ошибка загрузки сервера</string>
     <string name="warn_no_localy_updates">Нет обновлений</string>
-    <string name="need_update_server">Нужно обновить сервер</string>
+    <string name="need_update_server">Необходимо обновить сервер</string>
     <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
     <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
     <string name="stat_running">Локальный сервер запущен</string>
