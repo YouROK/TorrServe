@@ -195,6 +195,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="ru.yourok.torrserve.ui.activities.main.SettingsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
