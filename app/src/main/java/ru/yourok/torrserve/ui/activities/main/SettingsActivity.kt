@@ -59,14 +59,14 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Log.d("*****", "onBackPressed()")
         super.onBackPressed()
-//        TorrService.stop()
-        finishAffinity()
+        if (supportFragmentManager.getBackStackEntryCount() == 0) {
+//            TorrService.stop()
+            finishAffinity()
+        }
     }
 
     override fun onResume() {
-        Log.d("*****", "onResume()")
         super.onResume()
         themeUtil.onResume(this)
     }
