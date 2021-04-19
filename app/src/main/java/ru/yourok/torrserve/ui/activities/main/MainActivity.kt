@@ -71,6 +71,14 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+            } else {
+                withContext(Dispatchers.Main) {
+                    if (TorrService.isLocal())
+                        ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
+                    else
+                        ServerFinderFragment().show(this@MainActivity, R.id.container, true)
+                    App.Toast(R.string.need_install_server, true)
+                }
             }
         }
 

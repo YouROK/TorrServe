@@ -132,6 +132,7 @@
     <string name="update_server">Update server</string>
     <string name="warn_error_download_server">Server download error</string>
     <string name="warn_no_localy_updates">No local updates</string>
+    <string name="need_install_server">Server needs to be installed</string>
     <string name="need_update_server">Server needs to be updated</string>
     <string name="not_support_old_server">Server version 1.1.x is not supported. Update server or use client 1.1.x for it.</string>
 

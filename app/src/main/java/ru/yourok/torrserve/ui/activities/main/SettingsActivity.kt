@@ -48,8 +48,9 @@ class SettingsActivity : AppCompatActivity() {
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    ServerUpdateFragment().show(this@SettingsActivity, R.id.container, true)
-                    App.Toast(R.string.need_update_server, true)
+                    if (TorrService.isLocal())
+                        ServerUpdateFragment().show(this@SettingsActivity, R.id.container, true)
+                    App.Toast(R.string.need_install_server, true)
                 }
             }
         }

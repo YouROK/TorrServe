@@ -113,6 +113,7 @@
     <string name="update_server">Оновлення сервера</string>
     <string name="warn_error_download_server">Помилка при завантаженні сервера</string>
     <string name="warn_no_localy_updates">Немає локальних оновлень</string>
+    <string name="need_install_server">Необхідно встановити сервер</string>
     <string name="need_update_server">Потрібно оновити сервер</string>
     <string name="not_support_old_server">Сервер версії 1.1.x не підтримується. Оновіть сервер або користується клієнтом версії 1.1.x.</string>
     <string name="copy_to_clipboard">Скопійовано до буферу обміну</string>
