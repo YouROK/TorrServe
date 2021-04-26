@@ -183,12 +183,12 @@
     <string name="remove_action_summary">Reset default torrent action</string>
 
     <string name="boot_start_title">Start server on boot</string>
-    <string name="boot_start_sum_on">Enable start server on boot</string>
-    <string name="boot_start_sum_off">Disable start server on boot</string>
+    <string name="boot_start_sum_on">Start server on boot enabled</string>
+    <string name="boot_start_sum_off">Start server on boot disabled</string>
 
     <string name="root_start_title">Start server by root</string>
-    <string name="root_start_sum_on">Enable start server by root</string>
-    <string name="root_start_sum_off">Disable start server by root</string>
+    <string name="root_start_sum_on">Start server by root enabled</string>
+    <string name="root_start_sum_off">Start server by root disabled</string>
 
     <string name="choose_player_title">Choose player</string>
 
