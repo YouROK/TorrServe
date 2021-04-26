@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.provider.Settings
 import android.widget.Toast
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.local.services.GlobalTorrServeService
 
 object AccessibilityUtils {
@@ -35,7 +36,12 @@ object AccessibilityUtils {
             } else {
                 enServices = enServices.replace(myService, "")
             }
-            Settings.Secure.putString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, enServices)
+            try {
+                Settings.Secure.putString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, enServices)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                e.message?.let { App.Toast(it) }
+            }
         } else {
             if (requireContext.isPackageInstalled("com.android.settings")) {
                 openAccessibilitySettings(requireContext)

@@ -47,7 +47,7 @@ object Premissions {
     }
     fun isPermissionGranted(context: Context, permission: String) : Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+            return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
         }
         return true
     }
