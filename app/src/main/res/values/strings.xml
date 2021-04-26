@@ -206,7 +206,7 @@
 
     <string name="accessibility_manual">Enable or disable service in Device Preferences / Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
-    <string name="switch_accessibility_title">Show accessibility settings</string>
+    <string name="switch_accessibility_title">Accessibility service</string>
     <string name="switch_accessibility_summary">Press to enable or disable TorrServe service</string>
 
     <string name="stat_string_added">Torrent added</string>
