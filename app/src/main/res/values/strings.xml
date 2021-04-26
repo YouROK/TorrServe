@@ -128,7 +128,7 @@
     <string name="new_version">New version</string>
 
     <string name="server_update">Server update</string>
-    <string name="install_server_latest">Install / Update latest server</string>
+    <string name="install_server_latest">Install / Update server</string>
     <string name="install_server_local">Install server from the Download folder</string>
     <string name="delete_local_server">Delete local server</string>
     <string name="arch">Arch</string>
