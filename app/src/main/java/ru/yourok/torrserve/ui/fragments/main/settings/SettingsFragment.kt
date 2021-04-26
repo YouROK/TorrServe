@@ -21,6 +21,7 @@ import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.ext.commitFragment
 import ru.yourok.torrserve.ext.getLastFragment
 import ru.yourok.torrserve.settings.Settings
@@ -133,7 +134,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     ps?.removePreference(this)
                 else {
                     setOnPreferenceClickListener {
-                        requireActivity().startActivity(intent)
+                        if (Utils.isGoogleTV()) {
+                            if (AccessibilityUtils.isPackageInstalled(context, "com.android.settings")) {
+                                intent.`package` = "com.android.settings"
+                                requireActivity().startActivity(intent)
+                            } else {
+                                val tvintent = Intent(android.provider.Settings.ACTION_SETTINGS)
+                                requireActivity().startActivity(tvintent)
+                                App.Toast(R.string.show_battery_save_tv, true)
+                            }
+                        } else
+                            requireActivity().startActivity(intent)
                         true
                     }
                 }

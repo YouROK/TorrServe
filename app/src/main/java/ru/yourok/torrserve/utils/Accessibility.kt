@@ -43,11 +43,11 @@ object AccessibilityUtils {
                 e.message?.let { App.Toast(it) }
             }
         } else {
-            if (requireContext.isPackageInstalled("com.android.settings")) {
+            if (isPackageInstalled(requireContext,"com.android.settings")) {
                 openAccessibilitySettings(requireContext)
             } else {
                 openSettings(requireContext)
-                Toast.makeText(requireContext, R.string.accessibility_manual, Toast.LENGTH_LONG).show()
+                App.Toast(R.string.accessibility_manual, true)
             }
         }
     }
@@ -60,18 +60,18 @@ object AccessibilityUtils {
         return false
     }
 
-    fun Context.isPackageInstalled(packageName: String): Boolean {
+    fun isPackageInstalled(context: Context, packageName: String): Boolean {
         return try {
-            packageManager.getPackageInfo(packageName, 0)
+            context.packageManager.getPackageInfo(packageName, 0)
             true
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
     }
 
-    fun Context.isPackageEnabled(packageName: String): Boolean {
+    fun isPackageEnabled(context: Context, packageName: String): Boolean {
         return try {
-            packageManager.getApplicationInfo(packageName, 0).enabled
+            context.packageManager.getApplicationInfo(packageName, 0).enabled
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }

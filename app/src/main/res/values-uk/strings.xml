@@ -162,9 +162,10 @@
     <string name="show_cover_title">Відображати постери</string>
     <string name="show_cover_sum_on">Відображати постери торрентів</string>
     <string name="show_cover_sum_off">Не відображати постери торрентів</string>
+    <string name="show_battery_save_tv">Вимкніть оптимізацію в «Додатки» / «Спеціальний доступ» / «Оптимізація енергоспоживання»</string>
     <string name="show_battery_save_title">Показати налаштування енергозбереження</string>
     <string name="show_battery_save_summary">Відкрити налаштування енергозбереження</string>
-    <string name="accessibility_manual">Увімкнути або вимкнути службу в розділі Доступність</string>
+    <string name="accessibility_manual">Увімкнути або вимкнути службу в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_service_description">Включення цього сервісу може запобігти завершення локального TorrServer системою при воспрозведеніі</string>
     <string name="switch_accessibility_title">Сервіс спеціальних можливостей</string>
     <string name="switch_accessibility_summary">Натисніть для включення або відключення сервісу TorrServe</string>
