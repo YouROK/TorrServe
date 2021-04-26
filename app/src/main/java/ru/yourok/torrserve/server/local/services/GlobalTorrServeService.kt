@@ -26,12 +26,5 @@ class GlobalTorrServeService : AccessibilityService() {
             serverFile.run()
             notification.doBindService(this)
         }
-// https://developer.android.com/guide/topics/ui/accessibility/service
-//        var info = AccessibilityServiceInfo()
-//        info.apply {
-//            packageNames = arrayOf("ru.yourok.torrserve")
-//            feedbackType = AccessibilityServiceInfo.FEEDBACK_AUDIBLE
-//        }
-//        this.serviceInfo = info
     }
 }
