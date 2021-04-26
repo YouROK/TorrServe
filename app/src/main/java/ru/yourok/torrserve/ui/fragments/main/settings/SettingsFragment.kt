@@ -29,6 +29,7 @@ import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
+import ru.yourok.torrserve.utils.AccessibilityUtils
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -141,16 +142,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-        findPreference<Preference>("show_accessibility")?.apply {
-            val intent = Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            val cmp = intent.resolveActivity(requireActivity().packageManager)
-            if (cmp == null) {
-                ps?.removePreference(this)
+        findPreference<Preference>("switch_accessibility")?.apply {
+            if (AccessibilityUtils.isEnabledService(App.context)) {
+                this.summary = getString(R.string.capital_on)
             } else {
-                setOnPreferenceClickListener {
-                    requireActivity().startActivity(intent)
-                    true
+                this.summary = getString(R.string.capital_off)
+            }
+            setOnPreferenceClickListener {
+                val enable = AccessibilityUtils.isEnabledService(App.context)
+                AccessibilityUtils.enableService(App.context, !enable)
+                if (AccessibilityUtils.isEnabledService(App.context)) {
+                    this.summary = getString(R.string.capital_on)
+                } else {
+                    this.summary = getString(R.string.capital_off)
                 }
+                true
             }
         }
 

@@ -12,6 +12,8 @@
     <string name="open_torrserve">Запустить TorrServe</string>
     <string name="torrents">Торренты</string>
     <string name="apply">Применить</string>
+    <string name="capital_on">ВКЛ</string>
+    <string name="capital_off">ВЫКЛ</string>
     <string name="default_sets">Настройки по умолчанию</string>
     <string name="default_sets_applied">Установлены настройки по умолчанию</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
@@ -148,9 +150,10 @@
     <string name="show_cover_sum_off">Не показывать обложки торрентов</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
+    <string name="accessibility_manual">Включите или отключите сервис в разделе «Специальные возможности»</string>
     <string name="accessibility_service_description">Включение этого сервиса может предотвратить завершение локального TorrServer системой при воспрозведении</string>
-    <string name="show_accessibility_title">Настройки специальных возможностей</string>
-    <string name="show_accessibility_summary">Открыть для включения или отключения сервиса TorrServe</string>
+    <string name="switch_accessibility_title">Cервис специальных возможностей</string>
+    <string name="switch_accessibility_summary">Нажмите для включения или отключения сервиса TorrServe</string>
     <string name="stat_string_added">Торрент добавлен</string>
     <string name="stat_string_info">Получение информации</string>
     <string name="stat_string_preload">Предзагрузка</string>

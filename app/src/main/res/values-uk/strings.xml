@@ -14,6 +14,8 @@
     <string name="open_torrserve">Відкрити TorrServe</string>
     <string name="torrents">Торренти</string>
     <string name="apply">Застосувати</string>
+    <string name="capital_on">УВІМК</string>
+    <string name="capital_off">ВИМК</string>
     <string name="default_sets">За замовчуванням</string>
     <string name="cache_size">Розмір кешу (Мегабайти)</string>
     <string name="preload_before_start">Заповнювати кеш перед стартом</string>
@@ -162,9 +164,10 @@
     <string name="show_cover_sum_off">Не відображати постери торрентів</string>
     <string name="show_battery_save_title">Показати налаштування енергозбереження</string>
     <string name="show_battery_save_summary">Відкрити налаштування енергозбереження</string>
+    <string name="accessibility_manual">Увімкнути або вимкнути службу в розділі Доступність</string>
     <string name="accessibility_service_description">Включення цього сервісу може запобігти завершення локального TorrServer системою при воспрозведеніі</string>
-    <string name="show_accessibility_title">Налаштування спеціальних можливостей</string>
-    <string name="show_accessibility_summary">Відкрити для включення або відключення сервісу TorrServe</string>
+    <string name="switch_accessibility_title">Сервіс спеціальних можливостей</string>
+    <string name="switch_accessibility_summary">Натисніть для включення або відключення сервісу TorrServe</string>
     <string name="stat_string_added">Торрент додано</string>
     <string name="stat_string_info">Отримання інформації</string>
     <string name="stat_string_preload">Попереднє завантаження</string>

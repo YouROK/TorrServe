@@ -21,6 +21,9 @@
     <string name="torrents">Torrents</string>
 
     <string name="apply">Apply</string>
+    <string name="capital_on">ON</string>
+    <string name="capital_off">OFF</string>
+
     <string name="default_sets">Default Settings</string>
     <string name="default_sets_applied">Default Settings Applied</string>
 
@@ -200,9 +203,10 @@
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
+    <string name="accessibility_manual">Enable or disable service in Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
-    <string name="show_accessibility_title">Show accessibility settings</string>
-    <string name="show_accessibility_summary">Open to enable or disable TorrServe service</string>
+    <string name="switch_accessibility_title">Show accessibility settings</string>
+    <string name="switch_accessibility_summary">Press to enable or disable TorrServe service</string>
 
     <string name="stat_string_added">Torrent added</string>
     <string name="stat_string_info">Getting torrent info</string>
