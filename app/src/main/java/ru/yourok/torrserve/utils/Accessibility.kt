@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.provider.Settings
-import android.widget.Toast
 import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
@@ -25,11 +24,8 @@ object AccessibilityUtils {
 
     fun enableService(requireContext: Context, enable: Boolean) {
         val permission = "android.permission.WRITE_SECURE_SETTINGS"
-        if (!Premissions.isPermissionGranted(requireContext, permission)) {
-            if (Shell.rootAccess())
-                Shell.su("pm grant ${requireContext.packageName} $permission").exec()
-            else
-                Shell.sh("pm grant ${requireContext.packageName} $permission").exec()
+        if (!Premissions.isPermissionGranted(requireContext, permission) && Shell.rootAccess()) {
+            Shell.su("pm grant ${requireContext.packageName} $permission").exec()
         }
         if (Premissions.isPermissionGranted(requireContext, permission)) {
             val contentResolver = requireContext.contentResolver
@@ -51,7 +47,7 @@ object AccessibilityUtils {
                 e.message?.let { App.Toast(it) }
             }
         } else {
-            if (isPackageInstalled(requireContext,"com.android.settings")) {
+            if (isPackageInstalled(requireContext, "com.android.settings")) {
                 openAccessibilitySettings(requireContext)
             } else {
                 openSettings(requireContext)
