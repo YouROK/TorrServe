@@ -37,7 +37,8 @@ object AccessibilityUtils {
                 enServices = enServices.replace(myService, "")
             }
             try {
-                Settings.Secure.putString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, enServices)
+                if (enServices.isNotEmpty())
+                    Settings.Secure.putString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, enServices)
             } catch (e: Exception) {
                 e.printStackTrace()
                 e.message?.let { App.Toast(it) }
