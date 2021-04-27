@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.provider.Settings
 import android.widget.Toast
+import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.local.services.GlobalTorrServeService
@@ -23,6 +24,10 @@ object AccessibilityUtils {
     }
 
     fun enableService(requireContext: Context, enable: Boolean) {
+        if (Shell.rootAccess())
+            Shell.su("pm grant ${requireContext.packageName} android.permission.WRITE_SECURE_SETTINGS").exec()
+        else
+            Shell.sh("pm grant ${requireContext.packageName} android.permission.WRITE_SECURE_SETTINGS").exec()
         if (Premissions.isPermissionGranted(requireContext, "android.permission.WRITE_SECURE_SETTINGS")) {
             val contentResolver = requireContext.contentResolver
             var enServices = Settings.Secure.getString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
