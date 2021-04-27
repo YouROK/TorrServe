@@ -78,8 +78,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/action_selector"
-                    android:foregroundTint="?attr/colorAccent"
-                    android:foregroundTintMode="multiply"
                     android:padding="15dp">
 
                     <ImageView
@@ -109,8 +107,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/action_selector"
-                    android:foregroundTint="?attr/colorAccent"
-                    android:foregroundTintMode="multiply"
                     android:padding="15dp">
 
                     <ImageView
@@ -140,8 +136,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/action_selector"
-                    android:foregroundTint="?attr/colorAccent"
-                    android:foregroundTintMode="multiply"
                     android:padding="15dp">
 
                     <ImageView
@@ -171,8 +165,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/action_selector"
-                    android:foregroundTint="?attr/colorAccent"
-                    android:foregroundTintMode="multiply"
                     android:padding="15dp">
 
                     <ImageView
@@ -202,8 +194,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/action_selector"
-                    android:foregroundTint="?attr/colorAccent"
-                    android:foregroundTintMode="multiply"
                     android:padding="15dp">
 
                     <ImageView
@@ -233,8 +223,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/action_selector"
-                    android:foregroundTint="?attr/colorAccent"
-                    android:foregroundTintMode="multiply"
                     android:padding="15dp">
 
                     <ImageView
@@ -264,8 +252,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/action_selector"
-                    android:foregroundTint="?attr/colorAccent"
-                    android:foregroundTintMode="multiply"
                     android:padding="15dp">
 
                     <ImageView
