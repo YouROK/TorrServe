@@ -155,17 +155,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("switch_accessibility")?.apply {
             if (AccessibilityUtils.isEnabledService(App.context)) {
-                this.summary = getString(R.string.capital_on)
+                this.summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_on)}"
             } else {
-                this.summary = getString(R.string.capital_off)
+                this.summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_off)}"
             }
             setOnPreferenceClickListener {
                 val enable = AccessibilityUtils.isEnabledService(App.context)
                 AccessibilityUtils.enableService(App.context, !enable)
                 if (AccessibilityUtils.isEnabledService(App.context)) {
-                    this.summary = getString(R.string.capital_on)
+                    this.summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_on)}"
                 } else {
-                    this.summary = getString(R.string.capital_off)
+                    this.summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_off)}"
                 }
                 true
             }
