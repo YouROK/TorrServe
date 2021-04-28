@@ -154,11 +154,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("switch_accessibility")?.apply {
-            if (AccessibilityUtils.isEnabledService(App.context)) {
-                this.summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_on)}"
-            } else {
-                this.summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_off)}"
-            }
             setOnPreferenceClickListener {
                 val enable = AccessibilityUtils.isEnabledService(App.context)
                 AccessibilityUtils.enableService(App.context, !enable)
@@ -195,6 +190,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onResume()
         findPreference<Preference>("host")?.apply {
             summary = Settings.getHost()
+        }
+        findPreference<Preference>("switch_accessibility")?.apply {
+            if (AccessibilityUtils.isEnabledService(App.context)) {
+                summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_on)}"
+            } else {
+                summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_off)}"
+            }
         }
     }
 
