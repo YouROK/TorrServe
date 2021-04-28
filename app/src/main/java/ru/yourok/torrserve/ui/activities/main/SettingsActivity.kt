@@ -14,7 +14,7 @@ import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.settings.SettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
-import ru.yourok.torrserve.utils.Premissions
+import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
 
 
@@ -24,7 +24,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Premissions.requestPermissionWithRationale(this)
+        Permission.requestPermissionWithRationale(this)
         themeUtil.onCreate(this)
         setContentView(R.layout.settings_activity)
 

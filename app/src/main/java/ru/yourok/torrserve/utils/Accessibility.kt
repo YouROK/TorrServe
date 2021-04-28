@@ -34,10 +34,10 @@ object AccessibilityUtils {
 
     fun enableService(requireContext: Context, enable: Boolean) {
         val permission = "android.permission.WRITE_SECURE_SETTINGS"
-        if (!Premissions.isPermissionGranted(requireContext, permission) && Shell.rootAccess()) {
+        if (!Permission.isPermissionGranted(requireContext, permission) && Shell.rootAccess()) {
             Shell.su("pm grant ${requireContext.packageName} $permission").exec()
         }
-        if (Premissions.isPermissionGranted(requireContext, permission)) {
+        if (Permission.isPermissionGranted(requireContext, permission)) {
             val contentResolver = requireContext.contentResolver
             var enServices = Settings.Secure.getString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
             val myService = requireContext.packageName + "/" + GlobalTorrServeService::class.java.name

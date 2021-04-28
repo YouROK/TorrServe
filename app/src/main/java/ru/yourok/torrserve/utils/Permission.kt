@@ -15,7 +15,7 @@ import ru.yourok.torrserve.R
 import kotlin.concurrent.thread
 
 
-object Premissions {
+object Permission {
     fun requestPermissionWithRationale(activity: Activity) {
         thread {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {

@@ -32,7 +32,7 @@ import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
 import ru.yourok.torrserve.utils.Net
-import ru.yourok.torrserve.utils.Premissions
+import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
 
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Premissions.requestPermissionWithRationale(this)
+        Permission.requestPermissionWithRationale(this)
         themeUtil.onCreate(this)
         setContentView(R.layout.main_activity)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
