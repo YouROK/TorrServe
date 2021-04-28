@@ -1,13 +1,9 @@
 package ru.yourok.torrserve.ui.fragments.main.settings
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.View
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -202,12 +198,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 }
 
-@ColorInt
-fun Context.getColorFromAttr(
-    @AttrRes attrColor: Int,
-    typedValue: TypedValue = TypedValue(),
-    resolveRefs: Boolean = true
-): Int {
-    theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-    return typedValue.data
-}
+//@ColorInt
+//fun Context.getColorFromAttr(
+//    @AttrRes attrColor: Int,
+//    typedValue: TypedValue = TypedValue(),
+//    resolveRefs: Boolean = true
+//): Int {
+//    theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+//    return typedValue.data
+//}
