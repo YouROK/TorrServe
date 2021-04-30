@@ -49,10 +49,10 @@ class TorrService : Service() {
         thread {
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
                 Log.d("TorrService", "startServer()")
-                serverFile.run()
-                notification.doBindService(this)
                 if (Settings.get("accessibility_switch", false) && !AccessibilityUtils.isEnabledService(App.context))
                     AccessibilityUtils.enableService(App.context, true)
+                serverFile.run()
+                notification.doBindService(this)
             }
             updateAtvCards()
         }
