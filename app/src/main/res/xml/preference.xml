@@ -71,10 +71,12 @@
         app:title="@string/show_battery_save_title"
         app:summary="@string/show_battery_save_summary" />
 
-    <Preference
+    <SwitchPreferenceCompat
         app:key="switch_accessibility"
         app:title="@string/switch_accessibility_title"
-        app:summary="@string/switch_accessibility_summary" />
+        android:summaryOn="@string/switch_accessibility_summary_on"
+        android:summaryOff="@string/accessibility_service_description"
+        android:defaultValue="false" />
 
     <Preference
         app:key="version"

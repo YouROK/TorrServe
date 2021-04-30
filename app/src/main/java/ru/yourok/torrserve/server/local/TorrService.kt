@@ -12,6 +12,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.utils.AccessibilityUtils
 import kotlin.concurrent.thread
 
 class TorrService : Service() {
@@ -50,6 +51,8 @@ class TorrService : Service() {
                 Log.d("TorrService", "startServer()")
                 serverFile.run()
                 notification.doBindService(this)
+                if (Settings.get("accessibility_switch", false) && !AccessibilityUtils.isEnabledService(App.context))
+                    AccessibilityUtils.enableService(App.context, true)
             }
             updateAtvCards()
         }

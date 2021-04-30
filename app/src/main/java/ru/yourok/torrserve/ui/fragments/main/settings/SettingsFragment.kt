@@ -149,15 +149,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-        findPreference<Preference>("switch_accessibility")?.apply {
+        findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
             setOnPreferenceClickListener {
                 val enable = AccessibilityUtils.isEnabledService(App.context)
                 AccessibilityUtils.enableService(App.context, !enable)
-                if (AccessibilityUtils.isEnabledService(App.context)) {
-                    this.summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_on)}"
-                } else {
-                    this.summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_off)}"
-                }
+                this.isChecked = AccessibilityUtils.isEnabledService(App.context)
                 true
             }
         }
@@ -187,12 +183,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("host")?.apply {
             summary = Settings.getHost()
         }
-        findPreference<Preference>("switch_accessibility")?.apply {
-            if (AccessibilityUtils.isEnabledService(App.context)) {
-                summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_on)}"
-            } else {
-                summary = "${getString(R.string.accessibility_service_description)}\n\n${getString(R.string.capital_off)}"
-            }
+        findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
+            this.isChecked = AccessibilityUtils.isEnabledService(App.context)
         }
     }
 

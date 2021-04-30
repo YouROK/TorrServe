@@ -168,7 +168,7 @@
     <string name="accessibility_manual">Увімкнути або вимкнути службу в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_service_description">Включення цього сервісу може запобігти завершення локального TorrServer системою</string>
     <string name="switch_accessibility_title">Сервіс спеціальних можливостей</string>
-    <string name="switch_accessibility_summary">Натисніть для включення або відключення сервісу TorrServe</string>
+    <string name="switch_accessibility_summary_on">Натисніть для відключення сервісу TorrServe</string>
     <string name="stat_string_added">Торрент додано</string>
     <string name="stat_string_info">Отримання інформації</string>
     <string name="stat_string_preload">Попереднє завантаження</string>
