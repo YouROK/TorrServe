@@ -44,7 +44,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (currentPreference is Preference) {
                 holder.itemView.background = ContextCompat.getDrawable(App.context, R.drawable.action_selector)
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    holder.itemView.backgroundTintList = ColorStateList.valueOf(holder.itemView.context.getColorFromAttr(R.attr.colorAccent))
+//                    holder.itemView.backgroundTintList = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(holder.itemView.context, R.attr.colorAccent))
 //                    holder.itemView.backgroundTintMode = PorterDuff.Mode.MULTIPLY
 //                }
             }
@@ -189,13 +189,3 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
 }
-
-//@ColorInt
-//fun Context.getColorFromAttr(
-//    @AttrRes attrColor: Int,
-//    typedValue: TypedValue = TypedValue(),
-//    resolveRefs: Boolean = true
-//): Int {
-//    theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-//    return typedValue.data
-//}

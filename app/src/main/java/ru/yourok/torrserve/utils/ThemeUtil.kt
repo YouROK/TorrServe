@@ -1,5 +1,9 @@
 package ru.yourok.torrserve.utils
 
+import android.content.Context
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.settings.Settings.getTheme
@@ -28,5 +32,15 @@ class ThemeUtil {
                     else -> R.style.Theme_TorrServe_DayNight
                 }
             }
+
+        @ColorInt
+        fun getColorFromAttr(context: Context,
+                             @AttrRes attrColor: Int,
+                             typedValue: TypedValue = TypedValue(),
+                             resolveRefs: Boolean = true
+        ): Int {
+            context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+            return typedValue.data
+        }
     }
 }

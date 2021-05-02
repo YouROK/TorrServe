@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +21,7 @@ import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.Play.play
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
+import ru.yourok.torrserve.utils.ThemeUtil
 import kotlin.concurrent.thread
 
 
@@ -55,8 +55,8 @@ class PlayActivity : AppCompatActivity() {
         setWindow()
 
         findViewById<ProgressBar>(R.id.progressBar)?.apply {
-            progressDrawable?.setColorFilter(ContextCompat.getColor(this@PlayActivity, R.color.green), android.graphics.PorterDuff.Mode.SRC_IN)
-            indeterminateDrawable?.setColorFilter(ContextCompat.getColor(this@PlayActivity, R.color.green), android.graphics.PorterDuff.Mode.SRC_IN)
+            progressDrawable?.setColorFilter(ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent), PorterDuff.Mode.SRC_IN)
+            indeterminateDrawable?.setColorFilter(ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent), PorterDuff.Mode.SRC_IN)
         }
 
         lifecycleScope.launch { showProgress() }
@@ -138,10 +138,10 @@ class PlayActivity : AppCompatActivity() {
         if (isActive) {
             val progress = findViewById<ProgressBar>(R.id.progressBar)
             progress?.progressDrawable?.setColorFilter(
-                ContextCompat.getColor(this@PlayActivity, R.color.green), PorterDuff.Mode.SRC_IN
+                ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent), PorterDuff.Mode.SRC_IN
             )
             progress?.indeterminateDrawable?.setColorFilter(
-                ContextCompat.getColor(this@PlayActivity, R.color.green), PorterDuff.Mode.SRC_IN
+                ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent), PorterDuff.Mode.SRC_IN
             )
             progress?.apply {
                 visibility = View.VISIBLE
@@ -158,4 +158,5 @@ class PlayActivity : AppCompatActivity() {
         if (isActive)
             findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.INVISIBLE
     }
+
 }
