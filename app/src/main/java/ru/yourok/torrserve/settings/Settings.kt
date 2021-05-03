@@ -29,6 +29,7 @@ object Settings {
     fun getChooserAction(): Int = get("chooser_action", 0)
     fun setChooserAction(v: Int) = set("chooser_action", v)
 
+    fun isAccessibilityOn(): Boolean = get("switch_accessibility", false)
     fun isBootStart(): Boolean = get("boot_start", false)
     fun isRootStart(): Boolean = get("root_start", false)
 

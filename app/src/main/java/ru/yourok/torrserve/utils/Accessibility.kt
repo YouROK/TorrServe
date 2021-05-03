@@ -61,8 +61,11 @@ object AccessibilityUtils {
                 openAccessibilitySettings(requireContext)
             } else {
                 openSettings(requireContext)
-                App.Toast(R.string.accessibility_manual, true)
             }
+            if (enable)
+                App.Toast(R.string.accessibility_manual_on, true)
+            else
+                App.Toast(R.string.accessibility_manual_off, true)
         }
     }
 

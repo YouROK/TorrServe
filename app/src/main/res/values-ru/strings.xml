@@ -151,7 +151,8 @@
     <string name="show_battery_save_tv">Отключите оптимизацию в «Приложения» / «Специальный доступ» / «Экономия энергии»</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
-    <string name="accessibility_manual">Включите или отключите сервис в разделе «Настройки устройства» / «Специальные возможности»</string>
+    <string name="accessibility_manual_on">Включите сервис в разделе «Настройки устройства» / «Специальные возможности»</string>
+    <string name="accessibility_manual_off">Отключите сервис в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_service_description">Включение этого сервиса может предотвратить завершение локального TorrServer системой</string>
     <string name="switch_accessibility_title">Cервис специальных возможностей</string>
     <string name="switch_accessibility_summary_on">Нажмите для отключения сервиса TorrServe</string>

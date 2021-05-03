@@ -204,7 +204,8 @@
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
-    <string name="accessibility_manual">Enable or disable service in Device Preferences / Accessibility section</string>
+    <string name="accessibility_manual_on">Enable service in Device Preferences / Accessibility section</string>
+    <string name="accessibility_manual_off">Disable service in Device Preferences / Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
     <string name="switch_accessibility_title">Accessibility service</string>
     <string name="switch_accessibility_summary_on">Press to disable TorrServe service</string>

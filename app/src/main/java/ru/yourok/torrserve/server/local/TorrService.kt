@@ -47,6 +47,10 @@ class TorrService : Service() {
 
     private fun startServer() {
         thread {
+            if (Settings.isAccessibilityOn() && !AccessibilityUtils.isEnabledService(App.context)) {
+                Log.d("TorrService", "Try to enable AssessibilityService")
+                AccessibilityUtils.enableService(App.context, true)
+            }
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
                 Log.d("TorrService", "startServer()")
                 serverFile.run()
