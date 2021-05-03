@@ -18,10 +18,10 @@ abstract class TSFragment : Fragment() {
     var onResult: (suspend (Any?) -> Unit)? = null
     protected lateinit var viewModel: ViewModel
 
-    fun show(activity: FragmentActivity, id: Int, back: Boolean = false) {
-        if (activity.getLastFragment()?.javaClass?.name == this.javaClass.name)
+    fun show(activity: FragmentActivity?, id: Int, back: Boolean = false) {
+        if (activity?.getLastFragment()?.javaClass?.name == this.javaClass.name)
             return
-        activity.commitFragment {
+        activity?.commitFragment {
             replace(id, this@TSFragment)
             if (back)
                 addToBackStack(this.toString())
