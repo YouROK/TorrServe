@@ -4,11 +4,13 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.multidex.MultiDexApplication
+import ru.yourok.torrserve.settings.Settings
 
 // https://medium.com/android-news/how-to-detect-android-application-open-and-close-background-and-foreground-events-1b4713784b57
 class App : MultiDexApplication(), LifecycleObserver {
@@ -55,12 +57,12 @@ class App : MultiDexApplication(), LifecycleObserver {
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         context = applicationContext
 
-//        // DayNight Auto ON/OFF (useless?)
-//        when (Settings.getTheme()) {
-//            "dark", "black" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-//        }
+        // DayNight Auto ON/OFF
+        when (Settings.getTheme()) {
+            "dark", "black" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
 
 //        registerActivityLifecycleCallbacks(lifeCycleHandler)
 
