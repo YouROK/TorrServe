@@ -7,8 +7,8 @@ import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 
 class BootCompletedReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        if (Settings.isBootStart()) {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        if (Intent.ACTION_BOOT_COMPLETED == intent!!.action && Settings.isBootStart()) {
             TorrService.start()
         }
     }
