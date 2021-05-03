@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.app
 
+import android.app.Activity
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -8,10 +9,23 @@ import androidx.multidex.MultiDexApplication
 
 
 class App : MultiDexApplication() {
+
+    init {
+        instance = this
+    }
+
+    val mActivityLifecycleCallbacks = ActivityCallbacks()
+
     companion object {
+
+        private var instance: App? = null
         lateinit var context: Context
 
         private lateinit var wakeLock: PowerManager.WakeLock
+
+        fun currentActivity(): Activity? {
+            return instance!!.mActivityLifecycleCallbacks.currentActivity
+        }
 
         fun Toast(txt: String, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
@@ -36,6 +50,7 @@ class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
         context = applicationContext
         //// DayNight Auto ON/OFF (useless?)
         //when (Settings.getTheme()) {
