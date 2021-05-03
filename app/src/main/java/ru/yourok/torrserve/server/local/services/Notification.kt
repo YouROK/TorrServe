@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.services
+package ru.yourok.torrserve.server.local.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.ui.activities.main.MainActivity
 
 
@@ -20,7 +21,7 @@ class Notification : Service() {
     private var mNM: NotificationManager? = null
     private var builder: NotificationCompat.Builder? = null
 
-    private val NOTIFICATION = 42
+    private val mNotification = 42
     private val mBinder = LocalBinder()
 
     private val channelId = "ru.yourok.torrserve"
@@ -65,7 +66,7 @@ class Notification : Service() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val channel =
                     NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
-                this.getSystemService<NotificationManager>(NotificationManager::class.java)!!
+                this.getSystemService(NotificationManager::class.java)!!
                     .createNotificationChannel(channel)
             }
 
@@ -84,8 +85,9 @@ class Notification : Service() {
                     )
             else
                 builder?.setStyle(NotificationCompat.BigTextStyle().bigText(""))
+
             builder?.let {
-                startForeground(NOTIFICATION, it.build())
+                startForeground(mNotification, it.build())
             }
         }
     }

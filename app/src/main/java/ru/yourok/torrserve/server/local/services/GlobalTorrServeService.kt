@@ -5,8 +5,7 @@ import android.content.Intent
 import android.view.accessibility.AccessibilityEvent
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
-import ru.yourok.torrserve.services.NotificationHelper
-import ru.yourok.torrserve.services.TorrService
+import ru.yourok.torrserve.server.local.TorrService
 
 
 class GlobalTorrServeService : AccessibilityService() {

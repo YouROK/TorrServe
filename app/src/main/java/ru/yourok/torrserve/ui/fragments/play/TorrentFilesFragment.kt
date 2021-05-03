@@ -20,7 +20,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
-import ru.yourok.torrserve.services.TorrService
+import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.adapters.TorrentFilesAdapter
 import ru.yourok.torrserve.utils.Net

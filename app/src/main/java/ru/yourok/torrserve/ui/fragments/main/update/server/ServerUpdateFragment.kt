@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.local.ServerFile
-import ru.yourok.torrserve.services.TorrService
+import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.dialogs.DialogList
 import ru.yourok.torrserve.ui.fragments.TSFragment

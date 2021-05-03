@@ -10,7 +10,7 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.app.Consts
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
-import ru.yourok.torrserve.services.TorrService
+import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
 import java.io.File

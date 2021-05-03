@@ -31,7 +31,6 @@ object Settings {
 
     fun isBootStart(): Boolean = get("boot_start", false)
     fun isRootStart(): Boolean = get("root_start", false)
-//    fun isAccessibilityOn(): Boolean = get("switch_accessibility", false)
 
     fun showBanner(): Boolean = get("show_banner", true)
     fun setShowBanner(v: Boolean) = set("show_banner", v)
