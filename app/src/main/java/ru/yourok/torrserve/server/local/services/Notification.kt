@@ -92,34 +92,35 @@ class Notification : Service() {
 }
 
 class NotificationHelper {
-    private var mShouldUnbind: Boolean = false
     private var mBoundService: Notification? = null
 
     private val mConnection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             mBoundService = (service as Notification.LocalBinder).service
         }
 
-        override fun onServiceDisconnected(className: ComponentName) {
+        override fun onServiceDisconnected(name: ComponentName?) {
             mBoundService = null
         }
+
     }
 
     fun doBindService(context: Context) {
-        if (!mShouldUnbind) {
+        if (!isBound()) {
             context.bindService(
                 Intent(context, Notification::class.java),
                 mConnection,
                 Context.BIND_AUTO_CREATE
             )
-            mShouldUnbind = true
         }
     }
 
     fun doUnbindService(context: Context) {
-        if (mShouldUnbind) {
+        if (isBound()) {
             context.unbindService(mConnection)
-            mShouldUnbind = false
         }
     }
+
+    private fun isBound(): Boolean = (mBoundService != null)
+
 }

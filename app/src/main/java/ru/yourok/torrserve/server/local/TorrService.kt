@@ -16,7 +16,7 @@ import ru.yourok.torrserve.utils.AccessibilityUtils
 import kotlin.concurrent.thread
 
 class TorrService : Service() {
-    private var notification = NotificationHelper()
+    private val notification = NotificationHelper()
     private val serverFile = ServerFile()
 
     override fun onBind(p0: Intent?): IBinder? = null
