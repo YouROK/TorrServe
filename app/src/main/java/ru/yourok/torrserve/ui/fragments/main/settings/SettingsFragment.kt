@@ -149,6 +149,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val enable = AccessibilityUtils.isEnabledService(App.context)
                 AccessibilityUtils.enableService(App.context, !enable)
                 this.isChecked = AccessibilityUtils.isEnabledService(App.context)
+                if (this.isChecked)
+                    findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
                 true
             }
         }
@@ -190,6 +192,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
             this.isChecked = AccessibilityUtils.isEnabledService(App.context)
+            if (this.isChecked)
+                findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
         }
     }
 

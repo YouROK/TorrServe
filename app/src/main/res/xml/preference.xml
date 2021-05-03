@@ -30,6 +30,7 @@
     <SwitchPreferenceCompat
         app:key="boot_start"
         app:title="@string/boot_start_title"
+        android:dependency="switch_accessibility"
         android:summaryOn="@string/boot_start_sum_on"
         android:summaryOff="@string/boot_start_sum_off"
         android:defaultValue="false" />
@@ -74,6 +75,7 @@
     <SwitchPreferenceCompat
         app:key="switch_accessibility"
         app:title="@string/switch_accessibility_title"
+        android:disableDependentsState="true"
         android:summaryOn="@string/switch_accessibility_summary_on"
         android:summaryOff="@string/accessibility_service_description"
         android:defaultValue="false" />
