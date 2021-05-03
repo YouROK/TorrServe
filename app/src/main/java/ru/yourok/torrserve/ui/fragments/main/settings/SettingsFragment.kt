@@ -109,11 +109,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-        findPreference<SwitchPreferenceCompat>("root_start")?.apply {
-            if (!Shell.rootAccess())
-                ps?.removePreference(this)
-        }
-
         findPreference<ListPreference>("app_theme")?.apply {
             setOnPreferenceChangeListener { preference, newValue ->
                 Settings.setTheme(newValue.toString())
@@ -180,9 +175,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onResume() {
         super.onResume()
+
         findPreference<Preference>("host")?.apply {
             summary = Settings.getHost()
         }
+
+        findPreference<SwitchPreferenceCompat>("root_start")?.apply {
+            val isRootAvail = Shell.rootAccess()
+            this.isEnabled = isRootAvail
+            if (!isRootAvail) {
+                this.isChecked = false
+            }
+        }
+
         findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
             this.isChecked = AccessibilityUtils.isEnabledService(App.context)
         }

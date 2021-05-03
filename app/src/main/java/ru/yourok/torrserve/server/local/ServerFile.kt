@@ -4,7 +4,6 @@ import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.services.TorrService
 import ru.yourok.torrserve.settings.Settings
 import java.io.File
 
@@ -20,7 +19,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
             val setspath = Settings.getTorrPath()
             val logfile = File(setspath, "torrserver.log").path
             if (shell == null) {
-                if (Settings.isRootStart())
+                if (Settings.isRootStart() && Shell.rootAccess())
                     shell = Shell.su("$path -k -d ${setspath} -l ${logfile} &")
                 else
                     shell = Shell.sh("$path -k -d ${setspath} -l ${logfile} &")
@@ -37,7 +36,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
             return
         synchronized(lock) {
             Shell.Config.verboseLogging(BuildConfig.DEBUG)
-            val result: Shell.Result = if (Settings.isRootStart())
+            val result: Shell.Result = if (Shell.rootAccess())
                 Shell.su("killall -9 torrserver &").exec()
             else
                 Shell.sh("killall -9 torrserver &").exec()
