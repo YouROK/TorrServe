@@ -3,15 +3,14 @@ package ru.yourok.torrserve.ui.activities.play
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.AD
 import ru.yourok.torrserve.app.App
@@ -82,11 +81,18 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
+    override fun onUserLeaveHint() {
+        if (BuildConfig.DEBUG) Log.d("*****", "onUserLeaveHint()")
+        lifecycleScope.cancel()
+        finish()
+    }
+
     override fun onDestroy() {
         if (userClose) {
             if (torrentHash.isNotEmpty())
                 thread {
                     try {
+                        if (BuildConfig.DEBUG) Log.d("*****", "onDestroy() drop torrent ${torrentHash}")
                         Api.dropTorrent(torrentHash)
                     } catch (e: Exception) {
                         // TODO: notify user
