@@ -2,7 +2,9 @@ package ru.yourok.torrserve.server.local.services
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
@@ -14,6 +16,7 @@ class GlobalTorrServeService : AccessibilityService() {
 
     override fun onServiceConnected() {
         if (serverFile.exists() && TorrService.isLocal() && Api.echo().isEmpty()) {
+            if (BuildConfig.DEBUG) Log.d("GlobalTorrServeService", "onServiceConnected()")
             serverFile.run()
             notification.doBindService(this)
         }

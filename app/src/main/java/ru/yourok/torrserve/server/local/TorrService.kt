@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
@@ -48,21 +49,21 @@ class TorrService : Service() {
     private fun startServer() {
         thread {
             if (isLocal() && Settings.isAccessibilityOn() && !AccessibilityUtils.isEnabledService(App.context)) {
-                Log.d("TorrService", "Try to enable AssessibilityService")
+                if (BuildConfig.DEBUG) Log.d("TorrService", "Try to enable AssessibilityService")
                 AccessibilityUtils.enableService(App.context, true)
             }
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
-                Log.d("TorrService", "startServer()")
+                if (BuildConfig.DEBUG) Log.d("TorrService", "startServer()")
                 serverFile.run()
                 notification.doBindService(this)
             }
-            updateAtvCards()
+            Utils.updateAtvCards()
         }
     }
 
     private fun stopServer(forceClose: Boolean) {
         thread {
-            Log.d("TorrService", "stopServer(forceClose:$forceClose)")
+            if (BuildConfig.DEBUG) Log.d("TorrService", "stopServer(forceClose:$forceClose)")
             if (isLocal() && Api.echo().isNotEmpty())
                 Api.shutdown()
             serverFile.stop()
@@ -75,52 +76,6 @@ class TorrService : Service() {
             }
             stopSelf()
         }
-    }
-
-    private var updateStarted = false
-    private fun updateAtvCards() {
-        if (Utils.isGoogleTV()) {
-            synchronized(updateStarted) {
-                if (updateStarted)
-                    return
-                updateStarted = true
-            }
-            wait(5)
-            var lastList = emptyList<Torrent>()
-            try {
-                lastList = Api.listTorrent()
-            } catch (e: Exception) {
-            }
-            UpdaterCards.updateCards()
-            thread {
-                while (updateStarted) {
-                    var torrs = emptyList<Torrent>()
-                    try {
-                        torrs = Api.listTorrent()
-                    } catch (e: Exception) {
-                    }
-                    if (!equalTorrs(lastList, torrs)) {
-                        lastList = torrs
-                        UpdaterCards.updateCards()
-                        Thread.sleep(1000)
-                    } else
-                        Thread.sleep(5000)
-                }
-            }
-        }
-    }
-
-    private fun equalTorrs(lst1: List<Torrent>, lst2: List<Torrent>): Boolean {
-        if (lst1.size != lst2.size)
-            return false
-        lst1.forEachIndexed { index, torr ->
-            if (torr.hash != lst2[index].hash ||
-                torr.title != lst2[index].title ||
-                torr.poster != lst2[index].poster
-            )
-                return false
-        }
-        return true
     }
 
     companion object {

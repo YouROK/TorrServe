@@ -10,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.commitFragment
 import ru.yourok.torrserve.ext.getLastFragment
 import ru.yourok.torrserve.utils.ThemeUtil
@@ -22,12 +21,11 @@ abstract class TSFragment : Fragment() {
     fun show(activity: FragmentActivity?, id: Int, back: Boolean = false) {
         if (activity?.getLastFragment()?.javaClass?.name == this.javaClass.name)
             return
-        if (App.inForeground)
-            activity?.commitFragment {
-                replace(id, this@TSFragment)
-                if (back)
-                    addToBackStack(this.toString())
-            }
+        activity?.commitFragment {
+            replace(id, this@TSFragment)
+            if (back)
+                addToBackStack(this.toString())
+        }
     }
 
     suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
