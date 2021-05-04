@@ -8,10 +8,8 @@ import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
-import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.services.NotificationHelper
-import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.AccessibilityUtils
 import kotlin.concurrent.thread
