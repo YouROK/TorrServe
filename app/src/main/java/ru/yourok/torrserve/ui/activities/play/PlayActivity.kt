@@ -121,16 +121,17 @@ class PlayActivity : AppCompatActivity() {
             play(false)
         else {
             lifecycleScope.launch { hideProgress() }
-            ChooserFragment().show(this) {
-                when (it) {
-                    1, 2 -> {
-                        play(it == 2)
-                    }
-                    3 -> {
-                        addAndExit()
+            if (App.inForeground)
+                ChooserFragment().show(this) {
+                    when (it) {
+                        1, 2 -> {
+                            play(it == 2)
+                        }
+                        3 -> {
+                            addAndExit()
+                        }
                     }
                 }
-            }
         }
     }
 
