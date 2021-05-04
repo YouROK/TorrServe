@@ -32,6 +32,8 @@ object Play {
                         return@launch
                     }
                 infoFragment.startInfo(torr.hash)
+                if (torrentHash.isEmpty() && torr.hash.isNotBlank()) // store hash for Api.dropTorrent on close
+                    torrentHash = torr.hash
                 torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
                     App.Toast(getString(R.string.error_retrieve_torrent_info))
                     finish()

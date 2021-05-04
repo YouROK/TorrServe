@@ -69,6 +69,10 @@ class PlayActivity : AppCompatActivity() {
 
         TorrService.start()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         readArgs()
         lifecycleScope.launch(Dispatchers.IO) {
             if (!TorrService.wait(5)) {
@@ -82,7 +86,8 @@ class PlayActivity : AppCompatActivity() {
     }
 
     override fun onUserLeaveHint() {
-        if (BuildConfig.DEBUG) Log.d("*****", "onUserLeaveHint()")
+        super.onUserLeaveHint()
+        if (BuildConfig.DEBUG) Log.d("PlayActivity", "onUserLeaveHint()")
         lifecycleScope.cancel()
         finish()
     }
@@ -92,7 +97,7 @@ class PlayActivity : AppCompatActivity() {
             if (torrentHash.isNotEmpty())
                 thread {
                     try {
-                        if (BuildConfig.DEBUG) Log.d("*****", "onDestroy() drop torrent ${torrentHash}")
+                        if (BuildConfig.DEBUG) Log.d("PlayActivity", "onDestroy() drop torrent ${torrentHash}")
                         Api.dropTorrent(torrentHash)
                     } catch (e: Exception) {
                         // TODO: notify user
@@ -105,6 +110,7 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+        if (BuildConfig.DEBUG) Log.d("PlayActivity", "onBackPressed()")
         userClose = true
     }
 
