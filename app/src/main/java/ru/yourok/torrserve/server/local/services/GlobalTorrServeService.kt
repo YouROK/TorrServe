@@ -25,7 +25,7 @@ class GlobalTorrServeService : AccessibilityService() {
 
     override fun onUnbind(intent: Intent?): Boolean {
         notification.doUnbindService(this)
-        return true
+        return false
     }
 
 }
