@@ -12,24 +12,13 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.multidex.MultiDexApplication
 import ru.yourok.torrserve.settings.Settings
 
-// https://medium.com/android-news/how-to-detect-android-application-open-and-close-background-and-foreground-events-1b4713784b57
 class App : MultiDexApplication(), LifecycleObserver {
-
-//    init {
-//        instance = this
-//    }
-//    val lifeCycleHandler = AppLifecycleHandler()
 
     companion object {
 
-        // private var instance: App? = null
         lateinit var context: Context
-        var inForeground = false
+        var inForeground: Boolean = false
         private lateinit var wakeLock: PowerManager.WakeLock
-
-//        fun currentActivity(): Activity? {
-//            return instance!!.lifeCycleHandler.currentActivity
-//        }
 
         fun Toast(txt: String, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
@@ -63,8 +52,6 @@ class App : MultiDexApplication(), LifecycleObserver {
             "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
-
-//        registerActivityLifecycleCallbacks(lifeCycleHandler)
 
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "TorrServe:WakeLock")
