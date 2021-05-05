@@ -33,7 +33,7 @@ class PlayActivity : AppCompatActivity() {
     var torrentSave: Boolean = false
     var torrentFileIndex: Int = -1
 
-    var userClose = false
+    private var userClose = false
 
     var ad: AD? = null
     val infoFragment = InfoFragment()
@@ -43,8 +43,7 @@ class PlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //// DayNight Theme // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        val apptheme = Settings.getTheme()
-        when (apptheme) {
+        when (Settings.getTheme()) {
             "dark" -> setTheme(R.style.PlayDialog_Dark)
             "light" -> setTheme(R.style.PlayDialog_Light)
             "black" -> setTheme(R.style.PlayDialog_Black)
@@ -97,7 +96,7 @@ class PlayActivity : AppCompatActivity() {
             if (torrentHash.isNotEmpty())
                 thread {
                     try {
-                        if (BuildConfig.DEBUG) Log.d("PlayActivity", "onDestroy() drop torrent ${torrentHash}")
+                        if (BuildConfig.DEBUG) Log.d("PlayActivity", "onDestroy() drop torrent $torrentHash")
                         Api.dropTorrent(torrentHash)
                     } catch (e: Exception) {
                         // TODO: notify user

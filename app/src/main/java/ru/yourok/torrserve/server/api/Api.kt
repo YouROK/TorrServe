@@ -11,32 +11,32 @@ object Api {
 
     /// Server
     fun echo(): String {
-        try {
+        return try {
             val host = Net.getHostUrl("/echo")
-            return Net.getAuth(host)
+            Net.getAuth(host)
         } catch (e: Exception) {
             println(e.message)
-            return ""
+            ""
         }
     }
 
     fun remoteEcho(url: String): String {
-        try {
+        return try {
             val host = "$url/echo"
-            return Net.getAuth(host)
+            Net.getAuth(host)
         } catch (e: Exception) {
             println(e.message)
-            return ""
+            ""
         }
     }
 
     fun shutdown(): String {
-        try {
+        return try {
             val host = Net.getHostUrl("/shutdown")
-            return Net.getAuth(host)
+            Net.getAuth(host)
         } catch (e: Exception) {
             println(e.message)
-            return ""
+            ""
         }
     }
 
@@ -105,7 +105,7 @@ object Api {
         val host = Net.getHostUrl("/viewed")
         val req = ViewedReq("list", hash).toString()
         val resp = postJson(host, req)
-        if (resp.isNullOrBlank())
+        if (resp.isBlank())
             return emptyList()
         return Gson().fromJson(resp, Array<Viewed>::class.java).toList()
     }
