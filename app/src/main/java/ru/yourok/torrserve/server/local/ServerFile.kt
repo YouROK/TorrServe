@@ -19,10 +19,10 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
             val setspath = Settings.getTorrPath()
             val logfile = File(setspath, "torrserver.log").path
             if (shell == null) {
-                if (Settings.isRootStart() && Shell.rootAccess())
-                    shell = Shell.su("$path -k -d ${setspath} -l ${logfile} &")
+                shell = if (Settings.isRootStart() && Shell.rootAccess())
+                    Shell.su("$path -k -d $setspath -l $logfile &")
                 else
-                    shell = Shell.sh("$path -k -d ${setspath} -l ${logfile} &")
+                    Shell.sh("$path -k -d $setspath -l $logfile &")
 
                 shell?.add("export GODEBUG=madvdontneed=1")
                 if (shell?.exec()!!.isSuccess)
