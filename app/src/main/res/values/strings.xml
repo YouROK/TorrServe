@@ -141,10 +141,10 @@
 
     <string name="copy_to_clipboard">Copied to clipboard</string>
     <string name="stat_running">Service is running</string>
-    <string name="server_started">Server started</string>
-    <string name="server_stoped">Server stopped</string>
-    <string name="server_not_responding">Server is not responding</string>
-    <string name="server_not_exists">No server</string>
+    <string name="server_started">TorrServer started</string>
+    <string name="server_stoped">TorrServer stopped</string>
+    <string name="server_not_responding">TorrServer is not responding</string>
+    <string name="server_not_exists">No TorrServer</string>
     <string name="error_retrieving_settings">Error getting settings</string>
     <string name="error_sending_settings">Error when send settings</string>
     <string name="error_app_not_found">No suitable applications found</string>

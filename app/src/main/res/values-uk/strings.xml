@@ -120,10 +120,10 @@
     <string name="not_support_old_server">Сервер версії 1.1.x не підтримується. Оновіть сервер або користується клієнтом версії 1.1.x.</string>
     <string name="copy_to_clipboard">Скопійовано до буферу обміну</string>
     <string name="stat_running">Службу запущено</string>
-    <string name="server_started">Сервер запущено</string>
-    <string name="server_stoped">Сервер зупинено</string>
-    <string name="server_not_responding">Сервер не відповідає</string>
-    <string name="server_not_exists">Сервер відсутній</string>
+    <string name="server_started">TorrServer запущено</string>
+    <string name="server_stoped">TorrServer зупинено</string>
+    <string name="server_not_responding">TorrServer не відповідає</string>
+    <string name="server_not_exists">TorrServer відсутній</string>
     <string name="error_retrieving_settings">Помилка при отриманні налаштувань</string>
     <string name="error_sending_settings">Помилка при відправці налаштуваннь</string>
     <string name="error_app_not_found">Підходящих додатків не знайдено</string>
