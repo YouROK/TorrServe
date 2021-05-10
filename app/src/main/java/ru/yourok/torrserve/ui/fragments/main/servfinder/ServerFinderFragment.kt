@@ -85,11 +85,12 @@ class ServerFinderFragment : TSFragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 var host = view?.findViewById<EditText>(R.id.etHost)?.text?.toString() ?: return@launch
-                val uri = Uri.parse(host)
+                var uri = Uri.parse(host)
 
                 if (uri.scheme == null)
                     host = "http://$host"
 
+                uri = Uri.parse(host) // no port with empty scheme
                 if (uri.port == -1)
                     host += ":8090"
 
