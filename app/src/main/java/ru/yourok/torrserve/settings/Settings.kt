@@ -59,6 +59,9 @@ object Settings {
         var filesDir: File?
         filesDir = App.context.getExternalFilesDir(null)
 
+        if (!filesDir.canWrite())
+            filesDir = null
+
         if (filesDir == null)
             filesDir = App.context.filesDir
 
@@ -67,6 +70,7 @@ object Settings {
 
         if (!filesDir.exists())
             filesDir.mkdirs()
+
         return filesDir.path
     }
 
