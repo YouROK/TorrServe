@@ -114,24 +114,21 @@
                 android:id="@+id/cbSaveOnDisk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/save_on_disk"
-                android:visibility="gone" />
+                android:text="@string/save_on_disk" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:labelFor="@+id/etContentPath"
                 android:paddingStart="5dp"
-                android:text="@string/save_content_path"
-                android:visibility="gone" />
+                android:text="@string/save_content_path" />
 
             <EditText
                 android:id="@+id/etContentPath"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textUri"
-                android:visibility="gone" />
+                android:inputType="textUri" />
 
             <CheckBox
                 android:id="@+id/cbEnableIPv6"

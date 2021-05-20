@@ -6,8 +6,8 @@ data class BTSets(
     var PreloadBuffer: Boolean,
     var ReaderReadAHead: Int,
     // Storage
-    var SaveOnDisk: Boolean,
-    var ContentPath: String,
+    var UseDisk: Boolean,
+    var TorrentsSavePath: String,
     // Torrent
     var ForceEncrypt: Boolean,
     var RetrackersMode: Int,
@@ -26,5 +26,4 @@ data class BTSets(
     var ConnectionsLimit: Int,
     var DhtConnectionLimit: Int,
     var PeersListenPort: Int,
-    var Strategy: Int,
 )

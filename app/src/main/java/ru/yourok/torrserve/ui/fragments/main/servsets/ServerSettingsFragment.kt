@@ -101,8 +101,8 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etCacheSize)?.setText((sets.CacheSize / (1024 * 1024)).toString())
                     findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
                     findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
-                    findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.SaveOnDisk
-                    findViewById<EditText>(R.id.etContentPath)?.setText(sets.ContentPath)
+                    findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.UseDisk
+                    findViewById<EditText>(R.id.etContentPath)?.setText(sets.TorrentsSavePath)
                     findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
@@ -119,7 +119,6 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etConnectionsLimit)?.setText(sets.ConnectionsLimit.toString())
                     findViewById<EditText>(R.id.etConnectionsDhtLimit)?.setText(sets.DhtConnectionLimit.toString())
                     findViewById<EditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
-//                    findViewById<Spinner>(R.id.spinnerStrategy)?.setSelection(sets.Strategy)
                 }
                 if (BuildConfig.DEBUG)
                     findViewById<CheckBox>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
@@ -134,29 +133,27 @@ class ServerSettingsFragment : TSFragment() {
         try {
             view?.apply {
                 btsets = BTSets(
-                    (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 96L) * 1024 * 1024,
-                    findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: false,
-                    findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 95,
-                    findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
-                    findViewById<EditText>(R.id.etContentPath)?.text?.toString() ?: "",
-                    findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
-                    findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
-                    findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
-                    findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked ?:false,
-                    findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked ?: false,
-                    findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked != true,
-                    findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked != true,
-                    findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked != true,
-                    findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked != true,
-                    findViewById<CheckBox>(R.id.cbDisablePEX)?.isChecked != true,
-                    findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked != true,
-                    findViewById<EditText>(R.id.etDownloadRateLimit)?.text?.toString()?.toInt() ?: 0,
-                    findViewById<EditText>(R.id.etUploadRateLimit)?.text?.toString()?.toInt() ?: 0,
-                    findViewById<EditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 23,
-                    findViewById<EditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
-                    findViewById<EditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
-                    0
-//                    findViewById<Spinner>(R.id.spinnerStrategy)?.selectedItemPosition ?: 0,
+                    CacheSize = (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 96L) * 1024 * 1024,
+                    PreloadBuffer = findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: false,
+                    ReaderReadAHead = findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 95,
+                    UseDisk = findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
+                    TorrentsSavePath = findViewById<EditText>(R.id.etContentPath)?.text?.toString() ?: "",
+                    ForceEncrypt = findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
+                    RetrackersMode = findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
+                    TorrentDisconnectTimeout = findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
+                    EnableDebug = findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked ?: false,
+                    EnableIPv6 = findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked ?: false,
+                    DisableTCP = findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked != true,
+                    DisableUTP = findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked != true,
+                    DisableUPNP = findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked != true,
+                    DisableDHT = findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked != true,
+                    DisablePEX = findViewById<CheckBox>(R.id.cbDisablePEX)?.isChecked != true,
+                    DisableUpload = findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked != true,
+                    DownloadRateLimit = findViewById<EditText>(R.id.etDownloadRateLimit)?.text?.toString()?.toInt() ?: 0,
+                    UploadRateLimit = findViewById<EditText>(R.id.etUploadRateLimit)?.text?.toString()?.toInt() ?: 0,
+                    ConnectionsLimit = findViewById<EditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 23,
+                    DhtConnectionLimit = findViewById<EditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
+                    PeersListenPort = findViewById<EditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
                 )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {
