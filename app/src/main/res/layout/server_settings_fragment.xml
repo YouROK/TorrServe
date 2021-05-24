@@ -123,12 +123,11 @@
                 android:paddingStart="5dp"
                 android:text="@string/save_content_path" />
 
-            <EditText
-                android:id="@+id/etContentPath"
+            <Button
+                android:id="@+id/btnContentPath"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textUri" />
+                android:layout_height="wrap_content" />
 
             <CheckBox
                 android:id="@+id/cbEnableIPv6"
@@ -337,18 +336,6 @@
                 android:nextFocusUp="@id/etUploadRateLimit"
                 android:nextFocusDown="@id/etPeersListenPort" />
 
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:labelFor="@+id/spinnerStrategy"-->
-            <!--                android:paddingStart="5dp"-->
-            <!--                android:text="@string/strategy" />-->
-
-            <!--            <Spinner-->
-            <!--                android:id="@+id/spinnerStrategy"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content" />-->
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
@@ -400,13 +387,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@android:color/transparent" />
-
-            <!--TextView
-                android:id="@+id/tvVersion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:paddingEnd="5dp" /-->
 
         </LinearLayout>
     </ScrollView>

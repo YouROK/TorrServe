@@ -40,6 +40,14 @@ class ServerSettingsFragment : TSFragment() {
             }
         }
 
+        vi.findViewById<Button>(R.id.btnContentPath).let {
+            it.setOnClickListener {
+                DirectoryChooserFragment().show(this.activity) {
+
+                }
+            }
+        }
+
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 showProgress()
@@ -102,7 +110,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
                     findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.UseDisk
-                    findViewById<EditText>(R.id.etContentPath)?.setText(sets.TorrentsSavePath)
+                    findViewById<Button>(R.id.btnContentPath)?.setText(sets.TorrentsSavePath)
                     findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt

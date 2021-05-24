@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--    Header-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnUpDir"
+            android:background="@drawable/action_selector"
+            android:focusable="true"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_arrow_upward"
+            android:layout_width="65dp"
+            android:layout_height="65dp" />
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvCurrSize"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvCurrDir"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnCreateDir"
+            android:background="@drawable/action_selector"
+            android:focusable="true"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_create_new_folder"
+            android:layout_width="65dp"
+            android:layout_height="65dp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListDir"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+
+    <LinearLayout
+        android:id="@+id/footer"
+        style="@android:style/DeviceDefault.ButtonBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:divider="?android:attr/dividerVertical"
+        android:orientation="horizontal"
+        android:showDividers="none">
+
+        <Button
+            android:id="@+id/btnApply"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="@string/apply" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:text="@android:string/cancel" />
+    </LinearLayout>
+
+</LinearLayout>
