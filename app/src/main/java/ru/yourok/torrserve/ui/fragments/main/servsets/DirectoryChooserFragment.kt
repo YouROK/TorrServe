@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,8 +40,11 @@ class DirectoryChooserFragment : TSFragment() {
             directoryAdapter.setPath("/sdcard/")
         }
 
+        vi?.findViewById<TextView>(R.id.tvCurrSize)?.text = directoryAdapter.getSize()
+        vi?.findViewById<TextView>(R.id.tvCurrDir)?.text = directoryAdapter.getPath()
+
         directoryAdapter.onClick = {
-            directoryAdapter.setPath(it)
+            updateUI()
         }
 
         vi.findViewById<ImageButton>(R.id.btnUpDir).setOnClickListener {
@@ -48,5 +52,10 @@ class DirectoryChooserFragment : TSFragment() {
         }
 
         return vi
+    }
+
+    private fun updateUI() {
+        view?.findViewById<TextView>(R.id.tvCurrSize)?.text = directoryAdapter.getSize()
+        view?.findViewById<TextView>(R.id.tvCurrDir)?.text = directoryAdapter.getPath()
     }
 }
