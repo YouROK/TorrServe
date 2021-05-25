@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.utils.ByteFmt
 import java.io.File
 
@@ -27,6 +28,7 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
             it.isDirectory
         }.map { it.name }.toList()
         notifyDataSetChanged()
+        onClick?.invoke(path)
     }
 
     fun getPath(): String {
@@ -46,15 +48,25 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
     }
 
     fun dirUp() {
-        
+        val par = File(path).parentFile
+        if (par == null) {
+            path = "/"
+            return
+        }
+        path = par.path
+        update()
     }
 
     class ViewHolder(val view: View, val adapter: DirectoryAdapter) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
                 val ff = File(adapter.path, adapter.list[adapterPosition])
-                adapter.setPath(ff.path)
-                adapter.onClick?.invoke(ff.path)
+                if (ff.canRead()) {
+                    adapter.path = ff.path
+                    adapter.update()
+                } else {
+                    App.Toast("permission deny")
+                }
             }
         }
     }

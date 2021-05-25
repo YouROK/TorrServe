@@ -158,6 +158,8 @@
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>
 
+    <string name="permission_deny">Permission Denied</string>
+
     <string name="donation">Donation</string>
     <string name="link">Link</string>
     <string name="donation_msg">Donation to support projects</string>

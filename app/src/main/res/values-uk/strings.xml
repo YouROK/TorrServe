@@ -183,4 +183,5 @@
     <string name="not_used">Не використовується</string>
     <string name="not_installed">Не встановленно</string>
     <string name="default_sets_applied">Налаштування за замовчуванням застосовуються</string>
+    <string name="permission_deny">Дозвіл відмовлено</string>
 </resources>

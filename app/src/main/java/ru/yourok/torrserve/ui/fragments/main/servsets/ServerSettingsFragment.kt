@@ -42,8 +42,12 @@ class ServerSettingsFragment : TSFragment() {
 
         vi.findViewById<Button>(R.id.btnContentPath).let {
             it.setOnClickListener {
-                DirectoryChooserFragment().show(this.activity) {
-
+                DirectoryChooserFragment().show(this.activity) { path ->
+                    vi.findViewById<Button>(R.id.btnContentPath)?.setText(path)
+                    btsets?.TorrentsSavePath = path
+                    lifecycleScope.launch {
+                        updateUI()
+                    }
                 }
             }
         }
@@ -94,12 +98,16 @@ class ServerSettingsFragment : TSFragment() {
     }
 
     private var btsets: BTSets? = null
+    private var loaded = false
 
     private suspend fun load() = withContext(Dispatchers.Main) {
-        showProgress()
-        withContext(Dispatchers.IO) { btsets = loadSettings() }
-        updateUI()
-        hideProgress()
+        if (!loaded) {
+            showProgress()
+            withContext(Dispatchers.IO) { btsets = loadSettings() }
+            updateUI()
+            hideProgress()
+            loaded = true
+        }
     }
 
     private suspend fun updateUI() = withContext(Dispatchers.Main) {
@@ -145,7 +153,7 @@ class ServerSettingsFragment : TSFragment() {
                     PreloadBuffer = findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: false,
                     ReaderReadAHead = findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 95,
                     UseDisk = findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
-                    TorrentsSavePath = findViewById<EditText>(R.id.etContentPath)?.text?.toString() ?: "",
+                    TorrentsSavePath = btsets?.TorrentsSavePath ?: "",
                     ForceEncrypt = findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
                     RetrackersMode = findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
                     TorrentDisconnectTimeout = findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,

@@ -172,4 +172,5 @@
     <string name="host_authorization_desc">Введите имя и пароль через «:» (user:pass)</string>
     <string name="remove_all_warn">Вы хотите удалить все торренты?</string>
     <string name="remove_all_viewed">Удалить все метки просмотра</string>
+    <string name="permission_deny">В доступе отказано</string>
 </resources>
