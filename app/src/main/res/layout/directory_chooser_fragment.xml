@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--    Header-->
     <LinearLayout
+        android:id="@+id/dirCtrlLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -50,6 +50,35 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/dirNameLayout"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/etDirName"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:inputType="textUri"
+            android:nextFocusRight="@id/btnDone"
+            android:nextFocusDown="@id/rvListDir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/btnDone"
+            app:srcCompat="@drawable/ic_done"
+            android:background="@drawable/action_selector"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_width="65dp"
+            android:layout_height="65dp" />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListDir"
         android:layout_weight="1"
@@ -67,25 +96,6 @@
         android:orientation="horizontal"
         android:showDividers="none">
 
-        <Button
-            android:id="@+id/btnApply"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="@string/apply" />
-
-        <Button
-            android:id="@+id/btnCancel"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:text="@android:string/cancel" />
     </LinearLayout>
 
 </LinearLayout>

@@ -17,9 +17,13 @@ import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.ui.dialogs.DirectoryDialog
 import ru.yourok.torrserve.ui.fragments.TSFragment
 
 class ServerSettingsFragment : TSFragment() {
+
+    private var btsets: BTSets? = null
+    private var loaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +46,7 @@ class ServerSettingsFragment : TSFragment() {
 
         vi.findViewById<Button>(R.id.btnContentPath).let {
             it.setOnClickListener {
-                DirectoryChooserFragment().show(this.activity) { path ->
+                DirectoryDialog.show(context ?: return@setOnClickListener, "") { path ->
                     vi.findViewById<Button>(R.id.btnContentPath)?.setText(path)
                     btsets?.TorrentsSavePath = path
                     lifecycleScope.launch {
@@ -96,9 +100,6 @@ class ServerSettingsFragment : TSFragment() {
         super.onResume()
         lifecycleScope.launch { load() }
     }
-
-    private var btsets: BTSets? = null
-    private var loaded = false
 
     private suspend fun load() = withContext(Dispatchers.Main) {
         if (!loaded) {
