@@ -1,4 +1,4 @@
-package ru.yourok.torrserve.ui.fragments.main.servsets
+package ru.yourok.torrserve.ui.dialogs
 
 import android.os.Build
 import android.os.StatFs
