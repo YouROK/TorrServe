@@ -15,6 +15,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.dialogs.DirectoryDialog
@@ -54,6 +55,7 @@ class ServerSettingsFragment : TSFragment() {
                     }
                 }
             }
+            vi.findViewById<Button>(R.id.btnContentPath)?.isEnabled = TorrService.isLocal()
         }
 
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
