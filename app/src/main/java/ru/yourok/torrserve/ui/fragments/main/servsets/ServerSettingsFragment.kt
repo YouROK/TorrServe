@@ -44,18 +44,18 @@ class ServerSettingsFragment : TSFragment() {
                 it.text = Settings.getHost()
             }
         }
-
-        vi.findViewById<Button>(R.id.btnContentPath).let {
-            it.setOnClickListener {
+        val btn = vi.findViewById<Button>(R.id.btnContentPath)
+        btn?.let {
+            it.setOnClickListener { _ ->
                 DirectoryDialog.show(context ?: return@setOnClickListener, "") { path ->
-                    vi.findViewById<Button>(R.id.btnContentPath)?.setText(path)
+                    it.text = path
                     btsets?.TorrentsSavePath = path
                     lifecycleScope.launch {
                         updateUI()
                     }
                 }
             }
-            vi.findViewById<Button>(R.id.btnContentPath)?.isEnabled = TorrService.isLocal()
+            it.isEnabled = TorrService.isLocal()
         }
 
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
@@ -71,9 +71,9 @@ class ServerSettingsFragment : TSFragment() {
             popBackStackFragment()
         }
 
-        val adpRetracker = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.retracker_mode))
+        val adpRetracker = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.retracker_mode))
         adpRetracker.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        vi.findViewById<Spinner>(R.id.spinnerRetracker)?.setAdapter(adpRetracker)
+        vi.findViewById<Spinner>(R.id.spinnerRetracker)?.adapter = adpRetracker
 
         vi.findViewById<Button>(R.id.btnDefaultSets)?.let {
             it.setOnClickListener {
@@ -121,7 +121,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
                     findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.UseDisk
-                    findViewById<Button>(R.id.btnContentPath)?.setText(sets.TorrentsSavePath)
+                    findViewById<Button>(R.id.btnContentPath)?.text = sets.TorrentsSavePath
                     findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
