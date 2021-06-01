@@ -114,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nextFocusUp="@id/etDisconnectTimeout"
+                android:nextFocusDown="@id/btnContentPath"
                 android:text="@string/save_on_disk" />
 
             <TextView
@@ -126,6 +127,8 @@
             <Button
                 android:id="@+id/btnContentPath"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:nextFocusDown="@id/cbEnableIPv6"
+                android:nextFocusUp="@id/cbSaveOnDisk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
