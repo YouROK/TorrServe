@@ -102,7 +102,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             this.entries = pList.map { it.second }.toTypedArray()
             this.value = player
             this.summary = pList.find { it.first == player }?.second ?: player
-            setOnPreferenceChangeListener { preference, newValue ->
+            setOnPreferenceChangeListener { _, newValue ->
                 Settings.setPlayer(newValue.toString())
                 this.summary = (pList.find { it.first == newValue }?.second ?: newValue).toString()
                 true
@@ -110,7 +110,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<ListPreference>("app_theme")?.apply {
-            setOnPreferenceChangeListener { preference, newValue ->
+            setOnPreferenceChangeListener { _, newValue ->
                 Settings.setTheme(newValue.toString())
                 requireActivity().recreate()
                 true

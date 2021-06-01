@@ -27,6 +27,7 @@ import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoViewModel
 import ru.yourok.torrserve.utils.ByteFmt
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
+import java.util.*
 
 open class InfoFragment : TSFragment() {
 
@@ -130,9 +131,9 @@ open class InfoFragment : TSFragment() {
 
                     if (buffer.isNotEmpty()) {
                         val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            Html.fromHtml("<b>${getString(R.string.buffer)}:</b> ${buffer}", Html.FROM_HTML_MODE_COMPACT)
+                            Html.fromHtml("<b>${getString(R.string.buffer)}:</b> $buffer", Html.FROM_HTML_MODE_COMPACT)
                         else
-                            Html.fromHtml("<b>${getString(R.string.buffer)}:</b> ${buffer}")
+                            Html.fromHtml("<b>${getString(R.string.buffer)}:</b> $buffer")
                         findViewById<TextView>(R.id.tvBuffer).text = txt
                     }
 
@@ -147,31 +148,31 @@ open class InfoFragment : TSFragment() {
                     val peers = "[${torr.connected_seeders}] ${torr.active_peers}/${torr.total_peers}"
                     if (peers.isNotEmpty()) {
                         val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            Html.fromHtml("<b>${getString(R.string.peers)}:</b> ${peers}", Html.FROM_HTML_MODE_COMPACT)
+                            Html.fromHtml("<b>${getString(R.string.peers)}:</b> $peers", Html.FROM_HTML_MODE_COMPACT)
                         else
-                            Html.fromHtml("<b>${getString(R.string.peers)}:</b> ${peers}")
+                            Html.fromHtml("<b>${getString(R.string.peers)}:</b> $peers")
                         findViewById<TextView>(R.id.tvPeers).text = txt
                     }
 
                     val speed = ByteFmt.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
                     if (speed.isNotEmpty() && torr.download_speed > 50.0) {
                         val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> ${speed}", Html.FROM_HTML_MODE_COMPACT)
+                            Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> $speed", Html.FROM_HTML_MODE_COMPACT)
                         else
-                            Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> ${speed}")
+                            Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> $speed")
                         findViewById<TextView>(R.id.tvSpeed).text = txt
                     }
 
                     //view?.findViewById<TextView>(R.id.tvInfo)?.text = torr.stat_string
                     view?.findViewById<TextView>(R.id.tvInfo)?.apply {
-                        when (torr.stat_string.toLowerCase()) {
-                            "torrent added" -> text = getString(R.string.stat_string_added)
-                            "torrent getting info" -> text = getString(R.string.stat_string_info)
-                            "torrent preload" -> text = getString(R.string.stat_string_preload)
-                            "torrent working" -> text = getString(R.string.stat_string_working)
-                            "torrent closed" -> text = getString(R.string.stat_string_closed)
-                            "torrent in db" -> text = getString(R.string.stat_string_in_db)
-                            else -> text = torr.stat_string
+                        text = when (torr.stat_string.lowercase(Locale.getDefault())) {
+                            "torrent added" -> getString(R.string.stat_string_added)
+                            "torrent getting info" -> getString(R.string.stat_string_info)
+                            "torrent preload" -> getString(R.string.stat_string_preload)
+                            "torrent working" -> getString(R.string.stat_string_working)
+                            "torrent closed" -> getString(R.string.stat_string_closed)
+                            "torrent in db" -> getString(R.string.stat_string_in_db)
+                            else -> torr.stat_string
                         }
                     }
 

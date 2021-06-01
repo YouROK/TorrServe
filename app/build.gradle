@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 17
-        targetSdkVersion 29
+        targetSdkVersion 30
         // for older androids
         multiDexEnabled true
         versionCode 103

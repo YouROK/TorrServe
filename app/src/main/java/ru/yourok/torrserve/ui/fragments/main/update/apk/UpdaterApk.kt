@@ -107,7 +107,7 @@ object UpdaterApk {
         if (newVersion == null && !check())
             return
 
-        newVersion?.let { rel ->
+        newVersion?.let {
             val destination = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                 "TorrServe.apk"

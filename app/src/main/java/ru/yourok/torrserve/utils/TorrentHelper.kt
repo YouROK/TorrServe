@@ -7,6 +7,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import java.io.File
+import java.util.*
 
 object TorrentHelper {
     const val TorrentSTAdded = 0
@@ -27,12 +28,12 @@ object TorrentHelper {
             val path = it.path
             if (Mime.getMimeType(path) != "*/*") {
                 val size = it.length
-                if (File(path).extension.toLowerCase() == "m2ts") {
+                if (File(path).extension.lowercase(Locale.getDefault()) == "m2ts") {
                     if (size > 1073741824L)
                         retList.add(it)
                 } else
                     retList.add(it)
-            } else if (path.toLowerCase().contains("bdmv/index.bdmv")) {
+            } else if (path.lowercase(Locale.getDefault()).contains("bdmv/index.bdmv")) {
                 retList.add(it)
             }
         }
@@ -67,9 +68,9 @@ object TorrentHelper {
         return Net.getHostUrl("/stream/${name.urlEncode()}?link=${torr.hash}&index=${index}&play")
     }
 
-    fun getFileLink(torr: Torrent, file: FileStat): String {
+    fun getFileLink(torr: Torrent, file: FileStat?): String {
         val name = file?.let { File(it.path).name } ?: torr.title
-        return Net.getHostUrl("/stream/${name.urlEncode()}?link=${torr.hash}&index=${file.id}&play")
+        return Net.getHostUrl("/stream/${name.urlEncode()}?link=${torr.hash}&index=${file?.id}&play")
     }
 
     fun getTorrentPreloadLink(torr: Torrent, index: Int): String {

@@ -11,6 +11,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import java.util.*
 
 fun PlayActivity.readArgs() {
     intent.data?.let {
@@ -18,14 +19,14 @@ fun PlayActivity.readArgs() {
     }
     if (intent.action?.equals(Intent.ACTION_SEND) == true) {
         if (intent.getStringExtra(Intent.EXTRA_TEXT) != null)
-            torrentLink = intent.getStringExtra(Intent.EXTRA_TEXT)
+            torrentLink = intent.getStringExtra(Intent.EXTRA_TEXT)!!
         if (intent.extras?.get(Intent.EXTRA_STREAM) != null)
             torrentLink = intent.extras?.get(Intent.EXTRA_STREAM)?.toString() ?: ""
     }
 
     intent?.extras?.apply {
         keySet().forEach { key ->
-            when (key.toLowerCase()) {
+            when (key.lowercase(Locale.getDefault())) {
                 "hash" -> torrentHash = this.getString(key) ?: ""
                 "title" -> torrentTitle = this.getString(key) ?: ""
                 "poster" -> torrentPoster = this.getString(key) ?: ""

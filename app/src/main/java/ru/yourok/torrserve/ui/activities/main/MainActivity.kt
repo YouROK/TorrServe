@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigator() {
         findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
-            val currFragment = supportFragmentManager?.findFragmentById(R.id.container)
+            val currFragment = supportFragmentManager.findFragmentById(R.id.container)
             if (currFragment is TorrentsFragment)
                 ServerFinderFragment().show(this, R.id.container, true)
             else {
@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
             AlertDialog.Builder(this)
                 .setTitle(R.string.remove_all_warn)
-                .setPositiveButton(android.R.string.yes) { dialog, which ->
+                .setPositiveButton(android.R.string.yes) { dialog, _ ->
                     lifecycleScope.launch(Dispatchers.IO) {
                         try {
                             val list = Api.listTorrent()

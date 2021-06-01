@@ -60,7 +60,7 @@ class DonateFragment : TSFragment() {
 
         vi.findViewById<ImageView>(R.id.ivTelegram)?.apply {
             alpha = 0.6f
-            setOnFocusChangeListener { v, hasFocus ->
+            setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus)
                     alpha = 1.0f
                 else

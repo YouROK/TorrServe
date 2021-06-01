@@ -23,7 +23,7 @@ import java.util.*
 
 class ChannelProvider(private val iName: String, private val dName: String) {
 
-    fun create(): Long {
+    private fun create(): Long {
         var channelId = findChannel()
         if (channelId != -1L)
             return channelId
@@ -38,7 +38,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             TvContractCompat.Channels.CONTENT_URI,
             builder.build().toContentValues()
         )
-        channelId = ContentUris.parseId(channelUri)
+        channelId = channelUri?.let { ContentUris.parseId(it) } ?: 0
         val bitmap = BitmapFactory.decodeResource(App.context.resources, R.drawable.ts_round)
         ChannelLogoUtils.storeChannelLogo(App.context, channelId, bitmap)
         TvContractCompat.requestChannelBrowsable(App.context, channelId)

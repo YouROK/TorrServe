@@ -74,7 +74,7 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
             }
 
         vi.findViewById<TextView>(R.id.tvTorrName)?.text = title
-        vi.findViewById<TextView>(R.id.tvTorrHash)?.text = hash.toUpperCase()
+        vi.findViewById<TextView>(R.id.tvTorrHash)?.text = hash.uppercase(Locale.getDefault())
         if (addStr.isNotEmpty()) {
             vi.findViewById<TextView>(R.id.tvTorrDate)?.text = addStr
             vi.findViewById<TextView>(R.id.tvTorrDate)?.visibility = View.VISIBLE

@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.utils
 
 import java.io.File
+import java.util.*
 
 /**
  * Created by yourok on 03.03.18.
@@ -8,7 +9,7 @@ import java.io.File
 object Mime {
 
     fun getMimeType(filepath: String): String {
-        val ext = File(filepath).extension.toLowerCase()
+        val ext = File(filepath).extension.lowercase(Locale.getDefault())
         if (extVideo.contains(ext))
             return "video/*"
         if (extAudio.contains(ext))

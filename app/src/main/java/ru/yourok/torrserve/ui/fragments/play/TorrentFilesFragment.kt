@@ -111,9 +111,9 @@ class TorrentFilesFragment : TSFragment() {
             }
             findViewById<ListView>(R.id.lvTorrentFiles).apply {
                 adapter = torrFilesAdapter
-                setOnItemClickListener { parent, view, position, id ->
-                    val file = torrFilesAdapter.getItem(position) as FileStat? ?: return@setOnItemClickListener
-                    onClickItem?.invoke(file)
+                setOnItemClickListener { _, _, position, _ ->
+                    val f = torrFilesAdapter.getItem(position) as FileStat? ?: return@setOnItemClickListener
+                    onClickItem?.invoke(f)
                 }
                 postDelayed({
                     setSelection(next)

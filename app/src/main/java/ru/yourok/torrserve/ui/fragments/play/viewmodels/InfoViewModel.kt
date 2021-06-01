@@ -32,7 +32,7 @@ class InfoViewModel : ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    data?.value = InfoTorrent(null, e?.message ?: "error on add torrent")
+                    data?.value = InfoTorrent(null, e.message ?: "error on add torrent")
                 }
             }
         }

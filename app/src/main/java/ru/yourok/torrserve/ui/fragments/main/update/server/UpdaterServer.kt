@@ -24,7 +24,7 @@ object UpdaterServer {
     private val serverFile = ServerFile()
 
     suspend fun getLocalVersion(): String {
-        var version = ""
+        var version: String
         if (TorrService.isLocal()) {
             if (!serverFile.exists()) {
                 version = App.context.getString(R.string.not_installed)
@@ -37,7 +37,7 @@ object UpdaterServer {
         } else {
             version = App.context.getString(R.string.not_used)
         }
-        return "$version"
+        return version
     }
 
     fun updateFromNet(onProgress: ((prc: Int) -> Unit)?) {
@@ -121,15 +121,15 @@ object UpdaterServer {
     }
 
     fun check(): Boolean {
-        try {
+        return try {
             val body = Net.get(Consts.updateServerPath)
             val gson = Gson()
             version = gson.fromJson(body, ServVersion::class.java)
-            return true
+            true
         } catch (e: Exception) {
             e.printStackTrace()
             error = e.message ?: ""
-            return false
+            false
         }
     }
 
@@ -139,7 +139,7 @@ object UpdaterServer {
         return version?.version ?: error
     }
 
-    fun getLink(): String {
+    private fun getLink(): String {
         if (version == null)
             check()
         if (version == null)
@@ -148,10 +148,10 @@ object UpdaterServer {
             val arch = getArch()
             if (arch.isEmpty())
                 throw IOException("error get arch")
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-                return ver.links["linux-$arch"] ?: ""
+            return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                ver.links["linux-$arch"] ?: ""
             else
-                return ver.links["android-$arch"] ?: ""
+                ver.links["android-$arch"] ?: ""
         }
         return ""
     }

@@ -2,6 +2,7 @@ package ru.yourok.torrserve.ui.activities.play
 
 import android.content.Intent
 import ru.yourok.torrserve.server.models.torrent.FileStat
+import java.util.*
 
 object SerialFilter {
     fun filter(intent: Intent, files: List<FileStat>): Int {
@@ -10,7 +11,7 @@ object SerialFilter {
         intent.extras?.apply {
             try {
                 keySet().forEach {
-                    when (it.toLowerCase()) {
+                    when (it.lowercase(Locale.getDefault())) {
                         "season" -> season = this.getInt(it)
                         "episode" -> episode = this.getInt(it)
                     }
@@ -23,7 +24,7 @@ object SerialFilter {
             return -1
 
         files.forEach {
-            val name = it.path.toLowerCase()
+            val name = it.path.lowercase(Locale.getDefault())
             if (
                 name.contains("s${season.toString().padStart(2, '0')}e${episode.toString().padStart(2, '0')}") ||
                 name.contains("e${episode.toString().padStart(2, '0')}s${season.toString().padStart(2, '0')}") ||

@@ -24,9 +24,9 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
     }
 
     fun update() {
-        list = File(path).listFiles().filter {
+        list = File(path).listFiles()?.filter {
             it.isDirectory
-        }.map { it.name }.toList()
+        }?.map { it.name }?.toList() ?: emptyList()
         notifyDataSetChanged()
         onClick?.invoke(path)
     }

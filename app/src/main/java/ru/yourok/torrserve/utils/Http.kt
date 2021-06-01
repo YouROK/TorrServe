@@ -7,6 +7,7 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.HttpURLConnection.*
 import java.net.URL
+import java.util.*
 import java.util.zip.GZIPInputStream
 
 
@@ -82,7 +83,7 @@ class Http(url: Uri) {
             throw IOException("Error connect to: " + currUrl + " " + connection!!.responseMessage)
         }
         isConn = true
-        if ((connection!!.getHeaderField("Accept-Ranges")?.toLowerCase() ?: "") == "none")
+        if (connection!!.getHeaderField("Accept-Ranges").lowercase(Locale.getDefault()) == "none")
             return -1
         return getSize()
     }
