@@ -18,6 +18,7 @@ import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.main.MainActivity
 import java.nio.charset.Charset
+import java.util.*
 
 
 class ChannelProvider(private val iName: String, private val dName: String) {
@@ -162,7 +163,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             .setLive(false)
             .setPosterArtUri(posterUri)
             .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
-            .setDescription(torr.hash.toUpperCase())
+            .setDescription(torr.hash.uppercase(Locale.getDefault()))
 
         return preview.build()
     }

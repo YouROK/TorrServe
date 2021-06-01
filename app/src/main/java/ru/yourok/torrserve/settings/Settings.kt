@@ -12,7 +12,7 @@ object Settings {
     fun getHosts(): List<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         val ret = prefs.getStringSet("saved_hosts", mutableSetOf())
-        return ret.toList()
+        return ret?.toList() ?: emptyList()
     }
 
     fun setHosts(hosts: List<String>) {
@@ -59,7 +59,7 @@ object Settings {
         var filesDir: File?
         filesDir = App.context.getExternalFilesDir(null)
 
-        if (!filesDir.canWrite())
+        if (!filesDir!!.canWrite())
             filesDir = null
 
         if (filesDir == null)
