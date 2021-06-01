@@ -1,13 +1,11 @@
 package ru.yourok.torrserve.ui.activities.play
 
-import android.graphics.PorterDuff
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.*
 import ru.yourok.torrserve.BuildConfig
@@ -52,9 +50,9 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.play_activity)
         setWindow()
 
-        findViewById<ProgressBar>(R.id.progressBar)?.apply {
-            progressDrawable?.setColorFilter(ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent), PorterDuff.Mode.SRC_IN)
-            indeterminateDrawable?.setColorFilter(ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent), PorterDuff.Mode.SRC_IN)
+        findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
+            val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
+            setIndicatorColor(color)
         }
 
         lifecycleScope.launch { showProgress() }
@@ -148,27 +146,25 @@ class PlayActivity : AppCompatActivity() {
 
     suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
         if (isActive) {
-            val progress = findViewById<ProgressBar>(R.id.progressBar)
-            progress?.progressDrawable?.setColorFilter(
-                ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent), PorterDuff.Mode.SRC_IN
-            )
-            progress?.indeterminateDrawable?.setColorFilter(
-                ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent), PorterDuff.Mode.SRC_IN
-            )
+            val progress = findViewById<LinearProgressIndicator>(R.id.progressBar)
+            val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
             progress?.apply {
+                setIndicatorColor(color)
+                // https://material.io/components/progress-indicators/android
+                if (prog < 0) {
+                    visibility = View.INVISIBLE
+                    isIndeterminate = true
+                } else
+                    isIndeterminate = false
                 visibility = View.VISIBLE
-                isIndeterminate = prog < 0
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    setProgress(prog, true)
-                else
-                    setProgress(prog)
+                setProgressCompat(prog, true)
             }
         }
     }
 
     suspend fun hideProgress() = withContext(Dispatchers.Main) {
         if (isActive)
-            findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.INVISIBLE
+            findViewById<LinearProgressIndicator>(R.id.progressBar)?.visibility = View.INVISIBLE
     }
 
 }

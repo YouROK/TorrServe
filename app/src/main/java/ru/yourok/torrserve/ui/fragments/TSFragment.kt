@@ -1,11 +1,10 @@
 package ru.yourok.torrserve.ui.fragments
 
-import android.graphics.PorterDuff
 import android.view.View
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
@@ -30,26 +29,24 @@ abstract class TSFragment : Fragment() {
 
     suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
         if (activity != null && isActive) {
-            val progress = activity?.findViewById<ProgressBar>(R.id.progressBar)
-            progress?.progressDrawable?.setColorFilter(
-                ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorAccent), PorterDuff.Mode.SRC_IN
-            )
-            progress?.indeterminateDrawable?.setColorFilter(
-                ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorAccent), PorterDuff.Mode.SRC_IN
-            )
+            val progress = activity?.findViewById<LinearProgressIndicator>(R.id.progressBar)
+            val color = ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorAccent)
             progress?.apply {
+                setIndicatorColor(color)
+                // https://material.io/components/progress-indicators/android
+                if (prog < 0) {
+                    visibility = View.INVISIBLE
+                    isIndeterminate = true
+                } else
+                    isIndeterminate = false
                 visibility = View.VISIBLE
-                isIndeterminate = prog < 0
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                    setProgress(prog, true)
-                else
-                    setProgress(prog)
+                setProgressCompat(prog, true)
             }
         }
     }
 
     suspend fun hideProgress() = withContext(Dispatchers.Main) {
         if (activity != null && isActive)
-            activity?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.GONE
+            activity?.findViewById<LinearProgressIndicator>(R.id.progressBar)?.visibility = View.GONE
     }
 }
