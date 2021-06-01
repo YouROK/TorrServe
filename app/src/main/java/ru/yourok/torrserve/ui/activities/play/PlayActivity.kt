@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -50,10 +51,10 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.play_activity)
         setWindow()
 
-        findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
-            val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
-            setIndicatorColor(color)
-        }
+//        findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
+//            val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
+//            setIndicatorColor(color)
+//        }
 
         lifecycleScope.launch { showProgress() }
 
@@ -148,15 +149,19 @@ class PlayActivity : AppCompatActivity() {
         if (isActive) {
             val progress = findViewById<LinearProgressIndicator>(R.id.progressBar)
             val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
+            val pi = progress.isIndeterminate
+            val pv = progress.isVisible
             progress?.apply {
                 setIndicatorColor(color)
                 // https://material.io/components/progress-indicators/android
-                if (prog < 0) {
+                if (prog < 0 && !pi) {
                     visibility = View.INVISIBLE
                     isIndeterminate = true
-                } else
+                } else if (!pi) {
                     isIndeterminate = false
-                visibility = View.VISIBLE
+                }
+                if (!pv)
+                    visibility = View.VISIBLE
                 setProgressCompat(prog, true)
             }
         }
