@@ -33,6 +33,7 @@
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to store cache</string>
     <string name="save_on_disk">Use cache on disk</string>
+    <string name="save_on_disk_desc">(better use external media on flash-based devices)</string>
     <string name="force_encrypt">Force encrypt headers</string>
     <string name="force_encrypt_desc">(can help with torrent blocking providers)</string>
     <string name="enable_ipv6">IPv6</string>

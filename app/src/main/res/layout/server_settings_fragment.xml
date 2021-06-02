@@ -121,6 +121,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:labelFor="@+id/cbSaveOnDisk"
+                android:paddingBottom="10dp"
+                android:text="@string/save_on_disk_desc" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:labelFor="@+id/etContentPath"
                 android:text="@string/save_content_path" />
 
