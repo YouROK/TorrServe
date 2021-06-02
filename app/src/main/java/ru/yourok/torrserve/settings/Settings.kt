@@ -1,7 +1,7 @@
 package ru.yourok.torrserve.settings
 
 import android.net.Uri
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import ru.yourok.torrserve.app.App
 import java.io.File
 
@@ -66,7 +66,7 @@ object Settings {
             filesDir = App.context.filesDir
 
         if (filesDir == null)
-            filesDir = File("/sdcard/Torrserve")
+            filesDir = File("/sdcard/TorrServe")
 
         if (!filesDir.exists())
             filesDir.mkdirs()
