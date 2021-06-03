@@ -83,7 +83,7 @@ class Http(url: Uri) {
             throw IOException("Error connect to: " + currUrl + " " + connection!!.responseMessage)
         }
         isConn = true
-        if (connection!!.getHeaderField("Accept-Ranges").lowercase(Locale.getDefault()) == "none")
+        if (connection!!.getHeaderField("Accept-Ranges")?.lowercase(Locale.getDefault()) == "none")
             return -1
         return getSize()
     }
