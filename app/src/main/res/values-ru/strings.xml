@@ -22,7 +22,8 @@
     <string name="torrent_disconnect_timeout">Тайм-аут отключения торрента (секунды)</string>
     <string name="save_content_path">Путь для хранения кеша</string>
     <string name="save_on_disk">Использовать кеш на диске</string>
-    <string name="save_on_disk_desc">(лучше использовать внешние носители на устройствах с flash-памятью)</string>
+    <string name="remove_cache_on_drop">Удалять кеш при отключении</string>
+    <string name="remove_cache_on_drop_desc">(remove cache files from disk on drop torrent)</string>
     <string name="force_encrypt">Принудительное шифрование заголовков</string>
     <string name="force_encrypt_desc">(может помочь с блокирующими торрент провайдерами)</string>
     <string name="enable_ipv6">IPv6</string>

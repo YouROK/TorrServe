@@ -121,6 +121,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
                     findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.UseDisk
+                    findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.isChecked = sets.RemoveCacheOnDrop
                     findViewById<Button>(R.id.btnContentPath)?.text = sets.TorrentsSavePath
                     findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
@@ -156,6 +157,7 @@ class ServerSettingsFragment : TSFragment() {
                     PreloadBuffer = findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: false,
                     ReaderReadAHead = findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 95,
                     UseDisk = findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
+                    RemoveCacheOnDrop = findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.isChecked ?: false,
                     TorrentsSavePath = btsets?.TorrentsSavePath ?: "",
                     ForceEncrypt = findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
                     RetrackersMode = findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,

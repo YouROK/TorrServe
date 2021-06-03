@@ -8,6 +8,7 @@ data class BTSets(
     // Storage
     var UseDisk: Boolean,
     var TorrentsSavePath: String,
+    var RemoveCacheOnDrop: Boolean,
     // Torrent
     var ForceEncrypt: Boolean,
     var RetrackersMode: Int,
