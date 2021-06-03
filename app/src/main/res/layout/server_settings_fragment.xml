@@ -121,7 +121,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:labelFor="@+id/cbSaveOnDisk"
-                android:paddingBottom="10dp"
                 android:text="@string/save_on_disk_desc" />
 
             <CheckBox
@@ -135,23 +134,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:labelFor="@+id/cbRemoveCacheOnDrop"
-                android:paddingBottom="10dp"
                 android:text="@string/remove_cache_on_drop_desc" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:labelFor="@+id/etContentPath"
+                android:labelFor="@+id/btnContentPath"
+                android:paddingTop="15dp"
                 android:text="@string/save_content_path" />
 
             <Button
                 android:id="@+id/btnContentPath"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:nextFocusDown="@id/cbEnableIPv6"
-                android:nextFocusUp="@id/cbSaveOnDisk"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:nextFocusUp="@id/cbRemoveCacheOnDrop"
+                android:nextFocusDown="@id/cbEnableIPv6" />
 
             <CheckBox
                 android:id="@+id/cbEnableIPv6"
