@@ -24,6 +24,8 @@
     <string name="save_content_path">Шлях до збереження кешу</string>
     <string name="save_on_disk">Зберігати кешу на диск</string>
     <string name="save_on_disk_desc">(краще використовувати зовнішні носії на пристроях з flash-пам`яттю)</string>
+    <string name="remove_cache_on_drop">Очищати кеш при відключенні торрента</string>
+    <string name="remove_cache_on_drop_desc">(якщо відключено, файли кеша очищаються при видаленні торрента)</string>
     <string name="force_encrypt">Примусове шифрування заголовків</string>
     <string name="force_encrypt_desc">(може допомогти з блокуючими торрент провайдерами)</string>
     <string name="enable_ipv6">IPv6</string>
