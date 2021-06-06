@@ -59,7 +59,7 @@ object Settings {
         var filesDir: File?
         filesDir = App.context.getExternalFilesDir(null)
 
-        if (!filesDir!!.canWrite())
+        if (filesDir?.canWrite() != true)
             filesDir = null
 
         if (filesDir == null)
