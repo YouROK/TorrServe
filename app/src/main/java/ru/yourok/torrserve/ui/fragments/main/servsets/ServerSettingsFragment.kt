@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,6 +57,22 @@ class ServerSettingsFragment : TSFragment() {
                 }
             }
             it.isEnabled = TorrService.isLocal()
+        }
+        // hide disk cache options for older server versions
+        lifecycleScope.launch(Dispatchers.IO) {
+            val ver = Api.echo()
+            if (
+                ver.contains("MatriX", true) &&
+                ver.replace("MatriX.","").isDigitsOnly() &&
+                ver.replace("MatriX.","").toInt() < 94 // MatriX.94 is 1st disk cache release
+            ) {
+                vi.findViewById<CheckBox>(R.id.cbSaveOnDisk)?.visibility = View.GONE
+                vi.findViewById<TextView>(R.id.lbSaveOnDisk)?.visibility = View.GONE
+                vi.findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.visibility = View.GONE
+                vi.findViewById<TextView>(R.id.lbRemoveCacheOnDrop)?.visibility = View.GONE
+                vi.findViewById<TextView>(R.id.lbContentPath)?.visibility = View.GONE
+                vi.findViewById<Button>(R.id.btnContentPath)?.visibility = View.GONE
+            }
         }
 
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {

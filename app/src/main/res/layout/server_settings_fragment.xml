@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:labelFor="@+id/cbSaveOnDisk"
+                android:labelFor="@+id/cbPreloadBuffer"
                 android:text="@string/preload_before_start_desc" />
 
             <CheckBox
@@ -97,6 +97,7 @@
                 android:text="@string/save_on_disk" />
 
             <TextView
+                android:id="@+id/lbSaveOnDisk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -110,6 +111,7 @@
                 android:text="@string/remove_cache_on_drop" />
 
             <TextView
+                android:id="@+id/lbRemoveCacheOnDrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -117,6 +119,7 @@
                 android:text="@string/remove_cache_on_drop_desc" />
 
             <TextView
+                android:id="@+id/lbContentPath"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
