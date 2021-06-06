@@ -66,12 +66,14 @@ class ServerSettingsFragment : TSFragment() {
                 ver.replace("MatriX.","").isDigitsOnly() &&
                 ver.replace("MatriX.","").toInt() < 94 // MatriX.94 is 1st disk cache release
             ) {
-                vi.findViewById<CheckBox>(R.id.cbSaveOnDisk)?.visibility = View.GONE
-                vi.findViewById<TextView>(R.id.lbSaveOnDisk)?.visibility = View.GONE
-                vi.findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.visibility = View.GONE
-                vi.findViewById<TextView>(R.id.lbRemoveCacheOnDrop)?.visibility = View.GONE
-                vi.findViewById<TextView>(R.id.lbContentPath)?.visibility = View.GONE
-                vi.findViewById<Button>(R.id.btnContentPath)?.visibility = View.GONE
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<CheckBox>(R.id.cbSaveOnDisk)?.visibility = View.GONE
+                    vi.findViewById<TextView>(R.id.lbSaveOnDisk)?.visibility = View.GONE
+                    vi.findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.visibility = View.GONE
+                    vi.findViewById<TextView>(R.id.lbRemoveCacheOnDrop)?.visibility = View.GONE
+                    vi.findViewById<TextView>(R.id.lbContentPath)?.visibility = View.GONE
+                    vi.findViewById<Button>(R.id.btnContentPath)?.visibility = View.GONE
+                }
             }
         }
 
