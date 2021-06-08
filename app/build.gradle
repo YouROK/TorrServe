@@ -10,6 +10,7 @@ android {
     defaultConfig {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 17
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         // for older androids
         multiDexEnabled true
