@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.utils
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import info.guardianproject.netcipher.client.TlsOnlySocketFactory
 import org.jsoup.Connection
@@ -12,17 +13,16 @@ import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
-
 object Net {
     fun getHostUrl(path: String): String {
         val url = Settings.getHost()
         if (path.isEmpty())
             return url
 
-        if (url.last() == '/')
-            return url + path.substring(1)
+        return if (url.last() == '/')
+            url + path.substring(1)
         else
-            return url + path
+            url + path
     }
 
     private fun getAuthB64(): String {
@@ -66,13 +66,16 @@ object Net {
 
         val response = conn.execute()
 
-        val status = response.statusCode()
-        if (status == 200) {
-            return response.body()
-        } else if (status == 302) {
-            return ""
-        } else {
-            throw Exception(response.statusMessage())
+        return when (response.statusCode()) {
+            200 -> {
+                response.body()
+            }
+            302 -> {
+                ""
+            }
+            else -> {
+                throw Exception(response.statusMessage())
+            }
         }
     }
 
@@ -88,13 +91,16 @@ object Net {
 
         val response = conn.execute()
 
-        val status = response.statusCode()
-        if (status == 200) {
-            return response.body()
-        } else if (status == 302) {
-            return ""
-        } else {
-            throw Exception(response.statusMessage())
+        return when (response.statusCode()) {
+            200 -> {
+                response.body()
+            }
+            302 -> {
+                ""
+            }
+            else -> {
+                throw Exception(response.statusMessage())
+            }
         }
     }
 
@@ -113,23 +119,28 @@ object Net {
             .timeout(2000)
             .execute()
 
-        val status = response.statusCode()
-        if (status == 200) {
-            return response.body()
-        } else if (status == 302) {
-            return ""
-        } else {
-            throw Exception(response.statusMessage())
+        return when (response.statusCode()) {
+            200 -> {
+                response.body()
+            }
+            302 -> {
+                ""
+            }
+            else -> {
+                throw Exception(response.statusMessage())
+            }
         }
     }
 
     // https://stackoverflow.com/questions/26649389/how-to-disable-sslv3-in-android-for-httpsurlconnection
     private fun insecureTlsSocketFactory(): SSLSocketFactory {
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            @SuppressLint("TrustAllX509TrustManager")
             @Throws(CertificateException::class)
             override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
             }
 
+            @SuppressLint("TrustAllX509TrustManager")
             @Throws(CertificateException::class)
             override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
             }
@@ -142,8 +153,7 @@ object Net {
         try {
             val sslContext = SSLContext.getInstance("TLSv1.2")
             sslContext.init(null, trustAllCerts, java.security.SecureRandom())
-            val noSSLv3Factory: SSLSocketFactory = TlsOnlySocketFactory(sslContext.socketFactory)
-            return noSSLv3Factory
+            return TlsOnlySocketFactory(sslContext.socketFactory)
         } catch (e: Exception) {
             when (e) {
                 is RuntimeException, is KeyManagementException -> {
