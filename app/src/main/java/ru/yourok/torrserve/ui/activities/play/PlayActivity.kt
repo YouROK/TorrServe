@@ -51,11 +51,6 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.play_activity)
         setWindow()
 
-//        findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
-//            val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
-//            setIndicatorColor(color)
-//        }
-
         lifecycleScope.launch { showProgress() }
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -131,8 +126,9 @@ class PlayActivity : AppCompatActivity() {
             play(false)
         else {
             lifecycleScope.launch { hideProgress() }
-            if (App.inForeground)
-                ChooserFragment().show(this) {
+            if (App.inForeground) {
+                val isForceChoose = (intent.hasExtra("action") && intent.getStringExtra("action") == "choose")
+                ChooserFragment().show(this, isForceChoose) {
                     when (it) {
                         1, 2 -> {
                             play(it == 2)
@@ -142,6 +138,7 @@ class PlayActivity : AppCompatActivity() {
                         }
                     }
                 }
+            }
         }
     }
 

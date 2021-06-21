@@ -18,9 +18,9 @@ import ru.yourok.torrserve.ui.fragments.TSFragment
 
 class ChooserFragment : TSFragment() {
 
-    fun show(activity: PlayActivity, onChoose: (Int) -> Unit) {
+    fun show(activity: PlayActivity, forceChoose: Boolean, onChoose: (Int) -> Unit) {
         val saveChoose = Settings.getChooserAction()
-        if (saveChoose in 1..3) {
+        if (!forceChoose && saveChoose in 1..3) {
             onChoose(saveChoose)
             return
         }
