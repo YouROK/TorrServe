@@ -4,6 +4,7 @@ data class BTSets(
     // Cache
     var CacheSize: Long,
     var PreloadBuffer: Boolean,
+    var PreloadCache: Int,
     var ReaderReadAHead: Int,
     // Storage
     var UseDisk: Boolean,

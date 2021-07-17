@@ -20,7 +20,8 @@
     <string name="cache_size">Розмір кешу (Мегабайти)</string>
     <string name="preload_before_start">Заповнювати кеш перед стартом</string>
     <string name="preload_before_start_desc">(якщо відключено, буде використовуватися 32 МБ буфер в предзагрузкі)</string>
-    <string name="torrent_preload">Попереднє наповнення кешу (5%-100%, рек. 95%) </string>
+    <string name="torrent_preload">Випереджаюче кеш (5%-100%, рек. 95%) </string>
+    <string name="torrent_preload_cache">Буфер предзагрузкі (0%-100%, мін. 32MB)</string>
     <string name="torrent_disconnect_timeout">Таймаут відключення торрента (секунд)</string>
     <string name="save_content_path">Шлях до збереження кешу</string>
     <string name="save_on_disk">Зберігати кешу на диск</string>
@@ -182,7 +183,7 @@
     <string name="stat_string_in_db">Торрент у БД</string>
     <string name="fmt_p">КМГТПЕ</string>
     <string name="fmt_b">Б</string>
-    <string name="fmt_s">/с</string>
+    <string name="fmt_bps">біт/с</string>
     <string name="no_torrents">Немає торрентів</string>
     <string name="not_used">Не використовується</string>
     <string name="not_installed">Не встановленно</string>

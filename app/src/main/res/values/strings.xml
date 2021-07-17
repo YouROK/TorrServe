@@ -30,11 +30,12 @@
     <string name="cache_size">Cache size (Megabytes)</string>
     <string name="preload_before_start">Preload cache before start</string>
     <string name="preload_before_start_desc">(if disabled, 32MB buffer will be used for preload)</string>
-    <string name="torrent_preload">Cache Read Ahead (5%-100%, def. 95%) </string>
+    <string name="torrent_preload">Readahead Cache (5-100%, rec. 95%)</string>
+    <string name="torrent_preload_cache">Preload Cache Before Play (0%-100%, min. 32MB)</string>
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to store cache</string>
     <string name="save_on_disk">Use cache on disk</string>
-    <string name="save_on_disk_desc">(better use external media on flash-based devices)</string>
+    <string name="save_on_disk_desc">(better use RAM or external media on flash-based devices)</string>
     <string name="remove_cache_on_drop">Remove cache on drop torrent</string>
     <string name="remove_cache_on_drop_desc">(if disabled, cache removed on delete torrent)</string>
     <string name="force_encrypt">Force encrypt headers</string>
@@ -225,7 +226,7 @@
 
     <string name="fmt_p">KMGTPE</string>
     <string name="fmt_b">B</string>
-    <string name="fmt_s">/s</string>
+    <string name="fmt_bps">bps</string>
 
     <string name="no_torrents">No Torrents</string>
     <string name="not_used">Not Used</string>

@@ -61,7 +61,6 @@
                 android:layout_height="10dp"
                 android:background="@android:color/transparent" />
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,6 +76,29 @@
                 android:inputType="numberSigned"
                 android:nextFocusDown="@id/cbPreloadBuffer" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/lbPreloadCache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:labelFor="@+id/etPreloadCache"
+                android:text="@string/torrent_preload_cache"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/etPreloadCache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned"
+                android:nextFocusDown="@id/cbSaveOnDisk"
+                android:visibility="gone" />
+
             <CheckBox
                 android:id="@+id/cbPreloadBuffer"
                 android:layout_width="match_parent"
@@ -84,6 +106,7 @@
                 android:text="@string/preload_before_start" />
 
             <TextView
+                android:id="@+id/lbPreloadBuffer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

@@ -17,8 +17,8 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.local.TorrService
+import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.ui.fragments.TSFragment
@@ -145,7 +145,7 @@ open class InfoFragment : TSFragment() {
                     } else
                         (activity as PlayActivity?)?.hideProgress()
 
-                    val peers = "[${torr.connected_seeders}] ${torr.active_peers}/${torr.total_peers}"
+                    val peers = "${torr.connected_seeders} · ${torr.active_peers}/${torr.total_peers}"
                     if (peers.isNotEmpty()) {
                         val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
                             Html.fromHtml("<b>${getString(R.string.peers)}:</b> $peers", Html.FROM_HTML_MODE_COMPACT)
@@ -154,7 +154,8 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvPeers).text = txt
                     }
 
-                    val speed = ByteFmt.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
+                    //val speed = ByteFmt.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
+                    val speed = ByteFmt.speedFmt(torr.download_speed)
                     if (speed.isNotEmpty() && torr.download_speed > 50.0) {
                         val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
                             Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> $speed", Html.FROM_HTML_MODE_COMPACT)

@@ -45,8 +45,7 @@ class ServerSettingsFragment : TSFragment() {
                 it.text = Settings.getHost()
             }
         }
-        val btn = vi.findViewById<Button>(R.id.btnContentPath)
-        btn?.let {
+        vi.findViewById<Button>(R.id.btnContentPath)?.let {
             it.setOnClickListener { _ ->
                 DirectoryDialog.show(context ?: return@setOnClickListener, "") { path ->
                     it.text = path
@@ -61,10 +60,10 @@ class ServerSettingsFragment : TSFragment() {
         // hide disk cache options for older server versions
         lifecycleScope.launch(Dispatchers.IO) {
             val ver = Api.echo()
-            if (
+            if ( // MatriX.94 is 1st disk cache release
                 ver.contains("MatriX", true) &&
                 ver.replace("MatriX.","").isDigitsOnly() &&
-                ver.replace("MatriX.","").toInt() < 94 // MatriX.94 is 1st disk cache release
+                ver.replace("MatriX.","").toInt() < 94
             ) {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<CheckBox>(R.id.cbSaveOnDisk)?.visibility = View.GONE
@@ -73,6 +72,18 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<TextView>(R.id.lbRemoveCacheOnDrop)?.visibility = View.GONE
                     vi.findViewById<TextView>(R.id.lbContentPath)?.visibility = View.GONE
                     vi.findViewById<Button>(R.id.btnContentPath)?.visibility = View.GONE
+                }
+            }
+            if ( // MatriX.101 add PreloadCache
+                ver.contains("MatriX", true) &&
+                ver.replace("MatriX.","").isDigitsOnly() &&
+                ver.replace("MatriX.","").toInt() > 100
+            ) {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<TextView>(R.id.lbPreloadCache)?.visibility = View.VISIBLE
+                    vi.findViewById<EditText>(R.id.etPreloadCache)?.visibility = View.VISIBLE
+                    vi.findViewById<CheckBox>(R.id.cbPreloadBuffer)?.visibility = View.GONE
+                    vi.findViewById<TextView>(R.id.lbPreloadBuffer)?.visibility = View.GONE
                 }
             }
         }
@@ -139,6 +150,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etCacheSize)?.setText((sets.CacheSize / (1024 * 1024)).toString())
                     findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
                     findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
+                    findViewById<EditText>(R.id.etPreloadCache)?.setText(sets.PreloadCache.toString())
                     findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.UseDisk
                     findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.isChecked = sets.RemoveCacheOnDrop
                     findViewById<Button>(R.id.btnContentPath)?.text = sets.TorrentsSavePath
@@ -175,6 +187,7 @@ class ServerSettingsFragment : TSFragment() {
                     CacheSize = (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 96L) * 1024 * 1024,
                     PreloadBuffer = findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: false,
                     ReaderReadAHead = findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 95,
+                    PreloadCache = findViewById<EditText>(R.id.etPreloadCache)?.text?.toString()?.toInt() ?: 0,
                     UseDisk = findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
                     RemoveCacheOnDrop = findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.isChecked ?: false,
                     TorrentsSavePath = btsets?.TorrentsSavePath ?: "",
