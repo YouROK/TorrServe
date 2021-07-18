@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,10 +59,14 @@ class ServerSettingsFragment : TSFragment() {
         // hide disk cache options for older server versions
         lifecycleScope.launch(Dispatchers.IO) {
             val ver = Api.echo()
+            val numbers = Regex("[0-9]+").findAll(ver)
+                .map(MatchResult::value)
+                .toList()
+            val verMajor = numbers.firstOrNull()?.toIntOrNull() ?: 0
+            //val verMinor = numbers.getOrNull(1)?.toIntOrNull() ?: 0
             if ( // MatriX.94 is 1st disk cache release
                 ver.contains("MatriX", true) &&
-                ver.replace("MatriX.","").isDigitsOnly() &&
-                ver.replace("MatriX.","").toInt() < 94
+                verMajor < 94
             ) {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<CheckBox>(R.id.cbSaveOnDisk)?.visibility = View.GONE
@@ -76,8 +79,7 @@ class ServerSettingsFragment : TSFragment() {
             }
             if ( // MatriX.101 add PreloadCache
                 ver.contains("MatriX", true) &&
-                ver.replace("MatriX.","").isDigitsOnly() &&
-                ver.replace("MatriX.","").toInt() > 100
+                verMajor > 100
             ) {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<TextView>(R.id.lbPreloadCache)?.visibility = View.VISIBLE
