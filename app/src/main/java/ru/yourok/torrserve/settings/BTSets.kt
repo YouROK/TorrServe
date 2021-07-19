@@ -16,6 +16,8 @@ data class BTSets(
     var TorrentDisconnectTimeout: Int,
     var EnableDebug: Boolean,
     // BT Config
+    var AcceptPeerCon: Boolean,
+    var AnnTorrentsToDht: Boolean,
     var EnableIPv6: Boolean,
     var DisableTCP: Boolean,
     var DisableUTP: Boolean,
