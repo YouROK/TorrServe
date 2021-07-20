@@ -73,8 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned"
-                android:nextFocusDown="@id/cbPreloadBuffer" />
+                android:inputType="numberSigned" />
 
             <View
                 android:layout_width="match_parent"
