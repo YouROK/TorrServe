@@ -107,7 +107,7 @@ class ServerUpdateFragment : TSFragment() {
         }, 3000)
 
         countClick++
-        if (countClick > 10)
+        if (countClick > 4)
             view?.findViewById<Button>(R.id.btnUpdateDownload)?.visibility = View.VISIBLE
     }
 
