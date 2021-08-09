@@ -30,7 +30,7 @@ class SettingsActivity : AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             TorrService.start()
-            if (TorrService.wait(5)) {
+            if (TorrService.wait(10)) {
                 if (TorrService.isLocal()) {
                     val ver = Api.echo()
                     if (ver.startsWith("1.1.")) {
@@ -68,8 +68,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (supportFragmentManager.getBackStackEntryCount() == 0) {
-//            TorrService.stop()
+        if (supportFragmentManager.backStackEntryCount == 0) {
             finishAffinity()
         }
     }

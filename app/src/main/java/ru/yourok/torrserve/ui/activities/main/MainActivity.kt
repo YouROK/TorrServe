@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigator()
         lifecycleScope.launch(Dispatchers.IO) {
             TorrService.start()
-            if (TorrService.wait(5)) {
+            if (TorrService.wait(10)) {
                 if (TorrService.isLocal()) {
                     val ver = Api.echo()
                     if (ver.startsWith("1.1.")) {

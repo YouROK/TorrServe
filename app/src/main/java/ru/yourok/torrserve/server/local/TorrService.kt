@@ -11,6 +11,7 @@ import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.services.NotificationHelper
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.settings.Settings.isAccessibilityOn
 import ru.yourok.torrserve.utils.AccessibilityUtils
 import kotlin.concurrent.thread
 
@@ -64,7 +65,8 @@ class TorrService : Service() {
             if (BuildConfig.DEBUG) Log.d("TorrService", "stopServer(forceClose:$forceClose)")
             if (isLocal() && Api.echo().isNotEmpty())
                 Api.shutdown()
-            serverFile.stop()
+            if (!isAccessibilityOn())
+                serverFile.stop()
             notification.doUnbindService(this)
             if (forceClose) {
                 thread {
