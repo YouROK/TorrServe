@@ -95,7 +95,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
-        findPreference<ListPreference>("choose_player")?.apply {
+        findPreference<ListPreference>(getString(R.string.player_pref_key))?.apply {
             val pList = Players.getList()
             val player = Settings.getPlayer()
             this.entryValues = pList.map { it.first }.toTypedArray()

@@ -82,6 +82,7 @@
 
     <string name="default_player">Default Player</string>
     <string name="choose_player">Always Ask</string>
+    <string name="player_pref_key" translatable="false">player</string>
 
     <string name="app_theme_title">App Theme</string>
     <string-array name="app_theme_entries">

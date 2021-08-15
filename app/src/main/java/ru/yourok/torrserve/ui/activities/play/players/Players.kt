@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.activities.play.players
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Environment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -16,7 +17,7 @@ object Players {
     fun getIntent(torrent: Torrent, index: Int): Intent {
         val file = TorrentHelper.findFile(torrent, index) ?: throw Exception("file in torrent not found")
         val link = TorrentHelper.getTorrentPlayLink(torrent, index)
-        val pkg = Settings.getPlayer()
+        val player = Settings.getPlayer()
         val mime = Mime.getMimeType(file.path)
 
         val intent = Intent(Intent.ACTION_VIEW)
@@ -26,29 +27,28 @@ object Players {
         intent.putExtra("forcename", torrent.title) // ViMu
         intent.putExtra("forceresume", true) // ViMu
         // default player
-        if (pkg == "0" && intent.resolveActivity(App.context.packageManager) != null)
+        if (player == "0" && intent.resolveActivity(App.context.packageManager) != null)
             return intent
         // vimu player
-        if (pkg == "net.gtvbox.videoplayer") {
+        if (player == "net.gtvbox.videoplayer") {
             val vimuIntent = Vimu.getIntent(torrent, index)
             if (vimuIntent.resolveActivity(App.context.packageManager) != null)
                 return vimuIntent
         }
         // user defined player
-        if (pkg.isNotEmpty()) {
-            intent.`package` = pkg
+        if (player.isNotEmpty()) {
+            intent.`package` = player
             if (intent.resolveActivity(App.context.packageManager) != null)
                 return intent
             intent.`package` = null
         }
         // always ask / wrong package set
-        val cIntent = Intent.createChooser(intent, "")
-        return cIntent
+        return Intent.createChooser(intent, "")
     }
 
     fun getList(): List<Pair<String, String>> {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.fromFile(File("/sdcard/Download/file.mp4")), "video/*")
+        intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path,"file.mp4")), "video/*")
         var apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         val list = mutableListOf<Pair<String, String>>()
         list.add("" to App.context.getString(R.string.choose_player))
@@ -59,7 +59,7 @@ object Players {
             list.add(a.activityInfo.packageName to name)
         }
 
-        intent.setDataAndType(Uri.fromFile(File("/sdcard/Download/file.mp3")), "audio/*")
+        intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path,"file.mp3")), "audio/*")
         apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         for (a in apps) {
             val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName

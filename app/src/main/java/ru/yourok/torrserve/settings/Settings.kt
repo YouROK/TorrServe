@@ -2,6 +2,7 @@ package ru.yourok.torrserve.settings
 
 import android.net.Uri
 import androidx.preference.PreferenceManager
+import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import java.io.File
 
@@ -23,8 +24,8 @@ object Settings {
     fun getLastViewDonate() = get("last_view_donate", 0L)
     fun setLastViewDonate(v: Long) = set("last_view_donate", v)
 
-    fun getPlayer(): String = get("player", "")
-    fun setPlayer(v: String) = set("player", v)
+    fun getPlayer(): String = get(App.context.getString(R.string.player_pref_key), "")
+    fun setPlayer(v: String) = set(App.context.getString(R.string.player_pref_key), v)
 
     fun getChooserAction(): Int = get("chooser_action", 0)
     fun setChooserAction(v: Int) = set("chooser_action", v)

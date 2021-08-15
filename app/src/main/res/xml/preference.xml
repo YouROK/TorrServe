@@ -43,7 +43,7 @@
         android:defaultValue="false" />
 
     <ListPreference
-        app:key="choose_player"
+        app:key="@string/player_pref_key"
         app:title="@string/choose_player_title" />
 
     <SwitchPreferenceCompat
