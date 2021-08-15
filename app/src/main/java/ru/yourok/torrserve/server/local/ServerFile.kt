@@ -37,9 +37,9 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         synchronized(lock) {
             Shell.Config.verboseLogging(BuildConfig.DEBUG)
             if (Shell.rootAccess())
-                Shell.su("killall -9 torrserver 1>>$logfile 2>&1 &").exec()
+                Shell.su("killall -9 torrserver 1>>$logfile 2>/dev/null &").exec()
             else
-                Shell.sh("killall -9 torrserver 1>>$logfile 2>&1 &").exec()
+                Shell.sh("killall -9 torrserver 1>>$logfile 2>/dev/null &").exec()
             shell = null
         }
     }
