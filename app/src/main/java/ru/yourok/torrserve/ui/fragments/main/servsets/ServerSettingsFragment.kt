@@ -197,8 +197,6 @@ class ServerSettingsFragment : TSFragment() {
                     RetrackersMode = findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
                     TorrentDisconnectTimeout = findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
                     EnableDebug = findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked ?: false,
-                    AcceptPeerCon = btsets?.AcceptPeerCon ?: true,
-                    AnnTorrentsToDht = btsets?.AnnTorrentsToDht ?: true,
                     EnableIPv6 = findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked ?: false,
                     DisableTCP = findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked != true,
                     DisableUTP = findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked != true,
