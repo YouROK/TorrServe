@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/ivAd"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="100dp"
         android:layout_gravity="top|center"
         android:adjustViewBounds="true"
@@ -24,6 +24,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="?attr/colorOnBackground"
