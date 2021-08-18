@@ -34,7 +34,7 @@ class ChooserFragment : TSFragment() {
                 detach(this@ChooserFragment)
             }
         }
-        show(activity, R.id.bottom_container)
+        show(activity, R.id.info_container)
     }
 
     override fun onCreateView(
