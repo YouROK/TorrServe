@@ -94,22 +94,23 @@ class Notification : Service() {
 }
 
 class NotificationHelper {
-    private var mBoundService: Notification? = null
+    private var mService: Notification? = null
+    private var isBound: Boolean = false
 
     private val mConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            mBoundService = (service as Notification.LocalBinder).service
+            mService = (service as Notification.LocalBinder).service
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            mBoundService = null
+            mService = null
         }
 
     }
 
     fun doBindService(context: Context) {
-        if (!isBound()) {
-            context.bindService(
+        if (mService == null) {
+            isBound = context.bindService(
                 Intent(context, Notification::class.java),
                 mConnection,
                 Context.BIND_AUTO_CREATE
@@ -118,11 +119,9 @@ class NotificationHelper {
     }
 
     fun doUnbindService(context: Context) {
-        if (isBound()) {
+        if (isBound) {
             context.unbindService(mConnection)
         }
+        isBound = false
     }
-
-    private fun isBound(): Boolean = (mBoundService != null)
-
 }
