@@ -88,7 +88,7 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<TextView>(R.id.lbPreloadBuffer)?.visibility = View.GONE
                 }
             }
-            if ( // MatriX.105 add DLNA / disable
+            if ( // MatriX.105 add DLNA / disable DhtConnectionLimit
                 ver.contains("MatriX", true) &&
                 verMajor > 104
             ) {
