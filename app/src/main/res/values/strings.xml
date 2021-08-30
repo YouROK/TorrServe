@@ -43,6 +43,7 @@
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">(enable only if supported</string>
     <string name="enable_debug">Debug server logging</string>
+    <string name="enable_dlna">DLNA Media Server</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
     <string name="disable_tcp_desc">(don\'t disable without μTP enabled)</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>

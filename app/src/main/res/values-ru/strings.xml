@@ -32,6 +32,7 @@
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">(включите только если поддерживается)</string>
     <string name="enable_debug">Подробный лог сервера</string>
+    <string name="enable_dlna">DLNA-медиасервер</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
     <string name="disable_tcp_desc">(не отключайте без включенного μTP)</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>

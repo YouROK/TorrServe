@@ -15,6 +15,8 @@ data class BTSets(
     var RetrackersMode: Int,
     var TorrentDisconnectTimeout: Int,
     var EnableDebug: Boolean,
+    // DLNA
+    var EnableDLNA: Boolean,
     // BT Config
     var EnableIPv6: Boolean,
     var DisableTCP: Boolean,

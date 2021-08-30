@@ -88,6 +88,15 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<TextView>(R.id.lbPreloadBuffer)?.visibility = View.GONE
                 }
             }
+            if ( // MatriX.105 add DLNA / disable
+                ver.contains("MatriX", true) &&
+                verMajor > 104
+            ) {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<EditText>(R.id.etConnectionsDhtLimit)?.visibility = View.GONE
+                    vi.findViewById<CheckBox>(R.id.cbEnableDLNA)?.visibility = View.VISIBLE
+                }
+            }
         }
 
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
@@ -160,6 +169,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
                     findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
                     findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked = sets.EnableDebug
+                    findViewById<CheckBox>(R.id.cbEnableDLNA)?.isChecked = sets.EnableDLNA
                     findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked = sets.EnableIPv6
                     findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked = !sets.DisableTCP
                     findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked = !sets.DisableUTP
@@ -197,6 +207,7 @@ class ServerSettingsFragment : TSFragment() {
                     RetrackersMode = findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
                     TorrentDisconnectTimeout = findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
                     EnableDebug = findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked ?: false,
+                    EnableDLNA = findViewById<CheckBox>(R.id.cbEnableDLNA)?.isChecked ?: false,
                     EnableIPv6 = findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked ?: false,
                     DisableTCP = findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked != true,
                     DisableUTP = findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked != true,
