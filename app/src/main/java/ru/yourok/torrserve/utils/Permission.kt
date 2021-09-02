@@ -3,12 +3,8 @@ package ru.yourok.torrserve.utils
 import android.Manifest
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
-import android.os.PowerManager
-import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import ru.yourok.torrserve.R
@@ -28,7 +24,7 @@ object Permission {
                 ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
             }
         }
-        thread {
+        /*thread {
             // Disable power save
             try {
                 val intent = Intent()
@@ -43,9 +39,10 @@ object Permission {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
+        }*/
     }
-    fun isPermissionGranted(context: Context, permission: String) : Boolean {
+
+    fun isPermissionGranted(context: Context, permission: String): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
         }
