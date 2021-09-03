@@ -296,6 +296,7 @@
                 android:text="@string/disable_dht_desc" />
 
             <TextView
+                android:id="@+id/tvConnectionsDhtLimit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
