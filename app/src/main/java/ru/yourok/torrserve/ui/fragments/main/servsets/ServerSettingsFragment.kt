@@ -93,7 +93,7 @@ class ServerSettingsFragment : TSFragment() {
                 verMajor > 104
             ) {
                 withContext(Dispatchers.Main) {
-                    vi.findViewById<EditText>(R.id.tvConnectionsDhtLimit)?.visibility = View.GONE
+                    vi.findViewById<TextView>(R.id.tvConnectionsDhtLimit)?.visibility = View.GONE
                     vi.findViewById<EditText>(R.id.etConnectionsDhtLimit)?.visibility = View.GONE
                     vi.findViewById<CheckBox>(R.id.cbEnableDLNA)?.visibility = View.VISIBLE
                 }
