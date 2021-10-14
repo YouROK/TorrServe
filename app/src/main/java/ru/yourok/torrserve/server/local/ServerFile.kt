@@ -17,7 +17,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         if (!exists())
             return
         synchronized(lock) {
-            Shell.Config.verboseLogging(BuildConfig.DEBUG)
+            Shell.enableVerboseLogging = BuildConfig.DEBUG
             if (shell == null) {
                 shell = if (Settings.isRootStart() && Shell.rootAccess())
                     Shell.su("$path -k -d $setspath -l $logfile 1>>$logfile 2>&1 &")
@@ -35,7 +35,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         if (!exists())
             return
         synchronized(lock) {
-            Shell.Config.verboseLogging(BuildConfig.DEBUG)
+            Shell.enableVerboseLogging = BuildConfig.DEBUG
             if (Shell.rootAccess())
                 Shell.su("killall -9 torrserver 1>>$logfile 2>/dev/null &").exec()
             else
