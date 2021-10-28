@@ -27,7 +27,15 @@ class TorrentFilesAdapter : BaseAdapter() {
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val vi = view ?: LayoutInflater.from(parent?.context).inflate(R.layout.torrent_files_item, parent, false)
         val file = files[position]
-        val title = File(file.path).name
+        var title = ""
+//        val path = File(file.path).parent.split("/")
+//        path.forEach { it ->
+//            title += "$it/"
+//        }
+        val path = File(file.path).parent
+        if (!path.isNullOrEmpty())
+            title += "$path/\n"
+        title += File(file.path).name
         val size = ByteFmt.byteFmt(file.length)
 
         vi.findViewById<TextView>(R.id.tvFileName)?.text = title
