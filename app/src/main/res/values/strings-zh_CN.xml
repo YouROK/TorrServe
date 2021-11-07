@@ -1,0 +1,236 @@
+<resources>
+<string name="app_name" translatable="false">TorrServe MatriX</string>
+
+    <string name="add">添加种子</string>
+    <string name="delete">删除</string>
+    <string name="remove_all">全部删除</string>
+    <string name="playlist">播放列表</string>
+    <string name="donate">捐赠</string>
+    <string name="update">更新</string>
+    <string name="server">服务端</string>
+    <string name="settings">设置</string>
+    <string name="exit">退出</string>
+
+    <string name="remove_all_viewed">删除所有已查看</string>
+
+    <string name="remove_all_warn">是否要删除所有种子？</string>
+
+    <string name="share">分享</string>
+
+    <string name="open_torrserve">打开 TorrServe</string>
+    <string name="torrents">种子</string>
+
+    <string name="apply">应用</string>
+    <string name="capital_on">开启</string>
+    <string name="capital_off">关闭</string>
+
+    <string name="default_sets">使用默认设置</string>
+    <string name="default_sets_applied">默认设置已应用</string>
+    <string name="cache_size">缓存大小（兆字节）</string>
+    <string name="preload_before_start">启动前预加载缓存</string>
+    <string name="preload_before_start_desc">（如果禁用，将使用 32MB 缓冲区进行预加载）</string>
+    <string name="torrent_preload">预读缓存（5-100%，推荐 95%）</string>
+    <string name="torrent_preload_cache">播放前预加载缓存 (0-100%)</string>
+    <string name="torrent_disconnect_timeout">种子超时（秒）断开连接</string>
+    <string name="save_content_path">缓存路径</string>
+    <string name="save_on_disk">使用磁盘缓存</string>
+    <string name="save_on_disk_desc">（在基于闪存的设备上最好使用 RAM 或外部存储器）</string>
+    <string name="remove_cache_on_drop">删除种子时清理下载缓存</string>
+    <string name="remove_cache_on_drop_desc">（如果禁用，删除 torrent 时缓存被删除）</string>
+    <string name="force_encrypt">强制加密标头</string>
+    <string name="force_encrypt_desc">（可以帮助阻止 torrent 提供商）</string>
+    <string name="enable_ipv6">IPv6</string>
+    <string name="enable_ipv6_desc">（仅在支持时启用</string>
+    <string name="enable_debug">调试服务端日志</string>
+    <string name="enable_dlna">DLNA 媒体服务器</string>
+    <string name="disable_tcp">TCP - Transmission Control Protocol</string>
+    <string name="disable_tcp_desc">(don\'t disable without μTP enabled)</string>
+    <string name="disable_utp">μTP - Micro Transport Protocol</string>
+    <string name="disable_utp_desc">(not recommended to enable on weak devices)</string>
+    <string name="disable_upnp">UPnP - Universal Plug and Play</string>
+    <string name="disable_upnp_desc">(auto open port on router)</string>
+    <string name="disable_dht">DHT - Distributed Hash Table</string>
+    <string name="disable_dht_desc">(disable if there is no network after starting the server)</string>
+    <string name="disable_pex">PEX - Peer Exchange</string>
+    <string name="disable_pex_desc">(better leave enabled)</string>
+    <string name="disable_upload">Upload</string>
+    <string name="disable_upload_desc">(not recommended to disable)</string>
+    <string name="ecnryption">Ecnryption</string>
+    <string name="connections_limit">Torrent connections (20–25 recommended)</string>
+    <string name="connections_dht_limit">Limit of DHT connections (0 - unlimited)</string>
+    <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0 - unlimited)</string>
+    <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0 - unlimited)</string>
+    <string name="retrackers">Retrackers</string>
+    <string name="strategy">Request Strategy</string>
+    <string name="peers_listen_port">Peers listen port (0 - default)</string>
+    <string-array name="retracker_mode">
+        <item>Default</item>
+        <item>Add retrackers</item>
+        <item>Remove retrackers</item>
+        <item>Replace retrackers</item>
+    </string-array>
+    <string-array name="encryption_mode">
+        <item>Enabled</item>
+        <item>Disabled</item>
+        <item>Force</item>
+    </string-array>
+    <string-array name="strategy_mode">
+        <item>DuplicateRequestTimeout</item>
+        <item>Fuzzing</item>
+        <item>Fastest</item>
+    </string-array>
+
+    <string name="default_player">默认播放器</string>
+    <string name="choose_player">总是询问</string>
+    <string name="player_pref_key" translatable="false">播放器</string>
+
+    <string name="app_theme_title">App主题</string>
+    <string-array name="app_theme_entries">
+        <item>自动</item>
+        <item>白亮</item>
+        <item>黑暗</item>
+        <item>黑色</item>
+    </string-array>
+    <string-array name="app_theme_entries_values">
+        <item>自动</item>
+        <item>白亮</item>
+        <item>黑暗</item>
+        <item>黑色</item>
+    </string-array>
+
+    <string name="add_play">添加&amp;播放</string>
+    <string name="play">播放</string>
+
+    <string name="make_as_def">设为默认</string>
+    <string name="reset_def">清除默认值</string>
+
+    <string name="playlist_all">全部播放</string>
+    <string name="playlist_continue">继续</string>
+
+    <string name="torrent">磁力线地址</string>
+    <string name="title">名称</string>
+    <string name="poster">海报</string>
+    <string name="poster_link">海报链接</string>
+
+    <string name="local_ip">本地IP</string>
+    <string name="connected_host">已连接到</string>
+    <string name="find">查找</string>
+    <string name="find_hosts">查找主机</string>
+    <string name="local_server">本地服务端</string>
+    <string name="saved_server">已保存的服务端</string>
+    <string name="on_device">在设备上</string>
+
+    <string name="buffering">缓冲中</string>
+    <string name="buffer">缓冲</string>
+    <string name="peers">用户</string>
+    <string name="size">大小</string>
+    <string name="download_speed">下载速度</string>
+    <string name="upload_speed">上传速度</string>
+
+    <string name="loading">正在加载</string>
+    <string name="found_new_app_update">找到应用更新</string>
+    <string name="not_found_new_app_update">未找到应用更新</string>
+    <string name="current_version">当前版本</string>
+    <string name="new_version">新版本</string>
+
+    <string name="server_update">服务端更新</string>
+    <string name="install_server_latest">安装/更新服务端</string>
+    <string name="install_server_local">从下载文件夹安装服务端</string>
+    <string name="delete_local_server">删除本地服务端</string>
+    <string name="arch">架构</string>
+    <string name="update_server">更新服务端</string>
+    <string name="warn_error_download_server">服务端下载错误</string>
+    <string name="warn_no_localy_updates">无本地更新</string>
+    <string name="need_install_server">需要安装服务端</string>
+    <string name="need_update_server">服务端需要更新</string>
+    <string name="not_support_old_server">不支持服务端版本 1.1.x。更新服务端或使用客户端 1.1.x。</string>
+
+    <string name="copy_to_clipboard">复制到剪贴板</string>
+    <string name="stat_running">服务正在运行</string>
+    <string name="server_started">TorrServer 已启动</string>
+    <string name="server_stoped">TorrServer 停止</string>
+    <string name="server_not_responding">TorrServer 没有响应</string>
+    <string name="server_not_exists">无 TorrServer</string>
+    <string name="error_retrieving_settings">获取设置时出错</string>
+    <string name="error_sending_settings">发送设置时出错</string>
+    <string name="error_app_not_found">​​没有找到合适的应用程序</string>
+    <string name="done_sending_settings">已保存设置</string>
+
+    <string name="loading_torrent">检索种子信息...</string>
+    <string name="error_retrieve_data">检索数据时时出错</string>
+    <string name="error_retrieve_torrent_info">检索种子信息时出错</string>
+    <string name="error_retrieve_torrent_file">检索种子文件时出错</string>
+
+    <string name="permission_storage_msg">需要访问内存权限才能将设置写入文件</string>
+    <string name="permission_btn">GRANT</string>
+
+    <string name="permission_deny">权限被拒绝</string>
+
+    <string name="donation">捐赠</string>
+    <string name="link">链接</string>
+    <string name="donation_msg">捐赠支持项目</string>
+    <string name="yandex_money_msg">Yandex.Money卡</string>
+    <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
+    <string name="paypal_msg">在 PayPal 中捐款的电子邮件</string>
+    <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
+    <string name="telegram_msg">电报频道</string>
+
+    <!--    Settings    -->
+    <string name="app_settings">应用设置</string>
+    <string name="app_version">App版本</string>
+
+    <string name="host_title">设置 TorrServer url 地址</string>
+
+    <string name="host_authorization">服务端授权</string>
+    <string name="host_authorization_desc">通过“:”你能别填写用户名和密码（user:pass）</string>
+
+    <string name="torserver_title">TorrServer 设置</string>
+    <string name="torserver_summary">修改 TorrServer 设置</string>
+
+    <string name="remove_action_title">清除默认动作</string>
+    <string name="remove_action_summary">重置打开种子的默认操作</string>
+
+    <string name="boot_start_title">启动时运行服务端</string>
+    <string name="boot_start_sum_on">启动时服务端自动运行</string>
+    <string name="boot_start_sum_off">启动时不运行服务端</string>
+
+    <string name="root_start_title">使用root启动服务端</string>
+    <string name="root_start_sum_on">使用root启动服务端</string>
+    <string name="root_start_sum_off">不使用root启动服务端</string>
+
+    <string name="choose_player_title">选择播放器</string>
+
+    <string name="show_banner_title">显示横幅</string>
+    <string name="show_banner_sum_on">加载种子时显示横幅</string>
+    <string name="show_banner_sum_off">加载种子时不显示横幅</string>
+
+    <string name="show_cover_title">展示海报</string>
+    <string name="show_cover_sum_on">显示种子海报</string>
+    <string name="show_cover_sum_off">不显示种子海报</string>
+
+    <string name="show_battery_save_tv">在应用程序中禁用节省电池/特殊应用程序访问/能量优化</string>
+    <string name="show_battery_save_title">显示省电设置</string>
+    <string name="show_battery_save_summary">在设置中打开省电配置</string>
+
+    <string name="accessibility_manual_on">在设备首选项/辅助功能部分启用服务</string>
+    <string name="accessibility_manual_off">在设备首选项/辅助功能部分禁用服务</string>
+    <string name="accessibility_service_description">启用该服务可以防止本地 TorrServer 被操作系统关闭</string>
+    <string name="switch_accessibility_title">无障碍服务</string>
+    <string name="switch_accessibility_summary_on">按下可禁用 TorrServe 服务</string>
+
+    <string name="stat_string_ added">Torrent 添加</string>
+    <string name="stat_string_info">获取种子信息</string>
+    <string name="stat_string_preload">预加载种子</string>
+    <string name="stat_string_working">种子工作中</string>
+    <string name="stat_string_closed">种子已关闭</string>
+    <string name="stat_string_in_db">数据库中的种子</string>
+
+    <string name="fmt_p">KMGTPE</string>
+    <string name="fmt_b">B</string>
+    <string name="fmt_bps">bps</string>
+
+    <string name="no_torrents">没有种子</string>
+    <string name="not_used">未使用</string>
+    <string name="not_installed">未安装</string>
+
+</resources>
