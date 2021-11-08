@@ -7,5 +7,6 @@ Download torrent files.
 Application for downloading torrents as `HTTP` files.
 Torrent connection is done localy. **If your provider blocks torrents be aware**.
 Cache is stored in `RAM`, that is why internal memory does not corrupting.
-Application consists of two parts, server and client. 
-After first load you have to download client from `Updates -> Update server from network`.
+Application consists of two parts, server and client, this is client for android. 
+Source of server: https://github.com/YouROK/TorrServer
+After first load you have to download server from `Updates -> Update server from network`.
