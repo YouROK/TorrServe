@@ -218,7 +218,7 @@
     <string name="switch_accessibility_title">无障碍服务</string>
     <string name="switch_accessibility_summary_on">按下可禁用 TorrServe 服务</string>
 
-    <string name="stat_string_ added">种子已添加</string>
+    <string name="stat_string_added">种子已添加</string>
     <string name="stat_string_info">获取种子信息</string>
     <string name="stat_string_preload">预加载种子</string>
     <string name="stat_string_working">种子工作中</string>
