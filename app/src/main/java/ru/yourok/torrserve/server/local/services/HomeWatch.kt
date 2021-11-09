@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.tvprovider.media.tv.TvContractCompat
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ import ru.yourok.torrserve.server.api.Api
 
 @TargetApi(Build.VERSION_CODES.O)
 class HomeWatch : BroadcastReceiver() {
+    @DelicateCoroutinesApi
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         if (action == null || !Utils.isGoogleTV()) return
