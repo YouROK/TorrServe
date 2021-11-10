@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import ru.yourok.torrserve.BuildConfig
-import ru.yourok.torrserve.ad.ADManager
+//import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.api.Api
@@ -20,12 +20,12 @@ class TorrService : Service() {
     private val serverFile = ServerFile()
 
     override fun onBind(p0: Intent?): IBinder? = null
-    override fun onCreate() {
-        super.onCreate()
-        thread {
-            ADManager.get()
-        }
-    }
+//    override fun onCreate() {
+//        super.onCreate()
+//        thread {
+//            ADManager.get()
+//        }
+//    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.let {

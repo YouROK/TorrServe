@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
-import com.google.firebase.analytics.FirebaseAnalytics
+//import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.*
 import ru.yourok.torrserve.ad.model.Image
 import ru.yourok.torrserve.app.Consts
@@ -28,13 +28,13 @@ class AD(private val iv: ImageView, private val activity: AppCompatActivity) {
                         }
 
                         if (!Settings.showBanner()) {
-                            FirebaseAnalytics.getInstance(activity).logEvent("view_ad_disable", null)
+//                            FirebaseAnalytics.getInstance(activity).logEvent("view_ad_disable", null)
                             return@launch
                         }
 
                         if (js.images.isNotEmpty()) {
                             loadImages(js.images)
-                            FirebaseAnalytics.getInstance(activity).logEvent("view_ad", null)
+//                            FirebaseAnalytics.getInstance(activity).logEvent("view_ad", null)
                             Thread.sleep(5000)
                         }
                     } catch (e: Exception) {

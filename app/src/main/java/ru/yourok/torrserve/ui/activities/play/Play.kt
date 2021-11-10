@@ -98,7 +98,7 @@ object Play {
                 }
             }
         }
-        ad?.waitAd()
+//        ad?.waitAd()
         var intent: Intent? = null
         try {
             intent = Players.getIntent(torr, index)
