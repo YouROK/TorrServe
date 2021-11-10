@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.ad.ADManager
+//import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.ext.commitFragment
@@ -71,11 +71,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preference, rootKey)
         val ps = findPreference<PreferenceScreen>("prefs")
 
-        val bannerPref = findPreference<SwitchPreferenceCompat>("show_banner")
-        lifecycleScope.launch(Dispatchers.IO) {
-            if (ADManager.expired())
-                ps?.removePreference(bannerPref)
-        }
+//        val bannerPref = findPreference<SwitchPreferenceCompat>("show_banner")
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            if (ADManager.expired())
+//                ps?.removePreference(bannerPref)
+//        }
 
         findPreference<Preference>("host")?.apply {
             setOnPreferenceClickListener {

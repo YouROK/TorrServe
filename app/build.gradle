@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'com.google.firebase.crashlytics'
+//    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -71,8 +71,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     // firebase: firebase-core:19.0.2 is last api17 compatible
-    implementation 'com.google.firebase:firebase-core:19.0.2'
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.4'
+//    implementation 'com.google.firebase:firebase-core:19.0.2'
+//    implementation 'com.google.firebase:firebase-crashlytics:18.2.4'
 
     // multidex
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -86,5 +86,5 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
+//apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.firebase.crashlytics'

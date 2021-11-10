@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.google.firebase.analytics.FirebaseAnalytics
+//import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.*
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.ad.AD
+//import ru.yourok.torrserve.ad.AD
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
@@ -34,10 +34,10 @@ class PlayActivity : AppCompatActivity() {
 
     private var userClose = false
 
-    var ad: AD? = null
+//    var ad: AD? = null
     val infoFragment = InfoFragment()
 
-    private var firebaseAnalytics: FirebaseAnalytics? = null
+//    private var firebaseAnalytics: FirebaseAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class PlayActivity : AppCompatActivity() {
 
         lifecycleScope.launch { showProgress() }
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+//        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         if (intent == null) {
             error(ErrIntentNull)
@@ -118,8 +118,8 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun processIntent() {
-        ad = AD(findViewById(R.id.ivAd), this)
-        ad?.get()
+//        ad = AD(findViewById(R.id.ivAd), this)
+//        ad?.get()
 
         //// Play torrent
         if (intent.hasExtra("action") && intent.getStringExtra("action") == "play")
