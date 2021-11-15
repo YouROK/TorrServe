@@ -209,7 +209,7 @@
     <string name="show_cover_sum_on">Show torrent poster</string>
     <string name="show_cover_sum_off">Don\'t show torrent poster</string>
 
-    <string name="show_battery_save_tv">Disable battery save in Apps / Special app access / Enargy optimizaion</string>
+    <string name="show_battery_save_tv">Disable battery save in Apps / Special app access / Energy optimization</string>
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
