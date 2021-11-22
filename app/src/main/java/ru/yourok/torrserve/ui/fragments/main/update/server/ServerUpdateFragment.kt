@@ -69,7 +69,7 @@ class ServerUpdateFragment : TSFragment() {
                 updateUI()
                 hideProgress()
             }
-            clickOnMenu()
+//            clickOnMenu()
         }
 
         return vi

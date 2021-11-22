@@ -138,7 +138,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@string/install_server_local"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/btnDeleteServer"
