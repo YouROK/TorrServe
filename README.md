@@ -11,3 +11,11 @@ Application consists of two parts, server and client, this is client for android
 Source of server: https://github.com/YouROK/TorrServer
 
 After first load you have to download server from `Updates -> Update server from network`.
+
+## License
+[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
+
+This application is Free Software: You can use, study share and improve it at your
+will. Specifically you can redistribute and/or modify it under the terms of the
+[GNU General Public License v3](https://www.gnu.org/licenses/gpl.html) as
+published by the Free Software Foundation.
