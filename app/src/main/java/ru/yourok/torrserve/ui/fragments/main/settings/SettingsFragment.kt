@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
+//import androidx.lifecycle.lifecycleScope
 import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
 import com.topjohnwu.superuser.Shell
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import ru.yourok.torrserve.BuildConfig
+//import kotlinx.coroutines.Dispatchers
+//import kotlinx.coroutines.launch
+//import kotlinx.coroutines.withContext
+//import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 //import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
@@ -24,8 +24,8 @@ import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.players.Players
 import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
-import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
-import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
+//import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
+//import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.utils.AccessibilityUtils
 
 
@@ -155,23 +155,23 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-        findPreference<Preference>("version")?.apply {
-            this.summary = BuildConfig.VERSION_NAME
-            setOnPreferenceClickListener {
-                lifecycleScope.launch(Dispatchers.IO) {
-                    if (UpdaterApk.check())
-                        withContext(Dispatchers.Main) {
-                            ApkUpdateFragment().show(requireActivity(), R.id.container, true)
-                        }
-                    else {
-                        withContext(Dispatchers.Main) {
-                            App.Toast(R.string.not_found_new_app_update, true)
-                        }
-                    }
-                }
-                true
-            }
-        }
+//        findPreference<Preference>("version")?.apply {
+//            this.summary = BuildConfig.VERSION_NAME
+//            setOnPreferenceClickListener {
+//                lifecycleScope.launch(Dispatchers.IO) {
+//                    if (UpdaterApk.check())
+//                        withContext(Dispatchers.Main) {
+//                            ApkUpdateFragment().show(requireActivity(), R.id.container, true)
+//                        }
+//                    else {
+//                        withContext(Dispatchers.Main) {
+//                            App.Toast(R.string.not_found_new_app_update, true)
+//                        }
+//                    }
+//                }
+//                true
+//            }
+//        }
 
     }
 
