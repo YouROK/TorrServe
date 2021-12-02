@@ -4,4 +4,4 @@ Application for downloading torrents as HTTP files.
 Torrent connection is done localy. <b>If your provider blocks torrents be aware</b>.
 Cache is stored in RAM, that is why internal memory does not corrupting.
 Application consists of two parts, server and client. 
-After first load you have to download client from Updates → Update server from network.
+After first load you have to download server: Side Menu → Updates → Update server from network.
