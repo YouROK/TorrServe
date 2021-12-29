@@ -30,8 +30,8 @@
     <string name="cache_size">Cache size (Megabytes)</string>
     <string name="preload_before_start">Preload cache before start</string>
     <string name="preload_before_start_desc">(if disabled, 32MB buffer will be used for preload)</string>
-    <string name="torrent_preload">Readahead Cache (5-100%, rec. 95%)</string>
-    <string name="torrent_preload_cache">Preload Cache Before Play (0-100%)</string>
+    <string name="torrent_preload" formatted="false">Readahead Cache (5–100%, rec. 95%)</string>
+    <string name="torrent_preload_cache" formatted="false">Preload Cache Before Play (0–100%)</string>
     <string name="torrent_disconnect_timeout">Torrent disconnect timeout (seconds)</string>
     <string name="save_content_path">Path to store cache</string>
     <string name="save_on_disk">Use cache on disk</string>

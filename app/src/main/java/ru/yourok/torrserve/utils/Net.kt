@@ -133,7 +133,7 @@ object Net {
     }
 
     // https://stackoverflow.com/questions/26649389/how-to-disable-sslv3-in-android-for-httpsurlconnection
-    private fun insecureTlsSocketFactory(): SSLSocketFactory {
+    fun insecureTlsSocketFactory(): SSLSocketFactory {
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
             @SuppressLint("TrustAllX509TrustManager")
             @Throws(CertificateException::class)

@@ -18,9 +18,9 @@ import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.atv.channels.ChannelProvider
 import ru.yourok.torrserve.server.api.Api
 
+@DelicateCoroutinesApi
 @TargetApi(Build.VERSION_CODES.O)
 class HomeWatch : BroadcastReceiver() {
-    @DelicateCoroutinesApi
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         if (action == null || !Utils.isGoogleTV()) return
