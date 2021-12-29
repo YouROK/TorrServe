@@ -29,8 +29,8 @@
     <string name="cache_size">缓存大小（兆字节）</string>
     <string name="preload_before_start">启动前预加载缓存</string>
     <string name="preload_before_start_desc">（如果禁用，将使用 32MB 缓冲区进行预加载）</string>
-    <string name="torrent_preload">预读缓存（5-100%，推荐 95%）</string>
-    <string name="torrent_preload_cache">播放前预加载缓存 (0-100%)</string>
+    <string name="torrent_preload">预读缓存（5–100%，推荐 95%）</string>
+    <string name="torrent_preload_cache">播放前预加载缓存 (0–100%)</string>
     <string name="torrent_disconnect_timeout">种子超时（秒）断开连接</string>
     <string name="save_content_path">缓存路径</string>
     <string name="save_on_disk">使用磁盘缓存</string>

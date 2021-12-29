@@ -23,10 +23,10 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
                     Shell.su("$path -k -d $setspath -l $logfile 1>>$logfile 2>&1 &")
                 else
                     Shell.sh("$path -k -d $setspath -l $logfile 1>>$logfile 2>&1 &")
-
-                shell?.add("export GODEBUG=madvdontneed=1")
-                if (shell?.exec()!!.isSuccess)
-                    App.Toast(App.context.getString(R.string.server_started))
+                shell?.run {
+                    add("export GODEBUG=madvdontneed=1")
+                    exec()
+                }
             }
         }
     }

@@ -284,7 +284,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nextFocusUp="@id/etConnectionsLimit"
-                android:nextFocusDown="@id/etConnectionsDhtLimit"
+                android:nextFocusDown="@id/etDownloadRateLimit"
                 android:text="@string/disable_dht" />
 
             <TextView
