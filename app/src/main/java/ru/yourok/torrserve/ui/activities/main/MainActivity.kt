@@ -27,8 +27,8 @@ import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.settings.SettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
-import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
-import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
+//import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
+//import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
 import ru.yourok.torrserve.utils.Net
@@ -123,12 +123,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkUpdate() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            if (UpdaterApk.check())
-                withContext(Dispatchers.Main) {
-                    App.Toast(R.string.found_new_app_update, true)
-                }
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            if (UpdaterApk.check())
+//                withContext(Dispatchers.Main) {
+//                    App.Toast(R.string.found_new_app_update, true)
+//                }
+//        }
         lifecycleScope.launch(Dispatchers.IO) {
             UpdaterServer.check()
         }
@@ -207,14 +207,17 @@ class MainActivity : AppCompatActivity() {
         findViewById<FrameLayout>(R.id.btnUpdate).setOnClickListener {
 
             lifecycleScope.launch(Dispatchers.IO) {
-                if (UpdaterApk.check())
-                    withContext(Dispatchers.Main) {
-                        ApkUpdateFragment().show(this@MainActivity, R.id.container, true)
-                    }
-                else
-                    withContext(Dispatchers.Main) {
-                        ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
-                    }
+//                if (UpdaterApk.check())
+//                    withContext(Dispatchers.Main) {
+//                        ApkUpdateFragment().show(this@MainActivity, R.id.container, true)
+//                    }
+//                else
+//                    withContext(Dispatchers.Main) {
+//                        ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
+//                    }
+                withContext(Dispatchers.Main) {
+                    ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
+                }
             }
             closeMenu()
         }
