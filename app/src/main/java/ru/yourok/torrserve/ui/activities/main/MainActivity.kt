@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.activities.main
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -110,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.tvStatus)?.text = it
         }
     }
-
+    
     private fun closeMenu() {
         findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
     }
@@ -120,6 +121,17 @@ class MainActivity : AppCompatActivity() {
             closeMenu()
         else
             super.onBackPressed()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        val menu = findViewById<DrawerLayout>(R.id.drawerLayout)
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            if (menu?.isDrawerOpen(GravityCompat.START) == true)
+                closeMenu()
+            else
+                menu?.openDrawer(GravityCompat.START)
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     private fun checkUpdate() {
