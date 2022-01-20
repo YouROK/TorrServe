@@ -111,10 +111,10 @@ class ServerFinderViewModel : ViewModel() {
         val ret = mutableListOf<InterfaceAddress>()
         while (interfaces.hasMoreElements()) {
             val networkInterface: NetworkInterface = interfaces.nextElement()
-            if (networkInterface.isLoopback())
+            if (networkInterface.isLoopback)
                 continue
-            for (interfaceAddress in networkInterface.getInterfaceAddresses()) {
-                val ip = interfaceAddress.getAddress()
+            for (interfaceAddress in networkInterface.interfaceAddresses) {
+                val ip = interfaceAddress.address
                 if (ip is Inet4Address) {
                     ret.add(interfaceAddress)
                 }

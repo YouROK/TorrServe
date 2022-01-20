@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.app
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -16,6 +17,7 @@ class App : MultiDexApplication(), LifecycleObserver {
 
     companion object {
 
+        @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
         var inForeground: Boolean = false
         private lateinit var wakeLock: PowerManager.WakeLock
