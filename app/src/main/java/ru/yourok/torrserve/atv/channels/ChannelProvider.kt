@@ -5,7 +5,6 @@ import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.tv.TvContract
 import android.net.Uri
 import androidx.tvprovider.media.tv.Channel
 import androidx.tvprovider.media.tv.ChannelLogoUtils
@@ -85,6 +84,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
 
     }
 
+    @SuppressLint("RestrictedApi")
     private val PROGRAMS_PROJECTION = arrayOf(
         TvContractCompat.PreviewPrograms._ID,
         TvContractCompat.PreviewPrograms.COLUMN_SHORT_DESCRIPTION
@@ -103,7 +103,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             if (it.moveToFirst())
                 do {
                     val program = PreviewProgram.fromCursor(it)
-                    if (id.equals(program.id)) {
+                    if (id == program.id) {
                         cursor.close()
                         return program.description
                     }
@@ -113,6 +113,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
         return ""
     }
 
+    @SuppressLint("RestrictedApi")
     private fun emptyProgram(channelId: Long): PreviewProgram {
         val vintent = Intent(App.context, MainActivity::class.java)
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -139,10 +140,11 @@ class ChannelProvider(private val iName: String, private val dName: String) {
         return preview.build()
     }
 
+    @SuppressLint("RestrictedApi")
     private fun getProgram(channelId: Long, torr: Torrent, size: Int): PreviewProgram {
         val info = mutableListOf<String>()
         var posterUri = Uri.parse(torr.poster)
-        if (posterUri.toString().isNullOrEmpty()) {
+        if (posterUri.toString().isEmpty()) {
             val resourceId = R.drawable.emptyposter
             posterUri = Uri.Builder()
                 .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
