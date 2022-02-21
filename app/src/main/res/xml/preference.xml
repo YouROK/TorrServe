@@ -42,6 +42,14 @@
         android:summaryOff="@string/root_start_sum_off"
         android:defaultValue="false" />
 
+
+    <SwitchPreferenceCompat
+        app:key="client_download"
+        app:title="@string/client_download_title"
+        android:summaryOn="@string/client_download_sum_on"
+        android:summaryOff="@string/client_download_sum_off"
+        android:defaultValue="false" />
+
     <ListPreference
         app:key="@string/player_pref_key"
         app:title="@string/choose_player_title" />

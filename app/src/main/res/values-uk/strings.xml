@@ -190,4 +190,7 @@
     <string name="not_installed">Не встановленно</string>
     <string name="default_sets_applied">Налаштування за замовчуванням застосовуються</string>
     <string name="permission_deny">Дозвіл відмовлено</string>
+    <string name="client_download_title">Завантажувати дані про .torrent на клієнті</string>
+    <string name="client_download_sum_on">Дані про .torrent будуть завантажені на клієнті</string>
+    <string name="client_download_sum_off">Дані про .torrent будуть завантажені сервером</string>
 </resources>

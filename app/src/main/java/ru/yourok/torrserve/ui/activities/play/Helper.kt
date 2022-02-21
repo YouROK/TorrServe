@@ -11,6 +11,11 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.settings.Settings
+import java.io.BufferedInputStream
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 fun PlayActivity.readArgs() {
@@ -75,6 +80,15 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
         if (ContentResolver.SCHEME_CONTENT == scheme || ContentResolver.SCHEME_FILE == scheme) {
             val fis = App.context.contentResolver.openInputStream(Uri.parse(torrentLink))
             fis?.let { Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave) }
+        } else if (Settings.isClientDownload()) {
+            val url = URL(torrentLink)
+            val urlConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            try {
+                val fis: InputStream = BufferedInputStream(urlConnection.getInputStream())
+                Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave)
+            } finally {
+                urlConnection.disconnect()
+            }
         } else
             Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
     } else

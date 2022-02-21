@@ -199,6 +199,11 @@
     <string name="root_start_sum_on">Start server by root enabled</string>
     <string name="root_start_sum_off">Start server by root disabled</string>
 
+
+    <string name="client_download_title">Download .torrent data at client</string>
+    <string name="client_download_sum_on">Download .torrent data enabled</string>
+    <string name="client_download_sum_off">Download .torrent data disabled</string>
+
     <string name="choose_player_title">Choose player</string>
 
     <string name="show_banner_title">Show banner</string>

@@ -232,5 +232,8 @@
     <string name="no_torrents">没有种子</string>
     <string name="not_used">未使用</string>
     <string name="not_installed">未安装</string>
+    <string name="client_download_title">在客户端下载 .torrent 数据</string>
+    <string name="client_download_sum_on">下载 .torrent 数据已启用</string>
+    <string name="client_download_sum_off">下载 .torrent 数据已禁用</string>
 
 </resources>
