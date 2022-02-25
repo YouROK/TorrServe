@@ -11,6 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
@@ -67,8 +69,9 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
                 Glide.with(activity)
                     .asBitmap()
                     .load(poster)
-                    .fitCenter()
-                    .placeholder(ColorDrawable(0x3c000000))
+                    .centerCrop()
+                    //.placeholder(ColorDrawable(0x3c000000))
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(5)))
                     .transition(BitmapTransitionOptions.withCrossFade())
                     .into(it)
             }
