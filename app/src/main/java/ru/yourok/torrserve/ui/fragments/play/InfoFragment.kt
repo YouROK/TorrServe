@@ -1,17 +1,28 @@
 package ru.yourok.torrserve.ui.fragments.play
 
+import android.content.Context
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -37,7 +48,7 @@ open class InfoFragment : TSFragment() {
     ): View {
         val vi = inflater.inflate(R.layout.info_fragment, container, false)
         lifecycleScope.launch {
-            (activity as PlayActivity?)?.showProgress()
+            (activity as? PlayActivity)?.showProgress()
             vi.findViewById<TextView>(R.id.tvTitle).setText(R.string.loading_torrent)
         }
         TorrService.start()
@@ -46,7 +57,7 @@ open class InfoFragment : TSFragment() {
 
     suspend fun startInfo(hash: String) = withContext(Dispatchers.Main) {
         try {
-            viewModel = ViewModelProvider(this@InfoFragment).get(InfoViewModel::class.java)
+            viewModel = ViewModelProvider(this@InfoFragment)[InfoViewModel::class.java]
             if (isActive) {
                 val data = (viewModel as InfoViewModel).setTorrent(hash)
                 data.observe(this@InfoFragment) {
@@ -59,6 +70,42 @@ open class InfoFragment : TSFragment() {
     }
 
     private var poster = " "
+
+    // textView.text = "" // Remove old text
+    // textView.append("Red Text", Color.RED)
+    // textView.append("Blue Bold Text", Color.BLUE, true)
+    private fun TextView.append(string: String?, @ColorInt color: Int = 0, bold: Boolean = false) {
+        if (string == null || string.isEmpty()) {
+            return
+        }
+        val spannable: Spannable = SpannableString(string)
+        if (color != 0)
+            spannable.setSpan(
+                ForegroundColorSpan(color),
+                0,
+                spannable.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        if (bold)
+            spannable.setSpan(
+                StyleSpan(Typeface.BOLD),
+                0,
+                spannable.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        append(spannable)
+    }
+
+    @ColorInt
+    fun getColorFromAttr(
+        context: Context,
+        @AttrRes attrColor: Int,
+        typedValue: TypedValue = TypedValue(),
+        resolveRefs: Boolean = true
+    ): Int {
+        context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+        return typedValue.data
+    }
 
     private fun updateUI(info: InfoTorrent, index: Int) {
         lifecycleScope.launch {
@@ -76,8 +123,9 @@ open class InfoFragment : TSFragment() {
                                 Glide.with(this)
                                     .asBitmap()
                                     .load(poster)
-                                    .fitCenter()
-                                    .placeholder(ColorDrawable(0x3c000000))
+                                    .centerCrop()
+                                    //.placeholder(ColorDrawable(0x3c000000))
+                                    .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
                                     .transition(BitmapTransitionOptions.withCrossFade())
                                     .into(it)
                             }
@@ -89,33 +137,41 @@ open class InfoFragment : TSFragment() {
                     if (title.isEmpty())
                         findViewById<TextView>(R.id.tvTitle).visibility = View.GONE
                     else {
+                        (activity as? PlayActivity)?.hideTitle()
                         findViewById<TextView>(R.id.tvTitle).visibility = View.VISIBLE
                         findViewById<TextView>(R.id.tvTitle).text = title
                     }
 
                     val file: FileStat? = if (index >= 0) torr.file_stats?.get(index) else null
-
+                    val color1 = 0 // ColorUtils.setAlphaComponent(getColorFromAttr(this.context, R.attr.colorOnBackground), 200)
+                    val color2 = ColorUtils.setAlphaComponent(getColorFromAttr(this.context, R.attr.colorOnBackground), 220)
+                    val tvFN = findViewById<TextView>(R.id.tvFileName)
+                    val tvFS = findViewById<TextView>(R.id.tvFileSize)
                     file?.let {
                         var name = it.path
                         if (name.isNotEmpty())
                             name = File(name).name
 
-                        findViewById<TextView>(R.id.tvFileName).visibility = View.VISIBLE
-                        findViewById<TextView>(R.id.tvFileSize).visibility = View.VISIBLE
+                        tvFN.visibility = View.VISIBLE
+                        tvFS.visibility = View.VISIBLE
 
-                        findViewById<TextView>(R.id.tvFileName).text = name
+                        tvFN.apply {
+                            text = "" // name
+                            append("$name", color2)
+                        }
 
                         val size = it.length
                         if (size >= 0) {
-                            val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                                Html.fromHtml("<b>${getString(R.string.size)}:</b> ${ByteFmt.byteFmt(size)}", Html.FROM_HTML_MODE_COMPACT)
-                            else
-                                Html.fromHtml("<b>${getString(R.string.size)}:</b> ${ByteFmt.byteFmt(size)}")
-                            findViewById<TextView>(R.id.tvFileSize).text = txt
+                            // spannable
+                            tvFS.apply {
+                                text = "" // txt
+                                append("${getString(R.string.size)} ", color1, true)
+                                append("${ByteFmt.byteFmt(size)}", color2, true)
+                            }
                         }
                     } ?: let {
-                        findViewById<TextView>(R.id.tvFileName).visibility = View.GONE
-                        findViewById<TextView>(R.id.tvFileSize).visibility = View.GONE
+                        tvFN.visibility = View.GONE
+                        tvFS.visibility = View.GONE
                     }
 
                     var buffer = ""
@@ -130,41 +186,43 @@ open class InfoFragment : TSFragment() {
                     }
 
                     if (buffer.isNotEmpty()) {
-                        val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            Html.fromHtml("<b>${getString(R.string.buffer)}:</b> $buffer", Html.FROM_HTML_MODE_COMPACT)
-                        else
-                            Html.fromHtml("<b>${getString(R.string.buffer)}:</b> $buffer")
-                        findViewById<TextView>(R.id.tvBuffer).text = txt
+                        // spannable
+                        findViewById<TextView>(R.id.tvBuffer).apply {
+                            text = "" // txt
+                            append("${getString(R.string.buffer)} ", color1, true)
+                            append("$buffer", color2, true)
+                        }
                     }
 
                     if (torr.stat < TorrentHelper.TorrentSTWorking) {
                         if (prc > 0 && prc < 100)
-                            (activity as PlayActivity?)?.showProgress(prc.toInt())
+                            (activity as? PlayActivity)?.showProgress(prc.toInt())
                         else
-                            (activity as PlayActivity?)?.showProgress(-1)
+                            (activity as? PlayActivity)?.showProgress(-1)
                     } else
-                        (activity as PlayActivity?)?.hideProgress()
+                        (activity as? PlayActivity)?.hideProgress()
 
                     val peers = "${torr.connected_seeders} · ${torr.active_peers}/${torr.total_peers}"
                     if (peers.isNotEmpty()) {
-                        val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            Html.fromHtml("<b>${getString(R.string.peers)}:</b> $peers", Html.FROM_HTML_MODE_COMPACT)
-                        else
-                            Html.fromHtml("<b>${getString(R.string.peers)}:</b> $peers")
-                        findViewById<TextView>(R.id.tvPeers).text = txt
+                        // spannable
+                        findViewById<TextView>(R.id.tvPeers).apply {
+                            text = "" // txt
+                            append("${getString(R.string.peers)} ", color1, true)
+                            append("$peers", color2, true)
+                        }
                     }
 
                     //val speed = ByteFmt.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
                     val speed = ByteFmt.speedFmt(torr.download_speed)
                     if (speed.isNotEmpty() && torr.download_speed > 50.0) {
-                        val txt = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                            Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> $speed", Html.FROM_HTML_MODE_COMPACT)
-                        else
-                            Html.fromHtml("<b>${getString(R.string.download_speed)}:</b> $speed")
-                        findViewById<TextView>(R.id.tvSpeed).text = txt
+                        // spannable
+                        findViewById<TextView>(R.id.tvSpeed).apply {
+                            text = "" // txt
+                            append("${getString(R.string.download_speed)} ", color1, true)
+                            append("$speed", color2, true)
+                        }
                     }
 
-                    //view?.findViewById<TextView>(R.id.tvInfo)?.text = torr.stat_string
                     view?.findViewById<TextView>(R.id.tvInfo)?.apply {
                         text = when (torr.stat_string.lowercase(Locale.getDefault())) {
                             "torrent added" -> getString(R.string.stat_string_added)

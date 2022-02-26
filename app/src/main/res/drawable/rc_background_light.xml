@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetTop="20dp"
-    android:insetBottom="20dp">
+    android:insetTop="10dp"
+    android:insetBottom="10dp">
     <shape>
         <solid android:color="@color/tv_white" />
         <corners android:radius="6dp" />

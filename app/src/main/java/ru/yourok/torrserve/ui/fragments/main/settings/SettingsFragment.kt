@@ -37,7 +37,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     @SuppressLint("RestrictedApi")
     internal class CustomPreferenceAdapter @SuppressLint("RestrictedApi")
-    constructor(preferenceGroup: PreferenceGroup?) : PreferenceGroupAdapter(preferenceGroup) {
+    constructor(preferenceGroup: PreferenceGroup) : PreferenceGroupAdapter(preferenceGroup) {
         override fun onBindViewHolder(holder: PreferenceViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
             val currentPreference = getItem(position)
@@ -71,10 +71,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preference, rootKey)
         val ps = findPreference<PreferenceScreen>("prefs")
 
-//        val bannerPref = findPreference<SwitchPreferenceCompat>("show_banner")
+//        val bannerPref = findPreference<Preference>("show_banner")
 //        lifecycleScope.launch(Dispatchers.IO) {
 //            if (ADManager.expired())
-//                ps?.removePreference(bannerPref)
+//                bannerPref?.let { ps?.removePreference(it) }
 //        }
 
         findPreference<Preference>("host")?.apply {

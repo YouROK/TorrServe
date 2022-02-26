@@ -65,13 +65,13 @@ class ServerFinderViewModel : ViewModel() {
             try {
                 val ifaces = getIFaces()
                 ifaces.forEach { iface ->
-                    val ipbytes = iface.address.hostAddress.split(".")
+                    val ipbytes = iface.address?.hostAddress?.split(".")
                     var ipRange = ""
-                    if (ipbytes.size == 4)
+                    if (ipbytes?.size == 4)
                         ipRange = "${ipbytes[0]}.${ipbytes[1]}.${ipbytes[2]}."
                     if (ipRange.isEmpty())
                         return@forEach
-                    findIn(ipRange, iface.address.hostAddress)
+                    iface.address?.hostAddress?.let { findIn(ipRange, it) }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

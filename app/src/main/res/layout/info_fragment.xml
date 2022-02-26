@@ -20,8 +20,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:fontFamily="sans-serif-condensed"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="?attr/colorOnBackground" />
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,9 +34,9 @@
 
             <ImageView
                 android:id="@+id/ivPoster"
-                android:layout_width="80dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="6dp"
+                android:layout_width="78dp"
+                android:layout_height="117dp"
+                android:layout_marginTop="11dp"
                 android:layout_marginEnd="10dp"
                 android:contentDescription="@string/poster"
                 android:scaleType="centerCrop" />
@@ -40,7 +44,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="7dp"
                 android:gravity="top"
                 android:orientation="vertical">
 
@@ -55,15 +59,16 @@
                     android:id="@+id/tvFileName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="start"
-                    android:maxLines="2"
-                    android:textStyle="bold" />
+                    android:ellipsize="middle"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tvFileSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="6dp" />
 
                 <TextView
                     android:id="@+id/tvPeers"

@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.activities.play
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -162,6 +163,11 @@ class PlayActivity : AppCompatActivity() {
                 setProgressCompat(prog, true)
             }
         }
+    }
+
+    suspend fun hideTitle() = withContext(Dispatchers.Main) {
+        if (isActive)
+            findViewById<TextView>(R.id.info_title)?.visibility = View.GONE
     }
 
     suspend fun hideProgress() = withContext(Dispatchers.Main) {
