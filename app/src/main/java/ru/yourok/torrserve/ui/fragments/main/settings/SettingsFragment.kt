@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
 import com.topjohnwu.superuser.Shell
+import ru.yourok.torrserve.BuildConfig
 //import kotlinx.coroutines.Dispatchers
 //import kotlinx.coroutines.launch
 //import kotlinx.coroutines.withContext
@@ -155,8 +156,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-//        findPreference<Preference>("version")?.apply {
-//            this.summary = BuildConfig.VERSION_NAME
+        findPreference<Preference>("version")?.apply {
+            this.summary = BuildConfig.VERSION_NAME
 //            setOnPreferenceClickListener {
 //                lifecycleScope.launch(Dispatchers.IO) {
 //                    if (UpdaterApk.check())
@@ -171,7 +172,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 //                }
 //                true
 //            }
-//        }
+        }
 
     }
 
