@@ -62,14 +62,14 @@ class MainActivity : AppCompatActivity() {
                     if (ver.startsWith("1.1.")) {
                         withContext(Dispatchers.Main) {
                             ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
-                            App.Toast(R.string.need_update_server, true)
+                            App.toast(R.string.need_update_server, true)
                         }
                     }
                 } else {
                     val ver = Api.echo()
                     if (ver.startsWith("1.1.")) {
                         withContext(Dispatchers.Main) {
-                            App.Toast(R.string.not_support_old_server, true)
+                            App.toast(R.string.not_support_old_server, true)
                         }
                     }
                 }
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                         ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
                     else
                         ServerFinderFragment().show(this@MainActivity, R.id.container, true)
-                    App.Toast(R.string.need_install_server, true)
+                    App.toast(R.string.need_install_server, true)
                 }
             }
         }
@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             if (UpdaterApk.check())
                 withContext(Dispatchers.Main) {
-                    App.Toast(R.string.found_new_app_update, true)
+                    App.toast(R.string.found_new_app_update, true)
                 }
         }
         lifecycleScope.launch(Dispatchers.IO) {
@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
                             withContext(Dispatchers.Main) { dialog.dismiss() }
                         } catch (e: Exception) {
                             e.message?.let {
-                                App.Toast(it)
+                                App.toast(it)
                             }
                         }
                     }
@@ -200,11 +200,11 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlistall/all.m3u")), "video/*")
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        App.context.startActivity(intent)
+                        App.appContext().startActivity(intent)
                     }
                 } catch (e: Exception) {
                     e.message?.let {
-                        App.Toast(it)
+                        App.toast(it)
                     }
                 }
             }

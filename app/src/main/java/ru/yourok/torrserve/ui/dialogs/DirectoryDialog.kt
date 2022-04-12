@@ -69,7 +69,7 @@ object DirectoryDialog {
                         return@setOnClickListener
                     }
                 }
-                App.Toast(context.getString(R.string.permission_deny))
+                App.toast(context.getString(R.string.permission_deny))
             }
         }
 
@@ -78,7 +78,7 @@ object DirectoryDialog {
         builder.setPositiveButton(R.string.apply) { dialog, _ ->
             val path = directoryAdapter.getPath()
             if (!File(path).canWrite())
-                App.Toast(context.getString(R.string.permission_deny))
+                App.toast(context.getString(R.string.permission_deny))
             onSelect(path)
             dialog.dismiss()
         }

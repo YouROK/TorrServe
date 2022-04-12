@@ -49,7 +49,7 @@ class ServerUpdateFragment : TSFragment() {
                         }
                     } catch (e: Exception) {
                         withContext(Dispatchers.Main) {
-                            App.Toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
+                            App.toast(App.appContext().getString(R.string.warn_error_download_server) + ": " + e.message)
                         }
                     }
                 }
@@ -75,8 +75,8 @@ class ServerUpdateFragment : TSFragment() {
         return vi
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         Thread.sleep(500)
         updateUI()
     }
@@ -121,7 +121,7 @@ class ServerUpdateFragment : TSFragment() {
         }
 
         if (files.isNullOrEmpty()) {
-            App.Toast(R.string.warn_no_localy_updates)
+            App.toast(R.string.warn_no_localy_updates)
             val msg = getString(R.string.warn_no_localy_updates) + ": ${dw.name}/TorrServer-android-${UpdaterServer.getArch()}"
             view?.findViewById<TextView>(R.id.tvUpdateInfo)?.text = msg
             return
@@ -141,7 +141,7 @@ class ServerUpdateFragment : TSFragment() {
                     withContext(Dispatchers.Main) {
                         val msg = "Error copy server:" + (e.message ?: "")
                         view?.findViewById<TextView>(R.id.tvUpdateInfo)?.text = msg
-                        App.Toast(msg)
+                        App.toast(msg)
                     }
                     hideProgress()
                 }

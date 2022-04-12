@@ -1,6 +1,5 @@
 package ru.yourok.torrserve.app
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -17,28 +16,31 @@ class App : MultiDexApplication(), LifecycleObserver {
 
     companion object {
 
-        @SuppressLint("StaticFieldLeak")
-        lateinit var context: Context
+        private lateinit var appContext: Context
         var inForeground: Boolean = false
         private lateinit var wakeLock: PowerManager.WakeLock
 
-        fun Toast(txt: String, long: Boolean = false) {
+        fun appContext(): Context {
+            return appContext
+        }
+
+        fun toast(txt: String, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
                 val show = if (long)
                     android.widget.Toast.LENGTH_LONG
                 else
                     android.widget.Toast.LENGTH_SHORT
-                android.widget.Toast.makeText(context, txt, show).show()
+                android.widget.Toast.makeText(appContext, txt, show).show()
             }
         }
 
-        fun Toast(txt: Int, long: Boolean = false) {
+        fun toast(txt: Int, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
                 val show = if (long)
                     android.widget.Toast.LENGTH_LONG
                 else
                     android.widget.Toast.LENGTH_SHORT
-                android.widget.Toast.makeText(context, txt, show).show()
+                android.widget.Toast.makeText(appContext, txt, show).show()
             }
         }
     }
@@ -46,7 +48,7 @@ class App : MultiDexApplication(), LifecycleObserver {
     override fun onCreate() {
         super.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-        context = applicationContext
+        appContext = applicationContext
 
         // DayNight Auto ON/OFF
         when (Settings.getTheme()) {

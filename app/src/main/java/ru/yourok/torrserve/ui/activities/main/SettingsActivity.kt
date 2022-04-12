@@ -36,14 +36,14 @@ class SettingsActivity : AppCompatActivity() {
                     if (ver.startsWith("1.1.")) {
                         withContext(Dispatchers.Main) {
                             ServerUpdateFragment().show(this@SettingsActivity, R.id.container, true)
-                            App.Toast(R.string.need_update_server, true)
+                            App.toast(R.string.need_update_server, true)
                         }
                     }
                 } else {
                     val ver = Api.echo()
                     if (ver.startsWith("1.1.")) {
                         withContext(Dispatchers.Main) {
-                            App.Toast(R.string.not_support_old_server, true)
+                            App.toast(R.string.not_support_old_server, true)
                         }
                     }
                 }
@@ -53,7 +53,7 @@ class SettingsActivity : AppCompatActivity() {
                         ServerUpdateFragment().show(this@SettingsActivity, R.id.container, true)
                     else
                         ServerFinderFragment().show(this@SettingsActivity, R.id.container, true)
-                    App.Toast(R.string.need_install_server, true)
+                    App.toast(R.string.need_install_server, true)
                 }
             }
         }

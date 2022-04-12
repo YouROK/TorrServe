@@ -65,7 +65,7 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
                     adapter.path = ff.path
                     adapter.update()
                 } else {
-                    App.Toast("permission deny")
+                    App.toast("permission deny")
                 }
             }
         }

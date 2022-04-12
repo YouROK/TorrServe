@@ -38,14 +38,14 @@ class TorrentsFragment : TSFragment() {
             lvTorrents.adapter = torrentAdapter
             lvTorrents.setOnItemClickListener { _, _, i, _ ->
                 val torr = torrentAdapter?.getItem(i) as Torrent
-                val vintent = Intent(App.context, PlayActivity::class.java)
+                val vintent = Intent(App.appContext(), PlayActivity::class.java)
                 vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 vintent.action = Intent.ACTION_VIEW
                 vintent.putExtra("hash", torr.hash)
                 vintent.putExtra("title", torr.title)
                 vintent.putExtra("poster", torr.poster)
                 vintent.putExtra("action", "play")
-                App.context.startActivity(vintent)
+                App.appContext().startActivity(vintent)
             }
             lvTorrents.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
             lvTorrents.setMultiChoiceModeListener(TorrentsActionBar(lvTorrents))

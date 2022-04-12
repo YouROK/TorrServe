@@ -123,13 +123,13 @@ class ServerSettingsFragment : TSFragment() {
                     try {
                         Api.defSettings()
                         withContext(Dispatchers.Main) {
-                            App.Toast(R.string.default_sets_applied)
+                            App.toast(R.string.default_sets_applied)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
                         withContext(Dispatchers.Main) {
                             //e.message?.let { msg -> App.Toast(msg) }
-                            App.Toast(R.string.error_sending_settings)
+                            App.toast(R.string.error_sending_settings)
                         }
                     }
                     popBackStackFragment()
@@ -189,7 +189,7 @@ class ServerSettingsFragment : TSFragment() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            App.Toast(R.string.error_retrieving_settings)
+            App.toast(R.string.error_retrieving_settings)
         }
     }
 
@@ -225,13 +225,13 @@ class ServerSettingsFragment : TSFragment() {
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {
                         saveSettings(sets)
-                        App.Toast(R.string.done_sending_settings)
+                        App.toast(R.string.done_sending_settings)
                     }
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            App.Toast(R.string.error_sending_settings)
+            App.toast(R.string.error_sending_settings)
         }
     }
 

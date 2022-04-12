@@ -18,9 +18,9 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.urlEncode
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.api.Viewed
+import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
-import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.adapters.TorrentFilesAdapter
 import ru.yourok.torrserve.utils.Net
@@ -62,9 +62,9 @@ class TorrentFilesFragment : TSFragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        view?.apply {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.apply {
             var last = 0
             viewed?.forEach { last = max(last, it.file_index) }
             val file = TorrentHelper.findFile(torrent ?: return, last)
@@ -81,11 +81,11 @@ class TorrentFilesFragment : TSFragment() {
                                 val intent = Intent(Intent.ACTION_VIEW)
                                 intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torr.name.urlEncode()}.m3u?hash=${torr.hash}")), "video/*")
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                App.context.startActivity(intent)
+                                App.appContext().startActivity(intent)
                             }
                         } catch (e: Exception) {
                             e.message?.let {
-                                App.Toast(it)
+                                App.toast(it)
                             }
                         }
                     }
@@ -99,11 +99,11 @@ class TorrentFilesFragment : TSFragment() {
                                 val intent = Intent(Intent.ACTION_VIEW)
                                 intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torr.name.urlEncode()}.m3u?hash=${torr.hash}&fromlast")), "video/*")
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                App.context.startActivity(intent)
+                                App.appContext().startActivity(intent)
                             }
                         } catch (e: Exception) {
                             e.message?.let {
-                                App.Toast(it)
+                                App.toast(it)
                             }
                         }
                     }

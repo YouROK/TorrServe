@@ -21,26 +21,24 @@ class AddFragment : TSFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val vi = inflater.inflate(R.layout.add_fragment, container, false)
-        return vi
+        return inflater.inflate(R.layout.add_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        view?.apply {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.apply {
             findViewById<Button>(R.id.btnOK)?.setOnClickListener {
-                val link = view?.findViewById<EditText>(R.id.etMagnet)?.text?.toString() ?: ""
-                val title = view?.findViewById<EditText>(R.id.etTitle)?.text?.toString() ?: ""
-                val poster = view?.findViewById<EditText>(R.id.etPoster)?.text?.toString() ?: ""
+                val link = view.findViewById<EditText>(R.id.etMagnet)?.text?.toString() ?: ""
+                val title = view.findViewById<EditText>(R.id.etTitle)?.text?.toString() ?: ""
+                val poster = view.findViewById<EditText>(R.id.etPoster)?.text?.toString() ?: ""
 
-                if (!link.isNullOrBlank())
+                if (link.isNotBlank())
                     lifecycleScope.launch(Dispatchers.IO) {
                         try {
                             addTorrent("", link, title, poster, "", true)
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            App.Toast(e.message ?: getString(R.string.error_retrieve_data))
+                            App.toast(e.message ?: getString(R.string.error_retrieve_data))
                         }
                     }
                 popBackStackFragment()

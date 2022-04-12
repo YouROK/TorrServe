@@ -67,8 +67,8 @@ class ServerFinderFragment : TSFragment() {
         return vi
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch(Dispatchers.Default) {
             update()
         }
@@ -98,7 +98,7 @@ class ServerFinderFragment : TSFragment() {
                 Settings.setHost(host)
 
                 if (Api.echo().startsWith("1.1.")) {
-                    App.Toast(R.string.not_support_old_server, true)
+                    App.toast(R.string.not_support_old_server, true)
                     if (!TorrService.isLocal()) {
                         Settings.setHost(oldHost)
                         return@launch
@@ -118,7 +118,7 @@ class ServerFinderFragment : TSFragment() {
                 popBackStackFragment()
             } catch (e: Exception) {
                 e.message?.let {
-                    App.Toast(it)
+                    App.toast(it)
                 }
             }
         }
@@ -130,8 +130,8 @@ class ServerFinderFragment : TSFragment() {
         view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = getLocalIP()
         hostAdapter.clear()
         // add local
-        var host = "http://127.0.0.1:8090"
-        var version = App.context.getString(R.string.local_server)
+        val host = "http://127.0.0.1:8090"
+        var version = App.appContext().getString(R.string.local_server)
         withContext(Dispatchers.IO) {
             val v = Api.remoteEcho(host)
             if (v.isNotEmpty()) {
@@ -141,7 +141,7 @@ class ServerFinderFragment : TSFragment() {
         hostAdapter.add(ServerIp(host, version))
         // add saved
         Settings.getHosts().forEach {
-            version = App.context.getString(R.string.saved_server)
+            version = App.appContext().getString(R.string.saved_server)
             withContext(Dispatchers.IO) {
                 val v = Api.remoteEcho(it)
                 if (v.isNotEmpty()) {
@@ -151,7 +151,7 @@ class ServerFinderFragment : TSFragment() {
             hostAdapter.add(ServerIp(it, version))
         }
         // find all
-        viewModel = ViewModelProvider(this@ServerFinderFragment).get(ServerFinderViewModel::class.java)
+        viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
         (viewModel as ServerFinderViewModel).getStats().observe(viewLifecycleOwner) {
             view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.VISIBLE
             view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it
@@ -186,6 +186,6 @@ class ServerFinderFragment : TSFragment() {
                 }
             }
         }
-        return ret.map { it.address.hostAddress }.joinToString(", ")
+        return ret.joinToString(", ") { it.address.hostAddress }
     }
 }
