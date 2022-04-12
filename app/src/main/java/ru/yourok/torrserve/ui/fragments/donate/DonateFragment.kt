@@ -80,8 +80,8 @@ class DonateFragment : TSFragment() {
 
     fun startActivitySafely(intent: Intent): Boolean {
         try {
-            if (intent.resolveActivity(App.context.packageManager) != null) {
-                App.context.startActivity(intent)
+            if (intent.resolveActivity(App.appContext().packageManager) != null) {
+                App.appContext().startActivity(intent)
                 return true
             }
         } catch (e: ActivityNotFoundException) {

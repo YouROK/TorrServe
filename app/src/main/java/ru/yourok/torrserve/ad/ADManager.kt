@@ -53,7 +53,7 @@ object ADManager {
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
             .sslSocketFactory(Net.insecureTlsSocketFactory())
-            .timeout(0)
+            .timeout(3000)
             .execute()
 
         return when (response.statusCode()) {

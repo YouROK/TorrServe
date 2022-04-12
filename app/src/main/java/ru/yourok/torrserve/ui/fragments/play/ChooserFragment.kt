@@ -46,9 +46,9 @@ class ChooserFragment : TSFragment() {
         return vi
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        view?.apply {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.apply {
             findViewById<CardView>(R.id.cvPlay)?.setOnClickListener {
                 lifecycleScope.launch {
                     onResult?.invoke(1)
@@ -70,7 +70,7 @@ class ChooserFragment : TSFragment() {
         }
     }
 
-    fun saveAction(action: Int) {
+    private fun saveAction(action: Int) {
         view?.findViewById<CheckBox>(R.id.cbSaveChooseAction)?.apply {
             if (isChecked)
                 lifecycleScope.launch {

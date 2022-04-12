@@ -43,7 +43,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             super.onBindViewHolder(holder, position)
             val currentPreference = getItem(position)
             if (currentPreference is Preference) {
-                holder.itemView.background = ContextCompat.getDrawable(App.context, R.drawable.action_selector)
+                holder.itemView.background = ContextCompat.getDrawable(App.appContext(), R.drawable.action_selector)
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                    holder.itemView.backgroundTintList = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(holder.itemView.context, R.attr.colorAccent))
 //                    holder.itemView.backgroundTintMode = PorterDuff.Mode.MULTIPLY
@@ -92,7 +92,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("remove_action")?.setOnPreferenceClickListener {
             Settings.setChooserAction(0)
-            App.Toast(R.string.reset_def)
+            App.toast(R.string.reset_def)
             true
         }
 
@@ -133,7 +133,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                             } else {
                                 val tvintent = Intent(android.provider.Settings.ACTION_SETTINGS)
                                 requireActivity().startActivity(tvintent)
-                                App.Toast(R.string.show_battery_save_tv, true)
+                                App.toast(R.string.show_battery_save_tv, true)
                             }
                         } else
                             requireActivity().startActivity(intent)
@@ -147,9 +147,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
             setOnPreferenceClickListener {
-                val enable = AccessibilityUtils.isEnabledService(App.context)
-                AccessibilityUtils.enableService(App.context, !enable)
-                this.isChecked = AccessibilityUtils.isEnabledService(App.context)
+                val enable = AccessibilityUtils.isEnabledService(App.appContext())
+                AccessibilityUtils.enableService(App.appContext(), !enable)
+                this.isChecked = AccessibilityUtils.isEnabledService(App.appContext())
                 if (this.isChecked)
                     findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
                 true
@@ -166,7 +166,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 //                        }
 //                    else {
 //                        withContext(Dispatchers.Main) {
-//                            App.Toast(R.string.not_found_new_app_update, true)
+//                            App.toast(R.string.not_found_new_app_update, true)
 //                        }
 //                    }
 //                }
@@ -192,7 +192,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
-            this.isChecked = AccessibilityUtils.isEnabledService(App.context)
+            this.isChecked = AccessibilityUtils.isEnabledService(App.appContext())
             if (this.isChecked)
                 findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
         }

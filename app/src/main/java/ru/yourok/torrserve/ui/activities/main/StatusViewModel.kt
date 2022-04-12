@@ -54,7 +54,7 @@ class StatusViewModel : ViewModel() {
                     val old = data?.value
 
                     if (st.isEmpty())
-                        st = App.context.getString(R.string.server_not_responding)
+                        st = App.appContext().getString(R.string.server_not_responding)
 
                     if (old == null || st != old)
                         withContext(Dispatchers.Main) { data?.value = st }

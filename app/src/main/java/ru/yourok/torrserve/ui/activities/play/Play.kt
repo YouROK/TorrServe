@@ -27,7 +27,7 @@ object Play {
             try {
                 val torr = addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
                     ?: let {
-                        App.Toast(getString(R.string.error_retrieve_data))
+                        App.toast(getString(R.string.error_retrieve_data))
                         finish()
                         return@launch
                     }
@@ -35,13 +35,13 @@ object Play {
                 if (torrentHash.isEmpty() && torr.hash.isNotBlank()) // store hash for Api.dropTorrent on close
                     torrentHash = torr.hash
                 torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
-                    App.Toast(getString(R.string.error_retrieve_torrent_info))
+                    App.toast(getString(R.string.error_retrieve_torrent_info))
                     finish()
                     return@launch
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                App.Toast(e.message ?: getString(R.string.error_retrieve_data))
+                App.toast(e.message ?: getString(R.string.error_retrieve_data))
                 finish()
                 return@launch
             }
@@ -55,7 +55,7 @@ object Play {
             lifecycleScope.launch {
                 when {
                     files.isEmpty() -> {
-                        App.Toast(getString(R.string.error_retrieve_torrent_file))
+                        App.toast(getString(R.string.error_retrieve_torrent_file))
                         error(ErrLoadTorrentInfo)
                     }
                     files.size == 1 -> {
@@ -103,11 +103,11 @@ object Play {
         try {
             intent = Players.getIntent(torr, index)
         } catch (e: Exception) {
-            e.message?.let { App.Toast(it) }
+            e.message?.let { App.toast(it) }
         }
         intent?.let {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            App.context.startActivity(it)
+            App.appContext().startActivity(it)
         }
     }
 }

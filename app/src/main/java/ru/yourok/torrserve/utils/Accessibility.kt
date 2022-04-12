@@ -10,25 +10,25 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.local.services.GlobalTorrServeService
 
 object AccessibilityUtils {
-    fun openAccessibilitySettings(context: Context) {
+    private fun openAccessibilitySettings(context: Context) {
         val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
         try {
             context.startActivity(intent)
         } catch (e: Exception) {
             e.printStackTrace()
-            e.message?.let { App.Toast(it) }
+            e.message?.let { App.toast(it) }
         }
     }
 
-    fun openSettings(context: Context) {
+    private fun openSettings(context: Context) {
         val intent = Intent(Settings.ACTION_SETTINGS)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
         try {
             context.startActivity(intent)
         } catch (e: Exception) {
             e.printStackTrace()
-            e.message?.let { App.Toast(it) }
+            e.message?.let { App.toast(it) }
         }
     }
 
@@ -41,20 +41,20 @@ object AccessibilityUtils {
             val contentResolver = requireContext.contentResolver
             var enServices = Settings.Secure.getString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
             val myService = requireContext.packageName + "/" + GlobalTorrServeService::class.java.name
-            if (enable) {
-                enServices = if (enServices.isNullOrEmpty()) {
+            enServices = if (enable) {
+                if (enServices.isNullOrEmpty()) {
                     myService
                 } else {
                     "$enServices:$myService"
                 }
             } else {
-                enServices = enServices.replace(myService, "")
+                enServices.replace(myService, "")
             }
             try {
                 Settings.Secure.putString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, enServices)
             } catch (e: Exception) {
                 e.printStackTrace()
-                e.message?.let { App.Toast(it) }
+                e.message?.let { App.toast(it) }
             }
         } else {
             if (isPackageInstalled(requireContext, "com.android.settings")) {
@@ -63,9 +63,9 @@ object AccessibilityUtils {
                 openSettings(requireContext)
             }
             if (enable)
-                App.Toast(R.string.accessibility_manual_on, true)
+                App.toast(R.string.accessibility_manual_on, true)
             else
-                App.Toast(R.string.accessibility_manual_off, true)
+                App.toast(R.string.accessibility_manual_off, true)
         }
     }
 

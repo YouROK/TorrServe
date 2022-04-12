@@ -16,14 +16,14 @@ import kotlin.concurrent.thread
 object Utils {
 
     fun isGoogleTV(): Boolean {
-        return App.context.packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+        return App.appContext().packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
     }
 
     fun buildPendingIntent(torr: Torrent): Intent {
-        val vintent = Intent(App.context, PlayActivity::class.java)
+        val vintent = Intent(App.appContext(), PlayActivity::class.java)
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         vintent.action = Intent.ACTION_VIEW
-        vintent.setData(Uri.parse(TorrentHelper.getTorrentMagnet(torr)))
+        vintent.data = Uri.parse(TorrentHelper.getTorrentMagnet(torr))
         vintent.putExtra("action", "play")
         vintent.putExtra("hash", torr.hash)
         vintent.putExtra("title", torr.title)

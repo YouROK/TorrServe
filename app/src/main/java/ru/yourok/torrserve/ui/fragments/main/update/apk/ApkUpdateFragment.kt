@@ -50,19 +50,19 @@ class ApkUpdateFragment : TSFragment() {
         return vi
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch(Dispatchers.IO) {
             if (!UpdaterApk.check()) withContext(Dispatchers.Main) {
-                App.Toast(R.string.not_found_new_app_update, true)
+                App.toast(R.string.not_found_new_app_update, true)
                 hideProgress()
                 popBackStackFragment()
             }
             val newVer = UpdaterApk.getVersion()
             val overview = UpdaterApk.getOverview()
             withContext(Dispatchers.Main) {
-                view?.findViewById<TextView>(R.id.tvNewVersion)?.text = getString(R.string.new_version) + ": " + newVer
-                view?.findViewById<TextView>(R.id.tvOverview)?.text = overview
+                view.findViewById<TextView>(R.id.tvNewVersion)?.text = getString(R.string.new_version) + ": " + newVer
+                view.findViewById<TextView>(R.id.tvOverview)?.text = overview
             }
             hideProgress()
         }

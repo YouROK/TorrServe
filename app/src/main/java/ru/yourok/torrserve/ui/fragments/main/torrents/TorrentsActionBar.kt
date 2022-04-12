@@ -49,16 +49,16 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
                     share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     val intent = Intent.createChooser(share, "")
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    App.context.startActivity(intent)
+                    App.appContext().startActivity(intent)
                 }
             }
             R.id.itemCopyMagnet -> {
                 val msg = selected.joinToString("\n\n") { getTorrentMagnet(it) }
                 if (msg.isNotEmpty()) {
-                    val clipboard = App.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clipboard = App.appContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText("magnets", msg)
                     clipboard.setPrimaryClip(clip)
-                    App.Toast(App.context.getString(R.string.copy_to_clipboard))
+                    App.toast(App.appContext().getString(R.string.copy_to_clipboard))
                 }
             }
             R.id.itemRemoveTorrent -> {
