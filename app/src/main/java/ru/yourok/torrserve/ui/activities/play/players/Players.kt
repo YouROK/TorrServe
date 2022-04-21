@@ -27,18 +27,18 @@ object Players {
         intent.putExtra("forcename", torrent.title) // ViMu
         intent.putExtra("forceresume", true) // ViMu
         // default player
-        if (player == "0" && intent.resolveActivity(App.appContext().packageManager) != null)
+        if (player == "0" && intent.resolveActivity(App.context.packageManager) != null)
             return intent
         // vimu player
         if (player == "net.gtvbox.videoplayer") {
             val vimuIntent = Vimu.getIntent(torrent, index)
-            if (vimuIntent.resolveActivity(App.appContext().packageManager) != null)
+            if (vimuIntent.resolveActivity(App.context.packageManager) != null)
                 return vimuIntent
         }
         // user defined player
         if (player.isNotEmpty()) {
             intent.`package` = player
-            if (intent.resolveActivity(App.appContext().packageManager) != null)
+            if (intent.resolveActivity(App.context.packageManager) != null)
                 return intent
             intent.`package` = null
         }
@@ -49,20 +49,20 @@ object Players {
     fun getList(): List<Pair<String, String>> {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp4")), "video/*")
-        var apps = App.appContext().packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        var apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         val list = mutableListOf<Pair<String, String>>()
-        list.add("" to App.appContext().getString(R.string.choose_player))
-        list.add("0" to App.appContext().getString(R.string.default_player))
+        list.add("" to App.context.getString(R.string.choose_player))
+        list.add("0" to App.context.getString(R.string.default_player))
 
         for (a in apps) {
-            val name = a.loadLabel(App.appContext().packageManager)?.toString() ?: a.activityInfo.packageName
+            val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName
             list.add(a.activityInfo.packageName to name)
         }
 
         intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp3")), "audio/*")
-        apps = App.appContext().packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         for (a in apps) {
-            val name = a.loadLabel(App.appContext().packageManager)?.toString() ?: a.activityInfo.packageName
+            val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName
             list.add(a.activityInfo.packageName to name)
         }
 

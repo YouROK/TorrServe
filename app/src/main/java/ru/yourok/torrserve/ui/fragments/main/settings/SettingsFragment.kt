@@ -42,7 +42,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             super.onBindViewHolder(holder, position)
             val currentPreference = getItem(position)
             if (currentPreference is Preference) {
-                holder.itemView.background = ContextCompat.getDrawable(App.appContext(), R.drawable.action_selector)
+                holder.itemView.background = ContextCompat.getDrawable(App.context, R.drawable.action_selector)
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                    holder.itemView.backgroundTintList = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(holder.itemView.context, R.attr.colorAccent))
 //                    holder.itemView.backgroundTintMode = PorterDuff.Mode.MULTIPLY
@@ -146,9 +146,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
             setOnPreferenceClickListener {
-                val enable = AccessibilityUtils.isEnabledService(App.appContext())
-                AccessibilityUtils.enableService(App.appContext(), !enable)
-                this.isChecked = AccessibilityUtils.isEnabledService(App.appContext())
+                val enable = AccessibilityUtils.isEnabledService(App.context)
+                AccessibilityUtils.enableService(App.context, !enable)
+                this.isChecked = AccessibilityUtils.isEnabledService(App.context)
                 if (this.isChecked)
                     findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
                 true
@@ -191,7 +191,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
-            this.isChecked = AccessibilityUtils.isEnabledService(App.appContext())
+            this.isChecked = AccessibilityUtils.isEnabledService(App.context)
             if (this.isChecked)
                 findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
         }

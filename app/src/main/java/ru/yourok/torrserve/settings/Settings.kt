@@ -11,21 +11,21 @@ object Settings {
     fun getServerAuth() = get("server_auth", "")
 
     fun getHosts(): List<String> {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(App.appContext())
+        val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         val ret = prefs.getStringSet("saved_hosts", mutableSetOf())
         return ret?.toList() ?: emptyList()
     }
 
     fun setHosts(hosts: List<String>) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(App.appContext())
+        val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         prefs.edit().putStringSet("saved_hosts", hosts.toMutableSet()).apply()
     }
 
     fun getLastViewDonate() = get("last_view_donate", 0L)
     fun setLastViewDonate(v: Long) = set("last_view_donate", v)
 
-    fun getPlayer(): String = get(App.appContext().getString(R.string.player_pref_key), "")
-    fun setPlayer(v: String) = set(App.appContext().getString(R.string.player_pref_key), v)
+    fun getPlayer(): String = get(App.context.getString(R.string.player_pref_key), "")
+    fun setPlayer(v: String) = set(App.context.getString(R.string.player_pref_key), v)
 
     fun getChooserAction(): Int = get("chooser_action", 0)
     fun setChooserAction(v: Int) = set("chooser_action", v)
@@ -58,13 +58,13 @@ object Settings {
 
     fun getTorrPath(): String {
         var filesDir: File?
-        filesDir = App.appContext().getExternalFilesDir(null)
+        filesDir = App.context.getExternalFilesDir(null)
 
         if (filesDir?.canWrite() != true)
             filesDir = null
 
         if (filesDir == null)
-            filesDir = App.appContext().filesDir
+            filesDir = App.context.filesDir
 
         if (filesDir == null)
             filesDir = File("/sdcard/TorrServe")
@@ -77,7 +77,7 @@ object Settings {
 
     fun <T> get(name: String, def: T): T {
         try {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(App.appContext())
+            val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
             if (prefs.all.containsKey(name))
                 return prefs.all[name] as T
             return def
@@ -87,7 +87,7 @@ object Settings {
     }
 
     private fun set(name: String, value: Any?) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(App.appContext())
+        val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         when (value) {
             is String -> prefs.edit().putString(name, value).apply()
             is Boolean -> prefs.edit().putBoolean(name, value).apply()

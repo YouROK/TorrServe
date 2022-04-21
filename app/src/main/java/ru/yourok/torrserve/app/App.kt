@@ -6,13 +6,12 @@ import android.os.Looper
 import android.os.PowerManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.multidex.MultiDexApplication
 import ru.yourok.torrserve.settings.Settings
 
-class App : MultiDexApplication(), LifecycleObserver {
+class App : MultiDexApplication() {
 
     companion object {
 
@@ -20,8 +19,19 @@ class App : MultiDexApplication(), LifecycleObserver {
         var inForeground: Boolean = false
         private lateinit var wakeLock: PowerManager.WakeLock
 
-        fun appContext(): Context {
-            return appContext
+        val context: Context
+            get() {
+                return appContext
+            }
+
+        private val lifecycleEventObserver = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                //Log.e( "APP" , "in background" )
+                inForeground = false
+            } else if (event == Lifecycle.Event.ON_START) {
+                //Log.e( "APP" , "in foreground" )
+                inForeground = true
+            }
         }
 
         fun toast(txt: String, long: Boolean = false) {
@@ -30,7 +40,7 @@ class App : MultiDexApplication(), LifecycleObserver {
                     android.widget.Toast.LENGTH_LONG
                 else
                     android.widget.Toast.LENGTH_SHORT
-                android.widget.Toast.makeText(appContext, txt, show).show()
+                android.widget.Toast.makeText(context, txt, show).show()
             }
         }
 
@@ -40,15 +50,17 @@ class App : MultiDexApplication(), LifecycleObserver {
                     android.widget.Toast.LENGTH_LONG
                 else
                     android.widget.Toast.LENGTH_SHORT
-                android.widget.Toast.makeText(appContext, txt, show).show()
+                android.widget.Toast.makeText(context, txt, show).show()
             }
         }
     }
 
     override fun onCreate() {
         super.onCreate()
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         appContext = applicationContext
+        ProcessLifecycleOwner
+            .get().lifecycle
+            .addObserver(lifecycleEventObserver)
 
         // DayNight Auto ON/OFF
         when (Settings.getTheme()) {
@@ -59,16 +71,6 @@ class App : MultiDexApplication(), LifecycleObserver {
 
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "TorrServe:WakeLock")
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onAppBackgrounded() {
-        inForeground = false
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onAppForegrounded() {
-        inForeground = true
     }
 
 }

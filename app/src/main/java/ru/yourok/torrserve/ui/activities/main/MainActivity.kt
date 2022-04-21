@@ -200,7 +200,7 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlistall/all.m3u")), "video/*")
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        App.appContext().startActivity(intent)
+                        App.context.startActivity(intent)
                     }
                 } catch (e: Exception) {
                     e.message?.let {
