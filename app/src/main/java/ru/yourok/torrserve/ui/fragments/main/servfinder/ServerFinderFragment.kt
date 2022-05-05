@@ -131,7 +131,7 @@ class ServerFinderFragment : TSFragment() {
         hostAdapter.clear()
         // add local
         val host = "http://127.0.0.1:8090"
-        var version = App.appContext().getString(R.string.local_server)
+        var version = App.context.getString(R.string.local_server)
         withContext(Dispatchers.IO) {
             val v = Api.remoteEcho(host)
             if (v.isNotEmpty()) {
@@ -141,7 +141,7 @@ class ServerFinderFragment : TSFragment() {
         hostAdapter.add(ServerIp(host, version))
         // add saved
         Settings.getHosts().forEach {
-            version = App.appContext().getString(R.string.saved_server)
+            version = App.context.getString(R.string.saved_server)
             withContext(Dispatchers.IO) {
                 val v = Api.remoteEcho(it)
                 if (v.isNotEmpty()) {

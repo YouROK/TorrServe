@@ -2,12 +2,11 @@ package ru.yourok.torrserve.server.local
 
 import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.BuildConfig
-import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.settings.Settings
 import java.io.File
 
-class ServerFile : File(App.appContext().filesDir, "torrserver") {
+class ServerFile : File(App.context.filesDir, "torrserver") {
     private var shell: Shell.Job? = null
     private val lock = Any()
     private val setspath = Settings.getTorrPath()

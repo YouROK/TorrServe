@@ -122,14 +122,14 @@ object UpdaterApk {
                     val install = Intent(Intent.ACTION_VIEW)
                     install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     install.setDataAndType(uri, "application/vnd.android.package-archive")
-                    if (install.resolveActivity(App.appContext().packageManager) != null)
-                        App.appContext().startActivity(install)
+                    if (install.resolveActivity(App.context.packageManager) != null)
+                        App.context.startActivity(install)
                     else
                         App.toast(R.string.error_app_not_found)
                 } else {
                     val fileUri =
                         FileProvider.getUriForFile(
-                            App.appContext(),
+                            App.context,
                             BuildConfig.APPLICATION_ID + ".provider",
                             destination
                         )
@@ -137,8 +137,8 @@ object UpdaterApk {
                     install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     install.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    if (install.resolveActivity(App.appContext().packageManager) != null)
-                        App.appContext().startActivity(install)
+                    if (install.resolveActivity(App.context.packageManager) != null)
+                        App.context.startActivity(install)
                     else
                         App.toast(R.string.error_app_not_found)
                 }

@@ -107,7 +107,7 @@ object Play {
         }
         intent?.let {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            App.appContext().startActivity(it)
+            App.context.startActivity(it)
         }
     }
 }

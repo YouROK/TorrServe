@@ -27,7 +27,7 @@ object UpdaterServer {
         var version: String
         if (TorrService.isLocal()) {
             if (!serverFile.exists()) {
-                version = App.appContext().getString(R.string.not_installed)
+                version = App.context.getString(R.string.not_installed)
             } else {
                 TorrService.start()
                 withContext(Dispatchers.IO) {
@@ -35,7 +35,7 @@ object UpdaterServer {
                 }
             }
         } else {
-            version = App.appContext().getString(R.string.not_used)
+            version = App.context.getString(R.string.not_used)
         }
         return version
     }

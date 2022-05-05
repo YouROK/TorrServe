@@ -47,9 +47,9 @@ class TorrService : Service() {
 
     private fun startServer() {
         thread {
-            if (isLocal() && Settings.isAccessibilityOn() && !AccessibilityUtils.isEnabledService(App.appContext())) {
+            if (isLocal() && Settings.isAccessibilityOn() && !AccessibilityUtils.isEnabledService(App.context)) {
                 if (BuildConfig.DEBUG) Log.d("TorrService", "Try to enable AssessibilityService")
-                AccessibilityUtils.enableService(App.appContext(), true)
+                AccessibilityUtils.enableService(App.context, true)
             }
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
                 if (BuildConfig.DEBUG) Log.d("TorrService", "startServer()")
@@ -84,9 +84,9 @@ class TorrService : Service() {
 
         fun start() {
             try {
-                val intent = Intent(App.appContext(), TorrService::class.java)
+                val intent = Intent(App.context, TorrService::class.java)
                 intent.action = ActionStart
-                App.appContext().startService(intent)
+                App.context.startService(intent)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -94,9 +94,9 @@ class TorrService : Service() {
 
         fun stop() {
             try {
-                val intent = Intent(App.appContext(), TorrService::class.java)
+                val intent = Intent(App.context, TorrService::class.java)
                 intent.action = ActionStop
-                App.appContext().startService(intent)
+                App.context.startService(intent)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

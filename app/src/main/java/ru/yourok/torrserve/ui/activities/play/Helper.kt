@@ -73,7 +73,7 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
     } else if (torrentLink.isNotEmpty()) {
         val scheme = Uri.parse(torrentLink).scheme
         if (ContentResolver.SCHEME_CONTENT == scheme || ContentResolver.SCHEME_FILE == scheme) {
-            val fis = App.appContext().contentResolver.openInputStream(Uri.parse(torrentLink))
+            val fis = App.context.contentResolver.openInputStream(Uri.parse(torrentLink))
             fis?.let { Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave) }
         } else
             Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)

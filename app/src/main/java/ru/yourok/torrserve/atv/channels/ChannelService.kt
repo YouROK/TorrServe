@@ -11,7 +11,7 @@ object ChannelService {
         if (BuildConfig.DEBUG)
             Log.i("*****", "ChannelService: updateChannels()")
 
-        with(App.appContext()) {
+        with(App.context) {
             try {
                 ChannelProvider("Torrents", getString(R.string.torrents)).update(Provider.get(Provider.Torrents))
             } catch (e: Exception) {

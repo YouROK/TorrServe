@@ -81,7 +81,7 @@ class TorrentFilesFragment : TSFragment() {
                                 val intent = Intent(Intent.ACTION_VIEW)
                                 intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torr.name.urlEncode()}.m3u?hash=${torr.hash}")), "video/*")
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                App.appContext().startActivity(intent)
+                                App.context.startActivity(intent)
                             }
                         } catch (e: Exception) {
                             e.message?.let {
@@ -99,7 +99,7 @@ class TorrentFilesFragment : TSFragment() {
                                 val intent = Intent(Intent.ACTION_VIEW)
                                 intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlist/${torr.name.urlEncode()}.m3u?hash=${torr.hash}&fromlast")), "video/*")
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                App.appContext().startActivity(intent)
+                                App.context.startActivity(intent)
                             }
                         } catch (e: Exception) {
                             e.message?.let {

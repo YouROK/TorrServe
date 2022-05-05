@@ -49,7 +49,7 @@ class ServerUpdateFragment : TSFragment() {
                         }
                     } catch (e: Exception) {
                         withContext(Dispatchers.Main) {
-                            App.toast(App.appContext().getString(R.string.warn_error_download_server) + ": " + e.message)
+                            App.toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
                         }
                     }
                 }
