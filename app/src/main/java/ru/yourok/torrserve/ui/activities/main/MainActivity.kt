@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        viewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
+        viewModel = ViewModelProvider(this)[StatusViewModel::class.java]
 
         setupNavigator()
         lifecycleScope.launch(Dispatchers.IO) {
@@ -147,7 +147,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigator() {
-        findViewById<FrameLayout>(R.id.header).setOnClickListener { _ ->
+        // Logo
+        findViewById<FrameLayout>(R.id.header).setOnClickListener {
             val currFragment = supportFragmentManager.findFragmentById(R.id.container)
             if (currFragment is TorrentsFragment)
                 ServerFinderFragment().show(this, R.id.container, true)

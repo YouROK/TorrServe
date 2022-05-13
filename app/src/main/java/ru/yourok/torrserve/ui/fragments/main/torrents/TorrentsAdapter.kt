@@ -2,7 +2,6 @@ package ru.yourok.torrserve.ui.fragments.main.torrents
 
 
 import android.app.Activity
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,8 +53,8 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
         var addStr = ""
 
         if (addTime > 0) {
-            val sdf = SimpleDateFormat("dd.MM.yyyy")
-            sdf.setTimeZone(TimeZone.getDefault())
+            val sdf = SimpleDateFormat("dd.MM.yyyy", Locale("US"))
+            sdf.timeZone = TimeZone.getDefault()
             addStr = sdf.format(Date(addTime * 1000))
         }
 
@@ -78,17 +77,19 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
 
         vi.findViewById<TextView>(R.id.tvTorrName)?.text = title
         vi.findViewById<TextView>(R.id.tvTorrHash)?.text = hash.uppercase(Locale.getDefault())
+        val td = vi.findViewById<TextView>(R.id.tvTorrDate)
+        val ts = vi.findViewById<TextView>(R.id.tvTorrSize)
         if (addStr.isNotEmpty()) {
-            vi.findViewById<TextView>(R.id.tvTorrDate)?.text = addStr
-            vi.findViewById<TextView>(R.id.tvTorrDate)?.visibility = View.VISIBLE
+            td?.text = addStr
+            td?.visibility = View.VISIBLE
         } else
-            vi.findViewById<TextView>(R.id.tvTorrDate)?.visibility = View.GONE
+            td?.visibility = View.GONE
 
         if (size > 0.0) {
-            vi.findViewById<TextView>(R.id.tvTorrSize)?.text = ByteFmt.byteFmt(size)
-            vi.findViewById<TextView>(R.id.tvTorrSize)?.visibility = View.VISIBLE
+            ts?.text = ByteFmt.byteFmt(size)
+            ts?.visibility = View.VISIBLE
         } else
-            vi.findViewById<TextView>(R.id.tvTorrSize)?.visibility = View.GONE
+            ts?.visibility = View.GONE
 
         return vi
     }
