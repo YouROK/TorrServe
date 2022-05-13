@@ -71,8 +71,13 @@ class TorrentsFragment : TSFragment() {
                     activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.openDrawer(Gravity.LEFT)
                     isOpened = true
                 }
-            } else
+            } else { // close menu
                 emptyView.visibility = View.GONE
+                if (isOpened) {
+                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
+                    isOpened = false
+                }
+            }
         }
     }
 }
