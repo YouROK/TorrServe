@@ -170,6 +170,7 @@
     <string name="donation">Donation</string>
     <string name="link">Link</string>
     <string name="donation_msg">Donation to support projects</string>
+    <string name="boosty_msg">Boosty site</string>
     <string name="yandex_money_msg">Yandex.Money card</string>
     <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
     <string name="paypal_msg">Email to donate in PayPal</string>
