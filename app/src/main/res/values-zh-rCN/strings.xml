@@ -232,5 +232,6 @@
     <string name="no_torrents">没有种子</string>
     <string name="not_used">未使用</string>
     <string name="not_installed">未安装</string>
+    <string name="boosty_msg">Boosty 網站</string>
 
 </resources>

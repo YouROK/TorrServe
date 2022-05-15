@@ -30,6 +30,15 @@ class DonateFragment : TSFragment() {
         val vi = inflater.inflate(R.layout.donate_fragment, container, false)
         Settings.setLastViewDonate(System.currentTimeMillis() + 12 * 60 * 60 * 1000)
 
+        vi.findViewById<Button>(R.id.btnBoosty)?.setOnClickListener {
+            val link = "https://boosty.to/yourok"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivitySafely(intent)
+            Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
+        }
+
         vi.findViewById<Button>(R.id.btnYandex)?.setOnClickListener {
             val link = "https://money.yandex.ru/to/410013733697114/200"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
