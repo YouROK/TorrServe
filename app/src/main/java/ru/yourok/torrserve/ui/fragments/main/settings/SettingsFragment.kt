@@ -183,9 +183,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<SwitchPreferenceCompat>("root_start")?.apply {
-            val isRootAvail = Shell.rootAccess()
-            this.isEnabled = isRootAvail
-            if (!isRootAvail) {
+            val avail = App.isRootAvailable() // Shell.rootAccess() // (Shell.isAppGrantedRoot() == true)
+            this.isEnabled = avail
+            if (!avail) {
                 this.isChecked = false
             }
         }
@@ -196,5 +196,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
         }
     }
+
+
 
 }
