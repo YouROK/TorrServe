@@ -9,7 +9,7 @@ android {
     compileSdkVersion 31
     defaultConfig {
         applicationId "ru.yourok.torrserve"
-        minSdkVersion 17
+        minSdkVersion 19
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         // for older androids
@@ -62,8 +62,8 @@ dependencies {
     // json serializer
     implementation 'com.google.code.gson:gson:2.9.0'
     // root shell
-    implementation 'com.github.topjohnwu.libsu:core:3.1.2'
-    implementation 'com.github.topjohnwu.libsu:io:3.1.2'
+    def libsuVersion = '5.0.1'
+    implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
     // glide
     implementation 'com.github.bumptech.glide:glide:4.13.1'
     kapt  'com.github.bumptech.glide:compiler:4.13.1'
