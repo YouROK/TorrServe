@@ -14,8 +14,8 @@ android {
         targetSdkVersion 28
         // for older androids
         multiDexEnabled true
-        versionCode 115
-        versionName "MatriX.115.F-Droid"
+        versionCode 116
+        versionName "MatriX.116.F-Droid"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
@@ -55,7 +55,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-process:2.4.1'
     implementation 'com.google.android.material:material:1.6.0'
-    //implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0')
     // http client/parser
     implementation 'org.jsoup:jsoup:1.14.3'
