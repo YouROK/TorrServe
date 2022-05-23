@@ -30,8 +30,8 @@ object Players {
         if (player == "0" && intent.resolveActivity(App.context.packageManager) != null)
             return intent
         // vimu player
-        if (player == "net.gtvbox.videoplayer") {
-            val vimuIntent = Vimu.getIntent(torrent, index)
+        if (player == "net.gtvbox.videoplayer" || player == "net.gtvbox.vimuhd") {
+            val vimuIntent = Vimu.getIntent(player, torrent, index)
             if (vimuIntent.resolveActivity(App.context.packageManager) != null)
                 return vimuIntent
         }

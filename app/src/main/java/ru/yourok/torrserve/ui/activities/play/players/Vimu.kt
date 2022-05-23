@@ -8,14 +8,14 @@ import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
 
 object Vimu {
-    fun getIntent(torrent: Torrent, index: Int): Intent {
+    fun getIntent(pkg: String, torrent: Torrent, index: Int): Intent {
         val link = TorrentHelper.getTorrentPlayLink(torrent, index)
 
         val file = TorrentHelper.findFile(torrent, index) ?: throw Exception("file in torrent not found")
         val mime = Mime.getMimeType(file.path)
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setPackage("net.gtvbox.videoplayer")
+        intent.setPackage(pkg)
         intent.putExtra("forceresume", true)
         intent.putExtra("forcename", torrent.title)
         intent.setDataAndType(Uri.parse(link), mime)
