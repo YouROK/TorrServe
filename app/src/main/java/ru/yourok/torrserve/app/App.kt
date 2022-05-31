@@ -9,7 +9,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.multidex.MultiDexApplication
+import com.topjohnwu.superuser.Shell
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.settings.Settings
+import java.io.IOException
 
 class App : MultiDexApplication() {
 
@@ -53,6 +56,33 @@ class App : MultiDexApplication() {
                 android.widget.Toast.makeText(context, txt, show).show()
             }
         }
+
+        fun configureShell() {
+            Shell.enableVerboseLogging = BuildConfig.DEBUG
+//            val sb = if (Settings.isRootStart()) Shell.Builder.create()
+//                .setFlags(Shell.FLAG_REDIRECT_STDERR)
+//            else Shell.Builder.create()
+//                .setFlags(Shell.FLAG_REDIRECT_STDERR or Shell.FLAG_NON_ROOT_SHELL)
+//            if (Shell.getCachedShell() == null)
+//                Shell.setDefaultBuilder(sb)
+        }
+
+        fun closeShell() {
+            try {
+                Shell.getCachedShell()?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+
+        @Synchronized
+        fun isRootAvailable(): Boolean {
+            if (Shell.isAppGrantedRoot() != true) {
+                closeShell()
+                Shell.cmd("whoami").exec()
+            }
+            return Shell.isAppGrantedRoot() == true
+        }
     }
 
     override fun onCreate() {
@@ -71,6 +101,8 @@ class App : MultiDexApplication() {
 
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "TorrServe:WakeLock")
+
+        configureShell()
     }
 
 }
