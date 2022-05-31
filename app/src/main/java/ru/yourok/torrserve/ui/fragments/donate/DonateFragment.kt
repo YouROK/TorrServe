@@ -102,13 +102,13 @@ class DonateFragment : TSFragment() {
 }
 
 object DonateMessage {
-    private var showDonate = false
+    private var showDonate = Any()
 
     fun showDonate(activity: AppCompatActivity) {
         activity.lifecycleScope.launch(Dispatchers.IO) {
             synchronized(showDonate) {
                 val last: Long = Settings.getLastViewDonate()
-                if (System.currentTimeMillis() < last || showDonate)
+                if (System.currentTimeMillis() < last || showDonate == true)
                     return@launch
                 showDonate = true
             }

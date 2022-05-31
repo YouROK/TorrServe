@@ -33,13 +33,14 @@ object Utils {
         return vintent
     }
 
-    private var updateStarted = false
+    private var lock = Any()
     fun updateAtvCards() {
+
         if (isGoogleTV()) {
-            synchronized(updateStarted) {
-                if (updateStarted)
+            synchronized(lock) {
+                if (lock == true)
                     return
-                updateStarted = true
+                lock = true
             }
             TorrService.wait(5)
             Log.d("*****", "updateAtvCards()")
@@ -50,7 +51,7 @@ object Utils {
             }
             UpdaterCards.updateCards()
             thread {
-                while (updateStarted) {
+                while (lock == true) {
                     var torrs = emptyList<Torrent>()
                     try {
                         torrs = Api.listTorrent()

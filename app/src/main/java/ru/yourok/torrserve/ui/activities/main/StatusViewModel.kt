@@ -14,8 +14,8 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.settings.Settings
 
 class StatusViewModel : ViewModel() {
-    private var isWork = false
-    private var isWorkHost = false
+    private var isWork = Any()
+    private var isWorkHost = Any()
     var data: MutableLiveData<String>? = null
     var host: MutableLiveData<String>? = null
 
@@ -44,11 +44,11 @@ class StatusViewModel : ViewModel() {
     private fun update() {
         viewModelScope.launch(Dispatchers.IO) {
             synchronized(isWork) {
-                if (isWork)
+                if (isWork == true)
                     return@launch
             }
             isWork = true
-            while (isWork) {
+            while (isWork == true) {
                 try {
                     var st = Api.echo()
                     val old = data?.value
@@ -69,11 +69,11 @@ class StatusViewModel : ViewModel() {
     private fun updateHost() {
         viewModelScope.launch(Dispatchers.Main) {
             synchronized(isWorkHost) {
-                if (isWorkHost)
+                if (isWorkHost == true)
                     return@launch
             }
             isWorkHost = true
-            while (isWorkHost) {
+            while (isWorkHost == true) {
                 val sv = Settings.getHost()
                 val old = host?.value
                 if (old == null || sv != old)

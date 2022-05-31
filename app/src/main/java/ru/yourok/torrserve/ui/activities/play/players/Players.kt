@@ -25,15 +25,22 @@ object Players {
         intent.putExtra("title", torrent.title)
         intent.putExtra("poster", torrent.poster)
         intent.putExtra("forcename", torrent.title) // ViMu
+        intent.putExtra("forcedirect", true) // ViMu
         intent.putExtra("forceresume", true) // ViMu
         // default player
         if (player == "0" && intent.resolveActivity(App.context.packageManager) != null)
             return intent
-        // vimu player
+        // ViMu player
         if (player == "net.gtvbox.videoplayer" || player == "net.gtvbox.vimuhd") {
             val vimuIntent = Vimu.getIntent(player, torrent, index)
             if (vimuIntent.resolveActivity(App.context.packageManager) != null)
                 return vimuIntent
+        }
+        // MX player
+        if (player.contains("com.mxtech.videoplayer", true)) {
+            val mxIntent = MX.getIntent(player, torrent, index)
+            if (mxIntent.resolveActivity(App.context.packageManager) != null)
+                return mxIntent
         }
         // user defined player
         if (player.isNotEmpty()) {
