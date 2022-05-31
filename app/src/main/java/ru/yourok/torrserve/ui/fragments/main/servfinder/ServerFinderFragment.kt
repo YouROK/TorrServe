@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -186,6 +189,6 @@ class ServerFinderFragment : TSFragment() {
                 }
             }
         }
-        return ret.joinToString(", ") { it.address.hostAddress }
+        return ret.joinToString(", ") { it.address.hostAddress ?: "" }
     }
 }
