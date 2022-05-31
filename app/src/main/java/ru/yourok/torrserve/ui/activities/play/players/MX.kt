@@ -1,13 +1,15 @@
 package ru.yourok.torrserve.ui.activities.play.players
 
+import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
+import android.os.Parcelable
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.utils.Mime
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
 
-object Vimu {
+object MX {
     fun getIntent(pkg: String, torrent: Torrent, index: Int): Intent {
         val link = TorrentHelper.getTorrentPlayLink(torrent, index)
 
@@ -15,25 +17,28 @@ object Vimu {
         val mime = Mime.getMimeType(file.path)
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setPackage(pkg)
-        intent.putExtra("forcename", torrent.title)
-        intent.putExtra("forcedirect", true)
-        intent.putExtra("forceresume", true)
+//        intent.setPackage(pkg)
+        intent.component = ComponentName(pkg, "$pkg.ActivityScreen")
+        intent.putExtra("title", torrent.title)
+        intent.putExtra("sticky", false)
         intent.setDataAndType(Uri.parse(link), mime)
 
         val torrfiles = TorrentHelper.getPlayableFiles(torrent)
         if (torrfiles.size > 1) {
             val names = ArrayList<String>()
-            val files = ArrayList<String>()
-            torrfiles.forEach {
-                if (it.id >= index) {
-                    names.add(File(it.path).name)
-                    files.add(TorrentHelper.getFileLink(torrent, it))
-                }
+            val parcelableArr = arrayOfNulls<Parcelable>(torrfiles.size)
+            for (i in torrfiles.indices) {
+                names.add(File(torrfiles[i].path).name)
+                parcelableArr[i] = Uri.parse(TorrentHelper.getFileLink(torrent, torrfiles[i]))
             }
-            intent.setDataAndType(Uri.parse(link), "application/vnd.gtvbox.filelist")
-            intent.putStringArrayListExtra("asusfilelist", files)
-            intent.putStringArrayListExtra("asusnamelist", names)
+            val ta = names.toTypedArray()
+            intent.putExtra("video_list", parcelableArr)
+            intent.putExtra("video_list.name", ta)
+            intent.putExtra(
+                "video_list.filename",
+                ta
+            )
+            intent.putExtra("video_list_is_explicit", true)
         }
         return intent
     }
