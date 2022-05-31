@@ -12,7 +12,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 
 class TorrentsViewModel : ViewModel() {
-    private var isWork = false
+    private var isWork = Any()
     var data: MutableLiveData<List<Torrent>>? = null
 
     fun getData(): LiveData<List<Torrent>> {
@@ -31,11 +31,11 @@ class TorrentsViewModel : ViewModel() {
     private fun update() {
         viewModelScope.launch(Dispatchers.IO) {
             synchronized(isWork) {
-                if (isWork)
+                if (isWork == true)
                     return@launch
             }
             isWork = true
-            while (isWork) {
+            while (isWork == true) {
                 try {
                     val list = Api.listTorrent()
                     val oldList = data?.value

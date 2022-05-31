@@ -15,7 +15,7 @@ data class InfoTorrent(val torrent: Torrent?, val error: String)
 
 class InfoViewModel : ViewModel() {
     private var data: MutableLiveData<InfoTorrent>? = null
-    private var stop = true
+    private var lock = Any()
     private var torrent: Torrent? = null
 
     fun setTorrent(hash: String): LiveData<InfoTorrent> {
@@ -41,7 +41,7 @@ class InfoViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        stop = true
+        lock = false
         super.onCleared()
     }
 
@@ -49,12 +49,12 @@ class InfoViewModel : ViewModel() {
         if (torrent == null)
             return
 
-        synchronized(stop) {
-            if (!stop)
+        synchronized(lock) {
+            if (lock == true)
                 return
-            stop = false
+            lock = true
             viewModelScope.launch(Dispatchers.IO) {
-                while (!stop) {
+                while (lock == true) {
                     try {
                         torrent?.let {
                             torrent = Api.getTorrent(it.hash)
