@@ -186,6 +186,6 @@ class ServerFinderFragment : TSFragment() {
                 }
             }
         }
-        return ret.joinToString(", ") { it.address.hostAddress }
+        return ret.joinToString(", ") { it.address.hostAddress ?: ""}
     }
 }
