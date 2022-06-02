@@ -34,8 +34,8 @@ object AccessibilityUtils {
 
     fun enableService(requireContext: Context, enable: Boolean) {
         val permission = "android.permission.WRITE_SECURE_SETTINGS"
-        if (!Permission.isPermissionGranted(requireContext, permission) && Shell.rootAccess()) {
-            Shell.su("pm grant ${requireContext.packageName} $permission").exec()
+        if (!Permission.isPermissionGranted(requireContext, permission) && App.isRootAvailable()) {
+            Shell.cmd("pm grant ${requireContext.packageName} $permission").exec()
         }
         if (Permission.isPermissionGranted(requireContext, permission)) {
             val contentResolver = requireContext.contentResolver

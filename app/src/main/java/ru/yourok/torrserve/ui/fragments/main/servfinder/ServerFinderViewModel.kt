@@ -20,7 +20,7 @@ data class ServerIp(val host: String, val version: String) {
 }
 
 class ServerFinderViewModel : ViewModel() {
-    private var isWork = false
+    private var isWork = Any()
     private var stats: MutableLiveData<String>? = null
     private var servers: MutableLiveData<ServerIp>? = null
     private var onFinish: MutableLiveData<Boolean>? = null
@@ -55,7 +55,7 @@ class ServerFinderViewModel : ViewModel() {
     private fun update() {
         viewModelScope.launch(Dispatchers.IO) {
             synchronized(isWork) {
-                if (isWork)
+                if (isWork == true)
                     return@launch
             }
             isWork = true
@@ -84,10 +84,10 @@ class ServerFinderViewModel : ViewModel() {
     }
 
     private suspend fun findIn(ipRange: String, local: String) {
-        if (!isWork)
+        if (isWork != true)
             return
         for (i in 1..254) {
-            if (isWork) {
+            if (isWork == true) {
                 val checkHost = "http://$ipRange$i:8090"
 
                 if ("$ipRange$i" == local)

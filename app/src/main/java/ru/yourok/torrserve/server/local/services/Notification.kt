@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.server.local.services
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -52,17 +53,22 @@ class Notification : Service() {
         return mBinder
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun startForeground() {
         synchronized(lock) {
             val exitIntent = Intent(this, TorrService::class.java)
             exitIntent.action = TorrService.ActionStop
             exitIntent.putExtra("forceclose", true)
-            val exitPendingIntent = PendingIntent.getService(this, 0, exitIntent, 0)
-
+            val exitPendingIntent = if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M))
+                PendingIntent.getService(this, 0, exitIntent, PendingIntent.FLAG_IMMUTABLE)
+            else
+                PendingIntent.getService(this, 0, exitIntent, 0)
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
-
+            val pendingIntent = if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M))
+                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_ONE_SHOT)
+            else
+                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val channel =
                     NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
@@ -95,7 +101,6 @@ class Notification : Service() {
 
 class NotificationHelper {
     private var mService: Notification? = null
-    private var isBound: Boolean = false
 
     private val mConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -110,7 +115,7 @@ class NotificationHelper {
 
     fun doBindService(context: Context) {
         if (mService == null) {
-            isBound = context.bindService(
+            context.bindService(
                 Intent(context, Notification::class.java),
                 mConnection,
                 Context.BIND_AUTO_CREATE
@@ -119,9 +124,8 @@ class NotificationHelper {
     }
 
     fun doUnbindService(context: Context) {
-        if (isBound) {
+        if (mService != null) {
             context.unbindService(mConnection)
         }
-        isBound = false
     }
 }
