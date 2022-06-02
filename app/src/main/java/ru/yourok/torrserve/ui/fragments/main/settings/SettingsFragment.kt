@@ -182,11 +182,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
             summary = Settings.getHost()
         }
 
-        findPreference<SwitchPreferenceCompat>("root_start")?.apply {
-            val avail = App.isRootAvailable() // Shell.rootAccess() // (Shell.isAppGrantedRoot() == true)
-            this.isEnabled = avail
-            if (!avail) {
-                this.isChecked = false
+        findPreference<SwitchPreferenceCompat>("root_start")?.let {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val avail = App.isRootAvailable() // App.isRootAvailable() // Shell.rootAccess() // (Shell.isAppGrantedRoot() == true)
+                withContext(Dispatchers.Main) {
+                    it.isEnabled = avail
+                    if (!avail) {
+                        it.isChecked = false
+                    }
+                }
             }
         }
 
