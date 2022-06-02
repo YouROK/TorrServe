@@ -8,7 +8,9 @@
     <uses-permission android:name="android.permission.ACCESS_ALL_DOWNLOADS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        tools:ignore="LeanbackUsesWifi" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
@@ -19,7 +21,12 @@
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <uses-sdk tools:overrideLibrary="androidx.tvprovider" />
@@ -42,9 +49,11 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TorrServe.DayNight">
+        android:theme="@style/Theme.TorrServe.DayNight"
+        tools:targetApi="n">
         <activity
             android:name="ru.yourok.torrserve.ui.activities.main.MainActivity"
+            android:exported="true"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -69,6 +78,7 @@
 
         <activity
             android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity"
+            android:exported="true"
             android:theme="@style/PlayDialog.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -201,7 +211,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="ru.yourok.torrserve.ui.activities.main.SettingsActivity">
+        <activity
+            android:name="ru.yourok.torrserve.ui.activities.main.SettingsActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -218,7 +230,9 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <receiver android:name=".server.local.services.BootCompletedReceiver">
+        <receiver
+            android:name=".server.local.services.BootCompletedReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
@@ -245,6 +259,7 @@
         <service android:name=".server.local.services.Notification" />
         <service
             android:name=".server.local.services.GlobalTorrServeService"
+            android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

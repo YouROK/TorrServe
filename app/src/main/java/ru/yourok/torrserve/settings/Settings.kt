@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.preference.PreferenceManager
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.ext.getInternalStorageDirectoryPath
 import java.io.File
 
 object Settings {
@@ -67,7 +68,7 @@ object Settings {
             filesDir = App.context.filesDir
 
         if (filesDir == null)
-            filesDir = File("/sdcard/TorrServe")
+            filesDir = File(App.context.getInternalStorageDirectoryPath(), "TorrServe")
 
         if (!filesDir.exists())
             filesDir.mkdirs()
@@ -75,6 +76,7 @@ object Settings {
         return filesDir.path
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> get(name: String, def: T): T {
         try {
             val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
@@ -86,6 +88,7 @@ object Settings {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun set(name: String, value: Any?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         when (value) {

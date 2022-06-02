@@ -105,6 +105,7 @@ object UpdaterServer {
         }
     }
 
+    @Suppress("DEPRECATION")
     fun getArch(): String {
         val arch = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             Build.SUPPORTED_ABIS[0]
