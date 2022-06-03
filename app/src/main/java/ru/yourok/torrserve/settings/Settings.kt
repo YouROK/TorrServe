@@ -75,6 +75,7 @@ object Settings {
         return filesDir.path
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> get(name: String, def: T): T {
         try {
             val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
@@ -86,6 +87,7 @@ object Settings {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun set(name: String, value: Any?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         when (value) {
