@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.server.local
 
 import com.topjohnwu.superuser.Shell
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.settings.Settings
 import java.io.File
@@ -10,26 +11,24 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
     private val lock = Any()
     private val setspath = Settings.getTorrPath()
     private val logfile = File(setspath, "torrserver.log").path
+//    private val TAG = javaClass.simpleName.take(21)
 
     fun run() {
         if (!exists())
             return
         synchronized(lock) {
-            val shell = if (Settings.isRootStart()) Shell.Builder.create()
-                .setFlags(Shell.FLAG_REDIRECT_STDERR)
-                .build()
-            else Shell.Builder.create()
-                .setFlags(Shell.FLAG_REDIRECT_STDERR or Shell.FLAG_NON_ROOT_SHELL)
-                .build()
+            Shell.enableVerboseLogging = BuildConfig.DEBUG
             if (shellJob == null) {
-                App.closeShell()
+//                if (BuildConfig.DEBUG) Log.d(TAG, "Shell status: ${Shell.getCachedShell()?.status}")
+                val shell = if (Settings.isRootStart()) Shell.Builder.create()
+                    .build()
+                else Shell.Builder.create()
+                    .setFlags(Shell.FLAG_NON_ROOT_SHELL)
+                    .build()
                 shellJob = shell.newJob()
-                    .add("$path -k -d $setspath -l $logfile 1>>$logfile 2>&1 &")
                     .add("export GODEBUG=madvdontneed=1")
-                shellJob?.run {
-                    exec()
-                }
-                shell.close()
+                    .add("$path -k -d $setspath -l $logfile 1>>$logfile 2>&1 &")
+                shellJob?.exec()
             }
         }
     }
@@ -38,9 +37,14 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         if (!exists())
             return
         synchronized(lock) {
-            Shell.cmd("killall -9 torrserver 1>>$logfile 2>/dev/null &").exec()
-            App.closeShell()
+            // do nothing with -k startup switch?
+            Shell.enableVerboseLogging = BuildConfig.DEBUG
+            if (Shell.rootAccess())
+                Shell.su("killall -9 torrserver").exec()
+            else
+                Shell.sh("killall -9 torrserver").exec()
             shellJob = null
         }
     }
+
 }
