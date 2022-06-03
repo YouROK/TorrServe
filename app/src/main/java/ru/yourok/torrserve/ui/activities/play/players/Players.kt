@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Environment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.ext.getInternalStorageDirectoryPath
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
@@ -55,7 +56,7 @@ object Players {
 
     fun getList(): List<Pair<String, String>> {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp4")), "video/*")
+        intent.setDataAndType(Uri.fromFile(File(App.context.getInternalStorageDirectoryPath(), "file.mp4")), "video/*")
         var apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         val list = mutableListOf<Pair<String, String>>()
         list.add("" to App.context.getString(R.string.choose_player))
@@ -66,7 +67,7 @@ object Players {
             list.add(a.activityInfo.packageName to name)
         }
 
-        intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp3")), "audio/*")
+        intent.setDataAndType(Uri.fromFile(File(App.context.getInternalStorageDirectoryPath(), "file.mp3")), "audio/*")
         apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         for (a in apps) {
             val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName

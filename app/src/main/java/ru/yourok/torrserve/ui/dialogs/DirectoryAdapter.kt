@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.dialogs
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.StatFs
 import android.view.LayoutInflater
@@ -35,6 +36,8 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
         return path
     }
 
+    @SuppressLint("ObsoleteSdkInt")
+    @Suppress("DEPRECATION")
     fun getSize(): String {
         val stat = StatFs(path)
         val bytesAvailable = if (Build.VERSION.SDK_INT >=
@@ -77,7 +80,7 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        (holder.view as TextView).setText(list[position])
+        (holder.view as TextView).text = list[position]
     }
 
     override fun getItemCount() = list.size
