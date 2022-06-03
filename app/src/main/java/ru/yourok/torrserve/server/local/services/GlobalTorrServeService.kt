@@ -13,10 +13,13 @@ import ru.yourok.torrserve.server.local.TorrService
 class GlobalTorrServeService : AccessibilityService() {
     private val notification = NotificationHelper()
     private val serverFile = ServerFile()
+    private val TAG = javaClass.simpleName.take(21)
 
     override fun onServiceConnected() {
-        if (serverFile.exists() && TorrService.isLocal() && Api.echo().isEmpty()) {
-            if (BuildConfig.DEBUG) Log.d("GlobalTorrServeService", "onServiceConnected()")
+        // Api.echo() is always empty
+        if (serverFile.exists() && TorrService.isLocal()) {
+            if (BuildConfig.DEBUG) Log.d(TAG, "onServiceConnected()")
+            Api.shutdown()
             serverFile.run()
             notification.doBindService(this)
         }
