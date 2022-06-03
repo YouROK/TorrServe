@@ -7,7 +7,7 @@ import android.provider.Settings
 import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.server.local.services.GlobalTorrServeService
+import ru.yourok.torrserve.server.local.services.GlobalTorrService
 
 object AccessibilityUtils {
     private fun openAccessibilitySettings(context: Context) {
@@ -40,7 +40,7 @@ object AccessibilityUtils {
         if (Permission.isPermissionGranted(requireContext, permission)) {
             val contentResolver = requireContext.contentResolver
             var enServices = Settings.Secure.getString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
-            val myService = requireContext.packageName + "/" + GlobalTorrServeService::class.java.name
+            val myService = requireContext.packageName + "/" + GlobalTorrService::class.java.name
             enServices = if (enable) {
                 if (enServices.isNullOrEmpty()) {
                     myService
@@ -73,7 +73,7 @@ object AccessibilityUtils {
     fun isEnabledService(requireContext: Context): Boolean {
         val contentResolver = requireContext.contentResolver
         val enServices = Settings.Secure.getString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
-        val myService = requireContext.packageName + "/" + GlobalTorrServeService::class.java.name
+        val myService = requireContext.packageName + "/" + GlobalTorrService::class.java.name
         if (enServices?.contains(myService) == true) return true
         return false
     }
