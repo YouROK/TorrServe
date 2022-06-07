@@ -61,9 +61,9 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
     // json serializer
     implementation 'com.google.code.gson:gson:2.9.0'
-    // root shell (3.1.2)
-    //noinspection GradleDependency
-    implementation 'com.github.topjohnwu.libsu:core:3.1.2'
+    // root shell (3.2.1)
+    //noinspection GradleDependency 3.2.1 last api17 compatible
+    implementation 'com.github.topjohnwu.libsu:core:3.2.1'
     // glide
     def glideVersion = '4.13.1'
     implementation "com.github.bumptech.glide:glide:${glideVersion}"

@@ -36,7 +36,6 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
         return path
     }
 
-    @SuppressLint("ObsoleteSdkInt")
     @Suppress("DEPRECATION")
     fun getSize(): String {
         val stat = StatFs(path)
@@ -60,7 +59,7 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
         update()
     }
 
-    class ViewHolder(val view: View, val adapter: DirectoryAdapter) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(val view: View, private val adapter: DirectoryAdapter) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
                 val ff = File(adapter.path, adapter.list[adapterPosition])
