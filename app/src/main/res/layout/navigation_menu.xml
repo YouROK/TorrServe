@@ -4,277 +4,273 @@
     android:id="@+id/menulayout"
     android:layout_width="240dp"
     android:layout_height="match_parent"
-    android:layout_gravity="left">
+    android:layout_gravity="start"
+    android:background="?attr/colorBG"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/colorBG"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="120dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/action_selector">
 
-                <FrameLayout
-                    android:id="@+id/header"
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="5dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/action_selector">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
-                        android:layout_gravity="center|top"
-                        android:layout_marginTop="5dp"
-                        android:padding="5dp"
-                        android:src="@mipmap/ic_launcher" />
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tvCurrentHost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|bottom"
-                        android:layout_marginBottom="5dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvCurrentHost"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="http://localhost:8090"
-                            android:textAppearance="@android:style/TextAppearance.Medium"
-                            android:textColor="?attr/colorHost"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/tvStatus"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Status"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                </FrameLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/listDivider" />
-
-                <FrameLayout
-                    android:id="@+id/btnAdd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/action_selector"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_outline_add" />
+                        android:gravity="center"
+                        android:text="http://localhost:8090"
+                        android:textAppearance="@android:style/TextAppearance.Medium"
+                        android:textColor="?attr/colorHost"
+                        android:textSize="16sp" />
 
                     <TextView
-                        style="@style/MainMenuTextAppearance"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvStatus"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="40dp"
-                        android:text="@string/add" />
-                </FrameLayout>
+                        android:gravity="center"
+                        android:text="Status"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
+
+            <FrameLayout
+                android:id="@+id/btnAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/action_selector"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center_vertical"
+                    app:srcCompat="@drawable/ic_outline_add" />
+
+                <TextView
+                    style="@style/MainMenuTextAppearance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_gravity="left|center_vertical"
+                    android:paddingLeft="40dp"
+                    android:text="@string/add" />
+            </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/btnRemoveAll"
-                    android:layout_width="match_parent"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
+
+            <FrameLayout
+                android:id="@+id/btnRemoveAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/action_selector"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center_vertical"
+                    app:srcCompat="@drawable/ic_outline_remove" />
+
+                <TextView
+                    style="@style/MainMenuTextAppearance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/action_selector"
-                    android:padding="15dp">
+                    android:layout_gravity="left|center_vertical"
+                    android:paddingLeft="40dp"
+                    android:text="@string/remove_all" />
+            </FrameLayout>
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_outline_remove" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
 
-                    <TextView
-                        style="@style/MainMenuTextAppearance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="40dp"
-                        android:text="@string/remove_all" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/btnPlaylist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/action_selector"
+                android:padding="15dp">
 
-                <View
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center_vertical"
+                    app:srcCompat="@drawable/ic_outline_playlist_play" />
+
+                <TextView
+                    style="@style/MainMenuTextAppearance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_gravity="left|center_vertical"
+                    android:paddingLeft="40dp"
+                    android:text="@string/playlist" />
+            </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/btnPlaylist"
-                    android:layout_width="match_parent"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
+
+            <FrameLayout
+                android:id="@+id/btnDonate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/action_selector"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center_vertical"
+                    app:srcCompat="@drawable/ic_thumb_up" />
+
+                <TextView
+                    style="@style/MainMenuTextAppearance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/action_selector"
-                    android:padding="15dp">
+                    android:layout_gravity="left|center_vertical"
+                    android:paddingLeft="40dp"
+                    android:text="@string/donate" />
+            </FrameLayout>
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_outline_playlist_play" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
 
-                    <TextView
-                        style="@style/MainMenuTextAppearance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="40dp"
-                        android:text="@string/playlist" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/action_selector"
+                android:padding="15dp">
 
-                <View
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center_vertical"
+                    app:srcCompat="@drawable/ic_refresh" />
+
+                <TextView
+                    style="@style/MainMenuTextAppearance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_gravity="left|center_vertical"
+                    android:paddingLeft="40dp"
+                    android:text="@string/update" />
+            </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/btnDonate"
-                    android:layout_width="match_parent"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
+
+            <FrameLayout
+                android:id="@+id/btnSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/action_selector"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center_vertical"
+                    app:srcCompat="@drawable/ic_settings" />
+
+                <TextView
+                    style="@style/MainMenuTextAppearance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/action_selector"
-                    android:padding="15dp">
+                    android:layout_gravity="left|center_vertical"
+                    android:paddingLeft="40dp"
+                    android:text="@string/settings" />
+            </FrameLayout>
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_thumb_up" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
 
-                    <TextView
-                        style="@style/MainMenuTextAppearance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="40dp"
-                        android:text="@string/donate" />
-                </FrameLayout>
+            <FrameLayout
+                android:id="@+id/btnExit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/action_selector"
+                android:padding="15dp">
 
-                <View
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center_vertical"
+                    app:srcCompat="@drawable/ic_outline_exit_to_app" />
+
+                <TextView
+                    style="@style/MainMenuTextAppearance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_gravity="left|center_vertical"
+                    android:paddingLeft="40dp"
+                    android:text="@string/exit" />
+            </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/btnUpdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/action_selector"
-                    android:padding="15dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_refresh" />
-
-                    <TextView
-                        style="@style/MainMenuTextAppearance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="40dp"
-                        android:text="@string/update" />
-                </FrameLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/listDivider" />
-
-                <FrameLayout
-                    android:id="@+id/btnSettings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/action_selector"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_settings" />
-
-                    <TextView
-                        style="@style/MainMenuTextAppearance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="40dp"
-                        android:text="@string/settings" />
-                </FrameLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/listDivider" />
-
-                <FrameLayout
-                    android:id="@+id/btnExit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/action_selector"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="left|center_vertical"
-                        app:srcCompat="@drawable/ic_outline_exit_to_app" />
-
-                    <TextView
-                        style="@style/MainMenuTextAppearance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="40dp"
-                        android:text="@string/exit" />
-                </FrameLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/listDivider" />
-
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

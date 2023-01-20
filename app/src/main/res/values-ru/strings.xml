@@ -75,6 +75,7 @@
     </string-array>
     <string name="add_play">Доб. и играть</string>
     <string name="play">Играть</string>
+    <string name="play_from_start">Играть с начала</string>
     <string name="make_as_def">Запомнить действие</string>
     <string name="reset_def">Действие сброшено</string>
     <string name="playlist_all">Играть все</string>

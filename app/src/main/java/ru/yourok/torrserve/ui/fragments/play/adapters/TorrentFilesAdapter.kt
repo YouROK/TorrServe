@@ -25,6 +25,9 @@ class TorrentFilesAdapter : BaseAdapter() {
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
+        if (files.size > 1 && position == files.size ) {
+            return LayoutInflater.from(parent?.context).inflate(R.layout.torrent_files_button, parent, false)
+        }
         val vi = view ?: LayoutInflater.from(parent?.context).inflate(R.layout.torrent_files_item, parent, false)
         val file = files[position]
         var title = ""
@@ -54,8 +57,11 @@ class TorrentFilesAdapter : BaseAdapter() {
     }
 
     override fun getItem(p0: Int): Any? {
-        if (p0 < 0 || p0 >= files.size)
+        if (p0 < 0 || p0 > files.size)
             return null
+        // play from beginning
+        if (files.size > 1 && p0 == files.size)
+            return files[0]
         return files[p0]
     }
 
@@ -64,6 +70,9 @@ class TorrentFilesAdapter : BaseAdapter() {
     }
 
     override fun getCount(): Int {
-        return files.size
+        return if (files.size > 1)
+            files.size + 1
+        else
+            files.size
     }
 }

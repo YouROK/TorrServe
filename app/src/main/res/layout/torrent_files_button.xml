@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:padding="5dp">
+    <!--Button
+        android:id="@+id/btnPlaylist"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_weight="1"
+        android:text="@string/play_from_start" /-->
+    <TextView
+        android:id="@+id/tvPlayFromStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:minHeight="32dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/play_from_start"
+        android:textAllCaps="true"
+        android:textColor="?attr/colorPrimary"
+        android:textFontWeight="700"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</RelativeLayout>
