@@ -143,7 +143,7 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
+    suspend fun showProgress(prс: Int = -1) = withContext(Dispatchers.Main) {
         if (isActive) {
             val progress = findViewById<LinearProgressIndicator>(R.id.progressBar)
             val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
@@ -152,7 +152,7 @@ class PlayActivity : AppCompatActivity() {
             progress?.apply {
                 setIndicatorColor(color)
                 // https://material.io/components/progress-indicators/android
-                if (prog < 0 && !pi) {
+                if (prс < 0 && !pi) {
                     visibility = View.INVISIBLE
                     isIndeterminate = true
                 } else if (!pi) {
@@ -160,7 +160,7 @@ class PlayActivity : AppCompatActivity() {
                 }
                 if (!pv)
                     visibility = View.VISIBLE
-                setProgressCompat(prog, true)
+                setProgressCompat(prс, true)
             }
         }
     }

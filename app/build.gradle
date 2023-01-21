@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 17
@@ -45,18 +45,18 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-process:2.4.1'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1')
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4')
     // http client/parser
     implementation 'org.jsoup:jsoup:1.14.3'
     // json serializer

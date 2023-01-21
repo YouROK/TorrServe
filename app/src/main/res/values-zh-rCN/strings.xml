@@ -91,15 +91,10 @@
         <item>黑暗</item>
         <item>黑色</item>
     </string-array>
-    <string-array name="app_theme_entries_values">
-        <item>自动</item>
-        <item>白亮</item>
-        <item>黑暗</item>
-        <item>黑色</item>
-    </string-array>
 
     <string name="add_play">添加&amp;播放</string>
     <string name="play">播放</string>
+    <string name="play_from_start">从头开始玩</string>
 
     <string name="make_as_def">设为默认</string>
     <string name="reset_def">清除默认值</string>

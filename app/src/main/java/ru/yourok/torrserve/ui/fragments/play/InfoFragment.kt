@@ -198,7 +198,7 @@ open class InfoFragment : TSFragment() {
                         if (prc > 0 && prc < 100)
                             (activity as? PlayActivity)?.showProgress(prc.toInt())
                         else
-                            (activity as? PlayActivity)?.showProgress(-1)
+                            (activity as? PlayActivity)?.showProgress()
                     } else
                         (activity as? PlayActivity)?.hideProgress()
 

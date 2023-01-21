@@ -90,7 +90,7 @@
         <item>Auto</item>
         <item>Light</item>
         <item>Dark</item>
-        <item>Black</item>
+        <item>AMOLED</item>
     </string-array>
     <string-array name="app_theme_entries_values">
         <item>auto</item>
@@ -101,6 +101,7 @@
 
     <string name="add_play">Add &amp; Play</string>
     <string name="play">Play</string>
+    <string name="play_from_start">Play from beginning</string>
 
     <string name="make_as_def">Make as default</string>
     <string name="reset_def">Defaults cleared</string>

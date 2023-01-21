@@ -113,6 +113,11 @@ class TorrentFilesFragment : TSFragment() {
                 adapter = torrFilesAdapter
                 setOnItemClickListener { _, _, position, _ ->
                     val f = torrFilesAdapter.getItem(position) as FileStat? ?: return@setOnItemClickListener
+                    // clear viewed
+                    if (torrFilesAdapter.count > 1 && position == count - 1)
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            torrent?.hash?.let { Api.remViewed(it) }
+                        }
                     onClickItem?.invoke(f)
                 }
                 postDelayed({

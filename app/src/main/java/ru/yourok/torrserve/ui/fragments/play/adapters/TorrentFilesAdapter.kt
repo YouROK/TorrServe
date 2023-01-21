@@ -14,18 +14,23 @@ import ru.yourok.torrserve.utils.ByteFmt
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
 
+
 class TorrentFilesAdapter : BaseAdapter() {
     private var files: List<FileStat> = listOf()
+    private val typeFile = 0
+    private val typeButton = 1
     var viewed = listOf<Viewed>()
 
     fun update(torrent: Torrent, viewed: List<Viewed>?) {
         files = TorrentHelper.getPlayableFiles(torrent)
-        if (viewed != null)
-            this.viewed = viewed
+        if (viewed != null) this.viewed = viewed
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-        val vi = view ?: LayoutInflater.from(parent?.context).inflate(R.layout.torrent_files_item, parent, false)
+        val type: Int = getItemViewType(position)
+        val vi = view ?: if (type == typeFile) LayoutInflater.from(parent?.context).inflate(R.layout.torrent_files_item, parent, false)
+        else LayoutInflater.from(parent?.context).inflate(R.layout.torrent_files_button, parent, false)
+        if (files.size > 1 && position == count - 1) return vi
         val file = files[position]
         var title = ""
 //        val path = File(file.path).parent.split("/")
@@ -33,8 +38,7 @@ class TorrentFilesAdapter : BaseAdapter() {
 //            title += "$it/"
 //        }
         val path = File(file.path).parent
-        if (!path.isNullOrEmpty())
-            title += "$path/\n"
+        if (!path.isNullOrEmpty()) title += "$path/\n"
         title += File(file.path).name
         val size = ByteFmt.byteFmt(file.length)
 
@@ -54,8 +58,9 @@ class TorrentFilesAdapter : BaseAdapter() {
     }
 
     override fun getItem(p0: Int): Any? {
-        if (p0 < 0 || p0 >= files.size)
-            return null
+        if (p0 < 0 || p0 >= count) return null
+        // play from beginning
+        if (files.size > 1 && p0 == count - 1) return files[0]
         return files[p0]
     }
 
@@ -64,6 +69,15 @@ class TorrentFilesAdapter : BaseAdapter() {
     }
 
     override fun getCount(): Int {
-        return files.size
+        return if (files.size > 1) files.size + 1
+        else files.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (files.size > 1 && position == count - 1) typeButton else typeFile
+    }
+
+    override fun getViewTypeCount(): Int {
+        return 2
     }
 }

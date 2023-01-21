@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/torrent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -33,10 +34,10 @@
             android:fontFamily="sans-serif-condensed"
             android:maxLines="3"
             android:singleLine="false"
-            android:text="Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?attr/colorOnBackground"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="Name" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,12 +53,12 @@
                 android:ellipsize="middle"
                 android:fontFamily="sans-serif-condensed"
                 android:singleLine="false"
-                android:text="hash" />
+                tools:text="hash" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8px"
+                android:layout_marginBottom="4dp"
                 android:layout_weight="0"
                 android:orientation="vertical">
 
@@ -69,9 +70,9 @@
                     android:fontFamily="sans-serif-condensed"
                     android:paddingStart="3dp"
                     android:singleLine="true"
-                    android:text="5GB"
                     android:textColor="?attr/colorHost"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    tools:text="5GB" />
 
                 <TextView
                     android:id="@+id/tvTorrDate"
@@ -80,7 +81,7 @@
                     android:layout_gravity="end"
                     android:paddingStart="3dp"
                     android:singleLine="true"
-                    android:text="10.10.2001" />
+                    tools:text="10.10.2001" />
 
             </LinearLayout>
         </LinearLayout>

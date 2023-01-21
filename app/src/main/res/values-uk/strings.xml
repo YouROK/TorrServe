@@ -77,16 +77,11 @@
         <item>Авто</item>
         <item>Світла</item>
         <item>Темна</item>
-        <item>Чорна</item>
-    </string-array>
-    <string-array name="app_theme_entries_values">
-        <item>авто</item>
-        <item>світла</item>
-        <item>темна</item>
-        <item>чорна</item>
+        <item>AMOLED</item>
     </string-array>
     <string name="add_play">Додати і програти</string>
     <string name="play">Програти</string>
+    <string name="play_from_start">Грати з початку</string>
     <string name="make_as_def">Запам\'ятати вибір</string>
     <string name="reset_def">Дія скинута</string>
     <string name="playlist_all">Програти все</string>

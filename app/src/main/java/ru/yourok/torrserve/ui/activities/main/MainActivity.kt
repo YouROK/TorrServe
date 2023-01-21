@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 withContext(Dispatchers.Main) {
+                    if (App.inForeground)
                     if (TorrService.isLocal())
                         ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
                     else
