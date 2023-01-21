@@ -77,13 +77,7 @@
         <item>Авто</item>
         <item>Світла</item>
         <item>Темна</item>
-        <item>Чорна</item>
-    </string-array>
-    <string-array name="app_theme_entries_values">
-        <item>авто</item>
-        <item>світла</item>
-        <item>темна</item>
-        <item>чорна</item>
+        <item>AMOLED</item>
     </string-array>
     <string name="add_play">Додати і програти</string>
     <string name="play">Програти</string>

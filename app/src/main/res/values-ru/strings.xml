@@ -71,7 +71,7 @@
         <item>Как в системе</item>
         <item>Светлая</item>
         <item>Тёмная</item>
-        <item>Чёрная</item>
+        <item>AMOLED</item>
     </string-array>
     <string name="add_play">Доб. и играть</string>
     <string name="play">Играть</string>

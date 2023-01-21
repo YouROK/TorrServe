@@ -90,7 +90,7 @@
         <item>Auto</item>
         <item>Light</item>
         <item>Dark</item>
-        <item>Black</item>
+        <item>AMOLED</item>
     </string-array>
     <string-array name="app_theme_entries_values">
         <item>auto</item>
