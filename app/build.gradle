@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.firebase.crashlytics'
     id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -15,8 +16,8 @@ android {
         targetSdkVersion 28
         // for older androids
         multiDexEnabled true
-        versionCode 117
-        versionName "MatriX.117.Client"
+        versionCode 120
+        versionName "MatriX.120.Client"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
@@ -64,6 +65,7 @@ dependencies {
     // root shell (3.2.1)
     //noinspection GradleDependency 3.2.1 last api17 compatible
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
+    implementation 'androidx.core:core-ktx:+'
     // glide
     def glideVersion = '4.13.1'
     implementation "com.github.bumptech.glide:glide:${glideVersion}"
