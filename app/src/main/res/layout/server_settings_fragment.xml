@@ -401,6 +401,21 @@
                 android:text="@string/enable_dlna"
                 android:visibility="gone" />
 
+            <CheckBox
+                android:id="@+id/cbEnableRutorSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enable_rutor_search"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tvEnableRutorSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:labelFor="@+id/cbPreloadBuffer"
+                android:text="@string/enable_rutor_search_desc"
+                android:visibility="gone"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"

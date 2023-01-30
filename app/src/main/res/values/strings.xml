@@ -50,6 +50,8 @@
     <string name="disable_utp_desc">(not recommended to enable on weak devices)</string>
     <string name="disable_upnp">UPnP - Universal Plug and Play</string>
     <string name="disable_upnp_desc">(auto open port on router)</string>
+    <string name="enable_rutor_search">Enable search Rutor torrent</string>
+    <string name="enable_rutor_search_desc">(the database will occupy about 500 MB in memory)</string>
     <string name="disable_dht">DHT - Distributed Hash Table</string>
     <string name="disable_dht_desc">(disable if there is no network after starting the server)</string>
     <string name="disable_pex">PEX - Peer Exchange</string>
