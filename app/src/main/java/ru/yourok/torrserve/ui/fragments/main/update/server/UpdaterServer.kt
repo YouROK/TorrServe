@@ -13,10 +13,9 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
 
 object UpdaterServer {
     private var version: ServVersion? = null
@@ -81,6 +80,7 @@ object UpdaterServer {
         if (TorrService.isLocal()) {
             TorrService.start()
         }
+        downloadFFProbe()
     }
 
     fun updateFromFile(filePath: String) {
@@ -134,6 +134,47 @@ object UpdaterServer {
         }
     }
 
+    fun downloadFFProbe() {
+        val fileZip = File(App.context.filesDir, "ffprobe.zip")
+        val file = File(App.context.filesDir, "ffprobe")
+
+        if (file.exists())
+            return
+
+        val arch = getArch()
+        var link = ""
+        when (arch) {
+            "arm7" -> link = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v4.4.1/ffprobe-4.4.1-linux-armhf-32.zip"
+            "arm64" -> link = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v4.4.1/ffprobe-4.4.1-linux-arm-64.zip"
+            "386" -> link = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v4.4.1/ffprobe-4.4.1-linux-32.zip"
+            "amd64" -> link = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v4.4.1/ffprobe-4.4.1-linux-64.zip"
+        }
+
+        val http = Http(Uri.parse(link))
+        http.connect()
+        http.getInputStream().also { content ->
+            content ?: let {
+                fileZip.delete()
+                file.delete()
+                throw IOException("error connect server, url: $link")
+            }
+            FileOutputStream(fileZip).use { fileOut ->
+                content.copyTo(fileOut)
+                fileOut.flush()
+                fileOut.close()
+
+                fileZip.unzip(App.context.filesDir)
+//                unzip(fileZip, App.context.filesDir)
+
+                fileZip.delete()
+                if (!file.setExecutable(true)) {
+                    file.delete()
+                    throw IOException("error set exec permission")
+                }
+            }
+        }
+    }
+
     fun getRemoteVersion(): String {
         if (version == null)
             check()
@@ -155,5 +196,40 @@ object UpdaterServer {
                 ver.links["android-$arch"] ?: ""
         }
         return ""
+    }
+
+    data class ZipIO(val entry: ZipEntry, val output: File)
+
+    fun File.unzip(unzipLocationRoot: File? = null) {
+
+        val rootFolder = unzipLocationRoot ?: File(parentFile.absolutePath + File.separator + nameWithoutExtension)
+        if (!rootFolder.exists()) {
+            rootFolder.mkdirs()
+        }
+
+        ZipFile(this).use { zip ->
+            zip
+                .entries()
+                .asSequence()
+                .map {
+                    val outputFile = File(rootFolder.absolutePath + File.separator + it.name)
+                    ZipIO(it, outputFile)
+                }
+                .map {
+                    it.output.parentFile?.run {
+                        if (!exists()) mkdirs()
+                    }
+                    it
+                }
+                .filter { !it.entry.isDirectory }
+                .forEach { (entry, output) ->
+                    zip.getInputStream(entry).use { input ->
+                        output.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                }
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.server.api
 
 import com.google.gson.Gson
+import ru.yourok.torrserve.server.models.ffp.Format
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.utils.Net
@@ -120,6 +121,14 @@ object Api {
         val host = Net.getHostUrl("/viewed")
         val req = ViewedReq("rem", hash).toString()
         postJson(host, req)
+    }
+
+    fun getFFP(hash: String, id: Int): Format? {
+        val host = Net.getHostUrl("/ffp/${hash}/${id}")
+        val resp = Net.getAuth(host)
+        if (resp.isBlank())
+            return null
+        return Gson().fromJson(resp, Format::class.java)
     }
 
     private fun postJson(url: String, json: String): String {
