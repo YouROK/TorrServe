@@ -28,7 +28,7 @@ class Http(url: Uri) {
         connect(0)
     }
 
-    fun connect(pos: Long): Long {
+    private fun connect(pos: Long): Long {
 
         var responseCode: Int
         var redirCount = 0
@@ -38,14 +38,14 @@ class Http(url: Uri) {
 
             val url = URL(currUrl)
 
-            if (currUrl.startsWith("https"))
-                connection = NetCipher.getHttpsURLConnection(url)
+            connection = if (currUrl.startsWith("https"))
+                NetCipher.getHttpsURLConnection(url)
             else
-                connection = NetCipher.getHttpURLConnection(url)
+                NetCipher.getHttpURLConnection(url)
             connection!!.connectTimeout = timeout
             connection!!.readTimeout = 15000
-            connection!!.setRequestMethod("GET")
-            connection!!.setDoInput(true)
+            connection!!.requestMethod = "GET"
+            connection!!.doInput = true
 
             connection!!.setRequestProperty("UserAgent", "DWL/1.1.0 (Linux; Android;)")
             connection!!.setRequestProperty("Accept", "*/*")
@@ -55,7 +55,7 @@ class Http(url: Uri) {
 
             connection!!.connect()
 
-            responseCode = connection!!.getResponseCode()
+            responseCode = connection!!.responseCode
             var redirected =
                 responseCode == HTTP_MOVED_PERM || responseCode == HTTP_MOVED_TEMP || responseCode == HTTP_SEE_OTHER
             if (redirected) {
@@ -74,12 +74,12 @@ class Http(url: Uri) {
             }
 
             if (redirCount > 5) {
-                throw IOException("Error connect to: " + currUrl + " too many redirects")
+                throw IOException("Error connect to: $currUrl too many redirects")
             }
         } while (redirected)
 
 
-        if (responseCode != HttpURLConnection.HTTP_OK && responseCode != HttpURLConnection.HTTP_PARTIAL) {
+        if (responseCode != HTTP_OK && responseCode != HTTP_PARTIAL) {
             throw IOException("Error connect to: " + currUrl + " " + connection!!.responseMessage)
         }
         isConn = true
@@ -108,7 +108,7 @@ class Http(url: Uri) {
                     cl = cr.last()
                 return cl.toLong()
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
 
         cl = connection!!.getHeaderField("Content-Length")
@@ -116,7 +116,7 @@ class Http(url: Uri) {
             if (!cl.isNullOrEmpty()) {
                 return cl.toLong()
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
 
         return 0
@@ -128,10 +128,10 @@ class Http(url: Uri) {
 
     fun getInputStream(): InputStream? {
         if (inputStream == null && connection != null) {
-            if ("gzip".equals(connection?.getContentEncoding()))
-                inputStream = GZIPInputStream(connection!!.getInputStream())
+            inputStream = if ("gzip" == connection?.contentEncoding)
+                GZIPInputStream(connection!!.inputStream)
             else
-                inputStream = connection!!.getInputStream()
+                connection!!.inputStream
         }
 
         return inputStream
@@ -164,7 +164,7 @@ class Http(url: Uri) {
     fun close() {
         try {
             inputStream?.close()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
         connection?.disconnect()
         isConn = false

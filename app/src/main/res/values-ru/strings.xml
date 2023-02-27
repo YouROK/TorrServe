@@ -108,8 +108,9 @@
     <string name="delete_local_server">Удалить локальный сервер</string>
     <string name="arch">Архитектура ОС</string>
     <string name="update_server">Обновление сервера</string>
+    <string name="warn_error_check_ver">Ошибка проверки версии сервера</string>
     <string name="warn_error_download_server">Ошибка загрузки сервера</string>
-    <string name="warn_no_localy_updates">Нет обновлений</string>
+    <string name="warn_no_local_updates">Нет локальных обновлений</string>
     <string name="need_install_server">Необходимо установить сервер</string>
     <string name="need_update_server">Необходимо обновить сервер</string>
     <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
@@ -173,6 +174,7 @@
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">бит/c</string>
     <string name="no_torrents">Нет торрентов</string>
+    <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
     <string name="host_authorization">Авторизация на сервере</string>

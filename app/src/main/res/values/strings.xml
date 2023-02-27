@@ -143,8 +143,9 @@
     <string name="delete_local_server">Delete local server</string>
     <string name="arch">Arch</string>
     <string name="update_server">Update server</string>
+    <string name="warn_error_check_ver">Version check error</string>
     <string name="warn_error_download_server">Server download error</string>
-    <string name="warn_no_localy_updates">No local updates</string>
+    <string name="warn_no_local_updates">No local updates found</string>
     <string name="need_install_server">Server needs to be installed</string>
     <string name="need_update_server">Server needs to be updated</string>
     <string name="not_support_old_server">Server version 1.1.x is not supported. Update server or use client 1.1.x for it.</string>
@@ -235,6 +236,7 @@
     <string name="fmt_bps">bps</string>
 
     <string name="no_torrents">No Torrents</string>
+    <string name="no_updates">No updates found</string>
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
 
