@@ -8,7 +8,7 @@ import java.io.File
 
 object Settings {
 
-    fun getServerAuth() = get("server_auth", "")
+    fun getServerAuth() = get("server_auth", "").trim()
 
     fun getHosts(): List<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
