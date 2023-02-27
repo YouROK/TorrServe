@@ -47,7 +47,7 @@ object Utils {
             var lastList = emptyList<Torrent>()
             try {
                 lastList = Api.listTorrent()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
             UpdaterCards.updateCards()
             thread {
@@ -55,7 +55,7 @@ object Utils {
                     var torrs = emptyList<Torrent>()
                     try {
                         torrs = Api.listTorrent()
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                     }
                     if (!equalTorrs(lastList, torrs)) {
                         lastList = torrs

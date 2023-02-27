@@ -219,7 +219,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<FrameLayout>(R.id.btnUpdate).setOnClickListener {
-
             lifecycleScope.launch(Dispatchers.IO) {
 //                if (UpdaterApk.check())
 //                    withContext(Dispatchers.Main) {

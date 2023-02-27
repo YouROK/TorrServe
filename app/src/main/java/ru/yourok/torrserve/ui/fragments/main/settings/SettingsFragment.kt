@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.fragments.main.settings
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.*
 import ru.yourok.torrserve.BuildConfig
 //import kotlinx.coroutines.Dispatchers
 //import kotlinx.coroutines.launch
@@ -21,6 +23,8 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.ext.commitFragment
 import ru.yourok.torrserve.ext.getLastFragment
+import ru.yourok.torrserve.server.local.ServerFile
+import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.players.Players
 import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
@@ -174,6 +178,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
 //            }
         }
 
+        findPreference<EditTextPreference>("server_auth")?.apply {
+            setOnPreferenceChangeListener { _, newValue ->
+                if (BuildConfig.DEBUG) Log.d("*****", "OnPreferenceChange(\"server_auth\"), new value \"$newValue\"")
+                if (TorrService.isLocal()) {
+                    runBlocking {
+                        val sfl = ServerFile()
+                        val std: Deferred<Unit> = async(context = Dispatchers.Default) {
+                            sfl.stop()
+                        }
+                        std.await()
+                        sfl.run(newValue as String)
+                    }
+                }
+                true
+            }
+        }
     }
 
     override fun onResume() {

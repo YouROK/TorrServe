@@ -134,8 +134,9 @@
     <string name="delete_local_server">删除本地服务端</string>
     <string name="arch">架构</string>
     <string name="update_server">更新服务端</string>
+    <string name="warn_error_check_ver">版本检查错误</string>
     <string name="warn_error_download_server">服务端下载错误</string>
-    <string name="warn_no_localy_updates">无本地更新</string>
+    <string name="warn_no_local_updates">无本地更新</string>
     <string name="need_install_server">需要安装服务端</string>
     <string name="need_update_server">服务端需要更新</string>
     <string name="not_support_old_server">不支持服务端版本 1.1.x。更新服务端或使用客户端 1.1.x。</string>
@@ -225,6 +226,7 @@
     <string name="fmt_bps">bps</string>
 
     <string name="no_torrents">没有种子</string>
+    <string name="no_updates">没有更新</string>
     <string name="not_used">未使用</string>
     <string name="not_installed">未安装</string>
     <string name="boosty_msg">Boosty 網站</string>

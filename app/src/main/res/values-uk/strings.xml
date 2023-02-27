@@ -114,8 +114,9 @@
     <string name="delete_local_server">Видалити локальний сервер</string>
     <string name="arch">Архітектура ОС</string>
     <string name="update_server">Оновлення сервера</string>
+    <string name="warn_error_check_ver">Помилка перевірки версії</string>
     <string name="warn_error_download_server">Помилка при завантаженні сервера</string>
-    <string name="warn_no_localy_updates">Немає локальних оновлень</string>
+    <string name="warn_no_local_updates">Немає локальних оновлень</string>
     <string name="need_install_server">Необхідно встановити сервер</string>
     <string name="need_update_server">Потрібно оновити сервер</string>
     <string name="not_support_old_server">Сервер версії 1.1.x не підтримується. Оновіть сервер або користується клієнтом версії 1.1.x.</string>
@@ -181,6 +182,7 @@
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">біт/с</string>
     <string name="no_torrents">Немає торрентів</string>
+    <string name="no_updates">Немає оновлень</string>
     <string name="not_used">Не використовується</string>
     <string name="not_installed">Не встановленно</string>
     <string name="default_sets_applied">Налаштування за замовчуванням застосовуються</string>

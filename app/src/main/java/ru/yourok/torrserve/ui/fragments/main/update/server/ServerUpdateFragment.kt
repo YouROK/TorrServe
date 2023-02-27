@@ -88,9 +88,8 @@ class ServerUpdateFragment : TSFragment() {
                 view?.findViewById<TextView>(R.id.tvLocalVersion)?.text = UpdaterServer.getLocalVersion()
             }
             UpdaterServer.check()
-            val ver = UpdaterServer.getRemoteVersion()
             withContext(Dispatchers.Main) {
-                view?.findViewById<TextView>(R.id.tvRemoteVersion)?.text = ver
+                view?.findViewById<TextView>(R.id.tvRemoteVersion)?.text = UpdaterServer.getRemoteVersion()
             }
         }
     }
@@ -119,11 +118,8 @@ class ServerUpdateFragment : TSFragment() {
             else
                 false
         }
-
         if (files.isNullOrEmpty()) {
-            App.toast(R.string.warn_no_localy_updates)
-            val msg = getString(R.string.warn_no_localy_updates) + ": ${dw.name}/TorrServer-android-${UpdaterServer.getArch()}"
-            view?.findViewById<TextView>(R.id.tvUpdateInfo)?.text = msg
+            App.toast(R.string.warn_no_local_updates, true)
             return
         }
 
@@ -139,7 +135,7 @@ class ServerUpdateFragment : TSFragment() {
                     hideProgress()
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
-                        val msg = "Error copy server:" + (e.message ?: "")
+                        val msg = "Error copy server: " + (e.message ?: "unknown error")
                         view?.findViewById<TextView>(R.id.tvUpdateInfo)?.text = msg
                         App.toast(msg)
                     }
