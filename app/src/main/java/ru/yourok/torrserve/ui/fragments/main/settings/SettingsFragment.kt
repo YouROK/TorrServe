@@ -180,10 +180,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 if (TorrService.isLocal()) {
                     runBlocking {
                         val sfl = ServerFile()
-                        val std: Deferred<Unit> = async(context = Dispatchers.Default) {
+                        withContext(context = Dispatchers.Default) {
                             sfl.stop()
                         }
-                        std.await()
                         sfl.run(newValue as String)
                     }
                 }
