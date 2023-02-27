@@ -2,7 +2,6 @@ package ru.yourok.torrserve.ui.fragments.play
 
 import android.content.Context
 import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -29,6 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.local.TorrService
+import ru.yourok.torrserve.server.models.ffp.Format
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
@@ -70,6 +70,7 @@ open class InfoFragment : TSFragment() {
     }
 
     private var poster = " "
+    private var format: Format? = null
 
     // textView.text = "" // Remove old text
     // textView.append("Red Text", Color.RED)
@@ -140,6 +141,13 @@ open class InfoFragment : TSFragment() {
                         (activity as? PlayActivity)?.hideTitle()
                         findViewById<TextView>(R.id.tvTitle).visibility = View.VISIBLE
                         findViewById<TextView>(R.id.tvTitle).text = title
+                    }
+
+                    format?.let {
+                        findViewById<TextView>(R.id.tvBitrate).text = it.bit_rate
+                        findViewById<TextView>(R.id.tvBitrate).visibility = View.VISIBLE
+                    } ?: let {
+                        findViewById<TextView>(R.id.tvBitrate).visibility = View.GONE
                     }
 
                     val file: FileStat? = if (index >= 0) torr.file_stats?.get(index) else null
@@ -220,6 +228,17 @@ open class InfoFragment : TSFragment() {
                             text = "" // txt
                             append("${getString(R.string.download_speed)} ", color1, true)
                             append("$speed", color2, true)
+                        }
+                    }
+
+                    torr.bit_rate?.let { br ->
+                        if (br.isNotBlank()) {
+                            val bitRate = ByteFmt.speedFmt(br.toDouble())
+                            findViewById<TextView>(R.id.tvBitrate).apply {
+                                text = "" // txt
+                                append("${getString(R.string.bit_rate)} ", color1, true)
+                                append("$bitRate", color2, true)
+                            }
                         }
                     }
 

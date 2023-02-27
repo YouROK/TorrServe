@@ -190,4 +190,5 @@
     <string name="boosty_msg">Boosty сайт</string>
     <string name="enable_rutor_search">Увімкніть пошук Rutor</string>
     <string name="enable_rutor_search_desc">(база даних займе в пам\'яті близько 500 Мб)</string>
+    <string name="bit_rate">Бітрейт</string>
 </resources>

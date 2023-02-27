@@ -1,5 +1,5 @@
 <resources>
-<string name="app_name" translatable="false">TorrServe MatriX</string>
+    <string name="app_name" translatable="false">TorrServe MatriX</string>
 
     <string name="add">添加种子</string>
     <string name="delete">删除</string>
@@ -232,5 +232,6 @@
     <string name="boosty_msg">Boosty 網站</string>
     <string name="enable_rutor_search">打開Rutor的搜索</string>
     <string name="enable_rutor_search_desc">(數據庫將在內存中大約500 MB)</string>
+    <string name="bit_rate">比特率</string>
 
 </resources>
