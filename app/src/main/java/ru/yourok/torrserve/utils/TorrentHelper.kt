@@ -28,7 +28,10 @@ object TorrentHelper {
             val path = it.path
             if (Mime.getMimeType(path) != "*/*") {
                 val size = it.length
-                if (File(path).extension.lowercase(Locale.getDefault()) == "m2ts") {
+                if (File(path).extension.lowercase() == "m2ts" ||
+                    File(path).extension.lowercase() == "mts" ||
+                    File(path).extension.lowercase() == "ts"
+                ) {
                     if (size > 1073741824L)
                         retList.add(it)
                 } else
@@ -81,7 +84,7 @@ object TorrentHelper {
         try {
             val link = getTorrentPreloadLink(torr, index)
             Net.getAuth(link)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 

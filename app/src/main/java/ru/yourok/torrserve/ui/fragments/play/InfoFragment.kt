@@ -22,11 +22,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.server.models.ffp.Format
 import ru.yourok.torrserve.server.models.torrent.FileStat
@@ -55,6 +53,8 @@ open class InfoFragment : TSFragment() {
         return vi
     }
 
+    private var poster = " "
+    private var format: Format? = null
     suspend fun startInfo(hash: String) = withContext(Dispatchers.Main) {
         try {
             viewModel = ViewModelProvider(this@InfoFragment)[InfoViewModel::class.java]
@@ -64,13 +64,39 @@ open class InfoFragment : TSFragment() {
                     updateUI(it, (requireActivity() as PlayActivity).torrentFileIndex)
                 }
             }
+            val getFormat: Deferred<Format?> = async(Dispatchers.IO) {
+                format = try { // 404 on old servers throws an error
+                    Api.getFFP(hash, 0)?.format // FIXME! Which file ID?
+                } catch (e: java.lang.Exception) {
+                    null
+                }
+                //Log.d("*****", "got format: ${format.toString()}")
+                format
+            }
+            view?.apply {
+                val tvBr = findViewById<TextView>(R.id.tvBitrate)
+                val color1 = 0
+                val color2 = ColorUtils.setAlphaComponent(getColorFromAttr(this.context, R.attr.colorOnBackground), 220)
+                getFormat.await()?.let {
+                    it.bit_rate.let { br ->
+                        if (br.isNotBlank()) {
+                            val bitRate = ByteFmt.speedFmt(br.toDouble()/8)
+                            tvBr.apply {
+                                text = "" // txt
+                                append("${getString(R.string.bit_rate)} ", color1, true)
+                                append(bitRate, color2, true)
+                            }
+                        }
+                    }
+                    tvBr.visibility = View.VISIBLE
+                } ?: let {
+                    tvBr.visibility = View.GONE
+                }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-
-    private var poster = " "
-    private var format: Format? = null
 
     // textView.text = "" // Remove old text
     // textView.append("Red Text", Color.RED)
@@ -143,13 +169,6 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvTitle).text = title
                     }
 
-                    format?.let {
-                        findViewById<TextView>(R.id.tvBitrate).text = it.bit_rate
-                        findViewById<TextView>(R.id.tvBitrate).visibility = View.VISIBLE
-                    } ?: let {
-                        findViewById<TextView>(R.id.tvBitrate).visibility = View.GONE
-                    }
-
                     val file: FileStat? = if (index >= 0) torr.file_stats?.get(index) else null
                     val color1 = 0 // ColorUtils.setAlphaComponent(getColorFromAttr(this.context, R.attr.colorOnBackground), 200)
                     val color2 = ColorUtils.setAlphaComponent(getColorFromAttr(this.context, R.attr.colorOnBackground), 220)
@@ -165,7 +184,7 @@ open class InfoFragment : TSFragment() {
 
                         tvFN.apply {
                             text = "" // name
-                            append("$name", color2)
+                            append(name, color2)
                         }
 
                         val size = it.length
@@ -174,7 +193,7 @@ open class InfoFragment : TSFragment() {
                             tvFS.apply {
                                 text = "" // txt
                                 append("${getString(R.string.size)} ", color1, true)
-                                append("${ByteFmt.byteFmt(size)}", color2, true)
+                                append(ByteFmt.byteFmt(size), color2, true)
                             }
                         }
                     } ?: let {
@@ -198,7 +217,7 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvBuffer).apply {
                             text = "" // txt
                             append("${getString(R.string.buffer)} ", color1, true)
-                            append("$buffer", color2, true)
+                            append(buffer, color2, true)
                         }
                     }
 
@@ -216,7 +235,7 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvPeers).apply {
                             text = "" // txt
                             append("${getString(R.string.peers)} ", color1, true)
-                            append("$peers", color2, true)
+                            append(peers, color2, true)
                         }
                     }
 
@@ -227,7 +246,7 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvSpeed).apply {
                             text = "" // txt
                             append("${getString(R.string.download_speed)} ", color1, true)
-                            append("$speed", color2, true)
+                            append(speed, color2, true)
                         }
                     }
 
@@ -237,7 +256,7 @@ open class InfoFragment : TSFragment() {
                             findViewById<TextView>(R.id.tvBitrate).apply {
                                 text = "" // txt
                                 append("${getString(R.string.bit_rate)} ", color1, true)
-                                append("$bitRate", color2, true)
+                                append(bitRate, color2, true)
                             }
                         }
                     }

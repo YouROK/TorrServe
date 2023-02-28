@@ -180,7 +180,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 if (TorrService.isLocal()) {
                     runBlocking {
                         val sfl = ServerFile()
-                        withContext(context = Dispatchers.Default) {
+                        withContext(Dispatchers.Default) {
                             sfl.stop()
                         }
                         sfl.run(newValue as String)

@@ -57,7 +57,6 @@ object Net {
             .requestBody(req)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-//            .timeout(5000)
             .method(Connection.Method.POST)
 
         val auth = getAuthB64()
@@ -83,14 +82,13 @@ object Net {
         val conn = Jsoup.connect(url)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-            .timeout(2000)
+            .timeout(15000) // FFP
 
         val auth = getAuthB64()
         if (auth.isNotEmpty())
             conn.header("Authorization", auth)
 
         val response = conn.execute()
-
         return when (response.statusCode()) {
             200 -> {
                 response.body()
@@ -116,7 +114,7 @@ object Net {
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
             .sslSocketFactory(insecureTlsSocketFactory())
-            .timeout(2000)
+            .timeout(5000) // UPD
             .execute()
 
         return when (response.statusCode()) {
@@ -134,7 +132,8 @@ object Net {
 
     // https://stackoverflow.com/questions/26649389/how-to-disable-sslv3-in-android-for-httpsurlconnection
     fun insecureTlsSocketFactory(): SSLSocketFactory {
-        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+        val trustAllCerts = arrayOf<TrustManager>(@SuppressLint("CustomX509TrustManager")
+        object : X509TrustManager {
             @SuppressLint("TrustAllX509TrustManager")
             @Throws(CertificateException::class)
             override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
