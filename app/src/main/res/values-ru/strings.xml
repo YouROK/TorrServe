@@ -185,6 +185,6 @@
     <string name="permission_deny">В доступе отказано</string>
     <string name="boosty_msg">Boosty сайт</string>
     <string name="enable_rutor_search">Включить поиск по Rutor</string>
-    <string name="enable_rutor_search_desc">(база данных будет занимать около 500 МБ в памяти)</string>
+    <string name="enable_rutor_search_desc">(база данных будет занимать около 500 МБ в оперативной памяти)</string>
     <string name="bit_rate">Битрейт</string>
 </resources>
