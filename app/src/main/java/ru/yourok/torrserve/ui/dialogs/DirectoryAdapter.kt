@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.utils.ByteFmt
+import ru.yourok.torrserve.utils.Format
 import java.io.File
 
 class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
@@ -45,7 +45,7 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
         } else {
             stat.blockSize.toLong() * stat.availableBlocks.toLong()
         }
-        return ByteFmt.byteFmt(bytesAvailable)
+        return Format.byteFmt(bytesAvailable)
     }
 
     fun dirUp() {

@@ -173,6 +173,7 @@
     <string name="fmt_p">КМГТПЭ</string>
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">бит/c</string>
+    <string name="runtime">Длительность</string>
     <string name="no_torrents">Нет торрентов</string>
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>

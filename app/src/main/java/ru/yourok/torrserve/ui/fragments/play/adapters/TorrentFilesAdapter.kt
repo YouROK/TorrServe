@@ -10,7 +10,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
-import ru.yourok.torrserve.utils.ByteFmt
+import ru.yourok.torrserve.utils.Format
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
 
@@ -40,7 +40,7 @@ class TorrentFilesAdapter : BaseAdapter() {
         val path = File(file.path).parent
         if (!path.isNullOrEmpty()) title += "$path/\n"
         title += File(file.path).name
-        val size = ByteFmt.byteFmt(file.length)
+        val size = Format.byteFmt(file.length)
 
         vi.findViewById<TextView>(R.id.tvFileName)?.text = title
         vi.findViewById<TextView>(R.id.tvFileSize)?.text = size

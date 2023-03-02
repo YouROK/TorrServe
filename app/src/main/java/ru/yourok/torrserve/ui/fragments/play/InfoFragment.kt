@@ -22,18 +22,19 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
-import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
-import ru.yourok.torrserve.server.models.ffp.Format
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoTorrent
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoViewModel
-import ru.yourok.torrserve.utils.ByteFmt
+import ru.yourok.torrserve.utils.Format
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
 import java.util.*
@@ -54,7 +55,6 @@ open class InfoFragment : TSFragment() {
     }
 
     private var poster = " "
-    private var format: Format? = null
     suspend fun startInfo(hash: String) = withContext(Dispatchers.Main) {
         try {
             viewModel = ViewModelProvider(this@InfoFragment)[InfoViewModel::class.java]
@@ -62,35 +62,6 @@ open class InfoFragment : TSFragment() {
                 val data = (viewModel as InfoViewModel).setTorrent(hash)
                 data.observe(this@InfoFragment) {
                     updateUI(it, (requireActivity() as PlayActivity).torrentFileIndex)
-                }
-            }
-            val getFormat: Deferred<Format?> = async(Dispatchers.IO) {
-                format = try { // 404 on old servers throws an error
-                    Api.getFFP(hash, 0)?.format // FIXME! Which file ID?
-                } catch (e: java.lang.Exception) {
-                    null
-                }
-                //Log.d("*****", "got format: ${format.toString()}")
-                format
-            }
-            view?.apply {
-                val tvBr = findViewById<TextView>(R.id.tvBitrate)
-                val color1 = 0
-                val color2 = ColorUtils.setAlphaComponent(getColorFromAttr(this.context, R.attr.colorOnBackground), 220)
-                getFormat.await()?.let {
-                    it.bit_rate.let { br ->
-                        if (br.isNotBlank()) {
-                            val bitRate = ByteFmt.speedFmt(br.toDouble()/8)
-                            tvBr.apply {
-                                text = "" // txt
-                                append("${getString(R.string.bit_rate)} ", color1, true)
-                                append(bitRate, color2, true)
-                            }
-                        }
-                    }
-                    tvBr.visibility = View.VISIBLE
-                } ?: let {
-                    tvBr.visibility = View.GONE
                 }
             }
         } catch (e: Exception) {
@@ -193,7 +164,7 @@ open class InfoFragment : TSFragment() {
                             tvFS.apply {
                                 text = "" // txt
                                 append("${getString(R.string.size)} ", color1, true)
-                                append(ByteFmt.byteFmt(size), color2, true)
+                                append(Format.byteFmt(size), color2, true)
                             }
                         }
                     } ?: let {
@@ -207,9 +178,9 @@ open class InfoFragment : TSFragment() {
                         prc = torr.preloaded_bytes.toDouble() * 100.0 / torr.preload_size.toDouble()
                         if (prc < 100.0)
                             buffer = "%.1f".format(prc) + "% "
-                        buffer += ByteFmt.byteFmt(torr.preloaded_bytes)
+                        buffer += Format.byteFmt(torr.preloaded_bytes)
                         if (prc < 100.0)
-                            buffer += "/" + ByteFmt.byteFmt(torr.preload_size)
+                            buffer += "/" + Format.byteFmt(torr.preload_size)
                     }
 
                     if (buffer.isNotEmpty()) {
@@ -239,8 +210,8 @@ open class InfoFragment : TSFragment() {
                         }
                     }
 
-                    //val speed = ByteFmt.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
-                    val speed = ByteFmt.speedFmt(torr.download_speed)
+                    //val speed = Format.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
+                    val speed = Format.speedFmt(torr.download_speed)
                     if (speed.isNotEmpty() && torr.download_speed > 50.0) {
                         // spannable
                         findViewById<TextView>(R.id.tvSpeed).apply {
@@ -249,10 +220,20 @@ open class InfoFragment : TSFragment() {
                             append(speed, color2, true)
                         }
                     }
-
+                    // ffprobe addons
+                    torr.duration_seconds?.let { ds ->
+                        if (!ds.isNaN()) {
+                            val duration = Format.durFmt(ds)
+                            findViewById<TextView>(R.id.tvDuration).apply {
+                                text = "" // txt
+                                append("${getString(R.string.runtime)} ", color1, true)
+                                append(duration, color2, true)
+                            }
+                        }
+                    }
                     torr.bit_rate?.let { br ->
                         if (br.isNotBlank()) {
-                            val bitRate = ByteFmt.speedFmt(br.toDouble())
+                            val bitRate = Format.speedFmt(br.toDouble()/8)
                             findViewById<TextView>(R.id.tvBitrate).apply {
                                 text = "" // txt
                                 append("${getString(R.string.bit_rate)} ", color1, true)

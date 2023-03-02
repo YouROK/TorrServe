@@ -235,6 +235,7 @@
     <string name="fmt_p">KMGTPE</string>
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
+    <string name="runtime">Runtime</string>
 
     <string name="no_torrents">No Torrents</string>
     <string name="no_updates">No updates found</string>

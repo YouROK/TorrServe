@@ -128,7 +128,6 @@ object Api {
         val resp = Net.getAuth(host)
         if (resp.isBlank())
             return null
-        //Log.d("*****", "getFFP() $resp")
         return Gson().fromJson(resp, FFPModel::class.java)
     }
 

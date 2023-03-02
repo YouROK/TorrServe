@@ -224,6 +224,7 @@
     <string name="fmt_p">KMGTPE</string>
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
+    <string name="runtime">期间</string>
 
     <string name="no_torrents">没有种子</string>
     <string name="no_updates">没有更新</string>

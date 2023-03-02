@@ -181,6 +181,7 @@
     <string name="fmt_p">КМГТПЕ</string>
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">біт/с</string>
+    <string name="runtime">Тривалість</string>
     <string name="no_torrents">Немає торрентів</string>
     <string name="no_updates">Немає оновлень</string>
     <string name="not_used">Не використовується</string>

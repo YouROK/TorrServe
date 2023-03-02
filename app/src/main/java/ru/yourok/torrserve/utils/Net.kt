@@ -82,7 +82,7 @@ object Net {
         val conn = Jsoup.connect(url)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-            .timeout(15000) // FFP
+            .timeout(5000) // FFP
 
         val auth = getAuthB64()
         if (auth.isNotEmpty())
