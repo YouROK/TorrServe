@@ -125,7 +125,9 @@ class NotificationHelper {
 
     fun doUnbindService(context: Context) {
         if (mService != null) {
-            context.unbindService(mConnection)
+            try {
+                context.unbindService(mConnection)
+            } catch (_: Exception) {}
         }
     }
 }
