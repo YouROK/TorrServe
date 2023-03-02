@@ -221,25 +221,33 @@ open class InfoFragment : TSFragment() {
                         }
                     }
                     // ffprobe addons
+                    val tvdr = findViewById<TextView>(R.id.tvDuration)
                     torr.duration_seconds?.let { ds ->
                         if (!ds.isNaN()) {
                             val duration = Format.durFmt(ds)
-                            findViewById<TextView>(R.id.tvDuration).apply {
+                            tvdr.apply {
                                 text = "" // txt
                                 append("${getString(R.string.runtime)} ", color1, true)
                                 append(duration, color2, true)
+                                visibility = View.VISIBLE
                             }
                         }
+                    } ?: let {
+                        tvdr.visibility = View.GONE
                     }
+                    val tvbr = findViewById<TextView>(R.id.tvBitrate)
                     torr.bit_rate?.let { br ->
                         if (br.isNotBlank()) {
                             val bitRate = Format.speedFmt(br.toDouble()/8)
-                            findViewById<TextView>(R.id.tvBitrate).apply {
+                            tvbr.apply {
                                 text = "" // txt
                                 append("${getString(R.string.bit_rate)} ", color1, true)
                                 append(bitRate, color2, true)
+                                visibility = View.VISIBLE
                             }
                         }
+                    } ?: let {
+                        tvbr.visibility = View.GONE
                     }
 
                     view?.findViewById<TextView>(R.id.tvInfo)?.apply {
