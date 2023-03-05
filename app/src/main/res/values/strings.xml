@@ -138,12 +138,12 @@
     <string name="current_version">Current version</string>
     <string name="new_version">New version</string>
 
-    <string name="server_update">Server update</string>
+    <string name="server_update">TorrServer update</string>
     <string name="install_server_latest">Install / Update server</string>
     <string name="install_server_local">Install server from the Download folder</string>
     <string name="delete_local_server">Delete local server</string>
     <string name="arch">Arch</string>
-    <string name="update_server">Update server</string>
+    <string name="update_server">Update version</string>
     <string name="warn_error_check_ver">Version check error</string>
     <string name="warn_error_download_server">Server download error</string>
     <string name="warn_no_local_updates">No local updates found</string>
