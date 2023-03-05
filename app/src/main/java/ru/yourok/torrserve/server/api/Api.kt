@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import ru.yourok.torrserve.server.models.ffp.FFPModel
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.BTSets
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Net
 import java.io.InputStream
 
@@ -66,7 +67,10 @@ object Api {
         val host = Net.getHostUrl("/torrents")
         val req = TorrentReq("list").toString()
         val resp = postJson(host, req)
-        return Gson().fromJson(resp, Array<Torrent>::class.java).toList()
+        return if (Settings.sortTorrents())
+            Gson().fromJson(resp, Array<Torrent>::class.java).toList().sortedWith(compareBy { it.title })
+        else
+            Gson().fromJson(resp, Array<Torrent>::class.java).toList()
     }
 
     fun dropTorrent(hash: String) {

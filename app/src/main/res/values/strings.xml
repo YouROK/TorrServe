@@ -186,43 +186,47 @@
     <string name="app_settings">App Settings</string>
     <string name="app_version">App Version</string>
 
-    <string name="host_title">Set TorrServer url address</string>
+    <string name="host_title">Set TorrServer URL</string>
 
-    <string name="host_authorization">Authorization on server</string>
-    <string name="host_authorization_desc">Enter username and password via “:” (user:pass)</string>
+    <string name="host_authorization">Server Authorization</string>
+    <string name="host_authorization_desc">Enter username and password separated by a colon (user:password), leave blank for no auth.</string>
 
-    <string name="torserver_title">TorrServer settings</string>
+    <string name="torserver_title">TorrServer Settings</string>
     <string name="torserver_summary">Configure TorrServer settings</string>
 
-    <string name="remove_action_title">Clear actions defaults</string>
-    <string name="remove_action_summary">Reset default torrent action</string>
+    <string name="remove_action_title">Clear Actions Defaults</string>
+    <string name="remove_action_summary">Reset default OS application for torrent</string>
 
-    <string name="boot_start_title">Start server on boot</string>
+    <string name="boot_start_title">Start Server on Boot</string>
     <string name="boot_start_sum_on">Start server on boot enabled</string>
     <string name="boot_start_sum_off">Start server on boot disabled</string>
 
-    <string name="root_start_title">Start server by root</string>
+    <string name="root_start_title">Start Server by root</string>
     <string name="root_start_sum_on">Start server by root enabled</string>
     <string name="root_start_sum_off">Start server by root disabled</string>
 
-    <string name="choose_player_title">Choose player</string>
+    <string name="choose_player_title">Choose Player</string>
 
-    <string name="show_banner_title">Show banner</string>
+    <string name="show_banner_title">Show Banner</string>
     <string name="show_banner_sum_on">Show banner on load torrent</string>
     <string name="show_banner_sum_off">Don\'t show banner on load torrent</string>
 
-    <string name="show_cover_title">Show poster</string>
+    <string name="show_cover_title">Show Poster</string>
     <string name="show_cover_sum_on">Show torrent poster</string>
     <string name="show_cover_sum_off">Don\'t show torrent poster</string>
 
-    <string name="show_battery_save_tv">Disable battery save in Apps / Special app access / Energy optimization</string>
+    <string name="sort_torrents_list_title">Sort Torrents List Alphabetically</string>
+    <string name="sort_torrents_list_sum_on">Sort torrents alphabetically</string>
+    <string name="sort_torrents_list_sum_off">Sort torrents by time added</string>
+
+    <string name="show_battery_save_tv">Disable Battery Save in Apps / Special App Access / Energy optimization</string>
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
     <string name="accessibility_manual_on">Enable service in Device Preferences / Accessibility section</string>
     <string name="accessibility_manual_off">Disable service in Device Preferences / Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
-    <string name="switch_accessibility_title">Accessibility service</string>
+    <string name="switch_accessibility_title">Accessibility Service</string>
     <string name="switch_accessibility_summary_on">Press to disable TorrServe service</string>
 
     <string name="stat_string_added">Torrent added</string>

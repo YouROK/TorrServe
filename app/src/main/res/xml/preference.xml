@@ -60,6 +60,13 @@
         android:summaryOff="@string/show_cover_sum_off"
         android:defaultValue="true" />
 
+    <SwitchPreferenceCompat
+        app:key="sort_torrents"
+        app:title="@string/sort_torrents_list_title"
+        android:summaryOn="@string/sort_torrents_list_sum_on"
+        android:summaryOff="@string/sort_torrents_list_sum_off"
+        android:defaultValue="false" />
+
     <ListPreference
         app:key="app_theme"
         app:title="@string/app_theme_title"

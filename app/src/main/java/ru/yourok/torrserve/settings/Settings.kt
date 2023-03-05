@@ -38,6 +38,7 @@ object Settings {
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
     fun showCover(): Boolean = get("show_cover", true)
+    fun sortTorrents(): Boolean = get("sort_torrents", false)
 
     fun getTheme(): String = get("theme", "dark")
     fun setTheme(v: String) = set("theme", v)
