@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.utils
 
+import android.util.TypedValue
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import java.text.SimpleDateFormat
@@ -31,6 +32,18 @@ object Format {
         return "%.1f %s".format(bytes / 1024.0.pow(exp.toDouble()), pre) + App.context.getString(R.string.fmt_b)
     }
 
+    fun byteFmt(bytes: Float): String {
+        return byteFmt(bytes.toDouble())
+    }
+
+    fun byteFmt(bytes: Long): String {
+        return byteFmt(bytes.toDouble())
+    }
+
+    fun byteFmt(bytes: Int): String {
+        return byteFmt(bytes.toDouble())
+    }
+
     fun sdateFmt(timestamp: Long): String {
         val sdf = SimpleDateFormat("dd.MM.yyyy", Locale("US"))
         sdf.timeZone = TimeZone.getDefault()
@@ -44,15 +57,8 @@ object Format {
         }
     }
 
-    fun byteFmt(bytes: Float): String {
-        return byteFmt(bytes.toDouble())
-    }
-
-    fun byteFmt(bytes: Long): String {
-        return byteFmt(bytes.toDouble())
-    }
-
-    fun byteFmt(bytes: Int): String {
-        return byteFmt(bytes.toDouble())
+    fun dp2px(dip: Float): Int {
+        val dm = App.context.resources.displayMetrics
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, dm).toInt()
     }
 }
