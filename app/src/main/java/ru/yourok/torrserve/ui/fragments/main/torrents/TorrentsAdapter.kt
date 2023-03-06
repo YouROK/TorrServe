@@ -15,8 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
-import ru.yourok.torrserve.utils.ByteFmt
-import java.text.SimpleDateFormat
+import ru.yourok.torrserve.utils.Format
 import java.util.*
 
 
@@ -49,14 +48,10 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
         val hash = list[position].hash
         val size = list[position].torrent_size
         val addTime = list[position].timestamp
-
         var addStr = ""
 
-        if (addTime > 0) {
-            val sdf = SimpleDateFormat("dd.MM.yyyy", Locale("US"))
-            sdf.timeZone = TimeZone.getDefault()
-            addStr = sdf.format(Date(addTime * 1000))
-        }
+        if (addTime > 0)
+            addStr = Format.sdateFmt(addTime)
 
         if (title.isBlank())
             title = list[position].name
@@ -86,7 +81,7 @@ class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
             td?.visibility = View.GONE
 
         if (size > 0.0) {
-            ts?.text = ByteFmt.byteFmt(size)
+            ts?.text = Format.byteFmt(size)
             ts?.visibility = View.VISIBLE
         } else
             ts?.visibility = View.GONE

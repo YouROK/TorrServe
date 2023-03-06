@@ -164,6 +164,9 @@
     <string name="show_cover_title">Відображати постери</string>
     <string name="show_cover_sum_on">Відображати постери торрентів</string>
     <string name="show_cover_sum_off">Не відображати постери торрентів</string>
+    <string name="sort_torrents_list_title">Сортувати список торрентів за алфавітом</string>
+    <string name="sort_torrents_list_sum_on">Сортувати торренти за алфавітом</string>
+    <string name="sort_torrents_list_sum_off">Сортувати торренти за часом додавання</string>
     <string name="show_battery_save_tv">Вимкніть оптимізацію в «Додатки» / «Спеціальний доступ» / «Оптимізація енергоспоживання»</string>
     <string name="show_battery_save_title">Показати налаштування енергозбереження</string>
     <string name="show_battery_save_summary">Відкрити налаштування енергозбереження</string>
@@ -181,6 +184,7 @@
     <string name="fmt_p">КМГТПЕ</string>
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">біт/с</string>
+    <string name="runtime">Тривалість</string>
     <string name="no_torrents">Немає торрентів</string>
     <string name="no_updates">Немає оновлень</string>
     <string name="not_used">Не використовується</string>
@@ -189,5 +193,6 @@
     <string name="permission_deny">Дозвіл відмовлено</string>
     <string name="boosty_msg">Boosty сайт</string>
     <string name="enable_rutor_search">Увімкніть пошук Rutor</string>
-    <string name="enable_rutor_search_desc">(база даних займе в пам\'яті близько 500 Мб)</string>
+    <string name="enable_rutor_search_desc">(УВАГА: база даних займе в оперативної пам\'яті близько 500 МБ)</string>
+    <string name="bit_rate">Бітрейт</string>
 </resources>

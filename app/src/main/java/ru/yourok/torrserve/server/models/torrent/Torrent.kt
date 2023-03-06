@@ -31,6 +31,8 @@ data class Torrent(
     var chunks_read_wasted: Long,
     var pieces_dirtied_good: Long,
     var pieces_dirtied_bad: Long,
+    var duration_seconds: Double?,
+    var bit_rate: String?,
 
     var file_stats: List<FileStat>?
 )

@@ -1,14 +1,19 @@
 package ru.yourok.torrserve.utils
 
+import android.util.TypedValue
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.ln
 import kotlin.math.pow
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 /**
  * Created by yourok on 23.02.18.
  */
-object ByteFmt {
+object Format {
 
     fun speedFmt(bytes: Double): String {
         val bits = bytes * 8
@@ -37,5 +42,23 @@ object ByteFmt {
 
     fun byteFmt(bytes: Int): String {
         return byteFmt(bytes.toDouble())
+    }
+
+    fun sdateFmt(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale("US"))
+        sdf.timeZone = TimeZone.getDefault()
+        return sdf.format(Date(timestamp * 1000))
+    }
+
+    fun durFmt(data: Double): String {
+        val duration = data.toDuration(DurationUnit.SECONDS)
+        return duration.toComponents { hours, minutes, seconds, _ ->
+            String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        }
+    }
+
+    fun dp2px(dip: Float): Int {
+        val dm = App.context.resources.displayMetrics
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, dm).toInt()
     }
 }

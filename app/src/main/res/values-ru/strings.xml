@@ -156,6 +156,9 @@
     <string name="show_cover_title">Показывать обложки</string>
     <string name="show_cover_sum_on">Показывать обложки торрентов</string>
     <string name="show_cover_sum_off">Не показывать обложки торрентов</string>
+    <string name="sort_torrents_list_title">Отсортировать список торрентов по алфавиту</string>
+    <string name="sort_torrents_list_sum_on">Сортировать торренты по алфавиту</string>
+    <string name="sort_torrents_list_sum_off">Сортировать торренты по времени добавления</string>
     <string name="show_battery_save_tv">Отключите оптимизацию в «Приложения» / «Специальный доступ» / «Экономия энергии»</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
@@ -173,6 +176,7 @@
     <string name="fmt_p">КМГТПЭ</string>
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">бит/c</string>
+    <string name="runtime">Длительность</string>
     <string name="no_torrents">Нет торрентов</string>
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
@@ -184,5 +188,6 @@
     <string name="permission_deny">В доступе отказано</string>
     <string name="boosty_msg">Boosty сайт</string>
     <string name="enable_rutor_search">Включить поиск по Rutor</string>
-    <string name="enable_rutor_search_desc">(база данных будет занимать около 500 МБ в памяти)</string>
+    <string name="enable_rutor_search_desc">(ВНИМАНИЕ: база данных будет занимать около 500 МБ в оперативной памяти)</string>
+    <string name="bit_rate">Битрейт</string>
 </resources>

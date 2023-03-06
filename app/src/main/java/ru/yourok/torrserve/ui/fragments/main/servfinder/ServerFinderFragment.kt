@@ -155,9 +155,11 @@ class ServerFinderFragment : TSFragment() {
         }
         // find all
         viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
-        (viewModel as ServerFinderViewModel).getStats().observe(viewLifecycleOwner) {
-            view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.VISIBLE
-            view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it
+        view?.let {
+            (viewModel as ServerFinderViewModel).getStats().observe(viewLifecycleOwner) {
+                view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.VISIBLE
+                view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it
+            }
         }
         (viewModel as ServerFinderViewModel).getServers().observe(viewLifecycleOwner) {
             hostAdapter.add(it)

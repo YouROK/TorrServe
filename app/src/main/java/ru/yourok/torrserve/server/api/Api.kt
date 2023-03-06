@@ -1,9 +1,10 @@
 package ru.yourok.torrserve.server.api
 
 import com.google.gson.Gson
-import ru.yourok.torrserve.server.models.ffp.Format
+import ru.yourok.torrserve.server.models.ffp.FFPModel
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.BTSets
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Net
 import java.io.InputStream
 
@@ -66,7 +67,10 @@ object Api {
         val host = Net.getHostUrl("/torrents")
         val req = TorrentReq("list").toString()
         val resp = postJson(host, req)
-        return Gson().fromJson(resp, Array<Torrent>::class.java).toList()
+        return if (Settings.sortTorrents())
+            Gson().fromJson(resp, Array<Torrent>::class.java).toList().sortedWith(compareBy { it.title })
+        else
+            Gson().fromJson(resp, Array<Torrent>::class.java).toList()
     }
 
     fun dropTorrent(hash: String) {
@@ -123,12 +127,12 @@ object Api {
         postJson(host, req)
     }
 
-    fun getFFP(hash: String, id: Int): Format? {
+    fun getFFP(hash: String, id: Int): FFPModel? {
         val host = Net.getHostUrl("/ffp/${hash}/${id}")
         val resp = Net.getAuth(host)
         if (resp.isBlank())
             return null
-        return Gson().fromJson(resp, Format::class.java)
+        return Gson().fromJson(resp, FFPModel::class.java)
     }
 
     private fun postJson(url: String, json: String): String {

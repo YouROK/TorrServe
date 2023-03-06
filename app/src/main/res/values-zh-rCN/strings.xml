@@ -1,5 +1,5 @@
 <resources>
-<string name="app_name" translatable="false">TorrServe MatriX</string>
+    <string name="app_name" translatable="false">TorrServe MatriX</string>
 
     <string name="add">添加种子</string>
     <string name="delete">删除</string>
@@ -204,6 +204,10 @@
     <string name="show_cover_sum_on">显示种子海报</string>
     <string name="show_cover_sum_off">不显示种子海报</string>
 
+    <string name="sort_torrents_list_title">按字母顺序对种子列表进行排序</string>
+    <string name="sort_torrents_list_sum_on">按字母顺序排序种子</string>
+    <string name="sort_torrents_list_sum_off">按添加时间排序种子</string>
+
     <string name="show_battery_save_tv">在应用程序中禁用节省电池/特殊应用程序访问/能量优化</string>
     <string name="show_battery_save_title">显示省电设置</string>
     <string name="show_battery_save_summary">在设置中打开省电配置</string>
@@ -224,6 +228,7 @@
     <string name="fmt_p">KMGTPE</string>
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
+    <string name="runtime">期间</string>
 
     <string name="no_torrents">没有种子</string>
     <string name="no_updates">没有更新</string>
@@ -232,5 +237,6 @@
     <string name="boosty_msg">Boosty 網站</string>
     <string name="enable_rutor_search">打開Rutor的搜索</string>
     <string name="enable_rutor_search_desc">(數據庫將在內存中大約500 MB)</string>
+    <string name="bit_rate">比特率</string>
 
 </resources>

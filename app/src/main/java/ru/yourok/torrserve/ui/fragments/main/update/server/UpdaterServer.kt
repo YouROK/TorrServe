@@ -2,6 +2,7 @@ package ru.yourok.torrserve.ui.fragments.main.update.server
 
 import android.net.Uri
 import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import kotlinx.coroutines.*
 import ru.yourok.torrserve.R
@@ -86,7 +87,10 @@ object UpdaterServer {
         if (TorrService.isLocal()) {
             TorrService.start()
         }
-        downloadFFProbe()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            downloadFFProbe()
+        }
     }
 
     fun updateFromFile(filePath: String) {
@@ -140,6 +144,7 @@ object UpdaterServer {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun downloadFFProbe() {
         val fileZip = File(App.context.filesDir, "ffprobe.zip")
         val file = File(App.context.filesDir, "ffprobe")
@@ -213,6 +218,7 @@ object UpdaterServer {
 
     data class ZipIO(val entry: ZipEntry, val output: File)
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun File.unzip(unzipLocationRoot: File? = null) {
 
         val rootFolder = unzipLocationRoot ?: File(parentFile!!.absolutePath + File.separator + nameWithoutExtension)
@@ -237,4 +243,20 @@ object UpdaterServer {
         }
 
     }
+
+//    private suspend fun <T> withZipFromUri(
+//        context: Context,
+//        uri: Uri, block: suspend (ZipInputStream) -> T
+//    ): T =
+//        withContext(Dispatchers.IO) {
+//            kotlin.run {
+//                context.contentResolver.openInputStream(uri).use { input ->
+//                    if (input == null) throw FileNotFoundException("openInputStream failed")
+//                    ZipInputStream(input).use {
+//                        block.invoke(it)
+//                    }
+//                }
+//            }
+//        }
+
 }

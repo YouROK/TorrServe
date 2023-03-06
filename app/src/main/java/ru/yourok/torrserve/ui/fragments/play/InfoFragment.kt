@@ -2,7 +2,6 @@ package ru.yourok.torrserve.ui.fragments.play
 
 import android.content.Context
 import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -35,7 +34,7 @@ import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoTorrent
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoViewModel
-import ru.yourok.torrserve.utils.ByteFmt
+import ru.yourok.torrserve.utils.Format
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
 import java.util.*
@@ -55,6 +54,7 @@ open class InfoFragment : TSFragment() {
         return vi
     }
 
+    private var poster = " "
     suspend fun startInfo(hash: String) = withContext(Dispatchers.Main) {
         try {
             viewModel = ViewModelProvider(this@InfoFragment)[InfoViewModel::class.java]
@@ -68,8 +68,6 @@ open class InfoFragment : TSFragment() {
             e.printStackTrace()
         }
     }
-
-    private var poster = " "
 
     // textView.text = "" // Remove old text
     // textView.append("Red Text", Color.RED)
@@ -157,7 +155,7 @@ open class InfoFragment : TSFragment() {
 
                         tvFN.apply {
                             text = "" // name
-                            append("$name", color2)
+                            append(name, color2)
                         }
 
                         val size = it.length
@@ -166,7 +164,7 @@ open class InfoFragment : TSFragment() {
                             tvFS.apply {
                                 text = "" // txt
                                 append("${getString(R.string.size)} ", color1, true)
-                                append("${ByteFmt.byteFmt(size)}", color2, true)
+                                append(Format.byteFmt(size), color2, true)
                             }
                         }
                     } ?: let {
@@ -180,9 +178,9 @@ open class InfoFragment : TSFragment() {
                         prc = torr.preloaded_bytes.toDouble() * 100.0 / torr.preload_size.toDouble()
                         if (prc < 100.0)
                             buffer = "%.1f".format(prc) + "% "
-                        buffer += ByteFmt.byteFmt(torr.preloaded_bytes)
+                        buffer += Format.byteFmt(torr.preloaded_bytes)
                         if (prc < 100.0)
-                            buffer += "/" + ByteFmt.byteFmt(torr.preload_size)
+                            buffer += "/" + Format.byteFmt(torr.preload_size)
                     }
 
                     if (buffer.isNotEmpty()) {
@@ -190,7 +188,7 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvBuffer).apply {
                             text = "" // txt
                             append("${getString(R.string.buffer)} ", color1, true)
-                            append("$buffer", color2, true)
+                            append(buffer, color2, true)
                         }
                     }
 
@@ -208,19 +206,48 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvPeers).apply {
                             text = "" // txt
                             append("${getString(R.string.peers)} ", color1, true)
-                            append("$peers", color2, true)
+                            append(peers, color2, true)
                         }
                     }
 
-                    //val speed = ByteFmt.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
-                    val speed = ByteFmt.speedFmt(torr.download_speed)
+                    //val speed = Format.byteFmt(torr.download_speed) + getString(R.string.fmt_s)
+                    val speed = Format.speedFmt(torr.download_speed)
                     if (speed.isNotEmpty() && torr.download_speed > 50.0) {
                         // spannable
                         findViewById<TextView>(R.id.tvSpeed).apply {
                             text = "" // txt
                             append("${getString(R.string.download_speed)} ", color1, true)
-                            append("$speed", color2, true)
+                            append(speed, color2, true)
                         }
+                    }
+                    // ffprobe addons
+                    val tvdr = findViewById<TextView>(R.id.tvDuration)
+                    torr.duration_seconds?.let { ds ->
+                        if (!ds.isNaN()) {
+                            val duration = Format.durFmt(ds)
+                            tvdr.apply {
+                                text = "" // txt
+                                append("${getString(R.string.runtime)} ", color1, true)
+                                append(duration, color2, true)
+                                visibility = View.VISIBLE
+                            }
+                        }
+                    } ?: let {
+                        tvdr.visibility = View.GONE
+                    }
+                    val tvbr = findViewById<TextView>(R.id.tvBitrate)
+                    torr.bit_rate?.let { br ->
+                        if (br.isNotBlank()) {
+                            val bitRate = Format.speedFmt(br.toDouble()/8)
+                            tvbr.apply {
+                                text = "" // txt
+                                append("${getString(R.string.bit_rate)} ", color1, true)
+                                append(bitRate, color2, true)
+                                visibility = View.VISIBLE
+                            }
+                        }
+                    } ?: let {
+                        tvbr.visibility = View.GONE
                     }
 
                     view?.findViewById<TextView>(R.id.tvInfo)?.apply {

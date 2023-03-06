@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
@@ -21,8 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:ellipsize="end"
-            android:maxLines="4"
             android:fontFamily="sans-serif-condensed"
+            android:maxLines="4"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?attr/colorOnBackground"
             android:textSize="18sp" />
@@ -53,7 +54,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="true"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="Info" />
 
                 <TextView
                     android:id="@+id/tvFileName"
@@ -62,28 +64,57 @@
                     android:ellipsize="middle"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="Filename" />
 
-                <TextView
-                    android:id="@+id/tvFileSize"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp" />
+                    android:gravity="top"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvFileSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        tools:text="Size" />
+
+                    <TextView
+                        android:id="@+id/tvDuration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="6dp"
+                        tools:text="Duration" />
+
+                    <TextView
+                        android:id="@+id/tvBitrate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="6dp"
+                        tools:text="Bitrate" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvPeers"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:text="Peers" />
 
                 <TextView
                     android:id="@+id/tvSpeed"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:text="Speed" />
+
 
                 <TextView
                     android:id="@+id/tvBuffer"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:text="Buffer" />
 
             </LinearLayout>
         </LinearLayout>
