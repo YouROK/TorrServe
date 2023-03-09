@@ -36,7 +36,13 @@ android {
         resources.excludes += "DebugProbesKt.bin"
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = "11"
+    }
+    // kotlin-kapt workaround for kotlin_version 1.8.0
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
     }
     namespace 'ru.yourok.torrserve'
 }
