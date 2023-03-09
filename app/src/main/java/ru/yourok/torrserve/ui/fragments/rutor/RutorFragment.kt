@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.lifecycle.lifecycleScope
@@ -41,29 +42,12 @@ class RutorFragment : TSFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.apply {
-            findViewById<EditText>(R.id.etSearch).addTextChangedListener(object : TextWatcher {
-
-                override fun afterTextChanged(s: Editable) {
-                    jobSearch?.let { it.cancel() }
-                    jobSearch = lifecycleScope.launch(Dispatchers.IO) {
-                        val result = Api.searchTorrents(s.toString().trim())
-                        result?.let {
-                            Log.d("", "onTextChanged: ${it.size}")
-                            withContext(Dispatchers.Main) {
-                                torrsAdapter.set(it)
-                            }
-                        }
-                    }
-                }
-
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    val query = s.toString().trim()
-                    if (query.isNotBlank()) {
+            findViewById<EditText>(R.id.etSearch).apply {
+                setOnEditorActionListener { textView, actionId, keyEvent ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
                         jobSearch?.let { it.cancel() }
                         jobSearch = lifecycleScope.launch(Dispatchers.IO) {
-                            val result = Api.searchTorrents(s.toString().trim())
+                            val result = Api.searchTorrents(textView.text.toString().trim())
                             result?.let {
                                 Log.d("", "onTextChanged: ${it.size}")
                                 withContext(Dispatchers.Main) {
@@ -72,8 +56,31 @@ class RutorFragment : TSFragment() {
                             }
                         }
                     }
+
+                    true
                 }
-            })
+                addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable) {
+                        val query = s.toString().trim()
+                        if (query.isNotBlank() && query.length >= 3) {
+                            jobSearch?.let { it.cancel() }
+                            jobSearch = lifecycleScope.launch(Dispatchers.IO) {
+                                val result = Api.searchTorrents(query)
+                                result?.let {
+                                    Log.d("", "onTextChanged: ${it.size}")
+                                    withContext(Dispatchers.Main) {
+                                        torrsAdapter.set(it)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                })
+            }
             findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
