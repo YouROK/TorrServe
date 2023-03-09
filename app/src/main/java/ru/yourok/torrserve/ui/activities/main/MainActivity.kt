@@ -32,6 +32,7 @@ import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
+import ru.yourok.torrserve.ui.fragments.rutor.RutorFragment
 import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
@@ -76,10 +77,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 withContext(Dispatchers.Main) {
                     if (App.inForeground)
-                    if (TorrService.isLocal())
-                        ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
-                    else
-                        ServerFinderFragment().show(this@MainActivity, R.id.container, true)
+                        if (TorrService.isLocal())
+                            ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
+                        else
+                            ServerFinderFragment().show(this@MainActivity, R.id.container, true)
                     App.toast(R.string.need_install_server, true)
                 }
             }
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.tvStatus)?.text = it
         }
     }
-    
+
     private fun closeMenu() {
         findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
     }
@@ -167,6 +168,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<FrameLayout>(R.id.btnAdd).setOnClickListener {
             AddFragment().show(this@MainActivity, R.id.container, true)
+            closeMenu()
+        }
+
+        findViewById<FrameLayout>(R.id.btnRutor).setOnClickListener {
+            RutorFragment().show(this@MainActivity, R.id.container, true)
             closeMenu()
         }
 

@@ -3,10 +3,12 @@ package ru.yourok.torrserve.server.api
 import com.google.gson.Gson
 import ru.yourok.torrserve.server.models.ffp.FFPModel
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.server.models.torrent.TorrentDetails
 import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Net
 import java.io.InputStream
+import java.net.URLEncoder
 
 object Api {
     class ApiException(msg: String, val code: Int) : Exception(msg)
@@ -133,6 +135,14 @@ object Api {
         if (resp.isBlank())
             return null
         return Gson().fromJson(resp, FFPModel::class.java)
+    }
+
+    fun searchTorrents(query: String): List<TorrentDetails>? {
+        val host = Net.getHostUrl("/search?query=${URLEncoder.encode(query, "UTF-8")}")
+        val resp = Net.getAuth(host)
+        if (resp.isBlank())
+            return null
+        return Gson().fromJson(resp, Array<TorrentDetails>::class.java).toList()
     }
 
     private fun postJson(url: String, json: String): String {
