@@ -68,13 +68,13 @@ class TorrService : Service() {
             if (!isAccessibilityOn())
                 serverFile.stop()
             notification.doUnbindService(this)
+            stopSelf()
             if (forceClose) {
                 thread {
                     Thread.sleep(200)
                     Runtime.getRuntime().exit(0)
                 }
             }
-            stopSelf()
         }
     }
 
