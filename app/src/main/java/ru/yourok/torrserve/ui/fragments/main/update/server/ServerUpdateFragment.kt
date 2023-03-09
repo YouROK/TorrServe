@@ -21,7 +21,7 @@ import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.dialogs.DialogList
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import java.io.File
-import java.util.*
+import java.util.Timer
 import kotlin.concurrent.timerTask
 
 class ServerUpdateFragment : TSFragment() {
@@ -77,16 +77,19 @@ class ServerUpdateFragment : TSFragment() {
         vi.findViewById<Button>(R.id.btnDownloadFFProbe)?.also { btn ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 btn.visibility = View.VISIBLE
+                val fi = vi.findViewById<TextView>(R.id.tvFfprobeInfo)
                 val file = File(App.context.filesDir, "ffprobe")
-                
-                if (file.exists())
+
+                if (file.exists()) {
                     btn.setText(R.string.delete_ffprobe)
-                else
+                    fi.visibility = View.GONE
+                } else {
                     btn.setText(R.string.install_ffprobe)
+                    fi.visibility = View.VISIBLE
+                }
 
                 btn.setOnClickListener {
                     btn.isEnabled = false
-                    val file = File(App.context.filesDir, "ffprobe")
                     if (file.exists()) {
                         lifecycleScope.launch(Dispatchers.IO) {
                             showProgress()
@@ -97,6 +100,7 @@ class ServerUpdateFragment : TSFragment() {
                                 btn.isEnabled = true
                             }
                         }
+                        fi.visibility = View.VISIBLE
                     } else {
                         lifecycleScope.launch(Dispatchers.IO) {
                             try {
@@ -118,6 +122,7 @@ class ServerUpdateFragment : TSFragment() {
                                 }
                             }
                         }
+                        fi.visibility = View.GONE
                     }
                 }
             } else {
