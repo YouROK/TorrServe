@@ -238,5 +238,8 @@
     <string name="enable_rutor_search">打開Rutor的搜索</string>
     <string name="enable_rutor_search_desc">(數據庫將在內存中大約500 MB)</string>
     <string name="bit_rate">比特率</string>
+    <string name="install_ffprobe">安裝FFProbe</string>
+    <string name="delete_ffprobe">刪除FFProbe</string>
+    <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
 
 </resources>

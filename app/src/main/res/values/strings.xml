@@ -142,6 +142,10 @@
     <string name="install_server_latest">Install / Update server</string>
     <string name="install_server_local">Install server from the Download folder</string>
     <string name="delete_local_server">Delete local server</string>
+    <string name="install_ffprobe">Install FFProbe</string>
+    <string name="delete_ffprobe">Delete FFProbe</string>
+    <string name="ffprobe_summary">Download FFProbe to obtain additional video data, such as the duration, bitrate, etc.</string>
+    <string name="warn_error_download_ffprobe">FFProbe download error</string>
     <string name="arch">Arch</string>
     <string name="update_server">Update version</string>
     <string name="warn_error_check_ver">Version check error</string>

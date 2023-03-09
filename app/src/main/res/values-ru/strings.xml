@@ -190,4 +190,7 @@
     <string name="enable_rutor_search">Включить поиск по Rutor</string>
     <string name="enable_rutor_search_desc">(ВНИМАНИЕ: база данных будет занимать около 500 МБ в оперативной памяти)</string>
     <string name="bit_rate">Битрейт</string>
+    <string name="install_ffprobe">Установить FFProbe</string>
+    <string name="delete_ffprobe">Удалить FFProbe</string>
+    <string name="ffprobe_summary">Загрузите FFProbe для получения дополнительных данных о видео, таких как длительность, битрейт и т.д.</string>
 </resources>

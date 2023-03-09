@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.main.update.server
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.dialogs.DialogList
 import ru.yourok.torrserve.ui.fragments.TSFragment
+import java.io.File
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -70,6 +72,57 @@ class ServerUpdateFragment : TSFragment() {
                 hideProgress()
             }
             clickOnMenu()
+        }
+
+        vi.findViewById<Button>(R.id.btnDownloadFFProbe)?.also { btn ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                btn.visibility = View.VISIBLE
+                val file = File(App.context.filesDir, "ffprobe")
+                
+                if (file.exists())
+                    btn.setText(R.string.delete_ffprobe)
+                else
+                    btn.setText(R.string.install_ffprobe)
+
+                btn.setOnClickListener {
+                    btn.isEnabled = false
+                    val file = File(App.context.filesDir, "ffprobe")
+                    if (file.exists()) {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            showProgress()
+                            file.delete()
+                            hideProgress()
+                            withContext(Dispatchers.Main) {
+                                btn.setText(R.string.install_ffprobe)
+                                btn.isEnabled = true
+                            }
+                        }
+                    } else {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            try {
+                                showProgress()
+                                UpdaterServer.downloadFFProbe {
+                                    lifecycleScope.launch(Dispatchers.Main) {
+                                        showProgress(it)
+                                    }
+                                }
+                                delay(1000)
+                                hideProgress()
+                                withContext(Dispatchers.Main) {
+                                    btn.setText(R.string.delete_ffprobe)
+                                    btn.isEnabled = true
+                                }
+                            } catch (e: Exception) {
+                                withContext(Dispatchers.Main) {
+                                    App.toast(App.context.getString(R.string.warn_error_download_ffprobe) + ": " + e.message)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                btn.visibility = View.GONE
+            }
         }
 
         return vi

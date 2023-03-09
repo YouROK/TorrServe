@@ -88,9 +88,9 @@ object UpdaterServer {
             TorrService.start()
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            downloadFFProbe()
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            downloadFFProbe()
+//        }
     }
 
     fun updateFromFile(filePath: String) {
@@ -145,7 +145,7 @@ object UpdaterServer {
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
-    private fun downloadFFProbe() {
+    fun downloadFFProbe(onProgress: ((prc: Int) -> Unit)?) {
         val fileZip = File(App.context.filesDir, "ffprobe.zip")
         val file = File(App.context.filesDir, "ffprobe")
 
@@ -168,8 +168,26 @@ object UpdaterServer {
                 file.delete()
                 throw IOException("error connect server, url: $link")
             }
+
+            val contentLength = http.getSize()
+
             FileOutputStream(fileZip).use { fileOut ->
-                content.copyTo(fileOut)
+                if (onProgress == null)
+                    content.copyTo(fileOut)
+                else {
+                    val buffer = ByteArray(65535)
+                    val length = contentLength + 1
+                    var offset: Long = 0
+                    while (true) {
+                        val readed = content.read(buffer)
+                        offset += readed
+                        val prc = (offset * 100 / length).toInt()
+                        onProgress(prc)
+                        if (readed <= 0) break
+                        fileOut.write(buffer, 0, readed)
+                    }
+                    fileOut.flush()
+                }
                 fileOut.flush()
                 fileOut.close()
 

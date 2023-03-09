@@ -147,6 +147,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/delete_local_server" />
 
+            <Button
+                android:id="@+id/btnDownloadFFProbe"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/install_ffprobe"
+                android:visibility="gone" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

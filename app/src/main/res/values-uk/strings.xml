@@ -195,4 +195,7 @@
     <string name="enable_rutor_search">Увімкніть пошук Rutor</string>
     <string name="enable_rutor_search_desc">(УВАГА: база даних займе в оперативної пам\'яті близько 500 МБ)</string>
     <string name="bit_rate">Бітрейт</string>
+    <string name="install_ffprobe">Встановіть FFProbe</string>
+    <string name="delete_ffprobe">Видалити FFProbe</string>
+    <string name="ffprobe_summary">Завантажте FFProbe, щоб отримати додаткові відеоканчини, такі як тривалість, бітрейт тощо.</string>
 </resources>
