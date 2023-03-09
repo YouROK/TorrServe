@@ -87,10 +87,6 @@ object UpdaterServer {
         if (TorrService.isLocal()) {
             TorrService.start()
         }
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            downloadFFProbe()
-//        }
     }
 
     fun updateFromFile(filePath: String) {
