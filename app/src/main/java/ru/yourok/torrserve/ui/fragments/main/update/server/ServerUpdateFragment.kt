@@ -79,6 +79,7 @@ class ServerUpdateFragment : TSFragment() {
                 btn.visibility = View.VISIBLE
                 val fi = vi.findViewById<TextView>(R.id.tvFfprobeInfo)
                 val file = File(App.context.filesDir, "ffprobe")
+                fi.alpha = 0.7f
 
                 if (file.exists()) {
                     btn.setText(R.string.delete_ffprobe)
