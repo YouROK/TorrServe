@@ -59,15 +59,15 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4')
     // http client/parser
-    implementation 'org.jsoup:jsoup:1.14.3'
+    implementation 'org.jsoup:jsoup:1.15.4'
     // json serializer
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
     // root shell (3.2.1)
     //noinspection GradleDependency 3.2.1 last api17 compatible
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
     implementation 'androidx.core:core-ktx:1.9.0'
     // glide
-    def glideVersion = '4.13.1'
+    def glideVersion = '4.15.0'
     implementation "com.github.bumptech.glide:glide:${glideVersion}"
     kapt "com.github.bumptech.glide:compiler:${glideVersion}"
     //noinspection GradleDependency firebase-core:19.0.2 is last api17 compatible
