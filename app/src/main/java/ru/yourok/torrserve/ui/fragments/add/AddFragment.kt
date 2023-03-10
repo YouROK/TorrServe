@@ -11,8 +11,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.ScrollView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,9 +65,9 @@ class AddFragment : TSFragment() {
 
             findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.VISIBLE
             findViewById<EditText>(R.id.etSearch).apply {
-                setOnEditorActionListener { textView, actionId, keyEvent ->
+                setOnEditorActionListener { textView, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        jobSearch?.let { it.cancel() }
+                        jobSearch?.cancel()
                         jobSearch = lifecycleScope.launch(Dispatchers.IO) {
                             val result = try {
                                 Api.searchTorrents(textView.text.toString().trim())
@@ -96,7 +94,7 @@ class AddFragment : TSFragment() {
                     override fun afterTextChanged(s: Editable) {
                         val query = s.toString().trim()
                         if (query.isNotBlank() && query.length >= 3) {
-                            jobSearch?.let { it.cancel() }
+                            jobSearch?.cancel()
                             jobSearch = lifecycleScope.launch(Dispatchers.IO) {
                                 if (BuildConfig.DEBUG) Log.d("*****", "Api.searchTorrents($query)")
                                 val result = try {
