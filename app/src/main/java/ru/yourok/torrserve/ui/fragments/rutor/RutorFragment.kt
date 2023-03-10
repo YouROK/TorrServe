@@ -47,7 +47,14 @@ class RutorFragment : TSFragment() {
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         jobSearch?.let { it.cancel() }
                         jobSearch = lifecycleScope.launch(Dispatchers.IO) {
-                            val result = Api.searchTorrents(textView.text.toString().trim())
+                            val result = try {
+                                Api.searchTorrents(textView.text.toString().trim())
+                            } catch (e: Exception) {
+                                e.message?.let {
+                                    App.toast(it)
+                                }
+                                null
+                            }
                             result?.let {
                                 Log.d("", "onTextChanged: ${it.size}")
                                 withContext(Dispatchers.Main) {
@@ -65,7 +72,14 @@ class RutorFragment : TSFragment() {
                         if (query.isNotBlank() && query.length >= 3) {
                             jobSearch?.let { it.cancel() }
                             jobSearch = lifecycleScope.launch(Dispatchers.IO) {
-                                val result = Api.searchTorrents(query)
+                                val result = try {
+                                    Api.searchTorrents(query)
+                                } catch (e: Exception) {
+                                    e.message?.let {
+                                        App.toast(it)
+                                    }
+                                    null
+                                }
                                 result?.let {
                                     Log.d("", "onTextChanged: ${it.size}")
                                     withContext(Dispatchers.Main) {

@@ -77,13 +77,13 @@ class ServerUpdateFragment : TSFragment() {
         vi.findViewById<Button>(R.id.btnDownloadFFProbe)?.also { btn ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 btn.visibility = View.VISIBLE
-                val fi = vi.findViewById<TextView>(R.id.tvFfprobeInfo)
+                val fi = vi.findViewById<TextView>(R.id.tvInfo)
                 val file = File(App.context.filesDir, "ffprobe")
                 fi.alpha = 0.7f
 
                 if (file.exists()) {
                     btn.setText(R.string.delete_ffprobe)
-                    fi.visibility = View.GONE
+                    fi.visibility = View.INVISIBLE
                 } else {
                     btn.setText(R.string.install_ffprobe)
                     fi.visibility = View.VISIBLE
@@ -123,7 +123,7 @@ class ServerUpdateFragment : TSFragment() {
                                 }
                             }
                         }
-                        fi.visibility = View.GONE
+                        fi.visibility = View.INVISIBLE
                     }
                 }
             } else {
@@ -195,7 +195,9 @@ class ServerUpdateFragment : TSFragment() {
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         val msg = "Error copy server: " + (e.message ?: "unknown error")
-                        view?.findViewById<TextView>(R.id.tvUpdateInfo)?.text = msg
+                        val tvInfo = view?.findViewById<TextView>(R.id.tvInfo)
+                        tvInfo?.text = msg
+                        tvInfo?.visibility = View.VISIBLE
                         App.toast(msg)
                     }
                     hideProgress()
@@ -203,5 +205,4 @@ class ServerUpdateFragment : TSFragment() {
             }
         }
     }
-
 }

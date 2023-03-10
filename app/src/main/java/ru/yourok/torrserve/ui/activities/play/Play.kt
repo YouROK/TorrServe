@@ -9,6 +9,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.players.Players
 import ru.yourok.torrserve.ui.fragments.play.TorrentFilesFragment
@@ -46,7 +47,11 @@ object Play {
                 return@launch
             }
 
-            val viewed = Api.listViewed(torrent.hash)
+            val viewed = try {
+                Api.listViewed(torrent.hash)
+            } catch (_: Exception) {
+                emptyList()
+            }
             val files = TorrentHelper.getPlayableFiles(torrent)
 
             if (intent.hasExtra("FileTemplate") && torrentFileIndex == -1) // For lostfilm app

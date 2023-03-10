@@ -11,6 +11,7 @@ import java.io.InputStream
 import java.net.URLEncoder
 
 object Api {
+    /// all getAuth / postAuth calls can throw network exceptions
     class ApiException(msg: String, val code: Int) : Exception(msg)
 
     /// Server
@@ -130,37 +131,22 @@ object Api {
     }
 
     fun getFFP(hash: String, id: Int): FFPModel? {
-        return try {
         val host = Net.getHostUrl("/ffp/${hash}/${id}")
         val resp = Net.getAuth(host)
         if (resp.isBlank())
             return null
         return Gson().fromJson(resp, FFPModel::class.java)
-        } catch (e: Exception) {
-            println(e.message)
-            null
-        }
     }
 
     fun searchTorrents(query: String): List<TorrentDetails>? {
-        return try {
-            val host = Net.getHostUrl("/search?query=${URLEncoder.encode(query, "UTF-8")}")
-            val resp = Net.getAuth(host)
-            if (resp.isBlank())
-                return null
-            return Gson().fromJson(resp, Array<TorrentDetails>::class.java).toList()
-        } catch (e: Exception) {
-            println(e.message)
-            null
-        }
+        val host = Net.getHostUrl("/search?query=${URLEncoder.encode(query, "UTF-8")}")
+        val resp = Net.getAuth(host)
+        if (resp.isBlank())
+            return null
+        return Gson().fromJson(resp, Array<TorrentDetails>::class.java).toList()
     }
 
     private fun postJson(url: String, json: String): String {
-        return try {
-            Net.postAuth(url, json)
-        } catch (e: Exception) {
-            println(e.message)
-            ""
-        }
+        return Net.postAuth(url, json)
     }
 }

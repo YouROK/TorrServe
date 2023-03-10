@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -18,9 +19,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|top"
-        android:layout_marginLeft="20dp"
+        android:layout_gravity="start|top"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:minWidth="300dp"
         android:orientation="vertical"
         android:paddingTop="10dp"
@@ -98,13 +100,6 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvUpdateInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp" />
     </LinearLayout>
 
     <ScrollView
@@ -119,6 +114,18 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="70dp"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/ffprobe_summary"
+                android:visibility="gone"
+                tools:text="Error Messages: Examples, Best Practices &amp; Common Mistakes"
+                tools:visibility="visible" />
 
 
             <Button
@@ -153,17 +160,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/install_ffprobe"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tvFfprobeInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:text="@string/ffprobe_summary"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
 
         </LinearLayout>
     </ScrollView>
