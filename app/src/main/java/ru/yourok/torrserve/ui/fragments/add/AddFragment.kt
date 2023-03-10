@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ScrollView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
@@ -42,6 +44,7 @@ class AddFragment : TSFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.apply {
+            findViewById<LinearLayout>(R.id.footer)?.visibility = View.VISIBLE
             findViewById<Button>(R.id.btnOK)?.setOnClickListener {
                 val link = view.findViewById<EditText>(R.id.etMagnet)?.text?.toString() ?: ""
                 val title = view.findViewById<EditText>(R.id.etTitle)?.text?.toString() ?: ""
@@ -62,6 +65,7 @@ class AddFragment : TSFragment() {
                 popBackStackFragment()
             }
 
+            findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.VISIBLE
             findViewById<EditText>(R.id.etSearch).apply {
                 setOnEditorActionListener { textView, actionId, keyEvent ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -76,14 +80,16 @@ class AddFragment : TSFragment() {
                                 null
                             }
                             result?.let {
-                                Log.d("", "onTextChanged: ${it.size}")
-                                withContext(Dispatchers.Main) {
-                                    torrsAdapter.set(it)
-                                }
+                                if (BuildConfig.DEBUG) Log.d("*****", "onTextChanged: ${it.size}")
+                                if (it.isNotEmpty())
+                                    withContext(Dispatchers.Main) {
+                                        torrsAdapter.set(it)
+                                    }
+                                else
+                                    App.toast(R.string.no_torrents)
                             }
                         }
                     }
-
                     true
                 }
                 addTextChangedListener(object : TextWatcher {
@@ -92,6 +98,7 @@ class AddFragment : TSFragment() {
                         if (query.isNotBlank() && query.length >= 3) {
                             jobSearch?.let { it.cancel() }
                             jobSearch = lifecycleScope.launch(Dispatchers.IO) {
+                                if (BuildConfig.DEBUG) Log.d("*****", "Api.searchTorrents($query)")
                                 val result = try {
                                     Api.searchTorrents(query)
                                 } catch (e: Exception) {
@@ -101,12 +108,13 @@ class AddFragment : TSFragment() {
                                     null
                                 }
                                 result?.let {
-                                    Log.d("*****", "onTextChanged: ${it.size}")
-                                    withContext(Dispatchers.Main) {
-                                        torrsAdapter.set(it)
-                                        view.findViewById<ScrollView>(R.id.adder)?.visibility = View.GONE
-                                        view.findViewById<LinearLayout>(R.id.footer)?.visibility = View.GONE
-                                    }
+                                    if (BuildConfig.DEBUG) Log.d("*****", "onTextChanged: ${it.size}")
+                                    if (it.isNotEmpty())
+                                        withContext(Dispatchers.Main) {
+                                            torrsAdapter.set(it)
+                                            view.findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.GONE
+                                            view.findViewById<LinearLayout>(R.id.footer)?.visibility = View.GONE
+                                        }
                                 }
                             }
                         }
@@ -117,6 +125,7 @@ class AddFragment : TSFragment() {
                     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 })
             }
+
             findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
