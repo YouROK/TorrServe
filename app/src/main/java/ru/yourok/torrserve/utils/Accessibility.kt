@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.utils
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,12 +10,27 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.local.services.GlobalTorrServeService
 
+
 object AccessibilityUtils {
     private fun openAccessibilitySettings(context: Context) {
         val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
         try {
             context.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            e.message?.let { App.toast(it) }
+        }
+    }
+
+    private fun openTvAccessibilitySettings(context: Context) {
+        val componentName = ComponentName("com.android.tv.settings", "com.android.tv.settings.system.AccessibilityActivity")
+        val tvintent = Intent("android.intent.action.MAIN")
+        tvintent.addCategory("android.intent.category.LAUNCHER")
+        tvintent.component = componentName
+        tvintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+        try {
+            context.startActivity(tvintent)
         } catch (e: Exception) {
             e.printStackTrace()
             e.message?.let { App.toast(it) }
@@ -58,7 +74,9 @@ object AccessibilityUtils {
                 e.message?.let { App.toast(it) }
             }
         } else {
-            if (isPackageInstalled(requireContext, "com.android.settings")) {
+            if (isPackageInstalled(requireContext, "com.android.tv.settings")) {
+                openTvAccessibilitySettings(requireContext)
+            } else if (isPackageInstalled(requireContext, "com.android.settings")) {
                 openAccessibilitySettings(requireContext)
             } else {
                 openSettings(requireContext)
