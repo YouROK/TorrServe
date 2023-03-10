@@ -6,14 +6,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp">
+    <TextView
+        android:id="@+id/tvRutor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/etSearch"
+        android:text="@string/rutor"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        app:layout_constraintTop_toBottomOf="@+id/tvRutor"
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:hint="Venom 2018"
+        android:inputType="textUri"
+        android:textColor="?attr/colorHost" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/etSearch"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/rvRTorrents"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fadingEdgeLength="20dp"
+        android:requiresFadingEdge="vertical" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/adder">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="110dp">
+
 
             <TextView
                 android:id="@+id/textView1"
@@ -21,8 +59,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="4dp"
-                android:textSize="18sp"
                 android:text="@string/torrent"
+                android:textSize="18sp"
+                android:labelFor="@+id/etMagnet"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,6 +72,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:inputType="textUri"
                 app:layout_constraintTop_toBottomOf="@+id/textView1"
                 tools:layout_editor_absoluteX="16dp">
 
@@ -45,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="16dp"
+                android:labelFor="@+id/etTitle"
                 android:text="@string/title"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +98,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:inputType="text"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 tools:layout_editor_absoluteX="16dp" />
 
@@ -66,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="16dp"
+                android:labelFor="@+id/etPoster"
                 android:text="@string/poster_link"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +121,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:inputType="textUri"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
                 tools:layout_editor_absoluteX="16dp" />
 
@@ -87,9 +131,9 @@
     <LinearLayout
         android:id="@+id/footer"
         style="@android:style/DeviceDefault.ButtonBar"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:layout_margin="10dp"
         android:divider="?android:attr/dividerVertical"
         android:orientation="horizontal"

@@ -171,10 +171,10 @@ class MainActivity : AppCompatActivity() {
             closeMenu()
         }
 
-        findViewById<FrameLayout>(R.id.btnRutor).setOnClickListener {
-            RutorFragment().show(this@MainActivity, R.id.container, true)
-            closeMenu()
-        }
+//        findViewById<FrameLayout>(R.id.btnRutor).setOnClickListener {
+//            RutorFragment().show(this@MainActivity, R.id.container, true)
+//            closeMenu()
+//        }
 
         findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
             AlertDialog.Builder(this)
