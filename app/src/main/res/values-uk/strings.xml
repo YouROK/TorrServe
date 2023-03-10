@@ -86,7 +86,7 @@
     <string name="reset_def">Дія скинута</string>
     <string name="playlist_all">Програти все</string>
     <string name="playlist_continue">Продовжити</string>
-    <string name="torrent">Торрент</string>
+    <string name="torrent_link">Торрент | Magnet-посилання | Хеш</string>
     <string name="title">Назва</string>
     <string name="poster">Постер</string>
     <string name="poster_link">Посилання на постер</string>

@@ -112,7 +112,7 @@
     <string name="playlist_all">Play All</string>
     <string name="playlist_continue">Continue</string>
 
-    <string name="torrent">Torrent</string>
+    <string name="torrent_link">Torrent / Magnet / Hash</string>
     <string name="title">Title</string>
     <string name="poster">Poster</string>
     <string name="poster_link">Poster link</string>

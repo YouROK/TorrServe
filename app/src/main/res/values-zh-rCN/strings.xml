@@ -102,7 +102,7 @@
     <string name="playlist_all">全部播放</string>
     <string name="playlist_continue">继续</string>
 
-    <string name="torrent">磁力线地址</string>
+    <string name="torrent_link">磁力线地址</string>
     <string name="title">名称</string>
     <string name="poster">海报</string>
     <string name="poster_link">海报链接</string>

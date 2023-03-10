@@ -97,35 +97,6 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/listDivider" />
 
-            <!--FrameLayout
-                android:id="@+id/btnRutor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/action_selector"
-                android:padding="15dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="left|center_vertical"
-                    app:srcCompat="@drawable/ic_outline_add" />
-
-                <TextView
-                    style="@style/MainMenuTextAppearance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center_vertical"
-                    android:paddingLeft="40dp"
-                    android:text="@string/rutor" />
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/listDivider" /-->
-
             <FrameLayout
                 android:id="@+id/btnRemoveAll"
                 android:layout_width="match_parent"
