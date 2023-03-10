@@ -241,5 +241,6 @@
     <string name="install_ffprobe">安裝FFProbe</string>
     <string name="delete_ffprobe">刪除FFProbe</string>
     <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
+    <string name="warn_error_download_ffprobe">FFProbe 下载错误</string>
 
 </resources>
