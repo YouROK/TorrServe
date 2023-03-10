@@ -235,7 +235,7 @@
     <string name="not_used">未使用</string>
     <string name="not_installed">未安装</string>
     <string name="boosty_msg">Boosty 網站</string>
-    <string name="enable_rutor_search">打開Rutor的搜索</string>
+    <string name="enable_rutor_search">打開RuTor的搜索</string>
     <string name="enable_rutor_search_desc">(數據庫將在內存中大約500 MB)</string>
     <string name="bit_rate">比特率</string>
     <string name="install_ffprobe">安裝FFProbe</string>

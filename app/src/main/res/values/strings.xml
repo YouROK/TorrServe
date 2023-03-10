@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">TorrServe MatriX</string>
 
     <string name="add">Add</string>
-    <string name="rutor" translatable="false">Rutor</string>
+    <string name="rutor" translatable="false">RuTor</string>
     <string name="delete">Delete</string>
     <string name="remove_all">Delete All</string>
     <string name="playlist">Playlist</string>

@@ -187,7 +187,7 @@
     <string name="remove_all_viewed">Удалить все метки просмотра</string>
     <string name="permission_deny">В доступе отказано</string>
     <string name="boosty_msg">Boosty сайт</string>
-    <string name="enable_rutor_search">Включить поиск по Rutor</string>
+    <string name="enable_rutor_search">Включить поиск по RuTor</string>
     <string name="enable_rutor_search_desc">(ВНИМАНИЕ: база данных будет занимать около 500 МБ в оперативной памяти)</string>
     <string name="bit_rate">Битрейт</string>
     <string name="install_ffprobe">Установить FFProbe</string>

@@ -192,7 +192,7 @@
     <string name="default_sets_applied">Налаштування за замовчуванням застосовуються</string>
     <string name="permission_deny">Дозвіл відмовлено</string>
     <string name="boosty_msg">Boosty сайт</string>
-    <string name="enable_rutor_search">Увімкніть пошук Rutor</string>
+    <string name="enable_rutor_search">Увімкніть пошук RuTor</string>
     <string name="enable_rutor_search_desc">(УВАГА: база даних займе в оперативної пам\'яті близько 500 МБ)</string>
     <string name="bit_rate">Бітрейт</string>
     <string name="install_ffprobe">Встановіть FFProbe</string>
