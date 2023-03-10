@@ -47,7 +47,7 @@
     <string name="disable_upload">Відвантаження</string>
     <string name="disable_upload_desc">(не рекомендується відключати)</string>
     <string name="ecnryption">Шифрування</string>
-    <string name="connections_limit">Торрент-з\'єднання (рекомендовано 20-25)</string>
+    <string name="connections_limit">Торрент–з\'єднання (рекомендовано 20–25)</string>
     <string name="connections_dht_limit">Ліміт DHT з\'єднаннь (0-без обмежень)</string>
     <string name="download_rate_limit">Обмеження швидкості завантаження (Кілобайти, 0-без обмежень)</string>
     <string name="upload_rate_limit">Обмеження швидкості відвантаження (Кілобайти, 0-без обмежень)</string>
@@ -86,7 +86,7 @@
     <string name="reset_def">Дія скинута</string>
     <string name="playlist_all">Програти все</string>
     <string name="playlist_continue">Продовжити</string>
-    <string name="torrent_link">Торрент | Magnet-посилання | Хеш</string>
+    <string name="torrent_link">URL торрента | Magnet-посилання | Хеш</string>
     <string name="title">Назва</string>
     <string name="poster">Постер</string>
     <string name="poster_link">Посилання на постер</string>
