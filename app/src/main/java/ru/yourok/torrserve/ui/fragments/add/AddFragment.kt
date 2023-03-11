@@ -153,11 +153,12 @@ class AddFragment : TSFragment() {
                             data?.let {
                                 val format = it.format
                                 val streams = it.streams
+                                val title = format.tags.title ?: t.title
                                 val size = byteFmt(it.format.size.toDouble())
                                 val duration = durFmt(it.format.duration.toDouble())
                                 val bitrate = speedFmt(it.format.bit_rate.toDouble()/8)
                                 withContext(Dispatchers.Main) {
-                                    App.toast(" ${format.tags.title}\n Format: ${format.format_long_name}\n Streams: ${format.nb_streams}\n Size: $size\n Runtime: $duration\n Bitrate: $bitrate", true)
+                                    App.toast(" ${title}\n Format: ${format.format_long_name}\n Streams: ${format.nb_streams}\n Size: $size\n Runtime: $duration\n Bitrate: $bitrate", true)
                                 }
                             }
                         }
