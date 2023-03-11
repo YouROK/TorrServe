@@ -76,10 +76,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 withContext(Dispatchers.Main) {
                     if (App.inForeground)
-                    if (TorrService.isLocal())
-                        ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
-                    else
-                        ServerFinderFragment().show(this@MainActivity, R.id.container, true)
+                        if (TorrService.isLocal())
+                            ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
+                        else
+                            ServerFinderFragment().show(this@MainActivity, R.id.container, true)
                     App.toast(R.string.need_install_server, true)
                 }
             }
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.tvStatus)?.text = it
         }
     }
-    
+
     private fun closeMenu() {
         findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
     }

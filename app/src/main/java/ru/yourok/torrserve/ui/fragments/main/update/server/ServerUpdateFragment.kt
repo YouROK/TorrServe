@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.main.update.server
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -19,7 +20,8 @@ import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.dialogs.DialogList
 import ru.yourok.torrserve.ui.fragments.TSFragment
-import java.util.*
+import java.io.File
+import java.util.Timer
 import kotlin.concurrent.timerTask
 
 class ServerUpdateFragment : TSFragment() {
@@ -70,6 +72,63 @@ class ServerUpdateFragment : TSFragment() {
                 hideProgress()
             }
             clickOnMenu()
+        }
+
+        vi.findViewById<Button>(R.id.btnDownloadFFProbe)?.also { btn ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                btn.visibility = View.VISIBLE
+                val fi = vi.findViewById<TextView>(R.id.tvInfo)
+                val file = File(App.context.filesDir, "ffprobe")
+                fi.alpha = 0.7f
+
+                if (file.exists()) {
+                    btn.setText(R.string.delete_ffprobe)
+                    fi.visibility = View.INVISIBLE
+                } else {
+                    btn.setText(R.string.install_ffprobe)
+                    fi.visibility = View.VISIBLE
+                }
+
+                btn.setOnClickListener {
+                    btn.isEnabled = false
+                    if (file.exists()) {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            showProgress()
+                            file.delete()
+                            hideProgress()
+                            withContext(Dispatchers.Main) {
+                                btn.setText(R.string.install_ffprobe)
+                                btn.isEnabled = true
+                            }
+                        }
+                        fi.visibility = View.VISIBLE
+                    } else {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            try {
+                                showProgress()
+                                UpdaterServer.downloadFFProbe {
+                                    lifecycleScope.launch(Dispatchers.Main) {
+                                        showProgress(it)
+                                    }
+                                }
+                                delay(1000)
+                                hideProgress()
+                                withContext(Dispatchers.Main) {
+                                    btn.setText(R.string.delete_ffprobe)
+                                    btn.isEnabled = true
+                                }
+                            } catch (e: Exception) {
+                                withContext(Dispatchers.Main) {
+                                    App.toast(App.context.getString(R.string.warn_error_download_ffprobe) + ": " + e.message)
+                                }
+                            }
+                        }
+                        fi.visibility = View.INVISIBLE
+                    }
+                }
+            } else {
+                btn.visibility = View.GONE
+            }
         }
 
         return vi
@@ -136,7 +195,9 @@ class ServerUpdateFragment : TSFragment() {
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         val msg = "Error copy server: " + (e.message ?: "unknown error")
-                        view?.findViewById<TextView>(R.id.tvUpdateInfo)?.text = msg
+                        val tvInfo = view?.findViewById<TextView>(R.id.tvInfo)
+                        tvInfo?.text = msg
+                        tvInfo?.visibility = View.VISIBLE
                         App.toast(msg)
                     }
                     hideProgress()
@@ -144,5 +205,4 @@ class ServerUpdateFragment : TSFragment() {
             }
         }
     }
-
 }

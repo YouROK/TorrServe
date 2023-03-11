@@ -47,7 +47,7 @@
     <string name="disable_upload">Відвантаження</string>
     <string name="disable_upload_desc">(не рекомендується відключати)</string>
     <string name="ecnryption">Шифрування</string>
-    <string name="connections_limit">Торрент-з\'єднання (рекомендовано 20-25)</string>
+    <string name="connections_limit">Торрент–з\'єднання (рекомендовано 20–25)</string>
     <string name="connections_dht_limit">Ліміт DHT з\'єднаннь (0-без обмежень)</string>
     <string name="download_rate_limit">Обмеження швидкості завантаження (Кілобайти, 0-без обмежень)</string>
     <string name="upload_rate_limit">Обмеження швидкості відвантаження (Кілобайти, 0-без обмежень)</string>
@@ -86,7 +86,7 @@
     <string name="reset_def">Дія скинута</string>
     <string name="playlist_all">Програти все</string>
     <string name="playlist_continue">Продовжити</string>
-    <string name="torrent">Торрент</string>
+    <string name="torrent_link">URL торрента | Magnet-посилання | Хеш</string>
     <string name="title">Назва</string>
     <string name="poster">Постер</string>
     <string name="poster_link">Посилання на постер</string>
@@ -192,7 +192,11 @@
     <string name="default_sets_applied">Налаштування за замовчуванням застосовуються</string>
     <string name="permission_deny">Дозвіл відмовлено</string>
     <string name="boosty_msg">Boosty сайт</string>
-    <string name="enable_rutor_search">Увімкніть пошук Rutor</string>
+    <string name="enable_rutor_search">Увімкніть пошук RuTor</string>
     <string name="enable_rutor_search_desc">(УВАГА: база даних займе в оперативної пам\'яті близько 500 МБ)</string>
     <string name="bit_rate">Бітрейт</string>
+    <string name="install_ffprobe">Встановіть FFProbe</string>
+    <string name="delete_ffprobe">Видалити FFProbe</string>
+    <string name="ffprobe_summary">Завантажте FFProbe, щоб отримати додаткові відеоканчини, такі як тривалість, бітрейт тощо.</string>
+    <string name="warn_error_download_ffprobe">Помилка завантаження FFProbe</string>
 </resources>
