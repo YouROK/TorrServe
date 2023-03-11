@@ -65,7 +65,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4')
     // http client/parser
-    implementation 'org.jsoup:jsoup:1.15.4'
+    //noinspection GradleDependency 1.15.4 buggy on UTF-8 requests
+    implementation 'org.jsoup:jsoup:1.15.3'
     // json serializer
     implementation 'com.google.code.gson:gson:2.10.1'
     // root shell (3.2.1)
