@@ -163,9 +163,10 @@ class AddFragment : TSFragment() {
                                 streams.forEach { st -> // count in format.nb_streams
                                     when (st.codec_type) {
                                         "video" -> {
-                                            if (st.codec_name != "mjpeg") // exclude posters
+                                            if (st.codec_name != "mjpeg") { // exclude posters
                                                 videoDesc.add("${st.width}x${st.height}")
                                                 videoDesc.add(st.codec_long_name.ifEmpty { st.codec_name.uppercase() })
+                                            }
                                         }
 
                                         "audio" -> {
