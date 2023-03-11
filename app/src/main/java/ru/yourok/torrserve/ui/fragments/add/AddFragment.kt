@@ -15,7 +15,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
@@ -150,15 +154,55 @@ class AddFragment : TSFragment() {
                         torr?.let { t ->
                             val data = Api.getFFP(t.hash, 0)
                             //Log.d("*****", "data: ${data.toString()}")
-                            data?.let {
-                                val format = it.format
-                                val streams = it.streams
-                                val title = format.tags.title ?: t.title
-                                val size = byteFmt(it.format.size.toDouble())
-                                val duration = durFmt(it.format.duration.toDouble())
-                                val bitrate = speedFmt(it.format.bit_rate.toDouble()/8)
+                            data?.let { ffp ->
+                                val format = ffp.format
+                                val streams = ffp.streams
+                                val videoDesc = mutableListOf<String>()
+                                val audioDesc = mutableListOf<String>()
+                                val subsDesc = mutableListOf<String>()
+                                streams.forEach { st -> // count in format.nb_streams
+                                    when (st.codec_type) {
+                                        "video" -> {
+                                            if (st.codec_name != "mjpeg") // exclude posters
+                                                videoDesc.add("${st.width}x${st.height}")
+                                                videoDesc.add(st.codec_long_name.ifEmpty { st.codec_name.uppercase() })
+                                        }
+
+                                        "audio" -> {
+                                            st.tags?.let {
+                                                val audio = if (!it.title.isNullOrBlank())
+                                                    it.language.uppercase() + " - " + it.title.uppercase().cleanup()
+                                                else
+                                                    it.language.uppercase()
+                                                audioDesc.add(audio)
+                                            }
+                                            val channels = st.channel_layout ?: (st.channels.toString() + "CH")
+                                            audioDesc.add(st.codec_name.uppercase() + "/" + channels)
+                                            //videoDesc.add(st.codec_long_name)
+                                        }
+
+                                        "subtitle" -> {
+                                            st.tags?.let {
+                                                val titles = if (it.title.isNullOrBlank())
+                                                    it.language.uppercase()
+                                                else
+                                                    it.language.uppercase() + " - " + it.title.cleanup()
+                                                subsDesc.add(titles)
+                                            }
+                                        }
+
+                                        else -> {
+                                            // TODO
+                                        }
+                                    }
+                                }
+                                if (subsDesc.isEmpty()) subsDesc.add("None")
+                                val title = format.tags?.title ?: t.title
+                                val size = byteFmt(ffp.format.size.toDouble())
+                                val duration = durFmt(ffp.format.duration.toDouble())
+                                val bitrate = speedFmt(ffp.format.bit_rate.toDouble() / 8)
                                 withContext(Dispatchers.Main) {
-                                    App.toast(" ${title}\n Format: ${format.format_long_name}\n Streams: ${format.nb_streams}\n Size: $size\n Runtime: $duration\n Bitrate: $bitrate", true)
+                                    App.toast(" ${title}\n Format: ${format.format_long_name}\n Video: ${videoDesc.joinToString(" · ")}\n Audio: ${audioDesc.joinToString(" · ")}\n Subtitles: ${subsDesc.joinToString(" · ")}\n Size: $size Runtime: $duration Bitrate: $bitrate", true)
                                 }
                             }
                         }
@@ -168,5 +212,11 @@ class AddFragment : TSFragment() {
                 }
             }
         }
+    }
+
+    private fun String.cleanup(): String {
+        return this
+            .replace("[", "")
+            .replace("]", "")
     }
 }

@@ -11,5 +11,5 @@ data class Format(
     val probe_score: Int,
     val size: String,
     val start_time: String,
-    val tags: Tags
+    val tags: Tags?
 )
