@@ -15,10 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
@@ -27,6 +24,9 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
+import ru.yourok.torrserve.utils.Format.byteFmt
+import ru.yourok.torrserve.utils.Format.durFmt
+import ru.yourok.torrserve.utils.Format.speedFmt
 
 class AddFragment : TSFragment() {
 
@@ -141,6 +141,30 @@ class AddFragment : TSFragment() {
                     }
                 }
                 popBackStackFragment()
+            }
+            torrsAdapter.onLongClick = {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try {
+                        val torr = addTorrent("", it.Magnet, it.Title, "", "", false)
+                        delay(500)
+                        torr?.let { t ->
+                            val data = Api.getFFP(t.hash, 0)
+                            //Log.d("*****", "data: ${data.toString()}")
+                            data?.let {
+                                val format = it.format
+                                val streams = it.streams
+                                val size = byteFmt(it.format.size.toDouble())
+                                val duration = durFmt(it.format.duration.toDouble())
+                                val bitrate = speedFmt(it.format.bit_rate.toDouble()/8)
+                                withContext(Dispatchers.Main) {
+                                    App.toast(" ${format.tags.title}\n Format: ${format.format_long_name}\n Streams: ${format.nb_streams}\n Size: $size\n Runtime: $duration\n Bitrate: $bitrate", true)
+                                }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        App.toast(e.message ?: getString(R.string.error_retrieve_data))
+                    }
+                }
             }
         }
     }

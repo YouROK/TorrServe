@@ -13,6 +13,7 @@ class TorrentsAdapter : RecyclerView.Adapter<TorrentsAdapter.ViewHolder>() {
     val list = mutableListOf<TorrentDetails>()
 
     var onClick: ((TorrentDetails) -> Unit)? = null
+    var onLongClick: ((TorrentDetails) -> Unit)? = null
 
     @SuppressLint("NotifyDataSetChanged")
     fun set(tds: List<TorrentDetails>) {
@@ -28,6 +29,10 @@ class TorrentsAdapter : RecyclerView.Adapter<TorrentsAdapter.ViewHolder>() {
         init {
             view.setOnClickListener {
                 adapter.onClick?.invoke(adapter.list[adapterPosition])
+            }
+            view.setOnLongClickListener {
+                adapter.onLongClick?.invoke(adapter.list[adapterPosition])
+                true
             }
         }
     }
