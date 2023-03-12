@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
@@ -25,12 +24,14 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
 import ru.yourok.torrserve.utils.Format.byteFmt
 import ru.yourok.torrserve.utils.Format.durFmt
 import ru.yourok.torrserve.utils.Format.speedFmt
+import ru.yourok.torrserve.utils.TorrentHelper
 
 class AddFragment : TSFragment() {
 
@@ -148,67 +149,77 @@ class AddFragment : TSFragment() {
             }
             torrsAdapter.onLongClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
+                    val torrent: Torrent
+                    val torr = addTorrent("", it.Magnet, it.Title, "", "", false) ?: let {
+                        return@launch
+                    }
+                    torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
+                        return@launch
+                    }
+                    val ffp = try { // stats 1st torrent file
+                            Api.getFFP(torrent.hash, 1) // 0 = bad request on serials
+                    } catch (e: Exception) {
+                        App.toast(e.message ?: getString(R.string.error_retrieve_data))
+                        null
+                    } ?: let {
+                        return@launch
+                    }
+                    val format = ffp.format
+                    val streams = ffp.streams
+                    val videoDesc = mutableListOf<String>()
+                    val audioDesc = mutableListOf<String>()
+                    val subsDesc = mutableListOf<String>()
                     try {
-                        val torr = addTorrent("", it.Magnet, it.Title, "", "", false)
-                        delay(500)
-                        torr?.let { t ->
-                            val data = Api.getFFP(t.hash, 0)
-                            //Log.d("*****", "data: ${data.toString()}")
-                            data?.let { ffp ->
-                                val format = ffp.format
-                                val streams = ffp.streams
-                                val videoDesc = mutableListOf<String>()
-                                val audioDesc = mutableListOf<String>()
-                                val subsDesc = mutableListOf<String>()
-                                streams.forEach { st -> // count in format.nb_streams
-                                    when (st.codec_type) {
-                                        "video" -> {
-                                            if (st.codec_name != "mjpeg") { // exclude posters
-                                                videoDesc.add("${st.width}x${st.height}")
-                                                videoDesc.add(st.codec_long_name.ifEmpty { st.codec_name.uppercase() })
-                                            }
-                                        }
-
-                                        "audio" -> {
-                                            st.tags?.let {
-                                                val audio = if (!it.title.isNullOrBlank())
-                                                    it.language.uppercase() + " - " + it.title.uppercase().cleanup()
-                                                else
-                                                    it.language.uppercase()
-                                                audioDesc.add(audio)
-                                            }
-                                            val channels = st.channel_layout ?: (st.channels.toString() + "CH")
-                                            audioDesc.add(st.codec_name.uppercase() + "/" + channels)
-                                            //videoDesc.add(st.codec_long_name)
-                                        }
-
-                                        "subtitle" -> {
-                                            st.tags?.let {
-                                                val titles = if (it.title.isNullOrBlank())
-                                                    it.language.uppercase()
-                                                else
-                                                    it.language.uppercase() + " - " + it.title.cleanup()
-                                                subsDesc.add(titles)
-                                            }
-                                        }
-
-                                        else -> {
-                                            // TODO
-                                        }
+                        streams.forEach { st -> // count in format.nb_streams
+                            when (st.codec_type) {
+                                "video" -> {
+                                    if (st.codec_name != "mjpeg") { // exclude posters
+                                        videoDesc.add("${st.width}x${st.height}")
+                                        videoDesc.add(st.codec_long_name.ifEmpty { st.codec_name.uppercase() })
                                     }
                                 }
-                                if (subsDesc.isEmpty()) subsDesc.add("None")
-                                val title = format.tags?.title ?: t.title
-                                val size = byteFmt(ffp.format.size.toDouble())
-                                val duration = durFmt(ffp.format.duration.toDouble())
-                                val bitrate = speedFmt(ffp.format.bit_rate.toDouble() / 8)
-                                withContext(Dispatchers.Main) {
-                                    App.toast(" ${title}\n Format: ${format.format_long_name}\n Video: ${videoDesc.joinToString(" · ")}\n Audio: ${audioDesc.joinToString(" · ")}\n Subtitles: ${subsDesc.joinToString(" · ")}\n Size: $size Runtime: $duration Bitrate: $bitrate", true)
+
+                                "audio" -> {
+                                    var audio = ""
+                                    st.tags?.let {
+                                        audio = if (!it.title.isNullOrBlank())
+                                            it.language.uppercase() + " - " + it.title.uppercase().cleanup()
+                                        else
+                                            it.language.uppercase()
+                                    }
+                                    val channels = st.channel_layout ?: (st.channels.toString() + "CH")
+                                    if (audio.isNotBlank())
+                                        audioDesc.add(audio + " - " + st.codec_name.uppercase() + "/" + channels)
+                                    else
+                                        audioDesc.add(st.codec_name.uppercase() + "/" + channels)
+                                    //videoDesc.add(st.codec_long_name)
+                                }
+
+                                "subtitle" -> {
+                                    st.tags?.let {
+                                        val titles = if (it.title.isNullOrBlank())
+                                            it.language.uppercase()
+                                        else
+                                            it.language.uppercase() + " - " + it.title.cleanup()
+                                        subsDesc.add(titles)
+                                    }
+                                }
+
+                                else -> {
+                                    // TODO
                                 }
                             }
                         }
+                        if (subsDesc.isEmpty()) subsDesc.add("None")
+                        val title = format.tags?.title ?: torrent.title
+                        val size = byteFmt(ffp.format.size.toDouble())
+                        val duration = durFmt(ffp.format.duration.toDouble())
+                        val bitrate = speedFmt(ffp.format.bit_rate.toDouble() / 8)
+                        withContext(Dispatchers.Main) {
+                            App.toast(" Title: ${title}\n Format: ${format.format_long_name}\n Video: ${videoDesc.joinToString(" · ")}\n Audio: ${audioDesc.joinToString(" · ")}\n Subtitles: ${subsDesc.joinToString(" · ")}\n Size: $size Runtime: $duration Bitrate: $bitrate", true)
+                        }
                     } catch (e: Exception) {
-                        App.toast(e.message ?: getString(R.string.error_retrieve_data))
+                        e.message?.let { App.toast(it) }
                     }
                 }
             }
