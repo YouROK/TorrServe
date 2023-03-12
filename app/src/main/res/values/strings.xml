@@ -133,6 +133,11 @@
     <string name="upload_speed">Upload speed</string>
     <string name="bit_rate">Bitrate</string>
 
+    <string name="format">Format</string>
+    <string name="video">Video</string>
+    <string name="audio">Audio</string>
+    <string name="subtitles">Subtitles</string>
+
     <string name="loading">Loading</string>
     <string name="found_new_app_update">App update found</string>
     <string name="not_found_new_app_update">App update not found</string>

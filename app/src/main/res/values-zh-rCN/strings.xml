@@ -121,6 +121,12 @@
     <string name="size">大小</string>
     <string name="download_speed">下载速度</string>
     <string name="upload_speed">上传速度</string>
+    <string name="bit_rate">比特率</string>
+
+    <string name="format">格式</string>
+    <string name="video">视频</string>
+    <string name="audio">声音的</string>
+    <string name="subtitles">字幕</string>
 
     <string name="loading">正在加载</string>
     <string name="found_new_app_update">找到应用更新</string>
@@ -237,7 +243,6 @@
     <string name="boosty_msg">Boosty 網站</string>
     <string name="enable_rutor_search">打開RuTor的搜索</string>
     <string name="enable_rutor_search_desc">(數據庫將在內存中大約500 MB)</string>
-    <string name="bit_rate">比特率</string>
     <string name="install_ffprobe">安裝FFProbe</string>
     <string name="delete_ffprobe">刪除FFProbe</string>
     <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
