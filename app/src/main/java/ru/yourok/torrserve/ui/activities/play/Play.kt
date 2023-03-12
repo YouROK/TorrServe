@@ -9,7 +9,6 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
-import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.players.Players
 import ru.yourok.torrserve.ui.fragments.play.TorrentFilesFragment
@@ -63,15 +62,18 @@ object Play {
                         App.toast(getString(R.string.error_retrieve_torrent_file))
                         error(ErrLoadTorrentInfo)
                     }
+
                     files.size == 1 -> {
                         torrentFileIndex = 0
                         streamTorrent(torrent, files.first().id)
                         successful(Intent())
                     }
+
                     torrentFileIndex > 0 -> {
                         streamTorrent(torrent, torrentFileIndex)
                         successful(Intent())
                     }
+
                     else -> {
                         hideProgress()
                         TorrentFilesFragment().showTorrent(this@play, torrent, viewed) { file ->
@@ -88,18 +90,19 @@ object Play {
 
     private suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
         var torr = torrent
+
         TorrentHelper.preloadTorrent(torr, index)
         delay(200)
         withContext(Dispatchers.IO) {
             try {
                 torr = Api.getTorrent(torr.hash)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
             while (torr.stat == TorrentHelper.TorrentSTPreload) {
                 delay(1000)
                 try {
                     torr = Api.getTorrent(torr.hash)
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                 }
             }
         }
