@@ -26,6 +26,7 @@ import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.addTorrent
+import ru.yourok.torrserve.ui.dialogs.InfoDialog
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
 import ru.yourok.torrserve.utils.Format.byteFmt
@@ -173,7 +174,7 @@ class AddFragment : TSFragment() {
                         streams.forEach { st -> // count in format.nb_streams
                             when (st.codec_type) {
                                 "video" -> {
-                                    if (st.codec_name != "mjpeg") { // exclude posters
+                                    if (st.codec_name != "mjpeg" && st.codec_name != "png") { // exclude posters
                                         videoDesc.add("${st.width}x${st.height}")
                                         videoDesc.add(st.codec_long_name.ifEmpty { st.codec_name.uppercase() })
                                     }
@@ -183,13 +184,13 @@ class AddFragment : TSFragment() {
                                     var audio = ""
                                     st.tags?.let {
                                         audio = if (!it.title.isNullOrBlank())
-                                            it.language.uppercase() + " - " + it.title.uppercase().cleanup()
+                                            "[" + it.language.uppercase() + "] " + it.title.uppercase().cleanup()
                                         else
-                                            it.language.uppercase()
+                                            "[" + it.language.uppercase() + "]"
                                     }
                                     val channels = st.channel_layout ?: (st.channels.toString() + "CH")
                                     if (audio.isNotBlank())
-                                        audioDesc.add(audio + " - " + st.codec_name.uppercase() + "/" + channels)
+                                        audioDesc.add(audio + " " + st.codec_name.uppercase() + "/" + channels)
                                     else
                                         audioDesc.add(st.codec_name.uppercase() + "/" + channels)
                                     //videoDesc.add(st.codec_long_name)
@@ -198,9 +199,9 @@ class AddFragment : TSFragment() {
                                 "subtitle" -> {
                                     st.tags?.let {
                                         val titles = if (it.title.isNullOrBlank())
-                                            it.language.uppercase()
+                                            "[" + it.language.uppercase() + "]"
                                         else
-                                            it.language.uppercase() + " - " + it.title.cleanup()
+                                            "[" + it.language.uppercase() + "] " + it.title.cleanup()
                                         subsDesc.add(titles)
                                     }
                                 }
@@ -210,13 +211,12 @@ class AddFragment : TSFragment() {
                                 }
                             }
                         }
-                        if (subsDesc.isEmpty()) subsDesc.add("None")
                         val title = format.tags?.title ?: torrent.title
                         val size = byteFmt(ffp.format.size.toDouble())
                         val duration = durFmt(ffp.format.duration.toDouble())
                         val bitrate = speedFmt(ffp.format.bit_rate.toDouble() / 8)
                         withContext(Dispatchers.Main) {
-                            App.toast(" Title: ${title}\n Format: ${format.format_long_name}\n Video: ${videoDesc.joinToString(" · ")}\n Audio: ${audioDesc.joinToString(" · ")}\n Subtitles: ${subsDesc.joinToString(" · ")}\n Size: $size Runtime: $duration Bitrate: $bitrate", true)
+                            InfoDialog(view.context).show(title, format.format_long_name, videoDesc.joinToString(" · "), audioDesc.joinToString(" · "), subsDesc.joinToString(" · "), size, duration, bitrate)
                         }
                     } catch (e: Exception) {
                         e.message?.let { App.toast(it) }
