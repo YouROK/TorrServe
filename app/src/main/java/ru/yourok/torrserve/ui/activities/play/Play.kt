@@ -46,7 +46,11 @@ object Play {
                 return@launch
             }
 
-            val viewed = Api.listViewed(torrent.hash)
+            val viewed = try {
+                Api.listViewed(torrent.hash)
+            } catch (_: Exception) {
+                emptyList()
+            }
             val files = TorrentHelper.getPlayableFiles(torrent)
 
             if (intent.hasExtra("FileTemplate") && torrentFileIndex == -1) // For lostfilm app
@@ -58,15 +62,18 @@ object Play {
                         App.toast(getString(R.string.error_retrieve_torrent_file))
                         error(ErrLoadTorrentInfo)
                     }
+
                     files.size == 1 -> {
                         torrentFileIndex = 0
                         streamTorrent(torrent, files.first().id)
                         successful(Intent())
                     }
+
                     torrentFileIndex > 0 -> {
                         streamTorrent(torrent, torrentFileIndex)
                         successful(Intent())
                     }
+
                     else -> {
                         hideProgress()
                         TorrentFilesFragment().showTorrent(this@play, torrent, viewed) { file ->
@@ -83,18 +90,19 @@ object Play {
 
     private suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
         var torr = torrent
+
         TorrentHelper.preloadTorrent(torr, index)
         delay(200)
         withContext(Dispatchers.IO) {
             try {
                 torr = Api.getTorrent(torr.hash)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
             while (torr.stat == TorrentHelper.TorrentSTPreload) {
                 delay(1000)
                 try {
                     torr = Api.getTorrent(torr.hash)
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                 }
             }
         }

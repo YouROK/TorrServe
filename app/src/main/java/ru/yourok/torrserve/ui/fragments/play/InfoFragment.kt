@@ -1,19 +1,16 @@
 package ru.yourok.torrserve.ui.fragments.play
 
-import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.ViewModelProvider
@@ -35,9 +32,10 @@ import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoTorrent
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoViewModel
 import ru.yourok.torrserve.utils.Format
+import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
-import java.util.*
+import java.util.Locale
 
 open class InfoFragment : TSFragment() {
 
@@ -73,7 +71,7 @@ open class InfoFragment : TSFragment() {
     // textView.append("Red Text", Color.RED)
     // textView.append("Blue Bold Text", Color.BLUE, true)
     private fun TextView.append(string: String?, @ColorInt color: Int = 0, bold: Boolean = false) {
-        if (string == null || string.isEmpty()) {
+        if (string.isNullOrEmpty()) {
             return
         }
         val spannable: Spannable = SpannableString(string)
@@ -92,17 +90,6 @@ open class InfoFragment : TSFragment() {
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         append(spannable)
-    }
-
-    @ColorInt
-    fun getColorFromAttr(
-        context: Context,
-        @AttrRes attrColor: Int,
-        typedValue: TypedValue = TypedValue(),
-        resolveRefs: Boolean = true
-    ): Int {
-        context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-        return typedValue.data
     }
 
     private fun updateUI(info: InfoTorrent, index: Int) {
@@ -238,7 +225,7 @@ open class InfoFragment : TSFragment() {
                     val tvbr = findViewById<TextView>(R.id.tvBitrate)
                     torr.bit_rate?.let { br ->
                         if (br.isNotBlank()) {
-                            val bitRate = Format.speedFmt(br.toDouble()/8)
+                            val bitRate = Format.speedFmt(br.toDouble() / 8)
                             tvbr.apply {
                                 text = "" // txt
                                 append("${getString(R.string.bit_rate)} ", color1, true)

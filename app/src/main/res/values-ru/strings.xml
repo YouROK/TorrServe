@@ -80,8 +80,8 @@
     <string name="reset_def">Действие сброшено</string>
     <string name="playlist_all">Играть все</string>
     <string name="playlist_continue">Продолжить</string>
-    <string name="torrent">Торрент</string>
-    <string name="title">Название</string>
+    <string name="torrent_link">URL торрента | Magnet-ссылка | Хеш</string>
+    <string name="title">Название торрента</string>
     <string name="poster">Постер</string>
     <string name="poster_link">URL постера</string>
     <string name="local_ip">Локальный IP</string>
@@ -97,6 +97,10 @@
     <string name="size">Размер</string>
     <string name="download_speed">Скорость загрузки</string>
     <string name="upload_speed">Скорость отдачи</string>
+    <string name="format">Формат</string>
+    <string name="video">Видео</string>
+    <string name="audio">Аудио</string>
+    <string name="subtitles">Субтитры</string>
     <string name="loading">Загрузка</string>
     <string name="found_new_app_update">Найдено обновление приложения</string>
     <string name="not_found_new_app_update">Нет обновлений приложения</string>
@@ -187,10 +191,11 @@
     <string name="remove_all_viewed">Удалить все метки просмотра</string>
     <string name="permission_deny">В доступе отказано</string>
     <string name="boosty_msg">Boosty сайт</string>
-    <string name="enable_rutor_search">Включить поиск по Rutor</string>
+    <string name="enable_rutor_search">Включить поиск по RuTor</string>
     <string name="enable_rutor_search_desc">(ВНИМАНИЕ: база данных будет занимать около 500 МБ в оперативной памяти)</string>
     <string name="bit_rate">Битрейт</string>
     <string name="install_ffprobe">Установить FFProbe</string>
     <string name="delete_ffprobe">Удалить FFProbe</string>
     <string name="ffprobe_summary">Загрузите FFProbe для получения дополнительных данных о видео, таких как длительность, битрейт и т.д.</string>
+    <string name="warn_error_download_ffprobe">Ошибка загрузки FFProbe</string>
 </resources>

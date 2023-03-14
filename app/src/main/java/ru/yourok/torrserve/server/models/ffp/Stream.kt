@@ -4,7 +4,7 @@ data class Stream(
     val avg_frame_rate: String,
     val bit_rate: String,
     val bits_per_raw_sample: String,
-    val channel_layout: String,
+    val channel_layout: String?,
     val channels: Int,
     val codec_long_name: String,
     val codec_name: String,
@@ -31,7 +31,7 @@ data class Stream(
     val sample_rate: String,
     val start_pts: Int,
     val start_time: String,
-    val tags: TagsX,
+    val tags: TagsX?,
     val time_base: String,
     val width: Int
 )

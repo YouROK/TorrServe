@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.utils
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,16 +10,49 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.local.services.GlobalTorrServeService
 
+
 object AccessibilityUtils {
-    private fun openAccessibilitySettings(context: Context) {
+    private fun openAccessibilitySettings(context: Context): Boolean {
+        val isOk: Boolean
         val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-        try {
+        isOk = try {
             context.startActivity(intent)
+            true
         } catch (e: Exception) {
-            e.printStackTrace()
-            e.message?.let { App.toast(it) }
+            //e.printStackTrace()
+            //e.message?.let { App.toast(it) }
+            false
         }
+        return isOk
+    }
+
+    private fun openTvAccessibilitySettings(context: Context): Boolean {
+        var isOk: Boolean
+        val tvintent = Intent("android.intent.action.MAIN")
+        tvintent.addCategory("android.intent.category.LAUNCHER")
+        tvintent.setClassName("com.android.tv.settings", "com.android.tv.settings.system.AccessibilityActivity")
+        tvintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+        try {
+            context.startActivity(tvintent)
+            isOk = true
+        } catch (e: ActivityNotFoundException) {
+            tvintent.setClassName("com.android.tv.settings", "com.android.tv.settings.MainSettings")
+            // com.android.tv.settings.accessibility.AccessibilityFragment
+            //tvintent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.android.tv.settings.device.DevicePrefFragment")
+            //tvintent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, "accessibility") // extras
+            isOk = try {
+                context.startActivity(tvintent)
+                true
+            } catch (e: Exception) {
+                //e.printStackTrace()
+                false
+            }
+        } catch (e: Exception) {
+            //e.printStackTrace()
+            isOk = false
+        }
+        return isOk
     }
 
     private fun openSettings(context: Context) {
@@ -29,6 +63,16 @@ object AccessibilityUtils {
         } catch (e: Exception) {
             e.printStackTrace()
             e.message?.let { App.toast(it) }
+        }
+    }
+
+    private fun showAccessibilitySettings(context: Context) {
+        if (isPackageInstalled(context, "com.android.tv.settings")) {
+            openTvAccessibilitySettings(context)
+        } else if (isPackageInstalled(context, "com.android.settings")) {
+            openAccessibilitySettings(context)
+        } else {
+            openSettings(context)
         }
     }
 
@@ -54,19 +98,15 @@ object AccessibilityUtils {
                 Settings.Secure.putString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, enServices)
                 if (enable) Settings.Secure.putString(contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1")
             } catch (e: Exception) {
-                e.printStackTrace()
                 e.message?.let { App.toast(it) }
+                showAccessibilitySettings(requireContext)
             }
         } else {
-            if (isPackageInstalled(requireContext, "com.android.settings")) {
-                openAccessibilitySettings(requireContext)
-            } else {
-                openSettings(requireContext)
-            }
             if (enable)
                 App.toast(R.string.accessibility_manual_on, true)
             else
                 App.toast(R.string.accessibility_manual_off, true)
+            showAccessibilitySettings(requireContext)
         }
     }
 

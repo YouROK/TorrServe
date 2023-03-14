@@ -9,5 +9,5 @@ data class TagsX(
     val _STATISTICS_WRITING_APP: String,
     val _STATISTICS_WRITING_DATE_UTC: String,
     val language: String,
-    val title: String
+    val title: String?
 )

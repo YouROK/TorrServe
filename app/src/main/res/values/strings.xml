@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">TorrServe MatriX</string>
 
     <string name="add">Add</string>
-    <string name="rutor" translatable="false">Rutor</string>
+    <string name="rutor" translatable="false">RuTor</string>
     <string name="delete">Delete</string>
     <string name="remove_all">Delete All</string>
     <string name="playlist">Playlist</string>
@@ -112,7 +112,7 @@
     <string name="playlist_all">Play All</string>
     <string name="playlist_continue">Continue</string>
 
-    <string name="torrent">Torrent</string>
+    <string name="torrent_link">Torrent URL / Magnet / Hash</string>
     <string name="title">Title</string>
     <string name="poster">Poster</string>
     <string name="poster_link">Poster link</string>
@@ -132,6 +132,11 @@
     <string name="download_speed">Download speed</string>
     <string name="upload_speed">Upload speed</string>
     <string name="bit_rate">Bitrate</string>
+
+    <string name="format">Format</string>
+    <string name="video">Video</string>
+    <string name="audio">Audio</string>
+    <string name="subtitles">Subtitles</string>
 
     <string name="loading">Loading</string>
     <string name="found_new_app_update">App update found</string>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingTop="10dp"
+    android:paddingRight="24dp"
+    android:paddingBottom="24dp">
+
+    <ScrollView
+        android:id="@+id/scroller"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdgeLength="40dp"
+        android:fillViewport="true"
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/format"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="17sp"
+                tools:text="Format:" />
+
+            <TextView
+                android:id="@+id/video"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="17sp"
+                tools:text="Video:" />
+
+            <TextView
+                android:id="@+id/audio"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="17sp"
+                tools:text="Audio:" />
+
+            <TextView
+                android:id="@+id/subtitles"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="17sp"
+                tools:text="Subtitles:" />
+
+            <TextView
+                android:id="@+id/infoline"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="17sp"
+                tools:text="120 GB 02:58:08 20,2 Mbps" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

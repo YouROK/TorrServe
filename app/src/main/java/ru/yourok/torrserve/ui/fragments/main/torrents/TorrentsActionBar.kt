@@ -52,6 +52,7 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
                     App.context.startActivity(intent)
                 }
             }
+
             R.id.itemCopyMagnet -> {
                 val msg = selected.joinToString("\n\n") { getTorrentMagnet(it) }
                 if (msg.isNotEmpty()) {
@@ -61,6 +62,7 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
                     App.toast(App.context.getString(R.string.copy_to_clipboard))
                 }
             }
+
             R.id.itemRemoveTorrent -> {
                 thread {
                     selected.forEach {
@@ -72,6 +74,7 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
                     }
                 }
             }
+
             R.id.itemRemoveViewed -> {
                 thread {
                     selected.forEach {

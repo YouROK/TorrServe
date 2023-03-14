@@ -6,90 +6,129 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/tvRutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
+            android:layout_marginStart="2dp"
+            android:labelFor="@+id/etSearch"
+            android:text="@string/rutor"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="4dp"
-                android:textSize="18sp"
-                android:text="@string/torrent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:hint="Venom 2018"
+            android:inputType="textUri"
+            android:textColor="?attr/colorHost"
+            app:layout_constraintTop_toBottomOf="@+id/tvRutor" />
 
-            <EditText
-                android:id="@+id/etMagnet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView1"
-                tools:layout_editor_absoluteX="16dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRTorrents"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fadingEdgeLength="20dp"
+            android:requiresFadingEdge="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
 
-                <requestFocus />
-            </EditText>
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/adder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textView1,textView2,textView3,etMagnet,etTitle,etPoster" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/title"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etMagnet" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="16dp"
+            android:labelFor="@+id/etMagnet"
+            android:text="@string/torrent_link"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
 
-            <EditText
-                android:id="@+id/etTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                tools:layout_editor_absoluteX="16dp" />
+        <EditText
+            android:id="@+id/etMagnet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:inputType="textUri"
+            android:nextFocusDown="@id/etTitle"
+            android:nextFocusUp="@id/etSearch"
+            app:layout_constraintTop_toBottomOf="@+id/textView1"
+            tools:layout_editor_absoluteX="16dp">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/poster_link"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etTitle" />
+            <requestFocus />
+        </EditText>
 
-            <EditText
-                android:id="@+id/etPoster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                tools:layout_editor_absoluteX="16dp" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="16dp"
+            android:labelFor="@+id/etTitle"
+            android:text="@string/title"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etMagnet" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:inputType="text"
+            android:nextFocusUp="@id/etMagnet"
+            android:nextFocusDown="@id/etPoster"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="16dp"
+            android:labelFor="@+id/etPoster"
+            android:text="@string/poster_link"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etTitle" />
+
+        <EditText
+            android:id="@+id/etPoster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:inputType="textUri"
+            android:nextFocusUp="@id/etTitle"
+            android:nextFocusDown="@id/btnOK"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            tools:layout_editor_absoluteX="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/footer"
         style="@android:style/DeviceDefault.ButtonBar"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:layout_margin="10dp"
         android:divider="?android:attr/dividerVertical"
         android:orientation="horizontal"
@@ -103,6 +142,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:nextFocusUp="@id/etPoster"
             android:text="@android:string/ok" />
 
         <Button
@@ -113,6 +153,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:nextFocusUp="@id/etPoster"
             android:text="@android:string/cancel" />
     </LinearLayout>
 </FrameLayout>

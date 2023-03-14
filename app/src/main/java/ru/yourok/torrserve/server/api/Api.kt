@@ -11,6 +11,7 @@ import java.io.InputStream
 import java.net.URLEncoder
 
 object Api {
+    /// all getAuth / postAuth calls can throw network exceptions
     class ApiException(msg: String, val code: Int) : Exception(msg)
 
     /// Server

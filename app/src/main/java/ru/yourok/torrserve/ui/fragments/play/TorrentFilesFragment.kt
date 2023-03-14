@@ -53,7 +53,11 @@ class TorrentFilesFragment : TSFragment() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch(Dispatchers.IO) {
-            val viewed = Api.listViewed(torrent?.hash ?: return@launch)
+            val viewed = try {
+                Api.listViewed(torrent?.hash ?: return@launch)
+            } catch (_: Exception) {
+                return@launch
+            }
             if (viewed.size != torrFilesAdapter.viewed.size)
                 withContext(Dispatchers.Main) {
                     torrFilesAdapter.update(torrent ?: return@withContext, viewed)
@@ -116,7 +120,12 @@ class TorrentFilesFragment : TSFragment() {
                     // clear viewed
                     if (torrFilesAdapter.count > 1 && position == count - 1)
                         lifecycleScope.launch(Dispatchers.IO) {
-                            torrent?.hash?.let { Api.remViewed(it) }
+                            torrent?.hash?.let {
+                                try {
+                                    Api.remViewed(it)
+                                } catch (_: Exception) {
+                                }
+                            }
                         }
                     onClickItem?.invoke(f)
                 }

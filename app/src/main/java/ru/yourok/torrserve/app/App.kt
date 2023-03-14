@@ -76,6 +76,7 @@ class App : MultiDexApplication() {
                 }
                 snackbarLayout?.background = AppCompatResources.getDrawable(appContext, bg)
                 val textView = snackbarLayout?.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView?
+                textView?.maxLines = 15
                 textView?.textSize = 18.0f
                 textView?.setTextColor(ContextCompat.getColor(appContext, tc))
                 val img = ContextCompat.getDrawable(themedContext, R.drawable.ts_round)
@@ -116,6 +117,7 @@ class App : MultiDexApplication() {
                 }
                 snackbarLayout?.background = AppCompatResources.getDrawable(appContext, bg)
                 val textView = snackbarLayout?.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView?
+                textView?.maxLines = 15
                 textView?.textSize = 18.0f
                 textView?.setTextColor(ContextCompat.getColor(appContext, tc))
                 val img = ContextCompat.getDrawable(themedContext, R.drawable.ts_round)

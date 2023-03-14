@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.rutor
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +13,15 @@ class TorrentsAdapter : RecyclerView.Adapter<TorrentsAdapter.ViewHolder>() {
     val list = mutableListOf<TorrentDetails>()
 
     var onClick: ((TorrentDetails) -> Unit)? = null
+    var onLongClick: ((TorrentDetails) -> Unit)? = null
 
-    fun set(torrs: List<TorrentDetails>) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun set(tds: List<TorrentDetails>) {
         try {
             this.list.clear()
-            this.list.addAll(torrs)
+            this.list.addAll(tds)
             notifyDataSetChanged()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
@@ -26,6 +29,10 @@ class TorrentsAdapter : RecyclerView.Adapter<TorrentsAdapter.ViewHolder>() {
         init {
             view.setOnClickListener {
                 adapter.onClick?.invoke(adapter.list[adapterPosition])
+            }
+            view.setOnLongClickListener {
+                adapter.onLongClick?.invoke(adapter.list[adapterPosition])
+                true
             }
         }
     }
@@ -35,6 +42,7 @@ class TorrentsAdapter : RecyclerView.Adapter<TorrentsAdapter.ViewHolder>() {
         return ViewHolder(vi, this)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val torr = list[position]
         holder.view.findViewById<TextView>(R.id.tvName).text = torr.Title
