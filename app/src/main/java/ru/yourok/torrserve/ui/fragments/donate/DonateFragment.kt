@@ -47,7 +47,7 @@ class DonateFragment : TSFragment() {
         }
 
         vi.findViewById<Button>(R.id.btnYandex)?.setOnClickListener {
-            val link = "https://money.yandex.ru/to/410013733697114/200"
+            val link = "https://yoomoney.ru/to/410013733697114"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -55,14 +55,14 @@ class DonateFragment : TSFragment() {
             Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
         }
 
-        vi.findViewById<Button>(R.id.btnPayPal)?.setOnClickListener {
-            val link = "https://www.paypal.me/yourok/5usd"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-            intent.addCategory(Intent.CATEGORY_BROWSABLE)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivitySafely(intent)
-            Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
-        }
+//        vi.findViewById<Button>(R.id.btnPayPal)?.setOnClickListener {
+//            val link = "https://www.paypal.me/yourok/5usd"
+//            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+//            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivitySafely(intent)
+//            Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
+//        }
 
         vi.findViewById<Button>(R.id.btnTelegram)?.setOnClickListener {
             val intent = Intent()
@@ -71,6 +71,7 @@ class DonateFragment : TSFragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.data = Uri.parse("https://t.me/torrserve")
             startActivitySafely(intent)
+            Settings.setLastViewDonate(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000)
         }
 
         vi.findViewById<ImageView>(R.id.ivTelegram)?.apply {
