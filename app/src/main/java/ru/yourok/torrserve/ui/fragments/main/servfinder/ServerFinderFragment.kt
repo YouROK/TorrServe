@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.main.servfinder
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +29,7 @@ import ru.yourok.torrserve.ui.fragments.TSFragment
 import java.net.Inet4Address
 import java.net.InterfaceAddress
 import java.net.NetworkInterface
-import java.util.*
+import java.util.Enumeration
 
 class ServerFinderFragment : TSFragment() {
 
@@ -78,10 +79,10 @@ class ServerFinderFragment : TSFragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         lifecycleScope.launch {
             hideProgress()
         }
+        super.onDestroyView()
     }
 
     private fun setHost() {
@@ -127,54 +128,58 @@ class ServerFinderFragment : TSFragment() {
         }
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     private suspend fun update() = withContext(Dispatchers.Main) {
-        view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
-        showProgress()
-        view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = getLocalIP()
-        hostAdapter.clear()
-        // add local
-        val host = "http://127.0.0.1:8090"
-        var version = App.context.getString(R.string.local_server)
-        withContext(Dispatchers.IO) {
-            val v = Api.remoteEcho(host)
-            if (v.isNotEmpty()) {
-                version += " · $v"
-            }
-        }
-        hostAdapter.add(ServerIp(host, version))
-        // add saved
-        Settings.getHosts().forEach {
-            version = App.context.getString(R.string.saved_server)
+        view?.let {
+            view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
+            showProgress()
+            view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = getLocalIP()
+            hostAdapter.clear()
+            // add local
+            val host = "http://127.0.0.1:8090"
+            var version = App.context.getString(R.string.local_server)
             withContext(Dispatchers.IO) {
-                val v = Api.remoteEcho(it)
+                val v = Api.remoteEcho(host)
                 if (v.isNotEmpty()) {
                     version += " · $v"
                 }
             }
-            hostAdapter.add(ServerIp(it, version))
-        }
-        // find all
-        viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
-        view?.let {
-            (viewModel as ServerFinderViewModel).getStats().observe(viewLifecycleOwner) {
+            hostAdapter.add(ServerIp(host, version))
+            // add saved
+            Settings.getHosts().forEach {
+                version = App.context.getString(R.string.saved_server)
+                withContext(Dispatchers.IO) {
+                    val v = Api.remoteEcho(it)
+                    if (v.isNotEmpty()) {
+                        version += " · $v"
+                    }
+                }
+                hostAdapter.add(ServerIp(it, version))
+            }
+            // find all
+            viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
+            // java.lang.IllegalStateException: Can't access the Fragment View's LifecycleOwner when getView() is null
+            // i.e., before onCreateView() or after onDestroyView()
+            (viewModel as ServerFinderViewModel).getStats().observe(this@ServerFinderFragment) {
                 view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.VISIBLE
                 view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it
             }
-        }
-        (viewModel as ServerFinderViewModel).getServers().observe(viewLifecycleOwner) {
-            hostAdapter.add(it)
-        }
-        (viewModel as ServerFinderViewModel).getOnFinish().observe(viewLifecycleOwner) {
-            if (it) {
-                view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.INVISIBLE
-                view?.findViewById<TextView>(R.id.tvFindHosts)?.text = ""
-                view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = true
-                lifecycleScope.launch {
-                    this@ServerFinderFragment.hideProgress()
+            (viewModel as ServerFinderViewModel).getServers().observe(this@ServerFinderFragment) {
+                hostAdapter.add(it)
+            }
+            (viewModel as ServerFinderViewModel).getOnFinish().observe(this@ServerFinderFragment) {
+                if (it) {
+                    view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.INVISIBLE
+                    view?.findViewById<TextView>(R.id.tvFindHosts)?.text = ""
+                    view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = true
+                    lifecycleScope.launch {
+                        this@ServerFinderFragment.hideProgress()
+                    }
                 }
             }
+
+            (viewModel as ServerFinderViewModel).find()
         }
-        (viewModel as ServerFinderViewModel).find()
     }
 
     private fun getLocalIP(): String {

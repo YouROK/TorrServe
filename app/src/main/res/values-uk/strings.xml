@@ -202,5 +202,6 @@
     <string name="install_ffprobe">Встановіть FFProbe</string>
     <string name="delete_ffprobe">Видалити FFProbe</string>
     <string name="ffprobe_summary">Завантажте FFProbe, щоб отримати додаткові відеоканчини, такі як тривалість, бітрейт тощо.</string>
-    <string name="warn_error_download_ffprobe">Помилка завантаження FFProbe</string>
+    <string name="error_download_ffprobe">Помилка завантаження FFProbe</string>
+    <string name="error_add_torrent">Неможливо додати торрент</string>
 </resources>

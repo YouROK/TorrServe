@@ -100,10 +100,11 @@ class InfoDialog(private val context: Context) {
         builder.setPositiveButton(R.string.add) { dlg, _ ->
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    addTorrent("", td.Magnet, td.Title, "", "", true)
+                    val torrent = addTorrent("", td.Magnet, td.Title, "", "", true)
+                    torrent?.let { App.toast("${context.getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(context.getString(R.string.error_add_torrent))
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    App.toast(e.message ?: context.getString(R.string.error_retrieve_data))
+                    App.toast(e.message ?: context.getString(R.string.error_add_torrent))
                 }
             }
             dlg.dismiss()

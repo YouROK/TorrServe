@@ -197,5 +197,6 @@
     <string name="install_ffprobe">Установить FFProbe</string>
     <string name="delete_ffprobe">Удалить FFProbe</string>
     <string name="ffprobe_summary">Загрузите FFProbe для получения дополнительных данных о видео, таких как длительность, битрейт и т.д.</string>
-    <string name="warn_error_download_ffprobe">Ошибка загрузки FFProbe</string>
+    <string name="error_download_ffprobe">Ошибка загрузки FFProbe</string>
+    <string name="error_add_torrent">Не удалось добавить торрент</string>
 </resources>

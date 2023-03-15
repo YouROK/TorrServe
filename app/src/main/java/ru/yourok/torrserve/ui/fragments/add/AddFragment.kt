@@ -140,10 +140,11 @@ class AddFragment : TSFragment() {
             torrsAdapter.onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        addTorrent("", it.Magnet, it.Title, "", "", true)
+                        val torrent = addTorrent("", it.Magnet, it.Title, "", "", true)
+                        torrent?.let { App.toast("${getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(getString(R.string.error_add_torrent))
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        App.toast(e.message ?: getString(R.string.error_retrieve_data))
+                        App.toast(e.message ?: getString(R.string.error_add_torrent))
                     }
                 }
                 popBackStackFragment()
@@ -158,6 +159,7 @@ class AddFragment : TSFragment() {
                         return@launch
                     }
                     val ffp = try { // stats 1st torrent file
+                        App.toast(getString(R.string.stat_string_info))
                         Api.getFFP(torrent.hash, 1) // 0 = bad request on serials
                     } catch (e: Exception) {
                         App.toast(e.message ?: getString(R.string.error_retrieve_data))

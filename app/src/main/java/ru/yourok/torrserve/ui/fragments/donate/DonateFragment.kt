@@ -77,10 +77,10 @@ class DonateFragment : TSFragment() {
         vi.findViewById<ImageView>(R.id.ivTelegram)?.apply {
             alpha = 0.6f
             setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus)
-                    alpha = 1.0f
+                alpha = if (hasFocus)
+                    1.0f
                 else
-                    alpha = 0.6f
+                    0.6f
             }
             setOnClickListener {
                 val intent = Intent()
@@ -94,7 +94,7 @@ class DonateFragment : TSFragment() {
         return vi
     }
 
-    fun startActivitySafely(intent: Intent): Boolean {
+    private fun startActivitySafely(intent: Intent): Boolean {
         try {
             if (intent.resolveActivity(App.context.packageManager) != null) {
                 App.context.startActivity(intent)
