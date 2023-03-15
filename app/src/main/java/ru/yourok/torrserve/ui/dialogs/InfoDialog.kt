@@ -13,7 +13,13 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.ColorUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.server.models.torrent.TorrentDetails
+import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
 
 class InfoDialog(private val context: Context) {
@@ -39,7 +45,7 @@ class InfoDialog(private val context: Context) {
         append(spannable)
     }
 
-    fun show(title: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
+    fun show(td: TorrentDetails, title: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
         val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.dialog_info, null) as LinearLayout? ?: return
         val color1 = 0
@@ -89,7 +95,28 @@ class InfoDialog(private val context: Context) {
         if (title.isNotEmpty())
             builder.setTitle(title)
 
-        val dialog = builder.setView(view).create()
+        val dialog = builder.setView(view)
+
+        builder.setPositiveButton(R.string.add) { dlg, _ ->
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    addTorrent("", td.Magnet, td.Title, "", "", true)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    App.toast(e.message ?: context.getString(R.string.error_retrieve_data))
+                }
+            }
+            dlg.dismiss()
+        }
+
+        builder.setNegativeButton(android.R.string.cancel) { dlg, _ ->
+            dlg.dismiss()
+        }
+
+//        builder.setNeutralButton(R.string.play) { dlg, _ ->
+//            createPlayIntent()
+//            dlg.dismiss()
+//        }
 
         dialog.show()
     }
