@@ -69,14 +69,30 @@ fun PlayActivity.addAndExit() {
 
 fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, torrentPoster: String, torrentData: String, torrentSave: Boolean): Torrent? {
     return if (torrentHash.isNotEmpty()) {
-        Api.getTorrent(torrentHash)
+        try {
+            Api.getTorrent(torrentHash)
+        } catch (e: Exception) {
+            e.message?.let { App.toast(it) }
+            null
+        }
     } else if (torrentLink.isNotEmpty()) {
         val scheme = Uri.parse(torrentLink).scheme
         if (ContentResolver.SCHEME_CONTENT == scheme || ContentResolver.SCHEME_FILE == scheme) {
             val fis = App.context.contentResolver.openInputStream(Uri.parse(torrentLink))
-            fis?.let { Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave) }
-        } else
+            fis?.let {
+                try {
+                    Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave)
+                } catch (e: Exception) {
+                    e.message?.let { App.toast(it) }
+                    null
+                }
+            }
+        } else try {
             Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
+        } catch (e: Exception) {
+            e.message?.let { App.toast(it) }
+            null
+        }
     } else
-        return null
+        null
 }

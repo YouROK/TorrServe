@@ -7,7 +7,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import java.io.File
-import java.util.*
+import java.util.Locale
 
 object TorrentHelper {
     const val TorrentSTAdded = 0
@@ -56,6 +56,8 @@ object TorrentHelper {
                 }
                 Thread.sleep(1000)
             } catch (e: Exception) {
+                if (count > 59)
+                    return null
                 Thread.sleep(1000)
             }
         }

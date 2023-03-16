@@ -222,7 +222,7 @@ class AddFragment : TSFragment() {
                         val duration = durFmt(ffp.format.duration.toDouble())
                         val bitrate = speedFmt(ffp.format.bit_rate.toDouble() / 8)
                         withContext(Dispatchers.Main) {
-                            InfoDialog(view.context).show(it, title, format.format_long_name, videoDesc.joinToString(" · "), audioDesc.joinToString(" · "), subsDesc.joinToString(" · "), size, duration, bitrate)
+                            InfoDialog(view.context).show(it, title.trim(), format.format_long_name, videoDesc.joinToString(" ● "), audioDesc.joinToString(" ● "), subsDesc.joinToString(" ● "), size, duration, bitrate)
                         }
                     } catch (e: Exception) {
                         e.message?.let { App.toast(it) }

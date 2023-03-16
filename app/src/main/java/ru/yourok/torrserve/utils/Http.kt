@@ -5,9 +5,13 @@ import info.guardianproject.netcipher.NetCipher
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
-import java.net.HttpURLConnection.*
+import java.net.HttpURLConnection.HTTP_MOVED_PERM
+import java.net.HttpURLConnection.HTTP_MOVED_TEMP
+import java.net.HttpURLConnection.HTTP_OK
+import java.net.HttpURLConnection.HTTP_PARTIAL
+import java.net.HttpURLConnection.HTTP_SEE_OTHER
 import java.net.URL
-import java.util.*
+import java.util.Locale
 import java.util.zip.GZIPInputStream
 
 

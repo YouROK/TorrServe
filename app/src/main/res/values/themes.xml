@@ -1,15 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <attr name="colorHost" format="reference" />
-    <attr name="colorBG" format="reference" />
+    <attr name="colorMainMenu" format="reference" />
 
     <!-- Base application theme. https://material.io/develop/android/docs/getting-started -->
     <style name="Theme.TorrServe.Dark" parent="Theme.MaterialComponents">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowBackground">@color/darker_gray</item>
+        <item name="android:windowBackground">@color/dark_gray</item>
         <!-- attr colors -->
         <item name="colorHost">@color/green</item>
-        <item name="colorBG">@color/darker_gray</item>
+        <item name="colorMainMenu">@color/dark_gray</item>
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryVariant">@color/orange_dark</item>
@@ -19,9 +19,9 @@
         <item name="colorSecondaryVariant">@color/orange_dark</item>
         <item name="colorOnSecondary">@color/green</item>
         <!-- Status bar color -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
         <!-- Bottom bar color -->
-        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/dark_gray</item>
         <!-- Custom -->
         <item name="android:listDivider">@drawable/gradient_divider_green</item>
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
@@ -35,7 +35,7 @@
         <item name="android:windowBackground">@color/tv_white</item>
         <!-- attr colors -->
         <item name="colorHost">@color/orange_dark</item>
-        <item name="colorBG">@color/lighter_gray</item>
+        <item name="colorMainMenu">@color/light_gray</item>
         <!-- colors -->
         <item name="colorPrimary">@color/dark_brown</item>
         <item name="colorPrimaryVariant">@color/orange_dark</item>
@@ -44,8 +44,8 @@
         <item name="colorSecondaryVariant">@color/orange_dark</item>
         <item name="colorOnSecondary">@color/green</item>
         <!-- bars -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/light_gray</item>
         <!-- custom -->
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
@@ -55,7 +55,7 @@
     <style name="Theme.TorrServe.Black" parent="Theme.TorrServe.Dark">
         <!-- attr colors -->
         <item name="colorHost">@color/orange</item>
-        <item name="colorBG">@color/black</item>
+        <item name="colorMainMenu">@color/black</item>
         <!-- colors -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/black</item>
@@ -85,8 +85,8 @@
         <item name="colorSecondary">@color/orange</item>
         <item name="colorSecondaryVariant">@color/orange_dark</item>
         <item name="colorOnSecondary">@color/green</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/dark_gray</item>
     </style>
     <!-- Light Style -->
     <style name="PlayDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
@@ -101,8 +101,8 @@
         <item name="colorSecondary">@color/dark_brown</item>
         <item name="colorSecondaryVariant">@color/orange_dark</item>
         <item name="colorOnSecondary">@color/green</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/light_gray</item>
     </style>
     <!-- Black Style -->
     <style name="PlayDialog.Black" parent="PlayDialog.Dark">
@@ -187,5 +187,7 @@
 
     <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
     </style>
 </resources>
