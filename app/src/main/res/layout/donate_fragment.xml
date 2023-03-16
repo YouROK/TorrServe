@@ -70,37 +70,37 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/paypal"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="10dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/paypal_card"
-        app:srcCompat="@drawable/paypal" />
+    <!--    <ImageView-->
+    <!--        android:id="@+id/paypal"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_gravity="start"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:adjustViewBounds="true"-->
+    <!--        android:contentDescription="@string/paypal_card"-->
+    <!--        app:srcCompat="@drawable/paypal" />-->
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/paypal_card"
-            android:textSize="18sp" />
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:text="@string/paypal_card"-->
+    <!--            android:textSize="18sp" />-->
 
-        <Button
-            android:id="@+id/btnPayPal"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="@string/link"
-            android:textSize="14sp" />
+    <!--        <Button-->
+    <!--            android:id="@+id/btnPayPal"-->
+    <!--            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="3dp"-->
+    <!--            android:text="@string/link"-->
+    <!--            android:textSize="14sp" />-->
 
-    </LinearLayout>
+    <!--    </LinearLayout>-->
 
     <ImageView
         android:id="@+id/ivTelegram"

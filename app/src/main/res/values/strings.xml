@@ -151,7 +151,7 @@
     <string name="install_ffprobe">Install FFProbe</string>
     <string name="delete_ffprobe">Delete FFProbe</string>
     <string name="ffprobe_summary">Download FFProbe to obtain additional video data, such as the duration, bitrate, etc.</string>
-    <string name="warn_error_download_ffprobe">FFProbe download error</string>
+    <string name="error_download_ffprobe">FFProbe download error</string>
     <string name="arch">Arch</string>
     <string name="update_server">Update version</string>
     <string name="warn_error_check_ver">Version check error</string>
@@ -255,5 +255,7 @@
     <string name="no_updates">No updates found</string>
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
+
+    <string name="error_add_torrent">Error adding torrent</string>
 
 </resources>

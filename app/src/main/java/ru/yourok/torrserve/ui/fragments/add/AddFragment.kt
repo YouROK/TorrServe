@@ -140,10 +140,11 @@ class AddFragment : TSFragment() {
             torrsAdapter.onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        addTorrent("", it.Magnet, it.Title, "", "", true)
+                        val torrent = addTorrent("", it.Magnet, it.Title, "", "", true)
+                        torrent?.let { App.toast("${getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(getString(R.string.error_add_torrent))
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        App.toast(e.message ?: getString(R.string.error_retrieve_data))
+                        App.toast(e.message ?: getString(R.string.error_add_torrent))
                     }
                 }
                 popBackStackFragment()
@@ -158,7 +159,8 @@ class AddFragment : TSFragment() {
                         return@launch
                     }
                     val ffp = try { // stats 1st torrent file
-                            Api.getFFP(torrent.hash, 1) // 0 = bad request on serials
+                        App.toast(getString(R.string.stat_string_info))
+                        Api.getFFP(torrent.hash, 1) // 0 = bad request on serials
                     } catch (e: Exception) {
                         App.toast(e.message ?: getString(R.string.error_retrieve_data))
                         null
@@ -183,25 +185,29 @@ class AddFragment : TSFragment() {
                                 "audio" -> {
                                     var audio = ""
                                     st.tags?.let {
-                                        audio = if (!it.title.isNullOrBlank())
-                                            "[" + it.language.uppercase() + "] " + it.title.uppercase().cleanup()
-                                        else
-                                            "[" + it.language.uppercase() + "]"
+                                        it.language?.let { lang ->
+                                            audio = if (!it.title.isNullOrBlank())
+                                                "[" + lang.uppercase() + "] " + it.title.uppercase().cleanup()
+                                            else
+                                                "[" + lang.uppercase() + "]"
+                                        } ?: { audio = it.title?.uppercase()?.cleanup().toString() }
                                     }
                                     val channels = st.channel_layout ?: (st.channels.toString() + "CH")
                                     if (audio.isNotBlank())
                                         audioDesc.add(audio + " " + st.codec_name.uppercase() + "/" + channels)
                                     else
                                         audioDesc.add(st.codec_name.uppercase() + "/" + channels)
-                                    //videoDesc.add(st.codec_long_name)
                                 }
 
                                 "subtitle" -> {
+                                    var titles = ""
                                     st.tags?.let {
-                                        val titles = if (it.title.isNullOrBlank())
-                                            "[" + it.language.uppercase() + "]"
-                                        else
-                                            "[" + it.language.uppercase() + "] " + it.title.cleanup()
+                                        it.language?.let { lang ->
+                                            titles = if (it.title.isNullOrBlank())
+                                                "[" + lang.uppercase() + "]"
+                                            else
+                                                "[" + lang.uppercase() + "] " + it.title.cleanup()
+                                        } ?: { titles = it.title?.cleanup().toString() }
                                         subsDesc.add(titles)
                                     }
                                 }
@@ -216,7 +222,7 @@ class AddFragment : TSFragment() {
                         val duration = durFmt(ffp.format.duration.toDouble())
                         val bitrate = speedFmt(ffp.format.bit_rate.toDouble() / 8)
                         withContext(Dispatchers.Main) {
-                            InfoDialog(view.context).show(title, format.format_long_name, videoDesc.joinToString(" · "), audioDesc.joinToString(" · "), subsDesc.joinToString(" · "), size, duration, bitrate)
+                            InfoDialog(view.context).show(it, title, format.format_long_name, videoDesc.joinToString(" · "), audioDesc.joinToString(" · "), subsDesc.joinToString(" · "), size, duration, bitrate)
                         }
                     } catch (e: Exception) {
                         e.message?.let { App.toast(it) }
@@ -230,5 +236,6 @@ class AddFragment : TSFragment() {
         return this
             .replace("[", "")
             .replace("]", "")
+            .trim()
     }
 }
