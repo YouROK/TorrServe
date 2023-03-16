@@ -22,9 +22,11 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/darker_gray</item>
         <!-- Bottom bar color -->
         <item name="android:navigationBarColor" tools:targetApi="l">@color/darker_gray</item>
-        <!-- Customize -->
+        <!-- Custom -->
         <item name="android:listDivider">@drawable/gradient_divider_green</item>
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
+        <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="alertDialogTheme">@style/AlertDialog</item>
     </style>
     <!-- Light Theme -->
     <style name="Theme.TorrServe.Light" parent="Theme.MaterialComponents.Light">
@@ -44,8 +46,10 @@
         <!-- bars -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/lighter_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/lighter_gray</item>
-        <!-- Customize -->
+        <!-- custom -->
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
+        <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="alertDialogTheme">@style/AlertDialog.Light</item>
     </style>
     <!-- Black Theme -->
     <style name="Theme.TorrServe.Black" parent="Theme.TorrServe.Dark">
@@ -63,6 +67,7 @@
         <item name="colorBackgroundFloating">@color/black_opaque</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/black_opaque</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/black_opaque</item>
+        <item name="alertDialogTheme">@style/AlertDialog.Black</item>
     </style>
     <!-- DayNight Theme -->
     <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
@@ -134,5 +139,53 @@
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
+    </style>
+    <!-- RadioButton -->
+    <style name="Widget.App.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+    <!-- Alert and Dialogs -->
+    <style name="AlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/rc_background_dark</item>
+        <!-- Used for the title -->
+        <item name="materialAlertDialogTitleTextStyle">@style/AlertTitleTextStyle</item>
+        <!-- Used for the text -->
+        <item name="android:textColorPrimary">@color/tv_white</item>
+        <!-- Set min width -->
+        <item name="windowMinWidthMajor">50%</item><!--landscape -->
+        <item name="windowMinWidthMinor">70%</item><!--portrait -->
+        <!-- Used for the buttons -->
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorAccent">@color/orange</item>
+        <!-- Dialog Buttons -->
+        <item name="buttonBarPositiveButtonStyle">@style/AlertButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AlertButtonStyle</item>
+    </style>
+
+    <style name="AlertDialog.Light" parent="AlertDialog">
+        <item name="android:windowBackground">@drawable/rc_background_light</item>
+        <item name="colorPrimary">@color/dark_brown</item>
+        <item name="colorAccent">@color/dark_brown</item>
+        <!-- to change radioButtons text color: https://stackoverflow.com/a/60260915 -->
+        <!--        <item name="android:checkedTextViewStyle">@style/lightCheckedTextView</item>-->
+    </style>
+    <!--    <style name="lightCheckedTextView" parent="@style/Widget.MaterialComponents.CheckedTextView">-->
+    <!--        <item name="android:textColor">?attr/colorOnSurface</item>-->
+    <!--    </style>-->
+    <style name="AlertDialog.Black" parent="AlertDialog">
+        <item name="android:windowBackground">@drawable/rc_background_black</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorAccent">@color/green</item>
+    </style>
+    <!-- Dialog Title and Buttons -->
+    <style name="AlertTitleTextStyle" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+    </style>
+
+    <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_marginStart">6dp</item>
     </style>
 </resources>
