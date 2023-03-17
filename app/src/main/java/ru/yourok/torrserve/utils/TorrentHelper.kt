@@ -116,7 +116,12 @@ object TorrentHelper {
         val probe = try { // stats 1st torrent file
             if (torrLink.isNotBlank())
                 App.toast("${context.getString(R.string.stat_string_info)} …", true)
-            Api.getFFP(torrent.hash, 1) // 0 = bad request on serials
+            val files = getPlayableFiles(torrent)
+            if (files.isNotEmpty()) {
+                Api.getFFP(torrent.hash, files.first().id)
+            } else {
+                null
+            }
         } catch (e: Exception) {
             App.toast(e.message ?: context.getString(R.string.error_retrieve_data))
             null
