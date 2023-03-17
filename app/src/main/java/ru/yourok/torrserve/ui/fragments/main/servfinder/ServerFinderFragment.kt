@@ -131,8 +131,9 @@ class ServerFinderFragment : TSFragment() {
     @SuppressLint("FragmentLiveDataObserve")
     private suspend fun update() = withContext(Dispatchers.Main) {
         view?.let {
-            view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
             showProgress()
+
+            view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
             view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = getLocalIP()
             hostAdapter.clear()
             // add local
