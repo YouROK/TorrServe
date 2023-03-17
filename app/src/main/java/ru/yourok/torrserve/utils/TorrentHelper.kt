@@ -91,7 +91,8 @@ object TorrentHelper {
             val link = getTorrentPreloadLink(torr, index)
             Net.getAuth(link)
         } catch (e: Exception) {
-            e.message?.let { App.toast(it) }
+            e.printStackTrace() // FIXME: why there is timeout on Net.getAuth?
+            // e.message?.let { App.toast(it) }
         }
     }
 
