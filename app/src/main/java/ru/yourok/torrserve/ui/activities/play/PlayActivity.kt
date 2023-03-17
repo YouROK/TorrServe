@@ -94,7 +94,7 @@ class PlayActivity : AppCompatActivity() {
                         if (BuildConfig.DEBUG) Log.d("PlayActivity", "onDestroy() drop torrent $torrentHash")
                         Api.dropTorrent(torrentHash)
                     } catch (e: Exception) {
-                        // TODO: notify user
+                        e.message?.let { App.toast(it) }
                     }
                 }
         }

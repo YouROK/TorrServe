@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -255,11 +260,11 @@ class ServerSettingsFragment : TSFragment() {
     }
 
     private fun loadSettings(): BTSets? {
-        try {
-            return Api.getSettings()
+        return try {
+            Api.getSettings()
         } catch (e: Exception) {
             e.printStackTrace()
+            null
         }
-        return null
     }
 }

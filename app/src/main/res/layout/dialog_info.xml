@@ -46,6 +46,7 @@
                     android:paddingEnd="12dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     tools:text="120.1 GB" />
 
                 <TextView
@@ -58,6 +59,7 @@
                     android:paddingEnd="12dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     tools:text="02:58:08" />
 
                 <TextView
@@ -70,6 +72,7 @@
                     android:paddingEnd="12dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     tools:text="20,2 Mbps" />
 
             </com.google.android.flexbox.FlexboxLayout>

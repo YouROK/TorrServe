@@ -159,7 +159,7 @@ class AddFragment : TSFragment() {
                         return@launch
                     }
                     val ffp = try { // stats 1st torrent file
-                        App.toast(getString(R.string.stat_string_info))
+                        App.toast("${getString(R.string.stat_string_info)} …", true)
                         Api.getFFP(torrent.hash, 1) // 0 = bad request on serials
                     } catch (e: Exception) {
                         App.toast(e.message ?: getString(R.string.error_retrieve_data))

@@ -2,6 +2,7 @@ package ru.yourok.torrserve.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.urlEncode
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.FileStat
@@ -86,7 +87,8 @@ object TorrentHelper {
         try {
             val link = getTorrentPreloadLink(torr, index)
             Net.getAuth(link)
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            e.message?.let { App.toast(it) }
         }
     }
 
