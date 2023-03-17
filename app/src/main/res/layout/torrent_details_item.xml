@@ -18,10 +18,12 @@
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:paddingStart="5dp"
             android:paddingTop="1dp"
             android:paddingEnd="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/colorOnBackground" />
 
         <LinearLayout
             android:layout_width="match_parent"
