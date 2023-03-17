@@ -113,7 +113,8 @@ object TorrentHelper {
 
     suspend fun showFFPInfo(context: Context, torrLink: String, torrent: Torrent) {
         val probe = try { // stats 1st torrent file
-            App.toast("${context.getString(R.string.stat_string_info)} …", true)
+            if (torrLink.isNotBlank())
+                App.toast("${context.getString(R.string.stat_string_info)} …", true)
             Api.getFFP(torrent.hash, 1) // 0 = bad request on serials
         } catch (e: Exception) {
             App.toast(e.message ?: context.getString(R.string.error_retrieve_data))
