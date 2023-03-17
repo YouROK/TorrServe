@@ -60,14 +60,14 @@ class InfoDialog(private val context: Context) {
         .setAllCorners(CornerFamily.ROUNDED, radius)
         .build()
 
-    //private val themedContext = ContextThemeWrapper(this.context, ThemeUtil.selectedTheme)
-    private val bc = ColorStateList.valueOf(getColorFromAttr(this.context, R.attr.colorPrimary))
-    private val tc = getColorFromAttr(this.context, R.attr.colorSurface)
+    private val color = getColorFromAttr(this.context, R.attr.colorOnBackground)
+    private val labelsColor = ColorStateList.valueOf(getColorFromAttr(this.context, R.attr.colorPrimary))
+    private val labelsTextColor = getColorFromAttr(this.context, R.attr.colorSurface)
 
     fun show(torrLink: String, title: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
         val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.dialog_info, null) as LinearLayout? ?: return
-        val color = getColorFromAttr(this.context, R.attr.colorOnBackground)
+
         view.findViewById<TextView>(R.id.format)?.apply {
             if (format.isNotBlank()) {
                 val sIcon = SpannableString(" ")
@@ -77,8 +77,8 @@ class InfoDialog(private val context: Context) {
                     val span = ImageSpan(it, DynamicDrawableSpan.ALIGN_CENTER)
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
-                text = SpanFormat.format("%s ", sIcon)
-                append(format, color, false)
+                text = SpanFormat.format("%s $format", sIcon)
+                //append(format, color, false)
             } else
                 visibility = View.GONE
         }
@@ -91,8 +91,8 @@ class InfoDialog(private val context: Context) {
                     val span = ImageSpan(it, DynamicDrawableSpan.ALIGN_CENTER)
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
-                text = SpanFormat.format("%s ", sIcon)
-                append(video, color, false)
+                text = SpanFormat.format("%s $video", sIcon)
+                //append(video, color, false)
             } else
                 visibility = View.GONE
         }
@@ -105,8 +105,8 @@ class InfoDialog(private val context: Context) {
                     val span = ImageSpan(it, DynamicDrawableSpan.ALIGN_CENTER)
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
-                text = SpanFormat.format("%s ", sIcon)
-                append(audio, color, false)
+                text = SpanFormat.format("%s $audio", sIcon)
+                //append(audio, color, false)
             } else
                 visibility = View.GONE
         }
@@ -119,28 +119,22 @@ class InfoDialog(private val context: Context) {
                     val span = ImageSpan(it, DynamicDrawableSpan.ALIGN_CENTER)
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
-                text = SpanFormat.format("%s ", sIcon)
-                append(subtitles, color, false)
+                text = SpanFormat.format("%s $subtitles", sIcon)
+                //append(subtitles, color, false)
             } else
                 visibility = View.GONE
         }
-//        view.findViewById<TextView>(R.id.infoline)?.apply {
-//            text = ""
-//            append("${context.getString(R.string.size)}: ", color1)
-//            append(size, color2, true)
-//            append(", ${context.getString(R.string.runtime)}: ", color1)
-//            append(runtime, color2, true)
-//            append(", ${context.getString(R.string.bit_rate)}: ", color1)
-//            append(bitrate, color2, true)
-//        }
+        view.findViewById<TextView>(R.id.infoline)?.apply {
+            visibility = View.GONE
+        }
         view.findViewById<TextView>(R.id.tvSize)?.apply {
             if (size.isNotBlank()) {
                 text = size
                 val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
-                shapeDrawable.fillColor = bc.withAlpha(220)
-                shapeDrawable.setStroke(2.0f, bc.withAlpha(128))
+                shapeDrawable.fillColor = labelsColor.withAlpha(220)
+                shapeDrawable.setStroke(2.0f, labelsColor.withAlpha(128))
                 background = shapeDrawable
-                setTextColor(tc)
+                setTextColor(labelsTextColor)
             } else
                 visibility = View.GONE
         }
@@ -148,10 +142,10 @@ class InfoDialog(private val context: Context) {
             if (runtime.isNotBlank()) {
                 text = runtime
                 val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
-                shapeDrawable.fillColor = bc.withAlpha(220)
-                shapeDrawable.setStroke(2.0f, bc.withAlpha(128))
+                shapeDrawable.fillColor = labelsColor.withAlpha(220)
+                shapeDrawable.setStroke(2.0f, labelsColor.withAlpha(128))
                 background = shapeDrawable
-                setTextColor(tc)
+                setTextColor(labelsTextColor)
             } else
                 visibility = View.GONE
         }
@@ -159,10 +153,10 @@ class InfoDialog(private val context: Context) {
             if (bitrate.isNotBlank()) {
                 text = bitrate
                 val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
-                shapeDrawable.fillColor = bc.withAlpha(220)
-                shapeDrawable.setStroke(2.0f, bc.withAlpha(128))
+                shapeDrawable.fillColor = labelsColor.withAlpha(220)
+                shapeDrawable.setStroke(2.0f, labelsColor.withAlpha(128))
                 background = shapeDrawable
-                setTextColor(tc)
+                setTextColor(labelsTextColor)
             } else
                 visibility = View.GONE
         }
