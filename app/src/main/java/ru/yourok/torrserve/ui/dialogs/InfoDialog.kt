@@ -17,7 +17,6 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.ColorUtils
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -26,7 +25,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.server.models.torrent.TorrentDetails
 import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.utils.Format.dp2px
 import ru.yourok.torrserve.utils.SpanFormat
@@ -66,7 +64,7 @@ class InfoDialog(private val context: Context) {
     private val bc = ColorStateList.valueOf(getColorFromAttr(this.context, R.attr.colorPrimary))
     private val tc = getColorFromAttr(this.context, R.attr.colorSurface)
 
-    fun show(td: TorrentDetails, title: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
+    fun show(torrLink: String, title: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
         val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.dialog_info, null) as LinearLayout? ?: return
         val color = getColorFromAttr(this.context, R.attr.colorOnBackground)
@@ -175,27 +173,27 @@ class InfoDialog(private val context: Context) {
 
         val dialog = builder.setView(view)
 
-        builder.setPositiveButton(R.string.add) { dlg, _ ->
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val torrent = addTorrent("", td.Magnet, td.Title, "", "", true)
-                    torrent?.let { App.toast("${context.getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(context.getString(R.string.error_add_torrent))
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    App.toast(e.message ?: context.getString(R.string.error_add_torrent))
+        if (torrLink.isNotBlank()) {
+            builder.setPositiveButton(R.string.add) { dlg, _ ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val torrent = addTorrent("", torrLink, title, "", "", true)
+                        torrent?.let { App.toast("${context.getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(context.getString(R.string.error_add_torrent))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        App.toast(e.message ?: context.getString(R.string.error_add_torrent))
+                    }
                 }
+                dlg.dismiss()
             }
-            dlg.dismiss()
+            builder.setNegativeButton(android.R.string.cancel) { dlg, _ ->
+                dlg.dismiss()
+            }
+        } else {
+            builder.setNeutralButton(android.R.string.ok) { dlg, _ ->
+                dlg.dismiss()
+            }
         }
-
-        builder.setNegativeButton(android.R.string.cancel) { dlg, _ ->
-            dlg.dismiss()
-        }
-
-//        builder.setNeutralButton(R.string.play) { dlg, _ ->
-//            createPlayIntent()
-//            dlg.dismiss()
-//        }
 
         dialog.show()
     }

@@ -10,10 +10,15 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.AbsListView
 import android.widget.AbsListView.MultiChoiceModeListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.ui.activities.play.addTorrent
+import ru.yourok.torrserve.utils.TorrentHelper
 import ru.yourok.torrserve.utils.TorrentHelper.getTorrentMagnet
 import kotlin.concurrent.thread
 
@@ -83,6 +88,17 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
+                    }
+                }
+            }
+
+            R.id.itemShowInfo -> {
+                selected.forEach {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val torrent: Torrent = TorrentHelper.waitFiles(it.hash) ?: let {
+                            return@launch
+                        }
+                        TorrentHelper.showFFPInfo(listView.context, "", torrent)
                     }
                 }
             }

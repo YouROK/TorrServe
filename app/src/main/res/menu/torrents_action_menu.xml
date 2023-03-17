@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/itemShowInfo"
+        android:icon="@drawable/outline_info_24"
+        android:title="@string/stat_string_info"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/itemRemoveViewed"
         android:icon="@drawable/ic_outline_visibility_off"
         android:title="@string/delete"

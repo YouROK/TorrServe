@@ -26,12 +26,8 @@ import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.addTorrent
-import ru.yourok.torrserve.ui.dialogs.InfoDialog
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
-import ru.yourok.torrserve.utils.Format.byteFmt
-import ru.yourok.torrserve.utils.Format.durFmt
-import ru.yourok.torrserve.utils.Format.speedFmt
 import ru.yourok.torrserve.utils.TorrentHelper
 
 class AddFragment : TSFragment() {
@@ -158,84 +154,9 @@ class AddFragment : TSFragment() {
                     torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
                         return@launch
                     }
-                    val ffp = try { // stats 1st torrent file
-                        App.toast("${getString(R.string.stat_string_info)} …", true)
-                        Api.getFFP(torrent.hash, 1) // 0 = bad request on serials
-                    } catch (e: Exception) {
-                        App.toast(e.message ?: getString(R.string.error_retrieve_data))
-                        null
-                    } ?: let {
-                        return@launch
-                    }
-                    val format = ffp.format
-                    val streams = ffp.streams
-                    val videoDesc = mutableListOf<String>()
-                    val audioDesc = mutableListOf<String>()
-                    val subsDesc = mutableListOf<String>()
-                    try {
-                        streams.forEach { st -> // count in format.nb_streams
-                            when (st.codec_type) {
-                                "video" -> {
-                                    if (st.codec_name != "mjpeg" && st.codec_name != "png") { // exclude posters
-                                        videoDesc.add("${st.width}x${st.height}")
-                                        videoDesc.add(st.codec_long_name.ifEmpty { st.codec_name.uppercase() })
-                                    }
-                                }
-
-                                "audio" -> {
-                                    var audio = ""
-                                    st.tags?.let {
-                                        it.language?.let { lang ->
-                                            audio = if (!it.title.isNullOrBlank())
-                                                "[" + lang.uppercase() + "] " + it.title.uppercase().cleanup()
-                                            else
-                                                "[" + lang.uppercase() + "]"
-                                        } ?: { audio = it.title?.uppercase()?.cleanup().toString() }
-                                    }
-                                    val channels = st.channel_layout ?: (st.channels.toString() + "CH")
-                                    if (audio.isNotBlank())
-                                        audioDesc.add(audio + " " + st.codec_name.uppercase() + "/" + channels)
-                                    else
-                                        audioDesc.add(st.codec_name.uppercase() + "/" + channels)
-                                }
-
-                                "subtitle" -> {
-                                    var titles = ""
-                                    st.tags?.let {
-                                        it.language?.let { lang ->
-                                            titles = if (it.title.isNullOrBlank())
-                                                "[" + lang.uppercase() + "]"
-                                            else
-                                                "[" + lang.uppercase() + "] " + it.title.cleanup()
-                                        } ?: { titles = it.title?.cleanup().toString() }
-                                        subsDesc.add(titles)
-                                    }
-                                }
-
-                                else -> {
-                                    // TODO
-                                }
-                            }
-                        }
-                        val title = format.tags?.title ?: torrent.title
-                        val size = byteFmt(ffp.format.size.toDouble())
-                        val duration = durFmt(ffp.format.duration.toDouble())
-                        val bitrate = speedFmt(ffp.format.bit_rate.toDouble() / 8)
-                        withContext(Dispatchers.Main) {
-                            InfoDialog(view.context).show(it, title.trim(), format.format_long_name, videoDesc.joinToString(" ● "), audioDesc.joinToString(" ● "), subsDesc.joinToString(" ● "), size, duration, bitrate)
-                        }
-                    } catch (e: Exception) {
-                        e.message?.let { App.toast(it) }
-                    }
+                    TorrentHelper.showFFPInfo(view.context, it.Magnet, torrent)
                 }
             }
         }
-    }
-
-    private fun String.cleanup(): String {
-        return this
-            .replace("[", "")
-            .replace("]", "")
-            .trim()
     }
 }
