@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -61,41 +62,45 @@
                     android:id="@+id/tvFileName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
                     android:ellipsize="middle"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:singleLine="true"
                     android:textSize="16sp"
                     tools:text="Filename" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top"
-                    android:orientation="horizontal">
+                    app:alignContent="flex_start"
+                    app:alignItems="flex_start"
+                    app:dividerDrawable="@drawable/flexdivider"
+                    app:flexWrap="wrap"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:showDivider="none">
 
                     <TextView
                         android:id="@+id/tvFileSize"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginEnd="6dp"
                         tools:text="Size" />
 
                     <TextView
                         android:id="@+id/tvDuration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginEnd="6dp"
                         tools:text="Duration" />
 
                     <TextView
                         android:id="@+id/tvBitrate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginTop="6dp"
                         tools:text="Bitrate" />
-                </LinearLayout>
+                </com.google.android.flexbox.FlexboxLayout>
 
                 <TextView
                     android:id="@+id/tvPeers"
@@ -108,7 +113,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Speed" />
-
 
                 <TextView
                     android:id="@+id/tvBuffer"
