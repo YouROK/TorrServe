@@ -15,7 +15,7 @@ data class Stream(
     val display_aspect_ratio: String,
     val disposition: Disposition,
     val duration: String,
-    val duration_ts: Int,
+    val duration_ts: Long,
     val field_order: String,
     val has_b_frames: Int,
     val height: Int,
