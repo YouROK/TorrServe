@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -131,8 +131,7 @@ class ServerSettingsFragment : TSFragment() {
         }
 
         val adpRetracker = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.retracker_mode))
-        adpRetracker.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        vi.findViewById<Spinner>(R.id.spinnerRetracker)?.adapter = adpRetracker
+        vi.findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.setAdapter(adpRetracker)
 
         vi.findViewById<Button>(R.id.btnDefaultSets)?.let {
             it.setOnClickListener {
@@ -176,14 +175,15 @@ class ServerSettingsFragment : TSFragment() {
         try {
             view?.apply {
                 btsets?.let { sets ->
+                    val rtm = resources.getStringArray(R.array.retracker_mode)[sets.RetrackersMode]
                     findViewById<TextInputEditText>(R.id.etCacheSize)?.setText((sets.CacheSize / (1024 * 1024)).toString())
                     findViewById<SwitchMaterial>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
                     findViewById<TextInputEditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
                     findViewById<TextInputEditText>(R.id.etPreloadCache)?.setText(sets.PreloadCache.toString())
                     findViewById<SwitchMaterial>(R.id.cbSaveOnDisk)?.isChecked = sets.UseDisk
                     findViewById<SwitchMaterial>(R.id.cbRemoveCacheOnDrop)?.isChecked = sets.RemoveCacheOnDrop
-                    findViewById<Button>(R.id.btnContentPath)?.text = sets.TorrentsSavePath.ifBlank { getString(R.string.not_installed ) }
-                    findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
+                    findViewById<Button>(R.id.btnContentPath)?.text = sets.TorrentsSavePath.ifBlank { getString(R.string.not_installed) }
+                    findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.setText(rtm, false)
                     findViewById<TextInputEditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
                     findViewById<SwitchMaterial>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked = sets.EnableDebug
@@ -214,6 +214,9 @@ class ServerSettingsFragment : TSFragment() {
     suspend fun saveSettings() = withContext(Dispatchers.Main) {
         try {
             view?.apply {
+                val rtmode = findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.text
+                val values = resources.getStringArray(R.array.retracker_mode)
+                val rtIndex = values.indices.find { values[it] == rtmode.toString() } // values.indexOf(rtmode.toString())
                 btsets = BTSets(
                     CacheSize = (findViewById<TextInputEditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 96L) * 1024 * 1024,
                     PreloadBuffer = findViewById<SwitchMaterial>(R.id.cbPreloadBuffer)?.isChecked ?: false,
@@ -223,7 +226,7 @@ class ServerSettingsFragment : TSFragment() {
                     RemoveCacheOnDrop = findViewById<SwitchMaterial>(R.id.cbRemoveCacheOnDrop)?.isChecked ?: false,
                     TorrentsSavePath = btsets?.TorrentsSavePath ?: "",
                     ForceEncrypt = findViewById<SwitchMaterial>(R.id.cbForceEncrypt)?.isChecked ?: false,
-                    RetrackersMode = findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
+                    RetrackersMode = rtIndex ?: 0,
                     TorrentDisconnectTimeout = findViewById<TextInputEditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
                     EnableDebug = findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked ?: false,
                     EnableDLNA = findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.isChecked ?: false,
