@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,6 +24,59 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:alignContent="flex_start"
+                app:alignItems="flex_start"
+                app:dividerDrawable="@drawable/flexdivider"
+                app:flexWrap="wrap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:showDivider="middle">
+
+                <TextView
+                    android:id="@+id/tvSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="120.1 GB" />
+
+                <TextView
+                    android:id="@+id/tvRuntime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="02:58:08" />
+
+                <TextView
+                    android:id="@+id/tvBitrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="20,2 Mbps" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
             <TextView
                 android:id="@+id/format"
                 android:layout_width="fill_parent"
@@ -30,6 +84,7 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
+                android:textColor="?attr/colorOnBackground"
                 tools:text="Format:" />
 
             <TextView
@@ -39,6 +94,7 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
+                android:textColor="?attr/colorOnBackground"
                 tools:text="Video:" />
 
             <TextView
@@ -48,6 +104,7 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
+                android:textColor="?attr/colorOnBackground"
                 tools:text="Audio:" />
 
             <TextView
@@ -57,16 +114,21 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
+                android:textColor="?attr/colorOnBackground"
                 tools:text="Subtitles:" />
 
             <TextView
                 android:id="@+id/infoline"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
-                tools:text="120 GB 02:58:08 20,2 Mbps" />
+                android:textColor="?attr/colorOnBackground"
+                android:visibility="gone"
+                tools:visibility="gone"
+                tools:text="Infoline" />
 
         </LinearLayout>
 

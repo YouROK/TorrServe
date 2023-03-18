@@ -66,7 +66,7 @@ class ServerFinderFragment : TSFragment() {
             setHost()
         }
 
-        vi.findViewById<TextView>(R.id.tvConnectedHost)?.text = Settings.getHost()
+        vi.findViewById<TextView>(R.id.tvConnectedHost)?.text = Settings.getHost().removePrefix("http://")
         vi.findViewById<EditText>(R.id.etHost)?.setText(Settings.getHost())
         return vi
     }
@@ -90,17 +90,15 @@ class ServerFinderFragment : TSFragment() {
             try {
                 var host = view?.findViewById<EditText>(R.id.etHost)?.text?.toString() ?: return@launch
                 var uri = Uri.parse(host)
-
-                if (uri.scheme == null)
+                if (uri.scheme == null || !uri.scheme!!.contains("http", true))
                     host = "http://$host"
 
-                uri = Uri.parse(host) // no port with empty scheme
+                uri = Uri.parse(host) // no port, set default
                 if (uri.port == -1)
                     host += ":8090"
 
                 val oldHost = Settings.getHost()
                 Settings.setHost(host)
-
                 if (Api.echo().startsWith("1.1.")) {
                     App.toast(R.string.not_support_old_server, true)
                     if (!TorrService.isLocal()) {
@@ -131,8 +129,9 @@ class ServerFinderFragment : TSFragment() {
     @SuppressLint("FragmentLiveDataObserve")
     private suspend fun update() = withContext(Dispatchers.Main) {
         view?.let {
-            view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
             showProgress()
+
+            view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
             view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = getLocalIP()
             hostAdapter.clear()
             // add local

@@ -17,6 +17,7 @@ data class BTSets(
     var EnableDebug: Boolean,
     // DLNA
     var EnableDLNA: Boolean,
+    var FriendlyName: String,
     // Rutor search
     var EnableRutorSearch:Boolean,
     // BT Config

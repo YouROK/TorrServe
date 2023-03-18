@@ -20,7 +20,7 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
                 hosts.add(0, servIp)
                 notifyItemInserted(0)
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
@@ -30,7 +30,7 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
                 hosts.add(servIp)
                 notifyItemInserted(hosts.size - 1)
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
@@ -38,12 +38,12 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
         try {
             hosts.clear()
             notifyDataSetChanged()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
 
-    class ViewHolder(val view: View, val adapter: HostAdapter) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(val view: View, private val adapter: HostAdapter) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
                 adapter.onClick?.invoke(adapter.hosts[adapterPosition].host)
@@ -88,7 +88,7 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
                     hostAdapter.hosts.removeAt(pos)
                     hostAdapter.notifyItemRemoved(pos)
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
     }

@@ -18,10 +18,13 @@
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:paddingStart="5dp"
             android:paddingTop="1dp"
             android:paddingEnd="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/colorOnBackground"
+            tools:text="Torrent Name" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:alpha="0.75"
                 android:maxLines="1"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
@@ -46,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:alpha="0.75"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"

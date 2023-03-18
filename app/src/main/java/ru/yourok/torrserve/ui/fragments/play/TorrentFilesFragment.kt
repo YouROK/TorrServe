@@ -88,9 +88,7 @@ class TorrentFilesFragment : TSFragment() {
                                 App.context.startActivity(intent)
                             }
                         } catch (e: Exception) {
-                            e.message?.let {
-                                App.toast(it)
-                            }
+                            e.message?.let { App.toast(it) }
                         }
                     }
                 }
@@ -106,9 +104,7 @@ class TorrentFilesFragment : TSFragment() {
                                 App.context.startActivity(intent)
                             }
                         } catch (e: Exception) {
-                            e.message?.let {
-                                App.toast(it)
-                            }
+                            e.message?.let { App.toast(it) }
                         }
                     }
                 }
@@ -120,10 +116,11 @@ class TorrentFilesFragment : TSFragment() {
                     // clear viewed
                     if (torrFilesAdapter.count > 1 && position == count - 1)
                         lifecycleScope.launch(Dispatchers.IO) {
-                            torrent?.hash?.let {
+                            torrent?.hash?.let { hash ->
                                 try {
-                                    Api.remViewed(it)
-                                } catch (_: Exception) {
+                                    Api.remViewed(hash)
+                                } catch (e: Exception) {
+                                    e.message?.let { App.toast(it) }
                                 }
                             }
                         }

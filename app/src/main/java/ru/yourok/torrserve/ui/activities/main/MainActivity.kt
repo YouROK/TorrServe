@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateStatus() {
         val host = viewModel.getHost()
         host.observe(this) {
-            findViewById<TextView>(R.id.tvCurrentHost)?.text = it
+            findViewById<TextView>(R.id.tvCurrentHost)?.text = it.removePrefix("http://")
         }
         val data = viewModel.get()
         data.observe(this) {

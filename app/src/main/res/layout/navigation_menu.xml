@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menulayout"
     android:layout_width="240dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:background="?attr/colorBG"
+    android:background="?attr/colorMainMenu"
     android:orientation="vertical">
 
     <ScrollView
@@ -47,17 +48,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="http://localhost:8090"
                         android:textAppearance="@android:style/TextAppearance.Medium"
                         android:textColor="?attr/colorHost"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:text="http://localhost:8090"/>
 
                     <TextView
                         android:id="@+id/tvStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Status"
+                        tools:text="Status"
                         android:textSize="12sp" />
                 </LinearLayout>
 

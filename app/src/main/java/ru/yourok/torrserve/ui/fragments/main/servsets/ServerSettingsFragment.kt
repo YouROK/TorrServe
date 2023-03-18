@@ -5,8 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,6 +26,7 @@ import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.dialogs.DirectoryDialog
 import ru.yourok.torrserve.ui.fragments.TSFragment
+
 
 class ServerSettingsFragment : TSFragment() {
 
@@ -41,7 +48,7 @@ class ServerSettingsFragment : TSFragment() {
                 it.visibility = View.INVISIBLE
             else {
                 it.visibility = View.VISIBLE
-                it.text = Settings.getHost()
+                it.text = Settings.getHost().removePrefix("http://")
             }
         }
         vi.findViewById<Button>(R.id.btnContentPath)?.let {
@@ -69,9 +76,9 @@ class ServerSettingsFragment : TSFragment() {
                 verMajor < 94
             ) {
                 withContext(Dispatchers.Main) {
-                    vi.findViewById<CheckBox>(R.id.cbSaveOnDisk)?.visibility = View.GONE
+                    vi.findViewById<SwitchMaterial>(R.id.cbSaveOnDisk)?.visibility = View.GONE
                     vi.findViewById<TextView>(R.id.lbSaveOnDisk)?.visibility = View.GONE
-                    vi.findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.visibility = View.GONE
+                    vi.findViewById<SwitchMaterial>(R.id.cbRemoveCacheOnDrop)?.visibility = View.GONE
                     vi.findViewById<TextView>(R.id.lbRemoveCacheOnDrop)?.visibility = View.GONE
                     vi.findViewById<TextView>(R.id.lbContentPath)?.visibility = View.GONE
                     vi.findViewById<Button>(R.id.btnContentPath)?.visibility = View.GONE
@@ -82,9 +89,9 @@ class ServerSettingsFragment : TSFragment() {
                 verMajor > 100
             ) {
                 withContext(Dispatchers.Main) {
-                    vi.findViewById<TextView>(R.id.lbPreloadCache)?.visibility = View.VISIBLE
-                    vi.findViewById<EditText>(R.id.etPreloadCache)?.visibility = View.VISIBLE
-                    vi.findViewById<CheckBox>(R.id.cbPreloadBuffer)?.visibility = View.GONE
+                    vi.findViewById<TextInputLayout>(R.id.lbPreloadCache)?.visibility = View.VISIBLE
+                    //vi.findViewById<TextInputEditText>(R.id.etPreloadCache)?.visibility = View.VISIBLE
+                    vi.findViewById<SwitchMaterial>(R.id.cbPreloadBuffer)?.visibility = View.GONE
                     vi.findViewById<TextView>(R.id.lbPreloadBuffer)?.visibility = View.GONE
                 }
             }
@@ -93,9 +100,18 @@ class ServerSettingsFragment : TSFragment() {
                 verMajor > 104
             ) {
                 withContext(Dispatchers.Main) {
-                    vi.findViewById<TextView>(R.id.tvConnectionsDhtLimit)?.visibility = View.GONE
-                    vi.findViewById<EditText>(R.id.etConnectionsDhtLimit)?.visibility = View.GONE
-                    vi.findViewById<CheckBox>(R.id.cbEnableDLNA)?.visibility = View.VISIBLE
+                    vi.findViewById<TextInputLayout>(R.id.tvConnectionsDhtLimit)?.visibility = View.GONE
+                    //vi.findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.visibility = View.GONE
+                    vi.findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.visibility = View.VISIBLE
+                }
+            }
+            if ( // MatriX.115 add DLNA Friendly Name
+                ver.contains("MatriX", true) &&
+                verMajor > 114
+            ) {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<TextInputLayout>(R.id.tvFriendlyName)?.visibility = View.VISIBLE
+                    //vi.findViewById<TextInputEditText>(R.id.etFriendlyName)?.visibility = View.VISIBLE
                 }
             }
             if ( // MatriX.120 add Rutor search
@@ -103,7 +119,7 @@ class ServerSettingsFragment : TSFragment() {
                 verMajor > 119
             ) {
                 withContext(Dispatchers.Main) {
-                    vi.findViewById<CheckBox>(R.id.cbEnableRutorSearch)?.visibility = View.VISIBLE
+                    vi.findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.visibility = View.VISIBLE
                     vi.findViewById<TextView>(R.id.tvEnableRutorSearch)?.visibility = View.VISIBLE
                 }
             }
@@ -122,9 +138,8 @@ class ServerSettingsFragment : TSFragment() {
             popBackStackFragment()
         }
 
-        val adpRetracker = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.retracker_mode))
-        adpRetracker.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        vi.findViewById<Spinner>(R.id.spinnerRetracker)?.adapter = adpRetracker
+        val adpRetracker = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.retracker_mode))
+        vi.findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.setAdapter(adpRetracker)
 
         vi.findViewById<Button>(R.id.btnDefaultSets)?.let {
             it.setOnClickListener {
@@ -168,34 +183,36 @@ class ServerSettingsFragment : TSFragment() {
         try {
             view?.apply {
                 btsets?.let { sets ->
-                    findViewById<EditText>(R.id.etCacheSize)?.setText((sets.CacheSize / (1024 * 1024)).toString())
-                    findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
-                    findViewById<EditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
-                    findViewById<EditText>(R.id.etPreloadCache)?.setText(sets.PreloadCache.toString())
-                    findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked = sets.UseDisk
-                    findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.isChecked = sets.RemoveCacheOnDrop
-                    findViewById<Button>(R.id.btnContentPath)?.text = sets.TorrentsSavePath
-                    findViewById<Spinner>(R.id.spinnerRetracker)?.setSelection(sets.RetrackersMode)
-                    findViewById<EditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
-                    findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
-                    findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked = sets.EnableDebug
-                    findViewById<CheckBox>(R.id.cbEnableDLNA)?.isChecked = sets.EnableDLNA
-                    findViewById<CheckBox>(R.id.cbEnableRutorSearch)?.isChecked = sets.EnableRutorSearch
-                    findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked = sets.EnableIPv6
-                    findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked = !sets.DisableTCP
-                    findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked = !sets.DisableUTP
-                    findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked = !sets.DisableUPNP
-                    findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked = !sets.DisableDHT
-                    findViewById<CheckBox>(R.id.cbDisablePEX)?.isChecked = !sets.DisablePEX
-                    findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked = !sets.DisableUpload
-                    findViewById<EditText>(R.id.etDownloadRateLimit)?.setText(sets.DownloadRateLimit.toString())
-                    findViewById<EditText>(R.id.etUploadRateLimit)?.setText(sets.UploadRateLimit.toString())
-                    findViewById<EditText>(R.id.etConnectionsLimit)?.setText(sets.ConnectionsLimit.toString())
-                    findViewById<EditText>(R.id.etConnectionsDhtLimit)?.setText(sets.DhtConnectionLimit.toString())
-                    findViewById<EditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
+                    val rtm = resources.getStringArray(R.array.retracker_mode)[sets.RetrackersMode]
+                    findViewById<TextInputEditText>(R.id.etCacheSize)?.setText((sets.CacheSize / (1024 * 1024)).toString())
+                    findViewById<SwitchMaterial>(R.id.cbPreloadBuffer)?.isChecked = sets.PreloadBuffer
+                    findViewById<TextInputEditText>(R.id.etPreloadTorrent)?.setText(sets.ReaderReadAHead.toString())
+                    findViewById<TextInputEditText>(R.id.etPreloadCache)?.setText(sets.PreloadCache.toString())
+                    findViewById<SwitchMaterial>(R.id.cbSaveOnDisk)?.isChecked = sets.UseDisk
+                    findViewById<SwitchMaterial>(R.id.cbRemoveCacheOnDrop)?.isChecked = sets.RemoveCacheOnDrop
+                    findViewById<Button>(R.id.btnContentPath)?.text = sets.TorrentsSavePath.ifBlank { getString(R.string.not_installed) }
+                    findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.setText(rtm, false)
+                    findViewById<TextInputEditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
+                    findViewById<SwitchMaterial>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
+                    findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked = sets.EnableDebug
+                    findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.isChecked = sets.EnableDLNA
+                    findViewById<TextInputEditText>(R.id.etFriendlyName)?.setText(sets.FriendlyName)
+                    findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.isChecked = sets.EnableRutorSearch
+                    findViewById<SwitchMaterial>(R.id.cbEnableIPv6)?.isChecked = sets.EnableIPv6
+                    findViewById<SwitchMaterial>(R.id.cbDisableTCP)?.isChecked = !sets.DisableTCP
+                    findViewById<SwitchMaterial>(R.id.cbDisableUTP)?.isChecked = !sets.DisableUTP
+                    findViewById<SwitchMaterial>(R.id.cbDisableUPNP)?.isChecked = !sets.DisableUPNP
+                    findViewById<SwitchMaterial>(R.id.cbDisableDHT)?.isChecked = !sets.DisableDHT
+                    findViewById<SwitchMaterial>(R.id.cbDisablePEX)?.isChecked = !sets.DisablePEX
+                    findViewById<SwitchMaterial>(R.id.cbDisableUpload)?.isChecked = !sets.DisableUpload
+                    findViewById<TextInputEditText>(R.id.etDownloadRateLimit)?.setText(sets.DownloadRateLimit.toString())
+                    findViewById<TextInputEditText>(R.id.etUploadRateLimit)?.setText(sets.UploadRateLimit.toString())
+                    findViewById<TextInputEditText>(R.id.etConnectionsLimit)?.setText(sets.ConnectionsLimit.toString())
+                    findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.setText(sets.DhtConnectionLimit.toString())
+                    findViewById<TextInputEditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
                 }
                 if (BuildConfig.DEBUG)
-                    findViewById<CheckBox>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
+                    findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -206,32 +223,36 @@ class ServerSettingsFragment : TSFragment() {
     suspend fun saveSettings() = withContext(Dispatchers.Main) {
         try {
             view?.apply {
+                val rtmode = findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.text
+                val values = resources.getStringArray(R.array.retracker_mode)
+                val rtIndex = values.indices.find { values[it] == rtmode.toString() } // values.indexOf(rtmode.toString())
                 btsets = BTSets(
-                    CacheSize = (findViewById<EditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 96L) * 1024 * 1024,
-                    PreloadBuffer = findViewById<CheckBox>(R.id.cbPreloadBuffer)?.isChecked ?: false,
-                    ReaderReadAHead = findViewById<EditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 95,
-                    PreloadCache = findViewById<EditText>(R.id.etPreloadCache)?.text?.toString()?.toInt() ?: 0,
-                    UseDisk = findViewById<CheckBox>(R.id.cbSaveOnDisk)?.isChecked ?: false,
-                    RemoveCacheOnDrop = findViewById<CheckBox>(R.id.cbRemoveCacheOnDrop)?.isChecked ?: false,
+                    CacheSize = (findViewById<TextInputEditText>(R.id.etCacheSize)?.text?.toString()?.toLong() ?: 96L) * 1024 * 1024,
+                    PreloadBuffer = findViewById<SwitchMaterial>(R.id.cbPreloadBuffer)?.isChecked ?: false,
+                    ReaderReadAHead = findViewById<TextInputEditText>(R.id.etPreloadTorrent)?.text?.toString()?.toInt() ?: 95,
+                    PreloadCache = findViewById<TextInputEditText>(R.id.etPreloadCache)?.text?.toString()?.toInt() ?: 0,
+                    UseDisk = findViewById<SwitchMaterial>(R.id.cbSaveOnDisk)?.isChecked ?: false,
+                    RemoveCacheOnDrop = findViewById<SwitchMaterial>(R.id.cbRemoveCacheOnDrop)?.isChecked ?: false,
                     TorrentsSavePath = btsets?.TorrentsSavePath ?: "",
-                    ForceEncrypt = findViewById<CheckBox>(R.id.cbForceEncrypt)?.isChecked ?: false,
-                    RetrackersMode = findViewById<Spinner>(R.id.spinnerRetracker)?.selectedItemPosition ?: 0,
-                    TorrentDisconnectTimeout = findViewById<EditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
-                    EnableDebug = findViewById<CheckBox>(R.id.cbEnableDebug)?.isChecked ?: false,
-                    EnableDLNA = findViewById<CheckBox>(R.id.cbEnableDLNA)?.isChecked ?: false,
-                    EnableRutorSearch = findViewById<CheckBox>(R.id.cbEnableRutorSearch)?.isChecked ?: false,
-                    EnableIPv6 = findViewById<CheckBox>(R.id.cbEnableIPv6)?.isChecked ?: false,
-                    DisableTCP = findViewById<CheckBox>(R.id.cbDisableTCP)?.isChecked != true,
-                    DisableUTP = findViewById<CheckBox>(R.id.cbDisableUTP)?.isChecked != true,
-                    DisableUPNP = findViewById<CheckBox>(R.id.cbDisableUPNP)?.isChecked != true,
-                    DisableDHT = findViewById<CheckBox>(R.id.cbDisableDHT)?.isChecked != true,
-                    DisablePEX = findViewById<CheckBox>(R.id.cbDisablePEX)?.isChecked != true,
-                    DisableUpload = findViewById<CheckBox>(R.id.cbDisableUpload)?.isChecked != true,
-                    DownloadRateLimit = findViewById<EditText>(R.id.etDownloadRateLimit)?.text?.toString()?.toInt() ?: 0,
-                    UploadRateLimit = findViewById<EditText>(R.id.etUploadRateLimit)?.text?.toString()?.toInt() ?: 0,
-                    ConnectionsLimit = findViewById<EditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 23,
-                    DhtConnectionLimit = findViewById<EditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
-                    PeersListenPort = findViewById<EditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
+                    ForceEncrypt = findViewById<SwitchMaterial>(R.id.cbForceEncrypt)?.isChecked ?: false,
+                    RetrackersMode = rtIndex ?: 0,
+                    TorrentDisconnectTimeout = findViewById<TextInputEditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
+                    EnableDebug = findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked ?: false,
+                    EnableDLNA = findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.isChecked ?: false,
+                    FriendlyName = findViewById<TextInputEditText>(R.id.etFriendlyName)?.text?.toString() ?: "",
+                    EnableRutorSearch = findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.isChecked ?: false,
+                    EnableIPv6 = findViewById<SwitchMaterial>(R.id.cbEnableIPv6)?.isChecked ?: false,
+                    DisableTCP = findViewById<SwitchMaterial>(R.id.cbDisableTCP)?.isChecked != true,
+                    DisableUTP = findViewById<SwitchMaterial>(R.id.cbDisableUTP)?.isChecked != true,
+                    DisableUPNP = findViewById<SwitchMaterial>(R.id.cbDisableUPNP)?.isChecked != true,
+                    DisableDHT = findViewById<SwitchMaterial>(R.id.cbDisableDHT)?.isChecked != true,
+                    DisablePEX = findViewById<SwitchMaterial>(R.id.cbDisablePEX)?.isChecked != true,
+                    DisableUpload = findViewById<SwitchMaterial>(R.id.cbDisableUpload)?.isChecked != true,
+                    DownloadRateLimit = findViewById<TextInputEditText>(R.id.etDownloadRateLimit)?.text?.toString()?.toInt() ?: 0,
+                    UploadRateLimit = findViewById<TextInputEditText>(R.id.etUploadRateLimit)?.text?.toString()?.toInt() ?: 0,
+                    ConnectionsLimit = findViewById<TextInputEditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 23,
+                    DhtConnectionLimit = findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
+                    PeersListenPort = findViewById<TextInputEditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
                 )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {
@@ -255,11 +276,11 @@ class ServerSettingsFragment : TSFragment() {
     }
 
     private fun loadSettings(): BTSets? {
-        try {
-            return Api.getSettings()
+        return try {
+            Api.getSettings()
         } catch (e: Exception) {
             e.printStackTrace()
+            null
         }
-        return null
     }
 }

@@ -14,7 +14,7 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
 object Net {
-    private const val timeout = 15000 // in ms
+    private const val timeout = 30000 // in ms
     fun getHostUrl(path: String): String {
         val url = Settings.getHost()
         if (path.isEmpty())
@@ -70,9 +70,11 @@ object Net {
             200 -> {
                 response.body()
             }
+
             302 -> {
                 ""
             }
+
             else -> {
                 throw Exception(response.statusMessage())
             }
@@ -94,9 +96,11 @@ object Net {
             200 -> {
                 response.body()
             }
+
             302 -> {
                 ""
             }
+
             else -> {
                 throw Exception(response.statusMessage())
             }
@@ -122,9 +126,11 @@ object Net {
             200 -> {
                 response.body()
             }
+
             302 -> {
                 ""
             }
+
             else -> {
                 throw Exception(response.statusMessage())
             }
@@ -159,6 +165,7 @@ object Net {
                 is RuntimeException, is KeyManagementException -> {
                     throw RuntimeException("Failed to create a SSL socket factory", e)
                 }
+
                 else -> throw e
             }
         }

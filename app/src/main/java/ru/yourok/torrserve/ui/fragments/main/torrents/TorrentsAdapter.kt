@@ -1,13 +1,13 @@
 package ru.yourok.torrserve.ui.fragments.main.torrents
 
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -16,10 +16,10 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Format
-import java.util.*
+import java.util.Locale
 
 
-class TorrentsAdapter(private val activity: Activity) : BaseAdapter() {
+class TorrentsAdapter(private val activity: FragmentActivity) : BaseAdapter() {
     private val list = mutableListOf<Torrent>()
 
     fun update(list: List<Torrent>) {
