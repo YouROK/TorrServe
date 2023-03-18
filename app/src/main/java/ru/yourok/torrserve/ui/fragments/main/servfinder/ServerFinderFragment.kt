@@ -66,7 +66,7 @@ class ServerFinderFragment : TSFragment() {
             setHost()
         }
 
-        vi.findViewById<TextView>(R.id.tvConnectedHost)?.text = Settings.getHost()
+        vi.findViewById<TextView>(R.id.tvConnectedHost)?.text = Settings.getHost().removePrefix("http://")
         vi.findViewById<EditText>(R.id.etHost)?.setText(Settings.getHost())
         return vi
     }

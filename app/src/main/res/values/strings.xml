@@ -30,35 +30,35 @@
 
     <string name="cache_size">Cache Size (Megabytes)</string>
     <string name="preload_before_start">Preload Cache Before Start</string>
-    <string name="preload_before_start_desc">(if disabled, 32 MB buffer will be used for preload)</string>
+    <string name="preload_before_start_desc">If disabled, 32 MB buffer will be used for preload</string>
     <string name="torrent_preload" formatted="false">Readahead Cache (5–100%, rec. 95%)</string>
     <string name="torrent_preload_cache" formatted="false">Preload Cache Before Play (0–100%)</string>
     <string name="torrent_disconnect_timeout">Torrent Disconnect Timeout (seconds)</string>
     <string name="save_content_path">Path to Cache Store</string>
     <string name="save_on_disk">Use Cache on Disk</string>
-    <string name="save_on_disk_desc">(better use RAM or external media on flash-based devices)</string>
+    <string name="save_on_disk_desc">Better use RAM or external media on flash-based devices</string>
     <string name="remove_cache_on_drop">Remove Cache on Torrent Drop</string>
-    <string name="remove_cache_on_drop_desc">(if disabled, cache removed on torrent delete from DB)</string>
+    <string name="remove_cache_on_drop_desc">If disabled, cache removed on torrent delete from DB</string>
     <string name="force_encrypt">Force Encrypt Headers</string>
-    <string name="force_encrypt_desc">(can help with torrent blocking providers)</string>
+    <string name="force_encrypt_desc">Can help with torrent blocking providers</string>
     <string name="enable_ipv6">IPv6</string>
-    <string name="enable_ipv6_desc">(enable only if supported)</string>
+    <string name="enable_ipv6_desc">Enable only if supported by ISP</string>
     <string name="enable_debug">Debug TorrServer Logging</string>
     <string name="enable_dlna">DLNA Media Server</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
-    <string name="disable_tcp_desc">(don\'t disable without μTP enabled)</string>
+    <string name="disable_tcp_desc">Don\'t disable without μTP enabled</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>
-    <string name="disable_utp_desc">(not recommended to enable on weak devices)</string>
+    <string name="disable_utp_desc">Not recommended to enable on weak devices</string>
     <string name="disable_upnp">UPnP - Universal Plug and Play</string>
-    <string name="disable_upnp_desc">(auto-open port on router)</string>
+    <string name="disable_upnp_desc">Auto-open port on router</string>
     <string name="enable_rutor_search">Enable Rutor Torrents Search</string>
-    <string name="enable_rutor_search_desc">(NOTE: torrents database will occupy about 500 MB in RAM)</string>
+    <string name="enable_rutor_search_desc">NOTE: torrents database will occupy about 500 MB in RAM</string>
     <string name="disable_dht">DHT - Distributed Hash Table</string>
-    <string name="disable_dht_desc">(disable if there is no network after starting the server)</string>
+    <string name="disable_dht_desc">Disable if there is no network after starting the server</string>
     <string name="disable_pex">PEX - Peer Exchange</string>
-    <string name="disable_pex_desc">(better leave enabled)</string>
+    <string name="disable_pex_desc">Better leave enabled</string>
     <string name="disable_upload">Upload</string>
-    <string name="disable_upload_desc">(not recommended to disable)</string>
+    <string name="disable_upload_desc">Not recommended to disable</string>
     <string name="ecnryption">Encryption</string>
     <string name="connections_limit">Torrent Connections (20–25 recommended)</string>
     <string name="connections_dht_limit">Limit of DHT Connections (0 - unlimited)</string>

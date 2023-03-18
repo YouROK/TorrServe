@@ -26,6 +26,8 @@
         <item name="android:listDivider">@drawable/gradient_divider_green</item>
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="switchStyle">@style/Widget.App.Switch</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
         <item name="alertDialogTheme">@style/AlertDialog</item>
     </style>
     <!-- Light Theme -->
@@ -49,6 +51,8 @@
         <!-- custom -->
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="switchStyle">@style/Widget.App.Switch</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
         <item name="alertDialogTheme">@style/AlertDialog.Light</item>
     </style>
     <!-- Black Theme -->
@@ -143,6 +147,17 @@
     <!-- RadioButton -->
     <style name="Widget.App.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
         <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+    <!-- Switch -->
+    <style name="Widget.App.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <!--        <item name="android:textColor">?attr/colorOnSurface</item>-->
+        <item name="android:textSize">16sp</item>
+    </style>
+    <!-- TextInputLayout -->
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <!--        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>-->
+        <!--        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>-->
+        <item name="hintTextColor">?attr/colorOnSurface</item>
     </style>
     <!-- Alert and Dialogs -->
     <style name="AlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
