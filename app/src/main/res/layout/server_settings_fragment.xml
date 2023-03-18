@@ -34,32 +34,15 @@
                 android:id="@+id/tvServerAddr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="?attr/colorHost"
                 android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="5dp"-->
-            <!--                android:labelFor="@+id/etCacheSize"-->
-            <!--                android:text="@string/cache_size" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etCacheSize"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned" />-->
-
+            <!-- CACHE SIZE -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/cache_size">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -68,29 +51,11 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberSigned" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="5dp"-->
-            <!--                android:labelFor="@+id/etPreloadTorrent"-->
-            <!--                android:text="@string/torrent_preload" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etPreloadTorrent"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned" />-->
-
+            <!-- READAHEAD -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/torrent_preload">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -99,35 +64,12 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberSigned" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/lbPreloadCache"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="5dp"-->
-            <!--                android:labelFor="@+id/etPreloadCache"-->
-            <!--                android:text="@string/torrent_preload_cache"-->
-            <!--                android:visibility="gone" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etPreloadCache"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned"-->
-            <!--                android:nextFocusDown="@id/cbSaveOnDisk"-->
-            <!--                android:visibility="gone" />-->
-
+            <!-- PRELOAD -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lbPreloadCache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/torrent_preload_cache"
                 android:visibility="gone">
 
@@ -140,7 +82,7 @@
                     android:visibility="gone"
                     tools:visibility="visible" />
             </com.google.android.material.textfield.TextInputLayout>
-
+            <!-- BUFFER -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbPreloadBuffer"
                 android:layout_width="match_parent"
@@ -154,7 +96,7 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbPreloadBuffer"
                 android:text="@string/preload_before_start_desc" />
-
+            <!-- Cache on Disc -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbSaveOnDisk"
                 android:layout_width="match_parent"
@@ -168,7 +110,7 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbSaveOnDisk"
                 android:text="@string/save_on_disk_desc" />
-
+            <!-- Remove Cache on Drop -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbRemoveCacheOnDrop"
                 android:layout_width="match_parent"
@@ -182,12 +124,12 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbRemoveCacheOnDrop"
                 android:text="@string/remove_cache_on_drop_desc" />
-
+            <!-- Content Path -->
             <TextView
                 android:id="@+id/lbContentPath"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:labelFor="@+id/btnContentPath"
                 android:text="@string/save_content_path"
@@ -199,14 +141,10 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:nextFocusUp="@id/cbRemoveCacheOnDrop"
                 android:nextFocusDown="@id/cbEnableIPv6" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
+            <!-- IPv6 -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbEnableIPv6"
                 android:layout_width="match_parent"
@@ -219,7 +157,7 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbEnableIPv6"
                 android:text="@string/enable_ipv6_desc" />
-
+            <!-- TCP -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbDisableTCP"
                 android:layout_width="match_parent"
@@ -232,7 +170,7 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbDisableTCP"
                 android:text="@string/disable_tcp_desc" />
-
+            <!-- UTP -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbDisableUTP"
                 android:layout_width="match_parent"
@@ -245,7 +183,7 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbDisableUTP"
                 android:text="@string/disable_utp_desc" />
-
+            <!-- PEX -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbDisablePEX"
                 android:layout_width="match_parent"
@@ -258,7 +196,7 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbDisablePEX"
                 android:text="@string/disable_pex_desc" />
-
+            <!-- Force Encrypt -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbForceEncrypt"
                 android:layout_width="match_parent"
@@ -271,37 +209,20 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbForceEncrypt"
                 android:text="@string/force_encrypt_desc" />
-
+            <!-- DEBUG -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbEnableDebug"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:nextFocusDown="@id/etDisconnectTimeout"
                 android:text="@string/enable_debug"
                 android:visibility="gone" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginBottom="5dp"-->
-            <!--                android:labelFor="@+id/etDisconnectTimeout"-->
-            <!--                android:text="@string/torrent_disconnect_timeout" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etDisconnectTimeout"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned" />-->
-
+            <!-- Disconnect Timeout -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/torrent_disconnect_timeout">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -310,30 +231,11 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberSigned" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginBottom="5dp"-->
-            <!--                android:labelFor="@+id/etConnectionsLimit"-->
-            <!--                android:text="@string/connections_limit" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etConnectionsLimit"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned"-->
-            <!--                android:nextFocusDown="@id/cbDisableDHT" />-->
             <!-- Conn Limit -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/connections_limit">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -355,30 +257,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbDisableDHT"
                 android:text="@string/disable_dht_desc" />
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tvConnectionsDhtLimit"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="0dp"-->
-            <!--                android:labelFor="@+id/etConnectionsDhtLimit"-->
-            <!--                android:text="@string/connections_dht_limit" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etConnectionsDhtLimit"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned" />-->
-
+            <!-- Limit DHT -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tvConnectionsDhtLimit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/connections_dht_limit">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -386,27 +273,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="5dp"-->
-            <!--                android:labelFor="@+id/etDownloadRateLimit"-->
-            <!--                android:text="@string/download_rate_limit" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etDownloadRateLimit"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned"-->
-            <!--                android:nextFocusDown="@id/cbDisableUpload" />-->
-
+            <!-- Download Speed -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -417,9 +284,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberSigned"
-                    android:nextFocusDown="@id/cbDisableUpload"/>
+                    android:nextFocusDown="@id/cbDisableUpload" />
             </com.google.android.material.textfield.TextInputLayout>
-
+            <!-- Disable Upload -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbDisableUpload"
                 android:layout_width="match_parent"
@@ -433,24 +300,11 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbDisableUpload"
                 android:text="@string/disable_upload_desc" />
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="5dp"-->
-            <!--                android:labelFor="@+id/etUploadRateLimit"-->
-            <!--                android:text="@string/upload_rate_limit" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etUploadRateLimit"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned" />-->
-
+            <!-- Upload Speed -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/upload_rate_limit">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -458,26 +312,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/transparent" />
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="5dp"-->
-            <!--                android:labelFor="@+id/etPeersListenPort"-->
-            <!--                android:text="@string/peers_listen_port" />-->
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/etPeersListenPort"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:inputType="numberSigned"-->
-            <!--                android:nextFocusDown="@id/cbDisableUPNP" />-->
+            <!-- Peers Port -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -510,14 +345,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/enable_dlna"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="gone" />
             <!-- RUTOR -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbEnableRutorSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/enable_rutor_search"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvEnableRutorSearch"
@@ -526,13 +363,14 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbPreloadBuffer"
                 android:text="@string/enable_rutor_search_desc"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@android:color/transparent" />
-
+            <!-- Retrackers -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
