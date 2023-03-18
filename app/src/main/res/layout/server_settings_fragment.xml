@@ -545,7 +545,7 @@
                 android:id="@+id/spinnerRetracker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nextFocusUp="@id/cbDisableUPNP"
+                android:nextFocusUp="@id/cbEnableRutorSearch"
                 android:nextFocusDown="@id/btnDefaultSets" />
 
             <View
