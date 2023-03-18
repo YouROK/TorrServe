@@ -43,6 +43,8 @@
     <string name="enable_ipv6_desc">（仅在支持时启用</string>
     <string name="enable_debug">调试服务端日志</string>
     <string name="enable_dlna">DLNA 媒体服务器</string>
+    <string name="dlna_friendly_name">DLNA 服务器名称</string>
+    <string name="dlna_name_hint">留空以使用默认值</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
     <string name="disable_tcp_desc">Don\'t disable without μTP enabled</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>
