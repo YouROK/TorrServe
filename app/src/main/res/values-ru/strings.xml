@@ -162,7 +162,7 @@
     <string name="show_cover_title">Показывать обложки</string>
     <string name="show_cover_sum_on">Показывать обложки торрентов</string>
     <string name="show_cover_sum_off">Не показывать обложки торрентов</string>
-    <string name="sort_torrents_list_title">Отсортировать список торрентов по алфавиту</string>
+    <string name="sort_torrents_list_title">Список торрентов по алфавиту</string>
     <string name="sort_torrents_list_sum_on">Сортировать торренты по алфавиту</string>
     <string name="sort_torrents_list_sum_off">Сортировать торренты по времени добавления</string>
     <string name="show_battery_save_tv">Отключите оптимизацию в «Приложения» / «Специальный доступ» / «Экономия энергии»</string>
