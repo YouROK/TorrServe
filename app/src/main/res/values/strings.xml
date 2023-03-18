@@ -45,6 +45,8 @@
     <string name="enable_ipv6_desc">Enable only if supported by ISP</string>
     <string name="enable_debug">Debug TorrServer Logging</string>
     <string name="enable_dlna">DLNA Media Server</string>
+    <string name="dlna_friendly_name">DLNA Server Name</string>
+    <string name="dlna_name_hint">Leave blank to use default</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
     <string name="disable_tcp_desc">Don\'t disable without μTP enabled</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>

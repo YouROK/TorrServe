@@ -27,6 +27,7 @@ import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.dialogs.DirectoryDialog
 import ru.yourok.torrserve.ui.fragments.TSFragment
 
+
 class ServerSettingsFragment : TSFragment() {
 
     private var btsets: BTSets? = null
@@ -88,9 +89,8 @@ class ServerSettingsFragment : TSFragment() {
                 verMajor > 100
             ) {
                 withContext(Dispatchers.Main) {
-                    //vi.findViewById<TextInputLayout>(R.id.lbPreloadCache)?.isHintEnabled = true
                     vi.findViewById<TextInputLayout>(R.id.lbPreloadCache)?.visibility = View.VISIBLE
-                    vi.findViewById<TextInputEditText>(R.id.etPreloadCache)?.visibility = View.VISIBLE
+                    //vi.findViewById<TextInputEditText>(R.id.etPreloadCache)?.visibility = View.VISIBLE
                     vi.findViewById<SwitchMaterial>(R.id.cbPreloadBuffer)?.visibility = View.GONE
                     vi.findViewById<TextView>(R.id.lbPreloadBuffer)?.visibility = View.GONE
                 }
@@ -100,10 +100,18 @@ class ServerSettingsFragment : TSFragment() {
                 verMajor > 104
             ) {
                 withContext(Dispatchers.Main) {
-                    //vi.findViewById<TextInputLayout>(R.id.tvConnectionsDhtLimit)?.isHintEnabled = false
                     vi.findViewById<TextInputLayout>(R.id.tvConnectionsDhtLimit)?.visibility = View.GONE
-                    vi.findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.visibility = View.GONE
+                    //vi.findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.visibility = View.GONE
                     vi.findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.visibility = View.VISIBLE
+                }
+            }
+            if ( // MatriX.115 add DLNA Friendly Name
+                ver.contains("MatriX", true) &&
+                verMajor > 114
+            ) {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<TextInputLayout>(R.id.tvFriendlyName)?.visibility = View.VISIBLE
+                    //vi.findViewById<TextInputEditText>(R.id.etFriendlyName)?.visibility = View.VISIBLE
                 }
             }
             if ( // MatriX.120 add Rutor search
@@ -130,7 +138,7 @@ class ServerSettingsFragment : TSFragment() {
             popBackStackFragment()
         }
 
-        val adpRetracker = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.retracker_mode))
+        val adpRetracker = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.retracker_mode))
         vi.findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.setAdapter(adpRetracker)
 
         vi.findViewById<Button>(R.id.btnDefaultSets)?.let {
@@ -188,6 +196,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<SwitchMaterial>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked = sets.EnableDebug
                     findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.isChecked = sets.EnableDLNA
+                    findViewById<TextInputEditText>(R.id.etFriendlyName)?.setText(sets.FriendlyName)
                     findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.isChecked = sets.EnableRutorSearch
                     findViewById<SwitchMaterial>(R.id.cbEnableIPv6)?.isChecked = sets.EnableIPv6
                     findViewById<SwitchMaterial>(R.id.cbDisableTCP)?.isChecked = !sets.DisableTCP
@@ -230,6 +239,7 @@ class ServerSettingsFragment : TSFragment() {
                     TorrentDisconnectTimeout = findViewById<TextInputEditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
                     EnableDebug = findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked ?: false,
                     EnableDLNA = findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.isChecked ?: false,
+                    FriendlyName = findViewById<TextInputEditText>(R.id.etFriendlyName)?.text?.toString() ?: "",
                     EnableRutorSearch = findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.isChecked ?: false,
                     EnableIPv6 = findViewById<SwitchMaterial>(R.id.cbEnableIPv6)?.isChecked ?: false,
                     DisableTCP = findViewById<SwitchMaterial>(R.id.cbDisableTCP)?.isChecked != true,

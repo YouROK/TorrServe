@@ -34,6 +34,8 @@
     <string name="enable_ipv6_desc">Включите якщо підтримується</string>
     <string name="enable_debug">Докладний лог сервера</string>
     <string name="enable_dlna">DLNA-медиасервер</string>
+    <string name="dlna_friendly_name">Ім\'я сервера DLNA</string>
+    <string name="dlna_name_hint">Залиште порожнім, щоб використовувати значення за промовчанням.</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
     <string name="disable_tcp_desc">Не вимикайте без включеного μTP</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>

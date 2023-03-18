@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -71,16 +72,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="@string/torrent_preload_cache"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPreloadCache"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberSigned"
-                    android:nextFocusDown="@id/cbSaveOnDisk"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:nextFocusDown="@id/cbSaveOnDisk" />
             </com.google.android.material.textfield.TextInputLayout>
             <!-- BUFFER -->
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -277,6 +277,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/download_rate_limit">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -316,6 +317,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/peers_listen_port">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -346,7 +348,25 @@
                 android:layout_height="wrap_content"
                 android:text="@string/enable_dlna"
                 android:visibility="gone"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tvFriendlyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/dlna_friendly_name"
+                android:visibility="gone"
+                app:helperText="@string/dlna_name_hint"
+                app:helperTextEnabled="true"
+                tools:visibility="visible">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFriendlyName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
             <!-- RUTOR -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbEnableRutorSearch"
@@ -375,8 +395,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/retrackers"
-                android:inputType="none">
+                android:hint="@string/retrackers">
 
                 <AutoCompleteTextView
                     android:id="@+id/actvRetracker"
