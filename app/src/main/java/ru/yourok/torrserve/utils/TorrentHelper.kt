@@ -50,16 +50,20 @@ object TorrentHelper {
     fun waitFiles(hash: String): Torrent? {
         var count = 0
         while (true) {
+//            if (BuildConfig.DEBUG) Log.d("*****", "waitFiles($count) for $hash")
             try {
                 val torr = Api.getTorrent(hash)
-                if (torr.file_stats != null) {
-                    if ((torr.file_stats?.size ?: 0) > 0 || count > 59)
-                        return torr
-                    else
-                        count++
-                }
+//                if (torr.file_stats != null) {
+                if ((torr.file_stats?.size ?: 0) > 0 || count > 59)
+                    return torr
+//                    else
+//                        count++
+//                }
+                count++
                 Thread.sleep(1000)
             } catch (e: Exception) {
+                e.printStackTrace()
+                count++
                 if (count > 59)
                     return null
                 Thread.sleep(1000)
