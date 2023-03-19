@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -55,38 +57,24 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvFriendlyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/host_title"
+            app:helperText="http://localhost:8090"
+            app:helperTextEnabled="true">
 
-            <TextView
-                android:id="@+id/tvFindHostsPrefix"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etHost"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:paddingEnd="6dp"
-                android:text="@string/find"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/tvFindHosts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/etHost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="6dp"
-            android:hint="http://127.0.0.1:8090"
-            android:inputType="textUri"
-            android:textColor="?attr/colorHost" />
+                android:inputType="textUri"
+                android:textColor="?attr/colorHost" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnFindHosts"

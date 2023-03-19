@@ -11,6 +11,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.utils.Net.isValidPublicIp4
 import java.net.*
 import java.util.*
 
@@ -96,7 +97,7 @@ class ServerFinderViewModel : ViewModel() {
                 if ("$ipRange$i" == local)
                     continue
                 withContext(Dispatchers.Main) {
-                    stats?.value = checkHost
+                    stats?.value = checkHost.removePrefix("http://")
                 }
                 viewModelScope.launch(Dispatchers.IO) {
                     val version = Api.remoteEcho(checkHost)
@@ -125,7 +126,7 @@ class ServerFinderViewModel : ViewModel() {
                 continue
             for (interfaceAddress in networkInterface.interfaceAddresses) {
                 val ip = interfaceAddress.address
-                if (ip is Inet4Address) {
+                if (ip is Inet4Address && !isValidPublicIp4(ip.hostAddress)) {
                     ret.add(interfaceAddress)
                 }
             }
