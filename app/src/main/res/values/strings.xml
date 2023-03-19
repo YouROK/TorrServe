@@ -125,7 +125,8 @@
     <string name="find_hosts">Find hosts</string>
     <string name="local_server">Local server</string>
     <string name="saved_server">Saved server</string>
-    <string name="on_device">On Device</string>
+    <string name="new_server">New server</string>
+    <string name="online">Online</string>
 
     <string name="buffering">Buffering</string>
     <string name="buffer">Buffer</string>

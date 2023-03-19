@@ -115,7 +115,8 @@
     <string name="find_hosts">查找主机</string>
     <string name="local_server">本地服务端</string>
     <string name="saved_server">已保存的服务端</string>
-    <string name="on_device">在设备上</string>
+    <string name="new_server">新服务器</string>
+    <string name="online">在线的</string>
 
     <string name="buffering">缓冲中</string>
     <string name="buffer">缓冲</string>

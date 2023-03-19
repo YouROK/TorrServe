@@ -136,26 +136,31 @@ class ServerFinderFragment : TSFragment() {
             hostAdapter.clear()
             // add local
             val host = "http://127.0.0.1:8090"
-            var version = App.context.getString(R.string.local_server)
+            var status = App.context.getString(R.string.local_server)
+            if (TorrService.isLocal())
+                status += " · ${App.context.getString(R.string.connected_host)}"
+            var version = ""
             withContext(Dispatchers.IO) {
-                val v = Api.remoteEcho(host)
-                if (v.isNotEmpty()) {
-                    version += " · $v"
+                version = Api.remoteEcho(host)
+                if (version.isNotEmpty()) {
+                    status += " · ${App.context.getString(R.string.online)}"
                 }
             }
-            hostAdapter.add(ServerIp(host, version))
+            hostAdapter.add(ServerIp(host, version, status))
             // add saved
             Settings.getHosts().forEach {
-                version = App.context.getString(R.string.saved_server)
+                status = App.context.getString(R.string.saved_server)
+                if (it == Settings.getHost())
+                    status = App.context.getString(R.string.connected_host)
                 withContext(Dispatchers.IO) {
-                    val v = Api.remoteEcho(it)
-                    if (v.isNotEmpty()) {
-                        version += " · $v"
+                    version = Api.remoteEcho(it)
+                    if (version.isNotEmpty()) {
+                        status += " · ${App.context.getString(R.string.online)}"
                     }
                 }
-                hostAdapter.add(ServerIp(it, version))
+                hostAdapter.add(ServerIp(it, version, status))
             }
-            // find all
+            // find on local network
             viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
             // java.lang.IllegalStateException: Can't access the Fragment View's LifecycleOwner when getView() is null
             // i.e., before onCreateView() or after onDestroyView()
@@ -186,7 +191,9 @@ class ServerFinderFragment : TSFragment() {
         val ret = mutableListOf<InterfaceAddress>()
         while (interfaces.hasMoreElements()) {
             val networkInterface: NetworkInterface = interfaces.nextElement()
-            if (networkInterface.isLoopback)
+            if (networkInterface.isLoopback) // skip loopback
+                continue
+            if (networkInterface.isPointToPoint) // skip ptp / vpn
                 continue
             for (interfaceAddress in networkInterface.interfaceAddresses) {
                 val ip = interfaceAddress.address

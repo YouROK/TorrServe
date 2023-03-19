@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/action_selector"
-    android:focusable="true"
     android:clickable="true"
     android:clipToPadding="false"
+    android:focusable="true"
     android:padding="5dp">
 
     <LinearLayout
@@ -15,23 +17,51 @@
 
         <TextView
             android:id="@+id/tvHost"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="5dp"
+            android:layout_margin="3dp"
+            android:paddingStart="12dp"
             android:paddingTop="1dp"
-            android:paddingEnd="5dp"
-            android:text="http://127.0.0.1:8090"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:paddingEnd="12dp"
+            android:paddingBottom="3dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="http://127.0.0.1:8090" />
 
-        <TextView
-            android:id="@+id/tvVersion"
+        <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:paddingBottom="4dp"
-            android:text="1.XX.XX"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            app:alignContent="flex_start"
+            app:alignItems="flex_start"
+            app:dividerDrawable="@drawable/flexdivider"
+            app:flexWrap="wrap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showDivider="middle">
+
+            <TextView
+                android:id="@+id/tvVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="3dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                tools:text="1.XX.XX" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:paddingStart="3dp"
+                android:paddingEnd="3dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                tools:text="@string/online" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
     </LinearLayout>
 
     <ImageView
@@ -43,8 +73,8 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center|end"
         android:layout_marginEnd="5dp"
-        android:visibility="invisible"
-        android:background="@drawable/ic_circle_online" />
+        android:background="@drawable/ic_circle_online"
+        android:visibility="invisible" />
     <!-- can't use vectors with ?attr on 4.4 -->
 
 </RelativeLayout>

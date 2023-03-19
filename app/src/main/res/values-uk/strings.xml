@@ -98,7 +98,8 @@
     <string name="find_hosts">Пошук серверів</string>
     <string name="local_server">Локальний сервер</string>
     <string name="saved_server">Збережений сервер</string>
-    <string name="on_device">На пристрої</string>
+    <string name="new_server">Новий сервер</string>
+    <string name="online">Онлайн</string>
     <string name="buffering">Буферизація</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Піри</string>
