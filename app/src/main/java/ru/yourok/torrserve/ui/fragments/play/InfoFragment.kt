@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +33,7 @@ import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoTorrent
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoViewModel
 import ru.yourok.torrserve.utils.Format
+import ru.yourok.torrserve.utils.ThemeUtil
 import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
@@ -128,8 +130,9 @@ open class InfoFragment : TSFragment() {
                     }
 
                     val file: FileStat? = if (index >= 0) torr.file_stats?.get(index) else null
-                    val color1 = 0 // ColorUtils.setAlphaComponent(getColorFromAttr(this.context, R.attr.colorOnBackground), 200)
-                    val color2 = ColorUtils.setAlphaComponent(getColorFromAttr(this.context, R.attr.colorOnBackground), 220)
+                    val themedContext = ContextThemeWrapper(this.context, ThemeUtil.selectedTheme)
+                    val color1 = ColorUtils.setAlphaComponent(getColorFromAttr(themedContext, R.attr.colorBright), 200)
+                    val color2 = ColorUtils.setAlphaComponent(getColorFromAttr(themedContext, R.attr.colorBright), 240)
                     val tvFN = findViewById<TextView>(R.id.tvFileName)
                     val tvFS = findViewById<TextView>(R.id.tvFileSize)
                     file?.let {

@@ -9,30 +9,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:layout_marginTop="16dp">
+        android:layout_margin="16dp">
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvRutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:labelFor="@+id/etSearch"
-            android:text="@string/rutor"
-            android:textSize="18sp"
+            android:hint="@string/rutor"
+            app:helperText="Venom 2018"
+            app:helperTextEnabled="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:hint="Venom 2018"
-            android:inputType="textUri"
-            android:textColor="?attr/colorHost"
-            app:layout_constraintTop_toBottomOf="@+id/tvRutor" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRTorrents"
@@ -40,86 +35,81 @@
             android:layout_height="0dp"
             android:fadingEdgeLength="20dp"
             android:requiresFadingEdge="vertical"
+            android:layout_marginStart="-10dp"
+            android:layout_marginEnd="-10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
+            app:layout_constraintTop_toBottomOf="@+id/tvRutor"
+            tools:visibility="gone" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/adder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textView1,textView2,textView3,etMagnet,etTitle,etPoster" />
+            app:constraint_referenced_ids="textView1,textView2,textView3" />
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="16dp"
-            android:labelFor="@+id/etMagnet"
-            android:text="@string/torrent_link"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
-
-        <EditText
-            android:id="@+id/etMagnet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:inputType="textUri"
-            android:nextFocusDown="@id/etTitle"
-            android:nextFocusUp="@id/etSearch"
-            app:layout_constraintTop_toBottomOf="@+id/textView1"
-            tools:layout_editor_absoluteX="16dp">
+            android:layout_marginTop="16dp"
+            android:hint="@string/torrent_link"
+            app:helperText="@string/torrent_link_help"
+            app:helperTextEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRutor">
 
-            <requestFocus />
-        </EditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMagnet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusUp="@id/etSearch"
+                android:nextFocusDown="@id/etTitle"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium">
 
-        <TextView
+                <requestFocus />
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="16dp"
-            android:labelFor="@+id/etTitle"
-            android:text="@string/title"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etMagnet" />
-
-        <EditText
-            android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:inputType="text"
-            android:nextFocusUp="@id/etMagnet"
-            android:nextFocusDown="@id/etPoster"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            tools:layout_editor_absoluteX="16dp" />
+            android:layout_marginTop="16dp"
+            android:hint="@string/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView1">
 
-        <TextView
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusUp="@id/etMagnet"
+                android:nextFocusDown="@id/etPoster"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="16dp"
-            android:labelFor="@+id/etPoster"
-            android:text="@string/poster_link"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etTitle" />
-
-        <EditText
-            android:id="@+id/etPoster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:inputType="textUri"
-            android:nextFocusUp="@id/etTitle"
-            android:nextFocusDown="@id/btnOK"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:layout_editor_absoluteX="16dp" />
+            android:layout_marginTop="16dp"
+            android:hint="@string/poster_link"
+            app:helperText="@string/poster_link_help"
+            app:helperTextEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPoster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusUp="@id/etTitle"
+                android:nextFocusDown="@id/btnOK"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <attr name="colorBright" format="reference" />
     <attr name="colorHost" format="reference" />
     <attr name="colorMainMenu" format="reference" />
 
@@ -8,6 +9,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/dark_gray</item>
         <!-- attr colors -->
+        <item name="colorBright">@color/tv_white</item>
         <item name="colorHost">@color/green</item>
         <item name="colorMainMenu">@color/dark_gray</item>
         <!-- Primary brand color -->
@@ -36,6 +38,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/tv_white</item>
         <!-- attr colors -->
+        <item name="colorBright">@color/dark_brown</item>
         <item name="colorHost">@color/orange_dark</item>
         <item name="colorMainMenu">@color/light_gray</item>
         <!-- colors -->
@@ -140,24 +143,24 @@
 
     <!-- Checkboxes Text -->
     <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>
     <!-- RadioButton -->
     <style name="Widget.App.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
     </style>
     <!-- Switch -->
     <style name="Widget.App.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
-        <item name="android:textColor">?attr/colorOnSurface</item><!-- TODO: colorStateList -->
+        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
         <item name="android:textSize">16sp</item>
     </style>
     <!-- TextInputLayout -->
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <!--        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>-->
         <!--        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>-->
-        <item name="hintTextColor">?attr/colorOnSurface</item>
+        <item name="hintTextColor">?attr/colorBright</item><!-- TODO: colorStateList -->
     </style>
     <!-- Alert and Dialogs -->
     <style name="AlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
@@ -187,7 +190,7 @@
         <!--        <item name="android:checkedTextViewStyle">@style/lightCheckedTextView</item>-->
     </style>
     <!--    <style name="lightCheckedTextView" parent="@style/Widget.MaterialComponents.CheckedTextView">-->
-    <!--        <item name="android:textColor">?attr/colorOnSurface</item>-->
+    <!--        <item name="android:textColor">?attr/colorBright</item>-->
     <!--    </style>-->
     <style name="AlertDialog.Black" parent="AlertDialog">
         <item name="android:windowBackground">@drawable/rc_background_black</item>
@@ -198,6 +201,7 @@
     <style name="AlertTitleTextStyle" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+        <item name="android:layout_marginBottom">6dp</item>
     </style>
 
     <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">

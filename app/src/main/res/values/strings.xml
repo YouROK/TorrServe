@@ -114,10 +114,12 @@
     <string name="playlist_all">Play All</string>
     <string name="playlist_continue">Continue</string>
 
-    <string name="torrent_link">Torrent URL / Magnet / Hash</string>
+    <string name="torrent_link">Torrent URL</string>
+    <string name="torrent_link_help">Enter Torrent URL / Magnet / Hash</string>
     <string name="title">Title</string>
     <string name="poster">Poster</string>
-    <string name="poster_link">Poster link</string>
+    <string name="poster_link">Poster URL</string>
+    <string name="poster_link_help">Enter Poster URL (optional)</string>
 
     <string name="local_ip">Local IP</string>
     <string name="connected_host">Connected to</string>

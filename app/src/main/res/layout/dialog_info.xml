@@ -84,7 +84,7 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="?attr/colorBright"
                 tools:text="Format:" />
 
             <TextView
@@ -94,7 +94,7 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="?attr/colorBright"
                 tools:text="Video:" />
 
             <TextView
@@ -104,7 +104,7 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="?attr/colorBright"
                 tools:text="Audio:" />
 
             <TextView
@@ -114,7 +114,7 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="?attr/colorBright"
                 tools:text="Subtitles:" />
 
             <TextView
@@ -125,7 +125,7 @@
                 android:lineSpacingExtra="3sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="17sp"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="?attr/colorBright"
                 android:visibility="gone"
                 tools:visibility="gone"
                 tools:text="Infoline" />

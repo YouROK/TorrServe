@@ -35,7 +35,7 @@
             android:maxLines="3"
             android:singleLine="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="?attr/colorOnBackground"
+            android:textColor="?attr/colorBright"
             android:textSize="18sp"
             tools:text="Name" />
 

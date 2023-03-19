@@ -82,10 +82,12 @@
     <string name="reset_def">Действие сброшено</string>
     <string name="playlist_all">Играть все</string>
     <string name="playlist_continue">Продолжить</string>
-    <string name="torrent_link">URL торрента | Magnet-ссылка | Хеш</string>
+    <string name="torrent_link">Торрент</string>
+    <string name="torrent_link_help">Укажите URL торрента, magnet-ссылку или хеш</string>
     <string name="title">Название торрента</string>
     <string name="poster">Постер</string>
     <string name="poster_link">URL постера</string>
+    <string name="poster_link_help">Укажите ссылку на постер (опционально)</string>
     <string name="local_ip">Локальный IP</string>
     <string name="connected_host">Используется</string>
     <string name="find">Поиск</string>

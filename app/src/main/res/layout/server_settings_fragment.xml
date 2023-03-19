@@ -133,7 +133,7 @@
                 android:layout_marginBottom="5dp"
                 android:labelFor="@+id/btnContentPath"
                 android:text="@string/save_content_path"
-                android:textColor="?attr/colorOnSurface"
+                android:textColor="?attr/colorBright"
                 android:textSize="16sp" />
 
             <Button
