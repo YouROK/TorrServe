@@ -112,8 +112,8 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
             if (version.isNotBlank()) {
                 text = version
                 val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
-                shapeDrawable.fillColor = versionColor.withAlpha(200)
-                shapeDrawable.setStroke(2.0f, versionColor.withAlpha(128))
+                shapeDrawable.fillColor = versionColor.withAlpha(160)
+                shapeDrawable.setStroke(2.0f, versionColor.withAlpha(100))
                 background = shapeDrawable
                 setTextColor(labelsTextColor)
             } else {
