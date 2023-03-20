@@ -82,7 +82,7 @@ class App : MultiDexApplication() {
                 val img = ContextCompat.getDrawable(themedContext, R.drawable.ts_round)
                 val padding = dp2px(10f)
                 val imgSize = textView?.lineHeight ?: (padding * 2)
-                img?.setBounds(0, 0, imgSize + dp2px(8f), imgSize + dp2px(8f))
+                img?.setBounds(0, 0, imgSize + dp2px(6f), imgSize + dp2px(6f))
                 textView?.setCompoundDrawables(img, null, null, null)
                 textView?.compoundDrawablePadding = padding
 
@@ -123,7 +123,7 @@ class App : MultiDexApplication() {
                 val img = ContextCompat.getDrawable(themedContext, R.drawable.ts_round)
                 val padding = dp2px(10f)
                 val imgSize = textView?.lineHeight ?: (padding * 2)
-                img?.setBounds(0, 0, imgSize + dp2px(8f), imgSize + dp2px(8f))
+                img?.setBounds(0, 0, imgSize + dp2px(6f), imgSize + dp2px(6f))
                 textView?.setCompoundDrawables(img, null, null, null)
                 textView?.compoundDrawablePadding = padding
 

@@ -12,6 +12,7 @@
     <string name="open_torrserve">Запустить TorrServe</string>
     <string name="torrents">Торренты</string>
     <string name="apply">Применить</string>
+    <string name="skip">Пропустить</string>
     <string name="capital_on">ВКЛ</string>
     <string name="capital_off">ВЫКЛ</string>
     <string name="default_sets">Настройки по умолчанию</string>
@@ -109,7 +110,7 @@
     <string name="loading">Загрузка</string>
     <string name="found_new_app_update">Найдено обновление приложения</string>
     <string name="not_found_new_app_update">Нет обновлений приложения</string>
-    <string name="current_version">Установленная версия</string>
+    <string name="current_version">Установлен</string>
     <string name="new_version">Новая версия</string>
     <string name="server_update">Обновление сервера</string>
     <string name="install_server_latest">Установить / обновить сервер</string>
@@ -201,7 +202,7 @@
     <string name="bit_rate">Битрейт</string>
     <string name="install_ffprobe">Установить FFProbe</string>
     <string name="delete_ffprobe">Удалить FFProbe</string>
-    <string name="ffprobe_summary">Загрузите FFProbe для получения дополнительных данных о видео, таких как длительность, битрейт и т.д.</string>
+    <string name="ffprobe_summary">Загрузите FFProbe для получения данных о видео, таких как длительность, битрейт и т.д.</string>
     <string name="error_download_ffprobe">Ошибка загрузки FFProbe</string>
     <string name="error_add_torrent">Не удалось добавить торрент</string>
 </resources>
