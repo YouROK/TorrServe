@@ -23,7 +23,7 @@
             android:paddingTop="1dp"
             android:paddingEnd="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="?attr/colorOnBackground"
+            android:textColor="?attr/colorBright"
             tools:text="Torrent Name" />
 
         <LinearLayout

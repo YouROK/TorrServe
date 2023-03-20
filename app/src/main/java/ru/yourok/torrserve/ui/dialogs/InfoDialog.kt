@@ -60,7 +60,6 @@ class InfoDialog(private val context: Context) {
         .setAllCorners(CornerFamily.ROUNDED, radius)
         .build()
 
-    private val color = getColorFromAttr(this.context, R.attr.colorOnBackground)
     private val labelsColor = ColorStateList.valueOf(getColorFromAttr(this.context, R.attr.colorPrimary))
     private val labelsTextColor = getColorFromAttr(this.context, R.attr.colorSurface)
 

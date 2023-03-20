@@ -1,13 +1,19 @@
 package ru.yourok.torrserve.ui.fragments.main.servfinder
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.utils.Format
+import ru.yourok.torrserve.utils.ThemeUtil
 
 class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     val hosts = mutableListOf<ServerIp>()
@@ -52,7 +58,7 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
                 val lst = Settings.getHosts().toMutableList()
                 if (lst.remove(adapter.hosts[adapterPosition].host)) {
                     Settings.setHosts(lst)
-                    rem(adapter, adapter.hosts[adapterPosition])
+                    delete(adapter, adapter.hosts[adapterPosition])
                 }
                 true
             }
@@ -66,22 +72,60 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.view.findViewById<TextView>(R.id.tvHost).text = hosts[position].host
+        // round labels model
+        val radius = Format.dp2px(2.0f).toFloat()
+        val shapeAppearanceModel = ShapeAppearanceModel()
+            .toBuilder()
+            .setAllCorners(CornerFamily.ROUNDED, radius)
+            .build()
+        val hostColor = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(holder.view.context, R.attr.colorHost))
+        val versionColor = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(holder.view.context, R.attr.colorPrimary))
+        val labelsTextColor = ThemeUtil.getColorFromAttr(holder.view.context, R.attr.colorSurface)
+
+        holder.view.findViewById<TextView>(R.id.tvHost).apply {
+            text = hosts[position].host.removePrefix("http://")
+            val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
+            shapeDrawable.fillColor = hostColor.withAlpha(10)
+            shapeDrawable.setStroke(2.0f, hostColor.withAlpha(240))
+            background = shapeDrawable
+            setTextColor(hostColor)
+        } // TODO: http|https badge
 
         val version = hosts[position].version
         // set online badge by added version
-        if (version.contains("·", true) || version.startsWith("1.2.") || version.startsWith("MatriX"))
+        //if (version.contains("·", true) || version.startsWith("1.2.") || version.startsWith("MatriX"))
+        if (version.isNotBlank() && (version.startsWith("1.2.") || version.startsWith("MatriX")))
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
         else
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.INVISIBLE
 
-        holder.view.findViewById<TextView>(R.id.tvVersion).text = version
+        val status = hosts[position].status
+        holder.view.findViewById<TextView>(R.id.tvStatus).apply {
+            if (status.isNotBlank()) {
+                text = status
+            } else {
+                visibility = View.GONE
+            }
+        }
+
+        holder.view.findViewById<TextView>(R.id.tvVersion).apply {
+            if (version.isNotBlank()) {
+                text = version
+                val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
+                shapeDrawable.fillColor = versionColor.withAlpha(160)
+                shapeDrawable.setStroke(2.0f, versionColor.withAlpha(100))
+                background = shapeDrawable
+                setTextColor(labelsTextColor)
+            } else {
+                visibility = View.GONE
+            }
+        }
     }
 
     override fun getItemCount() = hosts.size
 
     companion object {
-        fun rem(hostAdapter: HostAdapter, servIp: ServerIp) {
+        fun delete(hostAdapter: HostAdapter, servIp: ServerIp) {
             try {
                 val pos = hostAdapter.hosts.indexOf(servIp)
                 if (pos != -1) {

@@ -114,10 +114,12 @@
     <string name="playlist_all">Play All</string>
     <string name="playlist_continue">Continue</string>
 
-    <string name="torrent_link">Torrent URL / Magnet / Hash</string>
+    <string name="torrent_link">Torrent URL</string>
+    <string name="torrent_link_help">Enter Torrent URL / Magnet / Hash</string>
     <string name="title">Title</string>
     <string name="poster">Poster</string>
-    <string name="poster_link">Poster link</string>
+    <string name="poster_link">Poster URL</string>
+    <string name="poster_link_help">Enter Poster URL (optional)</string>
 
     <string name="local_ip">Local IP</string>
     <string name="connected_host">Connected to</string>
@@ -125,7 +127,8 @@
     <string name="find_hosts">Find hosts</string>
     <string name="local_server">Local server</string>
     <string name="saved_server">Saved server</string>
-    <string name="on_device">On Device</string>
+    <string name="new_server">New server</string>
+    <string name="online">Online</string>
 
     <string name="buffering">Buffering</string>
     <string name="buffer">Buffer</string>

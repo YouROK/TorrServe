@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,10 +26,12 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
+import ru.yourok.torrserve.utils.Net.isValidPublicIp4
 import java.net.Inet4Address
 import java.net.InterfaceAddress
 import java.net.NetworkInterface
 import java.util.Enumeration
+
 
 class ServerFinderFragment : TSFragment() {
 
@@ -49,7 +51,7 @@ class ServerFinderFragment : TSFragment() {
         }
 
         hostAdapter.onClick = {
-            vi.findViewById<EditText>(R.id.etHost)?.setText(it)
+            vi.findViewById<TextInputEditText>(R.id.etHost)?.setText(it)
         }
 
         vi.findViewById<Button>(R.id.btnFindHosts)?.setOnClickListener {
@@ -67,7 +69,7 @@ class ServerFinderFragment : TSFragment() {
         }
 
         vi.findViewById<TextView>(R.id.tvConnectedHost)?.text = Settings.getHost().removePrefix("http://")
-        vi.findViewById<EditText>(R.id.etHost)?.setText(Settings.getHost())
+        vi.findViewById<TextInputEditText>(R.id.etHost)?.setText(Settings.getHost())
         return vi
     }
 
@@ -88,7 +90,7 @@ class ServerFinderFragment : TSFragment() {
     private fun setHost() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                var host = view?.findViewById<EditText>(R.id.etHost)?.text?.toString() ?: return@launch
+                var host = view?.findViewById<TextInputEditText>(R.id.etHost)?.text?.toString() ?: return@launch
                 var uri = Uri.parse(host)
                 if (uri.scheme == null || !uri.scheme!!.contains("http", true))
                     host = "http://$host"
@@ -131,46 +133,51 @@ class ServerFinderFragment : TSFragment() {
         view?.let {
             showProgress()
 
-            view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
-            view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = getLocalIP()
+            val btnFind = view?.findViewById<Button>(R.id.btnFindHosts)
+
+            btnFind?.isEnabled = false
+            view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = withContext(Dispatchers.IO) { getLocalIP() }
             hostAdapter.clear()
             // add local
             val host = "http://127.0.0.1:8090"
-            var version = App.context.getString(R.string.local_server)
+            var status = App.context.getString(R.string.local_server)
+            if (TorrService.isLocal())
+                status += " · ${App.context.getString(R.string.connected_host)}"
+            var version: String
             withContext(Dispatchers.IO) {
-                val v = Api.remoteEcho(host)
-                if (v.isNotEmpty()) {
-                    version += " · $v"
+                version = Api.remoteEcho(host)
+                if (version.isNotEmpty()) {
+                    status += " · ${App.context.getString(R.string.online)}"
                 }
             }
-            hostAdapter.add(ServerIp(host, version))
+            hostAdapter.add(ServerIp(host, version, status))
             // add saved
             Settings.getHosts().forEach {
-                version = App.context.getString(R.string.saved_server)
+                status = App.context.getString(R.string.saved_server)
+                if (it == Settings.getHost())
+                    status = App.context.getString(R.string.connected_host)
                 withContext(Dispatchers.IO) {
-                    val v = Api.remoteEcho(it)
-                    if (v.isNotEmpty()) {
-                        version += " · $v"
+                    version = Api.remoteEcho(it)
+                    if (version.isNotEmpty()) {
+                        status += " · ${App.context.getString(R.string.online)}"
                     }
                 }
-                hostAdapter.add(ServerIp(it, version))
+                hostAdapter.add(ServerIp(it, version, status))
             }
-            // find all
+            // find on local network
             viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
             // java.lang.IllegalStateException: Can't access the Fragment View's LifecycleOwner when getView() is null
             // i.e., before onCreateView() or after onDestroyView()
             (viewModel as ServerFinderViewModel).getStats().observe(this@ServerFinderFragment) {
-                view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.VISIBLE
-                view?.findViewById<TextView>(R.id.tvFindHosts)?.text = it
+                btnFind?.text = it
             }
             (viewModel as ServerFinderViewModel).getServers().observe(this@ServerFinderFragment) {
                 hostAdapter.add(it)
             }
             (viewModel as ServerFinderViewModel).getOnFinish().observe(this@ServerFinderFragment) {
                 if (it) {
-                    view?.findViewById<TextView>(R.id.tvFindHostsPrefix)?.visibility = View.INVISIBLE
-                    view?.findViewById<TextView>(R.id.tvFindHosts)?.text = ""
-                    view?.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = true
+                    btnFind?.text = App.context.getString(R.string.find_hosts)
+                    btnFind?.isEnabled = true
                     lifecycleScope.launch {
                         this@ServerFinderFragment.hideProgress()
                     }
@@ -186,15 +193,19 @@ class ServerFinderFragment : TSFragment() {
         val ret = mutableListOf<InterfaceAddress>()
         while (interfaces.hasMoreElements()) {
             val networkInterface: NetworkInterface = interfaces.nextElement()
-            if (networkInterface.isLoopback)
+            if (networkInterface.isLoopback) // skip loopback
+                continue
+            if (networkInterface.isPointToPoint) // skip ptp / vpn
                 continue
             for (interfaceAddress in networkInterface.interfaceAddresses) {
                 val ip = interfaceAddress.address
-                if (ip is Inet4Address) {
+                if (ip is Inet4Address && !isValidPublicIp4(ip.hostAddress)) {
                     ret.add(interfaceAddress)
                 }
             }
         }
+
         return ret.joinToString(", ") { it.address.hostAddress ?: "" }
     }
+
 }

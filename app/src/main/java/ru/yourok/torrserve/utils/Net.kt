@@ -7,6 +7,9 @@ import org.jsoup.Connection
 import org.jsoup.Jsoup
 import ru.yourok.torrserve.settings.Settings
 import java.io.InputStream
+import java.net.Inet4Address
+import java.net.InetAddress
+import java.net.UnknownHostException
 import java.nio.charset.Charset
 import java.security.KeyManagementException
 import java.security.cert.CertificateException
@@ -169,5 +172,20 @@ object Net {
                 else -> throw e
             }
         }
+    }
+    fun isValidPublicIp4(ip: String): Boolean {
+        val address: Inet4Address? = try {
+            InetAddress.getByName(ip) as? Inet4Address
+        } catch (exception: UnknownHostException) {
+            return false // assuming no logging, exception handling required
+        }
+        if (address != null) {
+            return !(address.isSiteLocalAddress ||
+                    address.isAnyLocalAddress ||
+                    address.isLinkLocalAddress ||
+                    address.isLoopbackAddress ||
+                    address.isMulticastAddress)
+        }
+        return false
     }
 }

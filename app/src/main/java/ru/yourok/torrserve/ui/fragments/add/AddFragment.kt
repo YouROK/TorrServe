@@ -9,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -46,9 +46,9 @@ class AddFragment : TSFragment() {
         view.apply {
             findViewById<LinearLayout>(R.id.footer)?.visibility = View.VISIBLE
             findViewById<Button>(R.id.btnOK)?.setOnClickListener {
-                val link = view.findViewById<EditText>(R.id.etMagnet)?.text?.toString() ?: ""
-                val title = view.findViewById<EditText>(R.id.etTitle)?.text?.toString() ?: ""
-                val poster = view.findViewById<EditText>(R.id.etPoster)?.text?.toString() ?: ""
+                val link = view.findViewById<TextInputEditText>(R.id.etMagnet)?.text?.toString() ?: ""
+                val title = view.findViewById<TextInputEditText>(R.id.etTitle)?.text?.toString() ?: ""
+                val poster = view.findViewById<TextInputEditText>(R.id.etPoster)?.text?.toString() ?: ""
 
                 if (link.isNotBlank())
                     lifecycleScope.launch(Dispatchers.IO) {
@@ -66,7 +66,7 @@ class AddFragment : TSFragment() {
             }
 
             findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.VISIBLE
-            findViewById<EditText>(R.id.etSearch).apply {
+            findViewById<TextInputEditText>(R.id.etSearch).apply {
                 setOnEditorActionListener { textView, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         jobSearch?.cancel()

@@ -7,11 +7,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.utils.Net.isValidPublicIp4
 import java.net.*
 import java.util.*
 
-data class ServerIp(val host: String, val version: String) {
+data class ServerIp(val host: String, val version: String, val status: String) {
     override fun equals(other: Any?): Boolean {
         if (other == null)
             return false
@@ -93,14 +97,19 @@ class ServerFinderViewModel : ViewModel() {
                 if ("$ipRange$i" == local)
                     continue
                 withContext(Dispatchers.Main) {
-                    stats?.value = checkHost
+                    stats?.value = checkHost.removePrefix("http://")
                 }
                 viewModelScope.launch(Dispatchers.IO) {
                     val version = Api.remoteEcho(checkHost)
-                    if (version.isNotEmpty() && (version.startsWith("1.2.") || version.startsWith("MatriX")))
+                    var status = if (!Settings.getHosts().contains(checkHost))
+                            App.context.getString(R.string.new_server)
+                        else ""
+                    if (version.isNotEmpty() && (version.startsWith("1.2.") || version.startsWith("MatriX"))) {
+                        status += " · ${App.context.getString(R.string.online)}"
                         withContext(Dispatchers.Main) {
-                            servers?.value = ServerIp(checkHost, version)
+                            servers?.value = ServerIp(checkHost, version, status)
                         }
+                    }
                 }
             }
         }
@@ -111,11 +120,13 @@ class ServerFinderViewModel : ViewModel() {
         val ret = mutableListOf<InterfaceAddress>()
         while (interfaces.hasMoreElements()) {
             val networkInterface: NetworkInterface = interfaces.nextElement()
-            if (networkInterface.isLoopback)
+            if (networkInterface.isLoopback) // skip loopbask
+                continue
+            if (networkInterface.isPointToPoint) // skip ptp / vpn
                 continue
             for (interfaceAddress in networkInterface.interfaceAddresses) {
                 val ip = interfaceAddress.address
-                if (ip is Inet4Address) {
+                if (ip is Inet4Address && !isValidPublicIp4(ip.hostAddress)) {
                     ret.add(interfaceAddress)
                 }
             }
