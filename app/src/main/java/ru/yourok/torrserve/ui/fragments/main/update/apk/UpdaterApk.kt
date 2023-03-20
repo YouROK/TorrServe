@@ -51,11 +51,11 @@ object UpdaterApk {
 
         versions?.forEach { ver ->
             if (ver.versionInt > BuildConfig.VERSION_CODE) {
-                ret += "<font color='white'><b>${ver.version}</b></font> <br>"
-                ret += "<i>${ver.desc.replace("\n", "<br>")}</i><br><br>"
+                ret += "<font color='white'><b>${ver.version}</b></font><br/><br/>"
+                ret += "<i>${ver.desc.replace("\n", "<br/>")}</i><br/><br/><br/>"
             } else {
-                ret += "${ver.version}<br>"
-                ret += "<i>${ver.desc.replace("\n", "<br>")}</i><br><br>"
+                ret += "${ver.version}<br/><br/>"
+                ret += "<i>${ver.desc.replace("\n", "<br>")}</i><br/><br/><br/>"
             }
         }
         return HtmlCompat.fromHtml(ret.trim(), HtmlCompat.FROM_HTML_MODE_LEGACY)
