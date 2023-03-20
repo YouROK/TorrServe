@@ -14,6 +14,7 @@
     <string name="open_torrserve">Відкрити TorrServe</string>
     <string name="torrents">Торренти</string>
     <string name="apply">Застосувати</string>
+    <string name="skip">Пропустити</string>
     <string name="capital_on">УВІМК</string>
     <string name="capital_off">ВИМК</string>
     <string name="default_sets">За замовчуванням</string>

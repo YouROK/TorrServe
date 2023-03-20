@@ -77,7 +77,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnUpdate"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,10 +85,13 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:minWidth="140dp"
-            android:text="@android:string/cancel" />
+            android:text="@string/update">
+
+            <requestFocus />
+        </Button>
 
         <Button
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnCancel"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,10 +99,6 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:minWidth="140dp"
-            android:text="@string/update">
-
-            <requestFocus />
-        </Button>
-
+            android:text="@string/skip" />
     </LinearLayout>
 </FrameLayout>

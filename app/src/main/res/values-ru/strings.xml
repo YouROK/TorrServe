@@ -12,6 +12,7 @@
     <string name="open_torrserve">Запустить TorrServe</string>
     <string name="torrents">Торренты</string>
     <string name="apply">Применить</string>
+    <string name="skip">Пропустить</string>
     <string name="capital_on">ВКЛ</string>
     <string name="capital_off">ВЫКЛ</string>
     <string name="default_sets">Настройки по умолчанию</string>
