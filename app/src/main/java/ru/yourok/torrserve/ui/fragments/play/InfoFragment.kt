@@ -214,7 +214,7 @@ open class InfoFragment : TSFragment() {
                     val tvdr = findViewById<TextView>(R.id.tvDuration)
                     torr.duration_seconds?.let { ds ->
                         if (!ds.isNaN()) {
-                            val duration = Format.durFmt(ds)
+                            val duration = Format.durFmtS(ds)
                             tvdr.apply {
                                 text = "" // txt
                                 append("${getString(R.string.runtime)} ", color1, true)

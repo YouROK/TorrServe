@@ -237,6 +237,9 @@
     <string name="stat_string_closed">种子已关闭</string>
     <string name="stat_string_in_db">数据库中的种子</string>
 
+    <string name="fmt_h">h.</string>
+    <string name="fmt_m">m.</string>
+    <string name="fmt_s">s.</string>
     <string name="fmt_p">KMGTPE</string>
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
