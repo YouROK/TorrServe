@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
@@ -34,10 +36,16 @@ class AddFragment : TSFragment() {
 
     private val torrsAdapter = TorrentsAdapter()
     private var jobSearch: Job? = null
+    private var rutorEnabled = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                rutorEnabled = loadSettings()?.EnableRutorSearch == true
+            }
+        }
         return inflater.inflate(R.layout.add_fragment, container, false)
     }
 
@@ -64,9 +72,14 @@ class AddFragment : TSFragment() {
             findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
                 popBackStackFragment()
             }
-
+            findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
+                visibility = if (rutorEnabled)
+                    View.VISIBLE
+                else
+                    View.GONE
+            }
             findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.VISIBLE
-            findViewById<TextInputEditText>(R.id.etSearch).apply {
+            findViewById<TextInputEditText>(R.id.etSearch)?.apply {
                 setOnEditorActionListener { textView, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         jobSearch?.cancel()
@@ -157,6 +170,15 @@ class AddFragment : TSFragment() {
                     TorrentHelper.showFFPInfo(view.context, it.Magnet, torrent)
                 }
             }
+        }
+    }
+
+    private fun loadSettings(): BTSets? {
+        return try {
+            Api.getSettings()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 }
