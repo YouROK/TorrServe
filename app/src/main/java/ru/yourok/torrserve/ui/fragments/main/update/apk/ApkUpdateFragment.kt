@@ -25,7 +25,7 @@ class ApkUpdateFragment : TSFragment() {
     ): View {
         lifecycleScope.launch { showProgress() }
         val vi = inflater.inflate(R.layout.apk_update_fragment, container, false)
-        vi.findViewById<TextView>(R.id.tvCurrentVersion)?.text = getString(R.string.current_version) + ": " + BuildConfig.VERSION_NAME
+        vi.findViewById<TextView>(R.id.tvCurrentVersion)?.text = getString(R.string.current_version) + " " + BuildConfig.VERSION_NAME
 
         vi.findViewById<Button>(R.id.btnUpdate)?.also { btn ->
             btn.setOnClickListener {
@@ -61,7 +61,7 @@ class ApkUpdateFragment : TSFragment() {
             val newVer = UpdaterApk.getVersion()
             val overview = UpdaterApk.getOverview()
             withContext(Dispatchers.Main) {
-                view.findViewById<TextView>(R.id.tvNewVersion)?.text = getString(R.string.new_version) + ": " + newVer
+                view.findViewById<TextView>(R.id.tvNewVersion)?.text = getString(R.string.new_version) + " – " + newVer
                 view.findViewById<TextView>(R.id.tvOverview)?.text = overview
             }
             hideProgress()

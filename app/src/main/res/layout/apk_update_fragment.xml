@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,9 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_margin="16dp"
         android:gravity="center"
         android:text="@string/found_new_app_update"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -18,12 +16,14 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|top"
-        android:layout_marginLeft="20dp"
+        android:layout_gravity="start|top"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="80dp"
-        android:minWidth="300dp"
+        android:layout_marginEnd="16dp"
+        android:minWidth="320dp"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/tvCurrentVersion"
@@ -40,29 +40,12 @@
             android:text="@string/new_version"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <TextView
-            android:id="@+id/tvUpdateInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/pbUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="gone"
-            app:trackThickness="4dp"
-            app:trackCornerRadius="2dp" />
-        <!--            android:indeterminateTint="@color/green"-->
-        <!--            android:progressTint="@color/green"-->
-        <!--            android:progressTintMode="src_atop"-->
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="180dp"
         android:layout_marginBottom="70dp"
         android:orientation="vertical">
 
@@ -77,9 +60,10 @@
                 android:id="@+id/tvOverview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:text="Some overview long text example. Some overview long text example. Some overview long text example." />
         </ScrollView>
     </LinearLayout>
 
@@ -93,7 +77,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnCancel"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,13 +85,10 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:minWidth="140dp"
-            android:text="@string/update">
-
-            <requestFocus />
-        </Button>
+            android:text="@android:string/cancel" />
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnUpdate"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -115,6 +96,10 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:minWidth="140dp"
-            android:text="@android:string/cancel" />
+            android:text="@string/update">
+
+            <requestFocus />
+        </Button>
+
     </LinearLayout>
 </FrameLayout>

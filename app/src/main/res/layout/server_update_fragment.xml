@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,97 +10,113 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_margin="16dp"
         android:gravity="center"
         android:text="@string/server_update"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start|top"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:minWidth="300dp"
+        android:layout_margin="16dp"
+        android:minWidth="320dp"
         android:orientation="vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp">
+            app:alignContent="flex_start"
+            app:alignItems="flex_start"
+            app:dividerDrawable="@drawable/flexdivider"
+            app:flexWrap="nowrap"
+            app:justifyContent="space_evenly"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showDivider="middle">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:minWidth="160dp"
                 android:text="@string/arch"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvArch"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="160dp"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="16sp" />
-        </LinearLayout>
+                android:textSize="16sp"
+                tools:text="arm7" />
+        </com.google.android.flexbox.FlexboxLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp">
+            app:alignContent="flex_start"
+            app:alignItems="flex_start"
+            app:dividerDrawable="@drawable/flexdivider"
+            app:flexDirection="row"
+            app:flexWrap="nowrap"
+            app:justifyContent="space_evenly"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showDivider="middle">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:minWidth="160dp"
                 android:text="@string/local_server"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvLocalVersion"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="160dp"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="16sp" />
-        </LinearLayout>
+                android:textSize="16sp"
+                tools:text="MatriX.120" />
+        </com.google.android.flexbox.FlexboxLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp">
+            app:alignContent="flex_start"
+            app:alignItems="flex_start"
+            app:dividerDrawable="@drawable/flexdivider"
+            app:flexWrap="nowrap"
+            app:justifyContent="space_evenly"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showDivider="middle">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:minWidth="160dp"
                 android:text="@string/update_server"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvRemoteVersion"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="160dp"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="16sp" />
-        </LinearLayout>
-
+                android:textSize="16sp"
+                tools:text="MatriX.121" />
+        </com.google.android.flexbox.FlexboxLayout>
     </LinearLayout>
 
     <ScrollView
@@ -109,9 +126,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="70dp"
             android:orientation="vertical">
 
@@ -120,11 +137,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
                 android:text="@string/ffprobe_summary"
                 android:visibility="gone"
-                tools:text="Error Messages: Examples, Best Practices &amp; Common Mistakes"
+                tools:text="@string/ffprobe_summary"
                 tools:visibility="visible" />
 
 
