@@ -191,6 +191,9 @@
     <string name="stat_string_working">Торрент активний</string>
     <string name="stat_string_closed">Торрент закрито</string>
     <string name="stat_string_in_db">Торрент у БД</string>
+    <string name="fmt_h">год.</string>
+    <string name="fmt_m">хв.</string>
+    <string name="fmt_s">с.</string>
     <string name="fmt_p">КМГТПЕ</string>
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">біт/с</string>

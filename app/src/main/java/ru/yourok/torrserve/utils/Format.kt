@@ -52,11 +52,21 @@ object Format {
         return sdf.format(Date(timestamp * 1000))
     }
 
-    fun durFmt(data: Double): String {
+    fun durFmtS(data: Double): String {
         val duration = data.toDuration(DurationUnit.SECONDS)
-        return duration.toComponents { hours, minutes, seconds, _ ->
-            String.format("%02d:%02d:%02d", hours, minutes, seconds)
+//        return duration.toComponents { hours, minutes, seconds, _ ->
+//            String.format("%02d:%02d:%02d", hours, minutes, seconds)
+//        }
+        val strDur = mutableListOf<String>()
+        duration.toComponents { hours, minutes, seconds, _ ->
+            if (hours > 0)
+                strDur.add(String.format("%d %s", hours, App.context.getString(R.string.fmt_h)))
+            if (minutes > 0)
+                strDur.add(String.format("%d %s", minutes, App.context.getString(R.string.fmt_m)))
+            if (hours == 0L && seconds > 0)
+                strDur.add(String.format("%d %s", seconds, App.context.getString(R.string.fmt_s)))
         }
+        return strDur.joinToString(" ")
     }
 
     fun dp2px(dip: Float): Int {

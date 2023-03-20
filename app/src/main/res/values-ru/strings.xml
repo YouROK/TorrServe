@@ -183,10 +183,13 @@
     <string name="stat_string_working">Торрент активен</string>
     <string name="stat_string_closed">Торрент закрыт</string>
     <string name="stat_string_in_db">Торрент в БД</string>
+    <string name="fmt_h">ч.</string>
+    <string name="fmt_m">мин.</string>
+    <string name="fmt_s">с.</string>
     <string name="fmt_p">КМГТПЭ</string>
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">бит/c</string>
-    <string name="runtime">Длительность</string>
+    <string name="runtime">Время</string>
     <string name="no_torrents">Нет торрентов</string>
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
