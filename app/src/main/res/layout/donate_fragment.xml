@@ -31,9 +31,10 @@
 
         <Button
             android:id="@+id/btnBoosty"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="3dp"
             android:text="@string/link"
             android:textSize="14sp" />
@@ -43,9 +44,9 @@
     <ImageView
         android:id="@+id/yandex"
         android:layout_width="wrap_content"
-        android:layout_height="54dp"
+        android:layout_height="50dp"
         android:layout_gravity="start"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/yandex_money_card"
         app:srcCompat="@drawable/io" />
@@ -63,9 +64,10 @@
 
         <Button
             android:id="@+id/btnYandex"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:text="@string/link"
             android:textSize="14sp" />
 
@@ -125,9 +127,10 @@
 
         <Button
             android:id="@+id/btnTelegram"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="3dp"
             android:text="@string/link"
             android:textSize="14sp" />
