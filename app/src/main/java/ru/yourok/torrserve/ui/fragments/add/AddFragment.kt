@@ -36,16 +36,10 @@ class AddFragment : TSFragment() {
 
     private val torrsAdapter = TorrentsAdapter()
     private var jobSearch: Job? = null
-    private var rutorEnabled = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                rutorEnabled = loadSettings()?.EnableRutorSearch == true
-            }
-        }
         return inflater.inflate(R.layout.add_fragment, container, false)
     }
 
@@ -72,11 +66,18 @@ class AddFragment : TSFragment() {
             findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
                 popBackStackFragment()
             }
-            findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
-                visibility = if (rutorEnabled)
-                    View.VISIBLE
-                else
-                    View.GONE
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    val rutorEnabled = loadSettings()?.EnableRutorSearch == true
+                    withContext(Dispatchers.Main) {
+                        findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
+                            visibility = if (rutorEnabled)
+                                View.VISIBLE
+                            else
+                                View.GONE
+                        }
+                    }
+                }
             }
             findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.VISIBLE
             findViewById<TextInputEditText>(R.id.etSearch)?.apply {
