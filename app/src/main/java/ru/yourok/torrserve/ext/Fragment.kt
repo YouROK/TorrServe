@@ -13,7 +13,8 @@ fun FragmentActivity.commitFragment(block: FragmentTransaction.() -> Unit) {
             android.R.anim.fade_out
         )
     block(transact)
-    transact.commit()
+    // experimental, to avoid frequent FCs in TSFragment
+    transact.commitAllowingStateLoss() //transact.commit()
 }
 
 fun FragmentActivity.getLastFragment(): Fragment? {
