@@ -67,8 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:nextFocusUp="@id/etSearch"
-                android:nextFocusDown="@id/etTitle"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium">
 
                 <requestFocus />
@@ -89,8 +87,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:nextFocusUp="@id/etMagnet"
-                android:nextFocusDown="@id/etPoster"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,8 +106,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:nextFocusUp="@id/etTitle"
-                android:nextFocusDown="@id/btnOK"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -155,6 +155,7 @@
     <style name="Widget.App.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
         <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
         <item name="android:textSize">16sp</item>
+        <item name="thumbTint">@color/thumb_color</item>
     </style>
     <!-- TextInputLayout -->
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
@@ -171,8 +172,8 @@
         <!-- Used for the text -->
         <item name="android:textColorPrimary">@color/tv_white</item>
         <!-- Set min width -->
-        <item name="windowMinWidthMajor">50%</item><!--landscape -->
-        <item name="windowMinWidthMinor">70%</item><!--portrait -->
+        <item name="windowMinWidthMajor">50%</item><!-- landscape -->
+        <item name="windowMinWidthMinor">70%</item><!-- portrait -->
         <!-- Used for the buttons -->
         <item name="colorPrimary">@color/orange</item>
         <item name="colorAccent">@color/orange</item>
