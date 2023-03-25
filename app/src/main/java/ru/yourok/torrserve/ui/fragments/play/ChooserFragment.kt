@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ext.commitFragment
@@ -71,7 +72,7 @@ class ChooserFragment : TSFragment() {
     }
 
     private fun saveAction(action: Int) {
-        view?.findViewById<CheckBox>(R.id.cbSaveChooseAction)?.apply {
+        view?.findViewById<SwitchMaterial>(R.id.cbSaveChooseAction)?.apply {
             if (isChecked)
                 lifecycleScope.launch {
                     Settings.setChooserAction(action)
