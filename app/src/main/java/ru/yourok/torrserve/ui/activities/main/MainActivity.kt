@@ -46,10 +46,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Permission.requestPermissionWithRationale(this, Permission.writePermission)
+//        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        Permission.requestPermissionWithRationale(this)
         themeUtil.onCreate(this)
         setContentView(R.layout.main_activity)
-//        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         viewModel = ViewModelProvider(this)[StatusViewModel::class.java]
 
@@ -117,6 +117,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
     }
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (findViewById<DrawerLayout>(R.id.drawerLayout)?.isDrawerOpen(GravityCompat.START) == true)
             closeMenu()

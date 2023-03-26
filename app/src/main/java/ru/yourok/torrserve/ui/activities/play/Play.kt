@@ -116,7 +116,11 @@ object Play {
         }
         intent?.let {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            App.context.startActivity(it)
+            try {
+                App.context.startActivity(it)
+            } catch (e: Exception) {
+                e.message?.let { msg -> App.toast(msg) }
+            }
         }
     }
 }

@@ -54,23 +54,28 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
     private fun storeAccs(auth: String): Boolean {
         if (auth.isNotBlank() && auth.split(":").size == 2) { // && !accsFile.exists()
             if (BuildConfig.DEBUG) Log.d("*****", "storeAccs() got auth \"$auth\"")
-            // remove stale auth
-            if (accsFile.exists() && accsFile.canWrite()) {
-                if (BuildConfig.DEBUG) Log.d("*****", "storeAccs() delete $accsFile")
-                accsFile.delete()
-            }
-            // create new accs.db
-            val user = auth.split(":")[0].trim()
-            val pass = auth.split(":")[1].trim()
-            if (BuildConfig.DEBUG) Log.d("*****", "storeAccs() save auth \"$user:$pass\" to $accsFile")
-            val content = "{\"$user\":\"$pass\"}"
-            val inputStream = ByteArrayInputStream(content.toByteArray())
-            inputStream.use { input ->
-                accsFile.outputStream().use { output ->
-                    input.copyTo(output)
-                    output.flush()
-                    output.close()
+            try {
+                // remove stale auth
+                if (accsFile.exists() && accsFile.canWrite()) {
+                    if (BuildConfig.DEBUG) Log.d("*****", "storeAccs() delete $accsFile")
+                    accsFile.delete()
                 }
+                // create new accs.db
+                val user = auth.split(":")[0].trim()
+                val pass = auth.split(":")[1].trim()
+                if (BuildConfig.DEBUG) Log.d("*****", "storeAccs() save auth \"$user:$pass\" to $accsFile")
+                val content = "{\"$user\":\"$pass\"}"
+                val inputStream = ByteArrayInputStream(content.toByteArray())
+                if (accsFile.createNewFile())
+                    inputStream.use { input ->
+                        accsFile.outputStream().use { output ->
+                            input.copyTo(output)
+                            output.flush()
+                            output.close()
+                        }
+                    }
+            } catch (e: Exception) {
+                return false
             }
             return true
 //        } else {

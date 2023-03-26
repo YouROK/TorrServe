@@ -8,8 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_ALL_DOWNLOADS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission
-        android:name="android.permission.ACCESS_WIFI_STATE"
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"
         tools:ignore="LeanbackUsesWifi" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -53,8 +52,8 @@
         tools:targetApi="n">
         <activity
             android:name="ru.yourok.torrserve.ui.activities.main.MainActivity"
-            android:exported="true"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -78,8 +77,8 @@
 
         <activity
             android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity"
-            android:exported="true"
-            android:theme="@style/PlayDialog.DayNight">
+            android:theme="@style/PlayDialog.DayNight"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -211,8 +210,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="ru.yourok.torrserve.ui.activities.main.SettingsActivity"
+        <activity android:name="ru.yourok.torrserve.ui.activities.main.SettingsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -230,9 +228,8 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <receiver
-            android:name=".server.local.services.BootCompletedReceiver"
-            android:exported="false">
+        <receiver android:name=".server.local.services.BootCompletedReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
@@ -258,9 +255,9 @@
         <service android:name=".server.local.TorrService" />
         <service android:name=".server.local.services.Notification" />
         <service
-            android:name=".server.local.services.GlobalTorrService"
-            android:exported="true"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:name=".server.local.services.GlobalTorrServeService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
