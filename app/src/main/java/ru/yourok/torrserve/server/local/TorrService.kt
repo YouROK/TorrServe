@@ -12,7 +12,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.services.NotificationHelper
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.settings.Settings.isAccessibilityOn
-import ru.yourok.torrserve.utils.AccessibilityUtils
+import ru.yourok.torrserve.utils.Accessibility
 import kotlin.concurrent.thread
 
 class TorrService : Service() {
@@ -47,9 +47,9 @@ class TorrService : Service() {
 
     private fun startServer() {
         thread {
-            if (isLocal() && isAccessibilityOn() && !AccessibilityUtils.isEnabledService(App.context)) {
+            if (isLocal() && isAccessibilityOn() && !Accessibility.isEnabledService(App.context)) {
                 if (BuildConfig.DEBUG) Log.d("TorrService", "Try to enable AssessibilityService")
-                AccessibilityUtils.enableService(App.context, true)
+                Accessibility.enableService(App.context, true)
             }
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
                 if (BuildConfig.DEBUG) Log.d("TorrService", "startServer()")

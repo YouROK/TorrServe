@@ -25,12 +25,12 @@ fun FragmentActivity.getLastFragment(): Fragment? {
 
 fun Fragment.getLastFragment() = requireActivity().getLastFragment()
 
-fun FragmentActivity.clearStackFragmnet() {
+fun FragmentActivity.clearStackFragment() {
     if (supportFragmentManager.backStackEntryCount > 0)
         supportFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
 }
 
-fun Fragment.clearStackFragmnet() = requireActivity().clearStackFragmnet()
+fun Fragment.clearStackFragment() = requireActivity().clearStackFragment()
 
 fun FragmentActivity.popBackStackFragment() {
     if (supportFragmentManager.backStackEntryCount > 0)

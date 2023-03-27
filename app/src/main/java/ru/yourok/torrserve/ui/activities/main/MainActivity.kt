@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.ext.clearStackFragmnet
+import ru.yourok.torrserve.ext.clearStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            clearStackFragmnet()
+            clearStackFragment()
             TorrentsFragment().apply {
                 show(this@MainActivity, R.id.container)
             }
@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
             if (currFragment is TorrentsFragment)
                 ServerFinderFragment().show(this, R.id.container, true)
             else {
-                clearStackFragmnet()
+                clearStackFragment()
                 TorrentsFragment().show(this, R.id.container)
             }
             closeMenu()
