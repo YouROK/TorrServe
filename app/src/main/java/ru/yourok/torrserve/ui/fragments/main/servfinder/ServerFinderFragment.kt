@@ -26,6 +26,7 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
+import ru.yourok.torrserve.utils.AccessibilityUtils
 import ru.yourok.torrserve.utils.Net.isValidPublicIp4
 import java.net.Inet4Address
 import java.net.InterfaceAddress
@@ -111,13 +112,15 @@ class ServerFinderFragment : TSFragment() {
 
                 if (ServerFile().exists() && TorrService.isLocal())
                     TorrService.start()
-                else
+                else { // unload local service in case switch to remote
+                    if (AccessibilityUtils.isEnabledService(App.context))
+                        AccessibilityUtils.enableService(App.context, false)
                     TorrService.stop()
+                    ServerFile().stop() // killall 4 sure
+                }
 
                 val lst = Settings.getHosts().toMutableList()
                 lst.add(host)
-//                if (lst.size > 10)
-//                    lst.removeAt(0)
                 Settings.setHosts(lst)
                 popBackStackFragment()
             } catch (e: Exception) {
@@ -139,30 +142,31 @@ class ServerFinderFragment : TSFragment() {
             view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = withContext(Dispatchers.IO) { getLocalIP() }
             hostAdapter.clear()
             // add local
-            val host = "http://127.0.0.1:8090"
+            val localhost = "http://127.0.0.1:8090"
             var status = App.context.getString(R.string.local_server)
             if (TorrService.isLocal())
                 status += " · ${App.context.getString(R.string.connected_host)}"
-            var version: String
-            withContext(Dispatchers.IO) {
-                version = Api.remoteEcho(host)
-                if (version.isNotEmpty()) {
-                    status += " · ${App.context.getString(R.string.online)}"
-                }
-            }
-            hostAdapter.add(ServerIp(host, version, status))
-            // add saved
-            Settings.getHosts().forEach {
-                status = App.context.getString(R.string.saved_server)
-                if (it == Settings.getHost())
-                    status = App.context.getString(R.string.connected_host)
-                withContext(Dispatchers.IO) {
-                    version = Api.remoteEcho(it)
-                    if (version.isNotEmpty()) {
+            val localVersion: String = withContext(Dispatchers.IO) {
+                Api.remoteEcho(localhost).also {
+                    if (it.isNotEmpty()) {
                         status += " · ${App.context.getString(R.string.online)}"
                     }
                 }
-                hostAdapter.add(ServerIp(it, version, status))
+            }
+            hostAdapter.add(ServerIp(localhost, localVersion, status))
+            // add saved
+            Settings.getHosts().forEach { host ->
+                status = App.context.getString(R.string.saved_server)
+                if (host == Settings.getHost())
+                    status = App.context.getString(R.string.connected_host)
+                val remoteVersion: String = withContext(Dispatchers.IO) {
+                    Api.remoteEcho(host).also {
+                        if (it.isNotEmpty()) {
+                            status += " · ${App.context.getString(R.string.online)}"
+                        }
+                    }
+                }
+                hostAdapter.add(ServerIp(host, remoteVersion, status))
             }
             // find on local network
             viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
