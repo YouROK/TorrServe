@@ -11,7 +11,7 @@ import ru.yourok.torrserve.app.Consts
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
-import ru.yourok.torrserve.utils.AccessibilityUtils
+import ru.yourok.torrserve.utils.Accessibility
 import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
 import java.io.*
@@ -46,8 +46,8 @@ object UpdaterServer {
             val http = Http(Uri.parse(url))
             http.connect()
             if (TorrService.isLocal()) {
-                if (AccessibilityUtils.isEnabledService(App.context))
-                    AccessibilityUtils.enableService(App.context, false)
+                if (Accessibility.isEnabledService(App.context))
+                    Accessibility.enableService(App.context, false)
                 TorrService.stop()
                 ServerFile().stop()
             }
@@ -95,8 +95,8 @@ object UpdaterServer {
 
     fun updateFromFile(filePath: String) {
         if (TorrService.isLocal()) {
-            if (AccessibilityUtils.isEnabledService(App.context))
-                AccessibilityUtils.enableService(App.context, false)
+            if (Accessibility.isEnabledService(App.context))
+                Accessibility.enableService(App.context, false)
             TorrService.stop()
             ServerFile().stop()
         }

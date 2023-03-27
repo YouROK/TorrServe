@@ -26,7 +26,7 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
-import ru.yourok.torrserve.utils.AccessibilityUtils
+import ru.yourok.torrserve.utils.Accessibility
 import ru.yourok.torrserve.utils.Net.isValidPublicIp4
 import java.net.Inet4Address
 import java.net.InterfaceAddress
@@ -113,8 +113,8 @@ class ServerFinderFragment : TSFragment() {
                 if (ServerFile().exists() && TorrService.isLocal())
                     TorrService.start()
                 else { // unload local service in case switch to remote
-                    if (AccessibilityUtils.isEnabledService(App.context))
-                        AccessibilityUtils.enableService(App.context, false)
+                    if (Accessibility.isEnabledService(App.context))
+                        Accessibility.enableService(App.context, false)
                     TorrService.stop()
                     ServerFile().stop() // killall 4 sure
                 }

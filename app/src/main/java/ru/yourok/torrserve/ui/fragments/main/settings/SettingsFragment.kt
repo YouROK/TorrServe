@@ -27,7 +27,7 @@ import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
-import ru.yourok.torrserve.utils.AccessibilityUtils
+import ru.yourok.torrserve.utils.Accessibility
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -127,7 +127,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 else {
                     setOnPreferenceClickListener {
                         if (Utils.isGoogleTV()) {
-                            if (AccessibilityUtils.isPackageInstalled(context, "com.android.settings")) {
+                            if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
                                 intent.`package` = "com.android.settings"
                                 requireActivity().startActivity(intent)
                             } else {
@@ -147,9 +147,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
             setOnPreferenceClickListener {
-                val enable = AccessibilityUtils.isEnabledService(App.context)
-                AccessibilityUtils.enableService(App.context, !enable)
-                this.isChecked = AccessibilityUtils.isEnabledService(App.context)
+                val enable = Accessibility.isEnabledService(App.context)
+                Accessibility.enableService(App.context, !enable)
+                this.isChecked = Accessibility.isEnabledService(App.context)
                 if (this.isChecked)
                     findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
                 true
@@ -209,7 +209,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<SwitchPreferenceCompat>("switch_accessibility")?.apply {
-            this.isChecked = AccessibilityUtils.isEnabledService(App.context)
+            this.isChecked = Accessibility.isEnabledService(App.context)
             if (this.isChecked)
                 findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
         }

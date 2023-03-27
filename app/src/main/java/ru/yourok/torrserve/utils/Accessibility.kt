@@ -11,7 +11,7 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.local.services.GlobalTorrServeService
 
 
-object AccessibilityUtils {
+object Accessibility {
     private fun openAccessibilitySettings(context: Context): Boolean {
         val isOk: Boolean
         val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
