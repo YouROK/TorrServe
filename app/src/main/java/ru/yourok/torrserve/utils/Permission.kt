@@ -16,7 +16,7 @@ object Permission {
     const val writePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
     const val requestCode = 101
 
-    fun requestPermissionWithRationale(activity: Activity, permission: String) {
+    fun requestPermissionWithRationale(activity: Activity, permission: String = writePermission) {
         thread {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                 Snackbar.make(activity.findViewById(android.R.id.content) ?: return@thread, R.string.permission_storage_msg, Snackbar.LENGTH_INDEFINITE)

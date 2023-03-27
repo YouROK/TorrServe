@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        Permission.requestPermissionWithRationale(this)
+//        Permission.requestPermissionWithRationale(this@MainActivity)
         themeUtil.onCreate(this)
         setContentView(R.layout.main_activity)
 
