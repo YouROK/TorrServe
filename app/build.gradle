@@ -78,10 +78,13 @@ dependencies {
     def glideVersion = '4.15.0'
     implementation "com.github.bumptech.glide:glide:${glideVersion}"
     kapt "com.github.bumptech.glide:compiler:${glideVersion}"
+    // firebase
     //noinspection GradleDependency firebase-core:19.0.2 is last api17 compatible
     implementation 'com.google.firebase:firebase-core:19.0.2'
+    //noinspection GradleDependency firebase-analytics:19.0.2 is last api17 compatible
+    implementation 'com.google.firebase:firebase-analytics-ktx:19.0.2'
     //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api17 compatible
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.5'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.5'
 }
 
 repositories {
