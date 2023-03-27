@@ -33,7 +33,7 @@ import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
 import ru.yourok.torrserve.utils.Net
-//import ru.yourok.torrserve.utils.Permission
+import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
 import kotlin.system.exitProcess
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-//        Permission.requestPermissionWithRationale(this@MainActivity)
+        Permission.requestPermissionWithRationale(this)
         themeUtil.onCreate(this)
         setContentView(R.layout.main_activity)
 
