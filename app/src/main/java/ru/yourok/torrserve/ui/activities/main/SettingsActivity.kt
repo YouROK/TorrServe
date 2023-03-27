@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.ext.clearStackFragmnet
+import ru.yourok.torrserve.ext.clearStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
@@ -59,13 +59,15 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            clearStackFragmnet()
+            clearStackFragment()
             SettingsFragment().apply {
                 show(this@SettingsActivity, R.id.container)
             }
         }
     }
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         if (supportFragmentManager.backStackEntryCount == 0) {
