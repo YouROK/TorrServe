@@ -17,7 +17,8 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
 object Net {
-    private const val timeout = 15000 // in ms
+    private const val timeout = 5000 // in ms
+
     fun getHostUrl(path: String): String {
         val url = Settings.getHost()
         if (path.isEmpty())
@@ -84,11 +85,11 @@ object Net {
         }
     }
 
-    fun getAuth(url: String): String {
+    fun getAuth(url: String, duration: Int = timeout): String {
         val conn = Jsoup.connect(url)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-            .timeout(timeout)
+            .timeout(duration)
 
         val auth = getAuthB64()
         if (auth.isNotEmpty())
@@ -109,8 +110,8 @@ object Net {
             }
         }
     }
-
-    fun get(url: String): String {
+    /* used for apk / server update check */
+    fun get(url: String, duration: Int = timeout): String {
         val link = Uri.parse(url)
         if (link.scheme.equals("https", true)) {
             val trustAllHostnames = HostnameVerifier { _, _ ->
@@ -122,7 +123,7 @@ object Net {
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
             .sslSocketFactory(insecureTlsSocketFactory())
-            .timeout(timeout)
+            .timeout(duration)
             .execute()
 
         return when (response.statusCode()) {

@@ -13,6 +13,7 @@ import java.net.URLEncoder
 object Api {
     /// all getAuth / postAuth calls can throw network exceptions
     class ApiException(msg: String, val code: Int) : Exception(msg)
+    private const val duration = 30000 // total request timeout duration, in ms
 
     /// Server
     fun echo(): String {
@@ -132,7 +133,7 @@ object Api {
 
     fun getFFP(hash: String, id: Int): FFPModel? {
         val host = Net.getHostUrl("/ffp/${hash}/${id}")
-        val resp = Net.getAuth(host)
+        val resp = Net.getAuth(host, duration)
         if (resp.isBlank())
             return null
         return Gson().fromJson(resp, FFPModel::class.java)
