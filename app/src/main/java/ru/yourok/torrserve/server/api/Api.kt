@@ -13,7 +13,6 @@ import java.net.URLEncoder
 object Api {
     /// all getAuth / postAuth calls can throw network exceptions
     class ApiException(msg: String, val code: Int) : Exception(msg)
-    private const val duration = 30000 // total request timeout duration, in ms
 
     /// Server
     fun echo(): String {
@@ -25,11 +24,11 @@ object Api {
             ""
         }
     }
-
+    /* used for remote server version check */
     fun remoteEcho(url: String): String {
         return try {
             val host = "$url/echo"
-            Net.getAuth(host)
+            Net.getAuth(host, 3000) // fast response, in ms
         } catch (e: Exception) {
             println(e.message)
             ""
@@ -133,7 +132,7 @@ object Api {
 
     fun getFFP(hash: String, id: Int): FFPModel? {
         val host = Net.getHostUrl("/ffp/${hash}/${id}")
-        val resp = Net.getAuth(host, duration)
+        val resp = Net.getAuth(host, 30000) // long response, in ms
         if (resp.isBlank())
             return null
         return Gson().fromJson(resp, FFPModel::class.java)

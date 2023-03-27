@@ -17,7 +17,7 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
 object Net {
-    private const val timeout = 5000 // in ms
+    private const val timeout = 5000 // total request timeout duration, in ms
 
     fun getHostUrl(path: String): String {
         val url = Settings.getHost()
