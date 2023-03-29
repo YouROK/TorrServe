@@ -1,9 +1,12 @@
 package ru.yourok.torrserve.ui.fragments.add
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -172,6 +175,93 @@ class AddFragment : TSFragment() {
                 }
             }
         }
+    }
+
+    fun onKeyUp(keyCode: Int): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_INFO,
+            KeyEvent.KEYCODE_MENU,
+            KeyEvent.KEYCODE_BUTTON_X -> {
+                return true
+            }
+        }
+        return false
+    }
+
+    private var sortMode: Int = 0
+    fun onKeyDown(keyCode: Int): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_INFO -> {
+                activity?.currentFocus?.let {
+                    it.findViewById<RecyclerView>(R.id.rvRTorrents)?.let { rv ->
+                        val itemPosition = rv.getChildAdapterPosition(rv.focusedChild)
+                        if (itemPosition in torrsAdapter.list.indices) {
+                            torrsAdapter.list[itemPosition].let {
+                                lifecycleScope.launch(Dispatchers.IO) {
+                                    val torrent: Torrent
+                                    val torr = addTorrent("", it.Magnet, it.Title, "", "", false) ?: let {
+                                        return@launch
+                                    }
+                                    torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
+                                        return@launch
+                                    }
+                                    TorrentHelper.showFFPInfo(rv.context, it.Magnet, torrent)
+                                }
+                            }
+                        }
+                    }
+                }
+                return true
+            }
+
+            KeyEvent.KEYCODE_MENU,
+            KeyEvent.KEYCODE_BUTTON_X -> {
+                val list = torrsAdapter.list.toMutableList()
+                when (sortMode) {
+                    0 -> {
+                        torrsAdapter.set(list.sortedBy { it.Title })
+                        App.toast("Sort by Name")
+                    }
+
+                    1 -> {
+                        val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { td ->
+                            if (td.Size.contains("GB", true))
+                                td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 * 1024 }
+                            else if (td.Size.contains("MB", true))
+                                td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 }
+                            else
+                                td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()
+                        })
+                        torrsAdapter.set(sort) // list.sortedByDescending { it.Size }
+                        App.toast("Sort by Size")
+                    }
+
+                    2 -> {
+                        val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { it.Seed }) // .toIntOrNull()
+                        torrsAdapter.set(sort)
+                        App.toast("Sort by Seeders")
+                    }
+
+                    3 -> {
+                        torrsAdapter.set(list.sortedByDescending { it.CreateDate })
+                        App.toast("Sort by Date")
+                    }
+                }
+                torrsAdapter.notifyDataSetChanged()
+                if (torrsAdapter.list.size > 0)
+                    activity?.findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
+                        scrollToPosition(0)
+                        // FIXME: Why RecycleView loose focus to Logo?
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            getChildAt(0).requestFocus()
+                        }, 500)
+                    }
+                if (sortMode == 3) sortMode = 0 else sortMode++
+                return true
+            }
+        }
+
+        return false
     }
 
     private fun loadSettings(): BTSets? {

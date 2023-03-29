@@ -126,13 +126,33 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
     }
 
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        supportFragmentManager.fragments.forEach {
+            when (it) {
+                is AddFragment ->
+                    if (it.onKeyUp(keyCode))
+                        return true
+            }
+        }
+        return super.onKeyUp(keyCode, event)
+    }
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        supportFragmentManager.fragments.forEach {
+            when (it) {
+                is AddFragment -> {
+                    if (it.onKeyDown(keyCode))
+                        return true
+                }
+            }
+        }
         val menu = findViewById<DrawerLayout>(R.id.drawerLayout)
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             if (menu?.isDrawerOpen(GravityCompat.START) == true)
                 closeMenu()
             else
                 menu?.openDrawer(GravityCompat.START)
+            return true
         }
         return super.onKeyDown(keyCode, event)
     }
