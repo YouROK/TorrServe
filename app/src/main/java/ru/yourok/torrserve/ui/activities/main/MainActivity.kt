@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.activities.main
 
+import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -237,7 +238,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
-            AlertDialog.Builder(this)
+            val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.remove_all_warn)
                 .setPositiveButton(android.R.string.yes) { dialog, _ ->
                     lifecycleScope.launch(Dispatchers.IO) {
@@ -257,7 +258,9 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton(android.R.string.no) { dialog, _ ->
                     dialog.dismiss()
                 }
-                .show()
+                .create()
+            dialog.show()
+            dialog.getButton(BUTTON_POSITIVE)?.requestFocus()
             closeMenu()
         }
 
