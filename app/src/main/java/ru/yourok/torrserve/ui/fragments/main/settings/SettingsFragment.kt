@@ -69,7 +69,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.preference, rootKey)
+        setPreferencesFromResource(R.xml.preferences, rootKey)
         val ps = findPreference<PreferenceScreen>("prefs")
 
         val bannerPref = findPreference<Preference>("show_banner")

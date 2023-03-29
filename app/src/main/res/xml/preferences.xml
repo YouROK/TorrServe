@@ -67,6 +67,13 @@
         android:summaryOff="@string/sort_torrents_list_sum_off"
         android:defaultValue="false" />
 
+    <SwitchPreferenceCompat
+        app:key="show_fab"
+        app:title="@string/show_fab_title"
+        android:summaryOn="@string/show_fab_sum_on"
+        android:summaryOff="@string/show_fab_sum_off"
+        android:defaultValue="false" />
+
     <ListPreference
         app:key="app_theme"
         app:title="@string/app_theme_title"
