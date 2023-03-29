@@ -1,6 +1,8 @@
 package ru.yourok.torrserve.ui.fragments.add
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -193,7 +195,7 @@ class AddFragment : TSFragment() {
                 activity?.currentFocus?.let {
                     it.findViewById<RecyclerView>(R.id.rvRTorrents)?.let { rv ->
                         val itemPosition = rv.getChildAdapterPosition(rv.focusedChild)
-                        if (itemPosition in 0 until torrsAdapter.list.size) {
+                        if (itemPosition in torrsAdapter.list.indices) {
                             torrsAdapter.list[itemPosition].let {
                                 lifecycleScope.launch(Dispatchers.IO) {
                                     val torrent: Torrent
@@ -246,6 +248,14 @@ class AddFragment : TSFragment() {
                     }
                 }
                 torrsAdapter.notifyDataSetChanged()
+                if (torrsAdapter.list.size > 0)
+                    activity?.findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
+                        scrollToPosition(0)
+                        // FIXME: Why RecycleView loose focus to Logo?
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            getChildAt(0).requestFocus()
+                        }, 500)
+                    }
                 if (sortMode == 3) sortMode = 0 else sortMode++
                 return true
             }
