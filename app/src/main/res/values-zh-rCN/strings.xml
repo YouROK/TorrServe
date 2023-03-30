@@ -266,4 +266,6 @@
     <string name="error_download_ffprobe">FFProbe 下载错误</string>
     <string name="error_add_torrent">添加种子失败</string>
 
+    <string name="donate_message">TorrServe is free and always will be. Please consider donating to support the future development of TorrServe.</string>
+
 </resources>

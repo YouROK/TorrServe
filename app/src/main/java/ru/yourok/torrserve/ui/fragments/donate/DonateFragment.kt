@@ -122,7 +122,7 @@ object DonateMessage {
                 showDonate = true
             }
 
-            val snackbar = Snackbar.make(activity.findViewById(R.id.container), R.string.donate, Snackbar.LENGTH_INDEFINITE)
+            val snackbar = Snackbar.make(activity.findViewById(android.R.id.content), R.string.donate_message, Snackbar.LENGTH_INDEFINITE)
             Handler(Looper.getMainLooper()).postDelayed({
                 val snackbarLayout: Snackbar.SnackbarLayout? = snackbar.view as Snackbar.SnackbarLayout?
                 val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
@@ -134,14 +134,15 @@ object DonateMessage {
                 }
                 snackbarLayout?.background = AppCompatResources.getDrawable(App.context, bg)
                 val textView = snackbarLayout?.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView?
+                textView?.maxLines = 15
                 textView?.textSize = 18.0f
                 textView?.setTextColor(ContextCompat.getColor(App.context, tc))
-                val img = ContextCompat.getDrawable(themedContext, R.drawable.ts_round)
-                val padding = Format.dp2px(10f)
-                val imgSize = textView?.lineHeight ?: (padding * 2)
-                img?.setBounds(0, 0, imgSize + Format.dp2px(8f), imgSize + Format.dp2px(8f))
-                textView?.setCompoundDrawables(img, null, null, null)
-                textView?.compoundDrawablePadding = padding
+//                val img = ContextCompat.getDrawable(themedContext, R.drawable.ts_round)
+//                val padding = Format.dp2px(10f)
+//                val imgSize = textView?.lineHeight ?: (padding * 2)
+//                img?.setBounds(0, 0, imgSize + Format.dp2px(2f), imgSize + Format.dp2px(2f))
+//                textView?.setCompoundDrawables(img, null, null, null)
+//                textView?.compoundDrawablePadding = padding
                 val layoutParams = snackbarLayout?.layoutParams as ViewGroup.MarginLayoutParams
                 val pad = Format.dp2px(32.0f)
                 layoutParams.setMargins(pad, pad, pad, pad)

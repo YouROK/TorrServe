@@ -274,5 +274,6 @@
     <string name="not_installed">Not Installed</string>
 
     <string name="error_add_torrent">Error adding torrent</string>
+    <string name="donate_message">TorrServe is free and always will be. Please consider donating to support the future development of TorrServe.</string>
 
 </resources>
