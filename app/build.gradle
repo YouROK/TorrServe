@@ -69,7 +69,8 @@ dependencies {
     //noinspection GradleDependency 1.15.4 buggy on UTF-8 requests
     implementation 'org.jsoup:jsoup:1.15.3'
     // json serializer
-    implementation 'com.google.code.gson:gson:2.10.1'
+    //noinspection GradleDependency 2.10.x thorow java.lang.VerifyError on api17
+    implementation 'com.google.code.gson:gson:2.9.1' // 2.10.1
     // root shell (3.2.1)
     //noinspection GradleDependency 3.2.1 last api17 compatible
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
