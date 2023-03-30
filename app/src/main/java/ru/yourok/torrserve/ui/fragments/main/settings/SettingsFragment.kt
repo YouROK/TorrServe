@@ -73,7 +73,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.preference, rootKey)
+        setPreferencesFromResource(R.xml.preferences, rootKey)
         val ps = findPreference<PreferenceScreen>("prefs")
 
 //        val bannerPref = findPreference<Preference>("show_banner")
@@ -110,6 +110,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             setOnPreferenceChangeListener { _, newValue ->
                 Settings.setPlayer(newValue.toString())
                 this.summary = (pList.find { it.first == newValue }?.second ?: newValue).toString()
+                true
+            }
+        }
+
+        findPreference<SwitchPreferenceCompat>("show_fab")?.apply {
+            setOnPreferenceClickListener {
+                requireActivity().recreate()
                 true
             }
         }

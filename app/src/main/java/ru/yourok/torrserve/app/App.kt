@@ -61,7 +61,9 @@ class App : MultiDexApplication() {
                     Snackbar.LENGTH_LONG
                 else
                     Snackbar.LENGTH_SHORT
-                val view = currentActivity()?.window?.decorView?.rootView ?: return@post
+                // this view overlap the system navigation bar, better use android.R.id.content
+                //val view = currentActivity()?.window?.decorView?.rootView ?: return@post
+                val view: View = currentActivity()?.findViewById(android.R.id.content) ?: return@post
 
                 val snackbar = Snackbar
                     .make(view, txt, dur)
@@ -102,7 +104,9 @@ class App : MultiDexApplication() {
                     Snackbar.LENGTH_LONG
                 else
                     Snackbar.LENGTH_SHORT
-                val view = currentActivity()?.window?.decorView?.rootView ?: return@post
+                // this view overlap the system navigation bar, better use android.R.id.content
+                //val view = currentActivity()?.window?.decorView?.rootView ?: return@post
+                val view: View = currentActivity()?.findViewById(android.R.id.content) ?: return@post
 
                 val snackbar = Snackbar
                     .make(view, txt, dur)

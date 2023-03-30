@@ -16,7 +16,6 @@ object Settings {
         val ret = prefs.getStringSet("saved_hosts", mutableSetOf())
         return ret?.toList() ?: emptyList()
     }
-
     fun setHosts(hosts: List<String>) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         prefs.edit().putStringSet("saved_hosts", hosts.toMutableSet()).apply()
@@ -40,6 +39,7 @@ object Settings {
 
     fun showCover(): Boolean = get("show_cover", true)
     fun sortTorrents(): Boolean = get("sort_torrents", false)
+    fun showFab(): Boolean = get("show_fab", false)
 
     fun getTheme(): String = get("theme", "dark")
     fun setTheme(v: String) = set("theme", v)

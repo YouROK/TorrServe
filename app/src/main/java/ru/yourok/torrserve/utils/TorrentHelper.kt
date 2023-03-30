@@ -119,7 +119,7 @@ object TorrentHelper {
     suspend fun showFFPInfo(context: Context, torrLink: String, torrent: Torrent) {
         val probe = try { // stats 1st torrent file
             if (torrLink.isNotBlank())
-                App.toast("${context.getString(R.string.stat_string_info)} …", true)
+                App.toast("${context.getString(R.string.stat_string_info)}…", true)
             val files = getPlayableFiles(torrent)
             if (files.isNotEmpty()) {
                 Api.getFFP(torrent.hash, files.first().id)

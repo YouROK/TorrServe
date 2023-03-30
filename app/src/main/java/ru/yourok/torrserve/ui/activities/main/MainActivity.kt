@@ -1,17 +1,21 @@
 package ru.yourok.torrserve.ui.activities.main
 
+import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 //import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +25,7 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.clearStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
 import ru.yourok.torrserve.ui.fragments.donate.DonateFragment
 import ru.yourok.torrserve.ui.fragments.donate.DonateMessage
@@ -32,11 +37,11 @@ import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
 //import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
+import ru.yourok.torrserve.utils.Format.dp2px
 import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
 import kotlin.system.exitProcess
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[StatusViewModel::class.java]
 
         setupNavigator()
+
         lifecycleScope.launch(Dispatchers.IO) {
             TorrService.start()
             if (TorrService.wait(10)) {
@@ -100,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         themeUtil.onResume(this)
         TorrService.start()
         updateStatus()
+        if (Settings.showFab()) setupFab()
     }
 
     private fun updateStatus() {
@@ -113,14 +120,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val isMenuVisible: Boolean
+        get() {
+            return findViewById<DrawerLayout>(R.id.drawerLayout)?.isDrawerOpen(GravityCompat.START) == true
+        }
+
+    private val drawerListener = object : DrawerLayout.SimpleDrawerListener() {
+        override fun onDrawerOpened(drawerView: View) {
+            super.onDrawerOpened(drawerView)
+            if (Settings.showFab()) showFab(false)
+        }
+
+        override fun onDrawerClosed(drawerView: View) {
+            super.onDrawerClosed(drawerView)
+            if (Settings.showFab()) showFab(true)
+        }
+    }
+
     private fun closeMenu() {
-        findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
+        findViewById<DrawerLayout>(R.id.drawerLayout)?.apply {
+            addDrawerListener(drawerListener)
+            closeDrawers()
+        }
+    }
+
+    private fun openMenu() {
+        findViewById<DrawerLayout>(R.id.drawerLayout)?.apply {
+            addDrawerListener(drawerListener)
+            openDrawer(GravityCompat.START)
+        }
     }
 
     @Suppress("DEPRECATION")
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (findViewById<DrawerLayout>(R.id.drawerLayout)?.isDrawerOpen(GravityCompat.START) == true)
+        if (isMenuVisible)
             closeMenu()
         else
             super.onBackPressed()
@@ -146,12 +180,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        val menu = findViewById<DrawerLayout>(R.id.drawerLayout)
         if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (menu?.isDrawerOpen(GravityCompat.START) == true)
+            if (isMenuVisible)
                 closeMenu()
             else
-                menu?.openDrawer(GravityCompat.START)
+                openMenu()
             return true
         }
         return super.onKeyDown(keyCode, event)
@@ -166,6 +199,35 @@ class MainActivity : AppCompatActivity() {
 //        }
         lifecycleScope.launch(Dispatchers.IO) {
             UpdaterServer.check()
+        }
+    }
+
+    private fun showFab(show: Boolean = true) {
+        val fab: FloatingActionButton? = findViewById(R.id.fab)
+        if (show)
+            fab?.show()
+        else
+            fab?.hide()
+    }
+
+    private fun setupFab() { // Fab TODO: animate?
+        val fab: FloatingActionButton? = findViewById(R.id.fab)
+        fab?.apply {
+            setImageDrawable(AppCompatResources.getDrawable(this.context, R.mipmap.ic_launcher)) // R.drawable.ts_round
+            customSize = dp2px(32f)
+            setMaxImageSize(dp2px(30f))
+            setOnClickListener {
+                if (isMenuVisible) {
+                    closeMenu()
+                    showFab(true)
+                } else {
+                    openMenu()
+                    showFab(false)
+                }
+            }
+        }
+        if (!isMenuVisible) {
+            showFab(true)
         }
     }
 
@@ -193,7 +255,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
-            AlertDialog.Builder(this)
+            val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.remove_all_warn)
                 .setPositiveButton(android.R.string.yes) { dialog, _ ->
                     lifecycleScope.launch(Dispatchers.IO) {
@@ -213,7 +275,9 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton(android.R.string.no) { dialog, _ ->
                     dialog.dismiss()
                 }
-                .show()
+                .create()
+            dialog.show()
+            dialog.getButton(BUTTON_POSITIVE)?.requestFocus()
             closeMenu()
         }
 

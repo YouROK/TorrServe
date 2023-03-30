@@ -1,5 +1,7 @@
 package ru.yourok.torrserve.ui.fragments.add
 
+import android.annotation.SuppressLint
+import android.app.Instrumentation
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,10 +15,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +37,7 @@ import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
+import ru.yourok.torrserve.utils.Format
 import ru.yourok.torrserve.utils.TorrentHelper
 
 class AddFragment : TSFragment() {
@@ -49,6 +54,7 @@ class AddFragment : TSFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.apply {
+            // FOOTER
             findViewById<LinearLayout>(R.id.footer)?.visibility = View.VISIBLE
             findViewById<Button>(R.id.btnOK)?.setOnClickListener {
                 val link = view.findViewById<TextInputEditText>(R.id.etMagnet)?.text?.toString() ?: ""
@@ -69,6 +75,7 @@ class AddFragment : TSFragment() {
             findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
                 popBackStackFragment()
             }
+            // SEARCH
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
                     val rutorEnabled = loadSettings()?.EnableRutorSearch == true
@@ -101,9 +108,12 @@ class AddFragment : TSFragment() {
                                 if (it.isNotEmpty())
                                     withContext(Dispatchers.Main) {
                                         torrsAdapter.set(it)
+                                        showSortFab()
                                     }
-                                else
+                                else {
                                     App.toast(R.string.no_torrents)
+                                    hideSortFab()
+                                }
                             }
                         }
                     }
@@ -131,6 +141,7 @@ class AddFragment : TSFragment() {
                                             torrsAdapter.set(it)
                                             view.findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.GONE
                                             view.findViewById<LinearLayout>(R.id.footer)?.visibility = View.GONE
+                                            showSortFab()
                                         }
                                 }
                             }
@@ -142,14 +153,13 @@ class AddFragment : TSFragment() {
                     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 })
             }
-
+            // RESULTS
             findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
                 adapter = torrsAdapter
                 addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
             }
-
             torrsAdapter.onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
@@ -174,6 +184,8 @@ class AddFragment : TSFragment() {
                     TorrentHelper.showFFPInfo(view.context, it.Magnet, torrent)
                 }
             }
+            // SORT
+            setupSortFab()
         }
     }
 
@@ -189,6 +201,7 @@ class AddFragment : TSFragment() {
     }
 
     private var sortMode: Int = 0
+    @SuppressLint("NotifyDataSetChanged")
     fun onKeyDown(keyCode: Int): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_INFO -> {
@@ -220,7 +233,7 @@ class AddFragment : TSFragment() {
                 when (sortMode) {
                     0 -> {
                         torrsAdapter.set(list.sortedBy { it.Title })
-                        App.toast("Sort by Name")
+                        App.toast(R.string.sort_by_name)
                     }
 
                     1 -> {
@@ -233,18 +246,18 @@ class AddFragment : TSFragment() {
                                 td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()
                         })
                         torrsAdapter.set(sort) // list.sortedByDescending { it.Size }
-                        App.toast("Sort by Size")
+                        App.toast(R.string.sort_by_size)
                     }
 
                     2 -> {
                         val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { it.Seed }) // .toIntOrNull()
                         torrsAdapter.set(sort)
-                        App.toast("Sort by Seeders")
+                        App.toast(R.string.sort_by_seed)
                     }
 
                     3 -> {
                         torrsAdapter.set(list.sortedByDescending { it.CreateDate })
-                        App.toast("Sort by Date")
+                        App.toast(R.string.sort_by_date)
                     }
                 }
                 torrsAdapter.notifyDataSetChanged()
@@ -262,6 +275,35 @@ class AddFragment : TSFragment() {
         }
 
         return false
+    }
+
+    private fun setupSortFab() { // Sort Fab
+        val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
+        fab?.apply {
+            setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_24))
+            customSize = Format.dp2px(32f)
+            setMaxImageSize(Format.dp2px(24f))
+            setOnClickListener {
+                // TODO: add sort options menu
+                Thread {
+                    try {
+                        Instrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BUTTON_X)
+                    } catch (_: InterruptedException) {
+                    }
+                }.start()
+            }
+            visibility = View.GONE
+        }
+    }
+
+    private fun showSortFab() {
+        val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
+        fab?.show()
+    }
+
+    private fun hideSortFab() {
+        val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
+        fab?.hide()
     }
 
     private fun loadSettings(): BTSets? {

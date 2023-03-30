@@ -12,6 +12,7 @@
     <string name="remove_all_warn">Ви хочете видалити всі торренти?</string>
     <string name="share">Поділитись</string>
     <string name="open_torrserve">Відкрити TorrServe</string>
+    <string name="show_menu">Показати головне меню</string>
     <string name="torrents">Торренти</string>
     <string name="apply">Застосувати</string>
     <string name="skip">Пропустити</string>
@@ -180,6 +181,9 @@
     <string name="show_battery_save_tv">Вимкніть оптимізацію в «Додатки» / «Спеціальний доступ» / «Оптимізація енергоспоживання»</string>
     <string name="show_battery_save_title">Показати налаштування енергозбереження</string>
     <string name="show_battery_save_summary">Відкрити налаштування енергозбереження</string>
+    <string name="show_fab_title">Плаваюча кнопка меню</string>
+    <string name="show_fab_sum_on">Відображати кнопку виклику меню</string>
+    <string name="show_fab_sum_off">Не відображати кнопку виклику меню</string>
     <string name="accessibility_manual_on">Увімкнути службу в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_manual_off">Вимкнути службу в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_service_description">Включення цього сервісу може запобігти завершення локального TorrServer системою</string>
@@ -198,6 +202,10 @@
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">біт/с</string>
     <string name="runtime">Тривалість</string>
+    <string name="sort_by_name">Сортування за назвою</string>
+    <string name="sort_by_size">Сортування за розміром</string>
+    <string name="sort_by_seed">Сортування за роздавальним</string>
+    <string name="sort_by_date">Сортування за датою</string>
     <string name="no_torrents">Немає торрентів</string>
     <string name="no_updates">Немає оновлень</string>
     <string name="not_used">Не використовується</string>

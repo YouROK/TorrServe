@@ -17,7 +17,7 @@ import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
 
-
+/* Activity to show settings from Accessibility */
 class SettingsActivity : AppCompatActivity() {
 
     private val themeUtil = ThemeUtil()

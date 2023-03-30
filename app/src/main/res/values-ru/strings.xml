@@ -10,6 +10,7 @@
     <string name="exit">Выход</string>
     <string name="share">Отправить</string>
     <string name="open_torrserve">Запустить TorrServe</string>
+    <string name="show_menu">Показать главное меню</string>
     <string name="torrents">Торренты</string>
     <string name="apply">Применить</string>
     <string name="skip">Пропустить</string>
@@ -172,6 +173,9 @@
     <string name="show_battery_save_tv">Отключите оптимизацию в «Приложения» / «Специальный доступ» / «Экономия энергии»</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
+    <string name="show_fab_title">Кнопка вызова меню на экране</string>
+    <string name="show_fab_sum_on">Показать кнопку вызова меню</string>
+    <string name="show_fab_sum_off">Не показывать кнопку вызова меню</string>
     <string name="accessibility_manual_on">Включите сервис в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_manual_off">Отключите сервис в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_service_description">Включение этого сервиса может предотвратить завершение локального TorrServer системой</string>
@@ -190,6 +194,10 @@
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">бит/c</string>
     <string name="runtime">Время</string>
+    <string name="sort_by_name">Сортировка по названию</string>
+    <string name="sort_by_size">Сортировка по размеру</string>
+    <string name="sort_by_seed">Сортировка по раздающим</string>
+    <string name="sort_by_date">Сортировка по дате</string>
     <string name="no_torrents">Нет торрентов</string>
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>

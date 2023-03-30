@@ -13,12 +13,11 @@
     <string name="exit">Exit</string>
 
     <string name="remove_all_viewed">Clear All Viewed</string>
-
     <string name="remove_all_warn">Do you want to delete all torrents?</string>
-
     <string name="share">Share</string>
 
     <string name="open_torrserve">Open TorrServe</string>
+    <string name="show_menu">Show Main Menu</string>
     <string name="torrents">Torrents</string>
 
     <string name="apply">Apply</string>
@@ -239,6 +238,10 @@
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
+    <string name="show_fab_title">Floating menu button</string>
+    <string name="show_fab_sum_on">Show floating action button</string>
+    <string name="show_fab_sum_off">Don\'t show floating action button</string>
+
     <string name="accessibility_manual_on">Enable service in Device Preferences / Accessibility section</string>
     <string name="accessibility_manual_off">Disable service in Device Preferences / Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
@@ -259,6 +262,11 @@
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
     <string name="runtime">Runtime</string>
+
+    <string name="sort_by_name">Sort list by Title</string>
+    <string name="sort_by_size">Sort list by Size</string>
+    <string name="sort_by_seed">Sort list by Seeders</string>
+    <string name="sort_by_date">Sort list by Date</string>
 
     <string name="no_torrents">No Torrents</string>
     <string name="no_updates">No updates found</string>

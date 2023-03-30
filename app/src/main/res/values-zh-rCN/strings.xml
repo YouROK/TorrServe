@@ -12,12 +12,11 @@
     <string name="exit">退出</string>
 
     <string name="remove_all_viewed">删除所有已查看</string>
-
     <string name="remove_all_warn">是否要删除所有种子？</string>
-
     <string name="share">分享</string>
 
     <string name="open_torrserve">打开 TorrServe</string>
+    <string name="show_menu">显示主菜单</string>
     <string name="torrents">种子</string>
 
     <string name="apply">应用</string>
@@ -224,6 +223,10 @@
     <string name="show_battery_save_title">显示省电设置</string>
     <string name="show_battery_save_summary">在设置中打开省电配置</string>
 
+    <string name="show_fab_title">浮动菜单按钮</string>
+    <string name="show_fab_sum_on">显示浮动操作按钮</string>
+    <string name="show_fab_sum_off">不要显示浮动操作按钮</string>
+
     <string name="accessibility_manual_on">在设备首选项/辅助功能部分启用服务</string>
     <string name="accessibility_manual_off">在设备首选项/辅助功能部分禁用服务</string>
     <string name="accessibility_service_description">启用该服务可以防止本地 TorrServer 被操作系统关闭</string>
@@ -244,6 +247,11 @@
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
     <string name="runtime">期间</string>
+
+    <string name="sort_by_name">Sort list by Title</string>
+    <string name="sort_by_size">Sort list by Size</string>
+    <string name="sort_by_seed">Sort list by Seeders</string>
+    <string name="sort_by_date">Sort list by Date</string>
 
     <string name="no_torrents">没有种子</string>
     <string name="no_updates">没有更新</string>
