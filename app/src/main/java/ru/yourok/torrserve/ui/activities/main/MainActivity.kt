@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         themeUtil.onResume(this)
-        TorrService.start()
+        //TorrService.start()
         updateStatus()
         if (Settings.showFab()) setupFab()
     }

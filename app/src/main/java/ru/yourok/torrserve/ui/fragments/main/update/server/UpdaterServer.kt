@@ -29,7 +29,7 @@ object UpdaterServer {
             if (!serverFile.exists()) {
                 lv = App.context.getString(R.string.not_installed)
             } else {
-                TorrService.start()
+                //TorrService.start()
                 withContext(Dispatchers.IO) {
                     lv = Api.echo()
                 }
@@ -45,7 +45,7 @@ object UpdaterServer {
         if (url.isNotBlank()) {
             val http = Http(Uri.parse(url))
             http.connect()
-            if (TorrService.isLocal()) {
+            if (TorrService.isLocal() && Api.echo().isNotEmpty()) {
                 if (Accessibility.isEnabledService(App.context))
                     Accessibility.enableService(App.context, false)
                 TorrService.stop()
@@ -94,7 +94,7 @@ object UpdaterServer {
     }
 
     fun updateFromFile(filePath: String) {
-        if (TorrService.isLocal()) {
+        if (TorrService.isLocal() && Api.echo().isNotEmpty()) {
             if (Accessibility.isEnabledService(App.context))
                 Accessibility.enableService(App.context, false)
             TorrService.stop()
