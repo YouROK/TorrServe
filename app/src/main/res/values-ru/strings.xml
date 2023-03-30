@@ -173,7 +173,7 @@
     <string name="show_battery_save_tv">Отключите оптимизацию в «Приложения» / «Специальный доступ» / «Экономия энергии»</string>
     <string name="show_battery_save_title">Показать настройки энергосбережения</string>
     <string name="show_battery_save_summary">Открыть настройки экономии заряда батареи</string>
-    <string name="show_fab_title">Плавающая кнопка меню</string>
+    <string name="show_fab_title">Кнопка вызова меню на экране</string>
     <string name="show_fab_sum_on">Показать кнопку вызова меню</string>
     <string name="show_fab_sum_off">Не показывать кнопку вызова меню</string>
     <string name="accessibility_manual_on">Включите сервис в разделе «Настройки устройства» / «Специальные возможности»</string>

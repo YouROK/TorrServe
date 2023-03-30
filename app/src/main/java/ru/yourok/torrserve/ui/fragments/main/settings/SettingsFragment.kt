@@ -110,6 +110,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
+        findPreference<SwitchPreferenceCompat>("show_fab")?.apply {
+            setOnPreferenceClickListener {
+                requireActivity().recreate()
+                true
+            }
+        }
+
         findPreference<ListPreference>("app_theme")?.apply {
             setOnPreferenceChangeListener { _, newValue ->
                 Settings.setTheme(newValue.toString())

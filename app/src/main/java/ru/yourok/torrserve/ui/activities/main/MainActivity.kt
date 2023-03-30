@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -42,7 +43,6 @@ import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
 import kotlin.system.exitProcess
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StatusViewModel
@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[StatusViewModel::class.java]
 
         setupNavigator()
+
         lifecycleScope.launch(Dispatchers.IO) {
             TorrService.start()
             if (TorrService.wait(10)) {
@@ -124,14 +125,30 @@ class MainActivity : AppCompatActivity() {
             return findViewById<DrawerLayout>(R.id.drawerLayout)?.isDrawerOpen(GravityCompat.START) == true
         }
 
+    private val drawerListener = object : DrawerLayout.SimpleDrawerListener() {
+        override fun onDrawerOpened(drawerView: View) {
+            super.onDrawerOpened(drawerView)
+            if (Settings.showFab()) showFab(false)
+        }
+
+        override fun onDrawerClosed(drawerView: View) {
+            super.onDrawerClosed(drawerView)
+            if (Settings.showFab()) showFab(true)
+        }
+    }
+
     private fun closeMenu() {
-        findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
-        if (Settings.showFab()) showFab(true)
+        findViewById<DrawerLayout>(R.id.drawerLayout)?.apply {
+            addDrawerListener(drawerListener)
+            closeDrawers()
+        }
     }
 
     private fun openMenu() {
-        findViewById<DrawerLayout>(R.id.drawerLayout)?.openDrawer(GravityCompat.START)
-        if (Settings.showFab()) showFab(false)
+        findViewById<DrawerLayout>(R.id.drawerLayout)?.apply {
+            addDrawerListener(drawerListener)
+            openDrawer(GravityCompat.START)
+        }
     }
 
     @Suppress("DEPRECATION")
