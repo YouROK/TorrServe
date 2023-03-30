@@ -205,7 +205,7 @@
     <string name="sort_by_name">Сортування за назвою</string>
     <string name="sort_by_size">Сортування за розміром</string>
     <string name="sort_by_seed">Сортування за роздавальним</string>
-    <string name="sort_by_date">Сортування за датою створення</string>
+    <string name="sort_by_date">Сортування за датою</string>
     <string name="no_torrents">Немає торрентів</string>
     <string name="no_updates">Немає оновлень</string>
     <string name="not_used">Не використовується</string>

@@ -251,7 +251,7 @@
     <string name="sort_by_name">Sort list by Title</string>
     <string name="sort_by_size">Sort list by Size</string>
     <string name="sort_by_seed">Sort list by Seeders</string>
-    <string name="sort_by_date">Sort list by Create Date</string>
+    <string name="sort_by_date">Sort list by Date</string>
 
     <string name="no_torrents">没有种子</string>
     <string name="no_updates">没有更新</string>

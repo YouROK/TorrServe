@@ -197,7 +197,7 @@
     <string name="sort_by_name">Сортировка по названию</string>
     <string name="sort_by_size">Сортировка по размеру</string>
     <string name="sort_by_seed">Сортировка по раздающим</string>
-    <string name="sort_by_date">Сортировка по дате создания</string>
+    <string name="sort_by_date">Сортировка по дате</string>
     <string name="no_torrents">Нет торрентов</string>
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
