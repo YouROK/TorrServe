@@ -111,6 +111,23 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/sortFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="21dp"
+        android:contentDescription="@string/show_menu"
+        android:scaleType="center"
+        android:visibility="gone"
+        app:fabCustomSize="32dp"
+        app:fabSize="mini"
+        app:maxImageSize="24dp"
+        app:srcCompat="@drawable/round_sort_24"
+        app:tint="@null"
+        tools:visibility="visible" />
+
     <LinearLayout
         android:id="@+id/footer"
         style="@android:style/DeviceDefault.ButtonBar"
@@ -131,7 +148,8 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:nextFocusUp="@id/etPoster"
-            android:text="@android:string/ok" />
+            android:text="@android:string/ok"
+            tools:ignore="ButtonOrder" />
 
         <Button
             android:id="@+id/btnCancel"

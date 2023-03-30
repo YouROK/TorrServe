@@ -46,10 +46,18 @@ object Format {
         return byteFmt(bytes.toDouble())
     }
 
-    fun sdateFmt(timestamp: Long): String {
+    fun sDateFmt(timestamp: Long): String {
         val sdf = SimpleDateFormat("dd.MM.yyyy", Locale("US"))
         sdf.timeZone = TimeZone.getDefault()
         return sdf.format(Date(timestamp * 1000))
+    }
+
+    fun sDateFmt(dateTimeString: String): String { //2021-06-21T00:00:00+03:00
+        val idf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale("US"))
+        val date = idf.parse(dateTimeString)
+        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale("US"))
+        sdf.timeZone = TimeZone.getDefault()
+        return sdf.format(date)
     }
 
     fun durFmtS(data: Double): String {

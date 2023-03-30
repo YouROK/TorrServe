@@ -49,12 +49,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
+                android:gravity="end"
                 android:maxLines="1"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
                 android:paddingBottom="4dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                tools:text="86805e28d3f476a73b2abc8d41ec0be9cb589362" />
+                tools:text="22.01.2022" />
         </LinearLayout>
     </LinearLayout>
 

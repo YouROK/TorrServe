@@ -51,7 +51,7 @@ class TorrentsAdapter(private val activity: FragmentActivity) : BaseAdapter() {
         var addStr = ""
 
         if (addTime > 0)
-            addStr = Format.sdateFmt(addTime)
+            addStr = Format.sDateFmt(addTime)
 
         if (title.isBlank())
             title = list[position].name

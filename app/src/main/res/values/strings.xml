@@ -263,6 +263,11 @@
     <string name="fmt_bps">bps</string>
     <string name="runtime">Runtime</string>
 
+    <string name="sort_by_name">Sort list by Title</string>
+    <string name="sort_by_size">Sort list by Size</string>
+    <string name="sort_by_seed">Sort list by Seeders</string>
+    <string name="sort_by_date">Sort list by Create Date</string>
+
     <string name="no_torrents">No Torrents</string>
     <string name="no_updates">No updates found</string>
     <string name="not_used">Not Used</string>

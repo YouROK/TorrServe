@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.models.torrent.TorrentDetails
+import ru.yourok.torrserve.utils.Format.sDateFmt
 
 class TorrentsAdapter : RecyclerView.Adapter<TorrentsAdapter.ViewHolder>() {
     val list = mutableListOf<TorrentDetails>()
@@ -45,9 +46,10 @@ class TorrentsAdapter : RecyclerView.Adapter<TorrentsAdapter.ViewHolder>() {
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val torr = list[position]
+        val sDate = sDateFmt(torr.CreateDate)
         holder.view.findViewById<TextView>(R.id.tvName).text = torr.Title
         holder.view.findViewById<TextView>(R.id.tvInfo1).text = "${torr.Size} ▲${torr.Seed} ▼${torr.Peer}"
-        holder.view.findViewById<TextView>(R.id.tvInfo2).text = torr.Hash.uppercase()
+        holder.view.findViewById<TextView>(R.id.tvInfo2).text = sDate // Hash.uppercase()
     }
 
     override fun getItemCount() = list.size
