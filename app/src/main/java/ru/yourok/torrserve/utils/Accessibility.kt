@@ -15,46 +15,35 @@ import ru.yourok.torrserve.server.local.services.GlobalTorrServeService
 
 object Accessibility {
     private fun openAccessibilitySettings(context: Context): Boolean {
-        val isOk: Boolean
         val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-        isOk = try {
+        return try {
             context.startActivity(intent)
             true
         } catch (e: Exception) {
-            //e.printStackTrace()
-            //e.message?.let { App.toast(it) }
             false
         }
-        return isOk
     }
 
     private fun openTvAccessibilitySettings(context: Context): Boolean {
-        var isOk: Boolean
         val tvintent = Intent("android.intent.action.MAIN")
         tvintent.addCategory("android.intent.category.LAUNCHER")
         tvintent.setClassName("com.android.tv.settings", "com.android.tv.settings.system.AccessibilityActivity")
         tvintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-        try {
+        return try {
             context.startActivity(tvintent)
-            isOk = true
+            true
         } catch (e: ActivityNotFoundException) {
             tvintent.setClassName("com.android.tv.settings", "com.android.tv.settings.MainSettings")
-            // com.android.tv.settings.accessibility.AccessibilityFragment
-            //tvintent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.android.tv.settings.device.DevicePrefFragment")
-            //tvintent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, "accessibility") // extras
-            isOk = try {
+            try {
                 context.startActivity(tvintent)
                 true
             } catch (e: Exception) {
-                //e.printStackTrace()
                 false
             }
         } catch (e: Exception) {
-            //e.printStackTrace()
-            isOk = false
+            false
         }
-        return isOk
     }
 
     private fun openSettings(context: Context) {

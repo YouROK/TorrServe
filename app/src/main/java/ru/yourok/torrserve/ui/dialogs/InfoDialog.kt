@@ -1,20 +1,16 @@
 package ru.yourok.torrserve.ui.dialogs
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.res.ColorStateList
-import android.graphics.Typeface
-import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.DynamicDrawableSpan
-import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import com.google.android.material.shape.CornerFamily
@@ -31,28 +27,6 @@ import ru.yourok.torrserve.utils.SpanFormat
 import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
 
 class InfoDialog(private val context: Context) {
-    private fun TextView.append(string: String?, @ColorInt color: Int = 0, bold: Boolean = false) {
-        if (string.isNullOrEmpty()) {
-            return
-        }
-        val spannable: Spannable = SpannableString(string)
-        if (color != 0)
-            spannable.setSpan(
-                ForegroundColorSpan(color),
-                0,
-                spannable.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        if (bold)
-            spannable.setSpan(
-                StyleSpan(Typeface.BOLD),
-                0,
-                spannable.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        append(spannable)
-    }
-
     // round labels model
     private val radius = dp2px(5.0f).toFloat()
     private val shapeAppearanceModel = ShapeAppearanceModel()
@@ -77,7 +51,6 @@ class InfoDialog(private val context: Context) {
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text = SpanFormat.format("%s $format", sIcon)
-                //append(format, color, false)
             } else
                 visibility = View.GONE
         }
@@ -91,7 +64,6 @@ class InfoDialog(private val context: Context) {
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text = SpanFormat.format("%s $video", sIcon)
-                //append(video, color, false)
             } else
                 visibility = View.GONE
         }
@@ -105,7 +77,6 @@ class InfoDialog(private val context: Context) {
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text = SpanFormat.format("%s $audio", sIcon)
-                //append(audio, color, false)
             } else
                 visibility = View.GONE
         }
@@ -119,7 +90,6 @@ class InfoDialog(private val context: Context) {
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text = SpanFormat.format("%s $subtitles", sIcon)
-                //append(subtitles, color, false)
             } else
                 visibility = View.GONE
         }
@@ -164,8 +134,6 @@ class InfoDialog(private val context: Context) {
         if (title.isNotEmpty())
             builder.setTitle(title)
 
-        val dialog = builder.setView(view)
-
         if (torrLink.isNotBlank()) {
             builder.setPositiveButton(R.string.add) { dlg, _ ->
                 CoroutineScope(Dispatchers.IO).launch {
@@ -188,6 +156,9 @@ class InfoDialog(private val context: Context) {
             }
         }
 
+        val dialog = builder.create()
+        dialog.setView(view)
         dialog.show()
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.requestFocus()
     }
 }

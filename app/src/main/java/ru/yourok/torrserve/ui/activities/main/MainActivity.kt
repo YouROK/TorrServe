@@ -257,7 +257,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
             val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.remove_all_warn)
-                .setPositiveButton(android.R.string.yes) { dialog, _ ->
+                .setPositiveButton(R.string.yes) { dialog, _ ->
                     lifecycleScope.launch(Dispatchers.IO) {
                         try {
                             val list = Api.listTorrent()

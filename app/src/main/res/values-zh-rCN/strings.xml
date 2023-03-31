@@ -26,6 +26,7 @@
     <string name="skip">跳过</string>
     <string name="capital_on">开启</string>
     <string name="capital_off">关闭</string>
+    <string name="yes">是的</string>
 
     <string name="default_sets">使用默认设置</string>
     <string name="default_sets_applied">默认设置已应用</string>
