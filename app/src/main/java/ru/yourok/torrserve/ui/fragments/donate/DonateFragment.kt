@@ -15,7 +15,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.Format
@@ -125,7 +125,6 @@ object DonateMessage {
             val snackbar = Snackbar.make(activity.findViewById(android.R.id.content), R.string.donate_message, Snackbar.LENGTH_INDEFINITE)
             Handler(Looper.getMainLooper()).postDelayed({
                 val snackbarLayout: Snackbar.SnackbarLayout? = snackbar.view as Snackbar.SnackbarLayout?
-                val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
                 var bg = R.drawable.snackbar
                 var tc = R.color.black
                 if (ThemeUtil.selectedTheme == R.style.Theme_TorrServe_Light) {
@@ -134,18 +133,17 @@ object DonateMessage {
                 }
                 snackbarLayout?.background = AppCompatResources.getDrawable(App.context, bg)
                 val textView = snackbarLayout?.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView?
-                textView?.maxLines = 15
+                textView?.maxLines = 10
                 textView?.textSize = 18.0f
                 textView?.setTextColor(ContextCompat.getColor(App.context, tc))
-//                val img = ContextCompat.getDrawable(themedContext, R.drawable.ts_round)
-//                val padding = Format.dp2px(10f)
-//                val imgSize = textView?.lineHeight ?: (padding * 2)
-//                img?.setBounds(0, 0, imgSize + Format.dp2px(2f), imgSize + Format.dp2px(2f))
-//                textView?.setCompoundDrawables(img, null, null, null)
-//                textView?.compoundDrawablePadding = padding
                 val layoutParams = snackbarLayout?.layoutParams as ViewGroup.MarginLayoutParams
-                val pad = Format.dp2px(32.0f)
-                layoutParams.setMargins(pad, pad, pad, pad)
+                val width = App.currentActivity()?.window?.decorView?.rootView?.width ?: 0
+                val height = App.currentActivity()?.window?.decorView?.rootView?.height ?: 0
+                var hmargin = Format.dp2px(12f)
+                if (width > height) // landscape
+                    hmargin = width / 6
+                val vmargin = Format.dp2px(64f)
+                layoutParams.setMargins(hmargin, vmargin, hmargin, vmargin)
                 snackbarLayout.layoutParams = layoutParams
                 snackbar
                     .setAction(android.R.string.ok) {

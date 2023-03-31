@@ -15,6 +15,9 @@ import kotlin.concurrent.thread
 
 object Utils {
 
+    fun isTV(): Boolean {
+        return App.context.packageManager.hasSystemFeature("android.hardware.type.television") || App.context.packageManager.hasSystemFeature("android.software.leanback")
+    }
     fun isGoogleTV(): Boolean {
         return App.context.packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
     }
