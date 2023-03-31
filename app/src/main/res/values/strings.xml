@@ -27,6 +27,7 @@
     <string name="skip">Skip</string>
     <string name="capital_on">ON</string>
     <string name="capital_off">OFF</string>
+    <string name="yes">Yes</string>
 
     <string name="default_sets">Default Settings</string>
     <string name="default_sets_applied">Default Settings Applied</string>

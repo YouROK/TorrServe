@@ -126,7 +126,7 @@ object DonateMessage {
             Handler(Looper.getMainLooper()).postDelayed({
                 val snackbarLayout: Snackbar.SnackbarLayout? = snackbar.view as Snackbar.SnackbarLayout?
                 var bg = R.drawable.snackbar
-                var tc = R.color.black
+                var tc = R.color.tv_white
                 if (ThemeUtil.selectedTheme == R.style.Theme_TorrServe_Light) {
                     bg = R.drawable.snackbar_dark
                     tc = R.color.tv_white

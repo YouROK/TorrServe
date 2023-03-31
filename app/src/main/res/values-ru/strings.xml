@@ -18,6 +18,7 @@
     <string name="skip">Пропустить</string>
     <string name="capital_on">ВКЛ</string>
     <string name="capital_off">ВЫКЛ</string>
+    <string name="yes">Да</string>
     <string name="default_sets">Настройки по умолчанию</string>
     <string name="default_sets_applied">Установлены настройки по умолчанию</string>
     <string name="cache_size">Размер кэша (Мегабайты)</string>
