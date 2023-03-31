@@ -1,6 +1,8 @@
 package ru.yourok.torrserve.ui.activities.play
 
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -28,7 +30,9 @@ object Play {
                 val torr = addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
                     ?: let {
                         App.toast(getString(R.string.error_retrieve_data))
-                        finish()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            finish()
+                        }, App.shortDuration.toLong()) // as in toast duration
                         return@launch
                     }
                 infoFragment.startInfo(torr.hash)
@@ -36,13 +40,17 @@ object Play {
                     torrentHash = torr.hash
                 torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
                     App.toast(getString(R.string.error_retrieve_torrent_info))
-                    finish()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, App.shortDuration.toLong()) // as in toast duration
                     return@launch
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 App.toast(e.message ?: getString(R.string.error_retrieve_data))
-                finish()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    finish()
+                }, App.shortDuration.toLong()) // as in toast duration
                 return@launch
             }
 
