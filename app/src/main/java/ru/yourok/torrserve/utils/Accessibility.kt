@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.R
@@ -99,14 +101,19 @@ object Accessibility {
                 if (enable) Settings.Secure.putString(contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1")
             } catch (e: Exception) {
                 e.message?.let { App.toast(it) }
-                showAccessibilitySettings(requireContext)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    showAccessibilitySettings(requireContext)
+                }, App.longDuration.toLong()) // as in toast duration
             }
         } else {
             if (enable)
                 App.toast(R.string.accessibility_manual_on, true)
             else
                 App.toast(R.string.accessibility_manual_off, true)
-            showAccessibilitySettings(requireContext)
+            Handler(Looper.getMainLooper()).postDelayed({
+                showAccessibilitySettings(requireContext)
+            }, App.longDuration.toLong()) // as in toast duration
+
         }
     }
 

@@ -12,6 +12,9 @@
     <string name="settings">Settings</string>
     <string name="exit">Exit</string>
 
+    <string name="exit_title">Are You want to Exit?</string>
+    <string name="exit_text">Local TorrServer will be stopped on Exit, if Accessibility Service is not enabled.</string>
+
     <string name="remove_all_viewed">Clear All Viewed</string>
     <string name="remove_all_warn">Do you want to delete all torrents?</string>
     <string name="share">Share</string>
@@ -274,5 +277,6 @@
     <string name="not_installed">Not Installed</string>
 
     <string name="error_add_torrent">Error adding torrent</string>
+    <string name="donate_message">TorrServe is free and always will be. Please consider donating to support the future development of TorrServe.</string>
 
 </resources>

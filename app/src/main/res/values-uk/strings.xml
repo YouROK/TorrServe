@@ -8,6 +8,8 @@
     <string name="server">Сервер</string>
     <string name="settings">Налаштування</string>
     <string name="exit">Вихід</string>
+    <string name="exit_title">Ви хочете вийти?</string>
+    <string name="exit_text">Локальний TorrServer буде зупинено під час виходу, якщо службу доступності не ввімкнено.</string>
     <string name="remove_all_viewed">Видалите все переглянуте</string>
     <string name="remove_all_warn">Ви хочете видалити всі торренти?</string>
     <string name="share">Поділитись</string>
@@ -221,4 +223,5 @@
     <string name="ffprobe_summary">Завантажте FFProbe, щоб отримати додаткові відеоканчини, такі як тривалість, бітрейт тощо.</string>
     <string name="error_download_ffprobe">Помилка завантаження FFProbe</string>
     <string name="error_add_torrent">Неможливо додати торрент</string>
+    <string name="donate_message">TorrServe безкоштовний і завжди буде. Будь ласка, подумайте про пожертвування для підтримки майбутнього розвитку TorrServe.</string>
 </resources>

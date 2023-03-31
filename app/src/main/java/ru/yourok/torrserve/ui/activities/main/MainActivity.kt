@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         themeUtil.onResume(this)
-        TorrService.start()
+        //TorrService.start()
         updateStatus()
         if (Settings.showFab()) setupFab()
     }
@@ -327,10 +327,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<FrameLayout>(R.id.btnExit).setOnClickListener {
+            val dialog = AlertDialog.Builder(this)
+                .setTitle(R.string.exit_title)
+                .setMessage(getString(R.string.exit_text))
+                .setPositiveButton(R.string.exit) { _, _ ->
+                    TorrService.stop()
+                    finishAffinity()
+                    exitProcess(0)
+                }
+                .setNegativeButton(android.R.string.no) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+            dialog.show()
+            dialog.getButton(BUTTON_POSITIVE)?.requestFocus()
             closeMenu()
-            TorrService.stop()
-            finishAffinity()
-            exitProcess(0)
         }
     }
 }

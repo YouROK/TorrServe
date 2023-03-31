@@ -113,7 +113,7 @@ class ServerFinderFragment : TSFragment() {
                 if (ServerFile().exists() && TorrService.isLocal())
                     TorrService.start()
                 else { // unload local service in case switch to remote
-                    if (Accessibility.isEnabledService(App.context))
+                    if (Api.echo().isNotEmpty() && Accessibility.isEnabledService(App.context))
                         Accessibility.enableService(App.context, false)
                     TorrService.stop()
                     ServerFile().stop() // killall 4 sure
