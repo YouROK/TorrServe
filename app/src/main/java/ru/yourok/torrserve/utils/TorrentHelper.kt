@@ -86,7 +86,7 @@ object TorrentHelper {
         return Net.getHostUrl("/stream/${name.urlEncode()}?link=${torr.hash}&index=${file?.id}&play")
     }
 
-    fun getTorrentPreloadLink(torr: Torrent, index: Int): String {
+    private fun getTorrentPreloadLink(torr: Torrent, index: Int): String {
         return Net.getHostUrl("/stream/${torr.title.urlEncode()}?link=${torr.hash}&index=${index}&preload")
     }
 
@@ -94,9 +94,8 @@ object TorrentHelper {
         try {
             val link = getTorrentPreloadLink(torr, index)
             Net.getAuth(link)
-        } catch (e: Exception) {
-            e.printStackTrace() // FIXME: why there is timeout on Net.getAuth?
-            // e.message?.let { App.toast(it) }
+        } catch (_: Exception) {
+            // FIXME: Net.getAuth(link) throw and error on request timeout (but preload works)
         }
     }
 
