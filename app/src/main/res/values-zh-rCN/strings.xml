@@ -11,6 +11,9 @@
     <string name="settings">设置</string>
     <string name="exit">退出</string>
 
+    <string name="exit_title">Are You want to Exit?</string>
+    <string name="exit_text">Local TorrServer will be stopped on Exit, if Accessibility Service is not enabled.</string>
+
     <string name="remove_all_viewed">删除所有已查看</string>
     <string name="remove_all_warn">是否要删除所有种子？</string>
     <string name="share">分享</string>

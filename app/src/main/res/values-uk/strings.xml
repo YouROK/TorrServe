@@ -8,6 +8,8 @@
     <string name="server">Сервер</string>
     <string name="settings">Налаштування</string>
     <string name="exit">Вихід</string>
+    <string name="exit_title">Ви хочете вийти?</string>
+    <string name="exit_text">Локальний TorrServer буде зупинено під час виходу, якщо службу доступності не ввімкнено.</string>
     <string name="remove_all_viewed">Видалите все переглянуте</string>
     <string name="remove_all_warn">Ви хочете видалити всі торренти?</string>
     <string name="share">Поділитись</string>
