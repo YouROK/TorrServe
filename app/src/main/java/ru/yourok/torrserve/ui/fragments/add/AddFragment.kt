@@ -30,6 +30,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -278,6 +279,7 @@ class AddFragment : TSFragment() {
     }
 
     private fun setupSortFab() { // Sort Fab
+        if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.apply {
             setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_24))
@@ -297,11 +299,13 @@ class AddFragment : TSFragment() {
     }
 
     private fun showSortFab() {
+        if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.show()
     }
 
     private fun hideSortFab() {
+        if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.hide()
     }
