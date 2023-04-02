@@ -2,7 +2,6 @@
     <attr name="colorBright" format="reference" />
     <attr name="colorHost" format="reference" />
     <attr name="colorMainMenu" format="reference" />
-
     <!-- Base application theme. https://material.io/develop/android/docs/getting-started -->
     <style name="Theme.TorrServe.Dark" parent="Theme.MaterialComponents">
         <item name="windowNoTitle">true</item>
@@ -28,6 +27,8 @@
         <item name="android:listDivider">@drawable/gradient_divider_green</item>
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
+        <item name="snackbarButtonStyle">@style/AlertButtonStyle</item>
         <item name="switchStyle">@style/Widget.App.Switch</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
         <item name="alertDialogTheme">@style/AlertDialog</item>
@@ -54,6 +55,8 @@
         <!-- custom -->
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
+        <item name="snackbarButtonStyle">@style/AlertButtonStyle</item>
         <item name="switchStyle">@style/Widget.App.Switch</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
         <item name="alertDialogTheme">@style/AlertDialog.Light</item>
@@ -78,8 +81,7 @@
     </style>
     <!-- DayNight Theme -->
     <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
-
-    <!-- Dark Style -->
+    <!-- Play Dialog Dark Style -->
     <style name="PlayDialog.Dark" parent="Theme.MaterialComponents.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -95,7 +97,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/dark_gray</item>
     </style>
-    <!-- Light Style -->
+    <!-- Play Dialog Light Style -->
     <style name="PlayDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -111,15 +113,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/light_gray</item>
     </style>
-    <!-- Black Style -->
+    <!-- Play Dialog Black Style -->
     <style name="PlayDialog.Black" parent="PlayDialog.Dark">
         <item name="android:windowBackground">@drawable/rc_background_black</item>
         <item name="colorPrimary">@color/green</item>
         <item name="colorSecondary">@color/green</item>
     </style>
-    <!-- DayNight Style -->
+    <!-- Play Dialog DayNight Style -->
     <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
-
     <!-- Head Preference Category -->
     <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
         <item name="android:layout">@layout/head_preference_category</item>
@@ -133,14 +134,12 @@
         <item name="android:paddingStart">16.0dip</item>
         <item name="android:paddingBottom">16.0dip</item>
     </style>
-
     <!-- Main Menu -->
     <style name="MainMenuTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
-
     <!-- Checkboxes Text -->
     <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
@@ -163,7 +162,7 @@
         <!--        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>-->
         <item name="hintTextColor">?attr/colorBright</item><!-- TODO: colorStateList -->
     </style>
-    <!-- Alert and Dialogs -->
+    <!-- Alert and Dialog Dark Style -->
     <style name="AlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/rc_background_dark</item>
@@ -182,7 +181,7 @@
         <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/AlertButtonStyle</item>
     </style>
-
+    <!-- Alert and Dialog Light Style -->
     <style name="AlertDialog.Light" parent="AlertDialog">
         <item name="android:windowBackground">@drawable/rc_background_light</item>
         <item name="colorPrimary">@color/dark_brown</item>
@@ -204,11 +203,16 @@
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
         <item name="android:layout_marginBottom">6dp</item>
     </style>
-
+    <!-- Snackbar https://stackoverflow.com/questions/32425191/style-snackbar-in-theme-app -->
+    <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
+        <!--<item name="android:layout_margin">32dp</item>-->
+        <item name="animationMode">slide</item>
+    </style>
+    <!-- Alert, Snackbar and Dialog Buttons -->
     <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_marginStart">6dp</item>
         <item name="android:layout_marginEnd">6dp</item>
-        <item name="android:layout_marginTop">3dp</item>
-        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
     </style>
 </resources>
