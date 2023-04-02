@@ -3,39 +3,39 @@
     android:key="prefs">
 
     <PreferenceCategory
-        android:title="@string/app_settings"
+        style="@style/HeadPreferenceCategory"
         android:key="data"
-        style="@style/HeadPreferenceCategory" />
+        android:title="@string/app_settings" />
 
     <Preference
         app:key="host"
-        app:title="@string/host_title"
-        app:summary="@string/host_title" />
+        app:summary="@string/host_title"
+        app:title="@string/host_title" />
 
     <Preference
         app:key="server_settings"
-        app:title="@string/torserver_title"
-        app:summary="@string/torserver_summary" />
+        app:summary="@string/torserver_summary"
+        app:title="@string/torserver_title" />
 
     <EditTextPreference
         app:key="server_auth"
-        app:title="@string/host_authorization"
-        app:summary="@string/host_authorization_desc" />
+        app:summary="@string/host_authorization_desc"
+        app:title="@string/host_authorization" />
 
     <SwitchPreferenceCompat
-        app:key="boot_start"
-        app:title="@string/boot_start_title"
+        android:defaultValue="false"
         android:dependency="switch_accessibility"
-        android:summaryOn="@string/boot_start_sum_on"
         android:summaryOff="@string/boot_start_sum_off"
-        android:defaultValue="false" />
+        android:summaryOn="@string/boot_start_sum_on"
+        app:key="boot_start"
+        app:title="@string/boot_start_title" />
 
     <SwitchPreferenceCompat
-        app:key="root_start"
-        app:title="@string/root_start_title"
-        android:summaryOn="@string/root_start_sum_on"
+        android:defaultValue="false"
         android:summaryOff="@string/root_start_sum_off"
-        android:defaultValue="false" />
+        android:summaryOn="@string/root_start_sum_on"
+        app:key="root_start"
+        app:title="@string/root_start_title" />
 
     <ListPreference
         app:key="@string/player_pref_key"
@@ -43,56 +43,56 @@
 
     <Preference
         app:key="remove_action"
-        app:title="@string/remove_action_title"
-        app:summary="@string/remove_action_summary" />
+        app:summary="@string/remove_action_summary"
+        app:title="@string/remove_action_title" />
 
     <SwitchPreferenceCompat
-        app:key="show_banner"
-        app:title="@string/show_banner_title"
-        android:summaryOn="@string/show_banner_sum_on"
+        android:defaultValue="true"
         android:summaryOff="@string/show_banner_sum_off"
-        android:defaultValue="true" />
+        android:summaryOn="@string/show_banner_sum_on"
+        app:key="show_banner"
+        app:title="@string/show_banner_title" />
 
     <SwitchPreferenceCompat
-        app:key="show_cover"
-        app:title="@string/show_cover_title"
-        android:summaryOn="@string/show_cover_sum_on"
+        android:defaultValue="true"
         android:summaryOff="@string/show_cover_sum_off"
-        android:defaultValue="true" />
+        android:summaryOn="@string/show_cover_sum_on"
+        app:key="show_cover"
+        app:title="@string/show_cover_title" />
 
     <SwitchPreferenceCompat
-        app:key="sort_torrents"
-        app:title="@string/sort_torrents_list_title"
-        android:summaryOn="@string/sort_torrents_list_sum_on"
+        android:defaultValue="false"
         android:summaryOff="@string/sort_torrents_list_sum_off"
-        android:defaultValue="false" />
+        android:summaryOn="@string/sort_torrents_list_sum_on"
+        app:key="sort_torrents"
+        app:title="@string/sort_torrents_list_title" />
 
     <SwitchPreferenceCompat
-        app:key="show_fab"
-        app:title="@string/show_fab_title"
-        android:summaryOn="@string/show_fab_sum_on"
+        android:defaultValue="false"
         android:summaryOff="@string/show_fab_sum_off"
-        android:defaultValue="false" />
+        android:summaryOn="@string/show_fab_sum_on"
+        app:key="show_fab"
+        app:title="@string/show_fab_title" />
 
     <ListPreference
-        app:key="app_theme"
-        app:title="@string/app_theme_title"
-        app:summary="%s"
         app:entries="@array/app_theme_entries"
-        app:entryValues="@array/app_theme_entries_values"/>
+        app:entryValues="@array/app_theme_entries_values"
+        app:key="app_theme"
+        app:summary="%s"
+        app:title="@string/app_theme_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:disableDependentsState="true"
+        android:summaryOff="@string/accessibility_service_description"
+        android:summaryOn="@string/switch_accessibility_summary_on"
+        app:key="switch_accessibility"
+        app:title="@string/switch_accessibility_title" />
 
     <Preference
         app:key="show_battery_save"
-        app:title="@string/show_battery_save_title"
-        app:summary="@string/show_battery_save_summary" />
-
-    <SwitchPreferenceCompat
-        app:key="switch_accessibility"
-        app:title="@string/switch_accessibility_title"
-        android:disableDependentsState="true"
-        android:summaryOn="@string/switch_accessibility_summary_on"
-        android:summaryOff="@string/accessibility_service_description"
-        android:defaultValue="false" />
+        app:summary="@string/show_battery_save_summary"
+        app:title="@string/show_battery_save_title" />
 
     <Preference
         app:key="version"

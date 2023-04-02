@@ -272,7 +272,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                .setNegativeButton(android.R.string.no) { dialog, _ ->
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
@@ -332,7 +332,7 @@ class MainActivity : AppCompatActivity() {
                     finishAffinity()
                     exitProcess(0)
                 }
-                .setNegativeButton(android.R.string.no) { dialog, _ ->
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
