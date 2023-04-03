@@ -28,7 +28,7 @@ class AppToastView @JvmOverloads constructor(
             startDelay = delay.toLong()
         }
         val logo = content.findViewById<ImageView?>(R.id.ivLogo)
-        breathFadeAnimation(logo, App.longDuration.toLong())
+        breathFadeAnimation(logo, App.longToastDuration.toLong())
     }
 
     override fun animateContentOut(delay: Int, duration: Int) {

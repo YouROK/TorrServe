@@ -32,7 +32,7 @@ object Play {
                         App.toast(getString(R.string.error_retrieve_data))
                         Handler(Looper.getMainLooper()).postDelayed({
                             finish()
-                        }, App.shortDuration.toLong()) // as in toast duration
+                        }, App.shortToastDuration.toLong()) // as in toast duration
                         return@launch
                     }
                 infoFragment.startInfo(torr.hash)
@@ -42,7 +42,7 @@ object Play {
                     App.toast(getString(R.string.error_retrieve_torrent_info))
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
-                    }, App.shortDuration.toLong()) // as in toast duration
+                    }, App.shortToastDuration.toLong()) // as in toast duration
                     return@launch
                 }
             } catch (e: Exception) {
@@ -50,7 +50,7 @@ object Play {
                 App.toast(e.message ?: getString(R.string.error_retrieve_data))
                 Handler(Looper.getMainLooper()).postDelayed({
                     finish()
-                }, App.shortDuration.toLong()) // as in toast duration
+                }, App.shortToastDuration.toLong()) // as in toast duration
                 return@launch
             }
 
