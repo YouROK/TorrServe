@@ -174,7 +174,7 @@ object Net {
             }
         }
     }
-    fun isValidPublicIp4(ip: String): Boolean {
+    fun isValidPublicIp4(ip: String?): Boolean {
         val address: Inet4Address? = try {
             InetAddress.getByName(ip) as? Inet4Address
         } catch (exception: UnknownHostException) {

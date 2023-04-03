@@ -57,7 +57,7 @@ object Format {
         val date = idf.parse(dateTimeString)
         val sdf = SimpleDateFormat("dd.MM.yyyy", Locale("US"))
         sdf.timeZone = TimeZone.getDefault()
-        return sdf.format(date)
+        return date?.let { sdf.format(it) } ?: dateTimeString
     }
 
     fun durFmtS(data: Double): String {
