@@ -43,9 +43,13 @@ class Notification : Service() {
         return START_NOT_STICKY
     }
 
+    @Suppress("DEPRECATION")
     override fun onDestroy() {
         synchronized(lock) {
-            stopForeground(true)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            } else
+                stopForeground(true)
         }
     }
 
@@ -127,7 +131,8 @@ class NotificationHelper {
         if (mService != null) {
             try {
                 context.unbindService(mConnection)
-            } catch (_: Exception) {}
+            } catch (_: Exception) {
+            }
         }
     }
 }

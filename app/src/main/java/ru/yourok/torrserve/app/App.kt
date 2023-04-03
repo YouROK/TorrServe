@@ -27,8 +27,8 @@ class App : MultiDexApplication() {
         private var instance: App? = null
         private lateinit var appContext: Context
         var inForeground: Boolean = false
-        const val shortDuration: Int = 1000
-        const val longDuration: Int = 3000
+        const val shortToastDuration: Int = 1500
+        const val longToastDuration: Int = 3000
         private lateinit var wakeLock: PowerManager.WakeLock
 
         val context: Context
@@ -51,7 +51,7 @@ class App : MultiDexApplication() {
         @SuppressLint("RestrictedApi")
         fun toast(txt: String, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
-                val dur = if (long) longDuration else shortDuration
+                val dur = if (long) longToastDuration else shortToastDuration
                 // this view overlap the system navigation bar, better use android.R.id.content
                 //val view = currentActivity()?.window?.decorView?.rootView ?: return@post
                 val view: View = currentActivity()?.findViewById(android.R.id.content) ?: return@post
@@ -65,7 +65,7 @@ class App : MultiDexApplication() {
         @SuppressLint("RestrictedApi")
         fun toast(txt: Int, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
-                val dur = if (long) longDuration else shortDuration
+                val dur = if (long) longToastDuration else shortToastDuration
                 // this view overlap the system navigation bar, better use android.R.id.content
                 //val view = currentActivity()?.window?.decorView?.rootView ?: return@post
                 val view: View = currentActivity()?.findViewById(android.R.id.content) ?: return@post

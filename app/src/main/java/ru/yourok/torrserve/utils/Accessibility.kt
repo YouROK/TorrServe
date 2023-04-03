@@ -92,7 +92,7 @@ object Accessibility {
                 e.message?.let { App.toast(it) }
                 Handler(Looper.getMainLooper()).postDelayed({
                     showAccessibilitySettings(requireContext)
-                }, App.longDuration.toLong()) // as in toast duration
+                }, App.shortToastDuration.toLong()) // as in toast duration
             }
         } else {
             if (enable)
@@ -101,7 +101,7 @@ object Accessibility {
                 App.toast(R.string.accessibility_manual_off, true)
             Handler(Looper.getMainLooper()).postDelayed({
                 showAccessibilitySettings(requireContext)
-            }, App.longDuration.toLong()) // as in toast duration
+            }, App.longToastDuration.toLong()) // as in toast duration
 
         }
     }
