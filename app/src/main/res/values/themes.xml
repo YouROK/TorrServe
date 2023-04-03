@@ -28,7 +28,7 @@
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
         <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
-        <item name="snackbarButtonStyle">@style/AlertButtonStyle</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarButtonTheme</item>
         <item name="switchStyle">@style/Widget.App.Switch</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
         <item name="alertDialogTheme">@style/AlertDialog</item>
@@ -56,7 +56,7 @@
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
         <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
-        <item name="snackbarButtonStyle">@style/AlertButtonStyle</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarButtonTheme</item>
         <item name="switchStyle">@style/Widget.App.Switch</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
         <item name="alertDialogTheme">@style/AlertDialog.Light</item>
@@ -203,18 +203,33 @@
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
         <item name="android:layout_marginBottom">6dp</item>
     </style>
-    <!-- Snackbar https://stackoverflow.com/questions/32425191/style-snackbar-in-theme-app -->
-    <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
-        <!--<item name="android:layout_margin">32dp</item>-->
-        <item name="animationMode">slide</item>
-        <!-- using backgroundTint the alpha layer is ignored -->
-        <!--<item name="backgroundTint">@color/snackbar</item>-->
-    </style>
-    <!-- Alert, Snackbar and Dialog Buttons -->
+    <!-- Alert and Dialog Buttons -->
     <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_marginStart">6dp</item>
         <item name="android:layout_marginEnd">6dp</item>
         <item name="android:layout_marginTop">6dp</item>
         <item name="android:layout_marginBottom">0dp</item>
     </style>
+    <!-- Snackbar https://stackoverflow.com/questions/32425191/style-snackbar-in-theme-app -->
+    <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
+        <!--<item name="android:layout_margin">32dp</item>-->
+        <item name="animationMode">slide</item>
+        <item name="actionTextColorAlpha">1.0</item>
+    </style>
+
+    <style name="MaterialSnackbarButtonTheme" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <!--item name="android:layout_margin">3dp</item-->
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="materialThemeOverlay">@style/WhiteButtonThemeOverlay</item>
+        <item name="strokeColor">@color/tv_white</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="WhiteButtonThemeOverlay">
+        <!--item name="backgroundTint">@color/tv_white</item-->
+        <!-- For filled buttons, your theme's colorPrimary provides the default background color of the component -->
+        <item name="android:textColor">@color/tv_white</item>
+        <item name="colorPrimary">@color/tv_white</item>
+    </style>
+
 </resources>
