@@ -21,6 +21,7 @@
     <string name="capital_on">УВІМК</string>
     <string name="capital_off">ВИМК</string>
     <string name="yes">Так</string>
+    <string name="cancel">Скасувати</string>
     <string name="default_sets">За замовчуванням</string>
     <string name="cache_size">Розмір кешу (Мегабайти)</string>
     <string name="preload_before_start">Заповнювати кеш перед стартом</string>

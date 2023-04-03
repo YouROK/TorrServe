@@ -2,13 +2,11 @@ package ru.yourok.torrserve.ui.fragments.main.torrents
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +23,7 @@ class TorrentsFragment : TSFragment() {
 
     private var torrentAdapter: TorrentsAdapter? = null
     private lateinit var emptyView: TextView
-    private var isOpened = false
+//    private var isOpened = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +36,14 @@ class TorrentsFragment : TSFragment() {
             lvTorrents.adapter = torrentAdapter
             lvTorrents.setOnItemClickListener { _, _, i, _ ->
                 val torr = torrentAdapter?.getItem(i) as Torrent
-                val vintent = Intent(App.context, PlayActivity::class.java)
-                vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                vintent.action = Intent.ACTION_VIEW
-                vintent.putExtra("hash", torr.hash)
-                vintent.putExtra("title", torr.title)
-                vintent.putExtra("poster", torr.poster)
-                vintent.putExtra("action", "play")
-                App.context.startActivity(vintent)
+                val intent = Intent(App.context, PlayActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.action = Intent.ACTION_VIEW
+                intent.putExtra("hash", torr.hash)
+                intent.putExtra("title", torr.title)
+                intent.putExtra("poster", torr.poster)
+                intent.putExtra("action", "play")
+                App.context.startActivity(intent)
             }
             lvTorrents.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
             lvTorrents.setMultiChoiceModeListener(TorrentsActionBar(lvTorrents))
@@ -61,22 +59,22 @@ class TorrentsFragment : TSFragment() {
     }
 
     suspend fun start() = withContext(Dispatchers.Main) {
-        viewModel = ViewModelProvider(this@TorrentsFragment).get(TorrentsViewModel::class.java)
+        viewModel = ViewModelProvider(this@TorrentsFragment)[TorrentsViewModel::class.java]
         val data = (viewModel as TorrentsViewModel).getData()
         data.observe(this@TorrentsFragment) {
             torrentAdapter?.update(it)
             if (it.isEmpty()) {
                 emptyView.visibility = View.VISIBLE
-                if (!isOpened) {
-                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.openDrawer(Gravity.LEFT)
-                    isOpened = true
-                }
+//                if (!isOpened) {
+//                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.openDrawer(GravityCompat.START)
+//                    isOpened = true
+//                }
             } else { // close menu
                 emptyView.visibility = View.GONE
-                if (isOpened) {
-                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
-                    isOpened = false
-                }
+//                if (isOpened) {
+//                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
+//                    isOpened = false
+//                }
             }
         }
     }
