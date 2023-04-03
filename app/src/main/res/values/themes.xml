@@ -24,6 +24,7 @@
         <!-- Bottom bar color -->
         <item name="android:navigationBarColor" tools:targetApi="l">@color/dark_gray</item>
         <!-- Custom -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
         <item name="android:listDivider">@drawable/gradient_divider_green</item>
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
@@ -53,6 +54,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/light_gray</item>
         <!-- custom -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
         <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
