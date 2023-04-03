@@ -27,7 +27,7 @@ class AppToastView @JvmOverloads constructor(
             setDuration(animateInDuration)
             startDelay = delay.toLong()
         }
-        val logo = content.findViewById<ImageView>(R.id.ivLogo)
+        val logo = content.findViewById<ImageView?>(R.id.ivLogo)
         breathFadeAnimation(logo, App.longDuration.toLong())
     }
 
@@ -40,7 +40,7 @@ class AppToastView @JvmOverloads constructor(
 
     }
 
-    private fun breathFadeAnimation(view: View, period: Long) {
+    private fun breathFadeAnimation(view: View?, period: Long) {
         val minAlpha = 0.25f // Minimum alpha value
         val maxAlpha = 1.0f // Maximum alpha value
 
@@ -51,7 +51,7 @@ class AppToastView @JvmOverloads constructor(
             repeatMode = ValueAnimator.REVERSE
             addUpdateListener { valueAnimator ->
                 val alphaValue = valueAnimator.animatedValue as Float
-                view.alpha = alphaValue
+                view?.alpha = alphaValue
             }
         }
 
@@ -62,7 +62,7 @@ class AppToastView @JvmOverloads constructor(
             repeatMode = ValueAnimator.REVERSE
             addUpdateListener { valueAnimator ->
                 val alphaValue = valueAnimator.animatedValue as Float
-                view.alpha = alphaValue
+                view?.alpha = alphaValue
             }
         }
 
