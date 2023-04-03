@@ -12,17 +12,32 @@ class AppToastView @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defaultStyle: Int = 0
 ) : ConstraintLayout(context, attributeSet, defaultStyle), ContentViewCallback {
+    private val content: View
 
     init {
-        View.inflate(context, R.layout.item_toast, this)
+        content = View.inflate(context, R.layout.item_toast, this)
     }
 
     override fun animateContentIn(delay: Int, duration: Int) {
-        // TODO("Use some animation")
+        content.alpha = 0f
+        content.animate().apply {
+            alpha(1.0f)
+            setDuration(animateInDuration)
+            startDelay = delay.toLong()
+        }
     }
 
     override fun animateContentOut(delay: Int, duration: Int) {
-        // TODO("Use some animation")
+        content.animate().apply {
+            alpha(0f)
+            setDuration(animateOutDuration)
+            startDelay = delay.toLong()
+        }
+
     }
 
+    companion object {
+        private const val animateInDuration = 500L
+        private const val animateOutDuration = 150L
+    }
 }

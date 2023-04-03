@@ -207,6 +207,8 @@
     <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
         <!--<item name="android:layout_margin">32dp</item>-->
         <item name="animationMode">slide</item>
+        <!-- using backgroundTint the alpha layer is ignored -->
+        <!--<item name="backgroundTint">@color/snackbar</item>-->
     </style>
     <!-- Alert, Snackbar and Dialog Buttons -->
     <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">

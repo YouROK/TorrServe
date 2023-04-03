@@ -22,7 +22,6 @@ class AppToast(
             tc = R.color.tv_white
         }
         getView().setBackgroundResource(bg)
-        getView().alpha = 0.5f
         getView().findViewById<TextView>(R.id.tvMessage).setTextColor(ContextCompat.getColor(view.context, tc))
 
         val padding = Format.dp2px(10f)
