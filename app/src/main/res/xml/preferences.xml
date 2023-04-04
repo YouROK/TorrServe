@@ -24,6 +24,14 @@
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
+        android:summaryOff="@string/local_auth_sum_off"
+        android:summaryOn="@string/local_auth_sum_on"
+        app:key="local_auth"
+        app:title="@string/local_auth_title" />
+
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
         android:dependency="switch_accessibility"
         android:summaryOff="@string/boot_start_sum_off"
         android:summaryOn="@string/boot_start_sum_on"
