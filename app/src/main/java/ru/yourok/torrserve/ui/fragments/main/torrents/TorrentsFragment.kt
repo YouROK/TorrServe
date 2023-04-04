@@ -121,20 +121,20 @@ class TorrentsFragment : TSFragment() {
 
             KeyEvent.KEYCODE_MENU,
             KeyEvent.KEYCODE_BUTTON_X -> {
-                val list = torrentAdapter!!.list.toMutableList()
-                when (sortMode) {
-                    0 -> {
-                        torrentAdapter?.update(list.sortedBy { it.title })
-                        App.toast(R.string.sort_by_name)
-                    }
+                val list = torrentAdapter!!.list
+                if (list.size > 0) {
+                    when (sortMode) {
+                        0 -> {
+                            torrentAdapter?.update(list.sortedBy { it.title })
+                            App.toast(R.string.sort_by_name)
+                        }
 
-                    1 -> {
-                        torrentAdapter?.update(list.sortedByDescending { it.timestamp })
-                        App.toast(R.string.sort_by_date)
+                        1 -> {
+                            torrentAdapter?.update(list.sortedByDescending { it.timestamp })
+                            App.toast(R.string.sort_by_date)
+                        }
                     }
-                }
-                torrentAdapter?.notifyDataSetChanged()
-                if (torrentAdapter!!.list.size > 0) {
+                    torrentAdapter?.notifyDataSetChanged()
                     activity?.findViewById<ListView>(R.id.lvTorrents)?.apply {
                         this.setSelection(0)
                         requestFocus()
