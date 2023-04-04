@@ -162,15 +162,18 @@
     <string name="server_stoped">TorrServer 停止</string>
     <string name="server_not_responding">TorrServer 没有响应</string>
     <string name="server_not_exists">无 TorrServer</string>
-    <string name="error_retrieving_settings">获取设置时出错</string>
-    <string name="error_sending_settings">发送设置时出错</string>
-    <string name="error_app_not_found">​​没有找到合适的应用程序</string>
     <string name="done_sending_settings">已保存设置</string>
 
     <string name="loading_torrent">检索种子信息...</string>
+
+    <string name="error_add_torrent">添加种子失败</string>
+    <string name="error_app_not_found">​​没有找到合适的应用程序</string>
+    <string name="error_download_ffprobe">FFProbe 下载错误</string>
     <string name="error_retrieve_data">检索数据时时出错</string>
-    <string name="error_retrieve_torrent_info">检索种子信息时出错</string>
     <string name="error_retrieve_torrent_file">检索种子文件时出错</string>
+    <string name="error_retrieve_torrent_info">检索种子信息时出错</string>
+    <string name="error_retrieving_settings">获取设置时出错</string>
+    <string name="error_sending_settings">发送设置时出错</string>
 
     <string name="permission_storage_msg">需要访问内存权限才能将设置写入文件</string>
     <string name="permission_btn">GRANT</string>
@@ -267,8 +270,6 @@
     <string name="install_ffprobe">安裝FFProbe</string>
     <string name="delete_ffprobe">刪除FFProbe</string>
     <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
-    <string name="error_download_ffprobe">FFProbe 下载错误</string>
-    <string name="error_add_torrent">添加种子失败</string>
 
     <string name="donate_message">TorrServe is free and always will be. Please consider donating to support the future development of TorrServe.</string>
 

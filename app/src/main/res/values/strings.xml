@@ -161,7 +161,6 @@
     <string name="install_ffprobe">Install FFProbe</string>
     <string name="delete_ffprobe">Delete FFProbe</string>
     <string name="ffprobe_summary">Download FFProbe to obtain additional video data, such as the duration, bitrate, etc.</string>
-    <string name="error_download_ffprobe">FFProbe download error</string>
     <string name="arch">Arch</string>
     <string name="update_server">Update version</string>
     <string name="warn_error_check_ver">Version check error</string>
@@ -177,15 +176,18 @@
     <string name="server_stoped">TorrServer stopped</string>
     <string name="server_not_responding">TorrServer is not responding</string>
     <string name="server_not_exists">No TorrServer</string>
-    <string name="error_retrieving_settings">Error getting settings</string>
-    <string name="error_sending_settings">Error when send settings</string>
-    <string name="error_app_not_found">No suitable applications found</string>
     <string name="done_sending_settings">Settings saved</string>
 
     <string name="loading_torrent">Retrieve torrent info…</string>
+
+    <string name="error_add_torrent">Error adding torrent</string>
+    <string name="error_app_not_found">No suitable applications found</string>
+    <string name="error_download_ffprobe">FFProbe download error</string>
     <string name="error_retrieve_data">Error retrieve data</string>
-    <string name="error_retrieve_torrent_info">Error retrieve torrent info</string>
     <string name="error_retrieve_torrent_file">Error retrieve torrent file</string>
+    <string name="error_retrieve_torrent_info">Error retrieve torrent info</string>
+    <string name="error_retrieving_settings">Error getting settings</string>
+    <string name="error_sending_settings">Error when send settings</string>
 
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>
@@ -278,7 +280,6 @@
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
 
-    <string name="error_add_torrent">Error adding torrent</string>
     <string name="donate_message">TorrServe is free and always will be. Please consider donating to support the future development of TorrServe.</string>
 
 </resources>

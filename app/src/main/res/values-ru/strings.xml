@@ -135,14 +135,16 @@
     <string name="server_stoped">TorrServer остановлен</string>
     <string name="server_not_responding">TorrServer не отвечает</string>
     <string name="server_not_exists">TorrServer отсутствует</string>
-    <string name="error_retrieving_settings">Ошибка при получении настроек</string>
-    <string name="error_sending_settings">Ошибка при отправке настроек</string>
-    <string name="error_app_not_found">Подходящих приложений не найдено</string>
     <string name="done_sending_settings">Настройки сохранены</string>
     <string name="loading_torrent">Загрузка информации о торренте…</string>
+    <string name="error_add_torrent">Не удалось добавить торрент</string>
+    <string name="error_app_not_found">Подходящих приложений не найдено</string>
+    <string name="error_download_ffprobe">Ошибка загрузки FFProbe</string>
     <string name="error_retrieve_data">Ошибка при получении данных</string>
-    <string name="error_retrieve_torrent_info">Ошибка при загрузке данных торрента</string>
     <string name="error_retrieve_torrent_file">Ошибка получения файлов торрента</string>
+    <string name="error_retrieve_torrent_info">Ошибка при загрузке данных торрента</string>
+    <string name="error_retrieving_settings">Ошибка при получении настроек</string>
+    <string name="error_sending_settings">Ошибка при отправке настроек</string>
     <string name="permission_storage_msg">Доступ к памяти необходим для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
     <string name="donation">Пожертвование</string>
@@ -218,7 +220,5 @@
     <string name="install_ffprobe">Установить FFProbe</string>
     <string name="delete_ffprobe">Удалить FFProbe</string>
     <string name="ffprobe_summary">Загрузите FFProbe для получения данных о видео, таких как длительность, битрейт и т.д.</string>
-    <string name="error_download_ffprobe">Ошибка загрузки FFProbe</string>
-    <string name="error_add_torrent">Не удалось добавить торрент</string>
     <string name="donate_message">TorrServe бесплатен и всегда будет. Пожалуйста, рассмотрите возможность пожертвования для поддержки будущего развития TorrServe.</string>
 </resources>

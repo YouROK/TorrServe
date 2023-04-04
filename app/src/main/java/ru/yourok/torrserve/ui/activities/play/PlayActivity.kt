@@ -18,6 +18,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.Play.play
+import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
 import ru.yourok.torrserve.utils.ThemeUtil
@@ -70,11 +71,12 @@ class PlayActivity : AppCompatActivity() {
         readArgs()
         lifecycleScope.launch(Dispatchers.IO) {
             if (!TorrService.wait(5)) {
-                App.toast(R.string.server_not_responding)
+                // TODO: redirect to server finder?
                 error(ErrTorrServerNotResponding)
-            }
-            withContext(Dispatchers.Main) {
-                processIntent()
+            } else {
+                withContext(Dispatchers.Main) {
+                    processIntent()
+                }
             }
         }
     }
@@ -137,6 +139,7 @@ class PlayActivity : AppCompatActivity() {
                         1, 2 -> {
                             play(it == 2)
                         }
+
                         3 -> {
                             addAndExit()
                         }
@@ -150,18 +153,18 @@ class PlayActivity : AppCompatActivity() {
         if (isActive) {
             val progress = findViewById<LinearProgressIndicator>(R.id.progressBar)
             val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
-            val pi = progress.isIndeterminate
-            val pv = progress.isVisible
+            val indeterminate = progress.isIndeterminate
+            val visible = progress.isVisible
             progress?.apply {
                 setIndicatorColor(color)
                 // https://material.io/components/progress-indicators/android
-                if (prc < 0 && !pi) {
+                if (prc < 0 && !indeterminate) {
                     visibility = View.INVISIBLE
                     isIndeterminate = true
-                } else if (!pi) {
+                } else if (!indeterminate) {
                     isIndeterminate = false
                 }
-                if (!pv)
+                if (!visible)
                     visibility = View.VISIBLE
                 setProgressCompat(prc, true)
             }

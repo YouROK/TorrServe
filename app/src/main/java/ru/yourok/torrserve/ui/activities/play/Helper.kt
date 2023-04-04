@@ -3,17 +3,15 @@ package ru.yourok.torrserve.ui.activities.play
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
-import java.util.*
+import java.util.Locale
 
 fun PlayActivity.readArgs() {
     intent.data?.let {
@@ -47,11 +45,15 @@ fun PlayActivity.successful(intent: Intent) {
 }
 
 fun PlayActivity.error(err: ReturnError) {
-    val ret = Intent()
-    ret.putExtra("errCode", err.errCode)
-    ret.putExtra("errMessage", err.errMessage)
-    setResult(AppCompatActivity.RESULT_CANCELED, ret)
-    finish()
+    lifecycleScope.launch(Dispatchers.Default) {
+        val ret = Intent()
+        ret.putExtra("errCode", err.errCode)
+        ret.putExtra("errMessage", err.errMessage)
+        setResult(AppCompatActivity.RESULT_CANCELED, ret)
+        App.toast(err.errMessage, true)
+        delay(App.shortToastDuration.toLong()) // as in toast duration
+        finish()
+    }
 }
 
 fun PlayActivity.addAndExit() {
@@ -59,10 +61,7 @@ fun PlayActivity.addAndExit() {
         try {
             addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, true)
         } catch (e: Exception) {
-            App.toast(e.message ?: getString(R.string.error_retrieve_data))
-            Handler(Looper.getMainLooper()).postDelayed({
-                finish()
-            }, App.shortToastDuration.toLong()) // as in toast duration
+            error(ErrLoadTorrent)
             return@launch
         }
     }
@@ -75,7 +74,7 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
         try {
             Api.getTorrent(torrentHash)
         } catch (e: Exception) {
-            e.message?.let { App.toast(it) }
+            //e.printStackTrace()
             null
         }
     } else if (torrentLink.isNotEmpty()) {
@@ -86,14 +85,14 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
                 try {
                     Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave)
                 } catch (e: Exception) {
-                    e.message?.let { App.toast(it) }
+                    //e.printStackTrace()
                     null
                 }
             }
         } else try {
             Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
         } catch (e: Exception) {
-            e.message?.let { App.toast(it) }
+            //e.printStackTrace()
             null
         }
     } else
