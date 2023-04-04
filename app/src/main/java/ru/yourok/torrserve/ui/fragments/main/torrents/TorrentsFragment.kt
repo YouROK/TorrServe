@@ -95,7 +95,7 @@ class TorrentsFragment : TSFragment() {
         return false
     }
 
-    private var sortMode: Int = if (Settings.sortTorrents()) 1 else 0
+    private var sortMode: Boolean = Settings.sortTorrByTitle()
 
     @SuppressLint("NotifyDataSetChanged")
     fun onKeyDown(keyCode: Int): Boolean {
@@ -124,23 +124,23 @@ class TorrentsFragment : TSFragment() {
                 val list = torrentAdapter!!.list
                 if (list.size > 0) {
                     when (sortMode) {
-                        0 -> {
+                        false -> {
                             torrentAdapter?.update(list.sortedBy { it.title })
                             App.toast(R.string.sort_by_name)
                         }
 
-                        1 -> {
+                        true -> {
                             torrentAdapter?.update(list.sortedByDescending { it.timestamp })
                             App.toast(R.string.sort_by_date)
                         }
                     }
-                    torrentAdapter?.notifyDataSetChanged()
+                    sortMode = !sortMode
+                    Settings.set("sort_torrents", sortMode)
                     activity?.findViewById<ListView>(R.id.lvTorrents)?.apply {
                         this.setSelection(0)
                         requestFocus()
                     }
                 }
-                if (sortMode == 1) sortMode = 0 else sortMode++
                 if (Utils.isTV()) return true
             }
 

@@ -72,7 +72,7 @@ object Api {
         val host = Net.getHostUrl("/torrents")
         val req = TorrentReq("list").toString()
         val resp = postJson(host, req)
-        return if (Settings.sortTorrents())
+        return if (Settings.sortTorrByTitle())
             Gson().fromJson(resp, Array<Torrent>::class.java).toList().sortedWith(compareBy { it.title })
         else
             Gson().fromJson(resp, Array<Torrent>::class.java).toList()
