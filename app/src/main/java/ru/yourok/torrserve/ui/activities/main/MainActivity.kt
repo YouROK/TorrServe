@@ -166,6 +166,9 @@ class MainActivity : AppCompatActivity() {
                 is AddFragment ->
                     if (it.onKeyUp(keyCode))
                         return true
+                is TorrentsFragment ->
+                    if (it.onKeyUp(keyCode))
+                        return true
             }
         }
         return super.onKeyUp(keyCode, event)
@@ -178,6 +181,9 @@ class MainActivity : AppCompatActivity() {
                     if (it.onKeyDown(keyCode))
                         return true
                 }
+                is TorrentsFragment ->
+                    if (it.onKeyDown(keyCode))
+                        return true
             }
         }
         if (keyCode == KeyEvent.KEYCODE_MENU) {
