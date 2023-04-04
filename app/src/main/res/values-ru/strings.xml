@@ -180,8 +180,8 @@
     <string name="show_fab_title">Кнопка вызова меню на экране</string>
     <string name="show_fab_sum_on">Показать кнопку вызова меню</string>
     <string name="show_fab_sum_off">Не показывать кнопку вызова меню</string>
-    <string name="accessibility_manual_on">Включите сервис в разделе «Настройки устройства» / «Специальные возможности»</string>
-    <string name="accessibility_manual_off">Отключите сервис в разделе «Настройки устройства» / «Специальные возможности»</string>
+    <string name="accessibility_manual_on">Включите сервис «%1$s» в разделе «Настройки устройства» / «Специальные возможности»</string>
+    <string name="accessibility_manual_off">Отключите сервис «%1$s» в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_service_description">Включение этого сервиса может предотвратить завершение локального TorrServer системой</string>
     <string name="switch_accessibility_title">Cервис специальных возможностей</string>
     <string name="switch_accessibility_summary_on">Нажмите для отключения сервиса TorrServe</string>

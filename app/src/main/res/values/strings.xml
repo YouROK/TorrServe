@@ -247,8 +247,8 @@
     <string name="show_fab_sum_on">Show floating action button</string>
     <string name="show_fab_sum_off">Don\'t show floating action button</string>
 
-    <string name="accessibility_manual_on">Enable service in Device Preferences / Accessibility section</string>
-    <string name="accessibility_manual_off">Disable service in Device Preferences / Accessibility section</string>
+    <string name="accessibility_manual_on">Enable service %1$s in Device Preferences / Accessibility section</string>
+    <string name="accessibility_manual_off">Disable service %1$s in Device Preferences / Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
     <string name="switch_accessibility_title">Accessibility Service</string>
     <string name="switch_accessibility_summary_on">Press to disable TorrServe service</string>

@@ -27,7 +27,7 @@ class App : MultiDexApplication() {
         private var instance: App? = null
         private lateinit var appContext: Context
         var inForeground: Boolean = false
-        const val shortToastDuration: Int = 1500
+        const val shortToastDuration: Int = 1200
         const val longToastDuration: Int = 3000
         private lateinit var wakeLock: PowerManager.WakeLock
 
