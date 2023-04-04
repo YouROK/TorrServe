@@ -1,8 +1,6 @@
 package ru.yourok.torrserve.ui.activities.play
 
 import android.content.Intent
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -25,31 +23,23 @@ object Play {
             torrentSave = save
 
             val torrent: Torrent
-
             try {
                 val torr = addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
                     ?: let {
-                        App.toast(getString(R.string.error_retrieve_data))
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            finish()
-                        }, App.shortToastDuration.toLong()) // as in toast duration
+                        error(ErrLoadTorrent)
                         return@launch
                     }
                 infoFragment.startInfo(torr.hash)
                 if (torrentHash.isEmpty() && torr.hash.isNotBlank()) // store hash for Api.dropTorrent on close
                     torrentHash = torr.hash
                 torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
-                    App.toast(getString(R.string.error_retrieve_torrent_info))
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        finish()
-                    }, App.shortToastDuration.toLong()) // as in toast duration
+                    error(ErrLoadTorrentInfo)
                     return@launch
                 }
             } catch (e: Exception) {
-                App.toast(e.message ?: getString(R.string.error_retrieve_data))
-                Handler(Looper.getMainLooper()).postDelayed({
-                    finish()
-                }, App.shortToastDuration.toLong()) // as in toast duration
+                //e.printStackTrace()
+                e.message?.let {App.toast(it, true)}
+                delay(App.longToastDuration.toLong())
                 return@launch
             }
 
@@ -66,8 +56,7 @@ object Play {
             lifecycleScope.launch {
                 when {
                     files.isEmpty() -> {
-                        App.toast(getString(R.string.error_retrieve_torrent_file))
-                        error(ErrLoadTorrentInfo)
+                        error(ErrLoadTorrentFiles)
                     }
 
                     files.size == 1 -> {
@@ -95,7 +84,7 @@ object Play {
         }
     }
 
-    private suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
+    suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
         var torr = torrent
 
         TorrentHelper.preloadTorrent(torr, index)
