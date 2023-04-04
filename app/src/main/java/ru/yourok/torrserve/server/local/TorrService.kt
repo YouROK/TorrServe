@@ -4,10 +4,10 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-//import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineScope
 //import kotlinx.coroutines.Dispatchers
 //import kotlinx.coroutines.SupervisorJob
-//import kotlinx.coroutines.launch
+import kotlinx.coroutines.launch
 import ru.yourok.torrserve.BuildConfig
 //import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
