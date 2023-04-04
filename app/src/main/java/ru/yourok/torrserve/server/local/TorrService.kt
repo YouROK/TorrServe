@@ -4,6 +4,10 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
@@ -18,13 +22,24 @@ import kotlin.concurrent.thread
 class TorrService : Service() {
     private val notification = NotificationHelper()
     private val serverFile = ServerFile()
+    private val job = SupervisorJob()
+    private val scope = CoroutineScope(Dispatchers.IO + job)
 
     override fun onBind(p0: Intent?): IBinder? = null
     override fun onCreate() {
         super.onCreate()
-        thread {
-            ADManager.get()
+        scope.launch {
+            try {
+                ADManager.get()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -35,6 +50,7 @@ class TorrService : Service() {
                         startServer()
                         return START_STICKY
                     }
+
                     ActionStop -> {
                         stopServer(intent.hasExtra("forceclose"))
                         return START_NOT_STICKY
