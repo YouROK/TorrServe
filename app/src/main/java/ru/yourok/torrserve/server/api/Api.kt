@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.server.api
 
 import com.google.gson.Gson
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.server.models.ffp.FFPModel
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.server.models.torrent.TorrentDetails
@@ -20,17 +21,18 @@ object Api {
             val host = Net.getHostUrl("/echo")
             Net.getAuth(host)
         } catch (e: Exception) {
-            println(e.message)
+            if (BuildConfig.DEBUG) println(e.message)
             ""
         }
     }
+
     /* used for remote server version check */
     fun remoteEcho(url: String): String {
         return try {
             val host = "$url/echo"
             Net.getAuth(host, 3000) // fast response, in ms
         } catch (e: Exception) {
-            println(e.message)
+            if (BuildConfig.DEBUG) println(e.message)
             ""
         }
     }
@@ -40,7 +42,7 @@ object Api {
             val host = Net.getHostUrl("/shutdown")
             Net.getAuth(host)
         } catch (e: Exception) {
-            println(e.message)
+            if (BuildConfig.DEBUG) println(e.message)
             ""
         }
     }
