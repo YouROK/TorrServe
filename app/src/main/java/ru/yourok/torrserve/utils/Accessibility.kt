@@ -95,14 +95,14 @@ object Accessibility {
                 }, App.shortToastDuration.toLong()) // as in toast duration
             }
         } else {
+            val appName = App.context.getString(R.string.app_name)
             if (enable)
-                App.toast(R.string.accessibility_manual_on, true)
+                App.toast(App.context.getString(R.string.accessibility_manual_on, appName), true)
             else
-                App.toast(R.string.accessibility_manual_off, true)
+                App.toast(App.context.getString(R.string.accessibility_manual_off, appName), true)
             Handler(Looper.getMainLooper()).postDelayed({
                 showAccessibilitySettings(requireContext)
             }, App.longToastDuration.toLong()) // as in toast duration
-
         }
     }
 

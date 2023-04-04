@@ -38,7 +38,7 @@ object Settings {
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
     fun showCover(): Boolean = get("show_cover", true)
-    fun sortTorrents(): Boolean = get("sort_torrents", false)
+    fun sortTorrByTitle(): Boolean = get("sort_torrents", false)
     fun showFab(): Boolean = get("show_fab", false)
 
     fun getTheme(): String = get("theme", "dark")
@@ -90,7 +90,7 @@ object Settings {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun set(name: String, value: Any?) {
+    fun set(name: String, value: Any?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         when (value) {
             is String -> prefs.edit().putString(name, value).apply()

@@ -20,7 +20,7 @@ import java.util.Locale
 
 
 class TorrentsAdapter(private val activity: FragmentActivity) : BaseAdapter() {
-    private val list = mutableListOf<Torrent>()
+    val list = mutableListOf<Torrent>()
 
     fun update(list: List<Torrent>) {
         if (this.list.size != list.size) {

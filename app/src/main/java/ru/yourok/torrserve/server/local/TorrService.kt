@@ -18,12 +18,14 @@ import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.settings.Settings.isAccessibilityOn
 import ru.yourok.torrserve.utils.Accessibility
 import kotlin.concurrent.thread
+import kotlin.coroutines.EmptyCoroutineContext
 
 class TorrService : Service() {
     private val notification = NotificationHelper()
     private val serverFile = ServerFile()
 //    private val job = SupervisorJob()
 //    private val scope = CoroutineScope(Dispatchers.IO + job)
+    private val serviceScope = CoroutineScope(EmptyCoroutineContext)
 
     override fun onBind(p0: Intent?): IBinder? = null
 
@@ -63,7 +65,7 @@ class TorrService : Service() {
     }
 
     private fun startServer() {
-        thread {
+        serviceScope.launch {
             if (isLocal() && isAccessibilityOn() && !Accessibility.isEnabledService(App.context)) {
                 if (BuildConfig.DEBUG) Log.d("TorrService", "Try to enable AssessibilityService")
                 Accessibility.enableService(App.context, true)
@@ -71,20 +73,20 @@ class TorrService : Service() {
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
                 if (BuildConfig.DEBUG) Log.d("TorrService", "startServer()")
                 serverFile.run()
-                notification.doBindService(this)
+                notification.doBindService(this@TorrService)
             }
             Utils.updateAtvCards()
         }
     }
 
     private fun stopServer(forceClose: Boolean) {
-        thread {
+        serviceScope.launch {
             if (BuildConfig.DEBUG) Log.d("TorrService", "stopServer(forceClose:$forceClose)")
             if (isLocal() && Api.echo().isNotEmpty())
                 Api.shutdown()
             if (!isAccessibilityOn())
                 serverFile.stop()
-            notification.doUnbindService(this)
+            notification.doUnbindService(this@TorrService)
             stopSelf()
             if (forceClose) {
                 thread {

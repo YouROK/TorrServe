@@ -46,7 +46,6 @@ object Play {
                     return@launch
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
                 App.toast(e.message ?: getString(R.string.error_retrieve_data))
                 Handler(Looper.getMainLooper()).postDelayed({
                     finish()

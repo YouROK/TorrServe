@@ -3,6 +3,8 @@ package ru.yourok.torrserve.ui.activities.play
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -57,9 +59,10 @@ fun PlayActivity.addAndExit() {
         try {
             addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, true)
         } catch (e: Exception) {
-            e.printStackTrace()
             App.toast(e.message ?: getString(R.string.error_retrieve_data))
-            finish()
+            Handler(Looper.getMainLooper()).postDelayed({
+                finish()
+            }, App.shortToastDuration.toLong()) // as in toast duration
             return@launch
         }
     }
