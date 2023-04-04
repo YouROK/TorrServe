@@ -197,7 +197,7 @@
 
     <string name="host_authorization">服务端授权</string>
     <string name="host_authorization_desc">通过“:”分别填写用户名和密码（user:pass）</string>
-    <string name="local_auth_title">本地 TorrServer 授权</string>
+    <string name="local_auth_title">具有授权的本地 TorrServer</string>
     <string name="local_auth_sum_on">在本地服务器上使用授权</string>
     <string name="local_auth_sum_off">不要在本地服务器上使用授权</string>
 

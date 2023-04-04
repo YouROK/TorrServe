@@ -210,7 +210,7 @@
     <string name="not_installed">Не установлен</string>
     <string name="host_authorization">Авторизация на сервере</string>
     <string name="host_authorization_desc">Введите имя и пароль через «:» (user:pass)</string>
-    <string name="local_auth_title">Локальная авторизация TorrServer</string>
+    <string name="local_auth_title">Локальный TorrServer с авторизацией</string>
     <string name="local_auth_sum_on">Использовать авторизацию на локальном сервере</string>
     <string name="local_auth_sum_off">Не использовать авторизацию на локальном сервере</string>
     <string name="remove_all_warn">Вы хотите удалить все торренты?</string>

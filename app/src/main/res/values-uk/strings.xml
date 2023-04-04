@@ -164,7 +164,7 @@
     <string name="host_title">Встановити URL-адресу TorrServer</string>
     <string name="host_authorization">Авторизація на сервері</string>
     <string name="host_authorization_desc">Введіть логін та пароль через «:» (user:pass)</string>
-    <string name="local_auth_title">Локальна авторизація TorrServer</string>
+    <string name="local_auth_title">Локальний TorrServer з авторизацією</string>
     <string name="local_auth_sum_on">Використовуйте авторизацію на локальному сервері</string>
     <string name="local_auth_sum_off">Не використовуйте авторизацію на локальному сервері</string>
     <string name="torserver_title">Налаштування TorrServer</string>

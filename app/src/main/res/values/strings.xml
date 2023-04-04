@@ -212,7 +212,7 @@
 
     <string name="host_authorization">Server Authorization</string>
     <string name="host_authorization_desc">Enter username and password separated by a colon (user:password), leave blank for no auth.</string>
-    <string name="local_auth_title">Local TorrServer authorization</string>
+    <string name="local_auth_title">Local TorrServer with Authorization</string>
     <string name="local_auth_sum_on">Use authorization on local server</string>
     <string name="local_auth_sum_off">Don\'t use authorization on local server</string>
 
