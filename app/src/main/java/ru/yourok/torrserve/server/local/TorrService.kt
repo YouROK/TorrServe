@@ -17,6 +17,7 @@ import ru.yourok.torrserve.server.local.services.NotificationHelper
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.settings.Settings.isAccessibilityOn
 import ru.yourok.torrserve.utils.Accessibility
+import kotlin.concurrent.thread
 
 class TorrService : Service() {
     private val notification = NotificationHelper()
