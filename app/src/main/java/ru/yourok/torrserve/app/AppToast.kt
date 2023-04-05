@@ -40,7 +40,6 @@ class AppToast(
     }
 
     companion object {
-
         fun make(viewGroup: ViewGroup, txt: String): AppToast {
             val snackView = LayoutInflater.from(viewGroup.context).inflate(
                 R.layout.layout_toast,

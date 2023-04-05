@@ -113,8 +113,9 @@ class TorrentFilesFragment : TSFragment() {
                 adapter = torrFilesAdapter
                 setOnItemClickListener { _, _, position, _ ->
                     val f = torrFilesAdapter.getItem(position) as FileStat? ?: return@setOnItemClickListener
-                    // clear viewed
-                    if (torrFilesAdapter.count > 1 && position == count - 1)
+                    onClickItem?.invoke(f)
+                    // clear all viewed
+                    if (torrFilesAdapter.count > 1 && position == count - 1) {
                         lifecycleScope.launch(Dispatchers.IO) {
                             torrent?.hash?.let { hash ->
                                 try {
@@ -124,7 +125,50 @@ class TorrentFilesFragment : TSFragment() {
                                 }
                             }
                         }
-                    onClickItem?.invoke(f)
+                    }
+                }
+                setOnItemLongClickListener { _, _, position, _ ->
+                    val fs = torrFilesAdapter.getItem(position) as FileStat?
+                    fs?.let { file ->
+                        // rem viewed
+                        if (torrFilesAdapter.viewed.any { it.file_index == file.id }) {
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                torrent?.hash?.let { hash ->
+                                    try {
+                                        Api.remViewed(hash, file.id)
+                                        withContext(Dispatchers.Main) {
+                                            val element = torrFilesAdapter.viewed.find { it.file_index == file.id }
+                                            val list = torrFilesAdapter.viewed.toMutableList()
+                                            list.removeAt(torrFilesAdapter.viewed.indexOf(element))
+                                            torrFilesAdapter.update(torrent ?: return@withContext, list)
+                                            torrFilesAdapter.notifyDataSetChanged()
+                                        }
+                                    } catch (e: Exception) {
+                                        e.message?.let { App.toast(it) }
+                                    }
+                                }
+                            }
+                        } else { // set viewed
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                torrent?.hash?.let { hash ->
+                                    try {
+                                        Api.setViewed(hash, file.id)
+                                        withContext(Dispatchers.Main) {
+                                            val list = torrFilesAdapter.viewed.toMutableList()
+                                            val item = Viewed(hash = hash, file_index = file.id)
+                                            list.add(item)
+                                            list.sortBy { it.file_index }
+                                            torrFilesAdapter.update(torrent ?: return@withContext, list)
+                                            torrFilesAdapter.notifyDataSetChanged()
+                                        }
+                                    } catch (e: Exception) {
+                                        e.message?.let { App.toast(it) }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    true
                 }
                 postDelayed({
                     setSelection(next)

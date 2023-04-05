@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.settings
 
 import android.net.Uri
+import android.os.Environment
 import androidx.preference.PreferenceManager
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
@@ -9,13 +10,14 @@ import java.io.File
 
 object Settings {
 
-    fun getServerAuth() = get("server_auth", "").trim()
-
+    fun getServerAuth(): String = get("server_auth", "").trim()
+    fun useLocalAuth(): Boolean = get("local_auth", false)
     fun getHosts(): List<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         val ret = prefs.getStringSet("saved_hosts", mutableSetOf())
         return ret?.toList() ?: emptyList()
     }
+
     fun setHosts(hosts: List<String>) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         prefs.edit().putStringSet("saved_hosts", hosts.toMutableSet()).apply()
@@ -69,7 +71,7 @@ object Settings {
             filesDir = App.context.filesDir
 
         if (filesDir == null)
-            filesDir = File(App.context.getInternalStorageDirectoryPath(), "TorrServe")
+            filesDir = File(Environment.getExternalStorageDirectory().path, "TorrServe")
 
         if (!filesDir.exists())
             filesDir.mkdirs()

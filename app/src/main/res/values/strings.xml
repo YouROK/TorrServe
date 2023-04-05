@@ -183,11 +183,16 @@
     <string name="error_add_torrent">Error adding torrent</string>
     <string name="error_app_not_found">No suitable applications found</string>
     <string name="error_download_ffprobe">FFProbe download error</string>
+    <string name="error_empty_link">Torrent link is empty</string>
+    <string name="error_intent_null">Intent is null</string>
+    <string name="error_process_cmd">Error when processing cmd, see logcat.</string>
     <string name="error_retrieve_data">Error retrieve data</string>
     <string name="error_retrieve_torrent_file">Error retrieve torrent file</string>
     <string name="error_retrieve_torrent_info">Error retrieve torrent info</string>
     <string name="error_retrieving_settings">Error getting settings</string>
     <string name="error_sending_settings">Error when send settings</string>
+    <string name="error_user_cancel">User stop</string>
+    <string name="error_unknown_command">Unknown command</string>
 
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>
@@ -198,7 +203,6 @@
     <string name="link">Link</string>
     <string name="donation_msg">Donation to support projects</string>
     <string name="boosty_msg">Boosty site</string>
-    <string name="yandex_money_msg">Yandex.Money card</string>
     <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
     <string name="paypal_msg">Email to donate in PayPal</string>
     <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
@@ -212,6 +216,9 @@
 
     <string name="host_authorization">Server Authorization</string>
     <string name="host_authorization_desc">Enter username and password separated by a colon (user:password), leave blank for no auth.</string>
+    <string name="local_auth_title">Local TorrServer with Authorization</string>
+    <string name="local_auth_sum_on">Use authorization on local server</string>
+    <string name="local_auth_sum_off">Don\'t use authorization on local server</string>
 
     <string name="torserver_title">TorrServer Settings</string>
     <string name="torserver_summary">Configure TorrServer settings</string>

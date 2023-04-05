@@ -5,6 +5,7 @@ import com.topjohnwu.superuser.Shell
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.settings.Settings.useLocalAuth
 import java.io.ByteArrayInputStream
 import java.io.File
 
@@ -20,7 +21,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
             return
         synchronized(lock) {
             var akey = ""
-            if (auth.isNotBlank() && storeAccs(auth))
+            if (useLocalAuth() && auth.isNotBlank() && storeAccs(auth))
                 akey = "--httpauth"
             Shell.enableVerboseLogging = BuildConfig.DEBUG
             if (shellJob == null) {

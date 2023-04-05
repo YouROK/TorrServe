@@ -133,17 +133,17 @@ open class InfoFragment : TSFragment() {
                     val themedContext = ContextThemeWrapper(this.context, ThemeUtil.selectedTheme)
                     val color1 = ColorUtils.setAlphaComponent(getColorFromAttr(themedContext, R.attr.colorBright), 200)
                     val color2 = ColorUtils.setAlphaComponent(getColorFromAttr(themedContext, R.attr.colorBright), 240)
-                    val tvFN = findViewById<TextView>(R.id.tvFileName)
-                    val tvFS = findViewById<TextView>(R.id.tvFileSize)
+                    val tvFileName = findViewById<TextView>(R.id.tvFileName)
+                    val tvFileSize = findViewById<TextView>(R.id.tvFileSize)
                     file?.let {
                         var name = it.path
                         if (name.isNotEmpty())
                             name = File(name).name
 
-                        tvFN.visibility = View.VISIBLE
-                        tvFS.visibility = View.VISIBLE
+                        tvFileName.visibility = View.VISIBLE
+                        tvFileSize.visibility = View.VISIBLE
 
-                        tvFN.apply {
+                        tvFileName.apply {
                             text = "" // name
                             append(name, color2)
                         }
@@ -151,15 +151,15 @@ open class InfoFragment : TSFragment() {
                         val size = it.length
                         if (size >= 0) {
                             // spannable
-                            tvFS.apply {
+                            tvFileSize.apply {
                                 text = "" // txt
                                 append("${getString(R.string.size)} ", color1, true)
                                 append(Format.byteFmt(size), color2, true)
                             }
                         }
                     } ?: let {
-                        tvFN.visibility = View.GONE
-                        tvFS.visibility = View.GONE
+                        tvFileName.visibility = View.INVISIBLE
+                        tvFileSize.visibility = View.GONE
                     }
 
                     var buffer = ""
