@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.AD
@@ -18,7 +23,6 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.Play.play
-import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
 import ru.yourok.torrserve.utils.ThemeUtil
@@ -41,6 +45,14 @@ class PlayActivity : AppCompatActivity() {
 
     private var firebaseAnalytics: FirebaseAnalytics? = null
 
+    private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (BuildConfig.DEBUG) Log.d("PlayActivity", "handleOnBackPressed() set userClose = true")
+            userClose = true
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //// DayNight Theme // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -52,6 +64,8 @@ class PlayActivity : AppCompatActivity() {
         }
         setContentView(R.layout.play_activity)
         setWindow()
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         lifecycleScope.launch { showProgress() }
 
@@ -85,7 +99,7 @@ class PlayActivity : AppCompatActivity() {
         super.onUserLeaveHint()
         if (BuildConfig.DEBUG) Log.d("PlayActivity", "onUserLeaveHint()")
         lifecycleScope.cancel()
-        finish()
+        finish() // back from player to files list
     }
 
     override fun onDestroy() {
@@ -97,20 +111,10 @@ class PlayActivity : AppCompatActivity() {
                         Api.dropTorrent(torrentHash)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        //e.message?.let { App.toast(it) }
                     }
                 }
         }
-
         super.onDestroy()
-    }
-
-    @Suppress("DEPRECATION")
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if (BuildConfig.DEBUG) Log.d("PlayActivity", "onBackPressed()")
-        userClose = true
     }
 
     private fun setWindow() {
@@ -126,7 +130,6 @@ class PlayActivity : AppCompatActivity() {
     private fun processIntent() {
         ad = AD(findViewById(R.id.ivAd), this)
         ad?.get()
-
         //// Play torrent
         if (intent.hasExtra("action") && intent.getStringExtra("action") == "play")
             play(false)

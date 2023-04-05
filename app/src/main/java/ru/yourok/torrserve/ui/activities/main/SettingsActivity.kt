@@ -1,11 +1,15 @@
 package ru.yourok.torrserve.ui.activities.main
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.clearStackFragment
@@ -22,11 +26,25 @@ class SettingsActivity : AppCompatActivity() {
 
     private val themeUtil = ThemeUtil()
 
+    private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (BuildConfig.DEBUG) Log.d("SettingsActivity", "handleOnBackPressed()")
+            if (supportFragmentManager.backStackEntryCount > 1)
+                supportFragmentManager.popBackStack()
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                finishAndRemoveTask()
+            else
+                finishAffinity()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Permission.requestPermissionWithRationale(this)
         themeUtil.onCreate(this)
         setContentView(R.layout.settings_activity)
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         lifecycleScope.launch(Dispatchers.IO) {
             TorrService.start()
@@ -63,15 +81,6 @@ class SettingsActivity : AppCompatActivity() {
             SettingsFragment().apply {
                 show(this@SettingsActivity, R.id.container)
             }
-        }
-    }
-
-    @Suppress("DEPRECATION")
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if (supportFragmentManager.backStackEntryCount == 0) {
-            finishAffinity()
         }
     }
 

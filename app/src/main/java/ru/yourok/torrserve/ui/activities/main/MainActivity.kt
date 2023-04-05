@@ -4,10 +4,12 @@ import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -20,6 +22,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.clearStackFragment
@@ -49,12 +52,25 @@ class MainActivity : AppCompatActivity() {
     private val themeUtil = ThemeUtil()
     private var firebaseAnalytics: FirebaseAnalytics? = null
 
+    private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (BuildConfig.DEBUG) Log.d("MainActivity", "handleOnBackPressed()")
+            if (isMenuVisible)
+                closeMenu()
+            else if (supportFragmentManager.backStackEntryCount > 0)
+                supportFragmentManager.popBackStack()
+            else finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         Permission.requestPermissionWithRationale(this)
         themeUtil.onCreate(this)
         setContentView(R.layout.main_activity)
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         viewModel = ViewModelProvider(this)[StatusViewModel::class.java]
 
@@ -151,21 +167,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @Suppress("DEPRECATION")
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (isMenuVisible)
-            closeMenu()
-        else
-            super.onBackPressed()
-    }
-
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         supportFragmentManager.fragments.forEach {
             when (it) {
                 is AddFragment ->
                     if (it.onKeyUp(keyCode))
                         return true
+
                 is TorrentsFragment ->
                     if (it.onKeyUp(keyCode))
                         return true
@@ -181,6 +189,7 @@ class MainActivity : AppCompatActivity() {
                     if (it.onKeyDown(keyCode))
                         return true
                 }
+
                 is TorrentsFragment ->
                     if (it.onKeyDown(keyCode))
                         return true
