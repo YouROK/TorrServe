@@ -136,15 +136,15 @@ class TorrentFilesFragment : TSFragment() {
                                 torrent?.hash?.let { hash ->
                                     try {
                                         Api.remViewed(hash, file.id)
+                                        withContext(Dispatchers.Main) {
+                                            val element = torrFilesAdapter.viewed.find { it.file_index == file.id }
+                                            val list = torrFilesAdapter.viewed.toMutableList()
+                                            list.removeAt(torrFilesAdapter.viewed.indexOf(element))
+                                            torrFilesAdapter.update(torrent ?: return@withContext, list)
+                                            torrFilesAdapter.notifyDataSetChanged()
+                                        }
                                     } catch (e: Exception) {
                                         e.message?.let { App.toast(it) }
-                                    }
-                                    withContext(Dispatchers.Main) {
-                                        val element = torrFilesAdapter.viewed.find { it.file_index == file.id }
-                                        val list = torrFilesAdapter.viewed.toMutableList()
-                                        list.removeAt(torrFilesAdapter.viewed.indexOf(element))
-                                        torrFilesAdapter.update(torrent ?: return@withContext, list)
-                                        torrFilesAdapter.notifyDataSetChanged()
                                     }
                                 }
                             }
@@ -153,16 +153,16 @@ class TorrentFilesFragment : TSFragment() {
                                 torrent?.hash?.let { hash ->
                                     try {
                                         Api.setViewed(hash, file.id)
+                                        withContext(Dispatchers.Main) {
+                                            val list = torrFilesAdapter.viewed.toMutableList()
+                                            val item = Viewed(hash = hash, file_index = file.id)
+                                            list.add(item)
+                                            list.sortBy { it.file_index }
+                                            torrFilesAdapter.update(torrent ?: return@withContext, list)
+                                            torrFilesAdapter.notifyDataSetChanged()
+                                        }
                                     } catch (e: Exception) {
                                         e.message?.let { App.toast(it) }
-                                    }
-                                    withContext(Dispatchers.Main) {
-                                        val list = torrFilesAdapter.viewed.toMutableList()
-                                        val item = Viewed(hash = hash, file_index = file.id)
-                                        list.add(item)
-                                        list.sortBy { it.file_index }
-                                        torrFilesAdapter.update(torrent ?: return@withContext, list)
-                                        torrFilesAdapter.notifyDataSetChanged()
                                     }
                                 }
                             }
