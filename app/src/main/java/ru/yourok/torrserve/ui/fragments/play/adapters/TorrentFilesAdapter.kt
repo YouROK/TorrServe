@@ -55,9 +55,12 @@ class TorrentFilesAdapter : BaseAdapter() {
                 append("$path/\n", color1) // path
                 append(File(file.path).name, color2) // file
             }
+        } else {
+            tvFileName.apply {
+                text = ""
+                append(File(file.path).name, color2) // file
+            }
         }
-//        title += File(file.path).name
-//        vi.findViewById<TextView>(R.id.tvFileName)?.text = title
 
         val size = Format.byteFmt(file.length)
         vi.findViewById<TextView>(R.id.tvFileSize)?.text = size
