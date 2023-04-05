@@ -126,9 +126,9 @@ object Api {
         postJson(host, req)
     }
 
-    fun remViewed(hash: String) {
+    fun remViewed(hash: String, id: Int = -1) {
         val host = Net.getHostUrl("/viewed")
-        val req = ViewedReq("rem", hash).toString()
+        val req = if (id > 0) ViewedReq("rem", hash, id).toString() else ViewedReq("rem", hash).toString()
         postJson(host, req)
     }
 
