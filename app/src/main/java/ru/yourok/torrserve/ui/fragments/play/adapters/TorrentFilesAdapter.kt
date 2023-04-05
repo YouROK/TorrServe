@@ -11,6 +11,7 @@ import androidx.core.graphics.ColorUtils
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.append
+import ru.yourok.torrserve.ext.clearName
 import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -43,16 +44,12 @@ class TorrentFilesAdapter : BaseAdapter() {
 
         val file = files[position]
         val tvFileName = vi.findViewById<TextView>(R.id.tvFileName)
-//        var title = ""
-//        val path = File(file.path).parent.split("/")
-//        path.forEach { it ->
-//            title += "$it/"
-//        }
         val path = File(file.path).parent
         if (!path.isNullOrEmpty()) { // split path
             tvFileName.apply {
+                val folder = path.substringAfterLast("/").clearName()
                 text = ""
-                append("$path/\n", color1) // path
+                append("$folder\n", color1) // folder
                 append(File(file.path).name, color2) // file
             }
         } else {
