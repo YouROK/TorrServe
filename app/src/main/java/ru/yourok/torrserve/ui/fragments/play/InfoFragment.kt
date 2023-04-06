@@ -1,18 +1,13 @@
 package ru.yourok.torrserve.ui.fragments.play
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +20,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.ext.append
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.settings.Settings
@@ -48,7 +44,8 @@ open class InfoFragment : TSFragment() {
         val vi = inflater.inflate(R.layout.info_fragment, container, false)
         lifecycleScope.launch {
             (activity as? PlayActivity)?.showProgress()
-            vi.findViewById<TextView>(R.id.tvTitle).setText(R.string.loading_torrent)
+            vi.findViewById<TextView?>(R.id.tvTitle)?.setText(R.string.loading_torrent)
+            vi.findViewById<ConstraintLayout?>(R.id.clInfo)?.visibility = View.GONE
         }
         TorrService.start()
         return vi
@@ -69,33 +66,9 @@ open class InfoFragment : TSFragment() {
         }
     }
 
-    // textView.text = "" // Remove old text
-    // textView.append("Red Text", Color.RED)
-    // textView.append("Blue Bold Text", Color.BLUE, true)
-    private fun TextView.append(string: String?, @ColorInt color: Int = 0, bold: Boolean = false) {
-        if (string.isNullOrEmpty()) {
-            return
-        }
-        val spannable: Spannable = SpannableString(string)
-        if (color != 0)
-            spannable.setSpan(
-                ForegroundColorSpan(color),
-                0,
-                spannable.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        if (bold)
-            spannable.setSpan(
-                StyleSpan(Typeface.BOLD),
-                0,
-                spannable.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        append(spannable)
-    }
-
     private fun updateUI(info: InfoTorrent, index: Int) {
         lifecycleScope.launch {
+            view?.findViewById<ConstraintLayout?>(R.id.clInfo)?.visibility = View.VISIBLE
             if (info.torrent == null && info.error.isNotEmpty()) {
                 view?.findViewById<TextView>(R.id.tvInfo)?.text = info.error
                 return@launch

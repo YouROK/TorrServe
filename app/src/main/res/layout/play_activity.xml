@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -26,11 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/app_name"
         android:alpha="1.0"
+        android:gravity="center"
+        android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="?attr/colorPrimary"
-        android:gravity="center" />
+        android:textColor="?attr/colorPrimary" />
 
     <FrameLayout
         android:id="@+id/info_container"
@@ -50,7 +51,8 @@
         android:indeterminate="true"
         android:visibility="gone"
         app:trackCornerRadius="2dp"
-        app:trackThickness="4dp" />
+        app:trackThickness="4dp"
+        tools:visibility="visible" />
 
     <FrameLayout
         android:id="@+id/bottom_container"

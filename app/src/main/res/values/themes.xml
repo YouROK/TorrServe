@@ -89,6 +89,9 @@
         <item name="windowActionBar">false</item>
         <item name="android:listDivider">@drawable/gradient_divider_white</item>
         <item name="android:windowBackground">@drawable/rc_background_dark</item>
+        <!-- attr colors -->
+        <item name="colorBright">@color/tv_white</item>
+        <item name="colorHost">@color/green</item>
         <!-- colors -->
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryVariant">@color/orange_dark</item>
@@ -98,6 +101,7 @@
         <item name="colorOnSecondary">@color/green</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/dark_gray</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
     </style>
     <!-- Play Dialog Light Style -->
     <style name="PlayDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
@@ -105,6 +109,9 @@
         <item name="windowActionBar">false</item>
         <item name="android:listDivider">@drawable/gradient_divider_white</item>
         <item name="android:windowBackground">@drawable/rc_background_light</item>
+        <!-- attr colors -->
+        <item name="colorBright">@color/dark_brown</item>
+        <item name="colorHost">@color/orange_dark</item>
         <!-- colors -->
         <item name="colorPrimary">@color/dark_brown</item>
         <item name="colorPrimaryVariant">@color/orange_dark</item>
@@ -114,6 +121,7 @@
         <item name="colorOnSecondary">@color/green</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/light_gray</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
     </style>
     <!-- Play Dialog Black Style -->
     <style name="PlayDialog.Black" parent="PlayDialog.Dark">
@@ -160,7 +168,6 @@
     </style>
     <!-- TextInputLayout -->
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <!--        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>-->
         <!--        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>-->
         <item name="hintTextColor">?attr/colorBright</item><!-- TODO: colorStateList -->
     </style>

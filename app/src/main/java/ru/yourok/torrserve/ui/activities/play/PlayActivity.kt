@@ -6,12 +6,13 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.progressindicator.LinearProgressIndicator
 //import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,6 +24,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.Play.play
+import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
 import ru.yourok.torrserve.utils.ThemeUtil
@@ -77,7 +79,6 @@ class PlayActivity : AppCompatActivity() {
         }
 
         TorrService.start()
-
     }
 
     override fun onResume() {
@@ -85,8 +86,10 @@ class PlayActivity : AppCompatActivity() {
         readArgs()
         lifecycleScope.launch(Dispatchers.IO) {
             if (!TorrService.wait(5)) {
-                // TODO: redirect to server finder?
                 error(ErrTorrServerNotResponding)
+                delay(App.longToastDuration.toLong())
+                // TODO: implement proper reload on Back/Apply
+                ServerFinderFragment().show(App.currentActivity() as? FragmentActivity?, R.id.bottom_container, true)
             } else {
                 withContext(Dispatchers.Main) {
                     processIntent()
@@ -152,36 +155,31 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
+    // https://material.io/components/progress-indicators/android
     suspend fun showProgress(prc: Int = -1) = withContext(Dispatchers.Main) {
         if (isActive) {
-            val progress = findViewById<LinearProgressIndicator>(R.id.progressBar)
             val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
-            val indeterminate = progress.isIndeterminate
-            val visible = progress.isVisible
-            progress?.apply {
+            findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
                 setIndicatorColor(color)
-                // https://material.io/components/progress-indicators/android
-                if (prc < 0 && !indeterminate) {
-                    visibility = View.INVISIBLE
-                    isIndeterminate = true
-                } else if (!indeterminate) {
-                    isIndeterminate = false
-                }
-                if (!visible)
-                    visibility = View.VISIBLE
-                setProgressCompat(prc, true)
+                visibility = View.VISIBLE
+                isIndeterminate = prc < 0
+                if (!isIndeterminate)
+                    setProgressCompat(prc, true)
             }
         }
+    }
+
+    suspend fun hideProgress() = withContext(Dispatchers.Main) {
+        if (isActive)
+            findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
+                visibility = View.INVISIBLE
+                isIndeterminate = true
+            }
     }
 
     suspend fun hideTitle() = withContext(Dispatchers.Main) {
         if (isActive)
             findViewById<TextView>(R.id.info_title)?.visibility = View.GONE
-    }
-
-    suspend fun hideProgress() = withContext(Dispatchers.Main) {
-        if (isActive)
-            findViewById<LinearProgressIndicator>(R.id.progressBar)?.visibility = View.INVISIBLE
     }
 
 }

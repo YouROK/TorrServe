@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/progress"
+    android:id="@+id/info"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="12dp"
@@ -26,6 +26,7 @@
         tools:text="Torrent Title" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -45,8 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
-            tools:background="@drawable/emptyposter"
-            tools:visibility="visible" />
+            tools:background="@drawable/emptyposter" />
 
 
         <TextView

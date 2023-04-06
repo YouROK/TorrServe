@@ -51,8 +51,9 @@ fun PlayActivity.error(err: ReturnError) {
         ret.putExtra("errMessage", err.errMessage)
         setResult(AppCompatActivity.RESULT_CANCELED, ret)
         App.toast(err.errMessage, true)
-        delay(App.shortToastDuration.toLong()) // as in toast duration
-        finish()
+        delay(App.longToastDuration.toLong()) // as in toast duration
+        if (err != ErrTorrServerNotResponding)
+            finish()
     }
 }
 

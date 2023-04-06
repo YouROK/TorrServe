@@ -187,7 +187,7 @@
     <string name="error_intent_null">Intent is null</string>
     <string name="error_process_cmd">Error when processing cmd, see logcat.</string>
     <string name="error_retrieve_data">Error retrieve data</string>
-    <string name="error_retrieve_torrent_file">Error retrieve torrent file</string>
+    <string name="error_retrieve_torrent_file">Error retrieve torrent content</string>
     <string name="error_retrieve_torrent_info">Error retrieve torrent info</string>
     <string name="error_retrieving_settings">Error getting settings</string>
     <string name="error_sending_settings">Error when send settings</string>

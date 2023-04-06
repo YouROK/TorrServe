@@ -220,7 +220,7 @@ class ServerSettingsFragment : TSFragment() {
         }
     }
 
-    suspend fun saveSettings() = withContext(Dispatchers.Main) {
+    private suspend fun saveSettings() = withContext(Dispatchers.Main) {
         try {
             view?.apply {
                 val rtmode = findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.text
