@@ -8,6 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 
@@ -32,7 +34,7 @@ class InfoViewModel : ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    data?.value = InfoTorrent(null, e.message ?: "error on add torrent")
+                    data?.value = InfoTorrent(null, e.message ?: App.context.getString(R.string.error_add_torrent))
                 }
             }
         }
@@ -65,7 +67,7 @@ class InfoViewModel : ViewModel() {
                         delay(100)
                     } catch (e: Exception) {
                         withContext(Dispatchers.Main) {
-                            data?.value = InfoTorrent(null, e.message ?: "error on get info torrent")
+                            data?.value = InfoTorrent(null, e.message ?: App.context.getString(R.string.error_retrieve_torrent_info))
                         }
                         delay(1000)
                     }
