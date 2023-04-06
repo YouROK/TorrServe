@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -26,6 +27,8 @@ import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.main.MainActivity
 import ru.yourok.torrserve.ui.activities.play.Play.play
+import ru.yourok.torrserve.ui.fragments.donate.DonateFragment
+import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
 import ru.yourok.torrserve.utils.ThemeUtil
@@ -89,11 +92,9 @@ class PlayActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             if (!TorrService.wait(5)) {
                 error(ErrTorrServerNotResponding)
-                // TODO: quick redirect to server finder?
                 delay(App.longToastDuration.toLong())
-                val i = Intent(App.context, MainActivity::class.java)
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(i)
+                // TODO: implement proper reload on Back/Apply
+                ServerFinderFragment().show(App.currentActivity() as? FragmentActivity?, R.id.container, true)
             } else {
                 withContext(Dispatchers.Main) {
                     processIntent()
