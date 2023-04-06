@@ -276,6 +276,6 @@
     <string name="delete_ffprobe">刪除FFProbe</string>
     <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
 
-    <string name="donate_message">TorrServe is free and always will be. Please consider donating to support the future development of TorrServe.</string>
+    <string name="donate_message">TorrServe is free. Please consider donating to support the future development of TorrServe.</string>
 
 </resources>

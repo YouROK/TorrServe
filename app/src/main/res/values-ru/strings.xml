@@ -227,5 +227,5 @@
     <string name="install_ffprobe">Установить FFProbe</string>
     <string name="delete_ffprobe">Удалить FFProbe</string>
     <string name="ffprobe_summary">Загрузите FFProbe для получения данных о видео, таких как длительность, битрейт и т.д.</string>
-    <string name="donate_message">TorrServe бесплатен и всегда будет. Пожалуйста, рассмотрите возможность пожертвования для поддержки будущего развития TorrServe.</string>
+    <string name="donate_message">TorrServe бесплатен. Пожалуйста, рассмотрите возможность пожертвования для поддержки будущего развития TorrServe.</string>
 </resources>

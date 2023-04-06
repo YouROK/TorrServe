@@ -287,6 +287,6 @@
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
 
-    <string name="donate_message">TorrServe is free and always will be. Please consider donating to support the future development of TorrServe.</string>
+    <string name="donate_message">TorrServe is free. Please consider donating to support the future development of TorrServe.</string>
 
 </resources>
