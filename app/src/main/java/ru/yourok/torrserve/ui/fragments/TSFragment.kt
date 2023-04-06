@@ -26,27 +26,25 @@ abstract class TSFragment : Fragment() {
                 addToBackStack(this.toString())
         }
     }
-
+    // https://material.io/components/progress-indicators/android
     suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
-        if (activity != null && isActive) {
-            val progress = activity?.findViewById<LinearProgressIndicator>(R.id.progressBar)
+        if (activity?.currentFocus != null && isActive) {
             val color = ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorAccent)
-            progress?.apply {
+            activity?.findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
                 setIndicatorColor(color)
-                // https://material.io/components/progress-indicators/android
-                if (prog < 0) {
-                    visibility = View.INVISIBLE
-                    isIndeterminate = true
-                } else
-                    isIndeterminate = false
                 visibility = View.VISIBLE
-                setProgressCompat(prog, true)
+                isIndeterminate = prog < 0
+                if (!isIndeterminate)
+                    setProgressCompat(prog, true)
             }
         }
     }
 
     suspend fun hideProgress() = withContext(Dispatchers.Main) {
-        if (activity != null && isActive)
-            activity?.findViewById<LinearProgressIndicator>(R.id.progressBar)?.visibility = View.GONE
+        if (activity?.currentFocus != null && isActive)
+            activity?.findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
+                visibility = View.GONE
+                isIndeterminate = true
+            }
     }
 }

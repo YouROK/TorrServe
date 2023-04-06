@@ -1,13 +1,11 @@
 package ru.yourok.torrserve.ui.activities.play
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -25,9 +23,7 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
-import ru.yourok.torrserve.ui.activities.main.MainActivity
 import ru.yourok.torrserve.ui.activities.play.Play.play
-import ru.yourok.torrserve.ui.fragments.donate.DonateFragment
 import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
@@ -160,36 +156,31 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
+    // https://material.io/components/progress-indicators/android
     suspend fun showProgress(prc: Int = -1) = withContext(Dispatchers.Main) {
         if (isActive) {
-            val progress = findViewById<LinearProgressIndicator>(R.id.progressBar)
             val color = ThemeUtil.getColorFromAttr(this@PlayActivity, R.attr.colorAccent)
-            val indeterminate = progress.isIndeterminate
-            val visible = progress.isVisible
-            progress?.apply {
+            findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
                 setIndicatorColor(color)
-                // https://material.io/components/progress-indicators/android
-                if (prc < 0 && !indeterminate) {
-                    visibility = View.INVISIBLE
-                    isIndeterminate = true
-                } else if (!indeterminate) {
-                    isIndeterminate = false
-                }
-                if (!visible)
-                    visibility = View.VISIBLE
-                setProgressCompat(prc, true)
+                visibility = View.VISIBLE
+                isIndeterminate = prc < 0
+                if (!isIndeterminate)
+                    setProgressCompat(prc, true)
             }
         }
+    }
+
+    suspend fun hideProgress() = withContext(Dispatchers.Main) {
+        if (isActive)
+            findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
+                visibility = View.INVISIBLE
+                isIndeterminate = true
+            }
     }
 
     suspend fun hideTitle() = withContext(Dispatchers.Main) {
         if (isActive)
             findViewById<TextView>(R.id.info_title)?.visibility = View.GONE
-    }
-
-    suspend fun hideProgress() = withContext(Dispatchers.Main) {
-        if (isActive)
-            findViewById<LinearProgressIndicator>(R.id.progressBar)?.visibility = View.INVISIBLE
     }
 
 }

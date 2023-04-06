@@ -51,7 +51,8 @@
         android:indeterminate="true"
         android:visibility="gone"
         app:trackCornerRadius="2dp"
-        app:trackThickness="4dp" />
+        app:trackThickness="4dp"
+        tools:visibility="visible" />
 
     <FrameLayout
         android:id="@+id/bottom_container"
