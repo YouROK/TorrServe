@@ -26,11 +26,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/app_name"
         android:alpha="1.0"
+        android:gravity="center"
+        android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="?attr/colorPrimary"
-        android:gravity="center" />
+        android:textColor="?attr/colorPrimary" />
 
     <FrameLayout
         android:id="@+id/info_container"

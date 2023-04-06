@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.activities.play
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +13,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,6 +24,7 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.ui.activities.main.MainActivity
 import ru.yourok.torrserve.ui.activities.play.Play.play
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
@@ -85,8 +88,12 @@ class PlayActivity : AppCompatActivity() {
         readArgs()
         lifecycleScope.launch(Dispatchers.IO) {
             if (!TorrService.wait(5)) {
-                // TODO: redirect to server finder?
                 error(ErrTorrServerNotResponding)
+                // TODO: quick redirect to server finder?
+                delay(App.longToastDuration.toLong())
+                val i = Intent(App.context, MainActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(i)
             } else {
                 withContext(Dispatchers.Main) {
                     processIntent()
