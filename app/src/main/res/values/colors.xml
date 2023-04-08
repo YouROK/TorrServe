@@ -9,6 +9,7 @@
     <color name="white_10">#1affffff</color>
     <color name="semi_red">#ff7373</color>
     <color name="light_gray">#ccc</color>
+    <color name="gray">#555</color>
     <color name="dark_gray">#2b2b2b</color>
     <color name="dark_brown">#2a2122</color>
     <color name="scrim_20">#33777777</color>

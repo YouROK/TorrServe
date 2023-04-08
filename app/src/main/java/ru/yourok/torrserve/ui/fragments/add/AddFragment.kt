@@ -1,7 +1,7 @@
 package ru.yourok.torrserve.ui.fragments.add
 
 import android.annotation.SuppressLint
-import android.app.Instrumentation
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,6 +16,8 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +32,6 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -39,6 +40,8 @@ import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
 import ru.yourok.torrserve.utils.Format
+import ru.yourok.torrserve.utils.ThemeUtil
+import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
 import ru.yourok.torrserve.utils.TorrentHelper
 
 class AddFragment : TSFragment() {
@@ -201,8 +204,6 @@ class AddFragment : TSFragment() {
         return false
     }
 
-    private var sortMode: Int = 0
-    @SuppressLint("NotifyDataSetChanged")
     fun onKeyDown(keyCode: Int): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_INFO -> {
@@ -230,47 +231,7 @@ class AddFragment : TSFragment() {
 
             KeyEvent.KEYCODE_MENU,
             KeyEvent.KEYCODE_BUTTON_X -> {
-                val list = torrsAdapter.list.toMutableList()
-                when (sortMode) {
-                    0 -> {
-                        torrsAdapter.set(list.sortedBy { it.Title })
-                        App.toast(R.string.sort_by_name)
-                    }
-
-                    1 -> {
-                        val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { td ->
-                            if (td.Size.contains("GB", true))
-                                td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 * 1024 }
-                            else if (td.Size.contains("MB", true))
-                                td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 }
-                            else
-                                td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()
-                        })
-                        torrsAdapter.set(sort) // list.sortedByDescending { it.Size }
-                        App.toast(R.string.sort_by_size)
-                    }
-
-                    2 -> {
-                        val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { it.Seed }) // .toIntOrNull()
-                        torrsAdapter.set(sort)
-                        App.toast(R.string.sort_by_seed)
-                    }
-
-                    3 -> {
-                        torrsAdapter.set(list.sortedByDescending { it.CreateDate })
-                        App.toast(R.string.sort_by_date)
-                    }
-                }
-                torrsAdapter.notifyDataSetChanged()
-                if (torrsAdapter.list.size > 0)
-                    activity?.findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
-                        scrollToPosition(0)
-                        // FIXME: Why RecycleView loose focus to Logo?
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            getChildAt(0).requestFocus()
-                        }, 500)
-                    }
-                if (sortMode == 3) sortMode = 0 else sortMode++
+                sortResults()
                 return true
             }
         }
@@ -278,34 +239,94 @@ class AddFragment : TSFragment() {
         return false
     }
 
+    private var sortMode: Int = 0
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun sortResults() {
+        val list = torrsAdapter.list.toMutableList()
+        when (sortMode) {
+            0 -> {
+                torrsAdapter.set(list.sortedBy { it.Title })
+                App.toast(R.string.sort_by_name)
+            }
+
+            1 -> {
+                val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { td ->
+                    if (td.Size.contains("GB", true))
+                        td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 * 1024 }
+                    else if (td.Size.contains("MB", true))
+                        td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 }
+                    else
+                        td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()
+                })
+                torrsAdapter.set(sort) // list.sortedByDescending { it.Size }
+                App.toast(R.string.sort_by_size)
+            }
+
+            2 -> {
+                val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { it.Seed }) // .toIntOrNull()
+                torrsAdapter.set(sort)
+                App.toast(R.string.sort_by_seed)
+            }
+
+            3 -> {
+                torrsAdapter.set(list.sortedByDescending { it.CreateDate })
+                App.toast(R.string.sort_by_date)
+            }
+        }
+        torrsAdapter.notifyDataSetChanged()
+        if (torrsAdapter.list.size > 0)
+            activity?.findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
+                scrollToPosition(0)
+                // FIXME: Why RecycleView loose focus to Logo?
+                Handler(Looper.getMainLooper()).postDelayed({
+                    getChildAt(0).requestFocus()
+                }, 500)
+            }
+        if (sortMode == 3) sortMode = 0 else sortMode++
+    }
+
     private fun setupSortFab() { // Sort Fab
-        if (Utils.isTV()) return
+        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
+        val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
+        val selectedColor = getColorFromAttr(themedContext, R.attr.colorPrimary)
+        val defaultColor = ContextCompat.getColor(themedContext, R.color.gray)
+
         fab?.apply {
             setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_24))
             customSize = Format.dp2px(32f)
             setMaxImageSize(Format.dp2px(24f))
+            backgroundTintList = ColorStateList(
+                arrayOf(
+                    intArrayOf(android.R.attr.state_focused),  // Focused
+                    intArrayOf(android.R.attr.state_enabled),  // Enabled
+                    intArrayOf() // normal
+                ),
+                intArrayOf(
+                    selectedColor,     // The color for the Focused state
+                    defaultColor,
+                    defaultColor
+                )
+            )
+            isFocusable = true
+            isClickable = true
             setOnClickListener {
                 // TODO: add sort options menu
-                Thread {
-                    try {
-                        Instrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BUTTON_X)
-                    } catch (_: InterruptedException) {
-                    }
-                }.start()
+                sortResults()
             }
             visibility = View.GONE
         }
     }
 
     private fun showSortFab() {
-        if (Utils.isTV()) return
+        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.show()
     }
 
     private fun hideSortFab() {
-        if (Utils.isTV()) return
+        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.hide()
     }
