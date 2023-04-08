@@ -35,8 +35,8 @@ class ServerUpdateFragment : TSFragment() {
             btn.setOnClickListener {
                 btn.isEnabled = false
                 lifecycleScope.launch(Dispatchers.IO) {
+                    showProgress()
                     try {
-                        showProgress()
                         Settings.setHost("") // revert to local server
                         UpdaterServer.updateFromNet {
                             lifecycleScope.launch(Dispatchers.Main) {
@@ -53,6 +53,7 @@ class ServerUpdateFragment : TSFragment() {
                         withContext(Dispatchers.Main) {
                             App.toast(App.context.getString(R.string.warn_error_download_server) + ": " + e.message)
                         }
+                        hideProgress()
                     }
                 }
             }
@@ -77,16 +78,16 @@ class ServerUpdateFragment : TSFragment() {
         vi.findViewById<Button>(R.id.btnDownloadFFProbe)?.also { btn ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 btn.visibility = View.VISIBLE
-                val fi = vi.findViewById<TextView>(R.id.tvInfo)
+                val tvInfo = vi.findViewById<TextView>(R.id.tvInfo)
                 val file = File(App.context.filesDir, "ffprobe")
-                fi.alpha = 0.7f
+                tvInfo.alpha = 0.7f
 
                 if (file.exists()) {
                     btn.setText(R.string.delete_ffprobe)
-                    fi.visibility = View.INVISIBLE
+                    tvInfo.visibility = View.INVISIBLE
                 } else {
                     btn.setText(R.string.install_ffprobe)
-                    fi.visibility = View.VISIBLE
+                    tvInfo.visibility = View.VISIBLE
                 }
 
                 btn.setOnClickListener {
@@ -94,18 +95,22 @@ class ServerUpdateFragment : TSFragment() {
                     if (file.exists()) {
                         lifecycleScope.launch(Dispatchers.IO) {
                             showProgress()
-                            file.delete()
-                            hideProgress()
-                            withContext(Dispatchers.Main) {
-                                btn.setText(R.string.install_ffprobe)
-                                btn.isEnabled = true
+                            try {
+                                file.delete()
+                                hideProgress()
+                                withContext(Dispatchers.Main) {
+                                    btn.setText(R.string.install_ffprobe)
+                                    btn.isEnabled = true
+                                }
+                            } catch (_: Exception) {
+                                hideProgress()
                             }
                         }
-                        fi.visibility = View.VISIBLE
+                        tvInfo.visibility = View.VISIBLE
                     } else {
                         lifecycleScope.launch(Dispatchers.IO) {
+                            showProgress()
                             try {
-                                showProgress()
                                 UpdaterServer.downloadFFProbe {
                                     lifecycleScope.launch(Dispatchers.Main) {
                                         showProgress(it)
@@ -121,9 +126,10 @@ class ServerUpdateFragment : TSFragment() {
                                 withContext(Dispatchers.Main) {
                                     App.toast(App.context.getString(R.string.error_download_ffprobe) + ": " + e.message)
                                 }
+                                hideProgress()
                             }
                         }
-                        fi.visibility = View.INVISIBLE
+                        tvInfo.visibility = View.INVISIBLE
                     }
                 }
             } else {
