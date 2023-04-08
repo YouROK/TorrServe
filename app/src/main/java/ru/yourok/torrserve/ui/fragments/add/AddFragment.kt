@@ -297,14 +297,15 @@ class AddFragment : TSFragment() {
             setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_24))
             customSize = Format.dp2px(32f)
             setMaxImageSize(Format.dp2px(24f))
+            rippleColor = selectedColor
             backgroundTintList = ColorStateList(
                 arrayOf(
-                    intArrayOf(android.R.attr.state_focused),  // Focused
-                    intArrayOf(android.R.attr.state_enabled),  // Enabled
+                    intArrayOf(android.R.attr.state_focused), // Focused
+                    intArrayOf(android.R.attr.state_enabled), // Enabled
                     intArrayOf() // normal
                 ),
                 intArrayOf(
-                    selectedColor,     // The color for the Focused state
+                    selectedColor, // The color for the Focused state
                     defaultColor,
                     defaultColor
                 )
