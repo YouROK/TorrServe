@@ -28,7 +28,7 @@ abstract class TSFragment : Fragment() {
     }
     // https://material.io/components/progress-indicators/android
     suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
-        if (activity?.currentFocus != null && isActive) {
+        if (isActive) {
             val color = ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorAccent)
             activity?.findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
                 setIndicatorColor(color)
@@ -41,7 +41,7 @@ abstract class TSFragment : Fragment() {
     }
 
     suspend fun hideProgress() = withContext(Dispatchers.Main) {
-        if (activity?.currentFocus != null && isActive)
+        if (isActive)
             activity?.findViewById<LinearProgressIndicator>(R.id.progressBar)?.apply {
                 visibility = View.GONE
                 isIndeterminate = true
