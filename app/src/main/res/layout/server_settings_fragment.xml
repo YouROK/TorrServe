@@ -51,6 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberSigned" />
+
                 <requestFocus />
             </com.google.android.material.textfield.TextInputLayout>
             <!-- READAHEAD -->
@@ -202,6 +203,7 @@
                 android:id="@+id/cbForceEncrypt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etDisconnectTimeout"
                 android:text="@string/force_encrypt" />
 
             <TextView
@@ -210,15 +212,6 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbForceEncrypt"
                 android:text="@string/force_encrypt_desc" />
-            <!-- DEBUG -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/cbEnableDebug"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:nextFocusDown="@id/etDisconnectTimeout"
-                android:text="@string/enable_debug"
-                android:visibility="gone" />
             <!-- Disconnect Timeout -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -382,10 +375,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:labelFor="@+id/cbPreloadBuffer"
+                android:labelFor="@+id/cbEnableRutorSearch"
                 android:text="@string/enable_rutor_search_desc"
                 android:visibility="gone"
                 tools:visibility="visible" />
+            <!-- DEBUG -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/cbEnableDebug"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/enable_debug"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
