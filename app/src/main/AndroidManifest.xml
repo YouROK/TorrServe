@@ -255,7 +255,7 @@
         <service android:name=".server.local.TorrService" />
         <service android:name=".server.local.services.Notification" />
         <service
-            android:name=".server.local.services.GlobalTorrServeService"
+            android:name=".server.local.services.GlobalTorrService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="true">
             <intent-filter>
