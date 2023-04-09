@@ -250,7 +250,7 @@ class AddFragment : TSFragment() {
                 App.toast(R.string.sort_by_name)
             }
 
-            1 -> {
+            1 -> { // 10.22 GB
                 val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { td ->
                     if (td.Size.contains("GB", true))
                         td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 * 1024 }
@@ -264,13 +264,18 @@ class AddFragment : TSFragment() {
             }
 
             2 -> {
-                val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { it.Seed }) // .toIntOrNull()
+                val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { it.Seed })
                 torrsAdapter.set(sort)
                 App.toast(R.string.sort_by_seed)
             }
 
-            3 -> {
+            3 -> { // 2021-06-21T00:00:00+03:00
                 torrsAdapter.set(list.sortedByDescending { it.CreateDate })
+//                val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { td ->
+//                    if (td.CreateDate.length == 25) td.CreateDate.substring(0, 10)
+//                    else td.CreateDate
+//                })
+//                torrsAdapter.set(sort)
                 App.toast(R.string.sort_by_date)
             }
         }
