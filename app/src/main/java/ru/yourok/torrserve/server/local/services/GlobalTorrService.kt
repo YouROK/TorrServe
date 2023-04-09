@@ -10,7 +10,7 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 
 
-class GlobalTorrServeService : AccessibilityService() {
+class GlobalTorrService : AccessibilityService() {
     private val notification = NotificationHelper()
     private val serverFile = ServerFile()
     private val TAG = javaClass.simpleName.take(21)
