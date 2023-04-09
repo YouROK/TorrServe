@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -44,10 +45,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val currentPreference = getItem(position)
             if (currentPreference is Preference) {
                 holder.itemView.background = ContextCompat.getDrawable(App.context, R.drawable.action_selector)
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    holder.itemView.backgroundTintList = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(holder.itemView.context, R.attr.colorAccent))
-//                    holder.itemView.backgroundTintMode = PorterDuff.Mode.MULTIPLY
-//                }
+                holder.itemView.findViewById<TextView>(android.R.id.title)?.apply {
+                    isSingleLine = false
+                    maxLines = 2
+                }
             }
         }
     }
