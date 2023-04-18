@@ -40,7 +40,7 @@ object Settings {
 
     fun showCover(): Boolean = get("show_cover", true)
     fun sortTorrByTitle(): Boolean = get("sort_torrents", false)
-    fun showFab(): Boolean = get("show_fab", false)
+    fun showFab(): Boolean = get("show_fab", true)
 
     fun getTheme(): String = get("theme", "dark")
     fun setTheme(v: String) = set("theme", v)

@@ -194,7 +194,7 @@
     <string name="show_battery_save_tv">Вимкніть оптимізацію в «Додатки» / «Спеціальний доступ» / «Оптимізація енергоспоживання»</string>
     <string name="show_battery_save_title">Показати налаштування енергозбереження</string>
     <string name="show_battery_save_summary">Відкрити налаштування енергозбереження</string>
-    <string name="show_fab_title">Плаваюча кнопка меню</string>
+    <string name="show_fab_title">Кнопка виклику меню на екрані</string>
     <string name="show_fab_sum_on">Відображати кнопку виклику меню</string>
     <string name="show_fab_sum_off">Не відображати кнопку виклику меню</string>
     <string name="accessibility_manual_on">Увімкнути службу «%1$s» в розділі «Параметри пристрою» / «Спеціальні можливості»</string>

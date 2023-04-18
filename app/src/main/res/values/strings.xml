@@ -252,7 +252,7 @@
     <string name="show_battery_save_title">Show battery save settings</string>
     <string name="show_battery_save_summary">Open settings with battery save configs</string>
 
-    <string name="show_fab_title">Floating menu button</string>
+    <string name="show_fab_title">Floating menu button in portrait</string>
     <string name="show_fab_sum_on">Show floating action button</string>
     <string name="show_fab_sum_off">Don\'t show floating action button</string>
 
