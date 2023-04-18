@@ -141,7 +141,7 @@ class TorrentsFragment : TSFragment() {
                         requestFocus()
                     }
                 }
-                if (Utils.isTV()) return true
+                if (Utils.isTvBox()) return true
             }
 
         }

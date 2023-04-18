@@ -1,6 +1,10 @@
 package ru.yourok.torrserve.atv
 
+import android.app.UiModeManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -13,11 +17,48 @@ import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.utils.TorrentHelper
 import kotlin.concurrent.thread
 
+
 object Utils {
 
-    fun isTV(): Boolean {
-        return App.context.packageManager.hasSystemFeature("android.hardware.type.television") || App.context.packageManager.hasSystemFeature("android.software.leanback")
+    private const val FEATURE_FIRE_TV = "amazon.hardware.fire_tv"
+    fun isTvBox(): Boolean {
+        val pm = App.context.packageManager
+        // TV for sure
+        val uiModeManager = App.context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+        if (uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
+            return true
+        }
+        if (pm.hasSystemFeature(FEATURE_FIRE_TV)) {
+            return true
+        }
+        // Missing Files app (DocumentsUI) means box (some boxes still have non functional app or stub)
+        if (!hasSAFChooser(pm)) {
+            return true
+        }
+        // Legacy storage no longer works on Android 11 (level 30)
+        if (Build.VERSION.SDK_INT < 30) {
+            // (Some boxes still report touchscreen feature)
+            if (!pm.hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN)) {
+                return true
+            }
+            if (pm.hasSystemFeature("android.hardware.hdmi.cec")) {
+                return true
+            }
+            if (Build.MANUFACTURER.equals("zidoo", ignoreCase = true)) {
+                return true
+            }
+        }
+        // Default: No TV - use SAF
+        return false
     }
+
+    fun hasSAFChooser(pm: PackageManager?): Boolean {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "video/*"
+        return intent.resolveActivity(pm!!) != null
+    }
+
     fun isGoogleTV(): Boolean {
         return App.context.packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
     }

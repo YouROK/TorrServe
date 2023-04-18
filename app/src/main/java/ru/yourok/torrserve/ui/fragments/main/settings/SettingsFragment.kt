@@ -205,7 +205,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         // hide FAB pref on TVs (no FAB in landscape)
         val fabPref = findPreference<Preference>("show_fab")
-        if (Utils.isTV())
+        if (Utils.isTvBox())
             fabPref?.let { ps?.removePreference(it) }
 
     }
