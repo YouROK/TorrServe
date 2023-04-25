@@ -77,10 +77,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preferences, rootKey)
         val ps = findPreference<PreferenceScreen>("prefs")
 
-//        val bannerPref = findPreference<Preference>("show_banner")
+        val bannerPref = findPreference<Preference>("show_banner")
 //        lifecycleScope.launch(Dispatchers.IO) {
 //            if (ADManager.expired())
-//                bannerPref?.let { ps?.removePreference(it) }
+                bannerPref?.let { ps?.removePreference(it) }
 //        }
 
         findPreference<Preference>("host")?.apply {
