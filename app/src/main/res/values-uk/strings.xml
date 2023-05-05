@@ -150,7 +150,7 @@
     <string name="error_intent_null">Порожній інтент</string>
     <string name="error_process_cmd">Помилка при обробці cmd, див. logcat</string>
     <string name="error_retrieve_data">Помилка отримання данних</string>
-    <string name="error_retrieve_torrent_file">Помилка отримання торрент-контенту</string>
+    <string name="error_retrieve_torrent_file">Не знайдено мультимедіа файлів у торренті</string>
     <string name="error_retrieve_torrent_info">Помилка отримання інформації торренту</string>
     <string name="error_retrieving_settings">Помилка при отриманні налаштувань</string>
     <string name="error_sending_settings">Помилка при відправці налаштуваннь</string>

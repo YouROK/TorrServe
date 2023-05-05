@@ -144,7 +144,7 @@
     <string name="error_intent_null">Пустой интент</string>
     <string name="error_process_cmd">Ошибка при обработке cmd, см. logcat.</string>
     <string name="error_retrieve_data">Ошибка при получении данных</string>
-    <string name="error_retrieve_torrent_file">Не удалось получить содержимое торрента</string>
+    <string name="error_retrieve_torrent_file">Не найдено мультимедиа файлов в торренте</string>
     <string name="error_retrieve_torrent_info">Не удалось загрузить данные торрента</string>
     <string name="error_retrieving_settings">Не удалось получить настройки</string>
     <string name="error_sending_settings">Не удалось сохранить настройки</string>
