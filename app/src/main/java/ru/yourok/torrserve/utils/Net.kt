@@ -63,6 +63,7 @@ object Net {
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
             .method(Connection.Method.POST)
+            .maxBodySize(0) // The default maximum is 2MB, 0 = unlimited body
 
         val auth = getAuthB64()
         if (auth.isNotEmpty())
@@ -110,6 +111,7 @@ object Net {
             }
         }
     }
+
     /* used for apk / server update check */
     fun get(url: String, duration: Int = timeout): String {
         val link = Uri.parse(url)
@@ -174,6 +176,7 @@ object Net {
             }
         }
     }
+
     fun isValidPublicIp4(ip: String?): Boolean {
         val address: Inet4Address? = try {
             InetAddress.getByName(ip) as? Inet4Address
