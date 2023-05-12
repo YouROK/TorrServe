@@ -16,8 +16,8 @@ android {
         targetSdkVersion 28
         // for older androids
         multiDexEnabled true
-        versionCode 137
-        versionName "MatriX.122.6.F-Droid"
+        versionCode 138
+        versionName "MatriX.123.F-Droid"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
@@ -52,7 +52,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -62,7 +62,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-process:2.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4')
     // http client/parser
@@ -74,7 +74,7 @@ dependencies {
     // root shell (3.2.1)
     //noinspection GradleDependency 3.2.1 last api17 compatible
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     // glide
     def glideVersion = '4.15.0'
     implementation "com.github.bumptech.glide:glide:${glideVersion}"
