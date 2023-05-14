@@ -66,9 +66,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        Permission.requestPermissionWithRationale(this)
+
         themeUtil.onCreate(this)
         setContentView(R.layout.main_activity)
+
+        Permission.requestPermissionWithRationale(this)
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
@@ -248,7 +250,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigator() {
         // Logo
-        findViewById<FrameLayout>(R.id.header).setOnClickListener {
+        findViewById<FrameLayout>(R.id.header)?.setOnClickListener {
             val currFragment = supportFragmentManager.findFragmentById(R.id.container)
             if (currFragment is TorrentsFragment)
                 ServerFinderFragment().show(this, R.id.container, true)
@@ -258,18 +260,18 @@ class MainActivity : AppCompatActivity() {
             }
             closeMenu()
         }
-        findViewById<FrameLayout>(R.id.header).setOnLongClickListener {
+        findViewById<FrameLayout>(R.id.header)?.setOnLongClickListener {
             ServerSettingsFragment().show(this, R.id.container, true)
             closeMenu()
             true
         }
 
-        findViewById<FrameLayout>(R.id.btnAdd).setOnClickListener {
+        findViewById<FrameLayout>(R.id.btnAdd)?.setOnClickListener {
             AddFragment().show(this@MainActivity, R.id.container, true)
             closeMenu()
         }
 
-        findViewById<FrameLayout>(R.id.btnRemoveAll).setOnClickListener { _ ->
+        findViewById<FrameLayout>(R.id.btnRemoveAll)?.setOnClickListener { _ ->
             val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.remove_all_warn)
                 .setPositiveButton(R.string.yes) { dialog, _ ->
@@ -296,7 +298,7 @@ class MainActivity : AppCompatActivity() {
             closeMenu()
         }
 
-        findViewById<FrameLayout>(R.id.btnPlaylist).setOnClickListener {
+        findViewById<FrameLayout>(R.id.btnPlaylist)?.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 try {
                     if (Api.listTorrent().isNotEmpty()) {
@@ -314,12 +316,12 @@ class MainActivity : AppCompatActivity() {
             closeMenu()
         }
 
-        findViewById<FrameLayout>(R.id.btnDonate).setOnClickListener {
+        findViewById<FrameLayout>(R.id.btnDonate)?.setOnClickListener {
             DonateFragment().show(this, R.id.container, true)
             closeMenu()
         }
 
-        findViewById<FrameLayout>(R.id.btnUpdate).setOnClickListener {
+        findViewById<FrameLayout>(R.id.btnUpdate)?.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 if (UpdaterApk.check())
                     withContext(Dispatchers.Main) {
@@ -333,12 +335,12 @@ class MainActivity : AppCompatActivity() {
             closeMenu()
         }
 
-        findViewById<FrameLayout>(R.id.btnSettings).setOnClickListener {
+        findViewById<FrameLayout>(R.id.btnSettings)?.setOnClickListener {
             SettingsFragment().show(this@MainActivity, R.id.container)
             closeMenu()
         }
 
-        findViewById<FrameLayout>(R.id.btnExit).setOnClickListener {
+        findViewById<FrameLayout>(R.id.btnExit)?.setOnClickListener {
             val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.exit_title)
                 .setMessage(getString(R.string.exit_text))
