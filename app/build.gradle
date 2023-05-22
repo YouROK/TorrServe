@@ -5,8 +5,6 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.firebase.crashlytics")
     id("com.google.gms.google-services")
-    id("kotlin-android")
-    id("kotlin-kapt")
     id("org.jetbrains.kotlin.android")
 }
 
@@ -32,20 +30,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-    packagingOptions {
-        resources.excludes += "DebugProbesKt.bin"
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     // kotlin-kapt workaround for kotlin_version 1.8.0
     tasks.withType(KotlinCompile).configureEach {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = "17"
         }
+    }
+    packagingOptions {
+        resources.excludes += "DebugProbesKt.bin"
     }
     namespace 'ru.yourok.torrserve'
 }
@@ -55,7 +50,6 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
-    //noinspection GradleDependency Firebase crash with 1.10.1 on api < 21
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
