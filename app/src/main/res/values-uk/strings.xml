@@ -124,6 +124,7 @@
     <string name="current_version">Поточна версія</string>
     <string name="new_version">Нова версія</string>
     <string name="server_update">Оновлення сервера</string>
+    <string name="install_server">Встановити TorrServer</string>
     <string name="install_server_latest">Встановити / оновити сервер</string>
     <string name="install_server_local">Встановити сервер з папки Download</string>
     <string name="delete_local_server">Видалити локальний сервер</string>

@@ -137,5 +137,7 @@ class TorrService : Service() {
             val host = Settings.getHost()
             return host.contains("://127.0.0.1") || host.contains("://localhost")
         }
+
+        fun isInstalled(): Boolean = ServerFile().exists()
     }
 }

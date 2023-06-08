@@ -144,6 +144,7 @@
     <string name="new_version">新版本</string>
 
     <string name="server_update">服务端更新</string>
+    <string name="install_server">安装 TorrServer</string>
     <string name="install_server_latest">安装/更新服务端</string>
     <string name="install_server_local">从下载文件夹安装服务端</string>
     <string name="delete_local_server">删除本地服务端</string>
