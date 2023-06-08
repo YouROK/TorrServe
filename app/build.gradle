@@ -1,10 +1,11 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-//    id 'com.google.firebase.crashlytics'
-//    id 'com.google.gms.google-services'
-    id 'org.jetbrains.kotlin.android'
+    id("com.android.application")
+    id("com.google.devtools.ksp")
+//    id("com.google.firebase.crashlytics")
+//    id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -29,20 +30,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    // kotlin-kapt workaround for kotlin_version 1.8.0
+    tasks.withType(KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
     }
     packagingOptions {
         resources.excludes += "DebugProbesKt.bin"
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-    // kotlin-kapt workaround for kotlin_version 1.8.0
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-        kotlinOptions {
-            jvmTarget = "11"
-        }
     }
     namespace 'ru.yourok.torrserve'
 }
@@ -52,8 +50,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
-    //noinspection GradleDependency Firebase crash with 1.10.1 on api < 21
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -65,10 +62,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-process:2.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
-    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4')
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1')
     // http client/parser
-    //noinspection GradleDependency 1.15.4 buggy on UTF-8 requests
-    implementation 'org.jsoup:jsoup:1.15.3'
+    implementation 'org.jsoup:jsoup:1.16.1'
     // json serializer
     //noinspection GradleDependency 2.10.x thorow java.lang.VerifyError on api17
     implementation 'com.google.code.gson:gson:2.9.1' // 2.10.1
@@ -76,16 +72,16 @@ dependencies {
     //noinspection GradleDependency 3.2.1 last api17 compatible
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
     // glide
-    def glideVersion = '4.15.0'
+    def glideVersion = '4.15.1'
     implementation "com.github.bumptech.glide:glide:${glideVersion}"
-    kapt "com.github.bumptech.glide:compiler:${glideVersion}"
+    ksp "com.github.bumptech.glide:ksp:${glideVersion}"
     // firebase
     //noinspection GradleDependency firebase-core:19.0.2 is last api17 compatible
     //implementation 'com.google.firebase:firebase-core:19.0.2'
     //noinspection GradleDependency firebase-analytics:19.0.2 is last api17 compatible
-    //implementation 'com.google.firebase:firebase-analytics-ktx:19.0.2'
+    //implementation 'com.google.firebase:firebase-analytics:19.0.2'
     //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api17 compatible
-    //implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.5'
+    //implementation 'com.google.firebase:firebase-crashlytics:18.2.5'
 }
 
 repositories {

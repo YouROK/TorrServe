@@ -25,6 +25,7 @@ import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.Play.play
 import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
+import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
 import ru.yourok.torrserve.ui.fragments.play.ChooserFragment
 import ru.yourok.torrserve.ui.fragments.play.InfoFragment
 import ru.yourok.torrserve.utils.ThemeUtil
@@ -88,8 +89,27 @@ class PlayActivity : AppCompatActivity() {
             if (!TorrService.wait(5)) {
                 error(ErrTorrServerNotResponding)
                 delay(App.longToastDuration.toLong())
-                // TODO: implement proper reload on Back/Apply
-                ServerFinderFragment().show(App.currentActivity() as? FragmentActivity?, R.id.bottom_container, true)
+                if (TorrService.isLocal() && !TorrService.isInstalled()) {
+                    findViewById<TextView>(R.id.info_title)?.setText(R.string.install_server)
+                    UpdaterServer.updateFromNet {
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            showProgress(it)
+                        }
+                    }
+                    withContext(Dispatchers.Main) {
+                        processIntent()
+                    }
+                } else {
+                    //server is not local, change
+                    ServerFinderFragment().apply {
+                        show(App.currentActivity() as? FragmentActivity?, R.id.bottom_container, true)
+                        onResult = {
+                            withContext(Dispatchers.Main) {
+                                processIntent()
+                            }
+                        }
+                    }
+                }
             } else {
                 withContext(Dispatchers.Main) {
                     processIntent()

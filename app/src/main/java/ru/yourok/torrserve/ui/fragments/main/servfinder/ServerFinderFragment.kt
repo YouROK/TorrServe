@@ -86,6 +86,9 @@ class ServerFinderFragment : TSFragment() {
             hideProgress()
         }
         super.onDestroyView()
+        lifecycleScope.launch {
+            onResult?.invoke(null)
+        }
     }
 
     private fun setHost() {
