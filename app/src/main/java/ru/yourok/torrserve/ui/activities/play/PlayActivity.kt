@@ -89,7 +89,14 @@ class PlayActivity : AppCompatActivity() {
                 error(ErrTorrServerNotResponding)
                 delay(App.longToastDuration.toLong())
                 // TODO: implement proper reload on Back/Apply
-                ServerFinderFragment().show(App.currentActivity() as? FragmentActivity?, R.id.bottom_container, true)
+                ServerFinderFragment().apply {
+                    show(App.currentActivity() as? FragmentActivity?, R.id.bottom_container, true)
+                    onResult = {
+                        withContext(Dispatchers.Main) {
+                            processIntent()
+                        }
+                    }
+                }
             } else {
                 withContext(Dispatchers.Main) {
                     processIntent()
