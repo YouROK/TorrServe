@@ -12,7 +12,7 @@ android {
     compileSdkVersion 33
     defaultConfig {
         applicationId "ru.yourok.torrserve"
-        minSdkVersion 17
+        minSdkVersion 21
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         // for older androids

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.animations.FIO
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.utils.onDoneClickListener
 import java.io.File
 
 object DirectoryDialog {
@@ -43,6 +44,10 @@ object DirectoryDialog {
 
         vi.findViewById<ImageButton>(R.id.btnUpDir).setOnClickListener {
             directoryAdapter.dirUp()
+        }
+
+        vi.findViewById<EditText>(R.id.tvCurrDir).onDoneClickListener {
+            directoryAdapter.dirUpdate(it)
         }
 
         vi.findViewById<ImageButton>(R.id.btnCreateDir).setOnClickListener {

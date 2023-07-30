@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
@@ -19,6 +20,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.contracts_of_activity_result.ContractToSelectFolder
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.TorrService
@@ -32,6 +34,20 @@ class ServerSettingsFragment : TSFragment() {
 
     private var btsets: BTSets? = null
     private var loaded = false
+    private var view : View? = null
+
+    private val getPathToSaveTorrent: ActivityResultLauncher<String?> =
+        registerForActivityResult(ContractToSelectFolder()) { result ->
+            view?.findViewById<Button>(R.id.btnContentPath)?.let {
+                if (result.isNotEmpty()) {
+                    it.text = result
+                    btsets?.TorrentsSavePath = result
+                    lifecycleScope.launch {
+                        updateUI()
+                    }
+                }
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +58,7 @@ class ServerSettingsFragment : TSFragment() {
         }
 
         val vi = inflater.inflate(R.layout.server_settings_fragment, container, false)
+        view = vi
 
         vi.findViewById<TextView>(R.id.tvServerAddr).let {
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -53,6 +70,8 @@ class ServerSettingsFragment : TSFragment() {
         }
         vi.findViewById<Button>(R.id.btnContentPath)?.let {
             it.setOnClickListener { _ ->
+//                getPathToSaveTorrent.launch(null)
+
                 DirectoryDialog.show(context ?: return@setOnClickListener, "") { path ->
                     it.text = path
                     btsets?.TorrentsSavePath = path
@@ -60,6 +79,7 @@ class ServerSettingsFragment : TSFragment() {
                         updateUI()
                     }
                 }
+
             }
             it.isEnabled = TorrService.isLocal()
         }

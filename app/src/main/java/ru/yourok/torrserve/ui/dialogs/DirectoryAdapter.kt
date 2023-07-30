@@ -58,6 +58,11 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
         update()
     }
 
+    fun dirUpdate(inputPath: String) { 
+        path = inputPath
+        update()
+    }
+
     class ViewHolder(val view: View, private val adapter: DirectoryAdapter) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
