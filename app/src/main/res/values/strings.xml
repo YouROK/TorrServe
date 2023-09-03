@@ -170,6 +170,7 @@
     <string name="need_install_server">Server needs to be installed</string>
     <string name="need_update_server">Server needs to be updated</string>
     <string name="not_support_old_server">Server version 1.1.x is not supported. Update server or use client 1.1.x for it.</string>
+    <string name="not_support_local_ip">Don\'t set local IP as torrserver URL! Use localhost/127.0.0.1 instead.</string>
 
     <string name="copy_to_clipboard">Copied to clipboard</string>
     <string name="stat_running">Service is running</string>

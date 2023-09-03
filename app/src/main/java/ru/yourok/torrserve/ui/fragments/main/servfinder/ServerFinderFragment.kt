@@ -37,6 +37,7 @@ import java.util.Enumeration
 class ServerFinderFragment : TSFragment() {
 
     private val hostAdapter = HostAdapter()
+    private var ips = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,6 +97,12 @@ class ServerFinderFragment : TSFragment() {
             try {
                 var host = view?.findViewById<TextInputEditText>(R.id.etHost)?.text?.toString() ?: return@launch
                 var uri = Uri.parse(host)
+                // Don't allow current local IP as server address
+                uri.host?.let { if (ips.contains(it))
+                    App.toast(R.string.not_support_local_ip, true)
+                    return@launch
+                }
+
                 if (uri.scheme == null || !uri.scheme!!.contains("http", true))
                     host = "http://$host"
 
@@ -138,11 +145,12 @@ class ServerFinderFragment : TSFragment() {
     private suspend fun update() = withContext(Dispatchers.Main) {
         view?.let {
             showProgress()
+            ips = withContext(Dispatchers.IO) { getLocalIP() }
 
             val btnFind = view?.findViewById<Button>(R.id.btnFindHosts)
 
             btnFind?.isEnabled = false
-            view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = withContext(Dispatchers.IO) { getLocalIP() }
+            view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = ips
             hostAdapter.clear()
             // add local
             val localhost = "http://127.0.0.1:8090"

@@ -156,6 +156,7 @@
     <string name="need_install_server">需要安装服务端</string>
     <string name="need_update_server">服务端需要更新</string>
     <string name="not_support_old_server">不支持服务端版本 1.1.x。更新服务端或使用客户端 1.1.x。</string>
+    <string name="not_support_local_ip">不要将本地 IP 设置为 TorrServer URL！ 请改用 localhost/127.0.0.1。</string>
 
     <string name="copy_to_clipboard">复制到剪贴板</string>
     <string name="stat_running">服务正在运行</string>
