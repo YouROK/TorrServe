@@ -116,8 +116,10 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
             val sparseBooleanArray = listView.checkedItemPositions
             for (i in 0 until sparseBooleanArray.size()) {
                 if (sparseBooleanArray.valueAt(i)) {
-                    val selectedItem = listView.getItemAtPosition(sparseBooleanArray.keyAt(i)) as Torrent
-                    selectedFiles.add(selectedItem)
+                    val selectedItem = listView.getItemAtPosition(sparseBooleanArray.keyAt(i)) as Torrent?
+                    if (selectedItem != null) {
+                        selectedFiles.add(selectedItem)
+                    }
                 }
             }
             return selectedFiles
