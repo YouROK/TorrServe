@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
@@ -9,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
     defaultConfig {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 17
@@ -33,12 +31,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    // kotlin-kapt workaround for kotlin_version 1.8.0
-    tasks.withType(KotlinCompile).configureEach {
-        kotlinOptions {
-            jvmTarget = "17"
-        }
-    }
     packagingOptions {
         resources.excludes += "DebugProbesKt.bin"
     }
@@ -55,14 +47,14 @@ dependencies {
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-process:2.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
-    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1')
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3')
     // http client/parser
     implementation 'org.jsoup:jsoup:1.16.1'
     // json serializer
@@ -72,7 +64,7 @@ dependencies {
     //noinspection GradleDependency 3.2.1 last api17 compatible
     implementation 'com.github.topjohnwu.libsu:core:3.2.1'
     // glide
-    def glideVersion = '4.15.1'
+    def glideVersion = '4.16.0'
     implementation "com.github.bumptech.glide:glide:${glideVersion}"
     ksp "com.github.bumptech.glide:ksp:${glideVersion}"
     // firebase
