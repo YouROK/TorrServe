@@ -98,8 +98,9 @@ class ServerFinderFragment : TSFragment() {
                 var host = view?.findViewById<TextInputEditText>(R.id.etHost)?.text?.toString() ?: return@launch
                 var uri = Uri.parse(host)
                 // Don't allow current local IP as server address
-                uri.host?.let {
-                    if (ips.contains(it)) {
+                uri.host?.let { hst ->
+                    val lst = ips.split(",").map { ip -> ip.trim() }
+                    if (lst.contains(hst)) {
                         App.toast(R.string.not_support_local_ip, true)
                         return@launch
                     }
