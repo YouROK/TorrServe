@@ -22,7 +22,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.Format

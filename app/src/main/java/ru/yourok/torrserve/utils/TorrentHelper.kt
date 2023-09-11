@@ -36,7 +36,7 @@ object TorrentHelper {
                     File(path).extension.lowercase() == "mts" ||
                     File(path).extension.lowercase() == "ts"
                 ) {
-                    if (size > 1073741824L)
+                    if (size > 524288000L) // 500MB 1073741824 = 1GB
                         retList.add(it)
                 } else
                     retList.add(it)
