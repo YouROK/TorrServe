@@ -1,6 +1,5 @@
 package ru.yourok.torrserve.server.local.services
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -59,7 +58,6 @@ class Notification : Service() {
         return mBinder
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
     private fun startForeground() {
         synchronized(lock) {
             val exitIntent = Intent(this, TorrService::class.java)
