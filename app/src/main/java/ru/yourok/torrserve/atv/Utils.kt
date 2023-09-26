@@ -63,6 +63,10 @@ object Utils {
         return App.context.packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
     }
 
+    fun isAmazonTV(): Boolean {
+        return App.context.packageManager.hasSystemFeature(FEATURE_FIRE_TV)
+    }
+
     fun buildPendingIntent(torr: Torrent): Intent {
         val vintent = Intent(App.context, PlayActivity::class.java)
         vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

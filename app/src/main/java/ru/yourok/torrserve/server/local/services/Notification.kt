@@ -9,11 +9,13 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.ui.activities.main.MainActivity
 
@@ -67,12 +69,14 @@ class Notification : Service() {
                 PendingIntent.getService(this, 0, exitIntent, PendingIntent.FLAG_IMMUTABLE)
             else
                 PendingIntent.getService(this, 0, exitIntent, 0)
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            val pendingIntent = if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M))
-                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_ONE_SHOT)
+
+            val contentIntent = Intent(this, MainActivity::class.java)
+            contentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            val contentPendingIntent = if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M))
+                PendingIntent.getActivity(this, 0, contentIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_ONE_SHOT)
             else
-                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+                PendingIntent.getActivity(this, 0, contentIntent, PendingIntent.FLAG_ONE_SHOT)
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val channel =
                     NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
@@ -86,7 +90,7 @@ class Notification : Service() {
                     .setContentText(getString(R.string.stat_running))
                     .setAutoCancel(false)
                     .setOngoing(true)
-                    .setContentIntent(pendingIntent)
+                    .setContentIntent(contentPendingIntent)
                     .setStyle(NotificationCompat.BigTextStyle().bigText(""))
                     .addAction(
                         android.R.drawable.ic_delete,
@@ -95,6 +99,9 @@ class Notification : Service() {
                     )
             else
                 builder?.setStyle(NotificationCompat.BigTextStyle().bigText(""))
+
+            if (Utils.isAmazonTV())
+                builder?.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notification))
 
             builder?.let {
                 startForeground(mNotification, it.build())
