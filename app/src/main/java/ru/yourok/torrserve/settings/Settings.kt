@@ -1,8 +1,11 @@
 package ru.yourok.torrserve.settings
 
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.util.Log
 import androidx.preference.PreferenceManager
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.getInternalStorageDirectoryPath
@@ -64,12 +67,15 @@ object Settings {
         var filesDir: File?
         filesDir = App.context.getExternalFilesDir(null)
 
-        if (filesDir?.canWrite() != true)
+        if (filesDir?.canWrite() != true || Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+            if (BuildConfig.DEBUG) Log.d("*****","Can't write to $filesDir or SDK>33")
             filesDir = null
+        }
 
-        if (filesDir == null)
+        if (filesDir == null) {
             filesDir = App.context.filesDir
-
+            if (BuildConfig.DEBUG) Log.d("*****", "Use $filesDir for settings path")
+        }
         if (filesDir == null)
             filesDir = File(Environment.getExternalStorageDirectory().path, "TorrServe")
 
