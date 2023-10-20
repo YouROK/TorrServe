@@ -90,7 +90,9 @@ class PlayActivity : AppCompatActivity() {
                 error(ErrTorrServerNotResponding)
                 delay(App.longToastDuration.toLong())
                 if (TorrService.isLocal() && !TorrService.isInstalled()) {
-                    findViewById<TextView>(R.id.info_title)?.setText(R.string.install_server)
+                    withContext(Dispatchers.Main) {
+                        findViewById<TextView>(R.id.info_title)?.setText(R.string.install_server)
+                    }
                     UpdaterServer.updateFromNet {
                         lifecycleScope.launch(Dispatchers.Main) {
                             showProgress(it)
