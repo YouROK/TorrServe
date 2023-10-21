@@ -56,7 +56,8 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3')
     // http client/parser
-    implementation 'org.jsoup:jsoup:1.16.2'
+    //noinspection GradleDependency 1.16.2 thorow VerifyError at org.jsoup.helper.HttpConnection$Request on api19
+    implementation 'org.jsoup:jsoup:1.16.1'
     // json serializer
     //noinspection GradleDependency 2.10.1 thorow java.lang.VerifyError on api17
     implementation 'com.google.code.gson:gson:2.9.1' // 2.10.1

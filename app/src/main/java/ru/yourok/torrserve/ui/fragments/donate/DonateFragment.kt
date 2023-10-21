@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.Format
@@ -34,7 +35,7 @@ class DonateFragment : TSFragment() {
         savedInstanceState: Bundle?
     ): View {
         val vi = inflater.inflate(R.layout.donate_fragment, container, false)
-        Settings.setLastViewDonate(System.currentTimeMillis() + 12 * 60 * 60 * 1000)
+        Settings.setLastViewDonate(System.currentTimeMillis() + 24 * 60 * 60 * 1000)
 
         vi.findViewById<Button>(R.id.btnBoosty)?.setOnClickListener {
             val link = "https://boosty.to/yourok"
@@ -70,7 +71,7 @@ class DonateFragment : TSFragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.data = Uri.parse("https://t.me/torrserve")
             startActivitySafely(intent)
-            Settings.setLastViewDonate(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000)
+            Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
         }
 
         vi.findViewById<ImageView>(R.id.ivTelegram)?.apply {
@@ -144,11 +145,12 @@ object DonateMessage {
                 val vmargin = Format.dp2px(64f)
                 layoutParams.setMargins(hmargin, vmargin, hmargin, vmargin)
                 snackbarLayout.layoutParams = layoutParams
-                snackbar
-                    .setAction(android.R.string.ok) {
-                        DonateFragment().show(activity, R.id.container, true)
-                    }
-                    .show()
+                if (!Utils.isTvBox())
+                    snackbar
+                        .setAction(android.R.string.ok) {
+                            DonateFragment().show(activity, R.id.container, true)
+                        }
+                snackbar.show()
             }, 5000)
             Handler(Looper.getMainLooper()).postDelayed({
                 if (snackbar.isShown) {
