@@ -168,10 +168,9 @@
     </style>
     <!-- TextInputLayout -->
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <!--        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>-->
         <item name="hintTextColor">?attr/colorBright</item><!-- TODO: colorStateList -->
     </style>
-    <!-- Alert and Dialog Dark Style -->
+    <!-- Dialog Dark Style -->
     <style name="AlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/rc_background_dark</item>
@@ -190,29 +189,26 @@
         <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/AlertButtonStyle</item>
     </style>
-    <!-- Alert and Dialog Light Style -->
+    <!-- Dialog Light Style -->
     <style name="AlertDialog.Light" parent="AlertDialog">
         <item name="android:windowBackground">@drawable/rc_background_light</item>
         <item name="colorPrimary">@color/dark_brown</item>
         <item name="colorAccent">@color/dark_brown</item>
-        <!-- to change radioButtons text color: https://stackoverflow.com/a/60260915 -->
-        <!--        <item name="android:checkedTextViewStyle">@style/lightCheckedTextView</item>-->
+        <!-- Used for the checkboxes text -->
+        <item name="android:textColorPrimary">@color/dark_brown</item>
     </style>
-    <!--    <style name="lightCheckedTextView" parent="@style/Widget.MaterialComponents.CheckedTextView">-->
-    <!--        <item name="android:textColor">?attr/colorBright</item>-->
-    <!--    </style>-->
     <style name="AlertDialog.Black" parent="AlertDialog">
         <item name="android:windowBackground">@drawable/rc_background_black</item>
         <item name="colorPrimary">@color/green</item>
         <item name="colorAccent">@color/green</item>
     </style>
-    <!-- Dialog Title and Buttons -->
+    <!-- Dialog Title -->
     <style name="AlertTitleTextStyle" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
         <item name="android:layout_marginBottom">6dp</item>
     </style>
-    <!-- Alert and Dialog Buttons -->
+    <!-- Dialog Buttons -->
     <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_marginStart">6dp</item>
         <item name="android:layout_marginEnd">6dp</item>
@@ -221,24 +217,21 @@
     </style>
     <!-- Snackbar https://stackoverflow.com/questions/32425191/style-snackbar-in-theme-app -->
     <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
-        <!--<item name="android:layout_margin">32dp</item>-->
         <item name="animationMode">slide</item>
         <item name="actionTextColorAlpha">1.0</item>
     </style>
-
+    <!-- Snackbar Buttons -->
     <style name="MaterialSnackbarButtonTheme" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
-        <!--item name="android:layout_margin">3dp</item-->
         <item name="android:layout_marginEnd">12dp</item>
         <item name="materialThemeOverlay">@style/WhiteButtonThemeOverlay</item>
         <item name="strokeColor">@color/tv_white</item>
         <item name="strokeWidth">1dp</item>
     </style>
-
+    <!-- Snackbar Buttons Theme -->
     <style name="WhiteButtonThemeOverlay">
         <!--item name="backgroundTint">@color/tv_white</item-->
         <!-- For filled buttons, your theme's colorPrimary provides the default background color of the component -->
         <item name="android:textColor">@color/tv_white</item>
         <item name="colorPrimary">@color/tv_white</item>
     </style>
-
 </resources>
