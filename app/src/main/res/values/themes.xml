@@ -194,12 +194,9 @@
         <item name="android:windowBackground">@drawable/rc_background_light</item>
         <item name="colorPrimary">@color/dark_brown</item>
         <item name="colorAccent">@color/dark_brown</item>
-        <!-- to change radioButtons text color: https://stackoverflow.com/a/60260915 -->
-        <!--        <item name="android:checkedTextViewStyle">@style/lightCheckedTextView</item>-->
+        <!-- Used for the checkboxes text -->
+        <item name="android:textColorPrimary">@color/dark_brown</item>
     </style>
-    <!--    <style name="lightCheckedTextView" parent="@style/Widget.MaterialComponents.CheckedTextView">-->
-    <!--        <item name="android:textColor">?attr/colorBright</item>-->
-    <!--    </style>-->
     <style name="AlertDialog.Black" parent="AlertDialog">
         <item name="android:windowBackground">@drawable/rc_background_black</item>
         <item name="colorPrimary">@color/green</item>
