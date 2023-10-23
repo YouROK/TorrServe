@@ -42,6 +42,12 @@ object Players {
             if (mxIntent.resolveActivity(App.context.packageManager) != null)
                 return mxIntent
         }
+        // UPlayer
+        if (player.contains("com.uapplication.uplayer", true)) {
+            val uIntent = UPlayer.getIntent(player, torrent, index)
+            if (uIntent.resolveActivity(App.context.packageManager) != null)
+                return uIntent
+        }
         // user defined player
         if (player.isNotEmpty()) {
             intent.`package` = player
