@@ -72,7 +72,7 @@
         <item>Отключено</item>
         <item>Принудительно</item>
     </string-array>
-    <string name="default_player">Плеер по умолчанию</string>
+    <string name="default_player">Плеер по умолчанию из ОС</string>
     <string name="choose_player">Всегда спрашивать</string>
     <string name="app_theme_title">Тема оформления</string>
     <string-array name="app_theme_entries">
