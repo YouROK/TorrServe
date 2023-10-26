@@ -99,6 +99,9 @@ class PlayActivity : AppCompatActivity() {
                         }
                     }
                     withContext(Dispatchers.Main) {
+                        findViewById<TextView>(R.id.info_title)?.setText(R.string.app_name)
+                    }
+                    withContext(Dispatchers.Main) {
                         processIntent()
                     }
                 } else {
