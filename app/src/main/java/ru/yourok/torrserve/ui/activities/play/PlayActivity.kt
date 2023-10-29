@@ -101,6 +101,7 @@ class PlayActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         findViewById<TextView>(R.id.info_title)?.setText(R.string.app_name)
                     }
+                    delay(1000) // todo: wait server start
                     withContext(Dispatchers.Main) {
                         processIntent()
                     }
