@@ -1,0 +1,237 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <attr name="colorBright" format="reference" />
+    <attr name="colorHost" format="reference" />
+    <attr name="colorMainMenu" format="reference" />
+    <!-- Base application theme. https://material.io/develop/android/docs/getting-started -->
+    <style name="Theme.TorrServe.Dark" parent="Theme.MaterialComponents">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@color/dark_gray</item>
+        <!-- attr colors -->
+        <item name="colorBright">@color/tv_white</item>
+        <item name="colorHost">@color/green</item>
+        <item name="colorMainMenu">@color/dark_gray</item>
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/green</item>
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/orange</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorOnSecondary">@color/green</item>
+        <!-- Status bar color -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
+        <!-- Bottom bar color -->
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/dark_gray</item>
+        <!-- Custom -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
+        <item name="android:listDivider">@drawable/gradient_divider_green</item>
+        <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
+        <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarButtonTheme</item>
+        <item name="switchStyle">@style/Widget.App.Switch</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="alertDialogTheme">@style/AlertDialog</item>
+    </style>
+    <!-- Light Theme -->
+    <style name="Theme.TorrServe.Light" parent="Theme.MaterialComponents.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@color/tv_white</item>
+        <!-- attr colors -->
+        <item name="colorBright">@color/dark_brown</item>
+        <item name="colorHost">@color/orange_dark</item>
+        <item name="colorMainMenu">@color/light_gray</item>
+        <!-- colors -->
+        <item name="colorPrimary">@color/dark_brown</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/green</item>
+        <item name="colorSecondary">@color/dark_brown</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorOnSecondary">@color/green</item>
+        <!-- bars -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/light_gray</item>
+        <!-- custom -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
+        <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
+        <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarButtonTheme</item>
+        <item name="switchStyle">@style/Widget.App.Switch</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="alertDialogTheme">@style/AlertDialog.Light</item>
+    </style>
+    <!-- Black Theme -->
+    <style name="Theme.TorrServe.Black" parent="Theme.TorrServe.Dark">
+        <!-- attr colors -->
+        <item name="colorHost">@color/orange</item>
+        <item name="colorMainMenu">@color/black</item>
+        <!-- colors -->
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorOnPrimary">@color/orange</item>
+        <item name="colorSecondary">@color/green</item>
+        <item name="android:strokeColor" tools:targetApi="l">@color/white_10</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="colorBackgroundFloating">@color/black_opaque</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black_opaque</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/black_opaque</item>
+        <item name="alertDialogTheme">@style/AlertDialog.Black</item>
+    </style>
+    <!-- DayNight Theme -->
+    <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
+    <!-- Play Dialog Dark Style -->
+    <style name="PlayDialog.Dark" parent="Theme.MaterialComponents.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:listDivider">@drawable/gradient_divider_white</item>
+        <item name="android:windowBackground">@drawable/rc_background_dark</item>
+        <!-- attr colors -->
+        <item name="colorBright">@color/tv_white</item>
+        <item name="colorHost">@color/green</item>
+        <!-- colors -->
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/green</item>
+        <item name="colorSecondary">@color/orange</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorOnSecondary">@color/green</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/dark_gray</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+    </style>
+    <!-- Play Dialog Light Style -->
+    <style name="PlayDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:listDivider">@drawable/gradient_divider_white</item>
+        <item name="android:windowBackground">@drawable/rc_background_light</item>
+        <!-- attr colors -->
+        <item name="colorBright">@color/dark_brown</item>
+        <item name="colorHost">@color/orange_dark</item>
+        <!-- colors -->
+        <item name="colorPrimary">@color/dark_brown</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/green</item>
+        <item name="colorSecondary">@color/dark_brown</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorOnSecondary">@color/green</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/light_gray</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+    </style>
+    <!-- Play Dialog Black Style -->
+    <style name="PlayDialog.Black" parent="PlayDialog.Dark">
+        <item name="android:windowBackground">@drawable/rc_background_black</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorSecondary">@color/green</item>
+    </style>
+    <!-- Play Dialog DayNight Style -->
+    <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
+    <!-- Head Preference Category -->
+    <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
+        <item name="android:layout">@layout/head_preference_category</item>
+    </style>
+    <!-- Head Preference Category Text -->
+    <style name="HeadPreferenceCategoryText" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">32.0dip</item>
+        <item name="android:paddingStart">16.0dip</item>
+        <item name="android:paddingBottom">16.0dip</item>
+    </style>
+    <!-- Main Menu -->
+    <style name="MainMenuTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+    <!-- Checkboxes Text -->
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <!-- RadioButton -->
+    <style name="Widget.App.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
+    </style>
+    <!-- Switch -->
+    <style name="Widget.App.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
+        <item name="android:textSize">16sp</item>
+        <item name="thumbTint">@color/thumb_color</item>
+    </style>
+    <!-- TextInputLayout -->
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="hintTextColor">?attr/colorBright</item><!-- TODO: colorStateList -->
+    </style>
+    <!-- Dialog Dark Style -->
+    <style name="AlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/rc_background_dark</item>
+        <!-- Used for the title -->
+        <item name="materialAlertDialogTitleTextStyle">@style/AlertTitleTextStyle</item>
+        <!-- Used for the text -->
+        <item name="android:textColorPrimary">@color/tv_white</item>
+        <!-- Set min width -->
+        <item name="windowMinWidthMajor">50%</item><!-- landscape -->
+        <item name="windowMinWidthMinor">70%</item><!-- portrait -->
+        <!-- Used for the buttons -->
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorAccent">@color/orange</item>
+        <!-- Dialog Buttons -->
+        <item name="buttonBarPositiveButtonStyle">@style/AlertButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AlertButtonStyle</item>
+    </style>
+    <!-- Dialog Light Style -->
+    <style name="AlertDialog.Light" parent="AlertDialog">
+        <item name="android:windowBackground">@drawable/rc_background_light</item>
+        <item name="colorPrimary">@color/dark_brown</item>
+        <item name="colorAccent">@color/dark_brown</item>
+        <!-- Used for the checkboxes text -->
+        <item name="android:textColorPrimary">@color/dark_brown</item>
+    </style>
+    <style name="AlertDialog.Black" parent="AlertDialog">
+        <item name="android:windowBackground">@drawable/rc_background_black</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorAccent">@color/green</item>
+    </style>
+    <!-- Dialog Title -->
+    <style name="AlertTitleTextStyle" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+    <!-- Dialog Buttons -->
+    <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+    <!-- Snackbar https://stackoverflow.com/questions/32425191/style-snackbar-in-theme-app -->
+    <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
+        <item name="animationMode">slide</item>
+        <item name="actionTextColorAlpha">1.0</item>
+    </style>
+    <!-- Snackbar Buttons -->
+    <style name="MaterialSnackbarButtonTheme" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="materialThemeOverlay">@style/WhiteButtonThemeOverlay</item>
+        <item name="strokeColor">@color/tv_white</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+    <!-- Snackbar Buttons Theme -->
+    <style name="WhiteButtonThemeOverlay">
+        <!--item name="backgroundTint">@color/tv_white</item-->
+        <!-- For filled buttons, your theme's colorPrimary provides the default background color of the component -->
+        <item name="android:textColor">@color/tv_white</item>
+        <item name="colorPrimary">@color/tv_white</item>
+    </style>
+</resources>

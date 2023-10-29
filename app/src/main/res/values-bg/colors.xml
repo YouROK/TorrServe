@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tv_white">#eee</color>
+    <color name="orange">#ffa724</color>
+    <color name="orange_dark">#ff7e00</color>
+    <color name="green">#3fb57a</color>
+    <color name="black">#000</color>
+    <color name="black_opaque">#030303</color>
+    <color name="white_10">#1affffff</color>
+    <color name="semi_red">#ff7373</color>
+    <color name="light_gray">#ccc</color>
+    <color name="gray">#555</color>
+    <color name="dark_gray">#2b2b2b</color>
+    <color name="dark_brown">#2a2122</color>
+    <color name="scrim_20">#33777777</color>
+    <color name="scrim_30">#4d777777</color>
+    <color name="snackbar">#fa555555</color>
+</resources>
