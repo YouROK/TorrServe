@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.channels.UpdaterCards
 import ru.yourok.torrserve.server.api.Api
@@ -91,7 +92,7 @@ object Utils {
                 lock = true
             }
             TorrService.wait(5)
-            Log.d("*****", "updateAtvCards()")
+            if (BuildConfig.DEBUG) Log.d("*****", "updateAtvCards()")
             var lastList = emptyList<Torrent>()
             try {
                 lastList = Api.listTorrent()

@@ -10,7 +10,9 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.players.Players
+import ru.yourok.torrserve.ui.dialogs.PlayersDialog
 import ru.yourok.torrserve.ui.fragments.play.TorrentFilesFragment
 import ru.yourok.torrserve.utils.TorrentHelper
 
@@ -37,8 +39,7 @@ object Play {
                     return@launch
                 }
             } catch (e: Exception) {
-                //e.printStackTrace()
-                e.message?.let {App.toast(it, true)}
+                e.message?.let { App.toast(it, true) }
                 delay(App.longToastDuration.toLong())
                 return@launch
             }
@@ -61,13 +62,17 @@ object Play {
 
                     files.size == 1 -> {
                         torrentFileIndex = 0
-                        streamTorrent(torrent, files.first().id)
-                        successful(Intent())
+                        lifecycleScope.launch {
+                            streamTorrent(torrent, files.first().id)
+                        }
+                        //successful(Intent())
                     }
 
                     torrentFileIndex > 0 -> {
-                        streamTorrent(torrent, torrentFileIndex)
-                        successful(Intent())
+                        lifecycleScope.launch {
+                            streamTorrent(torrent, torrentFileIndex)
+                        }
+                        //successful(Intent())
                     }
 
                     else -> {
@@ -84,7 +89,7 @@ object Play {
         }
     }
 
-    suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
+    private suspend fun PlayActivity.streamTorrent(torrent: Torrent, index: Int) {
         var torr = torrent
 
         TorrentHelper.preloadTorrent(torr, index)
@@ -105,18 +110,38 @@ object Play {
         }
 
         ad?.waitAd()
-        var intent: Intent? = null
+        var playerIntent: Intent? = null
         try {
-            intent = Players.getIntent(torr, index)
+            if (Settings.getPlayer().isEmpty()) {
+                // show chooser
+                PlayersDialog.show(this, torr, index) { player ->
+                    playerIntent = Players.getIntent(torr, index, player)
+                    //if (BuildConfig.DEBUG) Log.d("*****", "Player intent: ${playerIntent?.toUri(0)}")
+                    playerIntent?.let {
+                        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        try {
+                            App.context.startActivity(it)
+                            successful(it)
+                        } catch (e: Exception) {
+                            //e.message?.let { msg -> App.toast(msg) }
+                            error(ErrProcessCmd) // TODO: add specific error
+                        }
+                    }
+                }
+            } else
+                playerIntent = Players.getIntent(torr, index, null)
         } catch (e: Exception) {
             e.message?.let { App.toast(it) }
         }
-        intent?.let {
+        //if (BuildConfig.DEBUG) Log.d("*****", "Player intent: ${playerIntent?.toUri(0)}")
+        playerIntent?.let {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             try {
                 App.context.startActivity(it)
+                successful(it)
             } catch (e: Exception) {
-                e.message?.let { msg -> App.toast(msg) }
+                //e.message?.let { msg -> App.toast(msg) }
+                error(ErrProcessCmd) // TODO: add specific error
             }
         }
     }

@@ -86,9 +86,10 @@
         <item>Fastest</item>
     </string-array>
 
+    <string name="select_player">选择玩家</string>
+    <string name="use_as_default">保存为默认值</string>
     <string name="default_player">默认播放器</string>
     <string name="choose_player">总是询问</string>
-    <string name="player_pref_key" translatable="false">播放器</string>
 
     <string name="app_theme_title">App主题</string>
     <string-array name="app_theme_entries">

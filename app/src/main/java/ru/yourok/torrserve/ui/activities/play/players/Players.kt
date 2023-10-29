@@ -11,23 +11,23 @@ import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
+import java.util.Locale
 
 object Players {
 
-    fun getIntent(torrent: Torrent, index: Int): Intent {
+    fun getIntent(torrent: Torrent, index: Int, selectedPlayer: String?): Intent? {
         val file = TorrentHelper.findFile(torrent, index) ?: throw Exception("file in torrent not found")
         val link = TorrentHelper.getTorrentPlayLink(torrent, index)
-        val player = Settings.getPlayer()
+        var player = Settings.getPlayer()
+        if (!selectedPlayer.isNullOrEmpty()) {
+            player = selectedPlayer
+        }
         val mime = Mime.getMimeType(file.path)
-
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(Uri.parse(link), mime)
         intent.putExtra("title", torrent.title)
         intent.putExtra("poster", torrent.poster)
-        intent.putExtra("forcename", torrent.title) // ViMu
-        intent.putExtra("forcedirect", true) // ViMu
-        intent.putExtra("forceresume", true) // ViMu
-        // default player
+        // default os player
         if (player == "0" && intent.resolveActivity(App.context.packageManager) != null)
             return intent
         // ViMu player
@@ -63,12 +63,26 @@ object Players {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp4")), "video/*")
         var apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        val excludedApps = hashSetOf(
+            "com.android.gallery3d",
+            "com.android.tv.frameworkpackagestubs",
+            "com.estrongs.android.pop",
+            "com.ghisler.android.totalcommander",
+            "com.google.android.apps.photos",
+            "com.google.android.tv.frameworkpackagestubs",
+            "com.instantbits.cast.webvideo",
+            "com.lonelycatgames.xplore",
+            "com.mixplorer.silver",
+            "pl.solidexplorer2"
+        )
         val list = mutableListOf<Pair<String, String>>()
         list.add("" to App.context.getString(R.string.choose_player))
         list.add("0" to App.context.getString(R.string.default_player))
-
         for (a in apps) {
             val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName
+            if (excludedApps.contains(a.activityInfo.packageName.lowercase(Locale.getDefault()))) {
+                continue
+            }
             list.add(a.activityInfo.packageName to name)
         }
 
@@ -81,4 +95,5 @@ object Players {
 
         return list.distinctBy { it.first }
     }
+
 }
