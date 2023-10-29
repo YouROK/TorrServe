@@ -98,13 +98,11 @@ class PlayActivity : AppCompatActivity() {
                             showProgress(it)
                         }
                     }
-                    withContext(Dispatchers.Main) {
-                        findViewById<TextView>(R.id.info_title)?.setText(R.string.app_name)
-                    }
-                    delay(1000) // todo: wait server start
-                    withContext(Dispatchers.Main) {
-                        processIntent()
-                    }
+                    if (TorrService.wait(5))
+                        withContext(Dispatchers.Main) {
+                            findViewById<TextView>(R.id.info_title)?.setText(R.string.app_name)
+                            processIntent()
+                        }
                 } else {
                     //server is not local, change
                     ServerFinderFragment().apply {
