@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.app.Consts
 import ru.yourok.torrserve.app.Consts.excludedApps
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings

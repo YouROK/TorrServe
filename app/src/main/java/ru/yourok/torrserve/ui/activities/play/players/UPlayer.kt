@@ -1,9 +1,7 @@
 package ru.yourok.torrserve.ui.activities.play.players
 
-import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
-import android.os.Parcelable
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.utils.Mime
 import ru.yourok.torrserve.utils.TorrentHelper
