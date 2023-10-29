@@ -78,8 +78,10 @@
         <item>Fuzzing</item>
         <item>Fastest</item>
     </string-array>
+    <string name="select_player">Вибрати програвач</string>
+    <string name="use_as_default">Зберегти як за умовчанням</string>
     <string name="default_player">Програвач по замовчуванню</string>
-    <string name="choose_player">Вибрати програвач</string>
+    <string name="choose_player">Завжди запитувати</string>
     <string name="app_theme_title">Тема</string>
     <string-array name="app_theme_entries">
         <item>Авто</item>

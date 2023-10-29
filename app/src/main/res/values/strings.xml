@@ -91,7 +91,9 @@
         <item>Fastest</item>
     </string-array>
 
-    <string name="default_player">Default Player</string>
+    <string name="select_player">Select Player</string>
+    <string name="use_as_default">Save as Default</string>
+    <string name="default_player">OS Default Player</string>
     <string name="choose_player">Always Ask</string>
     <string name="player_pref_key" translatable="false">player</string>
 

@@ -102,6 +102,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/dark_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/dark_gray</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="alertDialogTheme">@style/AlertDialog</item>
     </style>
     <!-- Play Dialog Light Style -->
     <style name="PlayDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
@@ -122,12 +123,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_gray</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/light_gray</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="alertDialogTheme">@style/AlertDialog.Light</item>
     </style>
     <!-- Play Dialog Black Style -->
     <style name="PlayDialog.Black" parent="PlayDialog.Dark">
         <item name="android:windowBackground">@drawable/rc_background_black</item>
         <item name="colorPrimary">@color/green</item>
         <item name="colorSecondary">@color/green</item>
+        <item name="alertDialogTheme">@style/AlertDialog.Black</item>
     </style>
     <!-- Play Dialog DayNight Style -->
     <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
