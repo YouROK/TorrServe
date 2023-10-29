@@ -6,6 +6,8 @@ import android.net.Uri
 import android.os.Environment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.app.Consts
+import ru.yourok.torrserve.app.Consts.excludedApps
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
@@ -63,34 +65,23 @@ object Players {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp4")), "video/*")
         var apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-        val excludedApps = hashSetOf(
-            "com.android.gallery3d",
-            "com.android.tv.frameworkpackagestubs",
-            "com.estrongs.android.pop",
-            "com.ghisler.android.totalcommander",
-            "com.google.android.apps.photos",
-            "com.google.android.tv.frameworkpackagestubs",
-            "com.instantbits.cast.webvideo",
-            "com.lonelycatgames.xplore",
-            "com.mixplorer.silver",
-            "pl.solidexplorer2"
-        )
         val list = mutableListOf<Pair<String, String>>()
         list.add("" to App.context.getString(R.string.choose_player))
         list.add("0" to App.context.getString(R.string.default_player))
         for (a in apps) {
             val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName
-            if (excludedApps.contains(a.activityInfo.packageName.lowercase(Locale.getDefault()))) {
-                continue
+            if (!excludedApps.contains(a.activityInfo.packageName.lowercase(Locale.getDefault()))) {
+                list.add(a.activityInfo.packageName to name)
             }
-            list.add(a.activityInfo.packageName to name)
         }
 
         intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp3")), "audio/*")
         apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         for (a in apps) {
             val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName
-            list.add(a.activityInfo.packageName to name)
+            if (!excludedApps.contains(a.activityInfo.packageName.lowercase(Locale.getDefault()))) {
+                list.add(a.activityInfo.packageName to name)
+            }
         }
 
         return list.distinctBy { it.first }

@@ -10,6 +10,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.app.Consts
+import ru.yourok.torrserve.app.Consts.excludedApps
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
@@ -26,24 +28,12 @@ object PlayersDialog {
 
         val resInfo =
             App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-        val excludedApps = hashSetOf(
-            "com.android.gallery3d",
-            "com.android.tv.frameworkpackagestubs",
-            "com.estrongs.android.pop",
-            "com.ghisler.android.totalcommander",
-            "com.google.android.apps.photos",
-            "com.google.android.tv.frameworkpackagestubs",
-            "com.instantbits.cast.webvideo",
-            "com.lonelycatgames.xplore",
-            "com.mixplorer.silver",
-            "pl.solidexplorer2"
-        )
+
         val filteredList: MutableList<ResolveInfo> = mutableListOf()
         for (info in resInfo) {
-            if (excludedApps.contains(info.activityInfo.packageName.lowercase(Locale.getDefault()))) {
-                continue
+            if (!excludedApps.contains(info.activityInfo.packageName.lowercase(Locale.getDefault()))) {
+                filteredList.add(info)
             }
-            filteredList.add(info)
         }
 
         if (filteredList.isEmpty()) {
