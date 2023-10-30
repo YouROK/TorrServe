@@ -10,7 +10,6 @@
     <string name="exit">Изход</string>
     <string name="exit_title">Наистина ли искате да излезете?</string>
     <string name="exit_text">Локалният TorrServer ще бъде спрян при Изход, ако Услуга за достъпност не е разрешена.</string>
-    <string name="remove_all_viewed">Изчистване на всички гледани</string>
     <string name="remove_all_warn">Искате ли да изтриете всички торенти?</string>
     <string name="share">Сподели</string>
     <string name="open_torrserve">Отвори TorrServe</string>
@@ -18,8 +17,6 @@
     <string name="torrents">Торенти</string>
     <string name="apply">Приложи</string>
     <string name="skip">Пропусни</string>
-    <string name="capital_on">Вкл</string>
-    <string name="capital_off">Изкл</string>
     <string name="yes">Да</string>
     <string name="cancel">Отказ</string>
     <string name="default_sets">Настройките по подразбиране</string>
@@ -57,29 +54,17 @@
     <string name="disable_pex_desc">По-добре оставете включено</string>
     <string name="disable_upload">Качване</string>
     <string name="disable_upload_desc">Не се препоръчва да се деактивира</string>
-    <string name="ecnryption">Шифроване</string>
     <string name="connections_limit">Torrent връзки (20–25 препоръчително)</string>
     <string name="connections_dht_limit">Ограничение за DHT вързките (0 - неограничено)</string>
     <string name="download_rate_limit">Ограничение на скоростта на сваляне (килобайти, 0 - неограничено)</string>
     <string name="upload_rate_limit">Ограничение на скоростта на качване (килобайти, 0 - неограничено)</string>
     <string name="retrackers">Ретракери</string>
-    <string name="strategy">Стратегия за заявка</string>
     <string name="peers_listen_port">Порт за слушане на пиъри (0 - подразбиращ се)</string>
     <string-array name="retracker_mode">
         <item>Подразбиране</item>
         <item>Добави ретракер</item>
         <item>Премахни ретракери</item>
         <item>Подмени ретракери</item>
-    </string-array>
-    <string-array name="encryption_mode">
-        <item>Разрешен</item>
-        <item>Забранен</item>
-        <item>Принудително</item>
-    </string-array>
-    <string-array name="strategy_mode">
-        <item>DuplicateRequestTimeout</item>
-        <item>Fuzzing</item>
-        <item>Fastest</item>
     </string-array>
     <string name="select_player">Изберете играч</string>
     <string name="use_as_default">Запазване по подразбиране</string>
@@ -107,24 +92,16 @@
     <string name="poster_link_help">Въведете URL адрес към постер (опционално)</string>
     <string name="local_ip">Локално IP</string>
     <string name="connected_host">Свързан към</string>
-    <string name="find">Открий</string>
     <string name="find_hosts">Окртий хостове</string>
     <string name="local_server">Локален сървър</string>
     <string name="saved_server">Записан сървър</string>
     <string name="new_server">Нов сървър</string>
     <string name="online">На линия</string>
-    <string name="buffering">Буфериране</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Пиъри</string>
     <string name="size">Размер</string>
     <string name="download_speed">Скорост на сваляне</string>
-    <string name="upload_speed">Скорост на качване</string>
     <string name="bit_rate">Битрейт</string>
-    <string name="format">Формат</string>
-    <string name="video">Видео</string>
-    <string name="audio">Аудио</string>
-    <string name="subtitles">Субтитри</string>
-    <string name="loading">Зарежда се</string>
     <string name="found_new_app_update">Открит е ъдпейт на приложението</string>
     <string name="not_found_new_app_update">Не е открит ъпдейт</string>
     <string name="current_version">Текуща версия</string>
@@ -148,10 +125,7 @@
     <string name="not_support_local_ip">Не слагайте лоаклен IP адрес като URL адрес към сървъра! Използвайте localhost/127.0.0.1 вместо това.</string>
     <string name="copy_to_clipboard">Копиран в клипборда</string>
     <string name="stat_running">Услугата работи</string>
-    <string name="server_started">TorrServer е стартиран</string>
-    <string name="server_stoped">TorrServer е спрян</string>
     <string name="server_not_responding">TorrServer не отговаря</string>
-    <string name="server_not_exists">Няма TorrServer</string>
     <string name="done_sending_settings">Настройките са записани</string>
     <string name="loading_torrent">Изтеглят се данни за торента…</string>
     <string name="error_add_torrent">Грешка при добавяне на торента</string>
@@ -170,11 +144,8 @@
     <string name="permission_storage_msg">Необходим е достъп до паметта, за да запишете настройки във файл</string>
     <string name="permission_btn">GRANT</string>
     <string name="permission_deny">Разрешението е отказано</string>
-    <string name="donation">Дарение</string>
     <string name="link">Връзка</string>
-    <string name="donation_msg">Дарение за подпомагане на проекта</string>
     <string name="boosty_msg">Boosty сайт</string>
-    <string name="paypal_msg">Имейл за дарения през PayPal</string>
     <string name="telegram_msg">Telegram Канал</string>
     <string name="app_settings">Настройки</string>
     <string name="app_version">Версия</string>
