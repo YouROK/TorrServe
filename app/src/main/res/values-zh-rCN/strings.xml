@@ -7,14 +7,12 @@
     <string name="playlist">播放列表</string>
     <string name="donate">捐赠</string>
     <string name="update">更新</string>
-    <string name="server">服务端</string>
     <string name="settings">设置</string>
     <string name="exit">退出</string>
 
     <string name="exit_title">Are You want to Exit?</string>
     <string name="exit_text">Local TorrServer will be stopped on Exit, if Accessibility Service is not enabled.</string>
 
-    <string name="remove_all_viewed">删除所有已查看</string>
     <string name="remove_all_warn">是否要删除所有种子？</string>
     <string name="share">分享</string>
 
@@ -24,8 +22,6 @@
 
     <string name="apply">应用</string>
     <string name="skip">跳过</string>
-    <string name="capital_on">开启</string>
-    <string name="capital_off">关闭</string>
     <string name="yes">是的</string>
     <string name="cancel">取消</string>
     <string name="default_sets">使用默认设置</string>
@@ -61,29 +57,17 @@
     <string name="disable_pex_desc">Better leave enabled</string>
     <string name="disable_upload">Upload</string>
     <string name="disable_upload_desc">Not recommended to disable</string>
-    <string name="ecnryption">Ecnryption</string>
     <string name="connections_limit">Torrent connections (20–25 recommended)</string>
     <string name="connections_dht_limit">Limit of DHT connections (0 - unlimited)</string>
     <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0 - unlimited)</string>
     <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0 - unlimited)</string>
     <string name="retrackers">Retrackers</string>
-    <string name="strategy">Request Strategy</string>
     <string name="peers_listen_port">Peers listen port (0 - default)</string>
     <string-array name="retracker_mode">
         <item>Default</item>
         <item>Add retrackers</item>
         <item>Remove retrackers</item>
         <item>Replace retrackers</item>
-    </string-array>
-    <string-array name="encryption_mode">
-        <item>Enabled</item>
-        <item>Disabled</item>
-        <item>Force</item>
-    </string-array>
-    <string-array name="strategy_mode">
-        <item>DuplicateRequestTimeout</item>
-        <item>Fuzzing</item>
-        <item>Fastest</item>
     </string-array>
 
     <string name="select_player">选择玩家</string>
@@ -118,27 +102,18 @@
 
     <string name="local_ip">本地IP</string>
     <string name="connected_host">已连接到</string>
-    <string name="find">查找</string>
     <string name="find_hosts">查找主机</string>
     <string name="local_server">本地服务端</string>
     <string name="saved_server">已保存的服务端</string>
     <string name="new_server">新服务器</string>
     <string name="online">在线的</string>
 
-    <string name="buffering">缓冲中</string>
     <string name="buffer">缓冲</string>
     <string name="peers">用户</string>
     <string name="size">大小</string>
     <string name="download_speed">下载速度</string>
-    <string name="upload_speed">上传速度</string>
     <string name="bit_rate">比特率</string>
 
-    <string name="format">格式</string>
-    <string name="video">视频</string>
-    <string name="audio">声音的</string>
-    <string name="subtitles">字幕</string>
-
-    <string name="loading">正在加载</string>
     <string name="found_new_app_update">找到应用更新</string>
     <string name="not_found_new_app_update">未找到应用更新</string>
     <string name="current_version">当前版本</string>
@@ -161,10 +136,7 @@
 
     <string name="copy_to_clipboard">复制到剪贴板</string>
     <string name="stat_running">服务正在运行</string>
-    <string name="server_started">TorrServer 已启动</string>
-    <string name="server_stoped">TorrServer 停止</string>
     <string name="server_not_responding">TorrServer 没有响应</string>
-    <string name="server_not_exists">无 TorrServer</string>
     <string name="done_sending_settings">已保存设置</string>
 
     <string name="loading_torrent">检索种子信息...</string>
@@ -188,10 +160,8 @@
 
     <string name="permission_deny">权限被拒绝</string>
 
-    <string name="donation">捐赠</string>
     <string name="link">链接</string>
-    <string name="donation_msg">捐赠支持项目</string>
-    <string name="paypal_msg">在 PayPal 中捐款的电子邮件</string>
+    <string name="donate_message">TorrServe is free. Please consider donating to support the future development of TorrServe.</string>
     <string name="telegram_msg">电报频道</string>
 
     <!--    Settings    -->
@@ -278,7 +248,5 @@
     <string name="install_ffprobe">安裝FFProbe</string>
     <string name="delete_ffprobe">刪除FFProbe</string>
     <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
-
-    <string name="donate_message">TorrServe is free. Please consider donating to support the future development of TorrServe.</string>
 
 </resources>

@@ -75,7 +75,6 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
         try {
             Api.getTorrent(torrentHash)
         } catch (e: Exception) {
-            //e.printStackTrace()
             null
         }
     } else if (torrentLink.isNotEmpty()) {
@@ -86,14 +85,12 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
                 try {
                     Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave)
                 } catch (e: Exception) {
-                    //e.printStackTrace()
                     null
                 }
             }
         } else try {
             Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
         } catch (e: Exception) {
-            //e.printStackTrace()
             null
         }
     } else
