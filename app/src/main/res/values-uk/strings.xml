@@ -5,12 +5,10 @@
     <string name="playlist">Плейліст</string>
     <string name="donate">Пожертва</string>
     <string name="update">Оновлення</string>
-    <string name="server">Сервер</string>
     <string name="settings">Налаштування</string>
     <string name="exit">Вихід</string>
     <string name="exit_title">Ви хочете вийти?</string>
     <string name="exit_text">Локальний TorrServer буде зупинено під час виходу, якщо службу доступності не ввімкнено.</string>
-    <string name="remove_all_viewed">Видалите все переглянуте</string>
     <string name="remove_all_warn">Ви хочете видалити всі торренти?</string>
     <string name="share">Поділитись</string>
     <string name="open_torrserve">Відкрити TorrServe</string>
@@ -18,8 +16,6 @@
     <string name="torrents">Торренти</string>
     <string name="apply">Застосувати</string>
     <string name="skip">Пропустити</string>
-    <string name="capital_on">УВІМК</string>
-    <string name="capital_off">ВИМК</string>
     <string name="yes">Так</string>
     <string name="cancel">Скасувати</string>
     <string name="default_sets">За замовчуванням</string>
@@ -54,29 +50,17 @@
     <string name="disable_pex_desc">Не рекомендується відключати</string>
     <string name="disable_upload">Відвантаження</string>
     <string name="disable_upload_desc">Не рекомендується відключати</string>
-    <string name="ecnryption">Шифрування</string>
     <string name="connections_limit">Торрент–з\'єднання (рекомендовано 20–25)</string>
     <string name="connections_dht_limit">Ліміт DHT з\'єднаннь (0-без обмежень)</string>
     <string name="download_rate_limit">Обмеження швидкості завантаження (Кілобайти, 0-без обмежень)</string>
     <string name="upload_rate_limit">Обмеження швидкості відвантаження (Кілобайти, 0-без обмежень)</string>
     <string name="retrackers">Ретрекери</string>
-    <string name="strategy">Стратегія завантаження</string>
     <string name="peers_listen_port">Порт для вхідних підключень (0-по замовчуванню)</string>
     <string-array name="retracker_mode">
         <item>По замовчуванню</item>
         <item>Додавати</item>
         <item>Видаляти</item>
         <item>Заміняти</item>
-    </string-array>
-    <string-array name="encryption_mode">
-        <item>Включено</item>
-        <item>Виключено</item>
-        <item>Примусово</item>
-    </string-array>
-    <string-array name="strategy_mode">
-        <item>DuplicateRequestTimeout</item>
-        <item>Fuzzing</item>
-        <item>Fastest</item>
     </string-array>
     <string name="select_player">Вибрати програвач</string>
     <string name="use_as_default">Зберегти як за умовчанням</string>
@@ -104,23 +88,15 @@
     <string name="poster_link_help">Введіть URL-адресу плаката (необов’язково)</string>
     <string name="local_ip">Локальна IP</string>
     <string name="connected_host">Підключено до</string>
-    <string name="find">Пошук</string>
     <string name="find_hosts">Пошук серверів</string>
     <string name="local_server">Локальний сервер</string>
     <string name="saved_server">Збережений сервер</string>
     <string name="new_server">Новий сервер</string>
     <string name="online">Онлайн</string>
-    <string name="buffering">Буферизація</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Піри</string>
     <string name="size">Розмір</string>
     <string name="download_speed">Швидкість завантаження</string>
-    <string name="upload_speed">Швидкість відвантаження</string>
-    <string name="format">Формат</string>
-    <string name="video">Відео</string>
-    <string name="audio">Аудіо</string>
-    <string name="subtitles">Субтитри</string>
-    <string name="loading">Завантаження</string>
     <string name="found_new_app_update">Знайдено оновлення додатку</string>
     <string name="not_found_new_app_update">Оновлення додатку не знайдено</string>
     <string name="current_version">Поточна версія</string>
@@ -141,10 +117,7 @@
     <string name="not_support_local_ip">Не встановлюйте локальну IP як URL TorrServer! Натомість використовуйте localhost/127.0.0.1.</string>
     <string name="copy_to_clipboard">Скопійовано до буферу обміну</string>
     <string name="stat_running">Службу запущено</string>
-    <string name="server_started">TorrServer запущено</string>
-    <string name="server_stoped">TorrServer зупинено</string>
     <string name="server_not_responding">TorrServer не відповідає</string>
-    <string name="server_not_exists">TorrServer відсутній</string>
     <string name="done_sending_settings">Налаштування збережено</string>
     <string name="loading_torrent">Отримання інформації торренту…</string>
     <string name="error_add_torrent">Неможливо додати торрент</string>
@@ -162,10 +135,8 @@
     <string name="error_unknown_command">Невідома команда</string>
     <string name="permission_storage_msg">Вимагається доступ до внутрішньої пам\'яті для можливості запису файлу налаштувань</string>
     <string name="permission_btn">ДОЗВОЛИТИ</string>
-    <string name="donation">Пожертва</string>
     <string name="link">Посилання</string>
-    <string name="donation_msg">Пожертва на підтримку проєкту</string>
-    <string name="paypal_msg">E-mail для пожертв через PayPal</string>
+    <string name="donate_message">TorrServe безкоштовний. Будь ласка, подумайте про пожертвування для підтримки майбутнього розвитку TorrServe.</string>
     <string name="telegram_msg">Канал у Telegram</string>
     <string name="app_settings">Налаштування додатку</string>
     <string name="app_version">Версія додатка</string>
@@ -236,5 +207,4 @@
     <string name="install_ffprobe">Встановіть FFProbe</string>
     <string name="delete_ffprobe">Видалити FFProbe</string>
     <string name="ffprobe_summary">Завантажте FFProbe, щоб отримати додаткові відеоканчини, такі як тривалість, бітрейт тощо.</string>
-    <string name="donate_message">TorrServe безкоштовний. Будь ласка, подумайте про пожертвування для підтримки майбутнього розвитку TorrServe.</string>
 </resources>

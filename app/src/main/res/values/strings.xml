@@ -8,14 +8,12 @@
     <string name="playlist">Playlist</string>
     <string name="donate">Donate</string>
     <string name="update">Update</string>
-    <string name="server">Server</string>
     <string name="settings">Settings</string>
     <string name="exit">Exit</string>
 
     <string name="exit_title">Are You want to Exit?</string>
     <string name="exit_text">Local TorrServer will be stopped on Exit, if Accessibility Service is not enabled.</string>
 
-    <string name="remove_all_viewed">Clear All Viewed</string>
     <string name="remove_all_warn">Do you want to delete all torrents?</string>
     <string name="share">Share</string>
 
@@ -25,8 +23,6 @@
 
     <string name="apply">Apply</string>
     <string name="skip">Skip</string>
-    <string name="capital_on">ON</string>
-    <string name="capital_off">OFF</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
 
@@ -66,29 +62,17 @@
     <string name="disable_pex_desc">Better leave enabled</string>
     <string name="disable_upload">Upload</string>
     <string name="disable_upload_desc">Not recommended to disable</string>
-    <string name="ecnryption">Encryption</string>
     <string name="connections_limit">Torrent Connections (20–25 recommended)</string>
     <string name="connections_dht_limit">Limit of DHT Connections (0 - unlimited)</string>
     <string name="download_rate_limit">Download Speed Limit (Kilobytes, 0 - unlimited)</string>
     <string name="upload_rate_limit">Upload Speed Limit (Kilobytes, 0 - unlimited)</string>
     <string name="retrackers">Retrackers</string>
-    <string name="strategy">Request Strategy</string>
     <string name="peers_listen_port">Peers Listen Port (0 - default)</string>
     <string-array name="retracker_mode">
         <item>Default</item>
         <item>Add retrackers</item>
         <item>Remove retrackers</item>
         <item>Replace retrackers</item>
-    </string-array>
-    <string-array name="encryption_mode">
-        <item>Enabled</item>
-        <item>Disabled</item>
-        <item>Force</item>
-    </string-array>
-    <string-array name="strategy_mode">
-        <item>DuplicateRequestTimeout</item>
-        <item>Fuzzing</item>
-        <item>Fastest</item>
     </string-array>
 
     <string name="select_player">Select Player</string>
@@ -130,27 +114,18 @@
 
     <string name="local_ip">Local IP</string>
     <string name="connected_host">Connected to</string>
-    <string name="find">Find</string>
     <string name="find_hosts">Find hosts</string>
     <string name="local_server">Local server</string>
     <string name="saved_server">Saved server</string>
     <string name="new_server">New server</string>
     <string name="online">Online</string>
 
-    <string name="buffering">Buffering</string>
     <string name="buffer">Buffer</string>
     <string name="peers">Peers</string>
     <string name="size">Size</string>
     <string name="download_speed">Download speed</string>
-    <string name="upload_speed">Upload speed</string>
     <string name="bit_rate">Bitrate</string>
 
-    <string name="format">Format</string>
-    <string name="video">Video</string>
-    <string name="audio">Audio</string>
-    <string name="subtitles">Subtitles</string>
-
-    <string name="loading">Loading</string>
     <string name="found_new_app_update">App update found</string>
     <string name="not_found_new_app_update">App update not found</string>
     <string name="current_version">Current version</string>
@@ -176,10 +151,7 @@
 
     <string name="copy_to_clipboard">Copied to clipboard</string>
     <string name="stat_running">Service is running</string>
-    <string name="server_started">TorrServer started</string>
-    <string name="server_stoped">TorrServer stopped</string>
     <string name="server_not_responding">TorrServer is not responding</string>
-    <string name="server_not_exists">No TorrServer</string>
     <string name="done_sending_settings">Settings saved</string>
 
     <string name="loading_torrent">Retrieve torrent info…</string>
@@ -203,12 +175,10 @@
 
     <string name="permission_deny">Permission Denied</string>
 
-    <string name="donation">Donation</string>
     <string name="link">Link</string>
-    <string name="donation_msg">Donation to support projects</string>
+    <string name="donate_message">TorrServe is free. Please consider donating to support the future development of TorrServe.</string>
     <string name="boosty_msg">Boosty site</string>
     <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
-    <string name="paypal_msg">Email to donate in PayPal</string>
     <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
     <string name="telegram_msg">Telegram Channel</string>
 
@@ -290,7 +260,5 @@
     <string name="no_updates">No updates found</string>
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
-
-    <string name="donate_message">TorrServe is free. Please consider donating to support the future development of TorrServe.</string>
 
 </resources>

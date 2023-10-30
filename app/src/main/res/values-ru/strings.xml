@@ -5,7 +5,6 @@
     <string name="playlist">Плейлист</string>
     <string name="donate">Пожертвование</string>
     <string name="update">Обновление</string>
-    <string name="server">Сервер</string>
     <string name="settings">Настройки</string>
     <string name="exit">Выход</string>
     <string name="exit_title">Хотите завершить приложение?</string>
@@ -16,8 +15,6 @@
     <string name="torrents">Торренты</string>
     <string name="apply">Применить</string>
     <string name="skip">Пропустить</string>
-    <string name="capital_on">ВКЛ</string>
-    <string name="capital_off">ВЫКЛ</string>
     <string name="yes">Да</string>
     <string name="cancel">Отмена</string>
     <string name="default_sets">Настройки по умолчанию</string>
@@ -53,24 +50,17 @@
     <string name="disable_pex_desc">Обмен списками участников - не рекомендуется отключать</string>
     <string name="disable_upload">Отдача</string>
     <string name="disable_upload_desc">Не рекомендуется отключать</string>
-    <string name="ecnryption">Шифрование</string>
     <string name="connections_limit">Торрент-соединения (рекомендуется 20–25)</string>
     <string name="connections_dht_limit">Лимит подключений DHT (0 - без ограничений)</string>
     <string name="download_rate_limit">Ограничение скорости загрузки (Килобайты, 0 - без ограничений)</string>
     <string name="upload_rate_limit">Ограничение скорости отдачи (Килобайты, 0 - без ограничений)</string>
     <string name="retrackers">Ретрекеры</string>
-    <string name="strategy">Стратегия загрузки</string>
     <string name="peers_listen_port">Порт для входящих подключений (0 - по умолчанию)</string>
     <string-array name="retracker_mode">
         <item>Ничего не делать</item>
         <item>Добавлять</item>
         <item>Удалять</item>
         <item>Заменять</item>
-    </string-array>
-    <string-array name="encryption_mode">
-        <item>Включено</item>
-        <item>Отключено</item>
-        <item>Принудительно</item>
     </string-array>
     <string name="select_player">Выбор плеера</string>
     <string name="use_as_default">Запомнить выбор</string>
@@ -98,23 +88,15 @@
     <string name="poster_link_help">Укажите ссылку на постер (опционально)</string>
     <string name="local_ip">Локальный IP</string>
     <string name="connected_host">Используется</string>
-    <string name="find">Поиск</string>
     <string name="find_hosts">Поиск серверов</string>
     <string name="local_server">Локальный сервер</string>
     <string name="saved_server">Сохраненный сервер</string>
     <string name="new_server">Новый сервер</string>
     <string name="online">Онлайн</string>
-    <string name="buffering">Буферизация</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Пиры</string>
     <string name="size">Размер</string>
     <string name="download_speed">Скорость загрузки</string>
-    <string name="upload_speed">Скорость отдачи</string>
-    <string name="format">Формат</string>
-    <string name="video">Видео</string>
-    <string name="audio">Аудио</string>
-    <string name="subtitles">Субтитры</string>
-    <string name="loading">Загрузка</string>
     <string name="found_new_app_update">Найдено обновление приложения</string>
     <string name="not_found_new_app_update">Нет обновлений приложения</string>
     <string name="current_version">Установлен</string>
@@ -135,10 +117,7 @@
     <string name="not_support_local_ip">Не устанавливайте локальный IP-адрес в качестве URL-адреса TorrServer! Вместо этого используйте localhost/127.0.0.1.</string>
     <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
     <string name="stat_running">Локальный сервер запущен</string>
-    <string name="server_started">TorrServer запущен</string>
-    <string name="server_stoped">TorrServer остановлен</string>
     <string name="server_not_responding">TorrServer не отвечает</string>
-    <string name="server_not_exists">TorrServer отсутствует</string>
     <string name="done_sending_settings">Настройки сохранены</string>
     <string name="loading_torrent">Загрузка информации о торренте…</string>
     <string name="error_add_torrent">Не удалось добавить торрент</string>
@@ -156,10 +135,8 @@
     <string name="error_unknown_command">Неизвестная команда</string>
     <string name="permission_storage_msg">Доступ к памяти необходим для записи настроек в файл</string>
     <string name="permission_btn">РАЗРЕШИТЬ</string>
-    <string name="donation">Пожертвование</string>
     <string name="link">Открыть</string>
-    <string name="donation_msg">Пожертвование на поддержку проектов</string>
-    <string name="paypal_msg">PayPal:</string>
+    <string name="donate_message">TorrServe бесплатен. Пожалуйста, рассмотрите возможность пожертвования для поддержки будущего развития TorrServe.</string>
     <string name="telegram_msg">Канал в Telegram</string>
     <string name="app_settings">Настройки приложения</string>
     <string name="app_version">Версия приложения</string>
@@ -222,7 +199,6 @@
     <string name="local_auth_sum_on">Использовать авторизацию на локальном сервере</string>
     <string name="local_auth_sum_off">Не использовать авторизацию на локальном сервере</string>
     <string name="remove_all_warn">Вы хотите удалить все торренты?</string>
-    <string name="remove_all_viewed">Удалить все метки просмотра</string>
     <string name="permission_deny">В доступе отказано</string>
     <string name="boosty_msg">Boosty сайт</string>
     <string name="enable_rutor_search">Включить поиск по RuTor</string>
@@ -231,5 +207,4 @@
     <string name="install_ffprobe">Установить FFProbe</string>
     <string name="delete_ffprobe">Удалить FFProbe</string>
     <string name="ffprobe_summary">Загрузите FFProbe для получения данных о видео, таких как длительность, битрейт и т.д.</string>
-    <string name="donate_message">TorrServe бесплатен. Пожалуйста, рассмотрите возможность пожертвования для поддержки будущего развития TorrServe.</string>
 </resources>
