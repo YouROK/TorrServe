@@ -81,6 +81,8 @@
         <item>Fuzzing</item>
         <item>Fastest</item>
     </string-array>
+    <string name="select_player">Изберете играч</string>
+    <string name="use_as_default">Запазване по подразбиране</string>
     <string name="default_player">Основният плеър в OS</string>
     <string name="choose_player">Винаги питай</string>
     <string name="app_theme_title">Тема на приложението</string>
