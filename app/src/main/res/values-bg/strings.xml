@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">TorrServe MatriX</string>
-
     <string name="add">Добави</string>
-    <string name="rutor" translatable="false">RuTor</string>
     <string name="delete">Изтрий</string>
     <string name="remove_all">Изтрий всички</string>
     <string name="playlist">Плейлист</string>
@@ -11,28 +8,22 @@
     <string name="server">Сървър</string>
     <string name="settings">Настройки</string>
     <string name="exit">Изход</string>
-
     <string name="exit_title">Наистина ли искате да излезете?</string>
     <string name="exit_text">Локалният TorrServer ще бъде спрян при Изход, ако Услуга за достъпност не е разрешена.</string>
-
     <string name="remove_all_viewed">Изчистване на всички гледани</string>
     <string name="remove_all_warn">Искате ли да изтриете всички торенти?</string>
     <string name="share">Сподели</string>
-
     <string name="open_torrserve">Отвори TorrServe</string>
     <string name="show_menu">Покажи Главно меню</string>
     <string name="torrents">Торенти</string>
-
     <string name="apply">Приложи</string>
     <string name="skip">Пропусни</string>
     <string name="capital_on">Вкл</string>
     <string name="capital_off">Изкл</string>
     <string name="yes">Да</string>
     <string name="cancel">Отказ</string>
-
     <string name="default_sets">Настройките по подразбиране</string>
     <string name="default_sets_applied">Настройките по подразбиране приложени</string>
-
     <string name="cache_size">Кеш размер (Мегабайти)</string>
     <string name="preload_before_start">Предварителен кеш преди стартиране</string>
     <string name="preload_before_start_desc">Ако е деактивирано, 32 MB буфер ще се използва за предварително зареждане</string>
@@ -90,11 +81,8 @@
         <item>Fuzzing</item>
         <item>Fastest</item>
     </string-array>
-
     <string name="default_player">Основният плеър в OS</string>
     <string name="choose_player">Винаги питай</string>
-    <string name="player_pref_key" translatable="false">плеър</string>
-
     <string name="app_theme_title">Тема на приложението</string>
     <string-array name="app_theme_entries">
         <item>Авто</item>
@@ -102,30 +90,19 @@
         <item>Тъмна</item>
         <item>AMOLED</item>
     </string-array>
-    <string-array name="app_theme_entries_values">
-        <item>auto</item>
-        <item>light</item>
-        <item>dark</item>
-        <item>black</item>
-    </string-array>
-
     <string name="add_play">Добави &amp; Пусни</string>
     <string name="play">Пусни</string>
     <string name="play_from_start">Пусни от начало</string>
-
     <string name="make_as_def">Направи по подразбиране</string>
     <string name="reset_def">Настройките по подразбиране са изчистени</string>
-
     <string name="playlist_all">Пусни всички</string>
     <string name="playlist_continue">Продължи</string>
-
     <string name="torrent_link">Торент URL</string>
     <string name="torrent_link_help">Въведете URL адрес към Торент / Магнет / Хеш</string>
     <string name="title">Заглавие</string>
     <string name="poster">Пострер</string>
     <string name="poster_link">Постер URL</string>
     <string name="poster_link_help">Въведете URL адрес към постер (опционално)</string>
-
     <string name="local_ip">Локално IP</string>
     <string name="connected_host">Свързан към</string>
     <string name="find">Открий</string>
@@ -134,7 +111,6 @@
     <string name="saved_server">Записан сървър</string>
     <string name="new_server">Нов сървър</string>
     <string name="online">На линия</string>
-
     <string name="buffering">Буфериране</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Пиъри</string>
@@ -142,18 +118,15 @@
     <string name="download_speed">Скорост на сваляне</string>
     <string name="upload_speed">Скорост на качване</string>
     <string name="bit_rate">Битрейт</string>
-
     <string name="format">Формат</string>
     <string name="video">Видео</string>
     <string name="audio">Аудио</string>
     <string name="subtitles">Субтитри</string>
-
     <string name="loading">Зарежда се</string>
     <string name="found_new_app_update">Открит е ъдпейт на приложението</string>
     <string name="not_found_new_app_update">Не е открит ъпдейт</string>
     <string name="current_version">Текуща версия</string>
     <string name="new_version">Нова версия</string>
-
     <string name="server_update">TorrServer ъпдейт</string>
     <string name="install_server">Инсталиране на TorrServer</string>
     <string name="install_server_latest">Инсталиране / Ъпдейт на сървър</string>
@@ -171,7 +144,6 @@
     <string name="need_update_server">Сървърът трябва да бъде ъпдейтнат</string>
     <string name="not_support_old_server">Сървъри с версия 1.1.x не се поддържат. Опреснете сървъра или използвайте клиент с версия 1.1.x за такъв сървър.</string>
     <string name="not_support_local_ip">Не слагайте лоаклен IP адрес като URL адрес към сървъра! Използвайте localhost/127.0.0.1 вместо това.</string>
-
     <string name="copy_to_clipboard">Копиран в клипборда</string>
     <string name="stat_running">Услугата работи</string>
     <string name="server_started">TorrServer е стартиран</string>
@@ -179,9 +151,7 @@
     <string name="server_not_responding">TorrServer не отговаря</string>
     <string name="server_not_exists">Няма TorrServer</string>
     <string name="done_sending_settings">Настройките са записани</string>
-
     <string name="loading_torrent">Изтеглят се данни за торента…</string>
-
     <string name="error_add_torrent">Грешка при добавяне на торента</string>
     <string name="error_app_not_found">Не са намерени подходящи приложения</string>
     <string name="error_download_ffprobe">FFProbe грешка при сваляне</string>
@@ -195,82 +165,60 @@
     <string name="error_sending_settings">Грешка при изпращане на настройките</string>
     <string name="error_user_cancel">Потребителя спря</string>
     <string name="error_unknown_command">Непозната команда</string>
-
     <string name="permission_storage_msg">Необходим е достъп до паметта, за да запишете настройки във файл</string>
     <string name="permission_btn">GRANT</string>
-
     <string name="permission_deny">Разрешението е отказано</string>
-
     <string name="donation">Дарение</string>
     <string name="link">Връзка</string>
     <string name="donation_msg">Дарение за подпомагане на проекта</string>
     <string name="boosty_msg">Boosty сайт</string>
-    <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
     <string name="paypal_msg">Имейл за дарения през PayPal</string>
-    <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
     <string name="telegram_msg">Telegram Канал</string>
-
-    <!--    Settings    -->
     <string name="app_settings">Настройки</string>
     <string name="app_version">Версия</string>
-
     <string name="host_title">Задайте URL адрес на TorrServer</string>
-
     <string name="host_authorization">Оторизация към сървъра</string>
     <string name="host_authorization_desc">Въведете потребителско име и парола, разделени с двоеточие (потребител:парола), оставете празно за липса на удостоверяване.</string>
     <string name="local_auth_title">Локален TorrServer с оторизация</string>
     <string name="local_auth_sum_on">Използвайте оторизация към локален сървър</string>
     <string name="local_auth_sum_off">Не използвайте оторизация към локален сървър</string>
-
     <string name="torserver_title">TorrServer настройки</string>
     <string name="torserver_summary">Конфигуриране на TorrServer настройките</string>
-
     <string name="remove_action_title">Изчистване на действията по подразбиране</string>
     <string name="remove_action_summary">Нулиране на приложението в ОС по подразбиране за торенти</string>
-
     <string name="boot_start_title">Стартиране на сървърът при Старт на устройството</string>
     <string name="boot_start_sum_on">Стартирането на сървърът е разрешено</string>
     <string name="boot_start_sum_off">Стартирането на сървърът е забранено</string>
-
     <string name="root_start_title">Стартиране на сървърът като root</string>
     <string name="root_start_sum_on">Стартиране на сървърът като root разрешено</string>
     <string name="root_start_sum_off">Стартиране на сървърът като root забранено</string>
-
     <string name="choose_player_title">Избор на Плеър</string>
-
     <string name="show_banner_title">Покажи банер</string>
     <string name="show_banner_sum_on">Покажи банер при зареждане на торент</string>
     <string name="show_banner_sum_off">Не показвай банер при зареждане на торент</string>
-
     <string name="show_cover_title">Покажи постер</string>
     <string name="show_cover_sum_on">Покажи постера на торента</string>
     <string name="show_cover_sum_off">Не показвай постера на торента</string>
-
     <string name="sort_torrents_list_title">Сортиране на списъка с торенти по азбучен ред</string>
     <string name="sort_torrents_list_sum_on">Сортиране на торенти по азбучен ред</string>
     <string name="sort_torrents_list_sum_off">Сортиране на торенти по времето на добавяне</string>
-
     <string name="show_battery_save_tv">Деактивирайте пестенето на батерия в Приложения / Специален достъп до приложения / Оптимизация на енергията</string>
     <string name="show_battery_save_title">Показване на настройките за пестене на батерията</string>
     <string name="show_battery_save_summary">Отворете настройките с конфигурации за пестене на батерията</string>
-
     <string name="show_fab_title">Плаващ бутон на менюто в портрет</string>
     <string name="show_fab_sum_on">Показване на плаващ бутон за действие</string>
     <string name="show_fab_sum_off">Не показвай плаващ бутон за действие</string>
-
     <string name="accessibility_manual_on">Активирайте услугата %1$s в секцията Предпочитания на устройството / Достъпност</string>
     <string name="accessibility_manual_off">Деактивирайте услугата %1$s в секцията Предпочитания на устройството / Достъпност</string>
     <string name="accessibility_service_description">Активирането на тази услуга може да предотврати изключване на локалният TorrServer от операционната система</string>
     <string name="switch_accessibility_title">Услуга за достъпност</string>
     <string name="switch_accessibility_summary_on">Натиснете, за да деактивирате услугата TorrServe</string>
-
     <string name="stat_string_added">Добавен торент</string>
     <string name="stat_string_info">Получаване на информация за торент</string>
     <string name="stat_string_preload">Предварително зареждане на торент</string>
     <string name="stat_string_working">Торент работещ</string>
     <string name="stat_string_closed">Торент затворен</string>
     <string name="stat_string_in_db">Торент в базата данни</string>
-
     <string name="fmt_h">h.</string>
     <string name="fmt_m">m.</string>
     <string name="fmt_s">s.</string>
@@ -278,17 +226,13 @@
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
     <string name="runtime">Времетраене</string>
-
     <string name="sort_by_name">Сортиране на списъка по заглавие</string>
     <string name="sort_by_size">Сортиране на списъка по размер</string>
     <string name="sort_by_seed">Сортиране на списъка по сийдъри</string>
     <string name="sort_by_date">Сортиране на списъка по дата</string>
-
     <string name="no_torrents">Няма торенти</string>
     <string name="no_updates">Не са намерени ъпдейти</string>
     <string name="not_used">Не се използва</string>
     <string name="not_installed">Не е инсталирано</string>
-
     <string name="donate_message">TorrServe е свободен. Моля, помислете за дарение в подкрепа на бъдещото развитие на TorrServe.</string>
-
 </resources>
