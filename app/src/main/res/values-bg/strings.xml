@@ -144,6 +144,7 @@
     <string name="permission_btn">GRANT</string>
     <string name="permission_deny">Разрешението е отказано</string>
     <string name="link">Връзка</string>
+    <string name="donate_message">TorrServe е свободен. Моля, помислете за дарение в подкрепа на бъдещото развитие на TorrServe.</string>
     <string name="boosty_msg">Boosty сайт</string>
     <string name="telegram_msg">Telegram Канал</string>
     <string name="app_settings">Настройки</string>
@@ -206,5 +207,4 @@
     <string name="no_updates">Не са намерени ъпдейти</string>
     <string name="not_used">Не се използва</string>
     <string name="not_installed">Не е инсталирано</string>
-    <string name="donate_message">TorrServe е свободен. Моля, помислете за дарение в подкрепа на бъдещото развитие на TorrServe.</string>
 </resources>

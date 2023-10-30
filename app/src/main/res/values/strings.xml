@@ -88,7 +88,7 @@
         <item>Dark</item>
         <item>AMOLED</item>
     </string-array>
-    <string-array name="app_theme_entries_values">
+    <string-array name="app_theme_entries_values" translatable="false">
         <item>auto</item>
         <item>light</item>
         <item>dark</item>
@@ -172,7 +172,6 @@
 
     <string name="permission_storage_msg">Access to memory is required to write settings to a file</string>
     <string name="permission_btn">GRANT</string>
-
     <string name="permission_deny">Permission Denied</string>
 
     <string name="link">Link</string>
