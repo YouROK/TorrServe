@@ -18,23 +18,23 @@
     <string name="skip">Пропусни</string>
     <string name="yes">Да</string>
     <string name="cancel">Отказ</string>
-    <string name="default_sets">Настройките по подразбиране</string>
+    <string name="default_sets">Настройки по подразбиране</string>
     <string name="default_sets_applied">Настройките по подразбиране приложени</string>
     <string name="cache_size">Кеш размер (Мегабайти)</string>
-    <string name="preload_before_start">Предварителен кеш преди стартиране</string>
+    <string name="preload_before_start">Подготвителен буфер преди стартиране</string>
     <string name="preload_before_start_desc">Ако е деактивирано, 32 MB буфер ще се използва за предварително зареждане</string>
     <string name="torrent_preload" formatted="false">Кеш за четене напред (5–100%, rec. 95%)</string>
     <string name="torrent_preload_cache" formatted="false">Предварително кеш преди просвирване (0–100%)</string>
     <string name="torrent_disconnect_timeout">Време за прекъсване на връзката с торент (секунди)</string>
     <string name="save_content_path">Път до кеш хранилището</string>
     <string name="save_on_disk">Изпозвай кеш на диска</string>
-    <string name="save_on_disk_desc">По-добре използавйте RAM или вънпна медия като флаш устройства</string>
+    <string name="save_on_disk_desc">По-добре използавйте RAM или външна медия като флаш устройства</string>
     <string name="remove_cache_on_drop">Премахване на кеша при отказ на торента</string>
     <string name="remove_cache_on_drop_desc">Ако е забрабнен, кеша се изтрива, когато торента се изтрие от базата</string>
     <string name="force_encrypt">Задължително криптиране на хедърите</string>
     <string name="force_encrypt_desc">Може да помогне при доставчици, блокиращи торенти</string>
     <string name="enable_ipv6">IPv6</string>
-    <string name="enable_ipv6_desc">Разрешете само ако се поддържа от ISP</string>
+    <string name="enable_ipv6_desc">Разрешете, само ако се поддържа от Интернет доставчика</string>
     <string name="enable_debug">Лог файлове с дебъг информация за TorrServer</string>
     <string name="enable_dlna">DLNA Медия сървър</string>
     <string name="dlna_friendly_name">DLNA Име на сървъра</string>
@@ -48,13 +48,13 @@
     <string name="enable_rutor_search">Активиране на търсен в Rutor</string>
     <string name="enable_rutor_search_desc">ЗАБЕЛЕЖКА: торент базата данни ще заема около 500 MB в RAM</string>
     <string name="disable_dht">DHT - Distributed Hash Table</string>
-    <string name="disable_dht_desc">Деактивирайте, ако няма мрежа след стартиране на сървъра</string>
+    <string name="disable_dht_desc">Деактивирайте, ако нямате мрежова връзка след стартиране на сървъра</string>
     <string name="disable_pex">PEX - Peer Exchange</string>
     <string name="disable_pex_desc">По-добре оставете включено</string>
     <string name="disable_upload">Качване</string>
     <string name="disable_upload_desc">Не се препоръчва да се деактивира</string>
-    <string name="connections_limit">Torrent връзки (20–25 препоръчително)</string>
-    <string name="connections_dht_limit">Ограничение за DHT вързките (0 - неограничено)</string>
+    <string name="connections_limit"> Ограничение на връзки (20–25 препоръчително)</string>
+    <string name="connections_dht_limit">Ограничение за DHT връзките (0 - неограничено)</string>
     <string name="download_rate_limit">Ограничение на скоростта на сваляне (килобайти, 0 - неограничено)</string>
     <string name="upload_rate_limit">Ограничение на скоростта на качване (килобайти, 0 - неограничено)</string>
     <string name="retrackers">Ретракери</string>
@@ -65,8 +65,8 @@
         <item>Премахни ретракери</item>
         <item>Подмени ретракери</item>
     </string-array>
-    <string name="select_player">Изберете играч</string>
-    <string name="use_as_default">Запазване по подразбиране</string>
+    <string name="select_player">Изберете плеър</string>
+    <string name="use_as_default">Запази като настройки по подразбиране</string>
     <string name="default_player">Основният плеър в OS</string>
     <string name="choose_player">Винаги питай</string>
     <string name="app_theme_title">Тема на приложението</string>
@@ -107,9 +107,9 @@
     <string name="new_version">Нова версия</string>
     <string name="server_update">TorrServer ъпдейт</string>
     <string name="install_server">Инсталиране на TorrServer</string>
-    <string name="install_server_latest">Инсталиране / Ъпдейт на сървър</string>
-    <string name="install_server_local">Инсталиране на сървър от папката Свалени</string>
-    <string name="delete_local_server">Изтрий локалния сървър</string>
+    <string name="install_server_latest">Инсталиране/Ъпдейт на сървър</string>
+    <string name="install_server_local">Инсталиране на сървър от папка Свалени</string>
+    <string name="delete_local_server">Изтрий локалният сървър</string>
     <string name="install_ffprobe">Инсталирай FFProbe</string>
     <string name="delete_ffprobe">Изтрий FFProbe</string>
     <string name="ffprobe_summary">Свалете FFProbe, за да може да се получават допълнителни данни за видеото, като продължителност, битрейт и т.н.</string>
@@ -120,13 +120,13 @@
     <string name="warn_no_local_updates">Не са открити локални ъпдейти</string>
     <string name="need_install_server">Сървърът трябва да бъде инсталиран</string>
     <string name="need_update_server">Сървърът трябва да бъде ъпдейтнат</string>
-    <string name="not_support_old_server">Сървъри с версия 1.1.x не се поддържат. Опреснете сървъра или използвайте клиент с версия 1.1.x за такъв сървър.</string>
-    <string name="not_support_local_ip">Не слагайте лоаклен IP адрес като URL адрес към сървъра! Използвайте localhost/127.0.0.1 вместо това.</string>
+    <string name="not_support_old_server">Сървър с версия 1.1.x не се поддържа. Опреснете сървъра или използвайте клиент с версия 1.1.x за такъв сървър.</string>
+    <string name="not_support_local_ip">Не слагайте IP адрес като URL адрес към сървъра! Използвайте localhost/127.0.0.1 вместо това.</string>
     <string name="copy_to_clipboard">Копиран в клипборда</string>
     <string name="stat_running">Услугата работи</string>
     <string name="server_not_responding">TorrServer не отговаря</string>
     <string name="done_sending_settings">Настройките са записани</string>
-    <string name="loading_torrent">Изтеглят се данни за торента…</string>
+    <string name="loading_torrent">Плучават се данни за торента…</string>
     <string name="error_add_torrent">Грешка при добавяне на торента</string>
     <string name="error_app_not_found">Не са намерени подходящи приложения</string>
     <string name="error_download_ffprobe">FFProbe грешка при сваляне</string>
@@ -140,11 +140,11 @@
     <string name="error_sending_settings">Грешка при изпращане на настройките</string>
     <string name="error_user_cancel">Потребителя спря</string>
     <string name="error_unknown_command">Непозната команда</string>
-    <string name="permission_storage_msg">Необходим е достъп до паметта, за да запишете настройки във файл</string>
+    <string name="permission_storage_msg">Необходим е достъп до паметта, за да запишете настройките във файл</string>
     <string name="permission_btn">GRANT</string>
     <string name="permission_deny">Разрешението е отказано</string>
     <string name="link">Връзка</string>
-    <string name="donate_message">TorrServe е свободен. Моля, помислете за дарение в подкрепа на бъдещото развитие на TorrServe.</string>
+    <string name="donate_message">TorrServe е свободен софтуер. Моля, помислете за дарение в подкрепа на бъдещото развитие на TorrServe.</string>
     <string name="boosty_msg">Boosty сайт</string>
     <string name="telegram_msg">Telegram Канал</string>
     <string name="app_settings">Настройки</string>
@@ -163,8 +163,8 @@
     <string name="boot_start_sum_on">Стартирането на сървърът е разрешено</string>
     <string name="boot_start_sum_off">Стартирането на сървърът е забранено</string>
     <string name="root_start_title">Стартиране на сървърът като root</string>
-    <string name="root_start_sum_on">Стартиране на сървърът като root разрешено</string>
-    <string name="root_start_sum_off">Стартиране на сървърът като root забранено</string>
+    <string name="root_start_sum_on">Разрешено стартиране на сървърът като root</string>
+    <string name="root_start_sum_off">Забранено стартиране на сървърът като root</string>
     <string name="choose_player_title">Избор на Плеър</string>
     <string name="show_banner_title">Покажи банер</string>
     <string name="show_banner_sum_on">Покажи банер при зареждане на торент</string>

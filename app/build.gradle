@@ -15,7 +15,7 @@ android {
         targetSdkVersion 28
         // for older androids
         multiDexEnabled true
-        versionCode 146
+        versionCode 147
         versionName "MatriX.127.F-Droid"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
