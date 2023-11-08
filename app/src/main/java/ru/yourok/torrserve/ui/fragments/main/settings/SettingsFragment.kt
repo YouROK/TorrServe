@@ -1,8 +1,11 @@
 package ru.yourok.torrserve.ui.fragments.main.settings
 
 import android.annotation.SuppressLint
+import android.content.Context.POWER_SERVICE
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -127,24 +130,42 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("show_battery_save")?.apply {
+            // https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 val intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                val riboit = Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                val powerManager = requireContext().getSystemService(POWER_SERVICE) as PowerManager
+                val pkgIgnored = powerManager.isIgnoringBatteryOptimizations(requireContext().packageName)
                 val cmp = intent.resolveActivity(requireActivity().packageManager)
-                if (cmp == null)
+                if (cmp == null || pkgIgnored)
                     ps?.removePreference(this)
                 else {
                     setOnPreferenceClickListener {
-                        if (Utils.isGoogleTV()) {
-                            if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
-                                intent.`package` = "com.android.settings"
-                                requireActivity().startActivity(intent)
-                            } else {
-                                val tvintent = Intent(android.provider.Settings.ACTION_SETTINGS)
-                                requireActivity().startActivity(tvintent)
-                                App.toast(R.string.show_battery_save_tv, true)
+                            try { // show Ignore Dialog without open Settings
+                                riboit.data = Uri.parse("package:" + requireContext().packageName)
+                                requireActivity().startActivity(riboit)
+                            } catch (e: Exception) { // open Settings
+                                if (Utils.isGoogleTV()) {
+                                    if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
+                                        intent.`package` = "com.android.settings"
+                                        try {
+                                            requireActivity().startActivity(intent)
+                                        } catch (e: Exception) {
+                                            App.toast(R.string.error_app_not_found)
+                                        }
+                                    } else { // show TV Settings and info toast
+                                        val tvintent = Intent(android.provider.Settings.ACTION_SETTINGS)
+                                        try {
+                                            requireActivity().startActivity(tvintent)
+                                        } catch (e: Exception) {
+                                            App.toast(R.string.error_app_not_found)
+                                        }
+                                        App.toast(R.string.show_battery_save_tv, true)
+                                    }
+                                } else
+                                    requireActivity().startActivity(intent)
                             }
-                        } else
-                            requireActivity().startActivity(intent)
+
                         true
                     }
                 }
