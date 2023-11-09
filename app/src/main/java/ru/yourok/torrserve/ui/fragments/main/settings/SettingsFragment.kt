@@ -164,23 +164,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 else {
                     setOnPreferenceClickListener {
                         //showPowerRequest(context)
-                        if (Utils.isGoogleTV()) { // open Power Settings
-                            if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
-                                intent.`package` = "com.android.settings"
-                                try {
+                        try {
+                            if (Utils.isGoogleTV()) { // open Power Settings
+                                if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
+                                    intent.`package` = "com.android.settings"
                                     requireActivity().startActivity(intent)
-                                } catch (_: Exception) {
-                                }
-                            } else {
-                                intent = Intent(android.provider.Settings.ACTION_SETTINGS)
-                                try { // show TV Settings and info toast
+                                } else { // show TV Settings and info toast
+                                    intent = Intent(android.provider.Settings.ACTION_SETTINGS)
                                     requireActivity().startActivity(intent)
-                                } catch (_: Exception) {
+                                    App.toast(R.string.show_battery_save_tv, true)
                                 }
-                                App.toast(R.string.show_battery_save_tv, true)
+                            } else { // mobile - show request dialog / power prefs
+                                requireActivity().startActivity(intent)
                             }
-                        } else try { // mobile
-                            requireActivity().startActivity(intent)
                         } catch (_: Exception) {
                         }
                         true
