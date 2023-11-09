@@ -151,32 +151,36 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("show_battery_save")?.apply {
             // https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                val psIntent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-                val cmp = psIntent.resolveActivity(requireActivity().packageManager)
                 val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager
                 val pkgIgnored = powerManager.isIgnoringBatteryOptimizations(context.packageName)
-                if (cmp == null || pkgIgnored)
+                var intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                if (!pkgIgnored) {
+                    intent = Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                    intent.data = Uri.parse("package:${context.packageName}")
+                }
+                val cmp = intent.resolveActivity(requireActivity().packageManager)
+                if (cmp == null)
                     ps?.removePreference(this)
                 else {
                     setOnPreferenceClickListener {
-                        showPowerRequest(context)
+                        //showPowerRequest(context)
                         if (Utils.isGoogleTV()) { // open Power Settings
                             if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
-                                psIntent.`package` = "com.android.settings"
+                                intent.`package` = "com.android.settings"
                                 try {
-                                    requireActivity().startActivity(psIntent)
+                                    requireActivity().startActivity(intent)
                                 } catch (_: Exception) {
                                 }
-                            } else { // show TV Settings and info toast
-                                val tvintent = Intent(android.provider.Settings.ACTION_SETTINGS)
-                                try {
-                                    requireActivity().startActivity(tvintent)
+                            } else {
+                                intent = Intent(android.provider.Settings.ACTION_SETTINGS)
+                                try { // show TV Settings and info toast
+                                    requireActivity().startActivity(intent)
                                 } catch (_: Exception) {
                                 }
                                 App.toast(R.string.show_battery_save_tv, true)
                             }
                         } else try { // mobile
-                            requireActivity().startActivity(psIntent)
+                            requireActivity().startActivity(intent)
                         } catch (_: Exception) {
                         }
                         true
