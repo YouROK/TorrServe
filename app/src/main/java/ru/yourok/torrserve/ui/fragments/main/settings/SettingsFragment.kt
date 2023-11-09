@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.ui.fragments.main.settings
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Context.POWER_SERVICE
 import android.content.Intent
 import android.net.Uri
@@ -129,43 +130,55 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
+        fun showPowerRequest(context: Context) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                val pm = context.getSystemService(POWER_SERVICE) as PowerManager
+                val isIgnoringBatteryOptimizations = pm.isIgnoringBatteryOptimizations(
+                    context.packageName
+                )
+                if (!isIgnoringBatteryOptimizations) {
+                    val intent = Intent()
+                    intent.action = android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                    intent.data = Uri.parse("package:${context.packageName}")
+                    try {
+                        startActivity(intent)
+                    } catch (_: Exception) {
+                    }
+                }
+            }
+        }
+
         findPreference<Preference>("show_battery_save")?.apply {
             // https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                val intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-                val riboit = Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
-                val powerManager = requireContext().getSystemService(POWER_SERVICE) as PowerManager
-                val pkgIgnored = powerManager.isIgnoringBatteryOptimizations(requireContext().packageName)
-                val cmp = intent.resolveActivity(requireActivity().packageManager)
+                val psIntent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                val cmp = psIntent.resolveActivity(requireActivity().packageManager)
+                val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager
+                val pkgIgnored = powerManager.isIgnoringBatteryOptimizations(context.packageName)
                 if (cmp == null || pkgIgnored)
                     ps?.removePreference(this)
                 else {
                     setOnPreferenceClickListener {
-                            try { // show Ignore Dialog without open Settings
-                                riboit.data = Uri.parse("package:" + requireContext().packageName)
-                                requireActivity().startActivity(riboit)
-                            } catch (e: Exception) { // open Settings
-                                if (Utils.isGoogleTV()) {
-                                    if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
-                                        intent.`package` = "com.android.settings"
-                                        try {
-                                            requireActivity().startActivity(intent)
-                                        } catch (e: Exception) {
-                                            App.toast(R.string.error_app_not_found)
-                                        }
-                                    } else { // show TV Settings and info toast
-                                        val tvintent = Intent(android.provider.Settings.ACTION_SETTINGS)
-                                        try {
-                                            requireActivity().startActivity(tvintent)
-                                        } catch (e: Exception) {
-                                            App.toast(R.string.error_app_not_found)
-                                        }
-                                        App.toast(R.string.show_battery_save_tv, true)
-                                    }
-                                } else
-                                    requireActivity().startActivity(intent)
+                        showPowerRequest(context)
+                        if (Utils.isGoogleTV()) { // open Power Settings
+                            if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
+                                psIntent.`package` = "com.android.settings"
+                                try {
+                                    requireActivity().startActivity(psIntent)
+                                } catch (_: Exception) {
+                                }
+                            } else { // show TV Settings and info toast
+                                val tvintent = Intent(android.provider.Settings.ACTION_SETTINGS)
+                                try {
+                                    requireActivity().startActivity(tvintent)
+                                } catch (_: Exception) {
+                                }
+                                App.toast(R.string.show_battery_save_tv, true)
                             }
-
+                        } else try { // mobile
+                            requireActivity().startActivity(psIntent)
+                        } catch (_: Exception) {
+                        }
                         true
                     }
                 }
