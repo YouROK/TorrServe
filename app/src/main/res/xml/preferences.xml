@@ -83,6 +83,7 @@
         app:title="@string/show_fab_title" />
 
     <ListPreference
+        android:defaultValue="auto"
         app:entries="@array/app_theme_entries"
         app:entryValues="@array/app_theme_entries_values"
         app:key="app_theme"
