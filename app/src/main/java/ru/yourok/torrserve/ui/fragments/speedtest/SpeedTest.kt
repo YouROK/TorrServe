@@ -16,12 +16,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
 
 
 class SpeedTest : TSFragment() {
+
+    private val mbps = " M" + App.context.getString(R.string.fmt_bps)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,7 +33,7 @@ class SpeedTest : TSFragment() {
 
         val speedometer = vi.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer)
 
-        speedometer.unit = "MBit/Sec"
+        speedometer.unit = mbps
         speedometer.minSpeed = 0f
         speedometer.maxSpeed = 500f
         speedometer.withTremble = false
@@ -128,7 +131,7 @@ class SpeedTest : TSFragment() {
         if (speed > maxSpeed)
             maxSpeed = speed
         withContext(Dispatchers.Main) {
-            val ms = String.format("%.1f MBit/Sec", maxSpeed)
+            val ms = String.format("%.1f$mbps", maxSpeed)
             view?.findViewById<TextView>(R.id.tvSPStatus)?.text = ms
             view?.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer)?.speedTo(speed)
         }
