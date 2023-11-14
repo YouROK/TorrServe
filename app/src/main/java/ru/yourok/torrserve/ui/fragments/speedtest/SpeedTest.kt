@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import com.github.anastr.speedviewlib.Speedometer
 import com.github.anastr.speedviewlib.TubeSpeedometer
 import com.github.anastr.speedviewlib.components.Section
 import kotlinx.coroutines.Dispatchers
@@ -42,12 +43,14 @@ class SpeedTest : TSFragment() {
         speedometer.minSpeed = 0f
         speedometer.maxSpeed = 100f
         speedometer.withTremble = false
+        speedometer.speedometerMode = Speedometer.Mode.NORMAL // TOP
 
         vi.findViewById<Button>(R.id.btn100mb)?.setOnClickListener {
             vi?.findViewById<Button>(R.id.btn100mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = false
+            vi?.findViewById<Button>(R.id.btnStop)?.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.Main) {
                 speedTest(100)
             }
@@ -58,6 +61,7 @@ class SpeedTest : TSFragment() {
             vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = false
+            vi?.findViewById<Button>(R.id.btnStop)?.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.Main) {
                 speedTest(500)
             }
@@ -68,6 +72,7 @@ class SpeedTest : TSFragment() {
             vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = false
+            vi?.findViewById<Button>(R.id.btnStop)?.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.Main) {
                 speedTest(1000)
             }
@@ -78,13 +83,17 @@ class SpeedTest : TSFragment() {
             vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = false
             vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = false
+            vi?.findViewById<Button>(R.id.btnStop)?.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.Main) {
                 speedTest(5000)
             }
         }
 
-        vi.findViewById<Button>(R.id.btnStop)?.setOnClickListener {
-            isStop = true
+        vi.findViewById<Button>(R.id.btnStop)?.apply {
+            setOnClickListener {
+                isStop = true
+            }
+            visibility = View.INVISIBLE
         }
 
         return vi
@@ -136,6 +145,7 @@ class SpeedTest : TSFragment() {
                 view?.findViewById<Button>(R.id.btn500mb)?.isEnabled = true
                 view?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = true
                 view?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = true
+                view?.findViewById<Button>(R.id.btnStop)?.visibility = View.INVISIBLE
             }
         }
     }
@@ -171,7 +181,7 @@ class SpeedTest : TSFragment() {
             averageSpeed /= 2f
         }
         withContext(Dispatchers.Main) {
-            val ms = String.format("%.1f$mbps %.1f$mbps ", averageSpeed, maxSpeed)
+            val ms = String.format("%s %.1f$mbps | %s %.1f$mbps", getString(R.string.avg), averageSpeed, getString(R.string.max), maxSpeed)
             view?.findViewById<TextView>(R.id.tvSPStatus)?.text = ms
             view?.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer)?.speedTo(speed)
         }

@@ -252,6 +252,8 @@
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
     <string name="runtime">Runtime</string>
+    <string name="avg">average</string>
+    <string name="max">max.</string>
 
     <string name="sort_by_name">Sort list by Title</string>
     <string name="sort_by_size">Sort list by Size</string>

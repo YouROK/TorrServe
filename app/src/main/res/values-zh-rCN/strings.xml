@@ -233,6 +233,8 @@
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
     <string name="runtime">期间</string>
+    <string name="avg">平均的</string>
+    <string name="max">最大限度</string>
 
     <string name="sort_by_name">Sort list by Title</string>
     <string name="sort_by_size">Sort list by Size</string>

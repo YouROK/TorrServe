@@ -191,6 +191,8 @@
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">біт/с</string>
     <string name="runtime">Тривалість</string>
+    <string name="avg">середн.</string>
+    <string name="max">макс.</string>
     <string name="sort_by_name">Сортування за назвою</string>
     <string name="sort_by_size">Сортування за розміром</string>
     <string name="sort_by_seed">Сортування за роздавальним</string>

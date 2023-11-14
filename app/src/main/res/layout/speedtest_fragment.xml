@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="10dp"
     android:orientation="vertical">
 
@@ -11,42 +11,59 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
-            <com.github.anastr.speedviewlib.TubeSpeedometer
-                android:id="@+id/tubeSpeedometer"
-                app:sv_unitUnderSpeedText="false"
-                app:sv_speedTextColor="?attr/colorPrimary"
-                app:sv_textColor="?attr/colorPrimary"
-                app:sv_unitTextColor="?attr/colorPrimary"
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ts_round" />
+
+                <com.github.anastr.speedviewlib.TubeSpeedometer
+                    android:id="@+id/tubeSpeedometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:sv_speedTextColor="?attr/colorPrimary"
+                    app:sv_speedTextPadding="0dp"
+                    app:sv_speedTextSize="20sp"
+                    app:sv_speedometerWidth="8dp"
+                    app:sv_textColor="?attr/colorBright"
+                    app:sv_unitTextColor="?attr/colorPrimary"
+                    app:sv_unitTextSize="20sp"
+                    app:sv_unitUnderSpeedText="false" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tvSPStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="16.0dip"
+                android:paddingTop="6dp"
+                android:paddingBottom="3dp"
                 android:text=""
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="?attr/colorPrimary"
+                android:textColor="?attr/colorBright"
                 android:textSize="16sp" />
 
             <LinearLayout
-                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
                     <Button
@@ -54,7 +71,8 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100MB"
+                        android:layout_margin="3dp"
+                        android:text="100 MB"
                         android:textSize="14sp" />
 
                     <Button
@@ -62,7 +80,8 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="500MB"
+                        android:layout_margin="3dp"
+                        android:text="500 MB"
                         android:textSize="14sp" />
 
                     <Button
@@ -70,7 +89,8 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1GB"
+                        android:layout_margin="3dp"
+                        android:text="1 GB"
                         android:textSize="14sp" />
 
                     <Button
@@ -78,7 +98,8 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5GB"
+                        android:layout_margin="3dp"
+                        android:text="5 GB"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -87,7 +108,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stop"
+                    android:text="@string/cancel"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
