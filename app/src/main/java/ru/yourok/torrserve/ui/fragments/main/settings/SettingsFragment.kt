@@ -32,6 +32,7 @@ import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
+import ru.yourok.torrserve.ui.fragments.speedtest.SpeedTest
 import ru.yourok.torrserve.utils.Accessibility
 
 
@@ -86,6 +87,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("host")?.apply {
             setOnPreferenceClickListener {
                 ServerFinderFragment().show(requireActivity(), R.id.container, true)
+                true
+            }
+        }
+
+        findPreference<Preference>("speedtest")?.apply {
+            setOnPreferenceClickListener {
+                SpeedTest().show(requireActivity(), R.id.container, true)
                 true
             }
         }

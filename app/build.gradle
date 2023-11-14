@@ -75,6 +75,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:19.0.2'
     //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api17 compatible
     implementation 'com.google.firebase:firebase-crashlytics:18.2.5'
+    // speed test
+    implementation 'com.github.anastr:speedviewlib:1.6.0'
 }
 
 repositories {

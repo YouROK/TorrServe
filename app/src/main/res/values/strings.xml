@@ -187,6 +187,9 @@
 
     <string name="host_title">Set TorrServer URL</string>
 
+    <string name="speedtest_title">Speed test to TorrServer</string>
+    <string name="test_title">Test</string>
+
     <string name="host_authorization">Server Authorization</string>
     <string name="host_authorization_desc">Enter username and password separated by a colon (user:password), leave blank for no auth.</string>
     <string name="local_auth_title">Local TorrServer with Authorization</string>

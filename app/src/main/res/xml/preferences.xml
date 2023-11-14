@@ -13,6 +13,11 @@
         app:title="@string/host_title" />
 
     <Preference
+        app:key="speedtest"
+        app:summary="@string/speedtest_title"
+        app:title="@string/speedtest_title" />
+
+    <Preference
         app:key="server_settings"
         app:summary="@string/torserver_summary"
         app:title="@string/torserver_title" />
