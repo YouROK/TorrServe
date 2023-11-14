@@ -171,6 +171,7 @@
     <string name="host_title">设置 TorrServer url 地址</string>
 
     <string name="speedtest_title">TorrServer 速度测试</string>
+    <string name="speedtest_title_desc">测试 TorrServer 的速度</string>
     <string name="host_authorization">服务端授权</string>
     <string name="host_authorization_desc">通过“:”分别填写用户名和密码（user:pass）</string>
     <string name="local_auth_title">具有授权的本地 TorrServer</string>
@@ -251,6 +252,5 @@
     <string name="install_ffprobe">安裝FFProbe</string>
     <string name="delete_ffprobe">刪除FFProbe</string>
     <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
-    <string name="test_title">测试</string>
 
 </resources>

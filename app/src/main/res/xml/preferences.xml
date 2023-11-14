@@ -14,7 +14,7 @@
 
     <Preference
         app:key="speedtest"
-        app:summary="@string/speedtest_title"
+        app:summary="@string/speedtest_title_desc"
         app:title="@string/speedtest_title" />
 
     <Preference

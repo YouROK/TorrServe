@@ -151,6 +151,7 @@
     <string name="app_version">Версия приложения</string>
     <string name="host_title">Установить URL-адрес TorrServer</string>
     <string name="speedtest_title">Тест скорости до TorrServer</string>
+    <string name="speedtest_title_desc">Проверка cкорости соединения с TorrServer</string>
     <string name="host_authorization">Авторизация на сервере</string>
     <string name="host_authorization_desc">Введите имя и пароль через «:» (user:pass)</string>
     <string name="local_auth_title">Локальный TorrServer с авторизацией</string>
@@ -210,5 +211,4 @@
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
-    <string name="test_title">Тест</string>
 </resources>
