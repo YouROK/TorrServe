@@ -132,7 +132,7 @@
     <string name="error_download_ffprobe">Не удалось загрузить FFProbe</string>
     <string name="error_empty_link">Ссылка на торрент пуста</string>
     <string name="error_intent_null">Пустой интент</string>
-    <string name="error_process_cmd">Ошибка при обработке cmd, см. logcat.</string>
+    <string name="error_process_intent">Ошибка при открытии плеера. Проверьте настройки.</string>
     <string name="error_retrieve_data">Ошибка при получении данных</string>
     <string name="error_retrieve_torrent_file">В торренте не найдено файлов мультимедиа</string>
     <string name="error_retrieve_torrent_info">Не удалось загрузить данные торрента</string>

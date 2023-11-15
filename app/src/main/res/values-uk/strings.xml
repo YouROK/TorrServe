@@ -125,7 +125,7 @@
     <string name="error_download_ffprobe">Помилка завантаження FFProbe</string>
     <string name="error_empty_link">Посилання на торрент порожнє</string>
     <string name="error_intent_null">Порожній інтент</string>
-    <string name="error_process_cmd">Помилка при обробці cmd, див. logcat</string>
+    <string name="error_process_intent">Помилка відкриття плеєра. Перевірте налаштування.</string>
     <string name="error_retrieve_data">Помилка отримання данних</string>
     <string name="error_retrieve_torrent_file">У торренті не знайдено файлів мультимедіа</string>
     <string name="error_retrieve_torrent_info">Помилка отримання інформації торренту</string>

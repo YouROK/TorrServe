@@ -161,7 +161,7 @@
     <string name="error_download_ffprobe">FFProbe download error</string>
     <string name="error_empty_link">Torrent link is empty</string>
     <string name="error_intent_null">Intent is null</string>
-    <string name="error_process_cmd">Error when processing cmd, see logcat.</string>
+    <string name="error_process_intent">Error opening player. Check settings.</string>
     <string name="error_retrieve_data">Error retrieve data</string>
     <string name="error_retrieve_torrent_file">No playable files found</string>
     <string name="error_retrieve_torrent_info">Error retrieve torrent info</string>

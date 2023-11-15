@@ -146,7 +146,7 @@
     <string name="error_download_ffprobe">FFProbe 下载错误</string>
     <string name="error_empty_link">种子链接为空</string>
     <string name="error_intent_null">意图为空</string>
-    <string name="error_process_cmd">处理 cmd 时出错，请参阅 logcat。</string>
+    <string name="error_process_intent">打开播放器时出错。 检查设置。</string>
     <string name="error_retrieve_data">检索数据时时出错</string>
     <string name="error_retrieve_torrent_file">找不到可播放的文件</string>
     <string name="error_retrieve_torrent_info">检索种子信息时出错</string>

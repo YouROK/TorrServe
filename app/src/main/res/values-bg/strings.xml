@@ -132,7 +132,7 @@
     <string name="error_download_ffprobe">FFProbe грешка при сваляне</string>
     <string name="error_empty_link">Връзката към Torrent-а е празна</string>
     <string name="error_intent_null">Intent is null</string>
-    <string name="error_process_cmd">Грешка при изпълнение на командата, вижте logcat.</string>
+    <string name="error_process_intent">Грешка при отваряне на плейъра. Проверете настройките.</string>
     <string name="error_retrieve_data">Грешка при получаване на данните</string>
     <string name="error_retrieve_torrent_file">Не са намерени файлове за пускане</string>
     <string name="error_retrieve_torrent_info">Грешка при получаване на инфорамция за торента</string>
