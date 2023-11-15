@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.speedtest
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -17,7 +18,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.TSFragment
+import ru.yourok.torrserve.utils.Format.margin
 import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
 
@@ -37,6 +41,19 @@ class SpeedTest : TSFragment() {
     ): View {
         val vi = inflater.inflate(R.layout.speedtest_fragment, container, false)
 
+        val title = vi.findViewById<TextView?>(R.id.tvTitle)
+        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            title.apply {
+                text = Settings.getHost().removePrefix("http://")
+                visibility = View.VISIBLE
+            }
+        } else { // landscape
+            title.visibility = View.GONE
+            if (Utils.isTvBox()) {
+                vi.margin(top = 56F)
+            }
+        }
+
         val speedometer = vi.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer)
 
         speedometer.unit = mbps
@@ -46,44 +63,28 @@ class SpeedTest : TSFragment() {
         speedometer.speedometerMode = Speedometer.Mode.NORMAL // TOP
 
         vi.findViewById<Button>(R.id.btn100mb)?.setOnClickListener {
-            vi?.findViewById<Button>(R.id.btn100mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btnStop)?.visibility = View.VISIBLE
+            enableButtons(vi, false)
             lifecycleScope.launch(Dispatchers.Main) {
                 speedTest(100)
             }
         }
 
         vi.findViewById<Button>(R.id.btn500mb)?.setOnClickListener {
-            vi?.findViewById<Button>(R.id.btn100mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btnStop)?.visibility = View.VISIBLE
+            enableButtons(vi, false)
             lifecycleScope.launch(Dispatchers.Main) {
                 speedTest(500)
             }
         }
 
         vi.findViewById<Button>(R.id.btn1000mb)?.setOnClickListener {
-            vi?.findViewById<Button>(R.id.btn100mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btnStop)?.visibility = View.VISIBLE
+            enableButtons(vi, false)
             lifecycleScope.launch(Dispatchers.Main) {
                 speedTest(1000)
             }
         }
 
         vi.findViewById<Button>(R.id.btn5000mb)?.setOnClickListener {
-            vi?.findViewById<Button>(R.id.btn100mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = false
-            vi?.findViewById<Button>(R.id.btnStop)?.visibility = View.VISIBLE
+            enableButtons(vi, false)
             lifecycleScope.launch(Dispatchers.Main) {
                 speedTest(5000)
             }
@@ -93,10 +94,28 @@ class SpeedTest : TSFragment() {
             setOnClickListener {
                 isStop = true
             }
-            visibility = View.INVISIBLE
+            visibility = View.INVISIBLE // hide initially
         }
+        // set initial focus
+        vi.findViewById<Button>(R.id.btn100mb)?.requestFocus()
 
         return vi
+    }
+
+    private fun enableButtons(vi: View?, enabled: Boolean) {
+        val btnStop = vi?.findViewById<Button>(R.id.btnStop)
+        vi?.findViewById<Button>(R.id.btn100mb)?.isEnabled = enabled
+        vi?.findViewById<Button>(R.id.btn500mb)?.isEnabled = enabled
+        vi?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = enabled
+        vi?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = enabled
+        if (enabled) {
+            btnStop?.visibility = View.INVISIBLE
+            vi?.findViewById<Button>(R.id.btn100mb)?.requestFocus()
+        } else
+            btnStop?.apply {
+                visibility = View.VISIBLE
+                requestFocus()
+            }
     }
 
     private suspend fun speedTest(sizeMB: Int) {
@@ -115,12 +134,18 @@ class SpeedTest : TSFragment() {
                 http.connect()
             } catch (e: Exception) {
                 setStatus(e.message ?: "Error connect to server")
+                withContext(Dispatchers.Main) {
+                    enableButtons(view, true)
+                }
                 return@launch
             }
 
             val stream = http.getInputStream()
             stream ?: let {
                 setStatus("Error connect to server")
+                withContext(Dispatchers.Main) {
+                    enableButtons(view, true)
+                }
                 return@launch
             }
 
@@ -137,15 +162,14 @@ class SpeedTest : TSFragment() {
                 }
             } catch (e: Exception) {
                 setStatus(e.message ?: "Error read from server")
+                withContext(Dispatchers.Main) {
+                    enableButtons(view, true)
+                }
             }
 
             withContext(Dispatchers.Main) {
                 view?.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer)?.speedTo(0.0f)
-                view?.findViewById<Button>(R.id.btn100mb)?.isEnabled = true
-                view?.findViewById<Button>(R.id.btn500mb)?.isEnabled = true
-                view?.findViewById<Button>(R.id.btn1000mb)?.isEnabled = true
-                view?.findViewById<Button>(R.id.btn5000mb)?.isEnabled = true
-                view?.findViewById<Button>(R.id.btnStop)?.visibility = View.INVISIBLE
+                enableButtons(view, true)
             }
         }
     }
@@ -215,16 +239,16 @@ class SpeedTest : TSFragment() {
             speedometer.clearSections()
             if (maxSpeed <= 100) {
                 speedometer.addSections(
-                    Section(0f, getPrcSpeed(50f, speedometer.maxSpeed), Color.RED),
-                    Section(getPrcSpeed(50f, speedometer.maxSpeed), getPrcSpeed(70f, speedometer.maxSpeed), Color.YELLOW),
-                    Section(getPrcSpeed(70f, speedometer.maxSpeed), 1f, Color.parseColor("#00af50"))
+                    Section(0f, getPrcSpeed(30f, maxSpeed), Color.RED),
+                    Section(getPrcSpeed(30f, maxSpeed), getPrcSpeed(70f, maxSpeed), Color.YELLOW),
+                    Section(getPrcSpeed(70f, maxSpeed), 1f, Color.parseColor("#00af50"))
                 )
             } else {
                 speedometer.addSections(
-                    Section(0f, getPrcSpeed(50f, speedometer.maxSpeed), Color.RED),
-                    Section(getPrcSpeed(50f, speedometer.maxSpeed), getPrcSpeed(70f, speedometer.maxSpeed), Color.YELLOW),
-                    Section(getPrcSpeed(70f, speedometer.maxSpeed), getPrcSpeed(100f, speedometer.maxSpeed), Color.parseColor("#00af50")),
-                    Section(getPrcSpeed(100f, speedometer.maxSpeed), 1f, Color.BLUE)
+                    Section(0f, getPrcSpeed(30f, speedometer.maxSpeed), Color.RED),
+                    Section(getPrcSpeed(30f, maxSpeed), getPrcSpeed(70f, maxSpeed), Color.YELLOW),
+                    Section(getPrcSpeed(70f, maxSpeed), getPrcSpeed(100f, maxSpeed), Color.parseColor("#00af50")),
+                    Section(getPrcSpeed(100f, maxSpeed), 1f, Color.parseColor("#00ccff"))
                 )
             }
         }
