@@ -31,7 +31,8 @@
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/speedometer">
 
                 <LinearLayout
                     android:layout_width="100dp"
@@ -47,7 +48,7 @@
                     app:sv_speedTextPadding="0dp"
                     app:sv_speedTextSize="20sp"
                     app:sv_speedometerWidth="8dp"
-                    app:sv_textColor="?attr/colorBright"
+                    app:sv_textColor="@color/light_gray"
                     app:sv_unitTextColor="?attr/colorPrimary"
                     app:sv_unitTextSize="20sp"
                     app:sv_unitUnderSpeedText="false" />
@@ -58,12 +59,15 @@
                 android:id="@+id/tvSPStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="3dp"
                 android:text=""
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?attr/colorBright"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="Some error can produce long description here and take few lines"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

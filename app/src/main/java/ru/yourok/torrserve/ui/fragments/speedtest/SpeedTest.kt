@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.github.anastr.speedviewlib.Speedometer
@@ -51,6 +52,8 @@ class SpeedTest : TSFragment() {
             title.visibility = View.GONE
             if (Utils.isTvBox()) {
                 vi.margin(top = 56F)
+            } else {
+                vi.findViewById<FrameLayout>(R.id.speedometer).margin(top = 10F)
             }
         }
 
