@@ -11,8 +11,8 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import com.github.anastr.speedviewlib.PointerSpeedometer
 import com.github.anastr.speedviewlib.Speedometer
-import com.github.anastr.speedviewlib.TubeSpeedometer
 import com.github.anastr.speedviewlib.components.Section
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,7 +57,7 @@ class SpeedTest : TSFragment() {
             }
         }
 
-        val speedometer = vi.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer)
+        val speedometer = vi.findViewById<PointerSpeedometer>(R.id.tubeSpeedometer)
 
         speedometer.unit = mbps
         speedometer.minSpeed = 0f
@@ -171,7 +171,7 @@ class SpeedTest : TSFragment() {
             }
 
             withContext(Dispatchers.Main) {
-                view?.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer)?.speedTo(0.0f)
+                view?.findViewById<PointerSpeedometer>(R.id.tubeSpeedometer)?.speedTo(0.0f)
                 enableButtons(view, true)
             }
         }
@@ -210,7 +210,7 @@ class SpeedTest : TSFragment() {
         withContext(Dispatchers.Main) {
             val ms = String.format("%s %.1f$mbps | %s %.1f$mbps", getString(R.string.avg), averageSpeed, getString(R.string.max), maxSpeed)
             view?.findViewById<TextView>(R.id.tvSPStatus)?.text = ms
-            view?.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer)?.speedTo(speed)
+            view?.findViewById<PointerSpeedometer>(R.id.tubeSpeedometer)?.speedTo(speed)
         }
     }
 
@@ -237,7 +237,7 @@ class SpeedTest : TSFragment() {
 
     private suspend fun setSection(maxSpeed: Float) {
         withContext(Dispatchers.Main) {
-            val speedometer = view?.findViewById<TubeSpeedometer>(R.id.tubeSpeedometer) ?: return@withContext
+            val speedometer = view?.findViewById<PointerSpeedometer>(R.id.tubeSpeedometer) ?: return@withContext
             speedometer.maxSpeed = maxSpeed
             speedometer.clearSections()
             if (maxSpeed <= 100) {
