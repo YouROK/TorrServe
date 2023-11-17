@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- DayNight Theme -->
-    <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Dark" />
-    <style name="PlayDialog.DayNight" parent="PlayDialog.Dark" />
+    <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Black" />
+    <style name="PlayDialog.DayNight" parent="PlayDialog.Black" />
 </resources>

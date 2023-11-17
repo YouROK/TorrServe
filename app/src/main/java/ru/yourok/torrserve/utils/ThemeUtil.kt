@@ -1,11 +1,16 @@
 package ru.yourok.torrserve.utils
 
 import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
+import android.util.Log
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.settings.Settings.getTheme
 
 class ThemeUtil {
@@ -19,6 +24,18 @@ class ThemeUtil {
         if (currentTheme != selectedTheme) {
             activity.recreate()
         }
+    }
+
+    fun onConfigurationChanged(activity: AppCompatActivity, newConfig: Configuration) {
+        val isNightModeActive =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                activity.resources.configuration.isNightModeActive
+            } else {
+                newConfig.uiMode and
+                        Configuration.UI_MODE_NIGHT_MASK ==
+                        Configuration.UI_MODE_NIGHT_YES
+            }
+        if (BuildConfig.DEBUG) Log.d("*****", "onConfigurationChanged isNightModeActive = $isNightModeActive")
     }
 
     companion object {
@@ -42,6 +59,15 @@ class ThemeUtil {
         ): Int {
             context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
             return typedValue.data
+        }
+
+        fun isDarkMode(context: Context): Boolean {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                context.resources.configuration.isNightModeActive
+            } else {
+                val darkModeFlag = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                darkModeFlag == Configuration.UI_MODE_NIGHT_YES
+            }
         }
     }
 }
