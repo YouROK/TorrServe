@@ -8,9 +8,12 @@ import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils
+import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.settings.Settings.getTheme
 
 class ThemeUtil {
@@ -41,8 +44,7 @@ class ThemeUtil {
     companion object {
         val selectedTheme: Int
             get() {
-                val theme = getTheme()
-                return when (theme) {
+                return when (getTheme()) {
                     "light" -> R.style.Theme_TorrServe_Light
                     "dark" -> R.style.Theme_TorrServe_Dark
                     "black" -> R.style.Theme_TorrServe_Black
@@ -67,6 +69,15 @@ class ThemeUtil {
             } else {
                 val darkModeFlag = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
                 darkModeFlag == Configuration.UI_MODE_NIGHT_YES
+            }
+        }
+
+        fun setNightMode() {
+            when (getTheme()) {
+                "dark", "black" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                else -> if (Utils.isTvBox()) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_TIME) else
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) // phones
             }
         }
     }

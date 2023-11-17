@@ -34,6 +34,7 @@ import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.ui.fragments.speedtest.SpeedTest
 import ru.yourok.torrserve.utils.Accessibility
+import ru.yourok.torrserve.utils.ThemeUtil
 import ru.yourok.torrserve.utils.ThemeUtil.Companion.isDarkMode
 
 
@@ -136,6 +137,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             summary = "$summary (${darkMode})"
             setOnPreferenceChangeListener { _, newValue ->
                 Settings.setTheme(newValue.toString())
+                ThemeUtil.setNightMode()
                 requireActivity().recreate()
                 true
             }
