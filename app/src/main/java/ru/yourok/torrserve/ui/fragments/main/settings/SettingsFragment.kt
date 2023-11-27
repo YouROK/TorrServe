@@ -36,7 +36,10 @@ import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 //import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 //import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
+import ru.yourok.torrserve.ui.fragments.speedtest.SpeedTest
 import ru.yourok.torrserve.utils.Accessibility
+import ru.yourok.torrserve.utils.ThemeUtil
+import ru.yourok.torrserve.utils.ThemeUtil.Companion.isDarkMode
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -94,6 +97,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
+        findPreference<Preference>("speedtest")?.apply {
+            setOnPreferenceClickListener {
+                SpeedTest().show(requireActivity(), R.id.container, true)
+                true
+            }
+        }
+
         findPreference<Preference>("server_settings")?.setOnPreferenceClickListener {
             ServerSettingsFragment().show(requireActivity(), R.id.container, true)
             true
@@ -127,28 +137,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<ListPreference>("app_theme")?.apply {
+            val darkMode = if (isDarkMode(this.context)) "NM" else "DM"
+            summary = "$summary (${darkMode})"
             setOnPreferenceChangeListener { _, newValue ->
                 Settings.setTheme(newValue.toString())
+                ThemeUtil.setNightMode()
                 requireActivity().recreate()
                 true
-            }
-        }
-
-        fun showPowerRequest(context: Context) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                val pm = context.getSystemService(POWER_SERVICE) as PowerManager
-                val isIgnoringBatteryOptimizations = pm.isIgnoringBatteryOptimizations(
-                    context.packageName
-                )
-                if (!isIgnoringBatteryOptimizations) {
-                    val intent = Intent()
-                    intent.action = android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-                    intent.data = Uri.parse("package:${context.packageName}")
-                    try {
-                        startActivity(intent)
-                    } catch (_: Exception) {
-                    }
-                }
             }
         }
 
@@ -263,6 +258,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
             this.isChecked = Accessibility.isEnabledService(App.context)
             if (this.isChecked)
                 findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
+        }
+    }
+
+    fun showPowerRequest(context: Context) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            val pm = context.getSystemService(POWER_SERVICE) as PowerManager
+            val isIgnoringBatteryOptimizations = pm.isIgnoringBatteryOptimizations(
+                context.packageName
+            )
+            if (!isIgnoringBatteryOptimizations) {
+                val intent = Intent()
+                intent.action = android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                intent.data = Uri.parse("package:${context.packageName}")
+                try {
+                    startActivity(intent)
+                } catch (_: Exception) {
+                }
+            }
         }
     }
 

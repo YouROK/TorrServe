@@ -161,7 +161,7 @@
     <string name="error_download_ffprobe">FFProbe download error</string>
     <string name="error_empty_link">Torrent link is empty</string>
     <string name="error_intent_null">Intent is null</string>
-    <string name="error_process_cmd">Error when processing cmd, see logcat.</string>
+    <string name="error_process_intent">Error opening player. Check settings.</string>
     <string name="error_retrieve_data">Error retrieve data</string>
     <string name="error_retrieve_torrent_file">No playable files found</string>
     <string name="error_retrieve_torrent_info">Error retrieve torrent info</string>
@@ -186,6 +186,9 @@
     <string name="app_version">App Version</string>
 
     <string name="host_title">Set TorrServer URL</string>
+
+    <string name="speedtest_title">TorrServer Speed Test</string>
+    <string name="speedtest_title_desc">Test speed to TorrServer</string>
 
     <string name="host_authorization">Server Authorization</string>
     <string name="host_authorization_desc">Enter username and password separated by a colon (user:password), leave blank for no auth.</string>
@@ -249,6 +252,8 @@
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
     <string name="runtime">Runtime</string>
+    <string name="avg">average</string>
+    <string name="max">max.</string>
 
     <string name="sort_by_name">Sort list by Title</string>
     <string name="sort_by_size">Sort list by Size</string>

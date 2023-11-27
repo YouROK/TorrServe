@@ -82,7 +82,7 @@
         <item name="alertDialogTheme">@style/AlertDialog.Black</item>
     </style>
     <!-- DayNight Theme -->
-    <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
+    <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Dark" />
     <!-- Play Dialog Dark Style -->
     <style name="PlayDialog.Dark" parent="Theme.MaterialComponents.Dialog">
         <item name="windowNoTitle">true</item>
@@ -133,7 +133,7 @@
         <item name="alertDialogTheme">@style/AlertDialog.Black</item>
     </style>
     <!-- Play Dialog DayNight Style -->
-    <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
+    <style name="PlayDialog.DayNight" parent="PlayDialog.Dark" />
     <!-- Head Preference Category -->
     <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
         <item name="android:layout">@layout/head_preference_category</item>

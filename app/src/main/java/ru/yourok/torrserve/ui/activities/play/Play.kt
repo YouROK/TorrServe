@@ -122,8 +122,7 @@ object Play {
                             App.context.startActivity(it)
                             successful(it)
                         } catch (e: Exception) {
-                            //e.message?.let { msg -> App.toast(msg) }
-                            error(ErrProcessCmd) // TODO: add specific error
+                            error(ErrProcessIntent)
                         }
                     }
                 }
@@ -139,8 +138,7 @@ object Play {
                 App.context.startActivity(it)
                 successful(it)
             } catch (e: Exception) {
-                //e.message?.let { msg -> App.toast(msg) }
-                error(ErrProcessCmd) // TODO: add specific error
+                error(ErrProcessIntent)
             }
         }
     }

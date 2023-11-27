@@ -46,7 +46,7 @@ object Settings {
     fun sortTorrByTitle(): Boolean = get("sort_torrents", false)
     fun showFab(): Boolean = get("show_fab", true)
 
-    fun getTheme(): String = get("theme", "dark")
+    fun getTheme(): String = get("theme", "auto")
     fun setTheme(v: String) = set("theme", v)
 
     fun getHost(): String = get("host", "http://127.0.0.1:8090")

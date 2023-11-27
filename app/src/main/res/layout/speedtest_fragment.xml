@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text=""
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="?attr/colorHost"
+                android:textSize="20sp"
+                android:visibility="gone"
+                tools:text="127.0.0.1:8090"
+                tools:visibility="visible" />
+
+            <FrameLayout
+                android:id="@+id/speedometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.github.anastr.speedviewlib.PointerSpeedometer
+                    android:id="@+id/tubeSpeedometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:sv_backgroundCircleColor="@android:color/transparent"
+                    app:sv_indicator="NormalSmallIndicator"
+                    app:sv_indicatorColor="@color/orange_dark"
+                    app:sv_markColor="@color/orange_dark"
+                    app:sv_pointerColor="@color/orange_dark"
+                    app:sv_speedTextColor="?attr/colorPrimary"
+                    app:sv_speedTextPadding="0dp"
+                    app:sv_speedTextSize="20sp"
+                    app:sv_speedometerColor="@color/orange_dark"
+                    app:sv_speedometerWidth="8dp"
+                    app:sv_textColor="@color/orange_dark"
+                    app:sv_unitTextColor="?attr/colorPrimary"
+                    app:sv_unitTextSize="20sp"
+                    app:sv_unitUnderSpeedText="false"
+                    app:sv_withPointer="false" />
+
+                <LinearLayout
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ts_round" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvSPStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="3dp"
+                android:text=""
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="?attr/colorBright"
+                android:textSize="16sp"
+                tools:text="Some error can produce long description here and take few lines" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn100mb"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="100 MB"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btn500mb"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="500 MB"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btn1000mb"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="1 GB"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btn5000mb"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="5 GB"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnStop"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
