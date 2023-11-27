@@ -16,7 +16,7 @@ android {
         // for older androids
         multiDexEnabled true
         versionCode 147
-        versionName "MatriX.127.F-Droid"
+        versionName "MatriX.128.F-Droid"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
