@@ -90,8 +90,8 @@
     <string name="poster_link">Постер URL</string>
     <string name="poster_link_help">Въведете URL адрес към постер (опционално)</string>
     <string name="local_ip">Локално IP</string>
-    <string name="connected_host">Свързан към</string>
-    <string name="find_hosts">Окртий хостове</string>
+    <string name="connected_host">Свързан</string>
+    <string name="find_hosts">Открий TorrServ адреси</string>
     <string name="local_server">Локален сървър</string>
     <string name="saved_server">Записан сървър</string>
     <string name="new_server">Нов сървър</string>
