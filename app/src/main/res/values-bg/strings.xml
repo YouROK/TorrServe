@@ -132,7 +132,7 @@
     <string name="error_download_ffprobe">FFProbe грешка при сваляне</string>
     <string name="error_empty_link">Връзката към Torrent-а е празна</string>
     <string name="error_intent_null">Intent is null</string>
-    <string name="error_process_cmd">Грешка при изпълнение на командата, вижте logcat.</string>
+    <string name="error_process_intent">Грешка при отваряне на плейъра. Проверете настройките.</string>
     <string name="error_retrieve_data">Грешка при получаване на данните</string>
     <string name="error_retrieve_torrent_file">Не са намерени файлове за пускане</string>
     <string name="error_retrieve_torrent_info">Грешка при получаване на инфорамция за торента</string>
@@ -150,6 +150,8 @@
     <string name="app_settings">Настройки</string>
     <string name="app_version">Версия</string>
     <string name="host_title">Задайте URL адрес на TorrServer</string>
+    <string name="speedtest_title">Тест на скоростта към TorrServer</string>
+    <string name="speedtest_title_desc">Тествайте скоростта на TorrServer</string>
     <string name="host_authorization">Оторизация към сървъра</string>
     <string name="host_authorization_desc">Въведете потребителско име и парола, разделени с двоеточие (потребител:парола), оставете празно за липса на удостоверяване.</string>
     <string name="local_auth_title">Локален TorrServer с оторизация</string>
@@ -199,6 +201,8 @@
     <string name="fmt_b">B</string>
     <string name="fmt_bps">bps</string>
     <string name="runtime">Времетраене</string>
+    <string name="avg">средн.</string>
+    <string name="max">макс.</string>
     <string name="sort_by_name">Сортиране на списъка по заглавие</string>
     <string name="sort_by_size">Сортиране на списъка по размер</string>
     <string name="sort_by_seed">Сортиране на списъка по сийдъри</string>

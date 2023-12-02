@@ -1,8 +1,12 @@
 package ru.yourok.torrserve.ui.fragments.main.settings
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Context.POWER_SERVICE
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -28,7 +32,10 @@ import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
+import ru.yourok.torrserve.ui.fragments.speedtest.SpeedTest
 import ru.yourok.torrserve.utils.Accessibility
+import ru.yourok.torrserve.utils.ThemeUtil
+import ru.yourok.torrserve.utils.ThemeUtil.Companion.isDarkMode
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -86,6 +93,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
+        findPreference<Preference>("speedtest")?.apply {
+            setOnPreferenceClickListener {
+                SpeedTest().show(requireActivity(), R.id.container, true)
+                true
+            }
+        }
+
         findPreference<Preference>("server_settings")?.setOnPreferenceClickListener {
             ServerSettingsFragment().show(requireActivity(), R.id.container, true)
             true
@@ -119,32 +133,47 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<ListPreference>("app_theme")?.apply {
+            val darkMode = if (isDarkMode(this.context)) "NM" else "DM"
+            summary = "$summary (${darkMode})"
             setOnPreferenceChangeListener { _, newValue ->
                 Settings.setTheme(newValue.toString())
+                ThemeUtil.setNightMode()
                 requireActivity().recreate()
                 true
             }
         }
 
         findPreference<Preference>("show_battery_save")?.apply {
+            // https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                val intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager
+                val pkgIgnored = powerManager.isIgnoringBatteryOptimizations(context.packageName)
+                var intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                if (!pkgIgnored) {
+                    intent = Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                    intent.data = Uri.parse("package:${context.packageName}")
+                }
                 val cmp = intent.resolveActivity(requireActivity().packageManager)
                 if (cmp == null)
                     ps?.removePreference(this)
                 else {
                     setOnPreferenceClickListener {
-                        if (Utils.isGoogleTV()) {
-                            if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
-                                intent.`package` = "com.android.settings"
+                        //showPowerRequest(context)
+                        try {
+                            if (Utils.isGoogleTV()) { // open Power Settings
+                                if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
+                                    intent.`package` = "com.android.settings"
+                                    requireActivity().startActivity(intent)
+                                } else { // show TV Settings and info toast
+                                    intent = Intent(android.provider.Settings.ACTION_SETTINGS)
+                                    requireActivity().startActivity(intent)
+                                    App.toast(R.string.show_battery_save_tv, true)
+                                }
+                            } else { // mobile - show request dialog / power prefs
                                 requireActivity().startActivity(intent)
-                            } else {
-                                val tvintent = Intent(android.provider.Settings.ACTION_SETTINGS)
-                                requireActivity().startActivity(tvintent)
-                                App.toast(R.string.show_battery_save_tv, true)
                             }
-                        } else
-                            requireActivity().startActivity(intent)
+                        } catch (_: Exception) {
+                        }
                         true
                     }
                 }
@@ -225,6 +254,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
             this.isChecked = Accessibility.isEnabledService(App.context)
             if (this.isChecked)
                 findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
+        }
+    }
+
+    fun showPowerRequest(context: Context) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            val pm = context.getSystemService(POWER_SERVICE) as PowerManager
+            val isIgnoringBatteryOptimizations = pm.isIgnoringBatteryOptimizations(
+                context.packageName
+            )
+            if (!isIgnoringBatteryOptimizations) {
+                val intent = Intent()
+                intent.action = android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                intent.data = Uri.parse("package:${context.packageName}")
+                try {
+                    startActivity(intent)
+                } catch (_: Exception) {
+                }
+            }
         }
     }
 

@@ -13,6 +13,11 @@
         app:title="@string/host_title" />
 
     <Preference
+        app:key="speedtest"
+        app:summary="@string/speedtest_title_desc"
+        app:title="@string/speedtest_title" />
+
+    <Preference
         app:key="server_settings"
         app:summary="@string/torserver_summary"
         app:title="@string/torserver_title" />
@@ -83,6 +88,7 @@
         app:title="@string/show_fab_title" />
 
     <ListPreference
+        android:defaultValue="auto"
         app:entries="@array/app_theme_entries"
         app:entryValues="@array/app_theme_entries_values"
         app:key="app_theme"

@@ -25,6 +25,7 @@ class Http(url: Uri) {
     private var connection: HttpURLConnection? = null
     private var errMsg: String = ""
     private var inputStream: InputStream? = null
+    private var auth: String = ""
 
     private var timeout = 30000
 
@@ -56,6 +57,9 @@ class Http(url: Uri) {
             connection!!.setRequestProperty("Accept-Encoding", "gzip")
             if (pos > 0)
                 connection!!.setRequestProperty("Range", "bytes=$pos-")
+
+            if (auth.isNotBlank())
+                connection!!.setRequestProperty("Authorization", auth)
 
             connection!!.connect()
 
@@ -98,6 +102,10 @@ class Http(url: Uri) {
 
     fun isConnected(): Boolean {
         return isConn
+    }
+
+    fun setAuth(auth: String) {
+        this.auth = auth
     }
 
     fun getSize(): Long {

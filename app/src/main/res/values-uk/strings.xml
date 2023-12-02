@@ -125,7 +125,7 @@
     <string name="error_download_ffprobe">Помилка завантаження FFProbe</string>
     <string name="error_empty_link">Посилання на торрент порожнє</string>
     <string name="error_intent_null">Порожній інтент</string>
-    <string name="error_process_cmd">Помилка при обробці cmd, див. logcat</string>
+    <string name="error_process_intent">Помилка відкриття плеєра. Перевірте налаштування.</string>
     <string name="error_retrieve_data">Помилка отримання данних</string>
     <string name="error_retrieve_torrent_file">У торренті не знайдено файлів мультимедіа</string>
     <string name="error_retrieve_torrent_info">Помилка отримання інформації торренту</string>
@@ -141,6 +141,8 @@
     <string name="app_settings">Налаштування додатку</string>
     <string name="app_version">Версія додатка</string>
     <string name="host_title">Встановити URL-адресу TorrServer</string>
+    <string name="speedtest_title">Тест швидкості до TorrServer</string>
+    <string name="speedtest_title_desc">Перевірте швидкість TorrServer</string>
     <string name="host_authorization">Авторизація на сервері</string>
     <string name="host_authorization_desc">Введіть логін та пароль через «:» (user:pass)</string>
     <string name="local_auth_title">Локальний TorrServer з авторизацією</string>
@@ -190,6 +192,8 @@
     <string name="fmt_b">Б</string>
     <string name="fmt_bps">біт/с</string>
     <string name="runtime">Тривалість</string>
+    <string name="avg">середн.</string>
+    <string name="max">макс.</string>
     <string name="sort_by_name">Сортування за назвою</string>
     <string name="sort_by_size">Сортування за розміром</string>
     <string name="sort_by_seed">Сортування за роздавальним</string>

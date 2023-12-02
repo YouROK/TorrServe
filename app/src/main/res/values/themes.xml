@@ -82,7 +82,7 @@
         <item name="alertDialogTheme">@style/AlertDialog.Black</item>
     </style>
     <!-- DayNight Theme -->
-    <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Light" />
+    <style name="Theme.TorrServe.DayNight" parent="Theme.TorrServe.Dark" />
     <!-- Play Dialog Dark Style -->
     <style name="PlayDialog.Dark" parent="Theme.MaterialComponents.Dialog">
         <item name="windowNoTitle">true</item>
@@ -133,7 +133,7 @@
         <item name="alertDialogTheme">@style/AlertDialog.Black</item>
     </style>
     <!-- Play Dialog DayNight Style -->
-    <style name="PlayDialog.DayNight" parent="PlayDialog.Light" />
+    <style name="PlayDialog.DayNight" parent="PlayDialog.Dark" />
     <!-- Head Preference Category -->
     <style name="HeadPreferenceCategory" parent="@style/Preference.Category.Material">
         <item name="android:layout">@layout/head_preference_category</item>
@@ -155,17 +155,17 @@
     </style>
     <!-- Checkboxes Text -->
     <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
-        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>
     <!-- RadioButton -->
     <style name="Widget.App.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
-        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
+        <item name="android:textColor">@color/text_color</item>
     </style>
     <!-- Switch -->
     <style name="Widget.App.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
-        <item name="android:textColor">?attr/colorBright</item><!-- TODO: colorStateList -->
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">16sp</item>
         <item name="thumbTint">@color/thumb_color</item>
     </style>
@@ -180,7 +180,8 @@
         <!-- Used for the title -->
         <item name="materialAlertDialogTitleTextStyle">@style/AlertTitleTextStyle</item>
         <!-- Used for the text -->
-        <item name="android:textColorPrimary">@color/tv_white</item>
+<!--        <item name="android:textColor">@color/text_color</item>-->
+        <item name="android:textColorPrimary">@color/text_color</item>
         <!-- Set min width -->
         <item name="windowMinWidthMajor">50%</item><!-- landscape -->
         <item name="windowMinWidthMinor">70%</item><!-- portrait -->
@@ -197,9 +198,8 @@
         <item name="android:windowBackground">@drawable/rc_background_light</item>
         <item name="colorPrimary">@color/dark_brown</item>
         <item name="colorAccent">@color/dark_brown</item>
-        <!-- Used for the checkboxes text -->
-        <item name="android:textColorPrimary">@color/dark_brown</item>
     </style>
+    <!-- Dialog Black Style -->
     <style name="AlertDialog.Black" parent="AlertDialog">
         <item name="android:windowBackground">@drawable/rc_background_black</item>
         <item name="colorPrimary">@color/green</item>

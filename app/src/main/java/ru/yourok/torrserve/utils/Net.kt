@@ -30,7 +30,7 @@ object Net {
             url + path
     }
 
-    private fun getAuthB64(): String {
+    fun getAuthB64(): String {
         val auth = Settings.getServerAuth()
         if (auth.isNotEmpty())
             return "Basic " + android.util.Base64.encode(auth.toByteArray(), android.util.Base64.NO_WRAP).toString(Charset.defaultCharset())

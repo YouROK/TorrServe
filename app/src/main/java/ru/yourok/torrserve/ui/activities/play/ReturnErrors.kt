@@ -7,7 +7,7 @@ data class ReturnError(val errCode: Int, val errMessage: String)
 
 val ErrIntentNull = ReturnError(-1, App.context.getString(R.string.error_intent_null))
 val ErrUnknownCmd = ReturnError(-2, App.context.getString(R.string.error_unknown_command))
-val ErrProcessCmd = ReturnError(-3, App.context.getString(R.string.error_process_cmd))
+val ErrProcessIntent = ReturnError(-3, App.context.getString(R.string.error_process_intent))
 val ErrEmptyTorrent = ReturnError(-4, App.context.getString(R.string.error_empty_link))
 val ErrLoadTorrent = ReturnError(-5, App.context.getString(R.string.error_add_torrent))
 val ErrLoadTorrentInfo = ReturnError(-6, App.context.getString(R.string.error_retrieve_torrent_info))
