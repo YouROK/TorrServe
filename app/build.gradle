@@ -15,7 +15,7 @@ android {
         targetSdkVersion 28
         // for older androids
         multiDexEnabled true
-        versionCode 147
+        versionCode 148
         versionName "MatriX.128.F-Droid"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
@@ -57,7 +57,7 @@ dependencies {
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3')
     // http client/parser
     //noinspection GradleDependency 1.16.2 thorow java.lang.VerifyError on api19
-    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.jsoup:jsoup:1.17.1'
     // json serializer
     //noinspection GradleDependency 2.10.1 thorow java.lang.VerifyError on api17
     implementation 'com.google.code.gson:gson:2.9.1' // 2.10.1
@@ -76,7 +76,7 @@ dependencies {
     //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api17 compatible
     //implementation 'com.google.firebase:firebase-crashlytics:18.2.5'
     // speed test
-    implementation 'com.github.anastr:speedviewlib:1.6.0'
+    implementation 'com.github.anastr:speedviewlib:1.6.1'
 }
 
 repositories {
