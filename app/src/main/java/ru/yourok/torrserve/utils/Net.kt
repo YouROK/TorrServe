@@ -40,7 +40,9 @@ object Net {
     fun uploadAuth(url: String, title: String, poster: String, data: String, file: InputStream, save: Boolean): String {
         val req = Jsoup.connect(url)
             .data("file1", "filename", file)
+            .ignoreHttpErrors(true)
             .ignoreContentType(true)
+            .sslSocketFactory(insecureTlsSocketFactory())
             .method(Connection.Method.POST)
 
         if (save)
@@ -62,6 +64,7 @@ object Net {
             .requestBody(req)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
+            .sslSocketFactory(insecureTlsSocketFactory())
             .method(Connection.Method.POST)
             .maxBodySize(0) // The default maximum is 2MB, 0 = unlimited body
 
@@ -90,6 +93,7 @@ object Net {
         val conn = Jsoup.connect(url)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
+            .sslSocketFactory(insecureTlsSocketFactory())
             .timeout(duration)
 
         val auth = getAuthB64()
