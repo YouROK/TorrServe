@@ -53,6 +53,7 @@
         <activity
             android:name="ru.yourok.torrserve.ui.activities.main.MainActivity"
             android:launchMode="singleInstance"
+            android:configChanges="uiMode"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -78,6 +79,7 @@
         <activity
             android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity"
             android:theme="@style/PlayDialog.DayNight"
+            android:configChanges="uiMode"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -211,6 +213,7 @@
         </activity>
 
         <activity android:name="ru.yourok.torrserve.ui.activities.main.SettingsActivity"
+            android:configChanges="uiMode"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

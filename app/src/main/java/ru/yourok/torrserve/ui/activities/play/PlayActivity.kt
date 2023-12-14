@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.activities.play
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -42,6 +43,8 @@ class PlayActivity : AppCompatActivity() {
     var torrentFileIndex: Int = -1
 
     private var userClose = false
+
+    private val themeUtil = ThemeUtil()
 
 //    var ad: AD? = null
     val infoFragment = InfoFragment()
@@ -142,6 +145,12 @@ class PlayActivity : AppCompatActivity() {
                 }
         }
         super.onDestroy()
+    }
+
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        if (App.inForeground) super.onConfigurationChanged(newConfig)
+        themeUtil.onConfigurationChanged(this, newConfig)
     }
 
     private fun setWindow() {

@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.activities.main
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -87,6 +88,11 @@ class SettingsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         themeUtil.onResume(this)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        themeUtil.onConfigurationChanged(this, newConfig)
     }
 
 }

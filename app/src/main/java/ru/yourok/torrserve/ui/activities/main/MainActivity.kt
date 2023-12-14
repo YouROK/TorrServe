@@ -2,6 +2,7 @@ package ru.yourok.torrserve.ui.activities.main
 
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -127,6 +128,11 @@ class MainActivity : AppCompatActivity() {
         //TorrService.start()
         updateStatus()
         if (Settings.showFab()) setupFab()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        themeUtil.onConfigurationChanged(this, newConfig)
     }
 
     private fun updateStatus() {
