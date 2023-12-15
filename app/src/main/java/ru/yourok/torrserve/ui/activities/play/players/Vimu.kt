@@ -25,15 +25,16 @@ object Vimu {
         if (torrfiles.size > 1) {
             val names = ArrayList<String>()
             val files = ArrayList<String>()
-            torrfiles.forEach {
-                if (it.id >= index) {
-                    names.add(File(it.path).name)
-                    files.add(TorrentHelper.getFileLink(torrent, it))
-                }
+            var idx = 0
+            for (i in torrfiles.indices) {
+                names.add(File(torrfiles[i].path).name)
+                files.add(TorrentHelper.getFileLink(torrent, torrfiles[i]))
+                if (torrfiles[i].id == index) idx = i
             }
             intent.setDataAndType(Uri.parse(link), "application/vnd.gtvbox.filelist")
             intent.putStringArrayListExtra("asusfilelist", files)
             intent.putStringArrayListExtra("asusnamelist", names)
+            intent.putExtra("startindex", idx)
         }
         return intent
     }

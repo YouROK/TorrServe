@@ -46,8 +46,9 @@ class PlayActivity : AppCompatActivity() {
 
     private val themeUtil = ThemeUtil()
 
-//    var ad: AD? = null
     val infoFragment = InfoFragment()
+
+//    var ad: AD? = null
 
 //    private var firebaseAnalytics: FirebaseAnalytics? = null
 
