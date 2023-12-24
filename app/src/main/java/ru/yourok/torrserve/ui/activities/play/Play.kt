@@ -65,14 +65,12 @@ object Play {
                         lifecycleScope.launch {
                             streamTorrent(torrent, files.first().id)
                         }
-                        //successful(Intent())
                     }
 
                     torrentFileIndex > 0 -> {
                         lifecycleScope.launch {
                             streamTorrent(torrent, torrentFileIndex)
                         }
-                        //successful(Intent())
                     }
 
                     else -> {
