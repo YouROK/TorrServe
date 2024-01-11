@@ -60,13 +60,24 @@ object Utils {
         return intent.resolveActivity(pm!!) != null
     }
 
-    fun isGoogleTV(): Boolean {
-        return App.context.packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-    }
+    val isGoogleTV: Boolean
+        get() {
+            return App.context.packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+        }
 
-    fun isAmazonTV(): Boolean {
-        return App.context.packageManager.hasSystemFeature(FEATURE_FIRE_TV)
-    }
+    val isAmazonTV: Boolean
+        get() {
+            return App.context.packageManager.hasSystemFeature(FEATURE_FIRE_TV)
+        }
+
+    private val deviceName: String
+        get() = String.format("%s (%s)", Build.MODEL, Build.PRODUCT)
+
+    val isBrokenTCL: Boolean
+        get() {
+            val deviceName = deviceName
+            return deviceName.contains("(tcl_m7642)")
+        }
 
     fun buildPendingIntent(torr: Torrent): Intent {
         val vintent = Intent(App.context, PlayActivity::class.java)
@@ -85,7 +96,7 @@ object Utils {
     private var lock = Any()
     fun updateAtvCards() {
 
-        if (isGoogleTV()) {
+        if (isGoogleTV) {
             synchronized(lock) {
                 if (lock == true)
                     return

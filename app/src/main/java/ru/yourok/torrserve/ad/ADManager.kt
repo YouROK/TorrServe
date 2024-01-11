@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import org.jsoup.Jsoup
 import ru.yourok.torrserve.ad.model.ADData
 import ru.yourok.torrserve.app.Consts
+import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.utils.Net
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,7 +18,7 @@ object ADManager {
     fun expired(): Boolean {
         get()?.let {
             if (it.expired != "0") {
-                val formatter = SimpleDateFormat("dd.MM.yyyy")
+                val formatter = SimpleDateFormat("dd.MM.yyyy", Locale.US)
                 val date = formatter.parse(it.expired) as Date
                 return System.currentTimeMillis() > date.time
             }
@@ -49,20 +50,24 @@ object ADManager {
             }
             HttpsURLConnection.setDefaultHostnameVerifier(trustAllHostnames)
         }
-        val response = Jsoup.connect(url)
+        val conn = Jsoup.connect(url)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-            .sslSocketFactory(Net.insecureTlsSocketFactory())
             .timeout(3000)
-            .execute()
+        if (!Utils.isBrokenTCL)
+            conn.sslSocketFactory(Net.insecureTlsSocketFactory())
+
+        val response = conn.execute()
 
         return when (response.statusCode()) {
             200 -> {
                 response.body()
             }
+
             302 -> {
                 ""
             }
+
             else -> {
                 throw Exception(response.statusMessage())
             }
