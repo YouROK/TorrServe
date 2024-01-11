@@ -38,15 +38,20 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
 
     @Suppress("DEPRECATION")
     fun getSize(): String {
-        val stat = StatFs(path)
-        val bytesAvailable = if (Build.VERSION.SDK_INT >=
-            Build.VERSION_CODES.JELLY_BEAN_MR2
-        ) {
-            stat.blockSizeLong * stat.availableBlocksLong
-        } else {
-            stat.blockSize.toLong() * stat.availableBlocks.toLong()
+        val size = try {
+            val stat = StatFs(path)
+            val bytesAvailable = if (Build.VERSION.SDK_INT >=
+                Build.VERSION_CODES.JELLY_BEAN_MR2
+            ) {
+                stat.blockSizeLong * stat.availableBlocksLong
+            } else {
+                stat.blockSize.toLong() * stat.availableBlocks.toLong()
+            }
+            Format.byteFmt(bytesAvailable)
+        } catch (_: Exception) {
+            "N/A"
         }
-        return Format.byteFmt(bytesAvailable)
+        return size
     }
 
     fun dirUp() {

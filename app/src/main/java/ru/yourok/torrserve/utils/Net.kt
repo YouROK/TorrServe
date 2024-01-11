@@ -5,6 +5,7 @@ import android.net.Uri
 import info.guardianproject.netcipher.client.TlsOnlySocketFactory
 import org.jsoup.Connection
 import org.jsoup.Jsoup
+import ru.yourok.torrserve.atv.Utils.isBrokenTCL
 import ru.yourok.torrserve.settings.Settings
 import java.io.InputStream
 import java.net.Inet4Address
@@ -42,9 +43,9 @@ object Net {
             .data("file1", "filename", file)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-            .sslSocketFactory(insecureTlsSocketFactory())
             .method(Connection.Method.POST)
-
+        if (!isBrokenTCL)
+            req.sslSocketFactory(insecureTlsSocketFactory())
         if (save)
             req.data("save", "true")
         req.data("title", title)
@@ -55,8 +56,8 @@ object Net {
         if (auth.isNotEmpty())
             req.header("Authorization", auth)
 
-        val resp = req.execute()
-        return resp.body()
+        val response = req.execute()
+        return response.body()
     }
 
     fun postAuth(url: String, req: String): String {
@@ -64,9 +65,10 @@ object Net {
             .requestBody(req)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-            .sslSocketFactory(insecureTlsSocketFactory())
             .method(Connection.Method.POST)
             .maxBodySize(0) // The default maximum is 2MB, 0 = unlimited body
+        if (!isBrokenTCL)
+            conn.sslSocketFactory(insecureTlsSocketFactory())
 
         val auth = getAuthB64()
         if (auth.isNotEmpty())
@@ -93,8 +95,9 @@ object Net {
         val conn = Jsoup.connect(url)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-            .sslSocketFactory(insecureTlsSocketFactory())
             .timeout(duration)
+        if (!isBrokenTCL)
+            conn.sslSocketFactory(insecureTlsSocketFactory())
 
         val auth = getAuthB64()
         if (auth.isNotEmpty())
@@ -125,12 +128,14 @@ object Net {
             }
             HttpsURLConnection.setDefaultHostnameVerifier(trustAllHostnames)
         }
-        val response = Jsoup.connect(url)
+        val conn = Jsoup.connect(url)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
-            .sslSocketFactory(insecureTlsSocketFactory())
             .timeout(duration)
-            .execute()
+        if (!isBrokenTCL)
+            conn.sslSocketFactory(insecureTlsSocketFactory())
+
+        val response = conn.execute()
 
         return when (response.statusCode()) {
             200 -> {
