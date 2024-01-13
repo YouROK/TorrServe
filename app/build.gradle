@@ -13,7 +13,6 @@ android {
         minSdkVersion 17
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
-        // for older androids
         multiDexEnabled true
         versionCode 129
         versionName "MatriX.129.Client"
@@ -35,6 +34,9 @@ android {
         resources.excludes += "DebugProbesKt.bin"
     }
     namespace 'ru.yourok.torrserve'
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {
@@ -48,15 +50,20 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.2.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
-    implementation 'androidx.lifecycle:lifecycle-process:2.6.2'
+    def lifecycleVersion = '2.6.2' // 2.6.2 last api17 compatible
+    //noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
+    //noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
+    //noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycleVersion}"
+    //noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-process:${lifecycleVersion}"
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3')
     // http client/parser
-    //noinspection GradleDependency 1.16.2, 1.17.1 thorow java.lang.VerifyError on api19
+    //noinspection GradleDependency 1.16.2, 1.17.1, 1.17.2 thorow java.lang.VerifyError on api19
     implementation 'org.jsoup:jsoup:1.16.1'
     // json serializer
     //noinspection GradleDependency 2.10.1 thorow java.lang.VerifyError on api17
