@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.activities.play
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -44,6 +45,9 @@ class PlayActivity : AppCompatActivity() {
     private var userClose = false
 
     var ad: AD? = null
+
+    private val themeUtil = ThemeUtil()
+
     val infoFragment = InfoFragment()
 
     private var firebaseAnalytics: FirebaseAnalytics? = null
@@ -142,6 +146,12 @@ class PlayActivity : AppCompatActivity() {
                 }
         }
         super.onDestroy()
+    }
+
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        if (App.inForeground) super.onConfigurationChanged(newConfig)
+        themeUtil.onConfigurationChanged(this, newConfig)
     }
 
     private fun setWindow() {

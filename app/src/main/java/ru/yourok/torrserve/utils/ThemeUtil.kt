@@ -30,15 +30,16 @@ class ThemeUtil {
     }
 
     fun onConfigurationChanged(activity: AppCompatActivity, newConfig: Configuration) {
+        val config = activity.resources.configuration
         val isNightModeActive =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                activity.resources.configuration.isNightModeActive
+                config.isNightModeActive
             } else {
-                newConfig.uiMode and
+                config.uiMode and
                         Configuration.UI_MODE_NIGHT_MASK ==
                         Configuration.UI_MODE_NIGHT_YES
             }
-        if (BuildConfig.DEBUG) Log.d("*****", "onConfigurationChanged isNightModeActive = $isNightModeActive")
+        if (BuildConfig.DEBUG) Log.d("*****", "ThemeUtil onConfigurationChanged isNightModeActive = $isNightModeActive")
     }
 
     companion object {

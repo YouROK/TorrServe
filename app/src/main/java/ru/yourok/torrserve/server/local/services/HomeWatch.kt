@@ -23,7 +23,7 @@ import ru.yourok.torrserve.server.api.Api
 class HomeWatch : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
-        if (action == null || !Utils.isGoogleTV()) return
+        if (action == null || !Utils.isGoogleTV) return
 
         val previewProgramId = intent.getLongExtra(TvContractCompat.EXTRA_PREVIEW_PROGRAM_ID, -1L)
         val watchNextInternalId = intent.getLongExtra(TvContractCompat.EXTRA_WATCH_NEXT_PROGRAM_ID, -1L)

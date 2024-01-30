@@ -102,7 +102,7 @@ open class InfoFragment : TSFragment() {
                         findViewById<TextView>(R.id.tvTitle).text = title
                     }
 
-                    val file: FileStat? = if (index >= 0) torr.file_stats?.get(index) else null
+                    val file: FileStat? = if (index > 0 && index < torr.file_stats?.size!!) torr.file_stats?.get(index) else if (index == 0) TorrentHelper.getPlayableFiles(torr)[index] else null
                     val themedContext = ContextThemeWrapper(this.context, ThemeUtil.selectedTheme)
                     val color1 = ColorUtils.setAlphaComponent(getColorFromAttr(themedContext, R.attr.colorBright), 200)
                     val color2 = ColorUtils.setAlphaComponent(getColorFromAttr(themedContext, R.attr.colorBright), 240)

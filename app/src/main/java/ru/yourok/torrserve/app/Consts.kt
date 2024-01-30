@@ -16,6 +16,7 @@ object Consts {
         "com.lonelycatgames.xplore",
         "com.mixplorer.silver",
         "nextapp.fx",
+        "org.droidtv.contentexplorer",
         "pl.solidexplorer2"
     )
 }

@@ -98,7 +98,7 @@ class Notification : Service() {
             else
                 builder?.setStyle(NotificationCompat.BigTextStyle().bigText(""))
 
-            if (Utils.isAmazonTV())
+            if (Utils.isAmazonTV)
                 builder?.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notification))
 
             builder?.let {
