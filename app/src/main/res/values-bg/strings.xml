@@ -12,6 +12,7 @@
     <string name="remove_all_warn">Искате ли да изтриете всички торенти?</string>
     <string name="share">Сподели</string>
     <string name="open_torrserve">Отвори TorrServe</string>
+    <string name="open_with">Отваряне с</string>
     <string name="show_menu">Покажи Главно меню</string>
     <string name="torrents">Торенти</string>
     <string name="apply">Приложи</string>

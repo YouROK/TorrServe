@@ -28,22 +28,6 @@ object Permission {
                 ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
             }
         }
-        /*thread {
-            // Disable power save
-            try {
-                val intent = Intent()
-                val packageName: String = activity.packageName
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!(activity.getSystemService(Context.POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(packageName)) {
-                        intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-                        intent.data = Uri.parse("package:$packageName")
-                        activity.startActivity(intent)
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }*/
     }
 
     fun isPermissionGranted(context: Context, permission: String): Boolean {

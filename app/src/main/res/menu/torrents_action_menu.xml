@@ -32,4 +32,10 @@
         android:title="@string/copy"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/itemOpenWith"
+        android:icon="@drawable/ic_outline_exit_to_app"
+        android:title="@string/open_with"
+        app:showAsAction="ifRoom" />
+
 </menu>
