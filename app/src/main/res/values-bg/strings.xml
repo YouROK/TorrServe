@@ -91,14 +91,15 @@
     <string name="poster_link">Постер URL</string>
     <string name="poster_link_help">Въведете URL адрес към постер (опционално)</string>
     <string name="local_ip">Локално IP</string>
-    <string name="connected_host">Свързан към</string>
-    <string name="find_hosts">Окртий хостове</string>
+    <string name="connected_host">Свързан</string>
+    <string name="find_hosts">Открий TorrServ адреси</string>
     <string name="local_server">Локален сървър</string>
     <string name="saved_server">Записан сървър</string>
     <string name="new_server">Нов сървър</string>
     <string name="online">На линия</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Пиъри</string>
+    <string name="seeds">Сийдъри</string>
     <string name="size">Размер</string>
     <string name="download_speed">Скорост на сваляне</string>
     <string name="bit_rate">Битрейт</string>
@@ -122,7 +123,7 @@
     <string name="need_install_server">Сървърът трябва да бъде инсталиран</string>
     <string name="need_update_server">Сървърът трябва да бъде ъпдейтнат</string>
     <string name="not_support_old_server">Сървър с версия 1.1.x не се поддържа. Опреснете сървъра или използвайте клиент с версия 1.1.x за такъв сървър.</string>
-    <string name="not_support_local_ip">Не слагайте IP адрес като URL адрес към сървъра! Използвайте localhost/127.0.0.1 вместо това.</string>
+    <string name="not_support_local_ip">Не слагайте IP адрес като URL адрес към сървъра! Използвайте localhost | 127.0.0.1 вместо това.</string>
     <string name="copy_to_clipboard">Копиран в клипборда</string>
     <string name="stat_running">Услугата работи</string>
     <string name="server_not_responding">TorrServer не отговаря</string>

@@ -27,7 +27,7 @@
                 android:textColor="?attr/colorHost"
                 android:textSize="20sp"
                 android:visibility="gone"
-                tools:text="127.0.0.1:8090"
+                tools:text="localhost:8090"
                 tools:visibility="visible" />
 
             <FrameLayout

@@ -61,7 +61,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-process:${lifecycleVersion}"
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
-    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3')
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0')
     // http client/parser
     //noinspection GradleDependency 1.16.2, 1.17.1, 1.17.2 thorow java.lang.VerifyError on api19
     implementation 'org.jsoup:jsoup:1.16.1'
