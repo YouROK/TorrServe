@@ -48,11 +48,11 @@ object Settings {
     fun getTheme(): String = get("theme", "auto")
     fun setTheme(v: String) = set("theme", v)
 
-    fun getHost(): String = get("host", "http://127.0.0.1:8090")
+    fun getHost(): String = get("host", "http://localhost:8090")
     fun setHost(host: String) {
         var hst = host
         if (hst.isEmpty())
-            hst = "http://127.0.0.1:8090"
+            hst = "http://localhost:8090"
         val url = Uri.parse(hst)
         if (url.scheme.isNullOrBlank())
             hst = "http://$hst"

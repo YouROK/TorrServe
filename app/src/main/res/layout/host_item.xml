@@ -25,7 +25,7 @@
             android:paddingEnd="12dp"
             android:paddingBottom="3dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="http://127.0.0.1:8090" />
+            tools:text="http://localhost:8090" />
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
@@ -68,12 +68,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center|end"
         android:layout_marginEnd="5dp"
         android:background="@drawable/ic_circle_online"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:contentDescription="@string/online" />
     <!-- can't use vectors with ?attr on 4.4 -->
 
 </RelativeLayout>

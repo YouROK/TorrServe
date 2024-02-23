@@ -163,13 +163,23 @@ open class InfoFragment : TSFragment() {
                     } else
                         (activity as? PlayActivity)?.hideProgress()
 
-                    val peers = "${torr.connected_seeders} · ${torr.active_peers}/${torr.total_peers}"
+                    val peers = "${torr.active_peers}/${torr.total_peers}"
                     if (peers.isNotEmpty()) {
                         // spannable
                         findViewById<TextView>(R.id.tvPeers).apply {
                             text = "" // txt
                             append("${getString(R.string.peers)} ", color1, true)
                             append(peers, color2, true)
+                        }
+                    }
+
+                    val seeds = "${torr.connected_seeders}"
+                    if (seeds.isNotEmpty()) {
+                        // spannable
+                        findViewById<TextView>(R.id.tvSeeds).apply {
+                            text = "" // txt
+                            append("${getString(R.string.seeds)} ", color1, true)
+                            append(seeds, color2, true)
                         }
                     }
 

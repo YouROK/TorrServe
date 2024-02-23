@@ -156,7 +156,7 @@ class ServerFinderFragment : TSFragment() {
             view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = ips
             hostAdapter.clear()
             // add local
-            val localhost = "http://127.0.0.1:8090"
+            val localhost = "http://localhost:8090"
             var status = App.context.getString(R.string.local_server)
             if (TorrService.isLocal())
                 status += " · ${App.context.getString(R.string.connected_host)}"

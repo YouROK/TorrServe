@@ -99,6 +99,7 @@
     <string name="online">Онлайн</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Пиры</string>
+    <string name="seeds">Сиды</string>
     <string name="size">Размер</string>
     <string name="download_speed">Скорость загрузки</string>
     <string name="bit_rate">Битрейт</string>
@@ -122,7 +123,7 @@
     <string name="need_install_server">Необходимо установить сервер</string>
     <string name="need_update_server">Необходимо обновить сервер</string>
     <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
-    <string name="not_support_local_ip">Не устанавливайте локальный IP-адрес в качестве URL-адреса TorrServer! Вместо этого используйте localhost/127.0.0.1.</string>
+    <string name="not_support_local_ip">Не устанавливайте локальный IP-адрес устройства в качестве URL-адреса TorrServer! Вместо этого используйте localhost | 127.0.0.1.</string>
     <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
     <string name="stat_running">Локальный сервер запущен</string>
     <string name="server_not_responding">TorrServer не отвечает</string>

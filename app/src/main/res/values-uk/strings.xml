@@ -96,6 +96,7 @@
     <string name="online">Онлайн</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Піри</string>
+    <string name="seeds">Сіди</string>
     <string name="size">Розмір</string>
     <string name="download_speed">Швидкість завантаження</string>
     <string name="found_new_app_update">Знайдено оновлення додатку</string>
@@ -115,7 +116,7 @@
     <string name="need_install_server">Необхідно встановити сервер</string>
     <string name="need_update_server">Потрібно оновити сервер</string>
     <string name="not_support_old_server">Сервер версії 1.1.x не підтримується. Оновіть сервер або користується клієнтом версії 1.1.x.</string>
-    <string name="not_support_local_ip">Не встановлюйте локальну IP як URL TorrServer! Натомість використовуйте localhost/127.0.0.1.</string>
+    <string name="not_support_local_ip">Не встановлюйте локальну IP як URL TorrServer! Натомість використовуйте localhost | 127.0.0.1.</string>
     <string name="copy_to_clipboard">Скопійовано до буферу обміну</string>
     <string name="stat_running">Службу запущено</string>
     <string name="server_not_responding">TorrServer не відповідає</string>

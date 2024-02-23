@@ -2,6 +2,7 @@ package ru.yourok.torrserve.ui.activities.main
 
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
@@ -135,12 +136,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateStatus() {
         val host = viewModel.getHost()
+        val hostView = findViewById<TextView>(R.id.tvCurrentHost)
+        val hostColor = ThemeUtil.getColorFromAttr(this, R.attr.colorHost)
         host.observe(this) {
-            findViewById<TextView>(R.id.tvCurrentHost)?.text = it.removePrefix("http://")
+            hostView?.text = it.removePrefix("http://")
         }
         val data = viewModel.get()
         data.observe(this) {
             findViewById<TextView>(R.id.tvStatus)?.text = it
+            if (it.equals(getString(R.string.server_not_responding)))
+                hostView.apply {
+                    setTextColor(ThemeUtil.getColorFromAttr(this@MainActivity, R.attr.colorOnSurface))
+                    alpha = 0.75f
+                }
+            else
+                hostView.apply {
+                    setTextColor(hostColor)
+                    alpha = 1.0f
+                }
         }
     }
 
