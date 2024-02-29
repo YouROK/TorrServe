@@ -106,6 +106,13 @@
                 tools:text="Peers" />
 
             <TextView
+                android:id="@+id/tvSeeds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                tools:text="Seeds" />
+
+            <TextView
                 android:id="@+id/tvSpeed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

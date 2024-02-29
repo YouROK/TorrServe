@@ -70,8 +70,8 @@ class ServerFinderFragment : TSFragment() {
             setHost()
         }
 
-        vi.findViewById<TextView>(R.id.tvConnectedHost)?.text = Settings.getHost().removePrefix("http://")
-        vi.findViewById<TextInputEditText>(R.id.etHost)?.setText(Settings.getHost())
+        //vi.findViewById<TextView>(R.id.tvConnectedHost)?.text = Settings.getHost().removePrefix("http://")
+        vi.findViewById<TextInputEditText>(R.id.etHost)?.setText(Settings.getHost().removePrefix("http://"))
         return vi
     }
 
@@ -156,7 +156,7 @@ class ServerFinderFragment : TSFragment() {
             view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = ips
             hostAdapter.clear()
             // add local
-            val localhost = "http://127.0.0.1:8090"
+            val localhost = "http://localhost:8090"
             var status = App.context.getString(R.string.local_server)
             if (TorrService.isLocal())
                 status += " · ${App.context.getString(R.string.connected_host)}"

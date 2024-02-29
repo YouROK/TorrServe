@@ -2,8 +2,11 @@ package ru.yourok.torrserve.ui.fragments.main.torrents
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,11 +16,11 @@ import android.widget.AbsListView.MultiChoiceModeListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
-import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.utils.TorrentHelper
 import ru.yourok.torrserve.utils.TorrentHelper.getTorrentMagnet
 import kotlin.concurrent.thread
@@ -45,16 +48,62 @@ class TorrentsActionBar(private val listView: AbsListView) : MultiChoiceModeList
     override fun onActionItemClicked(actionMode: ActionMode, item: MenuItem): Boolean {
         val selected = selectedItems
         when (item.itemId) {
+            R.id.itemOpenWith -> {
+                val magnetUris = mutableListOf<Uri>()
+                selected.forEach {
+                    val magnet = getTorrentMagnet(it)
+                    if (magnet.isNotEmpty()) {
+                        magnetUris.add(Uri.parse(magnet))
+                    }
+                }
+                if (magnetUris.isNotEmpty()) {
+                    val magnetIntent = Intent()
+//                    if (magnetUris.size == 1) {
+                    val uri = magnetUris.first()
+                    magnetIntent.apply {
+                        action = Intent.ACTION_VIEW
+                        data = uri
+                        addCategory(Intent.CATEGORY_DEFAULT)
+                        addCategory(Intent.CATEGORY_BROWSABLE)
+                    }
+//                    } else {
+//                        val arrayList = arrayListOf<Uri>()
+//                        arrayList.addAll(magnetUris)
+//                        magnetIntent.apply {
+//                            action = Intent.ACTION_SEND_MULTIPLE
+//                            putParcelableArrayListExtra(Intent.EXTRA_STREAM, arrayList)
+//                            addCategory(Intent.CATEGORY_BROWSABLE)
+//                        }
+//                    }
+                    val chooser = Intent.createChooser(magnetIntent, App.context.getString(R.string.open_with)).apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            val excludedComponentNames = arrayOf(ComponentName(BuildConfig.APPLICATION_ID, "${BuildConfig.APPLICATION_ID}.ui.activities.play.PlayActivity"))
+                            putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, excludedComponentNames)
+                        }
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+
+                    if (magnetIntent.resolveActivity(App.context.packageManager) != null) {
+                        App.context.startActivity(chooser)
+                    } else { // Handle the case where no activity can handle the intent
+                        App.toast(R.string.error_app_not_found, true)
+                    }
+
+                }
+            }
+
             R.id.itemShareMagnet -> {
                 val msg = selected.joinToString("\n\n") { getTorrentMagnet(it) }
                 if (msg.isNotEmpty()) {
-                    val share = Intent(Intent.ACTION_SEND)
-                    share.type = "text/plain"
-                    share.putExtra(Intent.EXTRA_TEXT, msg)
-                    share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    val intent = Intent.createChooser(share, "")
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    App.context.startActivity(intent)
+                    val share = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, msg)
+                    }
+
+                    val shareIntent = Intent.createChooser(share, null)
+                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    App.context.startActivity(shareIntent)
                 }
             }
 

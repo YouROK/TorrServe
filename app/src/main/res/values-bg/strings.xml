@@ -12,6 +12,7 @@
     <string name="remove_all_warn">Искате ли да изтриете всички торенти?</string>
     <string name="share">Сподели</string>
     <string name="open_torrserve">Отвори TorrServe</string>
+    <string name="open_with">Отваряне с</string>
     <string name="show_menu">Покажи Главно меню</string>
     <string name="torrents">Торенти</string>
     <string name="apply">Приложи</string>
@@ -98,6 +99,7 @@
     <string name="online">На линия</string>
     <string name="buffer">Буфер</string>
     <string name="peers">Пиъри</string>
+    <string name="seeds">Сийдъри</string>
     <string name="size">Размер</string>
     <string name="download_speed">Скорост на сваляне</string>
     <string name="bit_rate">Битрейт</string>
@@ -121,7 +123,7 @@
     <string name="need_install_server">Сървърът трябва да бъде инсталиран</string>
     <string name="need_update_server">Сървърът трябва да бъде ъпдейтнат</string>
     <string name="not_support_old_server">Сървър с версия 1.1.x не се поддържа. Опреснете сървъра или използвайте клиент с версия 1.1.x за такъв сървър.</string>
-    <string name="not_support_local_ip">Не слагайте IP адрес като URL адрес към сървъра! Използвайте localhost/127.0.0.1 вместо това.</string>
+    <string name="not_support_local_ip">Не слагайте IP адрес като URL адрес към сървъра! Използвайте localhost | 127.0.0.1 вместо това.</string>
     <string name="copy_to_clipboard">Копиран в клипборда</string>
     <string name="stat_running">Услугата работи</string>
     <string name="server_not_responding">TorrServer не отговаря</string>

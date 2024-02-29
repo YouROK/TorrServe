@@ -81,8 +81,9 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
         val hostColor = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(holder.view.context, R.attr.colorHost))
         val versionColor = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(holder.view.context, R.attr.colorPrimary))
         val labelsTextColor = ThemeUtil.getColorFromAttr(holder.view.context, R.attr.colorSurface)
+        val hostView = holder.view.findViewById<TextView>(R.id.tvHost)
 
-        holder.view.findViewById<TextView>(R.id.tvHost).apply {
+        hostView.apply {
             text = hosts[position].host.removePrefix("http://")
             val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
             shapeDrawable.fillColor = hostColor.withAlpha(10)
@@ -96,9 +97,10 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
         //if (version.contains("·", true) || version.startsWith("1.2.") || version.startsWith("MatriX"))
         if (version.isNotBlank() && (version.startsWith("1.2.") || version.startsWith("MatriX")))
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
-        else
+        else {
             holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.INVISIBLE
-
+            hostView.alpha = 0.6f
+        }
         val status = hosts[position].status
         holder.view.findViewById<TextView>(R.id.tvStatus).apply {
             if (status.isNotBlank()) {
