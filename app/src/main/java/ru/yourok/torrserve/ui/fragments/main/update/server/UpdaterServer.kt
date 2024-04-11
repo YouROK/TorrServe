@@ -46,8 +46,8 @@ object UpdaterServer {
             val http = Http(Uri.parse(url))
             http.connect()
             if (TorrService.isLocal() && Api.echo().isNotEmpty()) {
-                if (Accessibility.isEnabledService(App.context))
-                    Accessibility.enableService(App.context, false)
+//                if (Accessibility.isEnabledService(App.context))
+//                    Accessibility.enableService(App.context, false)
                 TorrService.stop()
                 ServerFile().stop()
             }
@@ -95,8 +95,8 @@ object UpdaterServer {
 
     fun updateFromFile(filePath: String) {
         if (TorrService.isLocal() && Api.echo().isNotEmpty()) {
-            if (Accessibility.isEnabledService(App.context))
-                Accessibility.enableService(App.context, false)
+//            if (Accessibility.isEnabledService(App.context))
+//                Accessibility.enableService(App.context, false)
             TorrService.stop()
             ServerFile().stop()
         }
