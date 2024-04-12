@@ -124,6 +124,8 @@
     <string name="need_update_server">Необходимо обновить сервер</string>
     <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
     <string name="not_support_local_ip">Не устанавливайте локальный IP-адрес устройства в качестве URL-адреса TorrServer! Вместо этого используйте localhost | 127.0.0.1.</string>
+    <string name="not_loaded_exit_hint">Локальный TorrServer не запущен. Попробуйте нажать «Выход» в главном меню и снова запустить приложение или перезагрузить устройство. Если после этого ничего не изменится, обновите TorrServer в разделе «Обновление».</string>
+    <string name="not_loaded_select_hint">Выберите доступный TorrServer из списка, или укажите адрес нового.</string>
     <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
     <string name="stat_running">Локальный сервер запущен</string>
     <string name="server_not_responding">TorrServer не отвечает</string>

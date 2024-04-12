@@ -28,6 +28,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.clearStackFragment
 import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.fragments.add.AddFragment
@@ -100,14 +101,19 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-            } else {
+            } else { // no server response
                 withContext(Dispatchers.Main) {
                     if (App.inForeground)
-                        if (TorrService.isLocal())
-                            ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
-                        else
+                        if (TorrService.isLocal()) {
+                            if (!ServerFile().exists()) {
+                                ServerUpdateFragment().show(this@MainActivity, R.id.container, true)
+                                App.toast(R.string.need_install_server, true)
+                            } else // local torrserver exists but not started, show restart hint
+                                App.toast(R.string.not_loaded_exit_hint)
+                        } else {
                             ServerFinderFragment().show(this@MainActivity, R.id.container, true)
-                    App.toast(R.string.need_install_server, true)
+                            App.toast(R.string.not_loaded_select_hint)
+                        }
                 }
             }
         }
