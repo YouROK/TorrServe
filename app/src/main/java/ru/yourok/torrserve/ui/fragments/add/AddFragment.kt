@@ -183,12 +183,7 @@ class AddFragment : TSFragment() {
             torrsAdapter.onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        val category = when {
-                            it.Categories.equals("series", true) -> "tv"
-                            it.Categories.equals("tvshow", true) -> "tv"
-                            it.Categories.equals("movie", true) -> "movie"
-                            else -> it.Categories.lowercase()
-                        }
+                        val category = it.Categories.normalize()
                         val torrent = addTorrent("", it.Magnet, it.Title, "", category, "", true)
                         torrent?.let { App.toast("${getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(getString(R.string.error_add_torrent))
                     } catch (e: Exception) {
@@ -200,12 +195,7 @@ class AddFragment : TSFragment() {
             }
             torrsAdapter.onLongClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    val category = when {
-                        it.Categories.equals("series", true) -> "tv"
-                        it.Categories.equals("tvshow", true) -> "tv"
-                        it.Categories.equals("movie", true) -> "movie"
-                        else -> it.Categories.lowercase()
-                    }
+                    val category = it.Categories.normalize()
                     val torrent: Torrent
                     val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
                         return@launch
@@ -241,12 +231,7 @@ class AddFragment : TSFragment() {
                         if (itemPosition in torrsAdapter.list.indices) {
                             torrsAdapter.list[itemPosition].let {
                                 lifecycleScope.launch(Dispatchers.IO) {
-                                    val category = when {
-                                        it.Categories.equals("series", true) -> "tv"
-                                        it.Categories.equals("tvshow", true) -> "tv"
-                                        it.Categories.equals("movie", true) -> "movie"
-                                        else -> it.Categories.lowercase()
-                                    }
+                                    val category = it.Categories.normalize()
                                     val torrent: Torrent
                                     val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
                                         return@launch
@@ -377,6 +362,16 @@ class AddFragment : TSFragment() {
         } catch (e: Exception) {
             e.printStackTrace()
             null
+        }
+    }
+
+    // https://github.com/YouROK/NUMParser/blob/be9eb56f1b4b53ff251d84f75186f162019ddac4/db/models/torrentDetails.go#L9
+    private fun String.normalize(): String {
+        return when {
+            this.contains("movie", true) ->  "movie"
+            this.contains("series", true) -> "tv"
+            this.equals("tvshow", true) -> "tv"
+            else -> this.lowercase()
         }
     }
 }
