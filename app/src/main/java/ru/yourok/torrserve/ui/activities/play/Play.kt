@@ -26,7 +26,7 @@ object Play {
 
             val torrent: Torrent
             try {
-                val torr = addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
+                val torr = addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentCategory, torrentData, torrentSave)
                     ?: let {
                         error(ErrLoadTorrent)
                         return@launch

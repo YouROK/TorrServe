@@ -112,6 +112,8 @@
     <string name="poster">Poster</string>
     <string name="poster_link">Poster URL</string>
     <string name="poster_link_help">Enter Poster URL (optional)</string>
+    <string name="torrent_category">Category</string>
+    <string name="torrent_category_help">Set Category for Torrent (optional)</string>
 
     <string name="local_ip">Local IP</string>
     <string name="connected_host">Connected to</string>

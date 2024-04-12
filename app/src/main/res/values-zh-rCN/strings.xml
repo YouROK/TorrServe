@@ -100,6 +100,8 @@
     <string name="poster">海报</string>
     <string name="poster_link">海报链接</string>
     <string name="poster_link_help">输入海报 URL（可选）</string>
+    <string name="torrent_category">类别</string>
+    <string name="torrent_category_help">设置 Torrent 类别（可选）</string>
 
     <string name="local_ip">本地IP</string>
     <string name="connected_host">已连接到</string>

@@ -64,11 +64,12 @@ class AddFragment : TSFragment() {
                 val link = view.findViewById<TextInputEditText>(R.id.etMagnet)?.text?.toString() ?: ""
                 val title = view.findViewById<TextInputEditText>(R.id.etTitle)?.text?.toString() ?: ""
                 val poster = view.findViewById<TextInputEditText>(R.id.etPoster)?.text?.toString() ?: ""
+                val category = view.findViewById<TextInputEditText>(R.id.etCategory)?.text?.toString() ?: ""
 
                 if (link.isNotBlank())
                     lifecycleScope.launch(Dispatchers.IO) {
                         try {
-                            addTorrent("", link, title, poster, "", true)
+                            addTorrent("", link, title, poster, category, "", true)
                         } catch (e: Exception) {
                             e.printStackTrace()
                             App.toast(e.message ?: getString(R.string.error_retrieve_data))
@@ -79,13 +80,28 @@ class AddFragment : TSFragment() {
             findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
                 popBackStackFragment()
             }
-            // SEARCH
+            // SEARCH and CATEGORY
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
+                    val ver = Api.echo()
+                    val numbers = Regex("[0-9]+").findAll(ver)
+                        .map(MatchResult::value)
+                        .toList()
+                    val verMajor = numbers.firstOrNull()?.toIntOrNull() ?: 0
                     val rutorEnabled = loadSettings()?.EnableRutorSearch == true
+                    val categoryEnabled = ( // MatriX.132 add Categories
+                            ver.contains("MatriX", true) &&
+                                    verMajor > 131
+                            )
                     withContext(Dispatchers.Main) {
                         findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
                             visibility = if (rutorEnabled)
+                                View.VISIBLE
+                            else
+                                View.GONE
+                        }
+                        findViewById<TextInputLayout>(R.id.tvCategory)?.apply {
+                            visibility = if (categoryEnabled)
                                 View.VISIBLE
                             else
                                 View.GONE
@@ -167,7 +183,10 @@ class AddFragment : TSFragment() {
             torrsAdapter.onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        val torrent = addTorrent("", it.Magnet, it.Title, "", "", true)
+                        val category = if (it.Categories.equals("series", true)) "tv"
+                        else if (it.Categories.equals("movie", true)) "movie"
+                        else it.Categories.lowercase()
+                        val torrent = addTorrent("", it.Magnet, it.Title, "", category, "", true)
                         torrent?.let { App.toast("${getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(getString(R.string.error_add_torrent))
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -178,8 +197,11 @@ class AddFragment : TSFragment() {
             }
             torrsAdapter.onLongClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
+                    val category = if (it.Categories.equals("series", true)) "tv"
+                    else if (it.Categories.equals("movie", true)) "movie"
+                    else it.Categories.lowercase()
                     val torrent: Torrent
-                    val torr = addTorrent("", it.Magnet, it.Title, "", "", false) ?: let {
+                    val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
                         return@launch
                     }
                     torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
@@ -213,8 +235,11 @@ class AddFragment : TSFragment() {
                         if (itemPosition in torrsAdapter.list.indices) {
                             torrsAdapter.list[itemPosition].let {
                                 lifecycleScope.launch(Dispatchers.IO) {
+                                    val category = if (it.Categories.equals("series", true)) "tv"
+                                    else if (it.Categories.equals("movie", true)) "movie"
+                                    else it.Categories.lowercase()
                                     val torrent: Torrent
-                                    val torr = addTorrent("", it.Magnet, it.Title, "", "", false) ?: let {
+                                    val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
                                         return@launch
                                     }
                                     torrent = TorrentHelper.waitFiles(torr.hash) ?: let {

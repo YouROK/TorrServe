@@ -153,6 +153,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
                 .appendPath(App.context.resources.getResourceEntryName(resourceId))
                 .build()
         }
+        val type = if (torr.category.equals("tv", true)) TvContractCompat.PreviewPrograms.TYPE_TV_SERIES else TvContractCompat.PreviewPrograms.TYPE_MOVIE
         val preview = PreviewProgram.Builder()
             .setChannelId(channelId)
             .setTitle(torr.title)
@@ -160,7 +161,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             .setGenre(info.joinToString(" · "))
             .setIntent(Utils.buildPendingIntent(torr))
             .setWeight(size)
-            .setType(TvContractCompat.PreviewPrograms.TYPE_MOVIE)
+            .setType(type)
             .setSearchable(true)
             .setLive(false)
             .setPosterArtUri(posterUri)
