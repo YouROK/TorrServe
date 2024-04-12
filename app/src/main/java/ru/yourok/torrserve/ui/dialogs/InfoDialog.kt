@@ -37,7 +37,7 @@ class InfoDialog(private val context: Context) {
     private val labelsColor = ColorStateList.valueOf(getColorFromAttr(this.context, R.attr.colorPrimary))
     private val labelsTextColor = getColorFromAttr(this.context, R.attr.colorSurface)
 
-    fun show(torrLink: String, title: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
+    fun show(torrLink: String, title: String, category: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
         val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.dialog_info, null) as LinearLayout? ?: return
 
@@ -138,7 +138,7 @@ class InfoDialog(private val context: Context) {
             builder.setPositiveButton(R.string.add) { dlg, _ ->
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        val torrent = addTorrent("", torrLink, title, "", "", true)
+                        val torrent = addTorrent("", torrLink, title, "", category, "", true)
                         torrent?.let { App.toast("${context.getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(context.getString(R.string.error_add_torrent))
                     } catch (e: Exception) {
                         e.printStackTrace()

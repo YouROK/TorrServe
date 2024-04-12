@@ -90,6 +90,8 @@
     <string name="poster">Постер</string>
     <string name="poster_link">URL постера</string>
     <string name="poster_link_help">Укажите ссылку на постер (опционально)</string>
+    <string name="torrent_category">Категория</string>
+    <string name="torrent_category_help">Укажите категорию для торрента (опционально)</string>
     <string name="local_ip">Локальный IP</string>
     <string name="connected_host">Используется</string>
     <string name="find_hosts">Поиск серверов</string>

@@ -87,6 +87,8 @@
     <string name="poster">Постер</string>
     <string name="poster_link">Посилання на постер</string>
     <string name="poster_link_help">Введіть URL-адресу плаката (необов’язково)</string>
+    <string name="torrent_category">Категорія</string>
+    <string name="torrent_category_help">Установити категорію для торрента (необов’язково)</string>
     <string name="local_ip">Локальна IP</string>
     <string name="connected_host">Підключено до</string>
     <string name="find_hosts">Пошук серверів</string>

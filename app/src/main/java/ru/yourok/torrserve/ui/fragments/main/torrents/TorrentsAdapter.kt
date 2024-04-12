@@ -43,7 +43,8 @@ class TorrentsAdapter(private val activity: FragmentActivity) : BaseAdapter() {
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val vi = view ?: LayoutInflater.from(parent?.context).inflate(R.layout.torrent_item, parent, false)
 
-        var title = list[position].title
+        val category = list[position].category
+        var title = if (category.isNotBlank()) "${category.uppercase()} ● ${list[position].title}" else list[position].title
         val poster = list[position].poster
         val hash = list[position].hash
         val size = list[position].torrent_size

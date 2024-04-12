@@ -38,7 +38,7 @@ object Net {
         return ""
     }
 
-    fun uploadAuth(url: String, title: String, poster: String, data: String, file: InputStream, save: Boolean): String {
+    fun uploadAuth(url: String, title: String, poster: String, category: String, data: String, file: InputStream, save: Boolean): String {
         val req = Jsoup.connect(url)
             .data("file1", "filename", file)
             .ignoreHttpErrors(true)
@@ -50,6 +50,7 @@ object Net {
             req.data("save", "true")
         req.data("title", title)
         req.data("poster", poster)
+        req.data("category", category)
         req.data("data", data)
 
         val auth = getAuthB64()

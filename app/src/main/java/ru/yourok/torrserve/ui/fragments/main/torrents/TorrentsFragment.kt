@@ -46,6 +46,7 @@ class TorrentsFragment : TSFragment() {
                 intent.action = Intent.ACTION_VIEW
                 intent.putExtra("hash", torr.hash)
                 intent.putExtra("title", torr.title)
+                intent.putExtra("category", torr.category)
                 intent.putExtra("poster", torr.poster)
                 intent.putExtra("action", "play")
                 App.context.startActivity(intent)

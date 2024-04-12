@@ -181,11 +181,12 @@ object TorrentHelper {
                     }
                 }
                 val title = format.tags?.title ?: torrent.title
+                val category = torrent.category
                 val size = Format.byteFmt(ffp.format.size.toDouble())
                 val duration = Format.durFmtS(ffp.format.duration.toDouble())
                 val bitrate = Format.speedFmt(ffp.format.bit_rate.toDouble() / 8)
                 withContext(Dispatchers.Main) {
-                    InfoDialog(context).show(torrLink, title.trim(), format.format_long_name, videoDesc.joinToString(" ● "), audioDesc.joinToString(" ● "), subsDesc.joinToString(" ● "), size, duration, bitrate)
+                    InfoDialog(context).show(torrLink, title.trim(), category, format.format_long_name, videoDesc.joinToString(" ● "), audioDesc.joinToString(" ● "), subsDesc.joinToString(" ● "), size, duration, bitrate)
                 }
             } catch (e: Exception) {
                 e.message?.let { App.toast(it) }

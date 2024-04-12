@@ -38,6 +38,7 @@ class PlayActivity : AppCompatActivity() {
     var torrentHash: String = ""
     var torrentTitle: String = ""
     var torrentPoster: String = ""
+    var torrentCategory: String = ""
     var torrentData: String = ""
     var torrentSave: Boolean = false
     var torrentFileIndex: Int = -1

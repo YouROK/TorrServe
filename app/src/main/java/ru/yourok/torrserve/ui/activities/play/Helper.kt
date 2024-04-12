@@ -30,7 +30,7 @@ fun PlayActivity.readArgs() {
                 "hash" -> torrentHash = this.getString(key) ?: ""
                 "title" -> torrentTitle = this.getString(key) ?: ""
                 "poster" -> torrentPoster = this.getString(key) ?: ""
-                "info" -> torrentData = this.getString(key) ?: ""
+                "category" -> torrentCategory = this.getString(key) ?: ""
                 "data" -> torrentData = this.getString(key) ?: ""
                 "fileindex" -> torrentFileIndex = this.getInt(key, -1)
                 "save" -> torrentSave = this.getBoolean(key)
@@ -60,7 +60,7 @@ fun PlayActivity.error(err: ReturnError) {
 fun PlayActivity.addAndExit() {
     lifecycleScope.launch(Dispatchers.IO) {
         try {
-            addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, true)
+            addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentCategory, torrentData, true)
         } catch (e: Exception) {
             error(ErrLoadTorrent)
             return@launch
@@ -70,7 +70,7 @@ fun PlayActivity.addAndExit() {
     finish()
 }
 
-fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, torrentPoster: String, torrentData: String, torrentSave: Boolean): Torrent? {
+fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, torrentPoster: String, torrentCategory: String, torrentData: String, torrentSave: Boolean): Torrent? {
     return if (torrentHash.isNotEmpty()) {
         try {
             Api.getTorrent(torrentHash)
@@ -83,13 +83,13 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
             val fis = App.context.contentResolver.openInputStream(Uri.parse(torrentLink))
             fis?.let {
                 try {
-                    Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentData, torrentSave)
+                    Api.uploadTorrent(fis, torrentTitle, torrentPoster, torrentCategory, torrentData, torrentSave)
                 } catch (e: Exception) {
                     null
                 }
             }
         } else try {
-            Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
+            Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentCategory, torrentData, torrentSave)
         } catch (e: Exception) {
             null
         }
