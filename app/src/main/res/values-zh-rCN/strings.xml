@@ -175,6 +175,7 @@
     <string name="app_version">App版本</string>
 
     <string name="host_title">设置 TorrServer url 地址</string>
+    <string name="host_title_hint">http://localhost:8090 - 用于设备上的服务器</string>
 
     <string name="speedtest_title">TorrServer 速度测试</string>
     <string name="speedtest_title_desc">测试 TorrServer 的速度</string>

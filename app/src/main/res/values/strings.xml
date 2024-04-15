@@ -191,6 +191,7 @@
     <string name="app_version">App Version</string>
 
     <string name="host_title">Set TorrServer URL</string>
+    <string name="host_title_hint">http://localhost:8090 - for server on device</string>
 
     <string name="speedtest_title">TorrServer Speed Test</string>
     <string name="speedtest_title_desc">Test speed to TorrServer</string>

@@ -147,6 +147,7 @@
     <string name="app_settings">Налаштування додатку</string>
     <string name="app_version">Версія додатка</string>
     <string name="host_title">Встановити URL-адресу TorrServer</string>
+    <string name="host_title_hint">http://localhost:8090 - для сервера на пристрої</string>
     <string name="speedtest_title">Тест швидкості до TorrServer</string>
     <string name="speedtest_title_desc">Перевірте швидкість TorrServer</string>
     <string name="host_authorization">Авторизація на сервері</string>
