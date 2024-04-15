@@ -181,7 +181,7 @@ object TorrentHelper {
                     }
                 }
                 val title = format.tags?.title ?: torrent.title
-                val category = torrent.category
+                val category = torrent.category ?: ""
                 val size = Format.byteFmt(ffp.format.size.toDouble())
                 val duration = Format.durFmtS(ffp.format.duration.toDouble())
                 val bitrate = Format.speedFmt(ffp.format.bit_rate.toDouble() / 8)

@@ -88,8 +88,8 @@ object Utils {
         vintent.putExtra("hash", torr.hash)
         vintent.putExtra("title", torr.title)
         vintent.putExtra("poster", torr.poster)
-        vintent.putExtra("category", torr.category)
-        vintent.putExtra("data", torr.data)
+        torr.category?.let { if (it.isNotBlank()) vintent.putExtra("category", it) }
+        if (torr.data.isNotBlank()) vintent.putExtra("data", torr.data)
         vintent.putExtra("save", false)
         return vintent
     }

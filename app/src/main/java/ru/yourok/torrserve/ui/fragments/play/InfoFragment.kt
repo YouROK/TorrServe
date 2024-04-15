@@ -92,7 +92,7 @@ open class InfoFragment : TSFragment() {
                         else
                             findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
                     }
-                    val category = torr.category
+                    val category = torr.category ?: ""
                     val title = if (category.isNotBlank()) "${category.uppercase()} ● ${torr.title}" else torr.title
 
                     if (title.isEmpty())
