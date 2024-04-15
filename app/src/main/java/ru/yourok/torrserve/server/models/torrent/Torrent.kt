@@ -3,7 +3,7 @@ package ru.yourok.torrserve.server.models.torrent
 data class Torrent(
     var title: String,
     var poster: String,
-    var category: String,
+    var category: String?,
     var data: String,
     var timestamp: Long,
     var name: String,
