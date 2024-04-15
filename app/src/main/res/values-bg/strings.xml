@@ -156,6 +156,7 @@
     <string name="app_settings">Настройки</string>
     <string name="app_version">Версия</string>
     <string name="host_title">Задайте URL адрес на TorrServer</string>
+    <string name="host_title_hint">http://localhost:8090 - for server on device</string>
     <string name="speedtest_title">Тест на скоростта към TorrServer</string>
     <string name="speedtest_title_desc">Тествайте скоростта на TorrServer</string>
     <string name="host_authorization">Оторизация към сървъра</string>

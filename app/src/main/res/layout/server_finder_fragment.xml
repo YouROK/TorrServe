@@ -67,7 +67,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:hint="@string/host_title"
-            app:helperText="http://localhost:8090"
+            app:helperText="@string/host_title_hint"
             app:helperTextEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
