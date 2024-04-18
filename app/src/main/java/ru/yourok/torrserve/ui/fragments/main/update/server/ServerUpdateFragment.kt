@@ -146,6 +146,13 @@ class ServerUpdateFragment : TSFragment() {
         updateUI()
     }
 
+    override fun onStop() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            hideProgress()
+        }
+        super.onStop()
+    }
+
     private fun updateUI() {
         lifecycleScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {

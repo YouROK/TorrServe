@@ -266,6 +266,7 @@
     <string name="sort_by_seed">Sort list by Seeders</string>
     <string name="sort_by_date">Sort list by Date</string>
 
+    <string name="no_data">No data</string>
     <string name="no_torrents">No Torrents</string>
     <string name="no_updates">No updates found</string>
     <string name="not_used">Not Used</string>

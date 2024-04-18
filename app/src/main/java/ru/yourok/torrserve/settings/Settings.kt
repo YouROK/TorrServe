@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.server.api.Api
 import java.io.File
 
 object Settings {
@@ -67,7 +68,7 @@ object Settings {
         filesDir = App.context.getExternalFilesDir(null)
 
         if (filesDir?.canWrite() != true || Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-            if (BuildConfig.DEBUG) Log.d("*****","Can't write to $filesDir or SDK>33")
+            if (BuildConfig.DEBUG) Log.d("*****", "Can't write to $filesDir or SDK>33")
             filesDir = null
         }
 
@@ -83,6 +84,16 @@ object Settings {
 
         return filesDir.path
     }
+
+    suspend fun isShowCat(): Boolean {
+        return try {
+            val vi = Api.getMatrixVersionInt()
+            vi > 131 && get("show_cats", false) // MatriX.132 add Categories
+        } catch (e: Exception) {
+            false
+        }
+    }
+
 
     @Suppress("UNCHECKED_CAST")
     fun <T> get(name: String, def: T): T {

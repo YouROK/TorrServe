@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.fragments.main.servfinder
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,10 +83,14 @@ class ServerFinderFragment : TSFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        lifecycleScope.launch {
+    override fun onStop() {
+        lifecycleScope.launch(Dispatchers.Main) {
             hideProgress()
         }
+        super.onStop()
+    }
+
+    override fun onDestroyView() {
         super.onDestroyView()
         lifecycleScope.launch {
             onResult?.invoke(null)

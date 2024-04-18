@@ -1,6 +1,10 @@
 package ru.yourok.torrserve.server.api
 
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.server.models.ffp.FFPModel
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -150,5 +154,36 @@ object Api {
 
     private fun postJson(url: String, json: String): String {
         return Net.postAuth(url, json)
+    }
+
+    suspend fun getMatrixVersionInt(): Int {
+        return try {
+            var verStr: String
+            withContext(Dispatchers.IO) {
+                verStr = echo()
+            }
+            val isMatrix = verStr.contains("MatriX", true)
+            val numbers = Regex("[0-9]+").findAll(verStr)
+                .map(MatchResult::value)
+                .toList()
+            val verMajor = numbers.firstOrNull()?.toIntOrNull() ?: 0
+            //val verMinor = numbers.getOrNull(1)?.toIntOrNull() ?: 0
+            //Log.i("getMatrixVersionInt", "$verMajor")
+            return if (isMatrix) verMajor else 0
+        } catch (e: Exception) {
+            0
+        }
+    }
+
+    suspend fun haveCategories(): Boolean {
+        var vi = 0
+        coroutineScope {
+            val data = async(Dispatchers.IO) {
+                getMatrixVersionInt()
+            }
+            val result = data.await()
+            vi = result
+        }
+        return vi > 131 // MatriX.132 add Categories
     }
 }

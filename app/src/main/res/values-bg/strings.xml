@@ -214,6 +214,7 @@
     <string name="sort_by_size">Сортиране на списъка по размер</string>
     <string name="sort_by_seed">Сортиране на списъка по сийдъри</string>
     <string name="sort_by_date">Сортиране на списъка по дата</string>
+    <string name="no_data">Няма данни</string>
     <string name="no_torrents">Няма торенти</string>
     <string name="no_updates">Не са намерени ъпдейти</string>
     <string name="not_used">Не се използва</string>

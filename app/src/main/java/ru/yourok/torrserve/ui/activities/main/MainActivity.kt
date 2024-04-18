@@ -2,6 +2,7 @@ package ru.yourok.torrserve.ui.activities.main
 
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
@@ -48,6 +49,7 @@ import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
 import kotlin.system.exitProcess
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StatusViewModel
@@ -59,11 +61,17 @@ class MainActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) Log.d("MainActivity", "handleOnBackPressed()")
             if (isMenuVisible)
                 closeMenu()
-            else if (supportFragmentManager.backStackEntryCount > 0)
+            else if (supportFragmentManager.backStackEntryCount > 0) {
                 supportFragmentManager.popBackStack()
-            else finish()
+            } else finish()
         }
     }
+
+    private val isInTorrents: Boolean
+        get() {
+            val f = supportFragmentManager.findFragmentById(R.id.container)
+            return f is TorrentsFragment
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,6 +140,13 @@ class MainActivity : AppCompatActivity() {
         //TorrService.start()
         updateStatus()
         if (Settings.showFab()) setupFab()
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (Settings.isShowCat()) {
+                withContext(Dispatchers.Main) {
+                    setupCatFab()
+                }
+            }
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -170,12 +185,19 @@ class MainActivity : AppCompatActivity() {
     private val drawerListener = object : DrawerLayout.SimpleDrawerListener() {
         override fun onDrawerOpened(drawerView: View) {
             super.onDrawerOpened(drawerView)
+
             if (Settings.showFab()) showFab(false)
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (Settings.isShowCat()) withContext(Dispatchers.Main) { showCatFab(false) }
+            }
         }
 
         override fun onDrawerClosed(drawerView: View) {
             super.onDrawerClosed(drawerView)
             if (Settings.showFab()) showFab(true)
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (Settings.isShowCat() && isInTorrents) withContext(Dispatchers.Main) { showCatFab(true) } else withContext(Dispatchers.Main) { showCatFab(false) }
+            }
         }
     }
 
@@ -251,10 +273,10 @@ class MainActivity : AppCompatActivity() {
             fab?.hide()
     }
 
-    private fun setupFab() { // Fab TODO: animate?
+    private fun setupFab() { // Fab
         val fab: FloatingActionButton? = findViewById(R.id.fab)
         fab?.apply {
-            setImageDrawable(AppCompatResources.getDrawable(this.context, R.mipmap.ic_launcher)) // R.drawable.ts_round
+            setImageDrawable(AppCompatResources.getDrawable(this.context, R.mipmap.ic_launcher))
             customSize = dp2px(32f)
             setMaxImageSize(dp2px(30f))
             setOnClickListener {
@@ -270,6 +292,32 @@ class MainActivity : AppCompatActivity() {
         if (!isMenuVisible) {
             showFab(true)
         }
+    }
+
+    private fun showCatFab(show: Boolean = true) {
+        val fab: FloatingActionButton? = findViewById(R.id.cat_fab)
+        if (show)
+            fab?.show()
+        else
+            fab?.hide()
+    }
+
+    private fun setupCatFab() { // categories options menu
+        val fab: FloatingActionButton? = findViewById(R.id.cat_fab)
+        val color = ThemeUtil.getColorFromAttr(this, R.attr.colorAccent)
+        fab?.apply {
+            setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_view_list_24))
+            customSize = dp2px(32f)
+            setMaxImageSize(dp2px(24f))
+            backgroundTintList = ColorStateList.valueOf(
+                color
+            )
+            setOnClickListener {
+                // TODO
+            }
+        }
+        if (isInTorrents)
+            showCatFab(true)
     }
 
     private fun setupNavigator() {

@@ -38,6 +38,22 @@
             app:tint="@null"
             tools:visibility="visible" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cat_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|top"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/torrent_category"
+            android:scaleType="center"
+            android:visibility="gone"
+            app:fabCustomSize="32dp"
+            app:fabSize="mini"
+            app:maxImageSize="24dp"
+            app:srcCompat="@drawable/round_view_list_24"
+            app:tint="@null"
+            tools:visibility="visible" />
+
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"

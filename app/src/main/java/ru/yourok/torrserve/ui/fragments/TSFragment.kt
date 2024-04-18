@@ -5,9 +5,11 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
@@ -27,7 +29,10 @@ abstract class TSFragment : Fragment() {
             if (back)
                 addToBackStack(this.toString())
         }
+        // hide progress after main menu click
+        lifecycleScope.launch { hideProgress() }
     }
+
     // https://material.io/components/progress-indicators/android
     suspend fun showProgress(prog: Int = -1) = withContext(Dispatchers.Main) {
         if (isActive) {
