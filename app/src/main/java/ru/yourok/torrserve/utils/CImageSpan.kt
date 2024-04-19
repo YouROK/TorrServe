@@ -5,7 +5,6 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.text.style.ImageSpan
-import androidx.annotation.NonNull
 import java.lang.ref.WeakReference
 
 class CImageSpan(dr: Drawable) : ImageSpan(dr) {
@@ -16,14 +15,14 @@ class CImageSpan(dr: Drawable) : ImageSpan(dr) {
         val pfm = paint.fontMetricsInt
         if (fm != null) {
             fm.ascent = -rect.height() / 2 + pfm.ascent / 2
-            fm.descent = Math.max(0, rect.height() / 2 + pfm.ascent / 2)
+            fm.descent = 0.coerceAtLeast(rect.height() / 2 + pfm.ascent / 2)
             fm.top = fm.ascent
             fm.bottom = fm.descent
         }
         return rect.right
     }
 
-    override fun draw(canvas: Canvas, text: CharSequence?, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, @NonNull paint: Paint) {
+    override fun draw(canvas: Canvas, text: CharSequence?, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, paint: Paint) {
         val b = cachedDrawable!!
         canvas.save()
         val transY = (bottom + top) / 2 - b.bounds.height() / 2
