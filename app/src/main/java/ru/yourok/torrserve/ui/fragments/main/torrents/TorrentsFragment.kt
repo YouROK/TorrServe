@@ -28,7 +28,7 @@ class TorrentsFragment : TSFragment() {
 
     private var torrentAdapter: TorrentsAdapter? = null
     private lateinit var emptyView: TextView
-//    private var isOpened = false
+    private var sortMode: Boolean = Settings.sortTorrByTitle
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +64,45 @@ class TorrentsFragment : TSFragment() {
         }
     }
 
+    fun sort(mode: Boolean = sortMode) {
+        val list = torrentAdapter!!.list
+        if (list.size > 0) {
+            when (mode) {
+                false -> {
+                    torrentAdapter?.update(list.sortedBy { it.title })
+                    App.toast(R.string.sort_by_name)
+                }
+
+                true -> {
+                    torrentAdapter?.update(list.sortedByDescending { it.timestamp })
+                    App.toast(R.string.sort_by_date)
+                }
+            }
+            sortMode = !mode
+            Settings.set("sort_torrents", sortMode)
+            activity?.findViewById<ListView>(R.id.lvTorrents)?.apply {
+                this.setSelection(0)
+                requestFocus()
+            }
+        }
+    }
+
+    suspend fun filter(cat: String = "") = withContext(Dispatchers.Main) {
+        val data = (viewModel as TorrentsViewModel).getData()
+        data.observe(this@TorrentsFragment) { list ->
+            val fltList = if (cat.isNotBlank())
+                list.filter { it.category?.contains(cat, true) == true }
+            else
+                list
+            torrentAdapter?.update(fltList)
+            if (fltList.isEmpty()) {
+                emptyView.visibility = View.VISIBLE
+            } else {
+                emptyView.visibility = View.GONE
+            }
+        }
+    }
+
     suspend fun start() = withContext(Dispatchers.Main) {
         viewModel = ViewModelProvider(this@TorrentsFragment)[TorrentsViewModel::class.java]
         val data = (viewModel as TorrentsViewModel).getData()
@@ -71,16 +110,8 @@ class TorrentsFragment : TSFragment() {
             torrentAdapter?.update(it)
             if (it.isEmpty()) {
                 emptyView.visibility = View.VISIBLE
-//                if (!isOpened) {
-//                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.openDrawer(GravityCompat.START)
-//                    isOpened = true
-//                }
-            } else { // close menu
+            } else {
                 emptyView.visibility = View.GONE
-//                if (isOpened) {
-//                    activity?.findViewById<DrawerLayout>(R.id.drawerLayout)?.closeDrawers()
-//                    isOpened = false
-//                }
             }
         }
     }
@@ -95,8 +126,6 @@ class TorrentsFragment : TSFragment() {
         }
         return false
     }
-
-    private var sortMode: Boolean = Settings.sortTorrByTitle()
 
     @SuppressLint("NotifyDataSetChanged")
     fun onKeyDown(keyCode: Int): Boolean {
@@ -122,26 +151,7 @@ class TorrentsFragment : TSFragment() {
 
             KeyEvent.KEYCODE_MENU,
             KeyEvent.KEYCODE_BUTTON_X -> {
-                val list = torrentAdapter!!.list
-                if (list.size > 0) {
-                    when (sortMode) {
-                        false -> {
-                            torrentAdapter?.update(list.sortedBy { it.title })
-                            App.toast(R.string.sort_by_name)
-                        }
-
-                        true -> {
-                            torrentAdapter?.update(list.sortedByDescending { it.timestamp })
-                            App.toast(R.string.sort_by_date)
-                        }
-                    }
-                    sortMode = !sortMode
-                    Settings.set("sort_torrents", sortMode)
-                    activity?.findViewById<ListView>(R.id.lvTorrents)?.apply {
-                        this.setSelection(0)
-                        requestFocus()
-                    }
-                }
+                sort(sortMode)
                 if (Utils.isTvBox()) return true
             }
 

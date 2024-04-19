@@ -2,6 +2,7 @@ package ru.yourok.torrserve.ui.activities.main
 
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
@@ -26,6 +27,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.ext.clearStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
@@ -48,6 +50,7 @@ import ru.yourok.torrserve.utils.Permission
 import ru.yourok.torrserve.utils.ThemeUtil
 import kotlin.system.exitProcess
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StatusViewModel
@@ -59,11 +62,17 @@ class MainActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) Log.d("MainActivity", "handleOnBackPressed()")
             if (isMenuVisible)
                 closeMenu()
-            else if (supportFragmentManager.backStackEntryCount > 0)
+            else if (supportFragmentManager.backStackEntryCount > 0) {
                 supportFragmentManager.popBackStack()
-            else finish()
+            } else finish()
         }
     }
+
+    private val isInTorrents: Boolean
+        get() {
+            val f = supportFragmentManager.findFragmentById(R.id.container)
+            return f is TorrentsFragment
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,7 +142,15 @@ class MainActivity : AppCompatActivity() {
         themeUtil.onResume(this)
         //TorrService.start()
         updateStatus()
-        if (Settings.showFab()) setupFab()
+        if (Settings.showFab) setupFab()
+        if (Settings.showSortFab) setupSortFab()
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (Settings.isShowCat()) {
+                withContext(Dispatchers.Main) {
+                    setupCatFab()
+                }
+            }
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -172,12 +189,21 @@ class MainActivity : AppCompatActivity() {
     private val drawerListener = object : DrawerLayout.SimpleDrawerListener() {
         override fun onDrawerOpened(drawerView: View) {
             super.onDrawerOpened(drawerView)
-            if (Settings.showFab()) showFab(false)
+
+            if (Settings.showFab) showFab(false)
+            if (Settings.showSortFab) showSortFab(false)
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (Settings.isShowCat()) withContext(Dispatchers.Main) { showCatFab(false) }
+            }
         }
 
         override fun onDrawerClosed(drawerView: View) {
             super.onDrawerClosed(drawerView)
-            if (Settings.showFab()) showFab(true)
+            if (Settings.showFab) showFab(true)
+            if (Settings.showSortFab && isInTorrents) showSortFab(true)
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (Settings.isShowCat() && isInTorrents) withContext(Dispatchers.Main) { showCatFab(true) } else withContext(Dispatchers.Main) { showCatFab(false) }
+            }
         }
     }
 
@@ -245,18 +271,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showFab(show: Boolean = true) {
-        val fab: FloatingActionButton? = findViewById(R.id.fab)
-        if (show)
-            fab?.show()
-        else
-            fab?.hide()
-    }
-
-    private fun setupFab() { // Fab TODO: animate?
+    private fun setupFab() { // Fab
+        if (Utils.isTvBox()) return
         val fab: FloatingActionButton? = findViewById(R.id.fab)
         fab?.apply {
-            setImageDrawable(AppCompatResources.getDrawable(this.context, R.mipmap.ic_launcher)) // R.drawable.ts_round
+            setImageDrawable(AppCompatResources.getDrawable(this.context, R.mipmap.ic_launcher))
             customSize = dp2px(32f)
             setMaxImageSize(dp2px(30f))
             setOnClickListener {
@@ -271,6 +290,206 @@ class MainActivity : AppCompatActivity() {
         }
         if (!isMenuVisible) {
             showFab(true)
+        }
+    }
+
+    private fun showFab(show: Boolean = true) {
+        val fab: FloatingActionButton? = findViewById(R.id.fab)
+        if (show)
+            fab?.show()
+        else
+            fab?.hide()
+    }
+
+    private fun setupSortFab() {
+        if (Utils.isTvBox()) return
+
+        val accentColor = ThemeUtil.getColorFromAttr(this, R.attr.colorAccent)
+        val actionsColor = ThemeUtil.getColorFromAttr(this, R.attr.colorMainMenu)
+
+        val fab: FloatingActionButton? = findViewById(R.id.sort_fab)
+        fab?.apply {
+            if (Settings.sortTorrByTitle)
+                setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_filter_list_24))
+            else
+                setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_by_alpha_24))
+            customSize = dp2px(32f)
+            setMaxImageSize(dp2px(24f))
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            setOnClickListener {
+                if (isInTorrents) {
+                    val f = supportFragmentManager.findFragmentById(R.id.container)
+                    (f as TorrentsFragment?)?.sort()
+                }
+                if (Settings.sortTorrByTitle)
+                    setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_filter_list_24))
+                else
+                    setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_by_alpha_24))
+            }
+        }
+        // visibility change
+        if (isInTorrents)
+            showSortFab(true)
+        else
+            showSortFab(false)
+    }
+
+    private fun showSortFab(show: Boolean = true) {
+        val fab: FloatingActionButton? = findViewById(R.id.sort_fab)
+        if (show)
+            fab?.show()
+        else
+            fab?.hide()
+    }
+
+    private fun showCatFab(show: Boolean = true) {
+        val fab: FloatingActionButton? = findViewById(R.id.cat_fab)
+        if (show) {
+            fab?.show()
+        } else {
+            hideActions()
+            isCatsOpen = false
+            fab?.hide()
+        }
+    }
+
+    private var isCatsOpen = false
+    private var movFab: FloatingActionButton? = null
+    private var movText: TextView? = null
+    private var tvFab: FloatingActionButton? = null
+    private var tvText: TextView? = null
+    private var musFab: FloatingActionButton? = null
+    private var musText: TextView? = null
+    private var othFab: FloatingActionButton? = null
+    private var othText: TextView? = null
+    private var allFab: FloatingActionButton? = null
+    private var allText: TextView? = null
+
+    private fun setupCatFab() { // categories options menu
+        if (Utils.isTvBox()) return
+
+        val accentColor = ThemeUtil.getColorFromAttr(this, R.attr.colorAccent)
+        val actionsColor = ThemeUtil.getColorFromAttr(this, R.attr.colorMainMenu)
+        //val textColor = ThemeUtil.getColorFromAttr(this, R.attr.colorBright)
+
+        val catFab: FloatingActionButton? = findViewById(R.id.cat_fab)
+        movFab = findViewById(R.id.mov_fab)
+        movText = findViewById<TextView?>(R.id.mov_fab_text)?.apply { setTextColor(accentColor) }
+        tvFab = findViewById(R.id.tv_fab)
+        tvText = findViewById<TextView?>(R.id.tv_fab_text)?.apply { setTextColor(accentColor) }
+        musFab = findViewById(R.id.mus_fab)
+        musText = findViewById<TextView?>(R.id.mus_fab_text)?.apply { setTextColor(accentColor) }
+        othFab = findViewById(R.id.oth_fab)
+        othText = findViewById<TextView?>(R.id.oth_fab_text)?.apply { setTextColor(accentColor) }
+        allFab = findViewById(R.id.all_fab)
+        allText = findViewById<TextView?>(R.id.all_fab_text)?.apply { setTextColor(accentColor) }
+        catFab?.apply {
+            setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_view_list_24))
+            customSize = dp2px(32f)
+            setMaxImageSize(dp2px(24f))
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            setOnClickListener {
+                if (!isCatsOpen) {
+                    showActions()
+                } else {
+                    hideActions()
+                }
+                isCatsOpen = !isCatsOpen
+            }
+        }
+        movFab?.apply {
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            setOnClickListener {
+                filterTorrents("movie")
+                hideActions()
+                isCatsOpen = false
+            }
+        }
+        tvFab?.apply {
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            setOnClickListener {
+                filterTorrents("tv")
+                hideActions()
+                isCatsOpen = false
+            }
+        }
+        musFab?.apply {
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            setOnClickListener {
+                filterTorrents("music")
+                hideActions()
+                isCatsOpen = false
+            }
+        }
+        othFab?.apply {
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            setOnClickListener {
+                filterTorrents("other")
+                hideActions()
+                isCatsOpen = false
+            }
+        }
+        allFab?.apply {
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            setOnClickListener {
+                filterTorrents()
+                hideActions()
+                isCatsOpen = false
+            }
+        }
+        // visibility change
+        if (isInTorrents) {
+            showCatFab(true)
+            //hideActions()
+        } else {
+            showCatFab(false)
+        }
+    }
+
+    private fun showActions() {
+        movFab?.show()
+        tvFab?.show()
+        musFab?.show()
+        othFab?.show()
+        allFab?.show()
+        movText?.visibility = View.VISIBLE
+        tvText?.visibility = View.VISIBLE
+        musText?.visibility = View.VISIBLE
+        othText?.visibility = View.VISIBLE
+        allText?.visibility = View.VISIBLE
+    }
+
+    private fun hideActions() {
+        movFab?.hide()
+        tvFab?.hide()
+        musFab?.hide()
+        othFab?.hide()
+        allFab?.hide()
+        movText?.visibility = View.GONE
+        tvText?.visibility = View.GONE
+        musText?.visibility = View.GONE
+        othText?.visibility = View.GONE
+        allText?.visibility = View.GONE
+    }
+
+    private fun filterTorrents(category: String = "") {
+        if (isInTorrents) {
+            val f = supportFragmentManager.findFragmentById(R.id.container)
+            lifecycleScope.launch { (f as TorrentsFragment?)?.filter(category) }
         }
     }
 

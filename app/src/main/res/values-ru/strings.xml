@@ -190,6 +190,12 @@
     <string name="show_fab_title">Кнопка вызова меню на экране</string>
     <string name="show_fab_sum_on">Показать кнопку вызова меню</string>
     <string name="show_fab_sum_off">Не показывать кнопку вызова меню</string>
+    <string name="show_sort_fab_title">Кнопка сортировки на экране</string>
+    <string name="show_sort_fab_sum_on">Показать кнопку сортировки</string>
+    <string name="show_sort_fab_sum_off">Не показывать кнопку сортировки</string>
+    <string name="show_cat_fab_title">Кнопка фильтра по категории</string>
+    <string name="show_cat_fab_sum_on">Показать кнопку фильтра категорий</string>
+    <string name="show_cat_fab_sum_off">Не показывать кнопку фильтра категорий</string>
     <string name="accessibility_manual_on">Включите сервис «%1$s» в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_manual_off">Отключите сервис «%1$s» в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_service_description">Включение этого сервиса может предотвратить завершение локального TorrServer системой</string>
@@ -214,8 +220,14 @@
     <string name="sort_by_size">Сортировка по размеру</string>
     <string name="sort_by_seed">Сортировка по раздающим</string>
     <string name="sort_by_date">Сортировка по дате</string>
+    <string name="no_data">Нет данных</string>
     <string name="no_torrents">Нет торрентов</string>
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
+    <string name="cat_movie">Фильмы</string>
+    <string name="cat_tv">Сериалы</string>
+    <string name="cat_music">Музыка</string>
+    <string name="cat_other">Другое</string>
+    <string name="cat_none">Все торренты</string>
 </resources>

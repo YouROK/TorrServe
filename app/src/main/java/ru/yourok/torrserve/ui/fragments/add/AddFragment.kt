@@ -83,16 +83,8 @@ class AddFragment : TSFragment() {
             // SEARCH and CATEGORY
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
-                    val ver = Api.echo()
-                    val numbers = Regex("[0-9]+").findAll(ver)
-                        .map(MatchResult::value)
-                        .toList()
-                    val verMajor = numbers.firstOrNull()?.toIntOrNull() ?: 0
                     val rutorEnabled = loadSettings()?.EnableRutorSearch == true
-                    val categoryEnabled = ( // MatriX.132 add Categories
-                            ver.contains("MatriX", true) &&
-                                    verMajor > 131
-                            )
+                    val categoryEnabled = Api.getMatrixVersionInt() > 131
                     withContext(Dispatchers.Main) {
                         findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
                             visibility = if (rutorEnabled)
@@ -262,7 +254,7 @@ class AddFragment : TSFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun sortResults() {
-        val list = torrsAdapter.list.toMutableList()
+        val list = torrsAdapter.list //.toMutableList()
         when (sortMode) {
             0 -> {
                 torrsAdapter.set(list.sortedBy { it.Title })
@@ -311,7 +303,6 @@ class AddFragment : TSFragment() {
     }
 
     private fun setupSortFab() { // Sort Fab
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
         val selectedColor = getColorFromAttr(themedContext, R.attr.colorPrimary)
@@ -326,10 +317,10 @@ class AddFragment : TSFragment() {
                 arrayOf(
                     intArrayOf(android.R.attr.state_focused), // Focused
                     intArrayOf(android.R.attr.state_enabled), // Enabled
-                    intArrayOf() // normal
+                    intArrayOf() // Normal
                 ),
                 intArrayOf(
-                    selectedColor, // The color for the Focused state
+                    selectedColor, // color for the Focused state
                     defaultColor,
                     defaultColor
                 )
@@ -345,13 +336,11 @@ class AddFragment : TSFragment() {
     }
 
     private fun showSortFab() {
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.show()
     }
 
     private fun hideSortFab() {
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.hide()
     }

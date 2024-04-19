@@ -181,6 +181,12 @@
     <string name="show_fab_title">Кнопка виклику меню на екрані</string>
     <string name="show_fab_sum_on">Відображати кнопку виклику меню</string>
     <string name="show_fab_sum_off">Не відображати кнопку виклику меню</string>
+    <string name="show_sort_fab_title">Кнопка сортування в портретній орієнтації</string>
+    <string name="show_sort_fab_sum_on">Показати кнопку сортування</string>
+    <string name="show_sort_fab_sum_off">Не показувати кнопку сортування</string>
+    <string name="show_cat_fab_title">Кнопка категорій в портретній орієнтації</string>
+    <string name="show_cat_fab_sum_on">Показати кнопку категорій</string>
+    <string name="show_cat_fab_sum_off">Не показувати кнопку категорій</string>
     <string name="accessibility_manual_on">Увімкнути службу «%1$s» в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_manual_off">Вимкнути службу «%1$s» в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_service_description">Включення цього сервісу може запобігти завершення локального TorrServer системою</string>
@@ -205,6 +211,7 @@
     <string name="sort_by_size">Сортування за розміром</string>
     <string name="sort_by_seed">Сортування за роздавальним</string>
     <string name="sort_by_date">Сортування за датою</string>
+    <string name="no_data">Немає даних</string>
     <string name="no_torrents">Немає торрентів</string>
     <string name="no_updates">Немає оновлень</string>
     <string name="not_used">Не використовується</string>
@@ -218,4 +225,9 @@
     <string name="install_ffprobe">Встановіть FFProbe</string>
     <string name="delete_ffprobe">Видалити FFProbe</string>
     <string name="ffprobe_summary">Завантажте FFProbe, щоб отримати додаткові відеоканчини, такі як тривалість, бітрейт тощо.</string>
+    <string name="cat_movie">Фільми</string>
+    <string name="cat_tv">Серіал</string>
+    <string name="cat_music">Музика</string>
+    <string name="cat_other">Інше</string>
+    <string name="cat_none">Усі торренти</string>
 </resources>

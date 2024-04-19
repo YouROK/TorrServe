@@ -218,7 +218,7 @@ object UpdaterServer {
             }
         }
         if (version == null)
-            rv = error
+            rv = App.context.getString(R.string.no_data) // error
         return rv
     }
 

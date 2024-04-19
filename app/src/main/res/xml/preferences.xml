@@ -87,6 +87,20 @@
         app:key="show_fab"
         app:title="@string/show_fab_title" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:summaryOff="@string/show_sort_fab_sum_off"
+        android:summaryOn="@string/show_sort_fab_sum_on"
+        app:key="show_sort_fab"
+        app:title="@string/show_sort_fab_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:summaryOff="@string/show_cat_fab_sum_off"
+        android:summaryOn="@string/show_cat_fab_sum_on"
+        app:key="show_cat_fab"
+        app:title="@string/show_cat_fab_title" />
+
     <ListPreference
         android:defaultValue="auto"
         app:entries="@array/app_theme_entries"
