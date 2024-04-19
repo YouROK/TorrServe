@@ -17,7 +17,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,7 +40,6 @@ import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
 import ru.yourok.torrserve.utils.Format
 import ru.yourok.torrserve.utils.ThemeUtil
-import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
 import ru.yourok.torrserve.utils.TorrentHelper
 
 class AddFragment : TSFragment() {
@@ -305,26 +303,16 @@ class AddFragment : TSFragment() {
     private fun setupSortFab() { // Sort Fab
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
-        val selectedColor = getColorFromAttr(themedContext, R.attr.colorPrimary)
-        val defaultColor = ContextCompat.getColor(themedContext, R.color.gray)
+        val accentColor = ThemeUtil.getColorFromAttr(themedContext, R.attr.colorAccent)
+        val actionsColor = ThemeUtil.getColorFromAttr(themedContext, R.attr.colorMainMenu)
 
         fab?.apply {
             setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_24))
             customSize = Format.dp2px(32f)
             setMaxImageSize(Format.dp2px(24f))
-            rippleColor = selectedColor
-            backgroundTintList = ColorStateList(
-                arrayOf(
-                    intArrayOf(android.R.attr.state_focused), // Focused
-                    intArrayOf(android.R.attr.state_enabled), // Enabled
-                    intArrayOf() // Normal
-                ),
-                intArrayOf(
-                    selectedColor, // color for the Focused state
-                    defaultColor,
-                    defaultColor
-                )
-            )
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
             isFocusable = true
             isClickable = true
             setOnClickListener {
@@ -357,7 +345,7 @@ class AddFragment : TSFragment() {
     // https://github.com/YouROK/NUMParser/blob/be9eb56f1b4b53ff251d84f75186f162019ddac4/db/models/torrentDetails.go#L9
     private fun String.normalize(): String {
         return when {
-            this.contains("movie", true) ->  "movie"
+            this.contains("movie", true) -> "movie"
             this.contains("series", true) -> "tv"
             this.equals("tvshow", true) -> "tv"
             else -> this.lowercase()
