@@ -16,7 +16,7 @@ object Settings {
         get() = get("show_fab", true)
 
     val showSortFab: Boolean
-        get() = get("show_sort_fab", true)
+        get() = get("show_sort_fab", false)
 
     val sortTorrByTitle: Boolean
         get() = get("sort_torrents", false)
@@ -93,7 +93,7 @@ object Settings {
     suspend fun isShowCat(): Boolean {
         return try {
             val vi = Api.getMatrixVersionInt()
-            vi > 131 && get("show_cat_fab", true) // MatriX.132 add Categories
+            vi > 131 && get("show_cat_fab", false) // MatriX.132 add Categories
         } catch (e: Exception) {
             false
         }
