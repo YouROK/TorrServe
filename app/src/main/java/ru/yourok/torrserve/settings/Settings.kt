@@ -12,6 +12,14 @@ import ru.yourok.torrserve.server.api.Api
 import java.io.File
 
 object Settings {
+    val showFab: Boolean
+        get() = get("show_fab", true)
+
+    val showSortFab: Boolean
+        get() = get("show_sort_fab", true)
+
+    val sortTorrByTitle: Boolean
+        get() = get("sort_torrents", false)
 
     fun getServerAuth(): String = get("server_auth", "").trim()
     fun useLocalAuth(): Boolean = get("local_auth", false)
@@ -43,9 +51,6 @@ object Settings {
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
     fun showCover(): Boolean = get("show_cover", true)
-    fun sortTorrByTitle(): Boolean = get("sort_torrents", false)
-    fun showFab(): Boolean = get("show_fab", true)
-
     fun getTheme(): String = get("theme", "auto")
     fun setTheme(v: String) = set("theme", v)
 
@@ -88,7 +93,7 @@ object Settings {
     suspend fun isShowCat(): Boolean {
         return try {
             val vi = Api.getMatrixVersionInt()
-            vi > 131 && get("show_cats", false) // MatriX.132 add Categories
+            vi > 131 && get("show_cat_fab", true) // MatriX.132 add Categories
         } catch (e: Exception) {
             false
         }

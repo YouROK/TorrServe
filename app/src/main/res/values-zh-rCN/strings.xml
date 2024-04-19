@@ -221,6 +221,14 @@
     <string name="show_fab_sum_on">显示浮动操作按钮</string>
     <string name="show_fab_sum_off">不要显示浮动操作按钮</string>
 
+    <string name="show_sort_fab_title">纵向浮动排序按钮</string>
+    <string name="show_sort_fab_sum_on">显示浮动排序按钮</string>
+    <string name="show_sort_fab_sum_off">不显示浮动排序按钮</string>
+
+    <string name="show_cat_fab_title">纵向浮动类别按钮</string>
+    <string name="show_cat_fab_sum_on">显示浮动类别按钮</string>
+    <string name="show_cat_fab_sum_off">不显示浮动类别按钮</string>
+
     <string name="accessibility_manual_on">在设备首选项/辅助功能部分启用服务 %1$s</string>
     <string name="accessibility_manual_off">在设备首选项/辅助功能部分禁用服务 %1$s</string>
     <string name="accessibility_service_description">启用该服务可以防止本地 TorrServer 被操作系统关闭</string>
@@ -261,4 +269,9 @@
     <string name="delete_ffprobe">刪除FFProbe</string>
     <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
 
+    <string name="cat_movie">电影</string>
+    <string name="cat_tv">系列</string>
+    <string name="cat_music">音乐</string>
+    <string name="cat_other">其他</string>
+    <string name="cat_none">所有种子</string>
 </resources>

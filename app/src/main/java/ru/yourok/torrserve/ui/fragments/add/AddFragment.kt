@@ -254,7 +254,7 @@ class AddFragment : TSFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun sortResults() {
-        val list = torrsAdapter.list.toMutableList()
+        val list = torrsAdapter.list //.toMutableList()
         when (sortMode) {
             0 -> {
                 torrsAdapter.set(list.sortedBy { it.Title })
@@ -303,7 +303,6 @@ class AddFragment : TSFragment() {
     }
 
     private fun setupSortFab() { // Sort Fab
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
         val selectedColor = getColorFromAttr(themedContext, R.attr.colorPrimary)
@@ -337,13 +336,11 @@ class AddFragment : TSFragment() {
     }
 
     private fun showSortFab() {
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.show()
     }
 
     private fun hideSortFab() {
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.hide()
     }

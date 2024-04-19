@@ -190,6 +190,12 @@
     <string name="show_fab_title">Плаващ бутон на менюто в портрет</string>
     <string name="show_fab_sum_on">Показване на плаващ бутон за действие</string>
     <string name="show_fab_sum_off">Не показвай плаващ бутон за действие</string>
+    <string name="show_sort_fab_title">Бутон за сортиране във вертикална ориентация</string>
+    <string name="show_sort_fab_sum_on">Показване на плаващ бутон за сортиране</string>
+    <string name="show_sort_fab_sum_off">Не показвай плаващ бутон за сортиране</string>
+    <string name="show_cat_fab_title">Бутон за категории във вертикална ориентация</string>
+    <string name="show_cat_fab_sum_on">Показване на бутона за плаващи категории</string>
+    <string name="show_cat_fab_sum_off">Не показвай бутона за плаващи категории</string>
     <string name="accessibility_manual_on">Активирайте услугата %1$s в секцията Предпочитания на устройството / Достъпност</string>
     <string name="accessibility_manual_off">Деактивирайте услугата %1$s в секцията Предпочитания на устройството / Достъпност</string>
     <string name="accessibility_service_description">Активирането на тази услуга може да предотврати изключване на локалният TorrServer от операционната система</string>
@@ -219,4 +225,9 @@
     <string name="no_updates">Не са намерени ъпдейти</string>
     <string name="not_used">Не се използва</string>
     <string name="not_installed">Не е инсталирано</string>
+    <string name="cat_movie">Филми</string>
+    <string name="cat_tv">Сериал</string>
+    <string name="cat_music">Музика</string>
+    <string name="cat_other">Друго</string>
+    <string name="cat_none">Всички торенти</string>
 </resources>

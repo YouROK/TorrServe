@@ -238,6 +238,14 @@
     <string name="show_fab_sum_on">Show floating action button</string>
     <string name="show_fab_sum_off">Don\'t show floating action button</string>
 
+    <string name="show_sort_fab_title">Floating sort button in portrait</string>
+    <string name="show_sort_fab_sum_on">Show floating sort button</string>
+    <string name="show_sort_fab_sum_off">Don\'t show floating sort button</string>
+
+    <string name="show_cat_fab_title">Floating categories button in portrait</string>
+    <string name="show_cat_fab_sum_on">Show floating categories button</string>
+    <string name="show_cat_fab_sum_off">Don\'t show floating categories button</string>
+
     <string name="accessibility_manual_on">Enable service %1$s in Device Preferences / Accessibility section</string>
     <string name="accessibility_manual_off">Disable service %1$s in Device Preferences / Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
@@ -272,4 +280,9 @@
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
 
+    <string name="cat_movie">Movies</string>
+    <string name="cat_tv">Series</string>
+    <string name="cat_music">Music</string>
+    <string name="cat_other">Other</string>
+    <string name="cat_none">All torrents</string>
 </resources>
