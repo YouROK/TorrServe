@@ -14,8 +14,8 @@ android {
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         multiDexEnabled true
-        versionCode 160
-        versionName "MatriX.132.2.F-Droid"
+        versionCode 161
+        versionName "MatriX.132.3.F-Droid"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
@@ -44,8 +44,10 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
-    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
+    def coreKtxVer = '1.12.0' // 1.12.0 last api17 compatible
+    //noinspection GradleDependency
+    implementation "androidx.core:core-ktx:$coreKtxVer"
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
