@@ -27,8 +27,8 @@ class AppToast(
         val padding = Format.dp2px(10f)
         getView().setPadding(padding, padding, padding, padding)
 
-        val width = App.currentActivity()?.window?.decorView?.rootView?.width ?: 0
-        val height = App.currentActivity()?.window?.decorView?.rootView?.height ?: 0
+        val width = App.currentActivity?.window?.decorView?.rootView?.width ?: 0
+        val height = App.currentActivity?.window?.decorView?.rootView?.height ?: 0
         var hmargin = Format.dp2px(12f)
         if (width > height) // landscape
             hmargin = width / 6

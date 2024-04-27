@@ -40,7 +40,7 @@ object Play {
                 }
             } catch (e: Exception) {
                 e.message?.let { App.toast(it, true) }
-                delay(App.longToastDuration.toLong())
+                delay(App.LONG_TOAST_DURATION.toLong())
                 return@launch
             }
 

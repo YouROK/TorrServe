@@ -27,7 +27,7 @@ object ADManager {
             return it
         }
         try {
-            val link = Consts.ad_link + "/ad.json"
+            val link = Consts.AD_LINK + "/ad.json"
             val buf = Net.get(link)
             val data = Gson().fromJson(buf, ADData::class.java)
             addata = data

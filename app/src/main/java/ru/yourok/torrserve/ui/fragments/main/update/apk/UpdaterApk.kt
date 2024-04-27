@@ -22,7 +22,7 @@ object UpdaterApk {
 
     fun check(): Boolean {
         try {
-            val body = Net.get(Consts.updateApkPath)
+            val body = Net.get(Consts.UPDATE_APK_PATH)
             val gson = Gson()
             versions = gson.fromJson(body, ApkVersions::class.java)
             versions?.let {
