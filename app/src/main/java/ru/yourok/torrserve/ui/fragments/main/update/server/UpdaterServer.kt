@@ -136,7 +136,7 @@ object UpdaterServer {
 
     fun check(): Boolean {
         return try {
-            val body = Net.get(Consts.updateServerPath)
+            val body = Net.get(Consts.UPDATE_SERVER_PATH)
             val gson = Gson()
             version = gson.fromJson(body, ServVersion::class.java)
             true

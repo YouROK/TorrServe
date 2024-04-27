@@ -12,7 +12,6 @@ import kotlinx.coroutines.*
 import ru.yourok.torrserve.ad.model.Image
 import ru.yourok.torrserve.app.Consts
 import ru.yourok.torrserve.settings.Settings
-import java.util.*
 
 class AD(private val iv: ImageView, private val activity: AppCompatActivity) {
     private val lock = Any()
@@ -86,7 +85,7 @@ class AD(private val iv: ImageView, private val activity: AppCompatActivity) {
     private fun loadImg(linkImg: String) {
         var link = linkImg
         if (!link.startsWith("http"))
-            link = Consts.ad_link + link
+            link = Consts.AD_LINK + link
 
         Glide.with(activity)
             .asBitmap()

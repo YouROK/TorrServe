@@ -137,8 +137,8 @@ object DonateMessage {
                 textView?.textSize = 18.0f
                 textView?.setTextColor(ContextCompat.getColor(App.context, tc))
                 val layoutParams = snackbarLayout?.layoutParams as ViewGroup.MarginLayoutParams
-                val width = App.currentActivity()?.window?.decorView?.rootView?.width ?: 0
-                val height = App.currentActivity()?.window?.decorView?.rootView?.height ?: 0
+                val width = App.currentActivity?.window?.decorView?.rootView?.width ?: 0
+                val height = App.currentActivity?.window?.decorView?.rootView?.height ?: 0
                 var hmargin = Format.dp2px(12f)
                 if (width > height) // landscape
                     hmargin = width / 6
