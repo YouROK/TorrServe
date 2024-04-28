@@ -136,15 +136,18 @@ object DonateMessage {
                 textView?.maxLines = 10
                 textView?.textSize = 18.0f
                 textView?.setTextColor(ContextCompat.getColor(App.context, tc))
-                val layoutParams = snackbarLayout?.layoutParams as ViewGroup.MarginLayoutParams
-                val width = App.currentActivity?.window?.decorView?.rootView?.width ?: 0
-                val height = App.currentActivity?.window?.decorView?.rootView?.height ?: 0
+
+                val screenWidth = App.currentActivity?.window?.decorView?.rootView?.width ?: 0
+                val screenHeight = App.currentActivity?.window?.decorView?.rootView?.height ?: 0
                 var hmargin = Format.dp2px(12f)
-                if (width > height) // landscape
-                    hmargin = width / 6
+                if (screenWidth > screenHeight) // landscape
+                    hmargin = screenWidth / 6
                 val vmargin = Format.dp2px(64f)
+
+                val layoutParams = snackbarLayout?.layoutParams as ViewGroup.MarginLayoutParams
                 layoutParams.setMargins(hmargin, vmargin, hmargin, vmargin)
                 snackbarLayout.layoutParams = layoutParams
+
                 if (!Utils.isTvBox())
                     snackbar
                         .setAction(android.R.string.ok) {
