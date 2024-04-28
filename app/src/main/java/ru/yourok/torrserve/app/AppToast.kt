@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.app
 
+import android.os.Build
 import android.text.TextUtils
 import android.util.LayoutDirection
 import android.view.LayoutInflater
@@ -77,25 +78,26 @@ class AppToast(
             val appToast = AppToast(viewGroup, snackView)
             appToast.setGestureInsetBottomIgnored(true) // don't add toolbar margin
 
-            tvMessage.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    tvMessage.viewTreeObserver.removeOnPreDrawListener(this)
-                    // adjust tvMessage max lines to fit view
-                    val fullLineHeight = tvMessage.lineHeight + tvMessage.getCompoundPaddingTop() + tvMessage.getCompoundPaddingBottom()
-                    val noOfLinesVisible: Int = tvMessage.height / fullLineHeight
-                    tvMessage.setMaxLines(noOfLinesVisible)
-                    tvMessage.ellipsize = TextUtils.TruncateAt.END
-                    // adjust appToast view height
-                    val lineCount = tvMessage.lineCount
-                    // Drawing happens after layout so we can assume getLineCount() returns the correct value
-                    if (lineCount > 0) {
-                        appToast.getView().updateLayoutParams {
-                            height = 2 * paddingPx + fullLineHeight * lineCount
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                tvMessage.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+                    override fun onPreDraw(): Boolean {
+                        tvMessage.viewTreeObserver.removeOnPreDrawListener(this)
+                        // adjust tvMessage max lines to fit view
+                        val fullLineHeight = tvMessage.lineHeight + tvMessage.getCompoundPaddingTop() + tvMessage.getCompoundPaddingBottom()
+                        val noOfLinesVisible: Int = tvMessage.height / fullLineHeight
+                        tvMessage.setMaxLines(noOfLinesVisible)
+                        tvMessage.ellipsize = TextUtils.TruncateAt.END
+                        // adjust appToast view height
+                        val lineCount = tvMessage.lineCount
+                        // Drawing happens after layout so we can assume getLineCount() returns the correct value
+                        if (lineCount > 0) {
+                            appToast.getView().updateLayoutParams {
+                                height = 2 * paddingPx + fullLineHeight * lineCount
+                            }
                         }
+                        return true
                     }
-                    return true
-                }
-            })
+                })
 
             return appToast
         }
