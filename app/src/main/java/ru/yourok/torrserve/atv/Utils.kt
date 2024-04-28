@@ -87,16 +87,15 @@ object Utils {
         vintent.putExtra("action", "play")
         vintent.putExtra("hash", torr.hash)
         vintent.putExtra("title", torr.title)
-        vintent.putExtra("poster", torr.poster)
+        if (torr.poster.isNotBlank()) vintent.putExtra("poster", torr.poster)
         torr.category?.let { if (it.isNotBlank()) vintent.putExtra("category", it) }
-        if (torr.data.isNotBlank()) vintent.putExtra("data", torr.data)
+        torr.data?.let {if (it.isNotBlank()) vintent.putExtra("data", it) }
         vintent.putExtra("save", false)
         return vintent
     }
 
     private var lock = Any()
     fun updateAtvCards() {
-
         if (isGoogleTV) {
             synchronized(lock) {
                 if (lock == true)

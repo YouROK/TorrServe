@@ -53,8 +53,6 @@ class App : MultiDexApplication() {
         fun toast(txt: String, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
                 val dur = if (long) LONG_TOAST_DURATION else SHORT_TOAST_DURATION
-                // this view overlap the system navigation bar, better use android.R.id.content
-                //val view = currentActivity()?.window?.decorView?.rootView ?: return@post
                 val view: View = currentActivity?.findViewById(android.R.id.content) ?: return@post
                 AppToast
                     .make(view as ViewGroup, txt)
@@ -67,8 +65,6 @@ class App : MultiDexApplication() {
         fun toast(txt: Int, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
                 val dur = if (long) LONG_TOAST_DURATION else SHORT_TOAST_DURATION
-                // this view overlap the system navigation bar, better use android.R.id.content
-                //val view = currentActivity()?.window?.decorView?.rootView ?: return@post
                 val view: View = currentActivity?.findViewById(android.R.id.content) ?: return@post
                 AppToast
                     .make(view as ViewGroup, context.getString(txt))
