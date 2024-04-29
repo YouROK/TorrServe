@@ -139,8 +139,10 @@ object DonateMessage {
 
                 val screenWidth = App.currentActivity?.window?.decorView?.rootView?.width ?: 0
                 val screenHeight = App.currentActivity?.window?.decorView?.rootView?.height ?: 0
+                val isInLandscape = screenWidth > screenHeight
+
                 var hmargin = Format.dp2px(12f)
-                if (screenWidth > screenHeight) // landscape
+                if (isInLandscape) // landscape
                     hmargin = screenWidth / 6
                 val vmargin = Format.dp2px(64f)
 
