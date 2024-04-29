@@ -32,26 +32,19 @@ class AppToast(
         }
         getView().setBackgroundResource(bg)
         getView().findViewById<TextView>(R.id.tvMessage).setTextColor(ContextCompat.getColor(view.context, tc))
-
-        getView().setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
-
-        val screenWidth = App.currentActivity?.window?.decorView?.rootView?.width ?: 0
-        val screenHeight = App.currentActivity?.window?.decorView?.rootView?.height ?: 0
-        var hmargin = dp2px(12f)
-        if (screenWidth > screenHeight) // landscape
-            hmargin = screenWidth / 6
-        val vmargin = dp2px(64f)
-
-        val layoutParams = getView().layoutParams as MarginLayoutParams
-        layoutParams.setMargins(hmargin, vmargin, hmargin, vmargin)
-        getView().layoutParams = layoutParams // apply margins
     }
 
     companion object {
         private const val TEXT_SIZE = 18f
-        val paddingPx = dp2px(12f)
-        private val logoSizePx = dp2px(22f)
+        private val logoSizePx = dp2px(25f)
+
         fun make(viewGroup: ViewGroup, txt: String): AppToast {
+            val screenWidth = App.currentActivity?.window?.decorView?.rootView?.width ?: 0
+            val screenHeight = App.currentActivity?.window?.decorView?.rootView?.height ?: 0
+            val isInLandscape = screenWidth > screenHeight
+
+            val paddingPx = if (isInLandscape) dp2px(16f) else dp2px(12f)
+
             val snackView = LayoutInflater.from(viewGroup.context).inflate(
                 R.layout.layout_toast,
                 viewGroup,
@@ -59,42 +52,46 @@ class AppToast(
             ) as AppToastView
 
             val ivLogo = snackView.findViewById<ImageView>(R.id.ivLogo)
-            val tvMessage = snackView.findViewById<TextView>(R.id.tvMessage)
-
-            tvMessage.textSize = TEXT_SIZE
-            if (txt.isNotEmpty()) tvMessage.apply {
-                text = txt
-                if (Locale.getDefault().layoutDirection == LayoutDirection.RTL)
-                    this.setPadding(paddingPx, 0, paddingPx - dp2px(2f), 0)
-                else
-                    this.setPadding(paddingPx - dp2px(2f), 0, paddingPx, 0)
-            }
-
             ivLogo.updateLayoutParams {
                 width = logoSizePx
                 height = logoSizePx
             }
 
+            val tvMessage = snackView.findViewById<TextView>(R.id.tvMessage)
+            tvMessage.textSize = TEXT_SIZE
+            if (txt.isNotEmpty()) tvMessage.apply {
+                text = txt
+                val offset = if (isInLandscape) dp2px(4f) else dp2px(2f)
+                if (Locale.getDefault().layoutDirection == LayoutDirection.RTL)
+                    this.setPadding(paddingPx, 0, paddingPx - offset, 0)
+                else
+                    this.setPadding(paddingPx - offset, 0, paddingPx, 0)
+            }
+
             val appToast = AppToast(viewGroup, snackView)
+
             appToast.setGestureInsetBottomIgnored(true) // don't add toolbar margin
+
+            appToast.getView().setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
+
+            var hMargin = dp2px(12f)
+            if (isInLandscape)
+                hMargin = screenWidth / 6
+            val vMargin = dp2px(64f)
+
+            val layoutParams = appToast.getView().layoutParams as MarginLayoutParams
+            layoutParams.setMargins(hMargin, vMargin, hMargin, vMargin)
+            appToast.getView().layoutParams = layoutParams // apply margins
 
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
                 tvMessage.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
                     override fun onPreDraw(): Boolean {
                         tvMessage.viewTreeObserver.removeOnPreDrawListener(this)
-                        // adjust tvMessage max lines to fit view
-                        val fullLineHeight = tvMessage.lineHeight + tvMessage.getCompoundPaddingTop() + tvMessage.getCompoundPaddingBottom()
-                        val noOfLinesVisible: Int = tvMessage.height / fullLineHeight
+                        // adjust tvMessage height to fit view
+                        val compoundPadding = tvMessage.getCompoundPaddingTop() + tvMessage.getCompoundPaddingBottom()
+                        val noOfLinesVisible: Int = (tvMessage.height - compoundPadding) / tvMessage.lineHeight
                         tvMessage.setMaxLines(noOfLinesVisible)
                         tvMessage.ellipsize = TextUtils.TruncateAt.END
-                        // adjust appToast view height
-                        val lineCount = tvMessage.lineCount
-                        // Drawing happens after layout so we can assume getLineCount() returns the correct value
-                        if (lineCount > 0) {
-                            appToast.getView().updateLayoutParams {
-                                height = 2 * paddingPx + fullLineHeight * lineCount
-                            }
-                        }
                         return true
                     }
                 })
