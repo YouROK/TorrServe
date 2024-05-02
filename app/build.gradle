@@ -59,8 +59,6 @@ dependencies {
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'com.google.android.flexbox:flexbox:3.0.0'
     // speed test
     implementation 'com.github.anastr:speedviewlib:1.6.1'
     // glide
@@ -72,6 +70,8 @@ dependencies {
     def libsuVersion = '3.2.1' // 3.2.1 last api17 compatible
     //noinspection GradleDependency
     implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
     // json serializer
     def jsonVersion = '2.9.1' // 2.10.1 thorow java.lang.VerifyError on api17
     //noinspection GradleDependency
