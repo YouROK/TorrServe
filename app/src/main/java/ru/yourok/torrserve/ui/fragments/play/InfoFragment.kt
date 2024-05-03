@@ -83,9 +83,9 @@ open class InfoFragment : TSFragment() {
             }
             info.torrent?.let { torr ->
                 view?.apply {
-                    if (poster != torr.poster) {
-                        poster = torr.poster
-                        if (poster.isNotEmpty() && Settings.showCover())
+                    if (!torr.poster.isNullOrEmpty() && poster != torr.poster) {
+                        poster = torr.poster!!
+                        if (poster.isNotBlank() && Settings.showCover())
                             findViewById<ImageView?>(R.id.ivPoster)?.let {
                                 it.visibility = View.VISIBLE
                                 Glide.with(this)
