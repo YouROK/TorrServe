@@ -64,7 +64,7 @@ class TorrentsAdapter(private val activity: FragmentActivity) : BaseAdapter() {
             title = list[position].name
 
         vi.findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
-        if (poster.isNotEmpty() && Settings.showCover())
+        if (!poster.isNullOrBlank() && Settings.showCover())
             vi.findViewById<ImageView>(R.id.ivPoster)?.let {
                 it.visibility = View.VISIBLE
                 Glide.with(activity)
