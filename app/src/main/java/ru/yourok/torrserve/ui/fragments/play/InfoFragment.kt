@@ -184,7 +184,7 @@ open class InfoFragment : TSFragment() {
                         }
                     }
 
-                    if (torr.stat < TorrentHelper.TorrentSTWorking) {
+                    if (torr.stat < TorrentHelper.T_STATE_WORKING) {
                         if (prc > 0 && prc < 100)
                             (activity as? PlayActivity)?.showProgress(prc.toInt())
                         else

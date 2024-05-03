@@ -87,7 +87,7 @@ object Utils {
         vintent.putExtra("action", "play")
         vintent.putExtra("hash", torr.hash)
         vintent.putExtra("title", torr.title)
-        if (torr.poster.isNotBlank()) vintent.putExtra("poster", torr.poster)
+        torr.poster?.let { if (it.isNotBlank()) vintent.putExtra("poster", it) }
         torr.category?.let { if (it.isNotBlank()) vintent.putExtra("category", it) }
         torr.data?.let {if (it.isNotBlank()) vintent.putExtra("data", it) }
         vintent.putExtra("save", false)

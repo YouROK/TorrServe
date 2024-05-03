@@ -14,12 +14,12 @@ import java.io.File
 import java.util.Locale
 
 object TorrentHelper {
-    const val TorrentSTAdded = 0
-    const val TorrentSTGettingInfo = 1
-    const val TorrentSTPreload = 2
-    const val TorrentSTWorking = 3
-    const val TorrentSTClosed = 4
-    const val TorrentInDB = 5
+    const val T_STATE_ADDED = 0
+    const val T_STATE_GETINFO = 1
+    const val T_STATE_PRELOAD = 2
+    const val T_STATE_WORKING = 3
+    const val T_STATE_CLOSED = 4
+    const val T_STATE_INDB = 5
 
     fun getPlayableFiles(torr: Torrent): List<FileStat> {
         if (torr.file_stats.isNullOrEmpty())
@@ -53,16 +53,11 @@ object TorrentHelper {
 //            if (BuildConfig.DEBUG) Log.d("*****", "waitFiles($count) for $hash")
             try {
                 val torr = Api.getTorrent(hash)
-//                if (torr.file_stats != null) {
                 if ((torr.file_stats?.size ?: 0) > 0 || count > 59)
                     return torr
-//                    else
-//                        count++
-//                }
                 count++
                 Thread.sleep(1000)
             } catch (e: Exception) {
-                e.printStackTrace()
                 count++
                 if (count > 59)
                     return null
