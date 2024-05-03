@@ -115,7 +115,7 @@ class ServerSettingsFragment : TSFragment() {
                 showProgress()
                 saveSettings()
                 hideProgress()
-                withContext(Dispatchers.Main) { popBackStackFragment() }
+                popBackStackFragment()
             }
         }
 
@@ -135,7 +135,6 @@ class ServerSettingsFragment : TSFragment() {
                             App.toast(R.string.default_sets_applied)
                         }
                     } catch (e: Exception) {
-                        e.printStackTrace()
                         withContext(Dispatchers.Main) {
                             //e.message?.let { msg -> App.Toast(msg) }
                             App.toast(R.string.error_sending_settings)
