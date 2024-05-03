@@ -154,6 +154,13 @@ class ServerSettingsFragment : TSFragment() {
         lifecycleScope.launch { load() }
     }
 
+    override fun onStop() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            hideProgress()
+        }
+        super.onStop()
+    }
+
     private suspend fun load() = withContext(Dispatchers.Main) {
         if (!loaded) {
             showProgress()
