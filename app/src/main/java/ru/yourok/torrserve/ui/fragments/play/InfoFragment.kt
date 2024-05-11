@@ -58,7 +58,7 @@ open class InfoFragment : TSFragment() {
         return vi
     }
 
-    private var poster = " "
+    private var posterUrl = " "
     suspend fun startInfo(hash: String) = withContext(Dispatchers.Main) {
         try {
             viewModel = ViewModelProvider(this@InfoFragment)[InfoViewModel::class.java]
@@ -83,14 +83,14 @@ open class InfoFragment : TSFragment() {
             }
             info.torrent?.let { torr ->
                 view?.apply {
-                    if (!torr.poster.isNullOrEmpty() && poster != torr.poster) {
-                        poster = torr.poster!!
-                        if (poster.isNotBlank() && Settings.showCover())
+                    if (posterUrl != torr.poster) {
+                        posterUrl = torr.poster ?: ""
+                        if (posterUrl.isNotEmpty() && Settings.showCover())
                             findViewById<ImageView?>(R.id.ivPoster)?.let {
                                 it.visibility = View.VISIBLE
                                 Glide.with(this)
                                     .asBitmap()
-                                    .load(poster)
+                                    .load(posterUrl)
                                     .centerCrop()
                                     //.placeholder(ColorDrawable(0x3c000000))
                                     .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
