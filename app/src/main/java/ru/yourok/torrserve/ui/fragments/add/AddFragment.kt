@@ -175,13 +175,12 @@ class AddFragment : TSFragment() {
                     try {
                         val category = it.Categories.normalize()
                         val torrent = addTorrent("", it.Magnet, it.Title, "", category, "", true)
-                        torrent?.let { App.toast("${getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(getString(R.string.error_add_torrent))
+                        torrent?.let { App.toast("${App.context.getString(R.string.stat_string_added)}: ${it.title}", true) } ?: App.toast(R.string.error_add_torrent)
                     } catch (e: Exception) {
-                        e.printStackTrace()
-                        App.toast(e.message ?: getString(R.string.error_add_torrent))
+                        App.toast(e.message ?: App.context.getString(R.string.error_add_torrent))
                     }
+                    popBackStackFragment()
                 }
-                popBackStackFragment()
             }
             torrsAdapter.onLongClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
