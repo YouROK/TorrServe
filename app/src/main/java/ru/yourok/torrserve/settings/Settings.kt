@@ -8,7 +8,6 @@ import androidx.preference.PreferenceManager
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.server.api.Api
 import java.io.File
 
 object Settings {
@@ -89,16 +88,6 @@ object Settings {
 
         return filesDir.path
     }
-
-    suspend fun isShowCat(): Boolean {
-        return try {
-            val vi = Api.getMatrixVersionInt()
-            vi > 131 && get("show_cat_fab", false) // MatriX.132 add Categories
-        } catch (e: Exception) {
-            false
-        }
-    }
-
 
     @Suppress("UNCHECKED_CAST")
     fun <T> get(name: String, def: T): T {
