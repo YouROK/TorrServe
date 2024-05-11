@@ -34,3 +34,13 @@ fun String.clearPath(): String {
         .replace("\\s+".toRegex(), Typography.nbsp.toString()) // use &nbsp (don't break)
         .trim()
 }
+
+// https://github.com/YouROK/NUMParser/blob/be9eb56f1b4b53ff251d84f75186f162019ddac4/db/models/torrentDetails.go#L9
+fun String.normalize(): String {
+    return when {
+        this.contains("movie", true) -> "movie"
+        this.contains("series", true) -> "tv"
+        this.equals("tvshow", true) -> "tv"
+        else -> this.lowercase()
+    }
+}

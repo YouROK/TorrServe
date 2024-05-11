@@ -31,6 +31,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.ext.normalize
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -338,16 +339,6 @@ class AddFragment : TSFragment() {
         } catch (e: Exception) {
             e.printStackTrace()
             null
-        }
-    }
-
-    // https://github.com/YouROK/NUMParser/blob/be9eb56f1b4b53ff251d84f75186f162019ddac4/db/models/torrentDetails.go#L9
-    private fun String.normalize(): String {
-        return when {
-            this.contains("movie", true) -> "movie"
-            this.contains("series", true) -> "tv"
-            this.equals("tvshow", true) -> "tv"
-            else -> this.lowercase()
         }
     }
 }
