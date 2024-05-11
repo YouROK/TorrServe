@@ -70,9 +70,9 @@ class TorrService : Service() {
         return START_NOT_STICKY
     }
 
-    private fun startServer(nfg: Boolean = false) {
+    private fun startServer(needForeground: Boolean = false) {
         serviceScope.launch {
-            if (BuildConfig.DEBUG) Log.d("TorrService", "startServer(nfg:$nfg)")
+            if (BuildConfig.DEBUG) Log.d("TorrService", "startServer(needForeground:$needForeground)")
 
             if (isLocal() && isAccessibilityOn() && !Accessibility.isEnabledService(App.context)) {
                 if (BuildConfig.DEBUG) Log.d("TorrService", "Try to enable AssessibilityService")
@@ -80,7 +80,7 @@ class TorrService : Service() {
             }
 
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
-                if (nfg) { // fix start local server on boot
+                if (needForeground) { // fix start local server on boot
                     val builder = NotificationCompat.Builder(this@TorrService, NotificationTS().channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(getString(R.string.app_name))
@@ -131,7 +131,11 @@ class TorrService : Service() {
                 if (isLocal()) { // avoid ANR on remote
                     intent.putExtra(NEED_FOREGROUND_KEY, true)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        context.startForegroundService(intent)
+                        try {
+                            context.startForegroundService(intent)
+                        } catch (_: Exception) {
+                            // need then call Service.startForeground() or ANR
+                        }
                     }
                 }
             }
