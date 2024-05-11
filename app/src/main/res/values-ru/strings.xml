@@ -191,7 +191,7 @@
     <string name="show_fab_sum_on">Показать кнопку вызова меню</string>
     <string name="show_fab_sum_off">Не показывать кнопку вызова меню</string>
     <string name="show_sort_fab_title">Кнопка сортировки на экране</string>
-    <string name="show_sort_fab_sum_on">Показать кнопку сортировки</string>
+    <string name="show_sort_fab_sum_on">Показать кнопку сортировки списка</string>
     <string name="show_sort_fab_sum_off">Не показывать кнопку сортировки</string>
     <string name="show_cat_fab_title">Кнопка фильтра по категории</string>
     <string name="show_cat_fab_sum_on">Показать кнопку фильтра категорий</string>
