@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         if (Settings.showFab) setupFab()
         if (Settings.showSortFab) setupSortFab()
         lifecycleScope.launch(Dispatchers.IO) {
-            if (Settings.isShowCat()) {
+            if (TorrService.wait(10) && isShowCat()) {
                 withContext(Dispatchers.Main) {
                     setupCatFab()
                 }
@@ -191,16 +191,19 @@ class MainActivity : AppCompatActivity() {
             if (Settings.showFab) showFab(false)
             if (Settings.showSortFab) showSortFab(false)
             lifecycleScope.launch(Dispatchers.IO) {
-                if (Settings.isShowCat()) withContext(Dispatchers.Main) { showCatFab(false) }
+                if (isShowCat()) withContext(Dispatchers.Main) { showCatFab(false) }
             }
         }
 
         override fun onDrawerClosed(drawerView: View) {
             super.onDrawerClosed(drawerView)
-            if (Settings.showFab) showFab(true)
-            if (Settings.showSortFab && isInTorrents) showSortFab(true)
+            if (Settings.showFab) showFab()
+            if (Settings.showSortFab && isInTorrents) showSortFab()
             lifecycleScope.launch(Dispatchers.IO) {
-                if (Settings.isShowCat() && isInTorrents) withContext(Dispatchers.Main) { showCatFab(true) } else withContext(Dispatchers.Main) { showCatFab(false) }
+                if (isShowCat() && isInTorrents)
+                    withContext(Dispatchers.Main) { showCatFab() }
+                else
+                    withContext(Dispatchers.Main) { showCatFab(false) }
             }
         }
     }
@@ -279,7 +282,7 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener {
                 if (isMenuVisible) {
                     closeMenu()
-                    showFab(true)
+                    showFab()
                 } else {
                     openMenu()
                     showFab(false)
@@ -287,7 +290,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (!isMenuVisible) {
-            showFab(true)
+            showFab()
         }
     }
 
@@ -329,7 +332,7 @@ class MainActivity : AppCompatActivity() {
         }
         // visibility change
         if (isInTorrents)
-            showSortFab(true)
+            showSortFab()
         else
             showSortFab(false)
     }
@@ -340,17 +343,6 @@ class MainActivity : AppCompatActivity() {
             fab?.show()
         else
             fab?.hide()
-    }
-
-    private fun showCatFab(show: Boolean = true) {
-        val fab: FloatingActionButton? = findViewById(R.id.cat_fab)
-        if (show) {
-            fab?.show()
-        } else {
-            hideActions()
-            isCatsOpen = false
-            fab?.hide()
-        }
     }
 
     private var isCatsOpen = false
@@ -364,6 +356,16 @@ class MainActivity : AppCompatActivity() {
     private var othText: TextView? = null
     private var allFab: FloatingActionButton? = null
     private var allText: TextView? = null
+
+
+    suspend fun isShowCat(): Boolean {
+        return try {
+            val vi = Api.getMatrixVersionInt()
+            vi > 131 && Settings.get("show_cat_fab", false) // MatriX.132 add Categories
+        } catch (e: Exception) {
+            false
+        }
+    }
 
     private fun setupCatFab() { // categories options menu
         if (Utils.isTvBox()) return
@@ -451,10 +453,20 @@ class MainActivity : AppCompatActivity() {
         }
         // visibility change
         if (isInTorrents) {
-            showCatFab(true)
-            //hideActions()
+            showCatFab()
         } else {
             showCatFab(false)
+        }
+    }
+
+    private fun showCatFab(show: Boolean = true) {
+        val catFab: FloatingActionButton? = findViewById(R.id.cat_fab)
+        if (show) {
+            catFab?.show()
+        } else {
+            hideActions()
+            isCatsOpen = false
+            catFab?.hide()
         }
     }
 
