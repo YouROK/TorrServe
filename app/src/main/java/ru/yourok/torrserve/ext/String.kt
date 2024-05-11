@@ -22,6 +22,15 @@ fun String.removeOtherSymbolChar(): String // Some Control Char
 fun String.clearName(): String {
     return this.removeOtherSymbolChar()
         .replace(",", " ")
-        .replace("\\s+".toRegex(), " ")
+        .replace(".", " ")
+        .replace("\\s+".toRegex(), " ") // clear &nbsp and wide spaces
+        .trim()
+}
+
+fun String.clearPath(): String {
+    return this.removeOtherSymbolChar()
+        .replace(",", " ")
+        .replace(".", " ")
+        .replace("\\s+".toRegex(), Typography.nbsp.toString()) // use &nbsp (don't break)
         .trim()
 }
