@@ -8,7 +8,6 @@ import androidx.preference.PreferenceManager
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.server.api.Api
 import java.io.File
 
 object Settings {
