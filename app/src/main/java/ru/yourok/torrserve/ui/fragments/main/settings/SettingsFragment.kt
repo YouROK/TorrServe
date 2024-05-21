@@ -174,7 +174,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     setOnPreferenceClickListener {
                         //showPowerRequest(context)
                         try {
-                            if (Utils.isGoogleTV) { // open Power Settings
+                            if (Utils.isAndroidTV) { // open Power Settings
                                 if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
                                     intent.`package` = "com.android.settings"
                                     requireActivity().startActivity(intent)
