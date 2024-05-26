@@ -73,7 +73,9 @@ dependencies {
     def libsuVersion = '3.2.1' // 3.2.1 last api17 compatible
     //noinspection GradleDependency
     implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
-    implementation 'com.google.android.material:material:1.11.0'
+    def muiVersion = '1.11.0' // 1.11.0 last api17 compatible
+    //noinspection GradleDependency
+    implementation "com.google.android.material:material:${muiVersion}"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     // json serializer
     def jsonVersion = '2.9.1' // 2.10.1 thorow java.lang.VerifyError on api17
@@ -87,7 +89,7 @@ dependencies {
     //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api17 compatible
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
     // http client/parser
     def jsoupVersion = '1.16.1' // 1.16.2, 1.17.1, 1.17.2 thorow java.lang.VerifyError on api19
     //noinspection GradleDependency

@@ -16,6 +16,7 @@ import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.utils.TorrentHelper
+import java.util.Locale
 import kotlin.concurrent.thread
 
 
@@ -53,25 +54,46 @@ object Utils {
         return false
     }
 
-    fun hasSAFChooser(pm: PackageManager?): Boolean {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+    private fun hasSAFChooser(pm: PackageManager?): Boolean {
+        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Intent(Intent.ACTION_OPEN_DOCUMENT)
+        } else {
+            return true // VERSION.SDK_INT < KITKAT
+        }
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = "video/*"
         return intent.resolveActivity(pm!!) != null
     }
 
-    val isGoogleTV: Boolean
+    private val deviceName: String
+        get() = String.format("%s (%s)", Build.MODEL, Build.PRODUCT)
+
+    private val isHuaweiDevice: Boolean
         get() {
-            return App.context.packageManager.hasSystemFeature("android.software.leanback") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+            val manufacturer = Build.MANUFACTURER
+            val brand = Build.BRAND
+            return manufacturer.lowercase(Locale.getDefault())
+                .contains("huawei") || brand.lowercase(
+                Locale.getDefault()
+            ).contains("huawei")
+        }
+
+    val isAndroidTV: Boolean
+        get() {
+            return App.context.packageManager.hasSystemFeature("android.software.leanback") &&
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                    !isHuaweiDevice // Huawei Vision S TV on Harmony OS don't have support for content://android.media.tv/channel
+        }
+
+    val isGoogleTV: Boolean // wide posters on home
+        get() {
+            return App.context.packageManager.hasSystemFeature("com.google.android.tv") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
         }
 
     val isAmazonTV: Boolean
         get() {
             return App.context.packageManager.hasSystemFeature(FEATURE_FIRE_TV)
         }
-
-    private val deviceName: String
-        get() = String.format("%s (%s)", Build.MODEL, Build.PRODUCT)
 
     val isBrokenTCL: Boolean
         get() {
@@ -96,7 +118,7 @@ object Utils {
 
     private var lock = Any()
     fun updateAtvCards() {
-        if (isGoogleTV) {
+        if (isAndroidTV) {
             synchronized(lock) {
                 if (lock == true)
                     return
