@@ -2,18 +2,24 @@ package ru.yourok.torrserve.server.local
 
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.BuildConfig
+import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ad.ADManager
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.services.NotificationHelper
+import ru.yourok.torrserve.server.local.services.NotificationTS
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.settings.Settings.isAccessibilityOn
 import ru.yourok.torrserve.utils.Accessibility
@@ -46,14 +52,15 @@ class TorrService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.let {
+            val needToMoveToForeground = intent.getBooleanExtra(NEED_FOREGROUND_KEY, false)
             if (it.action != null) {
                 when (it.action) {
-                    ActionStart -> {
-                        startServer()
+                    ACTION_START -> {
+                        startServer(needToMoveToForeground)
                         return START_STICKY
                     }
 
-                    ActionStop -> {
+                    ACTION_STOP -> {
                         stopServer(intent.hasExtra("forceclose"))
                         return START_NOT_STICKY
                     }
@@ -63,17 +70,28 @@ class TorrService : Service() {
         return START_NOT_STICKY
     }
 
-    private fun startServer() {
+    private fun startServer(needForeground: Boolean = false) {
         serviceScope.launch {
+            if (BuildConfig.DEBUG) Log.d("TorrService", "startServer(needForeground:$needForeground)")
+
             if (isLocal() && isAccessibilityOn() && !Accessibility.isEnabledService(App.context)) {
                 if (BuildConfig.DEBUG) Log.d("TorrService", "Try to enable AssessibilityService")
                 Accessibility.enableService(App.context, true)
             }
+
             if (serverFile.exists() && isLocal() && Api.echo().isEmpty()) {
-                if (BuildConfig.DEBUG) Log.d("TorrService", "startServer()")
+                if (needForeground) { // fix start local server on boot
+                    val builder = NotificationCompat.Builder(this@TorrService, NotificationTS().channelId)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(getString(R.string.app_name))
+                        .setContentText("Start Foreground")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    ServiceCompat.startForeground(this@TorrService, NotificationTS().notificationId, builder.build(), FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+                }
                 serverFile.run()
                 notification.doBindService(this@TorrService)
             }
+
             Utils.updateAtvCards()
         }
     }
@@ -97,26 +115,40 @@ class TorrService : Service() {
     }
 
     companion object {
-        const val ActionStart = "ru.yourok.torrserve.server.action_start"
-        const val ActionStop = "ru.yourok.torrserve.server.action_stop"
+        const val ACTION_START = "ru.yourok.torrserve.server.action_start"
+        const val ACTION_STOP = "ru.yourok.torrserve.server.action_stop"
+        const val NEED_FOREGROUND_KEY = "need_foreground"
+
 
         fun start() {
+            val context = App.context
+            val intent = Intent(context, TorrService::class.java)
+            intent.action = ACTION_START
+            intent.putExtra(NEED_FOREGROUND_KEY, false)
             try {
-                val intent = Intent(App.context, TorrService::class.java)
-                intent.action = ActionStart
-                App.context.startService(intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
+                context.startService(intent)
+            } catch (ex: IllegalStateException) {
+                if (isLocal()) { // avoid ANR on remote
+                    intent.putExtra(NEED_FOREGROUND_KEY, true)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        try {
+                            context.startForegroundService(intent)
+                        } catch (_: Exception) {
+                            // need then call Service.startForeground() or ANR
+                        }
+                    }
+                }
             }
         }
 
         fun stop() {
+            val context = App.context
+            val intent = Intent(context, TorrService::class.java)
+            intent.action = ACTION_STOP
             try {
-                val intent = Intent(App.context, TorrService::class.java)
-                intent.action = ActionStop
-                App.context.startService(intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
+                context.startService(intent)
+            } catch (ex: Exception) {
+                ex.printStackTrace()
             }
         }
 

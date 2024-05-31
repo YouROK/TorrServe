@@ -90,6 +90,8 @@
     <string name="poster">Постер</string>
     <string name="poster_link">URL постера</string>
     <string name="poster_link_help">Укажите ссылку на постер (опционально)</string>
+    <string name="torrent_category">Категория</string>
+    <string name="torrent_category_help">Укажите категорию для торрента (опционально)</string>
     <string name="local_ip">Локальный IP</string>
     <string name="connected_host">Используется</string>
     <string name="find_hosts">Поиск серверов</string>
@@ -124,6 +126,8 @@
     <string name="need_update_server">Необходимо обновить сервер</string>
     <string name="not_support_old_server">Версия сервера 1.1.x не поддерживается. Обновите сервер или используйте клиент 1.1.x с ней.</string>
     <string name="not_support_local_ip">Не устанавливайте локальный IP-адрес устройства в качестве URL-адреса TorrServer! Вместо этого используйте localhost | 127.0.0.1.</string>
+    <string name="not_loaded_exit_hint">Локальный TorrServer не запущен. Попробуйте нажать «Выход» в главном меню и снова запустить приложение или перезагрузить устройство. Если после этого ничего не изменится, обновите TorrServer в разделе «Обновление».</string>
+    <string name="not_loaded_select_hint">Выберите доступный TorrServer из списка, или укажите адрес нового.</string>
     <string name="copy_to_clipboard">Скопированно в буфер обмена</string>
     <string name="stat_running">Локальный сервер запущен</string>
     <string name="server_not_responding">TorrServer не отвечает</string>
@@ -152,6 +156,7 @@
     <string name="app_settings">Настройки приложения</string>
     <string name="app_version">Версия приложения</string>
     <string name="host_title">Установить URL-адрес TorrServer</string>
+    <string name="host_title_hint">http://localhost:8090 – для сервера на устройстве</string>
     <string name="speedtest_title">Тест скорости до TorrServer</string>
     <string name="speedtest_title_desc">Проверка cкорости соединения с TorrServer</string>
     <string name="host_authorization">Авторизация на сервере</string>
@@ -185,6 +190,12 @@
     <string name="show_fab_title">Кнопка вызова меню на экране</string>
     <string name="show_fab_sum_on">Показать кнопку вызова меню</string>
     <string name="show_fab_sum_off">Не показывать кнопку вызова меню</string>
+    <string name="show_sort_fab_title">Кнопка сортировки на экране</string>
+    <string name="show_sort_fab_sum_on">Показать кнопку сортировки списка</string>
+    <string name="show_sort_fab_sum_off">Не показывать кнопку сортировки</string>
+    <string name="show_cat_fab_title">Кнопка фильтра по категории</string>
+    <string name="show_cat_fab_sum_on">Показать кнопку фильтра категорий</string>
+    <string name="show_cat_fab_sum_off">Не показывать кнопку фильтра категорий</string>
     <string name="accessibility_manual_on">Включите сервис «%1$s» в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_manual_off">Отключите сервис «%1$s» в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_service_description">Включение этого сервиса может предотвратить завершение локального TorrServer системой</string>
@@ -209,8 +220,14 @@
     <string name="sort_by_size">Сортировка по размеру</string>
     <string name="sort_by_seed">Сортировка по раздающим</string>
     <string name="sort_by_date">Сортировка по дате</string>
+    <string name="no_data">Нет данных</string>
     <string name="no_torrents">Нет торрентов</string>
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
+    <string name="cat_movie">Фильмы</string>
+    <string name="cat_tv">Сериалы</string>
+    <string name="cat_music">Музыка</string>
+    <string name="cat_other">Другое</string>
+    <string name="cat_none">Все торренты</string>
 </resources>

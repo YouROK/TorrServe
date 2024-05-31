@@ -10,7 +10,7 @@ object UpdaterCards {
 
     fun updateCards() {
         thread {
-            if (!Utils.isGoogleTV)
+            if (!Utils.isAndroidTV)
                 return@thread
 
             synchronized(lock) {

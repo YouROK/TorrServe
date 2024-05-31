@@ -38,6 +38,7 @@ class PlayActivity : AppCompatActivity() {
     var torrentHash: String = ""
     var torrentTitle: String = ""
     var torrentPoster: String = ""
+    var torrentCategory: String = ""
     var torrentData: String = ""
     var torrentSave: Boolean = false
     var torrentFileIndex: Int = -1
@@ -92,7 +93,7 @@ class PlayActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             if (!TorrService.wait(5)) {
                 error(ErrTorrServerNotResponding)
-                delay(App.longToastDuration.toLong())
+                delay(App.LONG_TOAST_DURATION.toLong())
                 if (TorrService.isLocal() && !TorrService.isInstalled()) {
                     withContext(Dispatchers.Main) {
                         findViewById<TextView>(R.id.info_title)?.setText(R.string.install_server)
@@ -110,7 +111,7 @@ class PlayActivity : AppCompatActivity() {
                 } else {
                     //server is not local, change
                     ServerFinderFragment().apply {
-                        show(App.currentActivity() as? FragmentActivity?, R.id.bottom_container, true)
+                        show(App.currentActivity as? FragmentActivity?, R.id.bottom_container, true)
                         onResult = {
                             withContext(Dispatchers.Main) {
                                 processIntent()

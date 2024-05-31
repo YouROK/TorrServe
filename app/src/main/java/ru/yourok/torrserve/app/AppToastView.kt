@@ -24,17 +24,17 @@ class AppToastView @JvmOverloads constructor(
         content.alpha = 0f
         content.animate().apply {
             alpha(1.0f)
-            setDuration(animateInDuration)
+            setDuration(ANIM_IN_DURATION)
             startDelay = delay.toLong()
         }
         val logo = content.findViewById<ImageView?>(R.id.ivLogo)
-        breathFadeAnimation(logo, App.longToastDuration.toLong())
+        breathFadeAnimation(logo, App.LONG_TOAST_DURATION.toLong())
     }
 
     override fun animateContentOut(delay: Int, duration: Int) {
         content.animate().apply {
             alpha(0f)
-            setDuration(animateOutDuration)
+            setDuration(ANIM_OUT_DURATION)
             startDelay = delay.toLong()
         }
 
@@ -73,7 +73,7 @@ class AppToastView @JvmOverloads constructor(
 
 
     companion object {
-        private const val animateInDuration = 500L
-        private const val animateOutDuration = 150L
+        private const val ANIM_IN_DURATION = 500L
+        private const val ANIM_OUT_DURATION = 150L
     }
 }

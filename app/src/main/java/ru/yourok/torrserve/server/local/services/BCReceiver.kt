@@ -7,7 +7,7 @@ import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 
-class BootCompletedReceiver : BroadcastReceiver() {
+class BCReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (Intent.ACTION_BOOT_COMPLETED == intent!!.action) {
             if (Settings.isBootStart()) {

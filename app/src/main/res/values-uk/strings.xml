@@ -87,6 +87,8 @@
     <string name="poster">Постер</string>
     <string name="poster_link">Посилання на постер</string>
     <string name="poster_link_help">Введіть URL-адресу плаката (необов’язково)</string>
+    <string name="torrent_category">Категорія</string>
+    <string name="torrent_category_help">Установити категорію для торрента (необов’язково)</string>
     <string name="local_ip">Локальна IP</string>
     <string name="connected_host">Підключено до</string>
     <string name="find_hosts">Пошук серверів</string>
@@ -117,6 +119,8 @@
     <string name="need_update_server">Потрібно оновити сервер</string>
     <string name="not_support_old_server">Сервер версії 1.1.x не підтримується. Оновіть сервер або користується клієнтом версії 1.1.x.</string>
     <string name="not_support_local_ip">Не встановлюйте локальну IP як URL TorrServer! Натомість використовуйте localhost | 127.0.0.1.</string>
+    <string name="not_loaded_exit_hint">Локальний TorrServer не запущено. Спробуйте натиснути «Вихід» в головному меню та знову запустити програму або перезавантажте пристрій. Якщо після цього нічого не зміниться, оновіть TorrServer у розділі «Оновлення».</string>
+    <string name="not_loaded_select_hint">Виберіть доступний TorrServer зі списку або вкажіть адресу нового.</string>
     <string name="copy_to_clipboard">Скопійовано до буферу обміну</string>
     <string name="stat_running">Службу запущено</string>
     <string name="server_not_responding">TorrServer не відповідає</string>
@@ -143,6 +147,7 @@
     <string name="app_settings">Налаштування додатку</string>
     <string name="app_version">Версія додатка</string>
     <string name="host_title">Встановити URL-адресу TorrServer</string>
+    <string name="host_title_hint">http://localhost:8090 - для сервера на пристрої</string>
     <string name="speedtest_title">Тест швидкості до TorrServer</string>
     <string name="speedtest_title_desc">Перевірте швидкість TorrServer</string>
     <string name="host_authorization">Авторизація на сервері</string>
@@ -176,6 +181,12 @@
     <string name="show_fab_title">Кнопка виклику меню на екрані</string>
     <string name="show_fab_sum_on">Відображати кнопку виклику меню</string>
     <string name="show_fab_sum_off">Не відображати кнопку виклику меню</string>
+    <string name="show_sort_fab_title">Кнопка сортування в портретній орієнтації</string>
+    <string name="show_sort_fab_sum_on">Показати кнопку сортування</string>
+    <string name="show_sort_fab_sum_off">Не показувати кнопку сортування</string>
+    <string name="show_cat_fab_title">Кнопка категорій в портретній орієнтації</string>
+    <string name="show_cat_fab_sum_on">Показати кнопку категорій</string>
+    <string name="show_cat_fab_sum_off">Не показувати кнопку категорій</string>
     <string name="accessibility_manual_on">Увімкнути службу «%1$s» в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_manual_off">Вимкнути службу «%1$s» в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_service_description">Включення цього сервісу може запобігти завершення локального TorrServer системою</string>
@@ -200,6 +211,7 @@
     <string name="sort_by_size">Сортування за розміром</string>
     <string name="sort_by_seed">Сортування за роздавальним</string>
     <string name="sort_by_date">Сортування за датою</string>
+    <string name="no_data">Немає даних</string>
     <string name="no_torrents">Немає торрентів</string>
     <string name="no_updates">Немає оновлень</string>
     <string name="not_used">Не використовується</string>
@@ -213,4 +225,9 @@
     <string name="install_ffprobe">Встановіть FFProbe</string>
     <string name="delete_ffprobe">Видалити FFProbe</string>
     <string name="ffprobe_summary">Завантажте FFProbe, щоб отримати додаткові відеоканчини, такі як тривалість, бітрейт тощо.</string>
+    <string name="cat_movie">Фільми</string>
+    <string name="cat_tv">Серіал</string>
+    <string name="cat_music">Музика</string>
+    <string name="cat_other">Інше</string>
+    <string name="cat_none">Усі торренти</string>
 </resources>

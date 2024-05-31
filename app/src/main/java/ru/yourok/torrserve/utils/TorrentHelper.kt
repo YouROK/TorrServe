@@ -14,12 +14,12 @@ import java.io.File
 import java.util.Locale
 
 object TorrentHelper {
-    const val TorrentSTAdded = 0
-    const val TorrentSTGettingInfo = 1
-    const val TorrentSTPreload = 2
-    const val TorrentSTWorking = 3
-    const val TorrentSTClosed = 4
-    const val TorrentInDB = 5
+    const val T_STATE_ADDED = 0
+    const val T_STATE_GETINFO = 1
+    const val T_STATE_PRELOAD = 2
+    const val T_STATE_WORKING = 3
+    const val T_STATE_CLOSED = 4
+    const val T_STATE_INDB = 5
 
     fun getPlayableFiles(torr: Torrent): List<FileStat> {
         if (torr.file_stats.isNullOrEmpty())
@@ -53,16 +53,11 @@ object TorrentHelper {
 //            if (BuildConfig.DEBUG) Log.d("*****", "waitFiles($count) for $hash")
             try {
                 val torr = Api.getTorrent(hash)
-//                if (torr.file_stats != null) {
                 if ((torr.file_stats?.size ?: 0) > 0 || count > 59)
                     return torr
-//                    else
-//                        count++
-//                }
                 count++
                 Thread.sleep(1000)
             } catch (e: Exception) {
-                e.printStackTrace()
                 count++
                 if (count > 59)
                     return null
@@ -181,11 +176,12 @@ object TorrentHelper {
                     }
                 }
                 val title = format.tags?.title ?: torrent.title
+                val category = torrent.category ?: ""
                 val size = Format.byteFmt(ffp.format.size.toDouble())
                 val duration = Format.durFmtS(ffp.format.duration.toDouble())
                 val bitrate = Format.speedFmt(ffp.format.bit_rate.toDouble() / 8)
                 withContext(Dispatchers.Main) {
-                    InfoDialog(context).show(torrLink, title.trim(), format.format_long_name, videoDesc.joinToString(" ● "), audioDesc.joinToString(" ● "), subsDesc.joinToString(" ● "), size, duration, bitrate)
+                    InfoDialog(context).show(torrLink, title.trim(), category, format.format_long_name, videoDesc.joinToString(" ● "), audioDesc.joinToString(" ● "), subsDesc.joinToString(" ● "), size, duration, bitrate)
                 }
             } catch (e: Exception) {
                 e.message?.let { App.toast(it) }

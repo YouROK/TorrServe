@@ -1,5 +1,8 @@
 package ru.yourok.torrserve.ui.fragments.play.adapters
 
+import android.graphics.text.LineBreaker
+import android.os.Build
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +15,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.append
 import ru.yourok.torrserve.ext.clearName
+import ru.yourok.torrserve.ext.clearPath
 import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -45,17 +49,29 @@ class TorrentFilesAdapter : BaseAdapter() {
         val file = files[position]
         val tvFileName = vi.findViewById<TextView>(R.id.tvFileName)
         val path = File(file.path).parent
+        val name = File(file.path).nameWithoutExtension.clearName()
+        val ext = File(file.path).extension
         if (!path.isNullOrEmpty()) { // split path
             tvFileName.apply {
-                val folder = path.substringAfterLast("/").clearName()
+                val folder = path.substringAfterLast("/").clearPath()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    breakStrategy = LineBreaker.BREAK_STRATEGY_SIMPLE
+                }
                 text = ""
                 append("$folder\n", color1) // folder
-                append(File(file.path).name, color2) // file
+                append(name, color2) // file
+                if (ext.isNotEmpty()) // extension
+                    append(" .$ext", color1)
             }
         } else {
             tvFileName.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    breakStrategy = LineBreaker.BREAK_STRATEGY_SIMPLE
+                }
                 text = ""
-                append(File(file.path).name, color2) // file
+                append(name, color2) // file
+                if (ext.isNotEmpty()) // extension
+                    append(" .$ext", color1)
             }
         }
 

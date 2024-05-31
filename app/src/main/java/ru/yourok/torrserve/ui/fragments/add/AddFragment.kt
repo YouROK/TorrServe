@@ -17,7 +17,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +31,7 @@ import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
+import ru.yourok.torrserve.ext.normalize
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
@@ -41,7 +41,6 @@ import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
 import ru.yourok.torrserve.utils.Format
 import ru.yourok.torrserve.utils.ThemeUtil
-import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
 import ru.yourok.torrserve.utils.TorrentHelper
 
 class AddFragment : TSFragment() {
@@ -64,11 +63,12 @@ class AddFragment : TSFragment() {
                 val link = view.findViewById<TextInputEditText>(R.id.etMagnet)?.text?.toString() ?: ""
                 val title = view.findViewById<TextInputEditText>(R.id.etTitle)?.text?.toString() ?: ""
                 val poster = view.findViewById<TextInputEditText>(R.id.etPoster)?.text?.toString() ?: ""
+                val category = view.findViewById<TextInputEditText>(R.id.etCategory)?.text?.toString() ?: ""
 
                 if (link.isNotBlank())
                     lifecycleScope.launch(Dispatchers.IO) {
                         try {
-                            addTorrent("", link, title, poster, "", true)
+                            addTorrent("", link, title, poster, category, "", true)
                         } catch (e: Exception) {
                             e.printStackTrace()
                             App.toast(e.message ?: getString(R.string.error_retrieve_data))
@@ -79,13 +79,20 @@ class AddFragment : TSFragment() {
             findViewById<Button>(R.id.btnCancel)?.setOnClickListener {
                 popBackStackFragment()
             }
-            // SEARCH
+            // SEARCH and CATEGORY
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
                     val rutorEnabled = loadSettings()?.EnableRutorSearch == true
+                    val categoryEnabled = Api.getMatrixVersionInt() > 131
                     withContext(Dispatchers.Main) {
                         findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
                             visibility = if (rutorEnabled)
+                                View.VISIBLE
+                            else
+                                View.GONE
+                        }
+                        findViewById<TextInputLayout>(R.id.tvCategory)?.apply {
+                            visibility = if (categoryEnabled)
                                 View.VISIBLE
                             else
                                 View.GONE
@@ -167,19 +174,20 @@ class AddFragment : TSFragment() {
             torrsAdapter.onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        val torrent = addTorrent("", it.Magnet, it.Title, "", "", true)
-                        torrent?.let { App.toast("${getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(getString(R.string.error_add_torrent))
+                        val category = it.Categories.normalize()
+                        val torrent = addTorrent("", it.Magnet, it.Title, "", category, "", true)
+                        torrent?.let { App.toast("${App.context.getString(R.string.stat_string_added)}: ${it.title}", true) } ?: App.toast(R.string.error_add_torrent)
                     } catch (e: Exception) {
-                        e.printStackTrace()
-                        App.toast(e.message ?: getString(R.string.error_add_torrent))
+                        App.toast(e.message ?: App.context.getString(R.string.error_add_torrent))
                     }
+                    popBackStackFragment()
                 }
-                popBackStackFragment()
             }
             torrsAdapter.onLongClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
+                    val category = it.Categories.normalize()
                     val torrent: Torrent
-                    val torr = addTorrent("", it.Magnet, it.Title, "", "", false) ?: let {
+                    val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
                         return@launch
                     }
                     torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
@@ -213,8 +221,9 @@ class AddFragment : TSFragment() {
                         if (itemPosition in torrsAdapter.list.indices) {
                             torrsAdapter.list[itemPosition].let {
                                 lifecycleScope.launch(Dispatchers.IO) {
+                                    val category = it.Categories.normalize()
                                     val torrent: Torrent
-                                    val torr = addTorrent("", it.Magnet, it.Title, "", "", false) ?: let {
+                                    val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
                                         return@launch
                                     }
                                     torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
@@ -243,7 +252,7 @@ class AddFragment : TSFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun sortResults() {
-        val list = torrsAdapter.list.toMutableList()
+        val list = torrsAdapter.list //.toMutableList()
         when (sortMode) {
             0 -> {
                 torrsAdapter.set(list.sortedBy { it.Title })
@@ -292,29 +301,18 @@ class AddFragment : TSFragment() {
     }
 
     private fun setupSortFab() { // Sort Fab
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
-        val selectedColor = getColorFromAttr(themedContext, R.attr.colorPrimary)
-        val defaultColor = ContextCompat.getColor(themedContext, R.color.gray)
+        val accentColor = ThemeUtil.getColorFromAttr(themedContext, R.attr.colorAccent)
+        val actionsColor = ThemeUtil.getColorFromAttr(themedContext, R.attr.colorMainMenu)
 
         fab?.apply {
             setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_24))
             customSize = Format.dp2px(32f)
             setMaxImageSize(Format.dp2px(24f))
-            rippleColor = selectedColor
-            backgroundTintList = ColorStateList(
-                arrayOf(
-                    intArrayOf(android.R.attr.state_focused), // Focused
-                    intArrayOf(android.R.attr.state_enabled), // Enabled
-                    intArrayOf() // normal
-                ),
-                intArrayOf(
-                    selectedColor, // The color for the Focused state
-                    defaultColor,
-                    defaultColor
-                )
-            )
+            setColorFilter(accentColor)
+            setRippleColor(ColorStateList.valueOf(accentColor))
+            backgroundTintList = ColorStateList.valueOf(actionsColor)
             isFocusable = true
             isClickable = true
             setOnClickListener {
@@ -326,13 +324,11 @@ class AddFragment : TSFragment() {
     }
 
     private fun showSortFab() {
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.show()
     }
 
     private fun hideSortFab() {
-        //if (Utils.isTV()) return
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.hide()
     }

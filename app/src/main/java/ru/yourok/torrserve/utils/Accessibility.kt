@@ -92,7 +92,7 @@ object Accessibility {
                 e.message?.let { App.toast(it) }
                 Handler(Looper.getMainLooper()).postDelayed({
                     showAccessibilitySettings(requireContext)
-                }, App.shortToastDuration.toLong()) // as in toast duration
+                }, App.SHORT_TOAST_DURATION.toLong()) // as in toast duration
             }
         } else {
             val appName = App.context.getString(R.string.app_name)
@@ -102,7 +102,7 @@ object Accessibility {
                 App.toast(App.context.getString(R.string.accessibility_manual_off, appName), true)
             Handler(Looper.getMainLooper()).postDelayed({
                 showAccessibilitySettings(requireContext)
-            }, App.longToastDuration.toLong()) // as in toast duration
+            }, App.LONG_TOAST_DURATION.toLong()) // as in toast duration
         }
     }
 

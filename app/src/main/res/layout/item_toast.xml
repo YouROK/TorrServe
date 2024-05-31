@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:contentDescription="@string/app_name"
         android:src="@mipmap/ic_launcher"
-        app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/app_name" />
+        app:layout_constraintVertical_bias="0" />
 
     <TextView
         android:id="@+id/tvMessage"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:gravity="top"
-        android:maxLines="15"
-        android:paddingStart="8dp"
-        tools:text="App Message!"
+        android:layout_height="wrap_content"
         android:textSize="18sp"
+        android:includeFontPadding="true"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivLogo"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintVertical_bias="0"
+        tools:text="App Message!\n\nVivamus a vehicula nunc. Phasellus nec metus cursus, molestie neque in, ullamcorper felis. Pellentesque pharetra ullamcorper mauris faucibus dapibus. Vestibulum eget gravida lacus. Pellentesque magna velit, dictum sed sagittis nec, commodo in nisi. Nam bibendum erat lorem, in semper tortor dignissim eu. Duis iaculis augue sit amet dolor mollis, interdum varius augue placerat. Praesent ut condimentum dui. Sed varius ultrices ligula quis cursus. Donec vulputate leo sit amet massa accumsan, id posuere orci convallis. Nam iaculis tempor ipsum placerat sodales. Morbi eleifend pretium malesuada." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

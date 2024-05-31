@@ -1,11 +1,16 @@
 package ru.yourok.torrserve.ui.fragments.play
 
+import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
@@ -28,7 +33,9 @@ import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoTorrent
 import ru.yourok.torrserve.ui.fragments.play.viewmodels.InfoViewModel
+import ru.yourok.torrserve.utils.CImageSpan
 import ru.yourok.torrserve.utils.Format
+import ru.yourok.torrserve.utils.SpanFormat
 import ru.yourok.torrserve.utils.ThemeUtil
 import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
 import ru.yourok.torrserve.utils.TorrentHelper
@@ -51,7 +58,7 @@ open class InfoFragment : TSFragment() {
         return vi
     }
 
-    private var poster = " "
+    private var posterUrl = " "
     suspend fun startInfo(hash: String) = withContext(Dispatchers.Main) {
         try {
             viewModel = ViewModelProvider(this@InfoFragment)[InfoViewModel::class.java]
@@ -66,23 +73,24 @@ open class InfoFragment : TSFragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateUI(info: InfoTorrent, index: Int) {
         lifecycleScope.launch {
             view?.findViewById<ConstraintLayout?>(R.id.clInfo)?.visibility = View.VISIBLE
             if (info.torrent == null && info.error.isNotEmpty()) {
-                view?.findViewById<TextView>(R.id.tvInfo)?.text = info.error
+                view?.findViewById<TextView?>(R.id.tvInfo)?.text = info.error
                 return@launch
             }
             info.torrent?.let { torr ->
                 view?.apply {
-                    if (poster != torr.poster) {
-                        poster = torr.poster
-                        if (poster.isNotEmpty() && Settings.showCover())
-                            findViewById<ImageView>(R.id.ivPoster)?.let {
+                    if (posterUrl != torr.poster) {
+                        posterUrl = torr.poster ?: ""
+                        if (posterUrl.isNotEmpty() && Settings.showCover())
+                            findViewById<ImageView?>(R.id.ivPoster)?.let {
                                 it.visibility = View.VISIBLE
                                 Glide.with(this)
                                     .asBitmap()
-                                    .load(poster)
+                                    .load(posterUrl)
                                     .centerCrop()
                                     //.placeholder(ColorDrawable(0x3c000000))
                                     .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
@@ -92,14 +100,35 @@ open class InfoFragment : TSFragment() {
                         else
                             findViewById<ImageView>(R.id.ivPoster)?.visibility = View.GONE
                     }
-
+                    val category = torr.category ?: ""
                     val title = torr.title
+                    val tv = findViewById<TextView?>(R.id.tvTitle)
+
                     if (title.isEmpty())
-                        findViewById<TextView>(R.id.tvTitle).visibility = View.GONE
+                        tv.visibility = View.GONE
                     else {
                         (activity as? PlayActivity)?.hideTitle()
-                        findViewById<TextView>(R.id.tvTitle).visibility = View.VISIBLE
-                        findViewById<TextView>(R.id.tvTitle).text = title
+                        tv.visibility = View.VISIBLE
+                        //tv.text = title
+                        if (category.isNotBlank()) {
+                            val sIcon = SpannableString(" ")
+                            val cDrawable: Drawable? = when {
+                                category.contains("movie", true) -> AppCompatResources.getDrawable(requireContext(), R.drawable.round_movie_24)
+                                category.contains("tv", true) -> AppCompatResources.getDrawable(requireContext(), R.drawable.round_live_tv_24)
+                                category.contains("music", true) -> AppCompatResources.getDrawable(requireContext(), R.drawable.round_music_note_24)
+                                category.contains("other", true) -> AppCompatResources.getDrawable(requireContext(), R.drawable.round_more_horiz_24)
+                                else -> null
+                            }
+                            if (cDrawable == null)
+                                tv.text = "${category.uppercase()} ● $title"
+                            else {
+                                cDrawable.setBounds(0, 0, cDrawable.intrinsicWidth, cDrawable.intrinsicHeight)
+                                val span = CImageSpan(cDrawable)
+                                sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                                tv.text = SpanFormat.format("%s $title", sIcon)
+                            }
+                        } else
+                            tv.text = title
                     }
 
                     val file: FileStat? = if (index > 0 && index < torr.file_stats?.size!!) torr.file_stats?.get(index) else if (index == 0) TorrentHelper.getPlayableFiles(torr)[index] else null
@@ -155,7 +184,7 @@ open class InfoFragment : TSFragment() {
                         }
                     }
 
-                    if (torr.stat < TorrentHelper.TorrentSTWorking) {
+                    if (torr.stat < TorrentHelper.T_STATE_WORKING) {
                         if (prc > 0 && prc < 100)
                             (activity as? PlayActivity)?.showProgress(prc.toInt())
                         else

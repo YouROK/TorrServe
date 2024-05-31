@@ -26,7 +26,7 @@ object Play {
 
             val torrent: Torrent
             try {
-                val torr = addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentData, torrentSave)
+                val torr = addTorrent(torrentHash, torrentLink, torrentTitle, torrentPoster, torrentCategory, torrentData, torrentSave)
                     ?: let {
                         error(ErrLoadTorrent)
                         return@launch
@@ -40,7 +40,7 @@ object Play {
                 }
             } catch (e: Exception) {
                 e.message?.let { App.toast(it, true) }
-                delay(App.longToastDuration.toLong())
+                delay(App.LONG_TOAST_DURATION.toLong())
                 return@launch
             }
 
@@ -98,7 +98,7 @@ object Play {
                 torr = Api.getTorrent(torr.hash)
             } catch (_: Exception) {
             }
-            while (torr.stat == TorrentHelper.TorrentSTPreload) {
+            while (torr.stat == TorrentHelper.T_STATE_PRELOAD) {
                 delay(1000)
                 try {
                     torr = Api.getTorrent(torr.hash)

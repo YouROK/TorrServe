@@ -22,6 +22,25 @@ fun String.removeOtherSymbolChar(): String // Some Control Char
 fun String.clearName(): String {
     return this.removeOtherSymbolChar()
         .replace(",", " ")
-        .replace("\\s+".toRegex(), " ")
+        .replace(".", " ")
+        .replace("\\s+".toRegex(), " ") // clear &nbsp and wide spaces
         .trim()
+}
+
+fun String.clearPath(): String {
+    return this.removeOtherSymbolChar()
+        .replace(",", " ")
+        .replace(".", " ")
+        .replace("\\s+".toRegex(), Typography.nbsp.toString()) // use &nbsp (don't break)
+        .trim()
+}
+
+// https://github.com/YouROK/NUMParser/blob/be9eb56f1b4b53ff251d84f75186f162019ddac4/db/models/torrentDetails.go#L9
+fun String.normalize(): String {
+    return when {
+        this.contains("movie", true) -> "movie"
+        this.contains("series", true) -> "tv"
+        this.equals("tvshow", true) -> "tv"
+        else -> this.lowercase()
+    }
 }

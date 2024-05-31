@@ -5,8 +5,6 @@ import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.style.DynamicDrawableSpan
-import android.text.style.ImageSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -22,6 +20,7 @@ import kotlinx.coroutines.launch
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ui.activities.play.addTorrent
+import ru.yourok.torrserve.utils.CImageSpan
 import ru.yourok.torrserve.utils.Format.dp2px
 import ru.yourok.torrserve.utils.SpanFormat
 import ru.yourok.torrserve.utils.ThemeUtil.Companion.getColorFromAttr
@@ -37,7 +36,7 @@ class InfoDialog(private val context: Context) {
     private val labelsColor = ColorStateList.valueOf(getColorFromAttr(this.context, R.attr.colorPrimary))
     private val labelsTextColor = getColorFromAttr(this.context, R.attr.colorSurface)
 
-    fun show(torrLink: String, title: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
+    fun show(torrLink: String, title: String, category: String, format: String, video: String, audio: String, subtitles: String, size: String, runtime: String, bitrate: String) {
         val view = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.dialog_info, null) as LinearLayout? ?: return
 
@@ -47,7 +46,7 @@ class InfoDialog(private val context: Context) {
                 val cDrawable = AppCompatResources.getDrawable(context, R.drawable.outline_format_24)
                 cDrawable?.let {
                     it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                    val span = ImageSpan(it, DynamicDrawableSpan.ALIGN_CENTER)
+                    val span = CImageSpan(it)
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text = SpanFormat.format("%s $format", sIcon)
@@ -60,7 +59,7 @@ class InfoDialog(private val context: Context) {
                 val cDrawable = AppCompatResources.getDrawable(context, R.drawable.outline_video_24)
                 cDrawable?.let {
                     it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                    val span = ImageSpan(it, DynamicDrawableSpan.ALIGN_CENTER)
+                    val span = CImageSpan(it)
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text = SpanFormat.format("%s $video", sIcon)
@@ -73,7 +72,7 @@ class InfoDialog(private val context: Context) {
                 val cDrawable = AppCompatResources.getDrawable(context, R.drawable.outline_audio_24)
                 cDrawable?.let {
                     it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                    val span = ImageSpan(it, DynamicDrawableSpan.ALIGN_CENTER)
+                    val span = CImageSpan(it)
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text = SpanFormat.format("%s $audio", sIcon)
@@ -86,7 +85,7 @@ class InfoDialog(private val context: Context) {
                 val cDrawable = AppCompatResources.getDrawable(context, R.drawable.outline_subtitles_24)
                 cDrawable?.let {
                     it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                    val span = ImageSpan(it, DynamicDrawableSpan.ALIGN_CENTER)
+                    val span = CImageSpan(it)
                     sIcon.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text = SpanFormat.format("%s $subtitles", sIcon)
@@ -138,7 +137,7 @@ class InfoDialog(private val context: Context) {
             builder.setPositiveButton(R.string.add) { dlg, _ ->
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        val torrent = addTorrent("", torrLink, title, "", "", true)
+                        val torrent = addTorrent("", torrLink, title, "", category, "", true)
                         torrent?.let { App.toast("${context.getString(R.string.stat_string_added)}: ${it.title}") } ?: App.toast(context.getString(R.string.error_add_torrent))
                     } catch (e: Exception) {
                         e.printStackTrace()

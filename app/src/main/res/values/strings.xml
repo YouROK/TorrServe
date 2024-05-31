@@ -112,6 +112,8 @@
     <string name="poster">Poster</string>
     <string name="poster_link">Poster URL</string>
     <string name="poster_link_help">Enter Poster URL (optional)</string>
+    <string name="torrent_category">Category</string>
+    <string name="torrent_category_help">Set Category for Torrent (optional)</string>
 
     <string name="local_ip">Local IP</string>
     <string name="connected_host">Connected to</string>
@@ -150,7 +152,8 @@
     <string name="need_update_server">Server needs to be updated</string>
     <string name="not_support_old_server">Server version 1.1.x is not supported. Update server or use client 1.1.x for it.</string>
     <string name="not_support_local_ip">Don\'t set local device IP as torrserver URL! Use localhost | 127.0.0.1 instead.</string>
-
+    <string name="not_loaded_exit_hint">The local TorrServer is not running. Try clicking \"Exit\" in the Main Menu and launch the application again, or restart your device. If nothing changes after this, update TorrServer in the \"Update\" section.</string>
+    <string name="not_loaded_select_hint">Select an available TorrServer from the list, or specify the address of a new one.</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
     <string name="stat_running">Service is running</string>
     <string name="server_not_responding">TorrServer is not responding</string>
@@ -188,6 +191,7 @@
     <string name="app_version">App Version</string>
 
     <string name="host_title">Set TorrServer URL</string>
+    <string name="host_title_hint">http://localhost:8090 - for server on device</string>
 
     <string name="speedtest_title">TorrServer Speed Test</string>
     <string name="speedtest_title_desc">Test speed to TorrServer</string>
@@ -234,6 +238,14 @@
     <string name="show_fab_sum_on">Show floating action button</string>
     <string name="show_fab_sum_off">Don\'t show floating action button</string>
 
+    <string name="show_sort_fab_title">Floating sort button in portrait</string>
+    <string name="show_sort_fab_sum_on">Show floating sort button</string>
+    <string name="show_sort_fab_sum_off">Don\'t show floating sort button</string>
+
+    <string name="show_cat_fab_title">Floating categories button in portrait</string>
+    <string name="show_cat_fab_sum_on">Show floating categories button</string>
+    <string name="show_cat_fab_sum_off">Don\'t show floating categories button</string>
+
     <string name="accessibility_manual_on">Enable service %1$s in Device Preferences / Accessibility section</string>
     <string name="accessibility_manual_off">Disable service %1$s in Device Preferences / Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
@@ -262,9 +274,15 @@
     <string name="sort_by_seed">Sort list by Seeders</string>
     <string name="sort_by_date">Sort list by Date</string>
 
+    <string name="no_data">No data</string>
     <string name="no_torrents">No Torrents</string>
     <string name="no_updates">No updates found</string>
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
 
+    <string name="cat_movie">Movies</string>
+    <string name="cat_tv">Series</string>
+    <string name="cat_music">Music</string>
+    <string name="cat_other">Other</string>
+    <string name="cat_none">All torrents</string>
 </resources>

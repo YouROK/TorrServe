@@ -11,6 +11,14 @@ import ru.yourok.torrserve.app.App
 import java.io.File
 
 object Settings {
+    val showFab: Boolean
+        get() = get("show_fab", true)
+
+    val showSortFab: Boolean
+        get() = get("show_sort_fab", false)
+
+    val sortTorrByTitle: Boolean
+        get() = get("sort_torrents", false)
 
     fun getServerAuth(): String = get("server_auth", "").trim()
     fun useLocalAuth(): Boolean = get("local_auth", false)
@@ -42,9 +50,6 @@ object Settings {
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
     fun showCover(): Boolean = get("show_cover", true)
-    fun sortTorrByTitle(): Boolean = get("sort_torrents", false)
-    fun showFab(): Boolean = get("show_fab", true)
-
     fun getTheme(): String = get("theme", "auto")
     fun setTheme(v: String) = set("theme", v)
 
@@ -67,7 +72,7 @@ object Settings {
         filesDir = App.context.getExternalFilesDir(null)
 
         if (filesDir?.canWrite() != true || Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-            if (BuildConfig.DEBUG) Log.d("*****","Can't write to $filesDir or SDK>33")
+            if (BuildConfig.DEBUG) Log.d("*****", "Can't write to $filesDir or SDK>33")
             filesDir = null
         }
 

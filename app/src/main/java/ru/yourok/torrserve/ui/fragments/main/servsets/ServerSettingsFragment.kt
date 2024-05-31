@@ -65,16 +65,9 @@ class ServerSettingsFragment : TSFragment() {
         }
         // hide disk cache options for older server versions
         lifecycleScope.launch(Dispatchers.IO) {
-            val ver = Api.echo()
-            val numbers = Regex("[0-9]+").findAll(ver)
-                .map(MatchResult::value)
-                .toList()
-            val verMajor = numbers.firstOrNull()?.toIntOrNull() ?: 0
-            //val verMinor = numbers.getOrNull(1)?.toIntOrNull() ?: 0
-            if ( // MatriX.94 is 1st disk cache release
-                ver.contains("MatriX", true) &&
-                verMajor < 94
-            ) {
+            val ver = Api.getMatrixVersionInt()
+            if (ver < 94) // MatriX.94 is 1st disk cache release
+            {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<SwitchMaterial>(R.id.cbSaveOnDisk)?.visibility = View.GONE
                     vi.findViewById<TextView>(R.id.lbSaveOnDisk)?.visibility = View.GONE
@@ -84,10 +77,8 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<Button>(R.id.btnContentPath)?.visibility = View.GONE
                 }
             }
-            if ( // MatriX.101 add PreloadCache
-                ver.contains("MatriX", true) &&
-                verMajor > 100
-            ) {
+            if (ver > 100) // MatriX.101 add PreloadCache
+            {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<TextInputLayout>(R.id.lbPreloadCache)?.visibility = View.VISIBLE
                     //vi.findViewById<TextInputEditText>(R.id.etPreloadCache)?.visibility = View.VISIBLE
@@ -95,29 +86,23 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<TextView>(R.id.lbPreloadBuffer)?.visibility = View.GONE
                 }
             }
-            if ( // MatriX.105 add DLNA / disable DhtConnectionLimit
-                ver.contains("MatriX", true) &&
-                verMajor > 104
-            ) {
+            if (ver > 104) // MatriX.105 add DLNA / disable DhtConnectionLimit
+            {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<TextInputLayout>(R.id.tvConnectionsDhtLimit)?.visibility = View.GONE
                     //vi.findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.visibility = View.GONE
                     vi.findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.visibility = View.VISIBLE
                 }
             }
-            if ( // MatriX.115 add DLNA Friendly Name
-                ver.contains("MatriX", true) &&
-                verMajor > 114
-            ) {
+            if (ver > 114) // MatriX.115 add DLNA Friendly Name
+            {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<TextInputLayout>(R.id.tvFriendlyName)?.visibility = View.VISIBLE
                     //vi.findViewById<TextInputEditText>(R.id.etFriendlyName)?.visibility = View.VISIBLE
                 }
             }
-            if ( // MatriX.120 add Rutor search
-                ver.contains("MatriX", true) &&
-                verMajor > 119
-            ) {
+            if (ver > 119) // MatriX.120 add Rutor search
+            {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.visibility = View.VISIBLE
                     vi.findViewById<TextView>(R.id.tvEnableRutorSearch)?.visibility = View.VISIBLE
@@ -130,7 +115,7 @@ class ServerSettingsFragment : TSFragment() {
                 showProgress()
                 saveSettings()
                 hideProgress()
-                withContext(Dispatchers.Main) { popBackStackFragment() }
+                popBackStackFragment()
             }
         }
 
@@ -150,7 +135,6 @@ class ServerSettingsFragment : TSFragment() {
                             App.toast(R.string.default_sets_applied)
                         }
                     } catch (e: Exception) {
-                        e.printStackTrace()
                         withContext(Dispatchers.Main) {
                             //e.message?.let { msg -> App.Toast(msg) }
                             App.toast(R.string.error_sending_settings)
@@ -167,6 +151,13 @@ class ServerSettingsFragment : TSFragment() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch { load() }
+    }
+
+    override fun onStop() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            hideProgress()
+        }
+        super.onStop()
     }
 
     private suspend fun load() = withContext(Dispatchers.Main) {

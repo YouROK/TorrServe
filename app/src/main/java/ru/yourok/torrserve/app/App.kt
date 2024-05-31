@@ -27,8 +27,8 @@ class App : MultiDexApplication() {
         private var instance: App? = null
         private lateinit var appContext: Context
         var inForeground: Boolean = false
-        const val shortToastDuration: Int = 1200
-        const val longToastDuration: Int = 3000
+        const val SHORT_TOAST_DURATION: Int = 1200
+        const val LONG_TOAST_DURATION: Int = 3000
         private lateinit var wakeLock: PowerManager.WakeLock
 
         val context: Context
@@ -44,17 +44,16 @@ class App : MultiDexApplication() {
             }
         }
 
-        fun currentActivity(): Activity? {
-            return instance?.mActivityLifecycleCallbacks?.currentActivity
-        }
+        val currentActivity: Activity?
+            get() {
+                return instance?.mActivityLifecycleCallbacks?.currentActivity
+            }
 
         @SuppressLint("RestrictedApi")
         fun toast(txt: String, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
-                val dur = if (long) longToastDuration else shortToastDuration
-                // this view overlap the system navigation bar, better use android.R.id.content
-                //val view = currentActivity()?.window?.decorView?.rootView ?: return@post
-                val view: View = currentActivity()?.findViewById(android.R.id.content) ?: return@post
+                val dur = if (long) LONG_TOAST_DURATION else SHORT_TOAST_DURATION
+                val view: View = currentActivity?.findViewById(android.R.id.content) ?: return@post
                 AppToast
                     .make(view as ViewGroup, txt)
                     .setDuration(dur)
@@ -65,10 +64,8 @@ class App : MultiDexApplication() {
         @SuppressLint("RestrictedApi")
         fun toast(txt: Int, long: Boolean = false) {
             Handler(Looper.getMainLooper()).post {
-                val dur = if (long) longToastDuration else shortToastDuration
-                // this view overlap the system navigation bar, better use android.R.id.content
-                //val view = currentActivity()?.window?.decorView?.rootView ?: return@post
-                val view: View = currentActivity()?.findViewById(android.R.id.content) ?: return@post
+                val dur = if (long) LONG_TOAST_DURATION else SHORT_TOAST_DURATION
+                val view: View = currentActivity?.findViewById(android.R.id.content) ?: return@post
                 AppToast
                     .make(view as ViewGroup, context.getString(txt))
                     .setDuration(dur)

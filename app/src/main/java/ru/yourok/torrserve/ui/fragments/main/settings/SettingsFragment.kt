@@ -132,6 +132,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
+        findPreference<SwitchPreferenceCompat>("show_sort_fab")?.apply {
+            setOnPreferenceClickListener {
+                requireActivity().recreate()
+                true
+            }
+        }
+
+        findPreference<SwitchPreferenceCompat>("show_cat_fab")?.apply {
+            setOnPreferenceClickListener {
+                requireActivity().recreate()
+                true
+            }
+        }
+
         findPreference<ListPreference>("app_theme")?.apply {
             val darkMode = if (isDarkMode(this.context)) "NM" else "DM"
             summary = "$summary (${darkMode})"
@@ -160,7 +174,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     setOnPreferenceClickListener {
                         //showPowerRequest(context)
                         try {
-                            if (Utils.isGoogleTV) { // open Power Settings
+                            if (Utils.isAndroidTV) { // open Power Settings
                                 if (Accessibility.isPackageInstalled(context, "com.android.settings")) {
                                     intent.`package` = "com.android.settings"
                                     requireActivity().startActivity(intent)
@@ -228,11 +242,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 true
             }
         }
-        // hide FAB pref on TVs (no FAB in landscape)
+        // hide FAB prefs on TVs (no FAB in landscape)
         val fabPref = findPreference<Preference>("show_fab")
-        if (Utils.isTvBox())
+        val sortFabPref = findPreference<Preference>("show_sort_fab")
+        val catFabPref = findPreference<Preference>("show_cat_fab")
+        if (Utils.isTvBox()) {
             fabPref?.let { ps?.removePreference(it) }
-
+            sortFabPref?.let { ps?.removePreference(it) }
+            catFabPref?.let { ps?.removePreference(it) }
+        }
     }
 
     override fun onResume() {

@@ -11,7 +11,7 @@ import ru.yourok.torrserve.app.Consts
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
-import ru.yourok.torrserve.utils.Accessibility
+//import ru.yourok.torrserve.utils.Accessibility
 import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
 import java.io.*
@@ -46,8 +46,8 @@ object UpdaterServer {
             val http = Http(Uri.parse(url))
             http.connect()
             if (TorrService.isLocal() && Api.echo().isNotEmpty()) {
-                if (Accessibility.isEnabledService(App.context))
-                    Accessibility.enableService(App.context, false)
+//                if (Accessibility.isEnabledService(App.context))
+//                    Accessibility.enableService(App.context, false)
                 TorrService.stop()
                 ServerFile().stop()
             }
@@ -95,8 +95,8 @@ object UpdaterServer {
 
     fun updateFromFile(filePath: String) {
         if (TorrService.isLocal() && Api.echo().isNotEmpty()) {
-            if (Accessibility.isEnabledService(App.context))
-                Accessibility.enableService(App.context, false)
+//            if (Accessibility.isEnabledService(App.context))
+//                Accessibility.enableService(App.context, false)
             TorrService.stop()
             ServerFile().stop()
         }
@@ -136,7 +136,7 @@ object UpdaterServer {
 
     fun check(): Boolean {
         return try {
-            val body = Net.get(Consts.updateServerPath)
+            val body = Net.get(Consts.UPDATE_SERVER_PATH)
             val gson = Gson()
             version = gson.fromJson(body, ServVersion::class.java)
             true
@@ -218,7 +218,7 @@ object UpdaterServer {
             }
         }
         if (version == null)
-            rv = error
+            rv = App.context.getString(R.string.no_data) // error
         return rv
     }
 

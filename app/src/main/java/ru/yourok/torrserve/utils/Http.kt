@@ -1,6 +1,7 @@
 package ru.yourok.torrserve.utils
 
 import android.net.Uri
+import android.os.Build
 import info.guardianproject.netcipher.NetCipher
 import java.io.IOException
 import java.io.InputStream
@@ -13,6 +14,8 @@ import java.net.HttpURLConnection.HTTP_SEE_OTHER
 import java.net.URL
 import java.util.Locale
 import java.util.zip.GZIPInputStream
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.HttpsURLConnection
 
 
 /**
@@ -45,6 +48,15 @@ class Http(url: Uri) {
 
             connection = if (currUrl.startsWith("https"))
                 NetCipher.getHttpsURLConnection(url)
+                    .also {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                            val trustAllHostnames = HostnameVerifier { _, _ ->
+                                true // Just allow them all
+                            }
+                            HttpsURLConnection.setDefaultHostnameVerifier(trustAllHostnames)
+                            HttpsURLConnection.setDefaultSSLSocketFactory(Net.insecureTlsSocketFactory())
+                        }
+                    }
             else
                 NetCipher.getHttpURLConnection(url)
             connection!!.connectTimeout = timeout
