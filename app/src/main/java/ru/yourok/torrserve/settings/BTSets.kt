@@ -15,6 +15,7 @@ data class BTSets(
     var RetrackersMode: Int,
     var TorrentDisconnectTimeout: Int,
     var EnableDebug: Boolean,
+    var ResponsiveMode: Boolean,
     // DLNA
     var EnableDLNA: Boolean,
     var FriendlyName: String,

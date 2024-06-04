@@ -36,6 +36,7 @@
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">Включите якщо підтримується</string>
     <string name="enable_debug">Докладний лог сервера</string>
+    <string name="enable_responsive_mode">Увімкнути адаптивний режим читання</string>
     <string name="enable_dlna">DLNA-медиасервер</string>
     <string name="dlna_friendly_name">Ім\'я сервера DLNA</string>
     <string name="dlna_name_hint">Залиште порожнім, щоб використовувати значення за промовчанням.</string>
