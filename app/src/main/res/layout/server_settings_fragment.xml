@@ -386,7 +386,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="@string/enable_debug"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
+            <!-- READER -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/cbResponsiveMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/enable_responsive_mode"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <View
                 android:layout_width="match_parent"

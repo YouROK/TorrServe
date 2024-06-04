@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.main.servsets
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -63,7 +64,7 @@ class ServerSettingsFragment : TSFragment() {
             }
             it.isEnabled = TorrService.isLocal()
         }
-        // hide disk cache options for older server versions
+        // hide options for older server versions
         lifecycleScope.launch(Dispatchers.IO) {
             val ver = Api.getMatrixVersionInt()
             if (ver < 94) // MatriX.94 is 1st disk cache release
@@ -106,6 +107,12 @@ class ServerSettingsFragment : TSFragment() {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.visibility = View.VISIBLE
                     vi.findViewById<TextView>(R.id.tvEnableRutorSearch)?.visibility = View.VISIBLE
+                }
+            }
+            if (ver > 132) // MatriX.133 add ResponsiveMode
+            {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<SwitchMaterial>(R.id.cbResponsiveMode)?.visibility = View.VISIBLE
                 }
             }
         }
@@ -170,6 +177,7 @@ class ServerSettingsFragment : TSFragment() {
         }
     }
 
+    @SuppressLint("NewApi")
     private suspend fun updateUI() = withContext(Dispatchers.Main) {
         try {
             view?.apply {
@@ -186,6 +194,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<TextInputEditText>(R.id.etDisconnectTimeout)?.setText(sets.TorrentDisconnectTimeout.toString())
                     findViewById<SwitchMaterial>(R.id.cbForceEncrypt)?.isChecked = sets.ForceEncrypt
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked = sets.EnableDebug
+                    findViewById<SwitchMaterial>(R.id.cbResponsiveMode)?.isChecked = sets.ResponsiveMode
                     findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.isChecked = sets.EnableDLNA
                     findViewById<TextInputEditText>(R.id.etFriendlyName)?.setText(sets.FriendlyName)
                     findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.isChecked = sets.EnableRutorSearch
@@ -229,6 +238,7 @@ class ServerSettingsFragment : TSFragment() {
                     RetrackersMode = rtIndex ?: 0,
                     TorrentDisconnectTimeout = findViewById<TextInputEditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
                     EnableDebug = findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked ?: false,
+                    ResponsiveMode = findViewById<SwitchMaterial>(R.id.cbResponsiveMode)?.isChecked ?: false,
                     EnableDLNA = findViewById<SwitchMaterial>(R.id.cbEnableDLNA)?.isChecked ?: false,
                     FriendlyName = findViewById<TextInputEditText>(R.id.etFriendlyName)?.text?.toString() ?: "",
                     EnableRutorSearch = findViewById<SwitchMaterial>(R.id.cbEnableRutorSearch)?.isChecked ?: false,

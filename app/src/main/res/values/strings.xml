@@ -46,6 +46,7 @@
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">Enable only if supported by ISP</string>
     <string name="enable_debug">Debug TorrServer Logging</string>
+    <string name="enable_responsive_mode">Enable responsive reader mode</string>
     <string name="enable_dlna">DLNA Media Server</string>
     <string name="dlna_friendly_name">DLNA Server Name</string>
     <string name="dlna_name_hint">Leave blank to use default</string>
@@ -285,4 +286,6 @@
     <string name="cat_music">Music</string>
     <string name="cat_other">Other</string>
     <string name="cat_none">All torrents</string>
+
+    <string name="accessibility_note">Disable Accessibility service to stop TorrServer</string>
 </resources>
