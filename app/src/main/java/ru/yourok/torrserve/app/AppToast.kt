@@ -62,7 +62,7 @@ class AppToast(
             if (txt.isNotEmpty()) tvMessage.apply {
                 text = txt
                 val offset = if (isInLandscape) dp2px(4f) else dp2px(2f)
-                if (Locale.getDefault().layoutDirection == LayoutDirection.RTL)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Locale.getDefault().layoutDirection == LayoutDirection.RTL)
                     this.setPadding(paddingPx, 0, paddingPx - offset, 0)
                 else
                     this.setPadding(paddingPx - offset, 0, paddingPx, 0)
