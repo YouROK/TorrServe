@@ -286,4 +286,6 @@
     <string name="cat_music">Music</string>
     <string name="cat_other">Other</string>
     <string name="cat_none">All torrents</string>
+
+    <string name="accessibility_note">Disable Accessibility service to stop TorrServer</string>
 </resources>

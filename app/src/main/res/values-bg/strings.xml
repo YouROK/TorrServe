@@ -231,4 +231,5 @@
     <string name="cat_music">Музика</string>
     <string name="cat_other">Друго</string>
     <string name="cat_none">Всички торенти</string>
+    <string name="accessibility_note">Деактивирайте услугата за достъпност, за да спрете TorrServer</string>
 </resources>

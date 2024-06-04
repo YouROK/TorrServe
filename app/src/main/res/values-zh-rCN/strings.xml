@@ -275,4 +275,6 @@
     <string name="cat_music">音乐</string>
     <string name="cat_other">其他</string>
     <string name="cat_none">所有种子</string>
+
+    <string name="accessibility_note">禁用辅助功能服务以停止 TorrServer</string>
 </resources>

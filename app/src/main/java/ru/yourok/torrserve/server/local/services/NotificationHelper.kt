@@ -16,9 +16,11 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.ui.activities.main.MainActivity
+import ru.yourok.torrserve.utils.Accessibility
 
 class NotificationHelper {
     private var mService: NotificationTS? = null
@@ -117,22 +119,22 @@ class NotificationTS : Service() {
                 this.getSystemService(NotificationManager::class.java)!!
                     .createNotificationChannel(channel)
             }
-
+            val accessibilityNote = if (Accessibility.isEnabledService(App.context)) this.getText(R.string.accessibility_note) else ""
             if (builder == null)
                 builder = NotificationCompat.Builder(this, channelId)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ts_icon)
                     .setContentText(getString(R.string.stat_running))
                     .setAutoCancel(false)
                     .setOngoing(true)
                     .setContentIntent(contentPendingIntent)
-                    .setStyle(NotificationCompat.BigTextStyle().bigText(""))
+                    .setStyle(NotificationCompat.BigTextStyle().bigText(accessibilityNote))
                     .addAction(
                         android.R.drawable.ic_delete,
                         this.getText(R.string.exit),
                         exitPendingIntent
                     )
             else
-                builder?.setStyle(NotificationCompat.BigTextStyle().bigText(""))
+                builder?.setStyle(NotificationCompat.BigTextStyle().bigText(accessibilityNote))
 
             if (Utils.isAmazonTV)
                 builder?.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notification))

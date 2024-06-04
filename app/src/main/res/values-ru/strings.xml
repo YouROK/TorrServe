@@ -231,4 +231,5 @@
     <string name="cat_music">Музыка</string>
     <string name="cat_other">Другое</string>
     <string name="cat_none">Все торренты</string>
+    <string name="accessibility_note">Отключите сервис специальных возможностей, чтобы остановить TorrServer.</string>
 </resources>
