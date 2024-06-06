@@ -21,8 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:paddingStart="12dp"
+            android:paddingLeft="12dp"
             android:paddingTop="1dp"
             android:paddingEnd="12dp"
+            android:paddingRight="12dp"
             android:paddingBottom="3dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             tools:text="http://localhost:8090" />
@@ -46,7 +48,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:paddingStart="5dp"
+                android:paddingLeft="5dp"
                 android:paddingEnd="5dp"
+                android:paddingRight="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 tools:text="1.XX.XX" />
 
@@ -55,7 +59,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="3dp"
+                android:paddingLeft="3dp"
                 android:paddingEnd="3dp"
+                android:paddingRight="3dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 tools:text="@string/online" />
 
@@ -68,12 +74,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center|end"
         android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/ic_circle_online"
-        android:visibility="invisible"
-        android:contentDescription="@string/online" />
+        android:contentDescription="@string/online"
+        android:visibility="invisible" />
     <!-- can't use vectors with ?attr on 4.4 -->
 
 </RelativeLayout>
