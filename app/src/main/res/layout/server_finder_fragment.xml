@@ -23,7 +23,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:paddingEnd="4dp"
+                android:paddingRight="4dp"
                 android:text="@string/local_ip"
                 android:textSize="16sp" />
 
@@ -37,35 +39,15 @@
                 tools:text="192.168.177.211, 192.168.131.124" />
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:paddingStart="10dp"-->
-<!--                android:paddingEnd="6dp"-->
-<!--                android:text="@string/connected_host"-->
-<!--                android:textSize="16sp" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tvConnectedHost"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="?attr/colorBright"-->
-<!--                android:textSize="16sp"-->
-<!--                tools:text="192.168.177.211" />-->
-<!--        </LinearLayout>-->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvFriendlyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:hint="@string/host_title"
             app:helperText="@string/host_title_hint"
             app:helperTextEnabled="true">
@@ -89,7 +71,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingStart="40dp"
+            android:paddingLeft="40dp"
             android:paddingEnd="40dp"
+            android:paddingRight="40dp"
             android:text="@string/find_hosts"
             android:textSize="16sp" />
 
@@ -118,7 +102,9 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:text="@string/apply" />
 
@@ -128,7 +114,9 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:text="@android:string/cancel" />
     </LinearLayout>

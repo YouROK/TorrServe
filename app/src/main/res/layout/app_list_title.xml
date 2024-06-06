@@ -25,14 +25,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:focusable="true"
         android:gravity="right|center_vertical|end"
         android:minWidth="200dp"
         android:switchPadding="5dp"
         android:text="@string/use_as_default"
         android:textAllCaps="true"
+        android:textColor="?attr/colorBright"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:textColor="?attr/colorBright"
         app:switchPadding="10dp" />
 </LinearLayout>

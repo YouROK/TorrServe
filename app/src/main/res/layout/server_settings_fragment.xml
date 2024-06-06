@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="50dp"
         android:requiresFadingEdge="vertical">
@@ -464,7 +465,9 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:text="@string/apply" />
 
@@ -474,7 +477,9 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text="@android:string/cancel" />
         </LinearLayout>

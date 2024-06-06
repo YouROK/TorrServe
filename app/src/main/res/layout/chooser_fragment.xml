@@ -92,6 +92,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="bottom|center"
+                        android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
                         app:srcCompat="@drawable/ic_plus" />
                 </FrameLayout>
@@ -158,6 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingStart="10dp"
+        android:paddingLeft="10dp"
         android:text="@string/make_as_def"
         android:textAllCaps="true"
         android:textColor="?attr/colorAccent" />

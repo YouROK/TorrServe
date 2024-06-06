@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="false"
     android:padding="5dp">
 
@@ -17,6 +17,7 @@
         android:gravity="center_vertical"
         android:minHeight="64dp"
         android:paddingStart="5dp"
+        android:paddingLeft="5dp"
         tools:text="Name" />
 
     <ImageView
@@ -27,10 +28,10 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center|end"
-        android:alpha="0.5"
         android:layout_marginEnd="5dp"
-        app:srcCompat="@drawable/outline_visibility_24"
- />
+        android:layout_marginRight="5dp"
+        android:alpha="0.5"
+        app:srcCompat="@drawable/outline_visibility_24" />
     <!-- can't use vectors with ?attr on 4.4 -->
     <TextView
         android:id="@+id/tvFileSize"
@@ -41,7 +42,9 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
         android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginBottom="3dp"
         android:textStyle="bold"
         tools:text="5 MB" />
