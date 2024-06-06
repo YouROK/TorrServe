@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="HeadPreferenceCategoryText" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">32.0dip</item>
+        <item name="android:paddingStart">16.0dip</item>
+        <item name="android:paddingBottom">16.0dip</item>
+    </style>
+
+    <style name="AlertButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="MaterialSnackbarButtonTheme" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="materialThemeOverlay">@style/WhiteButtonThemeOverlay</item>
+        <item name="strokeColor">@color/tv_white</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+</resources>
