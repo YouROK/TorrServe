@@ -5,6 +5,11 @@
     android:viewportHeight="24"
     android:tint="?attr/colorPrimary"
     android:autoMirrored="true">
+  <group
+      android:scaleX="1.1"
+      android:scaleY="1.1"
+      android:pivotX="4"
+      android:pivotY="0">
   <path
       android:fillColor="@android:color/white"
       android:pathData="M3,10h11v2h-11z"/>
@@ -17,4 +22,5 @@
   <path
       android:fillColor="@android:color/white"
       android:pathData="M16,13l0,8l6,-4z"/>
+  </group>
 </vector>
