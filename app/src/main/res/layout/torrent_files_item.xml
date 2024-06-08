@@ -30,7 +30,7 @@
         android:layout_gravity="center|end"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
-        android:alpha="0.7"
+        android:alpha="0.9"
         app:srcCompat="@drawable/outline_visibility_20" />
     <!-- can't use vectors with ?attr on 4.x -->
     <TextView
