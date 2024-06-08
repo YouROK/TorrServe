@@ -23,6 +23,7 @@ fun String.clearName(): String {
     return this.removeOtherSymbolChar()
         .replace(",", " ")
         .replace(".", " ")
+        .replace("_", " ")
         .replace("\\s+".toRegex(), " ") // clear &nbsp and wide spaces
         .trim()
 }
