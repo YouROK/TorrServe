@@ -105,7 +105,7 @@
     <string name="torrent_category_help">设置 Torrent 类别（可选）</string>
 
     <string name="local_ip">本地IP</string>
-    <string name="connected_host">已连接到</string>
+    <string name="connected_host">连接的</string>
     <string name="find_hosts">查找主机</string>
     <string name="local_server">本地服务端</string>
     <string name="saved_server">已保存的服务端</string>
