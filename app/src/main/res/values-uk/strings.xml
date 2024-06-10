@@ -91,7 +91,7 @@
     <string name="torrent_category">Категорія</string>
     <string name="torrent_category_help">Установити категорію для торрента (необов’язково)</string>
     <string name="local_ip">Локальна IP</string>
-    <string name="connected_host">Підключено до</string>
+    <string name="connected_host">Використовується</string>
     <string name="find_hosts">Пошук серверів</string>
     <string name="local_server">Локальний сервер</string>
     <string name="saved_server">Збережений сервер</string>
