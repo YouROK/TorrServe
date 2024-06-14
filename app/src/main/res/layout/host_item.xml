@@ -70,8 +70,8 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivOnline"
+    <TextView
+        android:id="@+id/tvOnline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -80,9 +80,15 @@
         android:layout_gravity="center|end"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/ic_circle_online"
         android:contentDescription="@string/online"
-        android:visibility="invisible" />
-    <!-- can't use vectors with ?attr on 4.4 -->
+        android:includeFontPadding="false"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:singleLine="true"
+        android:visibility="invisible"
+        tools:text="@string/online"
+        tools:visibility="visible" />
 
 </RelativeLayout>

@@ -6,6 +6,8 @@ import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -20,6 +22,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 //import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,9 +49,11 @@ import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
 //import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
+import ru.yourok.torrserve.utils.CImageSpan
 import ru.yourok.torrserve.utils.Format.dp2px
 import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.Permission
+import ru.yourok.torrserve.utils.SpanFormat
 import ru.yourok.torrserve.utils.ThemeUtil
 import kotlin.system.exitProcess
 
@@ -161,23 +168,52 @@ class MainActivity : AppCompatActivity() {
     private fun updateStatus() {
         val host = viewModel.getHost()
         val hostView = findViewById<TextView>(R.id.tvCurrentHost)
+        val statusView = findViewById<TextView>(R.id.tvStatus)
         val hostColor = ThemeUtil.getColorFromAttr(this, R.attr.colorHost)
+        val inactiveColor = ThemeUtil.getColorFromAttr(this, R.attr.colorOnSurface)
+        val labelTextColor = ThemeUtil.getColorFromAttr(this@MainActivity, R.attr.colorSurface)
+        val versionColorList = ColorStateList.valueOf(ThemeUtil.getColorFromAttr(this@MainActivity, R.attr.colorPrimary))
+        val radius = dp2px(2.0f).toFloat()
+        val shapeAppearanceModel = ShapeAppearanceModel()
+            .toBuilder()
+            .setAllCorners(CornerFamily.ROUNDED, radius)
+            .build()
+
         host.observe(this) {
-            hostView?.text = it.removePrefix("http://")
+            hostView?.text = if (it.startsWith("https", true)) {
+                val sIcon = SpannableString(" ")
+                AppCompatResources.getDrawable(this, R.drawable.ssl)?.let { icon ->
+                    icon.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
+                    sIcon.setSpan(CImageSpan(icon), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+                SpanFormat.format("%s ${it.removePrefix("https://")}", sIcon)
+            } else it.removePrefix("http://")
         }
         val data = viewModel.get()
         data.observe(this) {
-            findViewById<TextView>(R.id.tvStatus)?.text = it
-            if (it.equals(getString(R.string.server_not_responding)))
-                hostView.apply {
-                    setTextColor(ThemeUtil.getColorFromAttr(this@MainActivity, R.attr.colorOnSurface))
+            statusView?.text = it
+            if (it.equals(getString(R.string.server_not_responding))) {
+                statusView?.apply {
+                    background = null
+                    setTextColor(inactiveColor)
+                }
+                hostView?.apply {
+                    setTextColor(inactiveColor)
                     alpha = 0.75f
                 }
-            else
-                hostView.apply {
+            } else {
+                statusView?.apply {
+                    val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
+                    shapeDrawable.fillColor = versionColorList.withAlpha(160) // 160
+                    shapeDrawable.setStroke(2.0f, versionColorList.withAlpha(100)) // 100
+                    background = shapeDrawable
+                    setTextColor(labelTextColor)
+                }
+                hostView?.apply {
                     setTextColor(hostColor)
                     alpha = 1.0f
                 }
+            }
         }
     }
 
