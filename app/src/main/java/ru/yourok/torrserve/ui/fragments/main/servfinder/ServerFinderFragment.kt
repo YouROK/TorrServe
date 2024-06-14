@@ -71,7 +71,6 @@ class ServerFinderFragment : TSFragment() {
             setHost()
         }
 
-        //vi.findViewById<TextView>(R.id.tvConnectedHost)?.text = Settings.getHost().removePrefix("http://")
         vi.findViewById<TextInputEditText>(R.id.etHost)?.setText(Settings.getHost().removePrefix("http://"))
         return vi
     }
@@ -166,11 +165,11 @@ class ServerFinderFragment : TSFragment() {
             if (TorrService.isLocal())
                 status += " · ${App.context.getString(R.string.connected_host)}"
             val localVersion: String = withContext(Dispatchers.IO) {
-                Api.remoteEcho(localhost).also {
-                    if (it.isNotEmpty()) {
-                        status += " · ${App.context.getString(R.string.online)}"
-                    }
-                }
+                Api.remoteEcho(localhost) // .also {
+//                    if (it.isNotEmpty()) {
+//                        status += " · ${App.context.getString(R.string.online)}"
+//                    }
+//                }
             }
             hostAdapter.add(ServerIp(localhost, localVersion, status))
             // add saved
@@ -179,11 +178,11 @@ class ServerFinderFragment : TSFragment() {
                 if (host == Settings.getHost())
                     status = App.context.getString(R.string.connected_host)
                 val remoteVersion: String = withContext(Dispatchers.IO) {
-                    Api.remoteEcho(host).also {
-                        if (it.isNotEmpty()) {
-                            status += " · ${App.context.getString(R.string.online)}"
-                        }
-                    }
+                    Api.remoteEcho(host) // .also {
+//                        if (it.isNotEmpty()) {
+//                            status += " · ${App.context.getString(R.string.online)}"
+//                        }
+//                    }
                 }
                 hostAdapter.add(ServerIp(host, remoteVersion, status))
             }

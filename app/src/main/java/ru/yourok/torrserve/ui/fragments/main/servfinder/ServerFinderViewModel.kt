@@ -105,7 +105,7 @@ class ServerFinderViewModel : ViewModel() {
                             App.context.getString(R.string.new_server)
                         else ""
                     if (version.isNotEmpty() && (version.startsWith("1.2.") || version.startsWith("MatriX"))) {
-                        status += " · ${App.context.getString(R.string.online)}"
+//                        status += " · ${App.context.getString(R.string.online)}"
                         withContext(Dispatchers.Main) {
                             servers?.value = ServerIp(checkHost, version, status)
                         }

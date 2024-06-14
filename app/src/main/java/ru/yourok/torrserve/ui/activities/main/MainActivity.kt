@@ -6,6 +6,8 @@ import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -44,9 +46,11 @@ import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.ui.fragments.main.update.server.ServerUpdateFragment
 import ru.yourok.torrserve.ui.fragments.main.update.server.UpdaterServer
+import ru.yourok.torrserve.utils.CImageSpan
 import ru.yourok.torrserve.utils.Format.dp2px
 import ru.yourok.torrserve.utils.Net
 import ru.yourok.torrserve.utils.Permission
+import ru.yourok.torrserve.utils.SpanFormat
 import ru.yourok.torrserve.utils.ThemeUtil
 import kotlin.system.exitProcess
 
@@ -161,7 +165,14 @@ class MainActivity : AppCompatActivity() {
         val hostView = findViewById<TextView>(R.id.tvCurrentHost)
         val hostColor = ThemeUtil.getColorFromAttr(this, R.attr.colorHost)
         host.observe(this) {
-            hostView?.text = it.removePrefix("http://")
+            hostView?.text = if (it.startsWith("https", true)) {
+                val sIcon = SpannableString(" ")
+                AppCompatResources.getDrawable(this, R.drawable.ssl)?.let { icon ->
+                    icon.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
+                    sIcon.setSpan(CImageSpan(icon), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+                SpanFormat.format("%s ${it.removePrefix("https://")}", sIcon)
+            } else it.removePrefix("http://")
         }
         val data = viewModel.get()
         data.observe(this) {
