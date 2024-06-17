@@ -115,10 +115,10 @@ class TorrentFilesAdapter : BaseAdapter() {
         vi.findViewById<TextView>(R.id.tvFileSize)?.apply {
             text = size
             val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
-            shapeDrawable.fillColor = ColorStateList.valueOf(colorBright).withAlpha(40)
-            shapeDrawable.setStroke(2.0f, ColorStateList.valueOf(colorBright).withAlpha(250))
+            shapeDrawable.fillColor = ColorStateList.valueOf(colorBright).withAlpha(240)
+            shapeDrawable.setStroke(2.0f, ColorStateList.valueOf(colorBright).withAlpha(255))
             background = shapeDrawable
-            setTextColor(colorBright)
+            setTextColor(ThemeUtil.getColorFromAttr(themedContext, R.attr.colorSurface))
         }
 
         vi.findViewById<ImageView>(R.id.ivViewed)?.apply {
