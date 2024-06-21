@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.fragments.play.adapters
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.text.LineBreaker
 import android.os.Build
@@ -44,6 +45,7 @@ class TorrentFilesAdapter : BaseAdapter() {
         if (viewed != null) this.viewed = viewed
     }
 
+    @SuppressLint("SetTextI18n")
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val type: Int = getItemViewType(position)
         val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
