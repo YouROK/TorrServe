@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:padding="5dp">
+
     <TextView
         android:id="@+id/tvPlayFromStart"
         android:layout_width="match_parent"
@@ -12,7 +13,9 @@
         android:gravity="center"
         android:minHeight="36dp"
         android:paddingStart="5dp"
+        android:paddingLeft="5dp"
         android:paddingEnd="5dp"
+        android:paddingRight="5dp"
         android:text="@string/play_from_start"
         android:textAllCaps="true"
         android:textColor="?attr/colorPrimary"

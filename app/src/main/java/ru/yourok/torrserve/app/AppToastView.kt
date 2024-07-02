@@ -14,10 +14,11 @@ class AppToastView @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defaultStyle: Int = 0
 ) : ConstraintLayout(context, attributeSet, defaultStyle), ContentViewCallback {
-    private val content: View
+    private val content: View = View.inflate(context, R.layout.item_toast, this)
 
-    init {
-        content = View.inflate(context, R.layout.item_toast, this)
+    companion object {
+        private const val ANIM_IN_DURATION = 500L
+        private const val ANIM_OUT_DURATION = 150L
     }
 
     override fun animateContentIn(delay: Int, duration: Int) {
@@ -37,7 +38,6 @@ class AppToastView @JvmOverloads constructor(
             setDuration(ANIM_OUT_DURATION)
             startDelay = delay.toLong()
         }
-
     }
 
     private fun breathFadeAnimation(view: View?, period: Long) {
@@ -69,11 +69,5 @@ class AppToastView @JvmOverloads constructor(
         // Start both animators simultaneously
         fadeInAnimator.start()
         fadeOutAnimator.start()
-    }
-
-
-    companion object {
-        private const val ANIM_IN_DURATION = 500L
-        private const val ANIM_OUT_DURATION = 150L
     }
 }

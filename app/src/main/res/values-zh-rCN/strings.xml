@@ -43,6 +43,7 @@
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">（仅在支持时启用</string>
     <string name="enable_debug">调试服务端日志</string>
+    <string name="enable_responsive_mode">启用响应式阅读器模式</string>
     <string name="enable_dlna">DLNA 媒体服务器</string>
     <string name="dlna_friendly_name">DLNA 服务器名称</string>
     <string name="dlna_name_hint">留空以使用默认值</string>
@@ -104,7 +105,7 @@
     <string name="torrent_category_help">设置 Torrent 类别（可选）</string>
 
     <string name="local_ip">本地IP</string>
-    <string name="connected_host">已连接到</string>
+    <string name="connected_host">连接的</string>
     <string name="find_hosts">查找主机</string>
     <string name="local_server">本地服务端</string>
     <string name="saved_server">已保存的服务端</string>
@@ -274,4 +275,6 @@
     <string name="cat_music">音乐</string>
     <string name="cat_other">其他</string>
     <string name="cat_none">所有种子</string>
+
+    <string name="accessibility_note">禁用辅助功能服务以停止 TorrServer</string>
 </resources>

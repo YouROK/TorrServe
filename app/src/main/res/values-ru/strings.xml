@@ -37,6 +37,7 @@
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">Включите только если поддерживается</string>
     <string name="enable_debug">Подробный лог сервера</string>
+    <string name="enable_responsive_mode">Включить быстрый режим чтения</string>
     <string name="enable_dlna">DLNA-медиасервер</string>
     <string name="dlna_friendly_name">Имя сервера DLNA</string>
     <string name="dlna_name_hint">Оставьте пустым, чтобы использовать значение по умолчанию.</string>
@@ -230,4 +231,5 @@
     <string name="cat_music">Музыка</string>
     <string name="cat_other">Другое</string>
     <string name="cat_none">Все торренты</string>
+    <string name="accessibility_note">Отключите сервис специальных возможностей, чтобы остановить TorrServer.</string>
 </resources>

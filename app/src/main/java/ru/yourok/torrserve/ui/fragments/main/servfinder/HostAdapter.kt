@@ -1,18 +1,22 @@
 package ru.yourok.torrserve.ui.fragments.main.servfinder
 
 import android.content.res.ColorStateList
+import android.text.SpannableString
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.utils.CImageSpan
 import ru.yourok.torrserve.utils.Format
+import ru.yourok.torrserve.utils.SpanFormat
 import ru.yourok.torrserve.utils.ThemeUtil
 
 class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
@@ -84,21 +88,38 @@ class HostAdapter : RecyclerView.Adapter<HostAdapter.ViewHolder>() {
         val hostView = holder.view.findViewById<TextView>(R.id.tvHost)
 
         hostView.apply {
-            text = hosts[position].host.removePrefix("http://")
+            text = if (hosts[position].host.startsWith("https", true)) { // show https badge
+                val sIcon = SpannableString(" ")
+                AppCompatResources.getDrawable(holder.view.context, R.drawable.ssl)?.let { icon ->
+                    icon.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
+                    sIcon.setSpan(CImageSpan(icon), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+                SpanFormat.format("${hosts[position].host.removePrefix("https://")}  %s", sIcon)
+            } else hosts[position].host.removePrefix("http://")
             val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
             shapeDrawable.fillColor = hostColor.withAlpha(10)
             shapeDrawable.setStroke(2.0f, hostColor.withAlpha(240))
             background = shapeDrawable
             setTextColor(hostColor)
-        } // TODO: http|https badge
+        }
 
         val version = hosts[position].version
-        // set online badge by added version
-        //if (version.contains("·", true) || version.startsWith("1.2.") || version.startsWith("MatriX"))
-        if (version.isNotBlank() && (version.startsWith("1.2.") || version.startsWith("MatriX")))
-            holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.VISIBLE
-        else {
-            holder.view.findViewById<ImageView>(R.id.ivOnline)?.visibility = View.INVISIBLE
+        val onlineView = holder.view.findViewById<TextView>(R.id.tvOnline)
+        val onlineColor = AppCompatResources.getColorStateList(holder.view.context, R.color.green)
+        // set online and dim by added version
+        if (version.isNotBlank() && (version.startsWith("1.2.") || version.startsWith("MatriX"))) {
+            onlineView?.apply {
+                visibility = View.VISIBLE
+                hostView.alpha = 1.0f
+                val shapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
+                shapeDrawable.fillColor = onlineColor.withAlpha(10)
+                shapeDrawable.setStroke(2.0f, onlineColor)
+                background = shapeDrawable
+                setTextColor(onlineColor)
+                text = holder.view.context.getString(R.string.online).lowercase()
+            }
+        } else {
+            onlineView?.visibility = View.INVISIBLE
             hostView.alpha = 0.6f
         }
         val status = hosts[position].status

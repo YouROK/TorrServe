@@ -31,7 +31,7 @@
                     android:layout_width="72dp"
                     android:layout_height="72dp"
                     android:layout_gravity="center|top"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
                     android:src="@mipmap/ic_launcher" />
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="7dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -55,8 +55,14 @@
 
                     <TextView
                         android:id="@+id/tvStatus"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:includeFontPadding="true"
+                        android:paddingStart="4dp"
+                        android:paddingLeft="4dp"
+                        android:paddingEnd="4dp"
+                        android:paddingRight="4dp"
                         android:gravity="center"
                         tools:text="Status"
                         android:textSize="12sp" />
@@ -90,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:paddingLeft="40dp"
+                    android:paddingStart="40dp"
                     android:text="@string/add" />
             </FrameLayout>
 
@@ -119,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:paddingLeft="40dp"
+                    android:paddingStart="40dp"
                     android:text="@string/remove_all" />
             </FrameLayout>
 
@@ -148,6 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:paddingLeft="40dp"
+                    android:paddingStart="40dp"
                     android:text="@string/playlist" />
             </FrameLayout>
 
@@ -177,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:paddingLeft="40dp"
+                    android:paddingStart="40dp"
                     android:text="@string/donate" />
             </FrameLayout>
 
@@ -206,6 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:paddingLeft="40dp"
+                    android:paddingStart="40dp"
                     android:text="@string/update" />
             </FrameLayout>
 
@@ -235,6 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:paddingLeft="40dp"
+                    android:paddingStart="40dp"
                     android:text="@string/settings" />
             </FrameLayout>
 
@@ -264,6 +276,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:paddingLeft="40dp"
+                    android:paddingStart="40dp"
                     android:text="@string/exit" />
             </FrameLayout>
 

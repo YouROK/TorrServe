@@ -20,8 +20,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:paddingStart="5dp"
+            android:paddingLeft="5dp"
             android:paddingTop="1dp"
             android:paddingEnd="5dp"
+            android:paddingRight="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?attr/colorBright"
             tools:text="Torrent Name" />
@@ -38,7 +40,9 @@
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:paddingStart="5dp"
+                android:paddingLeft="5dp"
                 android:paddingEnd="5dp"
+                android:paddingRight="5dp"
                 android:paddingBottom="4dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 tools:text="120.55 GB ▲128 ▼223" />
@@ -52,7 +56,9 @@
                 android:gravity="end"
                 android:maxLines="1"
                 android:paddingStart="5dp"
+                android:paddingLeft="5dp"
                 android:paddingEnd="5dp"
+                android:paddingRight="5dp"
                 android:paddingBottom="4dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 tools:text="22.01.2022" />

@@ -10,12 +10,12 @@ android {
     compileSdk 34
     defaultConfig {
         applicationId "ru.yourok.torrserve"
-        minSdkVersion 17
+        minSdkVersion 16
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         multiDexEnabled true
-        versionCode 133
-        versionName "MatriX.133.Client"
+        versionCode 134
+        versionName "MatriX.134.Client"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
@@ -40,12 +40,14 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    def appCompatVersion = '1.6.1' // 1.6.1 last api16 compatible
+    //noinspection GradleDependency
+    implementation "androidx.appcompat:appcompat:${appCompatVersion}"
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    def coreKtxVersion = '1.12.0' // 1.12.0 last api17 compatible
+    def coreKtxVersion = '1.12.0' // 1.12.0 last api16 compatible
     //noinspection GradleDependency
     implementation "androidx.core:core-ktx:${coreKtxVersion}"
-    def lifecycleVersion = '2.6.2' // 2.6.2 last api17 compatible
+    def lifecycleVersion = '2.6.2' // 2.6.2 last api16 compatible
     //noinspection GradleDependency
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
     //noinspection GradleDependency
@@ -67,10 +69,10 @@ dependencies {
     ksp "com.github.bumptech.glide:ksp:${glideVersion}"
     implementation "com.github.bumptech.glide:annotations:${glideVersion}"
     // root shell
-    def libsuVersion = '3.2.1' // 3.2.1 last api17 compatible
+    def libsuVersion = '3.2.1' // 3.2.1 last api16 compatible
     //noinspection GradleDependency
     implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
-    def muiVersion = '1.11.0' // 1.11.0 last api17 compatible
+    def muiVersion = '1.11.0' // 1.11.0 last api16 compatible
     //noinspection GradleDependency
     implementation "com.google.android.material:material:${muiVersion}"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
@@ -79,11 +81,11 @@ dependencies {
     //noinspection GradleDependency
     implementation "com.google.code.gson:gson:${jsonVersion}"
     // firebase
-    //noinspection GradleDependency firebase-core:19.0.2 is last api17 compatible
+    //noinspection GradleDependency firebase-core:19.0.2 is last api16 compatible
     implementation 'com.google.firebase:firebase-core:19.0.2'
-    //noinspection GradleDependency firebase-analytics:19.0.2 is last api17 compatible
+    //noinspection GradleDependency firebase-analytics:19.0.2 is last api16 compatible
     implementation 'com.google.firebase:firebase-analytics:19.0.2'
-    //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api17 compatible
+    //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api16 compatible
     implementation 'com.google.firebase:firebase-crashlytics:18.2.5'
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
