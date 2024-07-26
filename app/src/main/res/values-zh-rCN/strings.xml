@@ -10,8 +10,8 @@
     <string name="settings">设置</string>
     <string name="exit">退出</string>
 
-    <string name="exit_title">Are You want to Exit?</string>
-    <string name="exit_text">Local TorrServer will be stopped on Exit, if Accessibility Service is not enabled.</string>
+    <string name="exit_title">是否要退出?</string>
+    <string name="exit_text">退出时本地 TorrServer 将停止，但前提是辅助服务未启用。</string>
 
     <string name="remove_all_warn">是否要删除所有种子？</string>
     <string name="share">分享</string>
@@ -72,7 +72,7 @@
         <item>Replace retrackers</item>
     </string-array>
 
-    <string name="select_player">选择玩家</string>
+    <string name="select_player">选择播放器</string>
     <string name="use_as_default">保存为默认值</string>
     <string name="default_player">默认播放器</string>
     <string name="choose_player">总是询问</string>
@@ -87,7 +87,7 @@
 
     <string name="add_play">添加&amp;播放</string>
     <string name="play">播放</string>
-    <string name="play_from_start">从头开始玩</string>
+    <string name="play_from_start">从头开始播放y</string>
 
     <string name="make_as_def">设为默认</string>
     <string name="reset_def">清除默认值</string>
@@ -113,8 +113,8 @@
     <string name="online">在线的</string>
 
     <string name="buffer">缓冲</string>
-    <string name="peers">用户</string>
-    <string name="seeds">Seeds</string>
+    <string name="peers">连接数</string>
+    <string name="seeds">种子数</string>
     <string name="size">大小</string>
     <string name="download_speed">下载速度</string>
     <string name="bit_rate">比特率</string>
@@ -168,7 +168,7 @@
     <string name="permission_deny">权限被拒绝</string>
 
     <string name="link">链接</string>
-    <string name="donate_message">TorrServe is free. Please consider donating to support the future development of TorrServe.</string>
+    <string name="donate_message">TorrServe是免费的，请考虑捐款以支持未来开发。</string>
     <string name="telegram_msg">电报频道</string>
 
     <!--    Settings    -->
@@ -232,9 +232,9 @@
 
     <string name="accessibility_manual_on">在设备首选项/辅助功能部分启用服务 %1$s</string>
     <string name="accessibility_manual_off">在设备首选项/辅助功能部分禁用服务 %1$s</string>
-    <string name="accessibility_service_description">启用该服务可以防止本地 TorrServer 被操作系统关闭</string>
+    <string name="accessibility_service_description">启用该服务可以防止本地TorrServer被操作系统关闭</string>
     <string name="switch_accessibility_title">无障碍服务</string>
-    <string name="switch_accessibility_summary_on">按下可禁用 TorrServe 服务</string>
+    <string name="switch_accessibility_summary_on">按下可禁用TorrServe服务</string>
 
     <string name="stat_string_added">种子已添加</string>
     <string name="stat_string_info">获取种子信息</string>
@@ -253,28 +253,28 @@
     <string name="avg">平均的</string>
     <string name="max">最大限度</string>
 
-    <string name="sort_by_name">Sort list by Title</string>
-    <string name="sort_by_size">Sort list by Size</string>
-    <string name="sort_by_seed">Sort list by Seeders</string>
-    <string name="sort_by_date">Sort list by Date</string>
+    <string name="sort_by_name">按标题对列表进行排序</string>
+    <string name="sort_by_size">按大小对列表进行排序</string>
+    <string name="sort_by_seed">按种子数对列表进行排序</string>
+    <string name="sort_by_date">按时间对列表进行排序</string>
 
     <string name="no_data">没有数据</string>
     <string name="no_torrents">没有种子</string>
     <string name="no_updates">没有更新</string>
     <string name="not_used">未使用</string>
     <string name="not_installed">未安装</string>
-    <string name="boosty_msg">Boosty 網站</string>
-    <string name="enable_rutor_search">打開RuTor的搜索</string>
-    <string name="enable_rutor_search_desc">數據庫將在內存中大約500 MB</string>
+    <string name="boosty_msg">Boosty网站</string>
+    <string name="enable_rutor_search">使用RuTor搜索</string>
+    <string name="enable_rutor_search_desc">数据库将占大约500MB内存</string>
     <string name="install_ffprobe">安裝FFProbe</string>
-    <string name="delete_ffprobe">刪除FFProbe</string>
-    <string name="ffprobe_summary">下載FFProbe以獲取其他視頻數據，例如持續時間，比特率等。</string>
+    <string name="delete_ffprobe">删除FFProbe</string>
+    <string name="ffprobe_summary">下载 FFProbe 以获取其他视频数据，如持续时间，比特率等。</string>
 
     <string name="cat_movie">电影</string>
-    <string name="cat_tv">系列</string>
+    <string name="cat_tv">电视剧</string>
     <string name="cat_music">音乐</string>
     <string name="cat_other">其他</string>
     <string name="cat_none">所有种子</string>
 
-    <string name="accessibility_note">禁用辅助功能服务以停止 TorrServer</string>
+    <string name="accessibility_note">禁用辅助功能服务以停止TorrServer</string>
 </resources>
