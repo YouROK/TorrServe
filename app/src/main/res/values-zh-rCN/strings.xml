@@ -125,8 +125,8 @@
     <string name="online">在线</string>
 
     <string name="buffer">缓冲</string>
-    <string name="peers">节点</string>
-    <string name="seeds">种子</string>
+    <string name="peers">连接数</string>
+    <string name="seeds">种子数</string>
     <string name="size">大小</string>
     <string name="download_speed">下载速度</string>
     <string name="bit_rate">比特率</string>
