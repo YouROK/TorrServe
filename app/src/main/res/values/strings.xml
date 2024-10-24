@@ -156,7 +156,7 @@
     <string name="not_loaded_exit_hint">The local TorrServer is not running. Try clicking \"Exit\" in the Main Menu and launch the application again, or restart your device. If nothing changes after this, update TorrServer in the \"Update\" section.</string>
     <string name="not_loaded_select_hint">Select an available TorrServer from the list, or specify the address of a new one.</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="stat_running">Service is running</string>
+    <string name="stat_running">TorrServer is running</string>
     <string name="server_not_responding">TorrServer is not responding</string>
     <string name="done_sending_settings">Settings saved</string>
 

@@ -12,6 +12,7 @@ import java.net.HttpURLConnection.HTTP_OK
 import java.net.HttpURLConnection.HTTP_PARTIAL
 import java.net.HttpURLConnection.HTTP_SEE_OTHER
 import java.net.URL
+import java.security.GeneralSecurityException
 import java.util.Locale
 import java.util.zip.GZIPInputStream
 import javax.net.ssl.HostnameVerifier
@@ -54,7 +55,13 @@ class Http(url: Uri) {
                                 true // Just allow them all
                             }
                             HttpsURLConnection.setDefaultHostnameVerifier(trustAllHostnames)
-                            HttpsURLConnection.setDefaultSSLSocketFactory(Net.insecureTlsSocketFactory())
+                        }
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                            try {
+                                // Only TLSv1.2 and TLSv1.3 protocol available and trust all certs (insecure).
+                                HttpsURLConnection.setDefaultSSLSocketFactory(TlsSocketFactory())
+                            } catch (_: GeneralSecurityException) {
+                            }
                         }
                     }
             else

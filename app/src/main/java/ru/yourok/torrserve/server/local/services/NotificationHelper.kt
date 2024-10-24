@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.server.local.services
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -15,6 +16,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
+import androidx.core.graphics.drawable.IconCompat
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
@@ -95,6 +97,7 @@ class NotificationTS : Service() {
         return mBinder
     }
 
+    @SuppressLint("InlinedApi")
     private fun createNotification() {
         synchronized(lock) {
             val exitIntent = Intent(this, TorrService::class.java)
@@ -120,27 +123,30 @@ class NotificationTS : Service() {
                     .createNotificationChannel(channel)
             }
             val accessibilityNote = if (Accessibility.isEnabledService(App.context)) this.getText(R.string.accessibility_note) else ""
-            if (builder == null)
+            if (builder == null) {
                 builder = NotificationCompat.Builder(this, channelId)
-                    .setSmallIcon(R.drawable.ts_icon)
+                    .setContentTitle(getString(R.string.app_name))
                     .setContentText(getString(R.string.stat_running))
                     .setAutoCancel(false)
                     .setOngoing(true)
                     .setContentIntent(contentPendingIntent)
                     .setStyle(NotificationCompat.BigTextStyle().bigText(accessibilityNote))
                     .addAction(
-                        android.R.drawable.ic_delete,
-                        this.getText(R.string.exit),
+                        android.R.drawable.ic_menu_close_clear_cancel,
+                        this.getText(R.string.exit).toString().uppercase(),
                         exitPendingIntent
                     )
-            else
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    builder?.setSmallIcon(IconCompat.createWithResource(this, R.drawable.ts_icon))
+                else
+                    builder?.setSmallIcon(R.drawable.ts_icon_white)
+            } else
                 builder?.setStyle(NotificationCompat.BigTextStyle().bigText(accessibilityNote))
-
             if (Utils.isAmazonTV)
                 builder?.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notification))
 
             builder?.let {
-                ServiceCompat.startForeground(this, notificationId, it.build(), FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+                    ServiceCompat.startForeground(this, notificationId, it.build(), FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
             }
         }
     }
