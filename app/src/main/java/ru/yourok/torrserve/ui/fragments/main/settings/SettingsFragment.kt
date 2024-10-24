@@ -13,10 +13,24 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 //import androidx.lifecycle.lifecycleScope
-import androidx.preference.*
+import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceGroup
+import androidx.preference.PreferenceGroupAdapter
+import androidx.preference.PreferenceScreen
+import androidx.preference.PreferenceViewHolder
+import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.topjohnwu.superuser.Shell
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 //import kotlinx.coroutines.Dispatchers
 //import kotlinx.coroutines.launch
@@ -38,6 +52,7 @@ import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 //import ru.yourok.torrserve.ui.fragments.main.update.apk.UpdaterApk
 import ru.yourok.torrserve.ui.fragments.speedtest.SpeedTest
 import ru.yourok.torrserve.utils.Accessibility
+import ru.yourok.torrserve.utils.Format.dp2px
 import ru.yourok.torrserve.utils.ThemeUtil
 import ru.yourok.torrserve.utils.ThemeUtil.Companion.isDarkMode
 
@@ -60,6 +75,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     isSingleLine = false
                     maxLines = 2
                 }
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) {
+                    holder.itemView.setPadding(dp2px(16f), 0, dp2px(16f), 0)
+                }
             }
         }
     }
@@ -77,7 +95,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val rv = listView // This holds the PreferenceScreen's items
-        rv?.setPadding(0, 0, 0, 56) // (left, top, right, bottom)
+
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) {
+            rv?.setPadding(0, dp2px(32f), 0, dp2px(16f)) // (left, top, right, bottom)
+        } else
+            rv?.setPadding(0, 0, 0, dp2px(28f)) // (left, top, right, bottom)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -98,10 +120,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("speedtest")?.apply {
-            setOnPreferenceClickListener {
-                SpeedTest().show(requireActivity(), R.id.container, true)
-                true
-            }
+            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+                isEnabled = false
+            else
+                setOnPreferenceClickListener {
+                    SpeedTest().show(requireActivity(), R.id.container, true)
+                    true
+                }
         }
 
         findPreference<Preference>("server_settings")?.setOnPreferenceClickListener {
@@ -246,7 +271,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 true
             }
         }
-        // hide FAB prefs on TVs (no FAB in landscape)
+        // hide FAB prefs on TVs (no FAB in landscape) and on old APIs (fab focus buggy for now)
         val fabPref = findPreference<Preference>("show_fab")
         val sortFabPref = findPreference<Preference>("show_sort_fab")
         val catFabPref = findPreference<Preference>("show_cat_fab")
@@ -254,6 +279,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
             fabPref?.let { ps?.removePreference(it) }
             sortFabPref?.let { ps?.removePreference(it) }
             catFabPref?.let { ps?.removePreference(it) }
+        }
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) { // TODO Fix FAB focus
+            fabPref?.let { ps?.removePreference(it) }
         }
     }
 

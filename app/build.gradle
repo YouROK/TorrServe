@@ -1,3 +1,5 @@
+import com.android.builder.core.BuilderConstants
+
 plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
@@ -88,6 +90,7 @@ dependencies {
     //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api16 compatible
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
+    implementation 'org.conscrypt:conscrypt-android:2.5.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
     // http client/parser
     def jsoupVersion = '1.16.1' // 1.16.2, 1.17.1, 1.17.2 thorow java.lang.VerifyError on api19

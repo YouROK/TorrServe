@@ -12,7 +12,9 @@ import java.io.File
 
 object Settings {
     val showFab: Boolean
-        get() = get("show_fab", true)
+        get() = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) false // TODO Fix FAB focus
+        else
+            get("show_fab", true)
 
     val showSortFab: Boolean
         get() = get("show_sort_fab", false)

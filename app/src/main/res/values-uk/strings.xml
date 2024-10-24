@@ -27,7 +27,7 @@
     <string name="torrent_preload_cache" formatted="false">Буфер предзагрузкі (0–100%)</string>
     <string name="torrent_disconnect_timeout">Таймаут відключення торрента (секунд)</string>
     <string name="save_content_path">Шлях до збереження кешу</string>
-    <string name="save_on_disk">Зберігати кешу на диск</string>
+    <string name="save_on_disk">Зберігати кеш на диск</string>
     <string name="save_on_disk_desc">Краще використовувати зовнішні носії на пристроях з flash-пам`яттю</string>
     <string name="remove_cache_on_drop">Очищати кеш при відключенні торрента</string>
     <string name="remove_cache_on_drop_desc">Якщо відключено, файли кеша очищаються при видаленні торрента</string>
@@ -39,7 +39,7 @@
     <string name="enable_responsive_mode">Увімкнути адаптивний режим читання</string>
     <string name="enable_dlna">DLNA-медиасервер</string>
     <string name="dlna_friendly_name">Ім\'я сервера DLNA</string>
-    <string name="dlna_name_hint">Залиште порожнім, щоб використовувати значення за промовчанням.</string>
+    <string name="dlna_name_hint">Залиште порожнім, щоб використовувати значення за замовчуванням.</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
     <string name="disable_tcp_desc">Не вимикайте без включеного μTP</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>
@@ -57,16 +57,16 @@
     <string name="download_rate_limit">Обмеження швидкості завантаження (Кілобайти, 0-без обмежень)</string>
     <string name="upload_rate_limit">Обмеження швидкості відвантаження (Кілобайти, 0-без обмежень)</string>
     <string name="retrackers">Ретрекери</string>
-    <string name="peers_listen_port">Порт для вхідних підключень (0-по замовчуванню)</string>
+    <string name="peers_listen_port">Порт для вхідних підключень (0-за замовчуванням)</string>
     <string-array name="retracker_mode">
         <item>По замовчуванню</item>
         <item>Додавати</item>
         <item>Видаляти</item>
         <item>Заміняти</item>
     </string-array>
-    <string name="select_player">Вибрати програвач</string>
-    <string name="use_as_default">Зберегти як за умовчанням</string>
-    <string name="default_player">Програвач по замовчуванню</string>
+    <string name="select_player">Вибір плеєра</string>
+    <string name="use_as_default">Запам\'ятати вибір</string>
+    <string name="default_player">Плеєр за замовчуванням</string>
     <string name="choose_player">Завжди запитувати</string>
     <string name="app_theme_title">Тема</string>
     <string-array name="app_theme_entries">
@@ -78,7 +78,7 @@
     <string name="add_play">Додати і програти</string>
     <string name="play">Програти</string>
     <string name="play_from_start">Грати з початку</string>
-    <string name="make_as_def">Запам\'ятати вибір</string>
+    <string name="make_as_def">Запам\'ятати дію</string>
     <string name="reset_def">Дія скинута</string>
     <string name="playlist_all">Програти все</string>
     <string name="playlist_continue">Продовжити</string>
@@ -87,7 +87,7 @@
     <string name="title">Назва</string>
     <string name="poster">Постер</string>
     <string name="poster_link">Посилання на постер</string>
-    <string name="poster_link_help">Введіть URL-адресу плаката (необов’язково)</string>
+    <string name="poster_link_help">Введіть URL-адресу на постер (необов’язково)</string>
     <string name="torrent_category">Категорія</string>
     <string name="torrent_category_help">Установити категорію для торрента (необов’язково)</string>
     <string name="local_ip">Локальна IP</string>
@@ -128,7 +128,7 @@
     <string name="done_sending_settings">Налаштування збережено</string>
     <string name="loading_torrent">Отримання інформації торренту…</string>
     <string name="error_add_torrent">Неможливо додати торрент</string>
-    <string name="error_app_not_found">Підходящих додатків не знайдено</string>
+    <string name="error_app_not_found">Відповідних додатків не знайдено</string>
     <string name="error_download_ffprobe">Помилка завантаження FFProbe</string>
     <string name="error_empty_link">Посилання на торрент порожнє</string>
     <string name="error_intent_null">Порожній інтент</string>
@@ -166,7 +166,7 @@
     <string name="root_start_title">Запускати сервер від користувача root</string>
     <string name="root_start_sum_on">Запускати від імені root для уникнення вигрузки системою</string>
     <string name="root_start_sum_off">Не запускати від імені root</string>
-    <string name="choose_player_title">Вибір програвача</string>
+    <string name="choose_player_title">Вибір плеєра</string>
     <string name="show_banner_title">Показувати банер</string>
     <string name="show_banner_sum_on">Показувати банер при завантаженні торрента</string>
     <string name="show_banner_sum_off">Не показувати банер при завантаженні торрента</string>
@@ -217,15 +217,15 @@
     <string name="no_updates">Немає оновлень</string>
     <string name="not_used">Не використовується</string>
     <string name="not_installed">Не встановленно</string>
-    <string name="default_sets_applied">Налаштування за замовчуванням застосовуються</string>
-    <string name="permission_deny">Дозвіл відмовлено</string>
+    <string name="default_sets_applied">Встановлено налаштування за замовчуванням</string>
+    <string name="permission_deny">У доступі відмовлено</string>
     <string name="boosty_msg">Boosty сайт</string>
-    <string name="enable_rutor_search">Увімкніть пошук RuTor</string>
+    <string name="enable_rutor_search">Увімкнути пошук по RuTor</string>
     <string name="enable_rutor_search_desc">УВАГА: база даних займе в оперативної пам\'яті близько 500 МБ</string>
     <string name="bit_rate">Бітрейт</string>
-    <string name="install_ffprobe">Встановіть FFProbe</string>
+    <string name="install_ffprobe">Встановити FFProbe</string>
     <string name="delete_ffprobe">Видалити FFProbe</string>
-    <string name="ffprobe_summary">Завантажте FFProbe, щоб отримати додаткові відеоканчини, такі як тривалість, бітрейт тощо.</string>
+    <string name="ffprobe_summary">Завантажте FFProbe для отримання даних про відео, таких як тривалість, бітрейт тощо.</string>
     <string name="cat_movie">Фільми</string>
     <string name="cat_tv">Серіал</string>
     <string name="cat_music">Музика</string>
