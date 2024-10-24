@@ -122,7 +122,8 @@ class NotificationTS : Service() {
                 this.getSystemService(NotificationManager::class.java)!!
                     .createNotificationChannel(channel)
             }
-            val accessibilityNote = if (Accessibility.isEnabledService(App.context)) this.getText(R.string.accessibility_note) else ""
+            val accEnabled = Accessibility.isEnabledService(App.context)
+            val accessibilityNote = if (accEnabled) getText(R.string.accessibility_note) else getText(R.string.stat_running)
             if (builder == null) {
                 builder = NotificationCompat.Builder(this, channelId)
                     .setContentTitle(getString(R.string.app_name))
@@ -131,7 +132,8 @@ class NotificationTS : Service() {
                     .setOngoing(true)
                     .setContentIntent(contentPendingIntent)
                     .setStyle(NotificationCompat.BigTextStyle().bigText(accessibilityNote))
-                    .addAction(
+                if (!accEnabled)
+                    builder?.addAction(
                         android.R.drawable.ic_menu_close_clear_cancel,
                         this.getText(R.string.exit).toString().uppercase(),
                         exitPendingIntent
@@ -146,7 +148,7 @@ class NotificationTS : Service() {
                 builder?.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notification))
 
             builder?.let {
-                    ServiceCompat.startForeground(this, notificationId, it.build(), FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+                ServiceCompat.startForeground(this, notificationId, it.build(), FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
             }
         }
     }
