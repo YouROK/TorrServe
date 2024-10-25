@@ -188,7 +188,6 @@
                 <data android:scheme="file" />
                 <data android:scheme="magnet" />
                 <data android:host="*" />
-                <data android:pathPattern="*.torrent" />
                 <data android:pathPattern=".*.TORRENT" />
                 <data android:pathPattern=".*.torrent" />
                 <data android:pathPattern=".*.torrent.*" />
