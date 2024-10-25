@@ -1,5 +1,3 @@
-import com.android.builder.core.BuilderConstants
-
 plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
