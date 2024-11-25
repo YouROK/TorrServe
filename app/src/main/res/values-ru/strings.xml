@@ -168,7 +168,7 @@
     <string name="torserver_title">Настройки TorrServer</string>
     <string name="torserver_summary">Настройки параметров TorrServer</string>
     <string name="remove_action_title">Удалить действие по умолчанию</string>
-    <string name="remove_action_summary">Сброс действия по умолчанию при открытии торрента</string>
+    <string name="remove_action_summary">Сброс ассоциации приложения с торрентами и magnet-ссылками</string>
     <string name="boot_start_title">Запускать сервер при загрузке</string>
     <string name="boot_start_sum_on">Запускать локальный сервер при загрузке устройства</string>
     <string name="boot_start_sum_off">Не запускать локальный сервер при загрузке устройства</string>

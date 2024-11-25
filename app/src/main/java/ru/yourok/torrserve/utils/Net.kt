@@ -2,7 +2,6 @@ package ru.yourok.torrserve.utils
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import info.guardianproject.netcipher.client.TlsOnlySocketFactory
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import ru.yourok.torrserve.atv.Utils.isBrokenTCL
@@ -45,7 +44,7 @@ object Net {
             .ignoreContentType(true)
             .method(Connection.Method.POST)
         if (!isBrokenTCL)
-            req.sslSocketFactory(insecureTlsSocketFactory())
+            req.sslSocketFactory(TlsSocketFactory())
         if (save)
             req.data("save", "true")
         req.data("title", title)
@@ -69,7 +68,7 @@ object Net {
             .method(Connection.Method.POST)
             .maxBodySize(0) // The default maximum is 2MB, 0 = unlimited body
         if (!isBrokenTCL)
-            conn.sslSocketFactory(insecureTlsSocketFactory())
+            conn.sslSocketFactory(TlsSocketFactory())
 
         val auth = getAuthB64()
         if (auth.isNotEmpty())
@@ -98,7 +97,7 @@ object Net {
             .ignoreContentType(true)
             .timeout(duration)
         if (!isBrokenTCL)
-            conn.sslSocketFactory(insecureTlsSocketFactory())
+            conn.sslSocketFactory(TlsSocketFactory())
 
         val auth = getAuthB64()
         if (auth.isNotEmpty())
@@ -134,7 +133,7 @@ object Net {
             .ignoreContentType(true)
             .timeout(duration)
         if (!isBrokenTCL)
-            conn.sslSocketFactory(insecureTlsSocketFactory())
+            conn.sslSocketFactory(TlsSocketFactory())
 
         val response = conn.execute()
 
@@ -149,40 +148,6 @@ object Net {
 
             else -> {
                 throw Exception(response.statusMessage())
-            }
-        }
-    }
-
-    // https://stackoverflow.com/questions/26649389/how-to-disable-sslv3-in-android-for-httpsurlconnection
-    fun insecureTlsSocketFactory(): SSLSocketFactory {
-        val trustAllCerts = arrayOf<TrustManager>(@SuppressLint("CustomX509TrustManager")
-        object : X509TrustManager {
-            @SuppressLint("TrustAllX509TrustManager")
-            @Throws(CertificateException::class)
-            override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
-            }
-
-            @SuppressLint("TrustAllX509TrustManager")
-            @Throws(CertificateException::class)
-            override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
-            }
-
-            override fun getAcceptedIssuers(): Array<X509Certificate> {
-                return arrayOf()
-            }
-        })
-
-        try {
-            val sslContext = SSLContext.getInstance("TLSv1.2")
-            sslContext.init(null, trustAllCerts, java.security.SecureRandom())
-            return TlsOnlySocketFactory(sslContext.socketFactory)
-        } catch (e: Exception) {
-            when (e) {
-                is RuntimeException, is KeyManagementException -> {
-                    throw RuntimeException("Failed to create a SSL socket factory", e)
-                }
-
-                else -> throw e
             }
         }
     }

@@ -27,8 +27,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     packagingOptions {
         resources.excludes += "DebugProbesKt.bin"
@@ -89,6 +89,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:18.2.5'
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
+    implementation 'org.conscrypt:conscrypt-android:2.5.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
     // http client/parser
     def jsoupVersion = '1.16.1' // 1.16.2, 1.17.1, 1.17.2 thorow java.lang.VerifyError on api19
