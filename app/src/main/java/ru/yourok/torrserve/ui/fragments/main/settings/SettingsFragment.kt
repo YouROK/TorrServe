@@ -6,6 +6,8 @@ import android.content.Context.POWER_SERVICE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
 import android.view.View
@@ -204,9 +206,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
                                     intent.`package` = "com.android.settings"
                                     requireActivity().startActivity(intent)
                                 } else { // show TV Settings and info toast
-                                    intent = Intent(android.provider.Settings.ACTION_SETTINGS)
-                                    requireActivity().startActivity(intent)
                                     App.toast(R.string.show_battery_save_tv, true)
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        intent = Intent(android.provider.Settings.ACTION_SETTINGS)
+                                        requireActivity().startActivity(intent)
+                                    }, App.LONG_TOAST_DURATION.toLong()) // as in toast duration
+
                                 }
                             } else { // mobile - show request dialog / power prefs
                                 requireActivity().startActivity(intent)
