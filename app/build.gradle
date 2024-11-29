@@ -43,7 +43,9 @@ dependencies {
     def appCompatVersion = '1.6.1' // 1.6.1 last api16 compatible
     //noinspection GradleDependency
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    def constraintVersion = '2.1.4' // 2.1.4 last api16 compatible
+    //noinspection GradleDependency
+    implementation "androidx.constraintlayout:constraintlayout:${constraintVersion}"
     def coreKtxVersion = '1.12.0' // 1.12.0 last api16 compatible
     //noinspection GradleDependency
     implementation "androidx.core:core-ktx:${coreKtxVersion}"
@@ -88,8 +90,8 @@ dependencies {
     //noinspection GradleDependency firebase-crashlytics:18.2.5 is last api16 compatible
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
-    implementation 'org.conscrypt:conscrypt-android:2.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+    implementation 'org.conscrypt:conscrypt-android:2.5.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0'
     // http client/parser
     def jsoupVersion = '1.16.1' // 1.16.2, 1.17.1, 1.17.2 thorow java.lang.VerifyError on api19
     //noinspection GradleDependency
