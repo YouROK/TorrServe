@@ -78,6 +78,11 @@ object Utils {
             ).contains("huawei")
         }
 
+    val isChangHong: Boolean
+        get() {
+            return deviceName.lowercase().contains("changhong", ignoreCase = true)
+        }
+
     val isAndroidTV: Boolean
         get() {
             return App.context.packageManager.hasSystemFeature("android.software.leanback") &&
