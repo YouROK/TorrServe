@@ -76,6 +76,7 @@
         <activity
             android:name="ru.yourok.torrserve.ui.activities.play.PlayActivity"
             android:configChanges="uiMode"
+            android:excludeFromRecents="true"
             android:exported="true"
             android:theme="@style/PlayDialog.DayNight">
             <intent-filter>
