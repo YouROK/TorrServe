@@ -41,7 +41,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Permission.requestPermissionWithRationale(this, Permission.writePermission)
+        Permission.requestPermissionWithRationale(this)
         themeUtil.onCreate(this)
         setContentView(R.layout.settings_activity)
 
