@@ -9,25 +9,27 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.atv.Utils.isChangHong
 import kotlin.concurrent.thread
 
 
 object Permission {
-    const val writePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-    const val requestCode = 101
+    const val PERM = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    const val CODE = 101
 
-    fun requestPermissionWithRationale(activity: Activity, permission: String = writePermission) {
-        thread {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                Snackbar.make(activity.findViewById(android.R.id.content) ?: return@thread, R.string.permission_storage_msg, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.permission_btn) {
-                        ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
-                    }
-                    .show()
-            } else {
-                ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
+    fun requestPermissionWithRationale(activity: Activity, permission: String = PERM) {
+        if (!isChangHong) // TODO
+            thread {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                    Snackbar.make(activity.findViewById(android.R.id.content) ?: return@thread, R.string.permission_storage_msg, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.permission_btn) {
+                            ActivityCompat.requestPermissions(activity, arrayOf(permission), CODE)
+                        }
+                        .show()
+                } else {
+                    ActivityCompat.requestPermissions(activity, arrayOf(permission), CODE)
+                }
             }
-        }
     }
 
     fun isPermissionGranted(context: Context, permission: String): Boolean {
