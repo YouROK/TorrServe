@@ -82,13 +82,29 @@ object Settings {
             filesDir = App.context.filesDir
             if (BuildConfig.DEBUG) Log.d("*****", "Use $filesDir for settings path")
         }
-        if (filesDir == null)
-            filesDir = File(Environment.getExternalStorageDirectory().path, "TorrServe")
 
-        if (!filesDir.exists())
-            filesDir.mkdirs()
+        if (filesDir == null) {
+            filesDir = File(Environment.getExternalStorageDirectory().path, "TorrServe")
+            if (!filesDir.exists())
+                filesDir.mkdirs()
+        }
 
         return filesDir.path
+    }
+
+    fun logPath(): String {
+        var filesDir: File?
+        filesDir = App.context.getExternalFilesDir(null)
+        if (filesDir?.canWrite() != true || Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU)
+            filesDir = File(Environment.getExternalStorageDirectory().path, "TorrServe")
+        if (!filesDir.exists())
+            filesDir.mkdirs()
+        if (filesDir.canWrite() != true) {
+            if (BuildConfig.DEBUG) Log.d("*****", "Can't write to $filesDir")
+            filesDir = null
+        } else
+            if (BuildConfig.DEBUG) Log.d("*****", "Use $filesDir for log path")
+        return filesDir?.path ?: ""
     }
 
     @Suppress("UNCHECKED_CAST")
