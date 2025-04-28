@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Environment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.app.Consts.excludedApps
+import ru.yourok.torrserve.app.Consts.PLAYERS_BLACKLIST
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
@@ -69,7 +69,7 @@ object Players {
         list.add("0" to App.context.getString(R.string.default_player))
         for (a in apps) {
             val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName
-            if (!excludedApps.contains(a.activityInfo.packageName.lowercase(Locale.getDefault()))) {
+            if (!PLAYERS_BLACKLIST.contains(a.activityInfo.packageName.lowercase(Locale.getDefault()))) {
                 list.add(a.activityInfo.packageName to name)
             }
         }
@@ -78,7 +78,7 @@ object Players {
         apps = App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         for (a in apps) {
             val name = a.loadLabel(App.context.packageManager)?.toString() ?: a.activityInfo.packageName
-            if (!excludedApps.contains(a.activityInfo.packageName.lowercase(Locale.getDefault()))) {
+            if (!PLAYERS_BLACKLIST.contains(a.activityInfo.packageName.lowercase(Locale.getDefault()))) {
                 list.add(a.activityInfo.packageName to name)
             }
         }

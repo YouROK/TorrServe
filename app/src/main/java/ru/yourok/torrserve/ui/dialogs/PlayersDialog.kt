@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.app.Consts.excludedApps
+import ru.yourok.torrserve.app.Consts.PLAYERS_BLACKLIST
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
@@ -30,7 +30,7 @@ object PlayersDialog {
 
         val filteredList: MutableList<ResolveInfo> = mutableListOf()
         for (info in resInfo) {
-            if (!excludedApps.contains(info.activityInfo.packageName.lowercase(Locale.getDefault()))) {
+            if (!PLAYERS_BLACKLIST.contains(info.activityInfo.packageName.lowercase(Locale.getDefault()))) {
                 filteredList.add(info)
             }
         }
