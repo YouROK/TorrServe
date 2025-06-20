@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
     defaultConfig {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 16
@@ -62,6 +62,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.2.1'
+    //noinspection GradleDependency
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
     // speed test
     implementation 'com.github.anastr:speedviewlib:1.6.1'

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.POWER_SERVICE
 import android.content.Intent
-import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
@@ -44,6 +45,7 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.ui.activities.play.players.Players
+import ru.yourok.torrserve.ui.fragments.LogFragment
 import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.update.apk.ApkUpdateFragment
@@ -73,7 +75,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     isSingleLine = false
                     maxLines = 2
                 }
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                     holder.itemView.setPadding(dp2px(16f), 0, dp2px(16f), 0)
                 }
             }
@@ -94,7 +96,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onViewCreated(view, savedInstanceState)
         val rv = listView // This holds the PreferenceScreen's items
 
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             rv?.setPadding(0, dp2px(32f), 0, dp2px(16f)) // (left, top, right, bottom)
         } else
             rv?.setPadding(0, 0, 0, dp2px(28f)) // (left, top, right, bottom)
@@ -118,7 +120,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("speedtest")?.apply {
-            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                 isEnabled = false
             else
                 setOnPreferenceClickListener {
@@ -186,13 +188,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("show_battery_save")?.apply {
             // https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager
                 val pkgIgnored = powerManager.isIgnoringBatteryOptimizations(context.packageName)
                 var intent = Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
                 if (!pkgIgnored) {
                     intent = Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
-                    intent.data = Uri.parse("package:${context.packageName}")
+                    intent.data = "package:${context.packageName}".toUri()
                 }
                 val cmp = intent.resolveActivity(requireActivity().packageManager)
                 if (cmp == null)
@@ -253,6 +255,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }
                 true
             }
+            // Set up long click by finding the preference's view
+            setOnPreferenceChangeListener { _, _ -> false } // Needed to make sure the view is created
+            // Long click action
+            // Wait for the view to be created
+            view?.setOnLongClickListener {
+                // Your long click action here
+
+                true
+            }
+        }
+
+        findPreference<Preference>("showlog")?.apply {
+            setOnPreferenceClickListener {
+                lifecycleScope.launch(Dispatchers.Main) {
+                    LogFragment().show(requireActivity(), R.id.container, true)
+                }
+                true
+            }
         }
 
         findPreference<EditTextPreference>("server_auth")?.apply {
@@ -281,7 +301,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             sortFabPref?.let { ps?.removePreference(it) }
             catFabPref?.let { ps?.removePreference(it) }
         }
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) { // TODO Fix FAB focus
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) { // TODO Fix FAB focus
             fabPref?.let { ps?.removePreference(it) }
         }
     }
@@ -291,6 +311,47 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("host")?.apply {
             summary = Settings.getHost()
+        }
+
+        // Handle showlog preference
+        val showLogPref = TorrService.isLocal()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            findPreference<Preference>("showlog")?.let { logPreference ->
+                // Modern API (23+) - use isVisible property
+                logPreference.isVisible = showLogPref
+            }
+        } else {
+            // Legacy API - properly handle preference hierarchy
+            val parent = preferenceScreen.findPreference<PreferenceScreen>("prefs")
+                ?: preferenceScreen
+            val logPreference = parent.findPreference<Preference>("showlog")
+            if (showLogPref) {
+                // Only add if not already present
+                if (logPreference == null) {
+                    // Create the showlog preference programmatically
+                    val newLogPref = Preference(requireContext()).apply {
+                        key = "showlog"
+                        title = getString(R.string.torrserver_log)
+                        summary = getString(R.string.torrserver_log_summary)
+                        // Add action
+                        setOnPreferenceClickListener {
+                            lifecycleScope.launch(Dispatchers.Main) {
+                                LogFragment().show(requireActivity(), R.id.container, true)
+                            }
+                            true
+                        }
+                    }
+                    parent.addPreference(newLogPref)
+                    // Reorder to ensure correct position
+                    val serverSettingsIndex = parent?.findPreference<Preference>("server_settings")?.order ?: 0
+                    newLogPref.order = serverSettingsIndex + 1
+                }
+            } else {
+                // Only remove if currently present
+                if (logPreference != null) {
+                    parent.removePreference(logPreference)
+                }
+            }
         }
 
         findPreference<SwitchPreferenceCompat>("root_start")?.apply {
@@ -309,7 +370,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     fun showPowerRequest(context: Context) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val pm = context.getSystemService(POWER_SERVICE) as PowerManager
             val isIgnoringBatteryOptimizations = pm.isIgnoringBatteryOptimizations(
                 context.packageName
@@ -317,7 +378,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (!isIgnoringBatteryOptimizations) {
                 val intent = Intent()
                 intent.action = android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-                intent.data = Uri.parse("package:${context.packageName}")
+                intent.data = "package:${context.packageName}".toUri()
                 try {
                     startActivity(intent)
                 } catch (_: Exception) {

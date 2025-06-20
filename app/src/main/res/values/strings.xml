@@ -288,4 +288,6 @@
     <string name="cat_none">All torrents</string>
 
     <string name="accessibility_note">Disable Accessibility service to stop TorrServer</string>
+    <string name="torrserver_log">TorrServer journal</string>
+    <string name="torrserver_log_summary">View local TorrServer journal</string>
 </resources>
