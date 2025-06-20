@@ -234,4 +234,5 @@
     <string name="accessibility_note">Отключите сервис специальных возможностей, чтобы остановить TorrServer.</string>
     <string name="torrserver_log">Журнал TorrServer</string>
     <string name="torrserver_log_summary">Просмотр журнала локального TorrServer</string>
+    <string name="torrserver_log_cleared">Журнал TorrServer очищен</string>
 </resources>

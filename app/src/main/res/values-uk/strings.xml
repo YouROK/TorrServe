@@ -234,4 +234,5 @@
     <string name="accessibility_note">Вимкніть службу доступності, щоб зупинити TorrServer.</string>
     <string name="torrserver_log">Журнал TorrServer</string>
     <string name="torrserver_log_summary">Перегляд журналу локального TorrServer</string>
+    <string name="torrserver_log_cleared">Журнал TorrServer очищено</string>
 </resources>
