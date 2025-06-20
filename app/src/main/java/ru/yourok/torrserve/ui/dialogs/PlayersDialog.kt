@@ -4,10 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
-import android.net.Uri
+import android.os.Build
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.net.toUri
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.app.Consts.PLAYERS_BLACKLIST
@@ -23,10 +24,14 @@ object PlayersDialog {
         val link = TorrentHelper.getTorrentPlayLink(torrent, index)
         val mime = Mime.getMimeType(file.path)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.parse(link), mime)
+        intent.setDataAndType(link.toUri(), mime)
 
         val resInfo =
-            App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+            } else {
+                App.context.packageManager.queryIntentActivities(intent, 0)
+            } // PackageManager.MATCH_DEFAULT_ONLY
 
         val filteredList: MutableList<ResolveInfo> = mutableListOf()
         for (info in resInfo) {
