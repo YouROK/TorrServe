@@ -90,14 +90,17 @@ class LogFragment : TSFragment() {
     private fun loadLogFile() {
         lifecycleScope.launch {
             try {
+                showProgress()
                 val logContent = withContext(Dispatchers.IO) {
                     readLogFileWithChunks(logfile)
                 }
                 withContext(Dispatchers.Main) {
                     logView.text = highlightLog(logContent)
                 }
+                hideProgress()
             } catch (e: Exception) {
                 logView.text = e.localizedMessage
+                hideProgress()
             }
         }
     }
