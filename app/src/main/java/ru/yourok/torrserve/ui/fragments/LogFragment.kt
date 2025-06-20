@@ -1,11 +1,17 @@
 package ru.yourok.torrserve.ui.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,6 +20,7 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Format.byteFmt
+import ru.yourok.torrserve.utils.ThemeUtil
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -64,7 +71,7 @@ class LogFragment : TSFragment() {
                         }
                     }
                     withContext(Dispatchers.Main) {
-                        logView.text = stringBuilder.toString()
+                        logView.text = stringBuilder.toString().highlightLog()
                     }
                 }
             } catch (e: Exception) {
@@ -99,6 +106,72 @@ class LogFragment : TSFragment() {
         } catch (e: Exception) {
             "Error: ${e.message}" to -1
         }
+    }
+
+    // Add this extension function to your LogFragment
+    private fun String.highlightLog(): SpannableString {
+        val spannable = SpannableString(this)
+
+        // Highlight START/END markers
+        "=+ START =+".toRegex().findAll(this).forEach { match ->
+            spannable.setSpan(
+                ForegroundColorSpan("#FF5722".toColorInt()), // Orange
+                match.range.first,
+                match.range.last + 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannable.setSpan(
+                StyleSpan(Typeface.BOLD),
+                match.range.first,
+                match.range.last + 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        // Highlight timestamps (UTC0)
+        val baseColor = ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorOnSurface)
+        val alpha = 128 // 0-255 (50% in this case)
+        val colorWithAlpha = (alpha shl 24) or (baseColor and 0x00FFFFFF)
+        "\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2} UTC\\d+".toRegex().findAll(this).forEach { match ->
+            spannable.setSpan(
+                ForegroundColorSpan(colorWithAlpha),
+                match.range.first,
+                match.range.last + 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        // Highlight error/warning messages
+        "(?i)(error|warn|fail|exception)".toRegex().findAll(this).forEach { match ->
+            spannable.setSpan(
+                ForegroundColorSpan("#F44336".toColorInt()), // Red
+                match.range.first,
+                match.range.last + 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        // Highlight IP addresses
+        "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}".toRegex().findAll(this).forEach { match ->
+            spannable.setSpan(
+                ForegroundColorSpan(ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorHost)),
+                match.range.first,
+                match.range.last + 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        // Highlight configuration blocks
+        "\\{.*?\\}".toRegex().findAll(this).forEach { match ->
+            spannable.setSpan(
+                ForegroundColorSpan(ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorAccent)),
+                match.range.first,
+                match.range.last + 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        return spannable
     }
 
 }
