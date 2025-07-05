@@ -1,6 +1,5 @@
 package ru.yourok.torrserve.settings
 
-import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.util.Log
@@ -9,6 +8,8 @@ import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import java.io.File
+import androidx.core.content.edit
+import androidx.core.net.toUri
 
 object Settings {
     val showFab: Boolean
@@ -32,7 +33,7 @@ object Settings {
 
     fun setHosts(hosts: List<String>) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
-        prefs.edit().putStringSet("saved_hosts", hosts.toMutableSet()).apply()
+        prefs.edit { putStringSet("saved_hosts", hosts.toMutableSet()) }
     }
 
     fun getLastViewDonate() = get("last_view_donate", 0L)
@@ -60,7 +61,7 @@ object Settings {
         var hst = host
         if (hst.isEmpty())
             hst = "http://localhost:8090"
-        val url = Uri.parse(hst)
+        val url = hst.toUri()
         if (url.scheme.isNullOrBlank())
             hst = "http://$hst"
         if (url.port == -1)
@@ -114,7 +115,7 @@ object Settings {
             if (prefs.all.containsKey(name))
                 return prefs.all[name] as T
             return def
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return def
         }
     }
@@ -123,13 +124,13 @@ object Settings {
     fun set(name: String, value: Any?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         when (value) {
-            is String -> prefs.edit().putString(name, value).apply()
-            is Boolean -> prefs.edit().putBoolean(name, value).apply()
-            is Float -> prefs.edit().putFloat(name, value).apply()
-            is Int -> prefs.edit().putInt(name, value).apply()
-            is Long -> prefs.edit().putLong(name, value).apply()
-            is MutableSet<*>? -> prefs.edit().putStringSet(name, value as MutableSet<String>?).apply()
-            else -> prefs.edit().putString(name, value.toString()).apply()
+            is String -> prefs.edit { putString(name, value) }
+            is Boolean -> prefs.edit { putBoolean(name, value) }
+            is Float -> prefs.edit { putFloat(name, value) }
+            is Int -> prefs.edit { putInt(name, value) }
+            is Long -> prefs.edit { putLong(name, value) }
+            is MutableSet<*>? -> prefs.edit { putStringSet(name, value as MutableSet<String>?) }
+            else -> prefs.edit { putString(name, value.toString()) }
         }
     }
 }
