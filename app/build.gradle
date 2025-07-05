@@ -93,6 +93,7 @@ dependencies {
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
     implementation 'org.conscrypt:conscrypt-android:2.5.3'
+    //noinspection GradleDependency
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0'
     // http client/parser
     def jsoupVersion = '1.16.1' // 1.16.2, 1.17.1, 1.17.2 thorow java.lang.VerifyError on api19

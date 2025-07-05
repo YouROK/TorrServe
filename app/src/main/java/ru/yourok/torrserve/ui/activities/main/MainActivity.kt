@@ -4,7 +4,6 @@ import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -17,6 +16,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
@@ -398,7 +398,7 @@ class MainActivity : AppCompatActivity() {
         return try {
             val vi = Api.getMatrixVersionInt()
             vi > 131 && Settings.get("show_cat_fab", false) // MatriX.132 add Categories
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             false
         }
     }
@@ -594,7 +594,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     if (Api.listTorrent().isNotEmpty()) {
                         val intent = Intent(Intent.ACTION_VIEW)
-                        intent.setDataAndType(Uri.parse(Net.getHostUrl("/playlistall/all.m3u")), "video/*")
+                        intent.setDataAndType(Net.getHostUrl("/playlistall/all.m3u").toUri(), "video/*")
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         App.context.startActivity(intent)
                     }

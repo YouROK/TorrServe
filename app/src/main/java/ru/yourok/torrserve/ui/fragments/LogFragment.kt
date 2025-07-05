@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
@@ -94,13 +95,13 @@ class LogFragment : TSFragment() {
                 val logContent = withContext(Dispatchers.IO) {
                     readLogFileWithChunks(logfile)
                 }
-                withContext(Dispatchers.Main) {
-                    logView.text = highlightLog(logContent)
-                }
-                hideProgress()
+                logView.text = highlightLog(logContent)
             } catch (e: Exception) {
-                logView.text = e.localizedMessage
-                hideProgress()
+                logView.text = e.localizedMessage ?: "Error loading log"
+            } finally {
+                withContext(NonCancellable) { // Ensure this runs even if coroutine is cancelled
+                    hideProgress()
+                }
             }
         }
     }
