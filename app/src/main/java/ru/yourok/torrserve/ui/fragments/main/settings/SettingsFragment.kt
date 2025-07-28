@@ -283,6 +283,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findPreference<Preference>("showlog")?.let { logPreference ->
                 // Modern API (23+) - use isVisible property
                 logPreference.isVisible = showLogPref
+                // Add action
+                logPreference.setOnPreferenceClickListener {
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        LogFragment().show(requireActivity(), R.id.container, true)
+                    }
+                    true
+                }
             }
         } else {
             // Legacy API - properly handle preference hierarchy
