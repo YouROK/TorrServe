@@ -26,6 +26,8 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
                 android:text=""
