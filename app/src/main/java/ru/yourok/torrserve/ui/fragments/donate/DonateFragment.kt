@@ -55,14 +55,14 @@ class DonateFragment : TSFragment() {
             Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
         }
 
-//        vi.findViewById<Button>(R.id.btnPayPal)?.setOnClickListener {
-//            val link = "https://www.paypal.me/yourok/5usd"
-//            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-//            intent.addCategory(Intent.CATEGORY_BROWSABLE)
-//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//            startActivitySafely(intent)
-//            Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
-//        }
+        vi.findViewById<Button>(R.id.btnTB)?.setOnClickListener {
+            val link = "https://www.tbank.ru/cf/742qEMhKhKn"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivitySafely(intent)
+            Settings.setLastViewDonate(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000)
+        }
 
         vi.findViewById<Button>(R.id.btnTelegram)?.setOnClickListener {
             val intent = Intent()

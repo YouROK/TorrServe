@@ -184,7 +184,7 @@
     <string name="donate_message">TorrServe is free. Please consider donating to support the future development of TorrServe.</string>
     <string name="boosty_msg">Boosty site</string>
     <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
-    <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
+    <string name="tbank" translatable="false">TBank</string>
     <string name="telegram_msg">Telegram Channel</string>
 
     <!--    Settings    -->
