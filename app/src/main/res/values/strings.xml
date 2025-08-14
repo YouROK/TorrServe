@@ -291,4 +291,6 @@
     <string name="torrserver_log">TorrServer journal</string>
     <string name="torrserver_log_summary">View local TorrServer journal</string>
     <string name="torrserver_log_cleared">TorrServer journal cleared</string>
+    <string name="torrserver_log_trimmed">Log content trimmed (showing last %s)</string>
+
 </resources>
