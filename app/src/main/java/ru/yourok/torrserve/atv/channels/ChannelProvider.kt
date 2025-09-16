@@ -166,7 +166,6 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             .setLive(false)
             .setPosterArtUri(posterUri)
             .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
-            .setDescription(torr.hash.uppercase(Locale.getDefault()))
 
         return preview.build()
     }
