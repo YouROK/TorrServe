@@ -235,4 +235,5 @@
     <string name="torrserver_log">Журнал TorrServer</string>
     <string name="torrserver_log_summary">Просмотр журнала локального TorrServer</string>
     <string name="torrserver_log_cleared">Журнал TorrServer очищен</string>
+    <string name="torrserver_log_trimmed">Лог обрезан (показаны последние %s)</string>
 </resources>

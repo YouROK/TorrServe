@@ -59,10 +59,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="TorrServer log contents"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="?attr/colorBright"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="TorrServer log contents" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

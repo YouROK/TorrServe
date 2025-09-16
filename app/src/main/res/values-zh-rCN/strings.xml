@@ -291,4 +291,5 @@
     <string name="torrserver_log">TorrServer 日志</string>
     <string name="torrserver_log_summary">查看本地 TorrServer 日志</string>
     <string name="torrserver_log_cleared">TorrServer 日志已清除</string>
+    <string name="torrserver_log_trimmed">日志内容已截断（显示最后%s）</string>
 </resources>
