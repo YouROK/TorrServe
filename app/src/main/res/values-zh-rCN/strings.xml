@@ -184,7 +184,6 @@
     <string name="donate_message">TorrServe 是免费的。请考虑捐赠以支持 TorrServe 的未来开发。</string>
     <string name="boosty_msg">Boosty 网站</string>
     <string name="yandex_money_card" translatable="false">5599 0050 6424 4747</string>
-    <string name="paypal_card" translatable="false">8YouROK8@gmail.com</string>
     <string name="telegram_msg">Telegram 频道</string>
 
     <!--    设置    -->
@@ -292,4 +291,5 @@
     <string name="torrserver_log">TorrServer 日志</string>
     <string name="torrserver_log_summary">查看本地 TorrServer 日志</string>
     <string name="torrserver_log_cleared">TorrServer 日志已清除</string>
+    <string name="torrserver_log_trimmed">日志内容已截断（显示最后%s）</string>
 </resources>

@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
@@ -25,24 +26,34 @@ import ru.yourok.torrserve.utils.ThemeUtil
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
+import java.io.RandomAccessFile
+import java.util.regex.Pattern
 
 class LogFragment : TSFragment() {
+    // Chunk size for reading file
+    private companion object {
+        const val DEFAULT_BUFFER_SIZE = 8192
+        const val MAX_LOG_SIZE = 512 * 1024 // 512 KB limit
+    }
+
+    // File handling
     private val logfile = File(Settings.logPath(), "torrserver.log")
     private lateinit var logView: TextView
 
     // Color cache
-    private var warningColor: Int = 0
-    private var timestampColor: Int = 0
-    private var hostColor: Int = 0
-    private var accentColor: Int = 0
-    private var startMarkerColor: Int = 0
+    private val warningColor by lazy { ResourcesCompat.getColor(resources, R.color.design_default_color_error, null) }
+    private val startMarkerColor by lazy { ResourcesCompat.getColor(resources, R.color.orange_dark, null) }
+    private val timestampColor by lazy { ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorOnSurface).withAlpha(150) }
+    private val hostColor by lazy { ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorHost) }
+    private val accentColor by lazy { ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorAccent) }
 
-    // Regex patterns (compiled once)
-    private val startMarkerRegex = "=+ START =+".toRegex()
-    private val timestampRegex = "\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2} UTC\\d+".toRegex()
-    private val errorRegex = "(?i)(error|warn|fail|exception)".toRegex()
-    private val ipRegex = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}".toRegex()
-    private val configBlockRegex = "\\{.*?\\}".toRegex()
+    // Precompiled patterns (more efficient than Regex)
+    private val startMarkerPattern by lazy { Pattern.compile("=+ START =+") }
+    private val timestampPattern by lazy { Pattern.compile("\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2} UTC\\d+") }
+    private val errorPattern by lazy { Pattern.compile("(?i)(error|warn|fail|exception)") }
+    private val ipPattern by lazy { Pattern.compile("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}") }
+    private val simpleIpv6Pattern by lazy { Pattern.compile("[0-9a-fA-F]{1,4}(?::[0-9a-fA-F]{1,4}){3,7}") }
+    private val configBlockPattern by lazy { Pattern.compile("\\{.*?\\}") }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,13 +63,6 @@ class LogFragment : TSFragment() {
         val vi = inflater.inflate(R.layout.log_fragment, container, false)
         val title = vi.findViewById<TextView>(R.id.tvTitle)
         val btnClear = vi.findViewById<Button>(R.id.btnClear)
-
-        // Initialize color cache
-        warningColor = ResourcesCompat.getColor(resources, R.color.design_default_color_error, null)
-        startMarkerColor = ResourcesCompat.getColor(resources, R.color.orange_dark, null)
-        timestampColor = ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorOnSurface).withAlpha(150)
-        hostColor = ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorHost)
-        accentColor = ThemeUtil.getColorFromAttr(requireContext(), R.attr.colorAccent)
 
         title.text = logfile.path
         logView = vi.findViewById(R.id.tvLog)
@@ -92,10 +96,42 @@ class LogFragment : TSFragment() {
         lifecycleScope.launch {
             try {
                 showProgress()
-                val logContent = withContext(Dispatchers.IO) {
-                    readLogFileWithChunks(logfile)
+                val (content, wasTrimmed) = withContext(Dispatchers.IO) {
+                    val content = readLogFileWithChunks(logfile)
+                    val trimmed = logfile.length() > MAX_LOG_SIZE
+                    content to trimmed
                 }
-                logView.text = highlightLog(logContent)
+
+                // Process in chunks to avoid blocking UI thread
+                val highlightedContent = withContext(Dispatchers.Default) {
+                    if (wasTrimmed) {
+                        val trimmedMessage = SpannableString("⚠️ " + getString(R.string.torrserver_log_trimmed, byteFmt(MAX_LOG_SIZE)) + "\n\n")
+                        // Style the trimmed message
+                        trimmedMessage.setSpan(
+                            ForegroundColorSpan(warningColor),
+                            0,
+                            trimmedMessage.length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        trimmedMessage.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            0,
+                            trimmedMessage.length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+
+                        val logSpannable = highlightLog(content)
+                        // Combine both messages
+                        val combined = SpannableStringBuilder()
+                            .append(trimmedMessage)
+                            .append(logSpannable)
+                        combined
+                    } else {
+                        highlightLog(content)
+                    }
+                }
+
+                logView.text = highlightedContent
             } catch (e: Exception) {
                 logView.text = e.localizedMessage ?: "Error loading log"
             } finally {
@@ -106,48 +142,76 @@ class LogFragment : TSFragment() {
         }
     }
 
-    private fun readLogFileWithChunks(file: File, chunkSize: Int = 8192): String {
-        val stringBuilder = StringBuilder()
-        BufferedReader(FileReader(file), chunkSize).use { reader ->
-            val buffer = CharArray(chunkSize)
-            var charsRead: Int
-            while (reader.read(buffer).also { charsRead = it } != -1) {
-                stringBuilder.append(buffer, 0, charsRead)
+    private fun readLogFileWithChunks(file: File, chunkSize: Int = DEFAULT_BUFFER_SIZE): String {
+        return when {
+            !file.exists() -> ""
+            file.length() > MAX_LOG_SIZE -> {
+                // For large files, read only the end portion
+                RandomAccessFile(file, "r").use { raf ->
+                    val startPos = file.length() - MAX_LOG_SIZE
+                    var pos = maxOf(0, startPos)
+                    // Find the next newline character
+                    if (startPos > 0) {
+                        raf.seek(pos)
+                        while (pos < file.length()) {
+                            if (raf.readByte().toInt().toChar() == '\n') {
+                                pos = raf.filePointer
+                                break
+                            }
+                            pos++
+                        }
+                    }
+                    // Read from the found position
+                    raf.seek(pos)
+                    val buffer = ByteArray(minOf(MAX_LOG_SIZE, (file.length() - pos).toInt()))
+                    raf.readFully(buffer)
+                    String(buffer, Charsets.UTF_8)
+                }
+            }
+
+            else -> {
+                // Normal file reading
+                BufferedReader(FileReader(file), chunkSize).use { it.readText() }
             }
         }
-        return stringBuilder.toString()
     }
 
     private fun highlightLog(content: String): SpannableString {
         val spannable = SpannableString(content)
+
         // Process highlights in order of most specific to least specific
-        highlightPattern(spannable, startMarkerRegex, startMarkerColor, bold = true)
-        highlightPattern(spannable, errorRegex, warningColor)
-        highlightPattern(spannable, ipRegex, hostColor)
-        highlightPattern(spannable, configBlockRegex, accentColor)
-        highlightPattern(spannable, timestampRegex, timestampColor)
+        highlightPattern(spannable, startMarkerPattern, startMarkerColor, bold = true)
+        highlightPattern(spannable, errorPattern, warningColor)
+        highlightPattern(spannable, ipPattern, hostColor) // IPv4
+        highlightPattern(spannable, simpleIpv6Pattern, hostColor) // IPv6
+        highlightPattern(spannable, configBlockPattern, accentColor)
+        highlightPattern(spannable, timestampPattern, timestampColor)
 
         return spannable
     }
 
     private fun highlightPattern(
         spannable: SpannableString,
-        pattern: Regex,
+        pattern: Pattern,
         color: Int,
         bold: Boolean = false
     ) {
-        pattern.findAll(spannable).forEach { match ->
+        val matcher = pattern.matcher(spannable)
+        while (matcher.find()) {
+            val start = matcher.start()
+            val end = matcher.end()
+
             spannable.setSpan(
                 ForegroundColorSpan(color),
-                match.range.first,
-                match.range.last + 1,
+                start,
+                end,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             if (bold) {
                 spannable.setSpan(
                     StyleSpan(Typeface.BOLD),
-                    match.range.first,
-                    match.range.last + 1,
+                    start,
+                    end,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             }
