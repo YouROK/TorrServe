@@ -16,8 +16,9 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.main.MainActivity
+import ru.yourok.torrserve.utils.Format
 import java.nio.charset.Charset
-import java.util.*
+import java.util.Locale
 
 
 class ChannelProvider(private val iName: String, private val dName: String) {
@@ -157,7 +158,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
         val preview = PreviewProgram.Builder()
             .setChannelId(channelId)
             .setTitle(torr.title)
-            .setAvailability(TvContractCompat.PreviewProgramColumns.AVAILABILITY_FREE)
+            .setAvailability(TvContractCompat.PreviewProgramColumns.AVAILABILITY_AVAILABLE)
             .setGenre(info.joinToString(" · "))
             .setIntent(Utils.buildPendingIntent(torr))
             .setWeight(size)
@@ -166,7 +167,8 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             .setLive(false)
             .setPosterArtUri(posterUri)
             .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
-//TODO посмотреть размер торрента и добавить в desc если есть
+            .setDescription(buildDescription(torr))
+
         return preview.build()
     }
 
@@ -224,5 +226,20 @@ class ChannelProvider(private val iName: String, private val dName: String) {
 
     private fun rem(ch: Channel) {
         App.context.contentResolver.delete(TvContractCompat.buildChannelUri(ch.id), null, null)
+    }
+
+    private fun buildDescription(torr: Torrent): String {
+        var retStr = ""
+        if (torr.title.isNotBlank())
+            retStr = torr.title
+        else if (torr.name.isNotBlank())
+            retStr = torr.name
+        else
+            retStr = torr.hash.uppercase(Locale.getDefault())
+
+        if (torr.torrent_size > 0)
+            retStr += " • ${Format.byteFmt(torr.torrent_size)}"
+
+        return retStr
     }
 }
