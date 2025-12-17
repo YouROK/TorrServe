@@ -232,4 +232,8 @@
     <string name="cat_other">Друго</string>
     <string name="cat_none">Всички торенти</string>
     <string name="accessibility_note">Деактивирайте услугата за достъпност, за да спрете TorrServer</string>
+    <string name="torrserver_log">Дневник на TorrServer</string>
+    <string name="torrserver_log_summary">Преглед на дневник на локалния TorrServer</string>
+    <string name="torrserver_log_cleared">Дневникът на TorrServer е изчистен</string>
+    <string name="torrserver_log_trimmed">Лога е съкратен (показва се последните %s)</string>
 </resources>

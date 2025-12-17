@@ -232,4 +232,8 @@
     <string name="cat_other">Інше</string>
     <string name="cat_none">Усі торренти</string>
     <string name="accessibility_note">Вимкніть службу доступності, щоб зупинити TorrServer.</string>
+    <string name="torrserver_log">Журнал TorrServer</string>
+    <string name="torrserver_log_summary">Перегляд журналу локального TorrServer</string>
+    <string name="torrserver_log_cleared">Журнал TorrServer очищено</string>
+    <string name="torrserver_log_trimmed">Лог обрізано (показано останні %s)</string>
 </resources>

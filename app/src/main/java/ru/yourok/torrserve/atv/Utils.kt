@@ -16,13 +16,61 @@ import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
 import ru.yourok.torrserve.utils.TorrentHelper
-import java.util.Locale
 import kotlin.concurrent.thread
 
 
 object Utils {
 
     private const val FEATURE_FIRE_TV = "amazon.hardware.fire_tv"
+
+    private var lock = Any()
+
+    val isChangHong: Boolean
+        get() {
+            return deviceName.lowercase().contains("changhong", ignoreCase = true)
+        }
+
+    val isAmazonTV: Boolean
+        get() {
+            return App.context.packageManager.hasSystemFeature(FEATURE_FIRE_TV)
+        }
+
+    val isAndroidTV: Boolean
+        get() {
+            return App.context.packageManager.hasSystemFeature("android.software.leanback") &&
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                    isTvContentProviderAvailable
+        }
+
+    val isBrokenTCL: Boolean
+        get() {
+            val deviceName = deviceName
+            return deviceName.contains("(tcl_m7642)")
+        }
+
+    val isGoogleTV: Boolean // wide posters on home
+        get() {
+            return App.context.packageManager.hasSystemFeature("com.google.android.tv") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+        }
+
+    private val deviceName: String
+        get() = String.format("%s (%s)", Build.MODEL, Build.PRODUCT)
+
+    fun buildPendingIntent(torr: Torrent): Intent {
+        return Intent(App.context, PlayActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            action = Intent.ACTION_VIEW
+            data = Uri.parse(TorrentHelper.getTorrentMagnet(torr))
+            putExtra("action", "play")
+            putExtra("hash", torr.hash)
+            putExtra("title", torr.title)
+            putExtra("save", false)
+            torr.poster.takeIf { !it.isNullOrBlank() }?.let { putExtra("poster", it) }
+            torr.category.takeIf { !it.isNullOrBlank() }?.let { putExtra("category", it) }
+            torr.data.takeIf { !it.isNullOrBlank() }?.let { putExtra("data", it) }
+        }
+    }
+
     fun isTvBox(): Boolean {
         val pm = App.context.packageManager
         // TV for sure
@@ -54,69 +102,6 @@ object Utils {
         return false
     }
 
-    private fun hasSAFChooser(pm: PackageManager?): Boolean {
-        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Intent(Intent.ACTION_OPEN_DOCUMENT)
-        } else {
-            return true // VERSION.SDK_INT < KITKAT
-        }
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "video/*"
-        return intent.resolveActivity(pm!!) != null
-    }
-
-    private val deviceName: String
-        get() = String.format("%s (%s)", Build.MODEL, Build.PRODUCT)
-
-    private val isHuaweiDevice: Boolean
-        get() {
-            val manufacturer = Build.MANUFACTURER
-            val brand = Build.BRAND
-            return manufacturer.lowercase(Locale.getDefault())
-                .contains("huawei") || brand.lowercase(
-                Locale.getDefault()
-            ).contains("huawei")
-        }
-
-    val isAndroidTV: Boolean
-        get() {
-            return App.context.packageManager.hasSystemFeature("android.software.leanback") &&
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
-                    !isHuaweiDevice // Huawei Vision S TV on Harmony OS don't have support for content://android.media.tv/channel
-        }
-
-    val isGoogleTV: Boolean // wide posters on home
-        get() {
-            return App.context.packageManager.hasSystemFeature("com.google.android.tv") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-        }
-
-    val isAmazonTV: Boolean
-        get() {
-            return App.context.packageManager.hasSystemFeature(FEATURE_FIRE_TV)
-        }
-
-    val isBrokenTCL: Boolean
-        get() {
-            val deviceName = deviceName
-            return deviceName.contains("(tcl_m7642)")
-        }
-
-    fun buildPendingIntent(torr: Torrent): Intent {
-        val vintent = Intent(App.context, PlayActivity::class.java)
-        vintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        vintent.action = Intent.ACTION_VIEW
-        vintent.data = Uri.parse(TorrentHelper.getTorrentMagnet(torr))
-        vintent.putExtra("action", "play")
-        vintent.putExtra("hash", torr.hash)
-        vintent.putExtra("title", torr.title)
-        torr.poster?.let { if (it.isNotBlank()) vintent.putExtra("poster", it) }
-        torr.category?.let { if (it.isNotBlank()) vintent.putExtra("category", it) }
-        torr.data?.let {if (it.isNotBlank()) vintent.putExtra("data", it) }
-        vintent.putExtra("save", false)
-        return vintent
-    }
-
-    private var lock = Any()
     fun updateAtvCards() {
         if (isAndroidTV) {
             synchronized(lock) {
@@ -148,6 +133,37 @@ object Utils {
                 }
             }
         }
+    }
+
+    /**
+     * Checks if the device supports Android TV content provider
+     */
+    val isTvContentProviderAvailable: Boolean
+        get() {
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && // to simplify checks on Pre-Oreo devices
+                    isContentProviderAvailable(App.context, "android.media.tv")
+        }
+
+    /**
+     * Generic content provider availability checker
+     */
+    private fun isContentProviderAvailable(context: Context, authority: String): Boolean {
+        return try {
+            context.packageManager.resolveContentProvider(authority, 0) != null
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun hasSAFChooser(pm: PackageManager?): Boolean {
+        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Intent(Intent.ACTION_OPEN_DOCUMENT)
+        } else {
+            return true // VERSION.SDK_INT < KITKAT
+        }
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "video/*"
+        return intent.resolveActivity(pm!!) != null
     }
 
     private fun equalTorrs(lst1: List<Torrent>, lst2: List<Torrent>): Boolean {

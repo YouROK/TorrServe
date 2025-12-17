@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
     defaultConfig {
         applicationId "ru.yourok.torrserve"
         minSdkVersion 16
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         multiDexEnabled true
-        versionCode 134
-        versionName "MatriX.134.Client"
+        versionCode 136
+        versionName "MatriX.136.Client"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
@@ -43,7 +43,9 @@ dependencies {
     def appCompatVersion = '1.6.1' // 1.6.1 last api16 compatible
     //noinspection GradleDependency
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    def constraintVersion = '2.1.4' // 2.1.4 last api16 compatible
+    //noinspection GradleDependency
+    implementation "androidx.constraintlayout:constraintlayout:${constraintVersion}"
     def coreKtxVersion = '1.12.0' // 1.12.0 last api16 compatible
     //noinspection GradleDependency
     implementation "androidx.core:core-ktx:${coreKtxVersion}"
@@ -60,6 +62,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.2.1'
+    //noinspection GradleDependency
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
     // speed test
     implementation 'com.github.anastr:speedviewlib:1.6.1'
@@ -89,8 +92,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:18.2.5'
     // SSL
     implementation 'info.guardianproject.netcipher:netcipher:2.1.0'
-    implementation 'org.conscrypt:conscrypt-android:2.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+    implementation 'org.conscrypt:conscrypt-android:2.5.3'
+    //noinspection GradleDependency
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0'
     // http client/parser
     def jsoupVersion = '1.16.1' // 1.16.2, 1.17.1, 1.17.2 thorow java.lang.VerifyError on api19
     //noinspection GradleDependency

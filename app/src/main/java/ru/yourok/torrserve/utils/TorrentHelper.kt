@@ -103,7 +103,8 @@ object TorrentHelper {
     }
 
     fun findIndex(torrent: Torrent, file: FileStat): Int {
-        torrent.file_stats?.forEachIndexed { index, fileStat ->
+        val list = getPlayableFiles(torrent)
+        list.forEachIndexed { index, fileStat ->
             if (fileStat.id == file.id)
                 return index
         }

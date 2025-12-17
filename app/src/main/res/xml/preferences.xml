@@ -22,6 +22,11 @@
         app:summary="@string/torserver_summary"
         app:title="@string/torserver_title" />
 
+    <Preference
+        app:key="showlog"
+        app:summary="@string/torrserver_log_summary"
+        app:title="@string/torrserver_log" />
+
     <EditTextPreference
         app:key="server_auth"
         app:summary="@string/host_authorization_desc"

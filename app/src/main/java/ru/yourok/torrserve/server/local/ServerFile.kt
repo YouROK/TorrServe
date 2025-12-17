@@ -13,8 +13,9 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
     private val lock = Any()
     private var shellJob: Shell.Job? = null
     private val setspath = Settings.getTorrPath()
-    private val logfile = File(setspath, "torrserver.log").path
-    private val accsFile = File(Settings.getTorrPath(), "accs.db")
+    private val logfpath = Settings.logPath()
+    private val logfile = if (logfpath.isNotEmpty()) File(logfpath, "torrserver.log").path else "/dev/null"
+    private val accsFile = File(setspath, "accs.db")
 
     fun run(auth: String = Settings.getServerAuth()) {
         if (!exists())
@@ -25,6 +26,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
                 akey = "--httpauth"
             Shell.enableVerboseLogging = BuildConfig.DEBUG
             if (shellJob == null) {
+                if (BuildConfig.DEBUG) Log.d("*****", "CMD: $path -k --path $setspath --logpath $logfile $akey 1>>$logfile 2>&1 &")
                 val shell = if (Settings.isRootStart()) Shell.Builder.create()
                     .build()
                 else Shell.Builder.create()
