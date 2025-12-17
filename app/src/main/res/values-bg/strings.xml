@@ -133,7 +133,7 @@
     <string name="stat_running">Услугата работи</string>
     <string name="server_not_responding">TorrServer не отговаря</string>
     <string name="done_sending_settings">Настройките са записани</string>
-    <string name="loading_torrent">Плучават се данни за торента…</string>
+    <string name="loading_torrent">Получават се данни за торента…</string>
     <string name="error_add_torrent">Грешка при добавяне на торента</string>
     <string name="error_app_not_found">Не са намерени подходящи приложения</string>
     <string name="error_download_ffprobe">FFProbe грешка при сваляне</string>
