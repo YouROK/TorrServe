@@ -115,6 +115,12 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<SwitchMaterial>(R.id.cbResponsiveMode)?.visibility = View.VISIBLE
                 }
             }
+            if (ver > 136) // MatriX.137 add WebDAV
+            {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<SwitchMaterial>(R.id.cbResponsiveMode)?.visibility = View.VISIBLE
+                }
+            }
         }
 
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {

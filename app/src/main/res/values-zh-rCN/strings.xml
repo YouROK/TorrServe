@@ -47,6 +47,7 @@
     <string name="enable_ipv6_desc">仅在 ISP 支持时启用</string>
     <string name="enable_debug">启用 TorrServer 调试日志</string>
     <string name="enable_responsive_mode">启用响应式阅读器模式</string>
+    <string name="show_only_active_torrents_fs">仅在文件系统中显示活动种子</string>
     <string name="enable_dlna">DLNA 媒体服务器</string>
     <string name="dlna_friendly_name">DLNA 服务器名称</string>
     <string name="dlna_name_hint">留空以使用默认名称</string>

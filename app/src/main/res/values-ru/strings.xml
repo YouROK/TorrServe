@@ -38,6 +38,7 @@
     <string name="enable_ipv6_desc">Включите только если поддерживается</string>
     <string name="enable_debug">Подробный лог сервера</string>
     <string name="enable_responsive_mode">Включить быстрый режим чтения</string>
+    <string name="show_only_active_torrents_fs">Отображать в файловой системе только активные торренты</string>
     <string name="enable_dlna">DLNA-медиасервер</string>
     <string name="dlna_friendly_name">Имя сервера DLNA</string>
     <string name="dlna_name_hint">Оставьте пустым, чтобы использовать значение по умолчанию.</string>

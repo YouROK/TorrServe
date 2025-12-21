@@ -37,6 +37,7 @@
     <string name="enable_ipv6_desc">Включите якщо підтримується</string>
     <string name="enable_debug">Докладний лог сервера</string>
     <string name="enable_responsive_mode">Увімкнути адаптивний режим читання</string>
+    <string name="show_only_active_torrents_fs">Показувати у файловій системі лише активні торенти</string>
     <string name="enable_dlna">DLNA-медиасервер</string>
     <string name="dlna_friendly_name">Ім\'я сервера DLNA</string>
     <string name="dlna_name_hint">Залиште порожнім, щоб використовувати значення за замовчуванням.</string>
