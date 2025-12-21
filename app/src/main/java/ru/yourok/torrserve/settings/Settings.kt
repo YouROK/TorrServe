@@ -3,13 +3,13 @@ package ru.yourok.torrserve.settings
 import android.os.Build
 import android.os.Environment
 import android.util.Log
+import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.preference.PreferenceManager
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import java.io.File
-import androidx.core.content.edit
-import androidx.core.net.toUri
 
 object Settings {
     val showFab: Boolean
@@ -39,6 +39,7 @@ object Settings {
     fun getLastViewDonate() = get("last_view_donate", 0L)
     fun setLastViewDonate(v: Long) = set("last_view_donate", v)
 
+
     fun getPlayer(): String = get(App.context.getString(R.string.player_pref_key), "")
     fun setPlayer(v: String) = set(App.context.getString(R.string.player_pref_key), v)
 
@@ -48,6 +49,7 @@ object Settings {
     fun isAccessibilityOn(): Boolean = get("switch_accessibility", false)
     fun isBootStart(): Boolean = get("boot_start", false)
     fun isRootStart(): Boolean = get("root_start", false)
+    fun isWebDAVStart(): Boolean = get("webdav_start", false)
 
     fun showBanner(): Boolean = get("show_banner", true)
     fun setShowBanner(v: Boolean) = set("show_banner", v)

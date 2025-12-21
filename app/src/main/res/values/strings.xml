@@ -217,6 +217,10 @@
     <string name="root_start_sum_on">Start server by root enabled</string>
     <string name="root_start_sum_off">Start server by root disabled</string>
 
+    <string name="webdav_start_title">Start server with WebDAV</string>
+    <string name="webdav_start_sum_on">Start server with WebDAV is enabled</string>
+    <string name="webdav_start_sum_off">Start server with WebDAV is disabled</string>
+
     <string name="choose_player_title">Choose Player</string>
 
     <string name="show_banner_title">Show Banner</string>

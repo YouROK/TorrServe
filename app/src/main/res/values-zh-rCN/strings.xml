@@ -216,6 +216,10 @@
     <string name="root_start_sum_on">已启用以 root 权限启动服务器</string>
     <string name="root_start_sum_off">已禁用以 root 权限启动服务器</string>
 
+    <string name="webdav_start_title">启动启用 WebDAV 的服务器</string>
+    <string name="webdav_start_sum_on">启动服务器：WebDAV 已启用</string>
+    <string name="webdav_start_sum_off">启动服务器：WebDAV 已禁用</string>
+
     <string name="choose_player_title">选择播放器</string>
 
     <string name="show_banner_title">显示横幅</string>

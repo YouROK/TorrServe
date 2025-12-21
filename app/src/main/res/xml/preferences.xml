@@ -55,6 +55,13 @@
         app:key="root_start"
         app:title="@string/root_start_title" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:summaryOff="@string/webdav_start_sum_off"
+        android:summaryOn="@string/webdav_start_sum_on"
+        app:key="webdav_start"
+        app:title="@string/webdav_start_title" />
+
     <ListPreference
         app:key="@string/player_pref_key"
         app:title="@string/choose_player_title" />

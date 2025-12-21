@@ -166,6 +166,9 @@
     <string name="root_start_title">Запускати сервер від користувача root</string>
     <string name="root_start_sum_on">Запускати від імені root для уникнення вигрузки системою</string>
     <string name="root_start_sum_off">Не запускати від імені root</string>
+    <string name="webdav_start_title">Запустити сервер із WebDAV</string>
+    <string name="webdav_start_sum_on">Запустити сервер: WebDAV увімкнено</string>
+    <string name="webdav_start_sum_off">Запустити сервер: WebDAV вимкнено</string>
     <string name="choose_player_title">Вибір плеєра</string>
     <string name="show_banner_title">Показувати банер</string>
     <string name="show_banner_sum_on">Показувати банер при завантаженні торрента</string>

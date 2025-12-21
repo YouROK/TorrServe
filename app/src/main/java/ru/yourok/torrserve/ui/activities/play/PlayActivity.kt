@@ -149,7 +149,6 @@ class PlayActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         if (App.inForeground) super.onConfigurationChanged(newConfig)
         themeUtil.onConfigurationChanged(this, newConfig)

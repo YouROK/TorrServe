@@ -21,12 +21,16 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
         if (!exists())
             return
         synchronized(lock) {
-            var akey = ""
+            val argsArr = mutableListOf<String>()
             if (useLocalAuth() && auth.isNotBlank() && storeAccs(auth))
-                akey = "--httpauth"
+                argsArr.add("--httpauth")
+            if (Settings.isWebDAVStart())
+                argsArr.add("--webdav")
+            val args = argsArr.joinToString(" ")
+
             Shell.enableVerboseLogging = BuildConfig.DEBUG
             if (shellJob == null) {
-                if (BuildConfig.DEBUG) Log.d("*****", "CMD: $path -k --path $setspath --logpath $logfile $akey 1>>$logfile 2>&1 &")
+                if (BuildConfig.DEBUG) Log.d("*****", "CMD: $path -k --path $setspath --logpath $logfile $args 1>>$logfile 2>&1 &")
                 val shell = if (Settings.isRootStart()) Shell.Builder.create()
                     .build()
                 else Shell.Builder.create()
@@ -34,7 +38,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
                     .build()
                 shellJob = shell.newJob()
                     .add("export GODEBUG=madvdontneed=1")
-                    .add("$path -k --path $setspath --logpath $logfile $akey 1>>$logfile 2>&1 &")
+                    .add("$path -k --path $setspath --logpath $logfile $args 1>>$logfile 2>&1 &")
                 shellJob?.exec()
             }
         }
@@ -55,7 +59,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
     }
 
     private fun storeAccs(auth: String): Boolean {
-        if (auth.isNotBlank() && auth.split(":").size == 2) { // && !accsFile.exists()
+        if (auth.isNotBlank() && auth.split(":").size == 2) {
             if (BuildConfig.DEBUG) Log.d("*****", "storeAccs() got auth \"$auth\"")
             try {
                 // remove stale auth
@@ -81,14 +85,7 @@ class ServerFile : File(App.context.filesDir, "torrserver") {
                 return false
             }
             return true
-//        } else {
-//            if (BuildConfig.DEBUG) Log.d("*****", "storeAccs() empty|bad auth \"$auth\"")
         }
         return false
     }
-
-//    fun md5(input: String): String {
-//        val md = MessageDigest.getInstance("MD5")
-//        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
-//    }
 }
