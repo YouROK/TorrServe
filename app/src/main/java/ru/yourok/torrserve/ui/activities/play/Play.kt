@@ -18,6 +18,8 @@ import ru.yourok.torrserve.utils.TorrentHelper
 
 object Play {
 
+    var tmpPlayerPackage: String? = null
+
     fun PlayActivity.play(save: Boolean) {
         infoFragment.show(this, R.id.info_container)
         lifecycleScope.launch(Dispatchers.IO) {
@@ -110,7 +112,10 @@ object Play {
         ad?.waitAd()
         var playerIntent: Intent? = null
         try {
-            if (Settings.getPlayer().isEmpty()) {
+            if (tmpPlayerPackage != null) {
+                playerIntent = Players.getIntent(torr, index, tmpPlayerPackage)
+                tmpPlayerPackage = null
+            } else if (Settings.getPlayer().isEmpty()) {
                 // show chooser
                 PlayersDialog.show(this, torr, index) { player ->
                     playerIntent = Players.getIntent(torr, index, player)
