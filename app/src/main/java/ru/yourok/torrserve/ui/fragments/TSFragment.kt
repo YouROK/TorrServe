@@ -21,6 +21,8 @@ abstract class TSFragment : Fragment() {
     var onResult: (suspend (Any?) -> Unit)? = null
     protected lateinit var viewModel: ViewModel
 
+    fun isViewModelInitialized() = ::viewModel.isInitialized
+
     fun show(activity: FragmentActivity?, id: Int, back: Boolean = false) {
         if (activity?.getLastFragment()?.javaClass?.name == this.javaClass.name)
             return

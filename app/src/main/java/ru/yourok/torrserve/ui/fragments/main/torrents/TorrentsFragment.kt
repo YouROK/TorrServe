@@ -64,6 +64,12 @@ class TorrentsFragment : TSFragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (isViewModelInitialized())
+            (viewModel as TorrentsViewModel).setUpdate(false)
+    }
+
     fun sort(mode: Boolean = sortMode) {
         val list = torrentAdapter!!.list
         if (list.size > 0) {
@@ -106,6 +112,7 @@ class TorrentsFragment : TSFragment() {
     suspend fun start() = withContext(Dispatchers.Main) {
         viewModel = ViewModelProvider(this@TorrentsFragment)[TorrentsViewModel::class.java]
         val data = (viewModel as TorrentsViewModel).getData()
+        (viewModel as TorrentsViewModel).setUpdate(true)
         data.observe(this@TorrentsFragment) {
             torrentAdapter?.update(it)
             if (it.isEmpty()) {
