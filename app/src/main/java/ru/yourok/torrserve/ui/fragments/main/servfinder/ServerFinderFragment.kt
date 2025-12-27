@@ -114,7 +114,8 @@ class ServerFinderFragment : TSFragment() {
                     host = "http://$host"
 
                 uri = Uri.parse(host) // no port, set default
-                if (uri.port == -1)
+                val isHttps = uri.scheme?.equals("https", true) == true
+                if (uri.port == -1 && !isHttps)
                     host += ":8090"
 
                 val oldHost = Settings.getHost()
