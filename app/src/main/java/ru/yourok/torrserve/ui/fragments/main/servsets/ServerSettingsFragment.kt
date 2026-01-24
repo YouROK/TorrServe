@@ -139,6 +139,13 @@ class ServerSettingsFragment : TSFragment() {
         val adpRetracker = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.retracker_mode))
         vi.findViewById<AutoCompleteTextView>(R.id.actvRetracker)?.setAdapter(adpRetracker)
 
+        val adpProxyMode = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.proxy_mode_entries))
+        vi.findViewById<AutoCompleteTextView>(R.id.actvProxyMode)?.setAdapter(adpProxyMode)
+        vi.findViewById<AutoCompleteTextView>(R.id.actvProxyMode)?.setOnItemClickListener { _, _, position, _ ->
+            // Enable Proxy URL field only when Proxy Mode is not "None" (index 0)
+            vi.findViewById<TextInputEditText>(R.id.etProxyUrl)?.isEnabled = position > 0
+        }
+
         vi.findViewById<Button>(R.id.btnDefaultSets)?.let {
             it.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -217,6 +224,16 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.setText(sets.DhtConnectionLimit.toString())
                     findViewById<TextInputEditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
                 }
+                // Proxy settings (local settings, not BTSets)
+                findViewById<TextInputEditText>(R.id.etProxyUrl)?.setText(Settings.getProxyUrl())
+                val proxyModeValue = Settings.getProxyMode()
+                val proxyModeEntries = resources.getStringArray(R.array.proxy_mode_entries)
+                val proxyModeValues = resources.getStringArray(R.array.proxy_mode_values)
+                val proxyModeIndex = proxyModeValues.indexOf(proxyModeValue).coerceAtLeast(0)
+                findViewById<AutoCompleteTextView>(R.id.actvProxyMode)?.setText(proxyModeEntries[proxyModeIndex], false)
+                // Enable Proxy URL field only when Proxy Mode is not "None" (index 0)
+                findViewById<TextInputEditText>(R.id.etProxyUrl)?.isEnabled = proxyModeIndex > 0
+
                 if (BuildConfig.DEBUG)
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
             }
@@ -267,6 +284,13 @@ class ServerSettingsFragment : TSFragment() {
                         App.toast(R.string.done_sending_settings)
                     }
                 }
+                // Proxy settings (local settings, not BTSets)
+                Settings.setProxyUrl(findViewById<TextInputEditText>(R.id.etProxyUrl)?.text?.toString() ?: "")
+                val proxyModeText = findViewById<AutoCompleteTextView>(R.id.actvProxyMode)?.text?.toString()
+                val proxyModeEntries = resources.getStringArray(R.array.proxy_mode_entries)
+                val proxyModeValues = resources.getStringArray(R.array.proxy_mode_values)
+                val proxyModeIndex = proxyModeEntries.indexOf(proxyModeText).coerceAtLeast(0)
+                Settings.setProxyMode(proxyModeValues[proxyModeIndex])
             }
         } catch (e: Exception) {
             e.printStackTrace()

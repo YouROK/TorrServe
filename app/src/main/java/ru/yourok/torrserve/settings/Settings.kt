@@ -51,6 +51,12 @@ object Settings {
     fun isRootStart(): Boolean = get("root_start", false)
     fun isWebDAVStart(): Boolean = get("webdav_start", false)
 
+    fun getProxyUrl(): String = get("proxy_url", "").trim()
+    fun setProxyUrl(v: String) = set("proxy_url", v)
+
+    fun getProxyMode(): String = get("proxy_mode", "").trim()
+    fun setProxyMode(v: String) = set("proxy_mode", v)
+
     fun showBanner(): Boolean = get("show_banner", true)
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
