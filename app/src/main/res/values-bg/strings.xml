@@ -179,6 +179,13 @@
     <string name="webdav_start_title">Стартиране на сървъра с WebDAV</string>
     <string name="webdav_start_sum_on">Стартиране на сървъра: WebDAV е включен</string>
     <string name="webdav_start_sum_off">Стартиране на сървъра: WebDAV е изключен</string>
+    <string name="proxy_url_title">URL адрес на прокси</string>
+    <string name="proxy_url_summary">URL адрес на прокси за BitTorrent трафик (http, socks4, socks5, socks5h), напр. socks5h://user:password@example.com:2080</string>
+    <string name="proxy_mode_title">Режим на прокси</string>
+    <string name="proxy_mode_none">Няма</string>
+    <string name="proxy_mode_tracker">Тракер (само HTTP тракери)</string>
+    <string name="proxy_mode_peers">Пиъри (само връзки с пиъри)</string>
+    <string name="proxy_mode_full">Пълен (целият трафик)</string>
     <string name="choose_player_title">Избор на Плеър</string>
     <string name="show_banner_title">Покажи банер</string>
     <string name="show_banner_sum_on">Покажи банер при зареждане на торент</string>

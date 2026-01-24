@@ -221,6 +221,14 @@
     <string name="webdav_start_sum_on">启动服务器：WebDAV 已启用</string>
     <string name="webdav_start_sum_off">启动服务器：WebDAV 已禁用</string>
 
+    <string name="proxy_url_title">代理 URL</string>
+    <string name="proxy_url_summary">BitTorrent 流量的代理 URL（http、socks4、socks5、socks5h），例如 socks5h://user:password@example.com:2080</string>
+    <string name="proxy_mode_title">代理模式</string>
+    <string name="proxy_mode_none">无</string>
+    <string name="proxy_mode_tracker">Tracker（仅 HTTP tracker）</string>
+    <string name="proxy_mode_peers">Peers（仅对等连接）</string>
+    <string name="proxy_mode_full">完整（所有流量）</string>
+
     <string name="choose_player_title">选择播放器</string>
 
     <string name="show_banner_title">显示横幅</string>
