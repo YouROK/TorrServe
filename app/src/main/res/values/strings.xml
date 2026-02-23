@@ -98,6 +98,19 @@
         <item>black</item>
     </string-array>
 
+    <string-array name="proxy_mode_entries">
+        <item>@string/proxy_mode_none</item>
+        <item>@string/proxy_mode_tracker</item>
+        <item>@string/proxy_mode_peers</item>
+        <item>@string/proxy_mode_full</item>
+    </string-array>
+    <string-array name="proxy_mode_values" translatable="false">
+        <item></item>
+        <item>tracker</item>
+        <item>peers</item>
+        <item>full</item>
+    </string-array>
+
     <string name="add_play">Add &amp; Play</string>
     <string name="play">Play</string>
     <string name="play_from_start">Play from beginning</string>
@@ -221,6 +234,14 @@
     <string name="webdav_start_title">Start server with WebDAV</string>
     <string name="webdav_start_sum_on">Start server with WebDAV is enabled</string>
     <string name="webdav_start_sum_off">Start server with WebDAV is disabled</string>
+
+    <string name="proxy_url_title">Proxy URL</string>
+    <string name="proxy_url_summary">Proxy URL for BitTorrent traffic (http, socks4, socks5, socks5h), e.g. socks5h://user:password@example.com:2080</string>
+    <string name="proxy_mode_title">Proxy Mode</string>
+    <string name="proxy_mode_none">None</string>
+    <string name="proxy_mode_tracker">Tracker (only HTTP trackers)</string>
+    <string name="proxy_mode_peers">Peers (only peer connections)</string>
+    <string name="proxy_mode_full">Full (all traffic)</string>
 
     <string name="choose_player_title">Choose Player</string>
 
