@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.TypedValue
 import android.view.View
@@ -57,12 +58,13 @@ object Format {
 
     fun sDateFmt(dateTimeString: String): String { //2021-06-21T00:00:00+03:00
         val idf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale("US"))
-        val date = idf.parse(dateTimeString)
+        val date = runCatching { idf.parse(dateTimeString) }.getOrNull()
         val sdf = SimpleDateFormat("dd.MM.yyyy", Locale("US"))
         sdf.timeZone = TimeZone.getDefault()
         return date?.let { sdf.format(it) } ?: dateTimeString
     }
 
+    @SuppressLint("DefaultLocale")
     fun durFmtS(data: Double): String {
         val duration = data.toDuration(DurationUnit.SECONDS)
 //        return duration.toComponents { hours, minutes, seconds, _ ->

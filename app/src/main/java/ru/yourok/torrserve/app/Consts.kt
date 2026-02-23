@@ -19,6 +19,7 @@ object Consts {
         "com.mixplorer.silver",
         "com.opera.browser",
         "com.tcl.browser",
+        "com.tcl.ui_mediacenter",
         "nextapp.fx",
         "org.droidtv.contentexplorer",
         "pl.solidexplorer2",
