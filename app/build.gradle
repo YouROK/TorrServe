@@ -14,8 +14,8 @@ android {
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         multiDexEnabled true
-        versionCode 137
-        versionName "MatriX.137.Client"
+        versionCode 140
+        versionName "MatriX.140.Client"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
