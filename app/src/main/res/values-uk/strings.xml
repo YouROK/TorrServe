@@ -65,6 +65,10 @@
         <item>Видаляти</item>
         <item>Заміняти</item>
     </string-array>
+    <string name="proxy_p2p_enable">Увімкнути проксі через TS</string>
+    <string name="proxy_host_list">Список хостів</string>
+    <string name="proxy_host_hint">Вкажіть домени через кому. Підтримуються маски, наприклад: *themoviedb.org, *tmdb.org, rutor.info</string>
+
     <string name="select_player">Вибір плеєра</string>
     <string name="use_as_default">Запам\'ятати вибір</string>
     <string name="default_player">Плеєр за замовчуванням</string>

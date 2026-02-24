@@ -77,6 +77,9 @@
         <item>移除重新跟踪器</item>
         <item>替换重新跟踪器</item>
     </string-array>
+    <string name="proxy_p2p_enable">通过 TS 启用代理</string>
+    <string name="proxy_host_list">主机列表</string>
+    <string name="proxy_host_hint">输入以逗号分隔的域名。支持通配符，例如：*themoviedb.org, *tmdb.org, rutor.info</string>
 
     <string name="select_player">选择播放器</string>
     <string name="use_as_default">保存为默认</string>

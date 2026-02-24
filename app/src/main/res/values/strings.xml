@@ -77,6 +77,9 @@
         <item>Remove retrackers</item>
         <item>Replace retrackers</item>
     </string-array>
+    <string name="proxy_p2p_enable">Enable proxy via TS</string>
+    <string name="proxy_host_list">Host list</string>
+    <string name="proxy_host_hint">Enter domains separated by commas. Wildcards are supported, for example: *themoviedb.org, *tmdb.org, rutor.info</string>
 
     <string name="select_player">Select Player</string>
     <string name="use_as_default">Save as Default</string>

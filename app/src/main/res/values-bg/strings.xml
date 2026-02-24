@@ -68,6 +68,10 @@
         <item>Премахни ретракери</item>
         <item>Подмени ретракери</item>
     </string-array>
+    <string name="proxy_p2p_enable">Активиране на прокси чрез TS</string>
+    <string name="proxy_host_list">Списък с хостове</string>
+    <string name="proxy_host_hint">Въведете домейни, разделени със запетая. Поддържат се маски, например: *themoviedb.org, *tmdb.org, rutor.info</string>
+
     <string name="select_player">Изберете плеър</string>
     <string name="use_as_default">Запази като настройки по подразбиране</string>
     <string name="default_player">Основният плеър в OS</string>

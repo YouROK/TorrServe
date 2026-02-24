@@ -20,7 +20,7 @@ data class BTSets(
     var EnableDLNA: Boolean,
     var FriendlyName: String,
     // Rutor search
-    var EnableRutorSearch:Boolean,
+    var EnableRutorSearch: Boolean,
     // BT Config
     var EnableIPv6: Boolean,
     var DisableTCP: Boolean,
@@ -34,4 +34,7 @@ data class BTSets(
     var ConnectionsLimit: Int,
     var DhtConnectionLimit: Int,
     var PeersListenPort: Int,
+    // Proxy
+    var EnableProxy: Boolean,
+    var ProxyHosts: List<String>,
 )

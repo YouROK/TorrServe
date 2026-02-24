@@ -425,7 +425,41 @@
                 android:text="@string/enable_responsive_mode"
                 android:visibility="gone"
                 tools:visibility="visible" />
+            <!-- Proxy -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
 
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/cbEnableProxy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/proxy_p2p_enable"
+                android:visibility="gone"
+                android:nextFocusDown="@id/etProxyHosts"
+                tools:visibility="visible" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tvProxyList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/proxy_host_list"
+                android:visibility="gone"
+                app:helperText="@string/proxy_host_hint"
+                app:helperTextEnabled="true"
+                tools:visibility="visible">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etProxyHosts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Def Button -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="30dp"

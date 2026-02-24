@@ -121,6 +121,13 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<SwitchMaterial>(R.id.cbResponsiveMode)?.visibility = View.VISIBLE
                 }
             }
+            if (ver > 139) // MatriX.139 add Proxy
+            {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.visibility = View.VISIBLE
+                    vi.findViewById<TextInputLayout>(R.id.tvProxyList)?.visibility = View.VISIBLE
+                }
+            }
         }
 
         vi.findViewById<Button>(R.id.btnApply)?.setOnClickListener {
@@ -216,6 +223,8 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<TextInputEditText>(R.id.etConnectionsLimit)?.setText(sets.ConnectionsLimit.toString())
                     findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.setText(sets.DhtConnectionLimit.toString())
                     findViewById<TextInputEditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
+                    findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.isChecked = sets.EnableProxy
+                    findViewById<TextInputEditText>(R.id.etProxyHosts)?.setText(sets.ProxyHosts.joinToString(", ").toString())
                 }
                 if (BuildConfig.DEBUG)
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
@@ -260,6 +269,8 @@ class ServerSettingsFragment : TSFragment() {
                     ConnectionsLimit = findViewById<TextInputEditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 23,
                     DhtConnectionLimit = findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
                     PeersListenPort = findViewById<TextInputEditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
+                    EnableProxy = findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.isChecked != true,
+                    ProxyHosts = findViewById<TextInputEditText>(R.id.etProxyHosts)?.text?.toString()?.split("\n")?.map { it.trim() } ?: listOf()
                 )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {
