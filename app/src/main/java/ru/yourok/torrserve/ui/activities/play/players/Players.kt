@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import androidx.core.net.toUri
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.app.Consts.PLAYERS_BLACKLIST
@@ -14,7 +15,6 @@ import ru.yourok.torrserve.utils.Mime
 import ru.yourok.torrserve.utils.TorrentHelper
 import java.io.File
 import java.util.Locale
-import androidx.core.net.toUri
 
 object Players {
 
@@ -38,6 +38,12 @@ object Players {
             val vimuIntent = Vimu.getIntent(player, torrent, index)
             if (vimuIntent.resolveActivity(App.context.packageManager) != null)
                 return vimuIntent
+        }
+        // DDD player
+        if (player == "top.rootu.dddplayer") {
+            val dddIntent = DDD.getIntent(player, torrent, index)
+            if (dddIntent.resolveActivity(App.context.packageManager) != null)
+                return dddIntent
         }
         // MX player
         if (player.contains("com.mxtech.videoplayer", true)) {
