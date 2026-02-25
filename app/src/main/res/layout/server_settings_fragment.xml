@@ -341,6 +341,7 @@
                 android:id="@+id/cbEnableDLNA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etFriendlyName"
                 android:text="@string/enable_dlna"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -367,6 +368,7 @@
                 android:id="@+id/cbEnableRutorSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nextFocusUp="@id/etFriendlyName"
                 android:text="@string/enable_rutor_search"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -395,6 +397,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:nextFocusDown="@id/actvRetracker"
                 android:text="@string/enable_responsive_mode"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -417,12 +420,18 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
             <!-- FS -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/transparent" />
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbShowActiveTorrsInFS"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="@string/enable_responsive_mode"
+                android:nextFocusUp="@id/actvRetracker"
+                android:text="@string/show_only_active_torrents_fs"
                 android:visibility="gone"
                 tools:visibility="visible" />
             <!-- Proxy -->

@@ -118,7 +118,7 @@ class ServerSettingsFragment : TSFragment() {
             if (ver > 136) // MatriX.137 add WebDAV
             {
                 withContext(Dispatchers.Main) {
-                    vi.findViewById<SwitchMaterial>(R.id.cbResponsiveMode)?.visibility = View.VISIBLE
+                    vi.findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.visibility = View.VISIBLE
                 }
             }
             if (ver > 139) // MatriX.139 add Proxy
@@ -224,7 +224,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.setText(sets.DhtConnectionLimit.toString())
                     findViewById<TextInputEditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
                     findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.isChecked = sets.EnableProxy
-                    findViewById<TextInputEditText>(R.id.etProxyHosts)?.setText(sets.ProxyHosts.joinToString(", ").toString())
+                    findViewById<TextInputEditText>(R.id.etProxyHosts)?.setText(sets.ProxyHosts?.joinToString(", ")?.toString() ?: "")
                 }
                 if (BuildConfig.DEBUG)
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.visibility = View.VISIBLE

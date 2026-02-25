@@ -36,5 +36,5 @@ data class BTSets(
     var PeersListenPort: Int,
     // Proxy
     var EnableProxy: Boolean,
-    var ProxyHosts: List<String>,
+    var ProxyHosts: List<String>?,
 )
