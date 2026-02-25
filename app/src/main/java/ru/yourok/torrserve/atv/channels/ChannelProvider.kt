@@ -106,7 +106,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
                     val program = PreviewProgram.fromCursor(it)
                     if (id == program.id) {
                         cursor.close()
-                        return program.description
+                        return program.internalProviderId ?: ""
                     }
                 } while (it.moveToNext())
             cursor.close()
@@ -168,6 +168,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             .setPosterArtUri(posterUri)
             .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
             .setDescription(buildDescription(torr))
+            .setInternalProviderId(torr.hash)
 
         return preview.build()
     }
