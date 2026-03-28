@@ -26,25 +26,37 @@ object TorrentHelper {
             return emptyList()
 
         val files = torr.file_stats
-        val retList = mutableListOf<FileStat>()
 
-        files?.forEach {
-            val path = it.path
-            if (Mime.getMimeType(path) != "*/*") {
-                val size = it.length
-                if (File(path).extension.lowercase() == "m2ts" ||
-                    File(path).extension.lowercase() == "mts" ||
-                    File(path).extension.lowercase() == "ts"
-                ) {
-                    if (size > 524288000L) // 500MB 1073741824 = 1GB
-                        retList.add(it)
-                } else
-                    retList.add(it)
-            } else if (path.lowercase(Locale.getDefault()).contains("bdmv/index.bdmv")) {
-                retList.add(it)
+        val playable = files?.mapNotNull { file ->
+            val mime = Mime.getMimeType(file.path)
+            val isBdmv by lazy {
+                file.path.lowercase(Locale.getDefault()).contains("bdmv/index.bdmv")
             }
+            when {
+                mime.startsWith("audio") -> "audio" to file
+                mime.startsWith("video") -> "video" to file
+                isBdmv -> "video" to file
+                else -> null
+            }
+        }?.groupBy({ it.first }, { it.second })
+
+        if(playable?.get("video").isNullOrEmpty()) {
+            return playable?.get("audio") ?: emptyList()
         }
-        return retList
+
+        return playable["video"]?.filter {
+            val ext = File(it.path).extension.lowercase()
+            return@filter when (ext) {
+                "m2ts", "mts", "ts" -> it.length > 524288000L
+                else -> true
+            }
+        } ?: emptyList()
+    }
+
+    fun getAudioFiles(torr: Torrent): List<FileStat> {
+        return torr.file_stats?.filter { f ->
+            Mime.getMimeType(f.path).startsWith("audio")
+        } ?: emptyList()
     }
 
     fun waitFiles(hash: String): Torrent? {

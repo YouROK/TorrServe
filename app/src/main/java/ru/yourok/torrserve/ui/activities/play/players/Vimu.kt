@@ -35,6 +35,13 @@ object Vimu {
             intent.putStringArrayListExtra("asusfilelist", files)
             intent.putStringArrayListExtra("asusnamelist", names)
             intent.putExtra("startindex", idx)
+        } else {
+            val extAudio = TorrentHelper.getAudioFiles(torrent).map { audio ->
+                TorrentHelper.getFileLink(torrent, audio)
+            }
+            if (extAudio.isNotEmpty()) {
+                intent.putStringArrayListExtra("extsound", ArrayList(extAudio))
+            }
         }
         return intent
     }
