@@ -58,6 +58,7 @@ object Mime {
 
     val extAudio = listOf(
         "aac",
+        "ac3",
         "aiff",
         "ape",
         "au",
