@@ -44,7 +44,7 @@ object TorrentHelper {
             return playable?.get("audio") ?: emptyList()
         }
 
-        return playable?.get("video")?.filter {
+        return playable["video"]?.filter {
             val ext = File(it.path).extension.lowercase()
             return@filter when (ext) {
                 "m2ts", "mts", "ts" -> it.length > 524288000L
