@@ -47,6 +47,7 @@
     <string name="enable_ipv6_desc">仅在 ISP 支持时启用</string>
     <string name="enable_debug">启用 TorrServer 调试日志</string>
     <string name="enable_responsive_mode">启用响应式阅读器模式</string>
+    <string name="show_only_active_torrents_fs">仅在文件系统中显示活动种子</string>
     <string name="enable_dlna">DLNA 媒体服务器</string>
     <string name="dlna_friendly_name">DLNA 服务器名称</string>
     <string name="dlna_name_hint">留空以使用默认名称</string>
@@ -76,6 +77,9 @@
         <item>移除重新跟踪器</item>
         <item>替换重新跟踪器</item>
     </string-array>
+    <string name="proxy_p2p_enable">通过 TS 启用代理</string>
+    <string name="proxy_host_list">主机列表</string>
+    <string name="proxy_host_hint">输入以逗号分隔的域名。支持通配符，例如：*themoviedb.org, *tmdb.org, rutor.info</string>
 
     <string name="select_player">选择播放器</string>
     <string name="use_as_default">保存为默认</string>
@@ -215,6 +219,10 @@
     <string name="root_start_title">以 root 权限启动服务器</string>
     <string name="root_start_sum_on">已启用以 root 权限启动服务器</string>
     <string name="root_start_sum_off">已禁用以 root 权限启动服务器</string>
+
+    <string name="webdav_start_title">启动启用 WebDAV 的服务器</string>
+    <string name="webdav_start_sum_on">启动服务器：WebDAV 已启用</string>
+    <string name="webdav_start_sum_off">启动服务器：WebDAV 已禁用</string>
 
     <string name="choose_player_title">选择播放器</string>
 

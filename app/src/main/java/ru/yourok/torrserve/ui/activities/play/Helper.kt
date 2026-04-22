@@ -88,6 +88,9 @@ fun addTorrent(torrentHash: String, torrentLink: String, torrentTitle: String, t
                     null
                 }
             }
+        } else if ("torrs" == scheme) {
+            //TODO parse torrshash
+            Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentCategory, torrentData, torrentSave)
         } else try {
             Api.addTorrent(torrentLink, torrentTitle, torrentPoster, torrentCategory, torrentData, torrentSave)
         } catch (e: Exception) {

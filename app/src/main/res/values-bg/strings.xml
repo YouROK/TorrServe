@@ -38,6 +38,7 @@
     <string name="enable_ipv6_desc">Разрешете, само ако се поддържа от Интернет доставчика</string>
     <string name="enable_debug">Лог файлове с дебъг информация за TorrServer</string>
     <string name="enable_responsive_mode">Режим на отзивчив четец</string>
+    <string name="show_only_active_torrents_fs">Показвай само активните торенти във файловата система</string>
     <string name="enable_dlna">DLNA Медия сървър</string>
     <string name="dlna_friendly_name">DLNA Име на сървъра</string>
     <string name="dlna_name_hint">Оставете празно, за да използвате по подразбиране</string>
@@ -67,6 +68,10 @@
         <item>Премахни ретракери</item>
         <item>Подмени ретракери</item>
     </string-array>
+    <string name="proxy_p2p_enable">Активиране на прокси чрез TS</string>
+    <string name="proxy_host_list">Списък с хостове</string>
+    <string name="proxy_host_hint">Въведете домейни, разделени със запетая. Поддържат се маски, например: *themoviedb.org, *tmdb.org, rutor.info</string>
+
     <string name="select_player">Изберете плеър</string>
     <string name="use_as_default">Запази като настройки по подразбиране</string>
     <string name="default_player">Основният плеър в OS</string>
@@ -133,7 +138,7 @@
     <string name="stat_running">Услугата работи</string>
     <string name="server_not_responding">TorrServer не отговаря</string>
     <string name="done_sending_settings">Настройките са записани</string>
-    <string name="loading_torrent">Плучават се данни за торента…</string>
+    <string name="loading_torrent">Получават се данни за торента…</string>
     <string name="error_add_torrent">Грешка при добавяне на торента</string>
     <string name="error_app_not_found">Не са намерени подходящи приложения</string>
     <string name="error_download_ffprobe">FFProbe грешка при сваляне</string>
@@ -175,6 +180,9 @@
     <string name="root_start_title">Стартиране на сървърът като root</string>
     <string name="root_start_sum_on">Разрешено стартиране на сървърът като root</string>
     <string name="root_start_sum_off">Забранено стартиране на сървърът като root</string>
+    <string name="webdav_start_title">Стартиране на сървъра с WebDAV</string>
+    <string name="webdav_start_sum_on">Стартиране на сървъра: WebDAV е включен</string>
+    <string name="webdav_start_sum_off">Стартиране на сървъра: WebDAV е изключен</string>
     <string name="choose_player_title">Избор на Плеър</string>
     <string name="show_banner_title">Покажи банер</string>
     <string name="show_banner_sum_on">Покажи банер при зареждане на торент</string>

@@ -47,6 +47,7 @@
     <string name="enable_ipv6_desc">Enable only if supported by ISP</string>
     <string name="enable_debug">Debug TorrServer Logging</string>
     <string name="enable_responsive_mode">Enable responsive reader mode</string>
+    <string name="show_only_active_torrents_fs">Show only active torrents in the file system</string>
     <string name="enable_dlna">DLNA Media Server</string>
     <string name="dlna_friendly_name">DLNA Server Name</string>
     <string name="dlna_name_hint">Leave blank to use default</string>
@@ -76,6 +77,9 @@
         <item>Remove retrackers</item>
         <item>Replace retrackers</item>
     </string-array>
+    <string name="proxy_p2p_enable">Enable proxy via TS</string>
+    <string name="proxy_host_list">Host list</string>
+    <string name="proxy_host_hint">Enter domains separated by commas. Wildcards are supported, for example: *themoviedb.org, *tmdb.org, rutor.info</string>
 
     <string name="select_player">Select Player</string>
     <string name="use_as_default">Save as Default</string>
@@ -216,6 +220,10 @@
     <string name="root_start_title">Start Server by root</string>
     <string name="root_start_sum_on">Start server by root enabled</string>
     <string name="root_start_sum_off">Start server by root disabled</string>
+
+    <string name="webdav_start_title">Start server with WebDAV</string>
+    <string name="webdav_start_sum_on">Start server with WebDAV is enabled</string>
+    <string name="webdav_start_sum_off">Start server with WebDAV is disabled</string>
 
     <string name="choose_player_title">Choose Player</string>
 

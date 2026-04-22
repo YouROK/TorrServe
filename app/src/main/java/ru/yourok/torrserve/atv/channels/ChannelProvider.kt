@@ -16,8 +16,10 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.main.MainActivity
+import ru.yourok.torrserve.utils.Format
 import java.nio.charset.Charset
-import java.util.*
+import java.util.Locale
+import androidx.core.net.toUri
 
 
 class ChannelProvider(private val iName: String, private val dName: String) {
@@ -31,7 +33,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
         builder.setType(TvContractCompat.Channels.TYPE_PREVIEW)
             .setDisplayName(dName)
             .setInternalProviderData(iName)
-            .setAppLinkIntentUri(Uri.parse("torrserve://${BuildConfig.APPLICATION_ID}/open_main_list"))
+            .setAppLinkIntentUri("torrserve://${BuildConfig.APPLICATION_ID}/open_main_list".toUri())
 
         val channelUri = App.context.contentResolver.insert(
             TvContractCompat.Channels.CONTENT_URI,
@@ -55,7 +57,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
         channel.setType(TvContractCompat.Channels.TYPE_PREVIEW)
             .setDisplayName(dName)
             .setInternalProviderData(iName)
-            .setAppLinkIntentUri(Uri.parse("torrserve://${BuildConfig.APPLICATION_ID}/open_main_list"))
+            .setAppLinkIntentUri("torrserve://${BuildConfig.APPLICATION_ID}/open_main_list".toUri())
             .build()
 
         App.context.contentResolver.update(
@@ -67,13 +69,13 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             list.forEachIndexed { index, torrent ->
                 val prg = getProgram(channelId, torrent, list.size - index)
                 App.context.contentResolver.insert(
-                    Uri.parse("content://android.media.tv/preview_program"),
+                    "content://android.media.tv/preview_program".toUri(),
                     prg.toContentValues()
                 )
             }
         else
             App.context.contentResolver.insert(
-                Uri.parse("content://android.media.tv/preview_program"),
+                "content://android.media.tv/preview_program".toUri(),
                 emptyProgram(channelId).toContentValues()
             )
 
@@ -87,7 +89,8 @@ class ChannelProvider(private val iName: String, private val dName: String) {
     @SuppressLint("RestrictedApi")
     private val PROGRAMS_PROJECTION = arrayOf(
         TvContractCompat.PreviewPrograms._ID,
-        TvContractCompat.PreviewPrograms.COLUMN_SHORT_DESCRIPTION
+        TvContractCompat.PreviewPrograms.COLUMN_INTERNAL_PROVIDER_ID
+        // TvContractCompat.PreviewPrograms.COLUMN_SHORT_DESCRIPTION
     )
 
     @SuppressLint("RestrictedApi")
@@ -105,7 +108,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
                     val program = PreviewProgram.fromCursor(it)
                     if (id == program.id) {
                         cursor.close()
-                        return program.description
+                        return program.internalProviderId ?: ""
                     }
                 } while (it.moveToNext())
             cursor.close()
@@ -143,7 +146,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
     @SuppressLint("RestrictedApi")
     private fun getProgram(channelId: Long, torr: Torrent, size: Int): PreviewProgram {
         val info = mutableListOf<String>()
-        var posterUri = Uri.parse(torr.poster)
+        var posterUri = torr.poster?.toUri()
         if (posterUri.toString().isEmpty()) {
             val resourceId = R.drawable.emptyposter
             posterUri = Uri.Builder()
@@ -154,10 +157,11 @@ class ChannelProvider(private val iName: String, private val dName: String) {
                 .build()
         }
         val type = if (torr.category.equals("tv", true)) TvContractCompat.PreviewPrograms.TYPE_TV_SERIES else TvContractCompat.PreviewPrograms.TYPE_MOVIE
+        val title = torr.title.ifBlank { torr.name.ifBlank { torr.hash } }
         val preview = PreviewProgram.Builder()
             .setChannelId(channelId)
-            .setTitle(torr.title)
-            .setAvailability(TvContractCompat.PreviewProgramColumns.AVAILABILITY_FREE)
+            .setTitle(title)
+            .setAvailability(TvContractCompat.PreviewProgramColumns.AVAILABILITY_AVAILABLE)
             .setGenre(info.joinToString(" · "))
             .setIntent(Utils.buildPendingIntent(torr))
             .setWeight(size)
@@ -166,7 +170,9 @@ class ChannelProvider(private val iName: String, private val dName: String) {
             .setLive(false)
             .setPosterArtUri(posterUri)
             .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_2_3)
-            .setDescription(torr.hash.uppercase(Locale.getDefault()))
+            .setDescription(buildDescription(torr))
+            .setInternalProviderId(torr.hash)
+
         return preview.build()
     }
 
@@ -224,5 +230,14 @@ class ChannelProvider(private val iName: String, private val dName: String) {
 
     private fun rem(ch: Channel) {
         App.context.contentResolver.delete(TvContractCompat.buildChannelUri(ch.id), null, null)
+    }
+
+    private fun buildDescription(torr: Torrent): String {
+        var retStr = ""
+        if (torr.torrent_size > 0)
+            retStr = "${Format.byteFmt(torr.torrent_size)} • "
+        retStr += torr.hash.uppercase(Locale.getDefault()).substring(0..5)
+        
+        return retStr
     }
 }

@@ -39,6 +39,12 @@ object Players {
             if (vimuIntent.resolveActivity(App.context.packageManager) != null)
                 return vimuIntent
         }
+        // DDD player
+        if (player == "top.rootu.dddplayer") {
+            val dddIntent = DDD.getIntent(player, torrent, index)
+            if (dddIntent.resolveActivity(App.context.packageManager) != null)
+                return dddIntent
+        }
         // MX player
         if (player.contains("com.mxtech.videoplayer", true)) {
             val mxIntent = MX.getIntent(player, torrent, index)

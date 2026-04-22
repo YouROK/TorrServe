@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -13,7 +13,9 @@ import ru.yourok.torrserve.R
 import ru.yourok.torrserve.ext.commitFragment
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.ui.activities.play.Play
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
+import ru.yourok.torrserve.ui.activities.play.players.Players
 import ru.yourok.torrserve.ui.fragments.TSFragment
 
 
@@ -66,6 +68,21 @@ class ChooserFragment : TSFragment() {
                 lifecycleScope.launch {
                     onResult?.invoke(3)
                     saveAction(3)
+                }
+            }
+            findViewById<CardView>(R.id.cvPlayer)?.setOnClickListener {
+                lifecycleScope.launch {
+                    val list = Players.getList()
+                    val titles = list.map { it.second }.toTypedArray()
+
+                    AlertDialog.Builder(view.context)
+                        .setTitle(getString(R.string.select_player))
+                        .setItems(titles) { _, which ->
+                            val selectedPackage = list[which].first
+                            Play.tmpPlayerPackage = selectedPackage
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show()
                 }
             }
         }

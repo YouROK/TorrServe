@@ -1,9 +1,10 @@
 package ru.yourok.torrserve.utils
 
-import android.annotation.SuppressLint
 import android.net.Uri
+import android.os.Build
 import org.jsoup.Connection
 import org.jsoup.Jsoup
+import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.atv.Utils.isBrokenTCL
 import ru.yourok.torrserve.settings.Settings
 import java.io.InputStream
@@ -11,13 +12,12 @@ import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.UnknownHostException
 import java.nio.charset.Charset
-import java.security.KeyManagementException
-import java.security.cert.CertificateException
-import java.security.cert.X509Certificate
-import javax.net.ssl.*
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.HttpsURLConnection
 
 object Net {
     private const val timeout = 5000 // total request timeout duration, in ms
+    private val userAgent = "TorrServe/${App.context.packageManager.getPackageInfo(App.context.packageName, 0).versionName} (Android ${Build.VERSION.RELEASE}; ${Build.MODEL})"
 
     fun getHostUrl(path: String): String {
         val url = Settings.getHost()
@@ -62,6 +62,7 @@ object Net {
 
     fun postAuth(url: String, req: String): String {
         val conn = Jsoup.connect(url)
+            .userAgent(userAgent)
             .requestBody(req)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
@@ -93,6 +94,7 @@ object Net {
 
     fun getAuth(url: String, duration: Int = timeout): String {
         val conn = Jsoup.connect(url)
+            .userAgent(userAgent)
             .ignoreHttpErrors(true)
             .ignoreContentType(true)
             .timeout(duration)
