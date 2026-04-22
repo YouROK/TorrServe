@@ -40,15 +40,17 @@ object TorrentHelper {
             }
         }?.groupBy({ it.first }, { it.second })
 
-        if(playable?.get("video").isNullOrEmpty()) {
-            return playable?.get("audio") ?: emptyList()
-        }
-
-        return playable["video"]?.filter {
-            val ext = File(it.path).extension.lowercase()
-            return@filter when (ext) {
-                "m2ts", "mts", "ts" -> it.length > 524288000L
-                else -> true
+        return playable?.let { p ->
+            if (p["video"].isNullOrEmpty()) {
+                p["audio"] ?: emptyList()
+            } else {
+                p["video"]?.filter {
+                    val ext = File(it.path).extension.lowercase()
+                    when (ext) {
+                        "m2ts", "mts", "ts" -> it.length > 524288000L
+                        else -> true
+                    }
+                } ?: emptyList()
             }
         } ?: emptyList()
     }
@@ -69,7 +71,7 @@ object TorrentHelper {
                     return torr
                 count++
                 Thread.sleep(1000)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 count++
                 if (count > 59)
                     return null
