@@ -236,7 +236,7 @@ class ChannelProvider(private val iName: String, private val dName: String) {
         var retStr = ""
         if (torr.torrent_size > 0)
             retStr = "${Format.byteFmt(torr.torrent_size)} • "
-        retStr += torr.hash.uppercase(Locale.getDefault())
+        retStr += torr.hash.uppercase(Locale.getDefault()).substring(0..5)
         
         return retStr
     }
