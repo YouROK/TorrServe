@@ -3,6 +3,7 @@ package ru.yourok.torrserve.server.local
 import android.app.Service
 import android.content.Intent
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -86,7 +87,7 @@ class TorrService : Service() {
                         .setContentTitle(getString(R.string.app_name))
                         .setContentText("Start Foreground")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    ServiceCompat.startForeground(this@TorrService, NotificationTS().notificationId, builder.build(), FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+                    ServiceCompat.startForeground(this@TorrService, NotificationTS().notificationId, builder.build(), FOREGROUND_SERVICE_TYPE_DATA_SYNC or FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
                 }
                 serverFile.run()
                 notification.doBindService(this@TorrService)
@@ -127,7 +128,7 @@ class TorrService : Service() {
             intent.putExtra(NEED_FOREGROUND_KEY, false)
             try {
                 context.startService(intent)
-            } catch (ex: IllegalStateException) {
+            } catch (_: IllegalStateException) {
                 if (isLocal()) { // avoid ANR on remote
                     intent.putExtra(NEED_FOREGROUND_KEY, true)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
