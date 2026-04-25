@@ -234,16 +234,15 @@ class ChannelProvider(private val iName: String, private val dName: String) {
     }
 
     private fun buildDescription(torr: Torrent): String {
-        val sizePart = if (torr.torrent_size > 0) {
-            "${Format.byteFmt(torr.torrent_size)} • "
-        } else ""
+        val sizeText = if (torr.torrent_size > 0) {
+            Format.byteFmt(torr.torrent_size)
+        } else null
 
-        val hash = torr.hash.uppercase(Locale.getDefault())
-        val formattedHash = when {
-            hash.length > 6 -> "${hash.substring(0, 4)}..${hash.substring(hash.length - 2)}"
-            else -> hash
-        }
+        val hashText = torr.hash.uppercase(Locale.getDefault()).let { hash ->
+            if (hash.length > 6) "${hash.substring(0, 4)}..${hash.substring(hash.length - 2)}"
+            else hash
+        }.takeIf { it.isNotEmpty() }
 
-        return "$sizePart$formattedHash"
+        return listOfNotNull(sizeText, hashText).joinToString(" • ")
     }
 }
