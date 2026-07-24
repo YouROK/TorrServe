@@ -242,9 +242,10 @@ class ServerFinderViewModel : ViewModel() {
         synchronized(mdnsServers) {
             mdnsServers[host] = ServerIp(host, version, status, auth, isMdns = true)
         }
-        if (discoveredHosts.add(host)) {
-            servers?.postValue(ServerIp(host, version, status, auth, isMdns = true))
-        }
+        // The IP-range scan may have published this URL already. Emit the mDNS
+        // version as well so the UI can upgrade that row with its source and auth.
+        discoveredHosts.add(host)
+        servers?.postValue(ServerIp(host, version, status, auth, isMdns = true))
     }
 
     private fun NsdServiceInfo.resolveUrl(): String? {
