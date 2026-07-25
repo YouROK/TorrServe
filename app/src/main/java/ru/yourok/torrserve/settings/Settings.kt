@@ -47,6 +47,7 @@ object Settings {
     fun setChooserAction(v: Int) = set("chooser_action", v)
 
     fun isAccessibilityOn(): Boolean = get("switch_accessibility", false)
+    fun isDisableAccessibilityOnServerSwitchOn(): Boolean = get("switch_disable_accessibility_on_server_switch", true)
     fun isBootStart(): Boolean = get("boot_start", false)
     fun isRootStart(): Boolean = get("root_start", false)
     fun isWebDAVStart(): Boolean = get("webdav_start", false)

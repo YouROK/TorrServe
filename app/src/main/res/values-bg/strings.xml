@@ -250,4 +250,7 @@
     <string name="torrserver_log_summary">Преглед на дневник на локалния TorrServer</string>
     <string name="torrserver_log_cleared">Дневникът на TorrServer е изчистен</string>
     <string name="torrserver_log_trimmed">Лога е съкратен (показва се последните %s)</string>
+    <string name="switch_disable_accessibility_on_server_switch_title">Деактивиране на услугата за достъпност при превключване на сървъра</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Услугата за достъпност ще бъде деактивирана при преминаване от локален към отдалечен сървър</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Услугата за достъпност няма да бъде деактивирана при преминаване от локален към отдалечен сървър</string>
 </resources>

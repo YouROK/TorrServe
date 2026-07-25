@@ -7,7 +7,7 @@
     <string name="update">Обновление</string>
     <string name="settings">Настройки</string>
     <string name="exit">Выход</string>
-    <string name="exit_title">Хотите завершить приложение?</string>
+    <string name="exit_title">Хотите закрыть приложение?</string>
     <string name="exit_text">Локальный TorrServer будет остановлен после выхода, если не включен сервис специальных возможностей.</string>
     <string name="remove_all_warn">Вы хотите удалить все торренты?</string>
     <string name="share">Отправить</string>
@@ -49,7 +49,7 @@
     <string name="dlna_friendly_name">Имя сервера DLNA</string>
     <string name="dlna_name_hint">Оставьте пустым, чтобы использовать значение по умолчанию.</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
-    <string name="disable_tcp_desc">Не отключайте без включенного μTP</string>
+    <string name="disable_tcp_desc">Не отключайте без включённого μTP</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>
     <string name="disable_utp_desc">Не рекомендуется включать на слабых устройствах</string>
     <string name="disable_upnp">UPnP - Universal Plug and Play</string>
@@ -169,7 +169,7 @@
     <string name="host_title">Установить URL-адрес TorrServer</string>
     <string name="host_title_hint">http://localhost:8090 – для сервера на устройстве</string>
     <string name="speedtest_title">Тест скорости до TorrServer</string>
-    <string name="speedtest_title_desc">Проверка cкорости соединения с TorrServer</string>
+    <string name="speedtest_title_desc">Проверка скорости соединения с TorrServer</string>
     <string name="host_authorization">Авторизация на сервере</string>
     <string name="host_authorization_desc">Введите имя и пароль через «:» (user:pass)</string>
     <string name="local_auth_title">Локальный TorrServer с авторизацией</string>
@@ -249,4 +249,7 @@
     <string name="torrserver_log_summary">Просмотр журнала локального TorrServer</string>
     <string name="torrserver_log_cleared">Журнал TorrServer очищен</string>
     <string name="torrserver_log_trimmed">Лог обрезан (показаны последние %s)</string>
+    <string name="switch_disable_accessibility_on_server_switch_title">Отключение сервиса специальных возможностей при смене сервера</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Сервис специальных возможностей будет отключён при переключении с локального на удалённый сервер</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Сервис специальных возможностей не будет отключён при переключении с локального на удалённый сервер</string>
 </resources>
