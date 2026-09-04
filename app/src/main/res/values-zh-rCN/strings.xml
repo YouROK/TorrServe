@@ -43,12 +43,16 @@
     <string name="remove_cache_on_drop_desc">如果禁用,缓存将在从数据库删除种子时移除</string>
     <string name="force_encrypt">强制加密标头</string>
     <string name="force_encrypt_desc">可以帮助解决服务提供商封锁种子的问题</string>
+    <string name="lpd_ipv6">LPD IPv6</string>
+    <string name="lpd_ipv6_desc">仅在ISP支持时启用</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">仅在 ISP 支持时启用</string>
     <string name="enable_debug">启用 TorrServer 调试日志</string>
     <string name="enable_responsive_mode">启用响应式阅读器模式</string>
     <string name="show_only_active_torrents_fs">仅在文件系统中显示活动种子</string>
     <string name="enable_dlna">DLNA 媒体服务器</string>
+    <string name="enable_bonjour">Bonjour (mDNS)</string>
+    <string name="enable_bonjour_desc">在局域网上广播以便发现 (mDNS)</string>
     <string name="dlna_friendly_name">DLNA 服务器名称</string>
     <string name="dlna_name_hint">留空以使用默认名称</string>
     <string name="disable_tcp">TCP - 传输控制协议</string>

@@ -34,12 +34,16 @@
     <string name="remove_cache_on_drop_desc">Ако е забрабнен, кеша се изтрива, когато торента се изтрие от базата</string>
     <string name="force_encrypt">Задължително криптиране на хедърите</string>
     <string name="force_encrypt_desc">Може да помогне при доставчици, блокиращи торенти</string>
+    <string name="lpd_ipv6">LPD IPv6</string>
+    <string name="lpd_ipv6_desc">Активирайте само ако се поддържа от ISP</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">Разрешете, само ако се поддържа от Интернет доставчика</string>
     <string name="enable_debug">Лог файлове с дебъг информация за TorrServer</string>
     <string name="enable_responsive_mode">Режим на отзивчив четец</string>
     <string name="show_only_active_torrents_fs">Показвай само активните торенти във файловата система</string>
     <string name="enable_dlna">DLNA Медия сървър</string>
+    <string name="enable_bonjour">Bonjour (mDNS)</string>
+    <string name="enable_bonjour_desc">Рекламиране в локалната мрежа за откриване (mDNS)</string>
     <string name="dlna_friendly_name">DLNA Име на сървъра</string>
     <string name="dlna_name_hint">Оставете празно, за да използвате по подразбиране</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
