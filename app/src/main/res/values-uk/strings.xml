@@ -32,8 +32,10 @@
     <string name="remove_cache_on_drop">Очищати кеш при відключенні торрента</string>
     <string name="remove_cache_on_drop_desc">Якщо відключено, файли кеша очищаються при видаленні торрента</string>
     <string name="force_encrypt">Примусове шифрування заголовків</string>
-    <string name="lpd_ipv6">LPD IPv6</string>
     <string name="force_encrypt_desc">Може допомогти з блокуючими торрент провайдерами</string>
+    <string name="enable_lpd">LPD (Local Peer Discovery)</string>
+    <string name="enable_lpd_desc">LPD дозволяє пристроям, підключеним до однієї домашньої мережі, ідентифікувати один одного та безпосередньо обмінюватися торрент-файлами</string>
+    <string name="lpd_ipv6">LPD IPv6</string>
     <string name="lpd_ipv6_desc">Включите якщо підтримується</string>
     <string name="enable_ipv6">IPv6</string>
     <string name="enable_ipv6_desc">Включите якщо підтримується</string>

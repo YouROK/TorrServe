@@ -34,6 +34,8 @@
     <string name="remove_cache_on_drop_desc">Ако е забрабнен, кеша се изтрива, когато торента се изтрие от базата</string>
     <string name="force_encrypt">Задължително криптиране на хедърите</string>
     <string name="force_encrypt_desc">Може да помогне при доставчици, блокиращи торенти</string>
+    <string name="enable_lpd">LPD (Local Peer Discovery)</string>
+    <string name="enable_lpd_desc">LPD позволява на устройствата, свързани към една и съща домашна мрежа, да се разпознават взаимно и да споделят директно торрент файлове</string>
     <string name="lpd_ipv6">LPD IPv6</string>
     <string name="lpd_ipv6_desc">Активирайте само ако се поддържа от ISP</string>
     <string name="enable_ipv6">IPv6</string>
