@@ -121,7 +121,7 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.visibility = View.VISIBLE
                 }
             }
-            if (ver > 139) // MatriX.139 add Proxy
+            if (ver in 138..<142) // MatriX.138 add Proxy (Removed in MatriX.142)
             {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.visibility = View.VISIBLE
