@@ -37,4 +37,11 @@ data class BTSets(
     // Proxy
     var EnableProxy: Boolean,
     var ProxyHosts: List<String>?,
+    // LPD
+    var EnableLPD: Boolean,
+    var LPDIPv6: Boolean,
+    // Bonjour
+    var EnableBonjour: Boolean,
+    // FS
+    var ShowFSActiveTorr: Boolean,
 )

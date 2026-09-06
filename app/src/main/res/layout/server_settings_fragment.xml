@@ -204,7 +204,6 @@
                 android:id="@+id/cbForceEncrypt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nextFocusDown="@id/etDisconnectTimeout"
                 android:text="@string/force_encrypt" />
 
             <TextView
@@ -213,6 +212,43 @@
                 android:layout_marginBottom="20dp"
                 android:labelFor="@+id/cbForceEncrypt"
                 android:text="@string/force_encrypt_desc" />
+            <!-- LPD -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/cbEnableLPD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enable_lpd"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvEnableLPD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:labelFor="@+id/cbEnableLPD"
+                android:text="@string/enable_lpd_desc"
+                android:visibility="gone"
+                tools:visibility="visible" />
+            <!-- LPD IPv6 -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/cbLPDIPv6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etDisconnectTimeout"
+                android:text="@string/lpd_ipv6"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvLPDIPv6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:labelFor="@+id/cbLPDIPv6"
+                android:text="@string/lpd_ipv6_desc"
+                android:visibility="gone"
+                tools:visibility="visible" />
             <!-- Disconnect Timeout -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -341,10 +377,27 @@
                 android:id="@+id/cbEnableDLNA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nextFocusDown="@id/etFriendlyName"
                 android:text="@string/enable_dlna"
                 android:visibility="gone"
                 tools:visibility="visible" />
+
+            <!-- Bonjour -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/cbEnableBonjour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nextFocusDown="@id/etFriendlyName"
+                android:text="@string/enable_bonjour"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvEnableBonjour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:labelFor="@+id/cbEnableBonjour"
+                android:text="@string/enable_bonjour_desc" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tvFriendlyName"
