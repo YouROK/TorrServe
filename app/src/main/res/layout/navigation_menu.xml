@@ -82,7 +82,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/action_selector"
-                android:padding="15dp">
+                android:padding="13dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -112,7 +112,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/action_selector"
-                android:padding="15dp">
+                android:padding="13dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -142,7 +142,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/action_selector"
-                android:padding="15dp">
+                android:padding="13dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -173,7 +173,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/action_selector"
-                android:padding="15dp">
+                android:padding="13dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -203,7 +203,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/action_selector"
-                android:padding="15dp">
+                android:padding="13dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -233,7 +233,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/action_selector"
-                android:padding="15dp">
+                android:padding="13dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -263,7 +263,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/action_selector"
-                android:padding="15dp">
+                android:padding="13dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -293,7 +293,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/action_selector"
-                android:padding="15dp">
+                android:padding="13dp">
 
                 <ImageView
                     android:layout_width="24dp"

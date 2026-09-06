@@ -6,7 +6,10 @@
 
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground">
 
     <LinearLayout
 
@@ -22,8 +25,8 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             app:tint="?attr/colorPrimary" />
-
         <TextView
+
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

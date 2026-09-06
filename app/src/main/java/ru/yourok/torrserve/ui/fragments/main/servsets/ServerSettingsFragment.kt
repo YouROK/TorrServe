@@ -121,11 +121,27 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.visibility = View.VISIBLE
                 }
             }
-            if (ver > 139) // MatriX.139 add Proxy
+            if (ver in 138..<142) // MatriX.138 add Proxy (Removed in MatriX.142)
             {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.visibility = View.VISIBLE
                     vi.findViewById<TextInputLayout>(R.id.tvProxyList)?.visibility = View.VISIBLE
+                }
+            }
+            if (ver > 141) // MatriX.142 add LPD
+            {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<SwitchMaterial>(R.id.cbEnableLPD)?.visibility = View.VISIBLE
+                    vi.findViewById<TextView>(R.id.tvEnableLPD)?.visibility = View.VISIBLE
+                    vi.findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.visibility = View.VISIBLE
+                    vi.findViewById<TextView>(R.id.tvLPDIPv6)?.visibility = View.VISIBLE
+                }
+            }
+            if (ver > 142) // MatriX.143 add Bonjour
+            {
+                withContext(Dispatchers.Main) {
+                    vi.findViewById<SwitchMaterial>(R.id.cbEnableBonjour)?.visibility = View.VISIBLE
+                    vi.findViewById<TextView>(R.id.tvEnableBonjour)?.visibility = View.VISIBLE
                 }
             }
         }
@@ -225,6 +241,10 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<TextInputEditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
                     findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.isChecked = sets.EnableProxy
                     findViewById<TextInputEditText>(R.id.etProxyHosts)?.setText(sets.ProxyHosts?.joinToString(", ")?.toString() ?: "")
+                    findViewById<SwitchMaterial>(R.id.cbEnableLPD)?.isChecked = sets.EnableLPD
+                    findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.isChecked = sets.LPDIPv6
+                    findViewById<SwitchMaterial>(R.id.cbEnableBonjour)?.isChecked = sets.EnableBonjour
+                    findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.isChecked = sets.ShowFSActiveTorr
                 }
                 if (BuildConfig.DEBUG)
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
@@ -250,7 +270,7 @@ class ServerSettingsFragment : TSFragment() {
                     RemoveCacheOnDrop = findViewById<SwitchMaterial>(R.id.cbRemoveCacheOnDrop)?.isChecked ?: false,
                     TorrentsSavePath = btsets?.TorrentsSavePath ?: "",
                     ForceEncrypt = findViewById<SwitchMaterial>(R.id.cbForceEncrypt)?.isChecked ?: false,
-                    RetrackersMode = rtIndex ?: 0,
+                    RetrackersMode = rtIndex ?: 1,
                     TorrentDisconnectTimeout = findViewById<TextInputEditText>(R.id.etDisconnectTimeout)?.text?.toString()?.toInt() ?: 30,
                     EnableDebug = findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.isChecked ?: false,
                     ResponsiveMode = findViewById<SwitchMaterial>(R.id.cbResponsiveMode)?.isChecked ?: false,
@@ -269,8 +289,15 @@ class ServerSettingsFragment : TSFragment() {
                     ConnectionsLimit = findViewById<TextInputEditText>(R.id.etConnectionsLimit)?.text?.toString()?.toInt() ?: 23,
                     DhtConnectionLimit = findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.text?.toString()?.toInt() ?: 500,
                     PeersListenPort = findViewById<TextInputEditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
-                    EnableProxy = findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.isChecked != true,
-                    ProxyHosts = findViewById<TextInputEditText>(R.id.etProxyHosts)?.text?.toString()?.split("\n")?.map { it.trim() } ?: listOf()
+                    EnableProxy = findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.isChecked ?: false, // def false
+                    ProxyHosts = findViewById<TextInputEditText>(R.id.etProxyHosts)?.text?.toString()?.split("\n")?.map { it.trim() } ?: listOf(),
+                    // Bonjour (MatriX.141)
+                    EnableBonjour = findViewById<SwitchMaterial>(R.id.cbEnableBonjour)?.isChecked ?: true, // def true
+                    // LPD (MatriX.142)
+                    EnableLPD = findViewById<SwitchMaterial>(R.id.cbEnableLPD)?.isChecked ?: true, // def true
+                    LPDIPv6 = findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.isChecked ?: false, // def false
+                    // FS (MatriX.137)
+                    ShowFSActiveTorr = findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.isChecked ?: true // def true
                 )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {
