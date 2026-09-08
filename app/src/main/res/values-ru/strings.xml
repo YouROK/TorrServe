@@ -81,6 +81,9 @@
     <string name="use_as_default">Запомнить выбор</string>
     <string name="default_player">Плеер по умолчанию из ОС</string>
     <string name="choose_player">Всегда спрашивать</string>
+    <string name="kodi_playlist_title">Поддержка плейлистов Kodi</string>
+    <string name="kodi_playlist_sum_on">Поддержка плейлистов Kodi 22+ включена</string>
+    <string name="kodi_playlist_sum_off">Поддержка плейлистов Kodi 22+ отключена</string>
     <string name="app_theme_title">Тема оформления</string>
     <string-array name="app_theme_entries">
         <item>Как в системе</item>

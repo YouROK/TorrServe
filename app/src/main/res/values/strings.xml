@@ -233,6 +233,10 @@
 
     <string name="choose_player_title">Choose Player</string>
 
+    <string name="kodi_playlist_title">Kodi playlist support</string>
+    <string name="kodi_playlist_sum_on">Kodi 22+ playlist support is enabled</string>
+    <string name="kodi_playlist_sum_off">Kodi 22+ playlist support is disabled</string>
+
     <string name="show_banner_title">Show Banner</string>
     <string name="show_banner_sum_on">Show banner on load torrent</string>
     <string name="show_banner_sum_off">Don\'t show banner on load torrent</string>

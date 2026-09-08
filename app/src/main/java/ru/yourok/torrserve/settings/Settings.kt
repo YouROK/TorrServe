@@ -56,6 +56,7 @@ object Settings {
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
     fun showCover(): Boolean = get("show_cover", true)
+    fun kodiPlaylist(): Boolean = get("kodi_playlist", true)
     fun getTheme(): String = get("theme", "auto")
     fun setTheme(v: String) = set("theme", v)
 

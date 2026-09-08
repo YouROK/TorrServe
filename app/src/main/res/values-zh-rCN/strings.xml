@@ -91,6 +91,9 @@
     <string name="use_as_default">保存为默认</string>
     <string name="default_player">系统默认播放器</string>
     <string name="choose_player">总是询问</string>
+    <string name="kodi_playlist_title">Kodi 播放列表支持</string>
+    <string name="kodi_playlist_sum_on">Kodi 22+ 播放列表支持已启用</string>
+    <string name="kodi_playlist_sum_off">Kodi 22+ 播放列表支持已禁用</string>
     <string name="player_pref_key" translatable="false">player</string>
 
     <string name="app_theme_title">应用主题</string>

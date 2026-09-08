@@ -181,6 +181,9 @@
     <string name="webdav_start_sum_on">Запустити сервер: WebDAV увімкнено</string>
     <string name="webdav_start_sum_off">Запустити сервер: WebDAV вимкнено</string>
     <string name="choose_player_title">Вибір плеєра</string>
+    <string name="kodi_playlist_title">Підтримка плейлистів Kodi</string>
+    <string name="kodi_playlist_sum_on">Підтримку плейлистів Kodi 22+ увімкнено</string>
+    <string name="kodi_playlist_sum_off">Підтримку плейлистів Kodi 22+ вимкнено</string>
     <string name="show_banner_title">Показувати банер</string>
     <string name="show_banner_sum_on">Показувати банер при завантаженні торрента</string>
     <string name="show_banner_sum_off">Не показувати банер при завантаженні торрента</string>

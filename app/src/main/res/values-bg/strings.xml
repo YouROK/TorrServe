@@ -190,6 +190,9 @@
     <string name="webdav_start_sum_on">Стартиране на сървъра: WebDAV е включен</string>
     <string name="webdav_start_sum_off">Стартиране на сървъра: WebDAV е изключен</string>
     <string name="choose_player_title">Избор на Плеър</string>
+    <string name="kodi_playlist_title">Поддръжка на плейлисти Kodi</string>
+    <string name="kodi_playlist_sum_on">Поддръжката на плейлисти Kodi 22+ е активирана</string>
+    <string name="kodi_playlist_sum_off">Поддръжката на плейлисти Kodi 22+ е деактивирана</string>
     <string name="show_banner_title">Покажи банер</string>
     <string name="show_banner_sum_on">Покажи банер при зареждане на торент</string>
     <string name="show_banner_sum_off">Не показвай банер при зареждане на торент</string>

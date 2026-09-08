@@ -57,6 +57,14 @@ object Players {
             if (uIntent.resolveActivity(App.context.packageManager) != null)
                 return uIntent
         }
+        // Kodi player
+        if (player.contains("org.xbmc.kodi", true) ||
+            player.contains("net.kodinerds.maven.kodi", true) ||
+            player.contains("org.xbmc.fandangos", true)) {
+            val kodiIntent = Kodi.getIntent(player, torrent, index)
+            if (kodiIntent.resolveActivity(App.context.packageManager) != null)
+                return kodiIntent
+        }
         // user defined player
         if (player.isNotEmpty()) {
             intent.`package` = player
