@@ -247,7 +247,8 @@
     <string name="cat_tv">Серіал</string>
     <string name="cat_music">Музика</string>
     <string name="cat_other">Інше</string>
-    <string name="cat_none">Усі торренти</string>
+    <string name="cat_none">Без категорії</string>
+    <string name="cat_all">Усі торренти</string>
     <string name="accessibility_note">Вимкніть службу доступності, щоб зупинити TorrServer.</string>
     <string name="torrserver_log">Журнал TorrServer</string>
     <string name="torrserver_log_summary">Перегляд журналу локального TorrServer</string>

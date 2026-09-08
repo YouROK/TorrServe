@@ -249,7 +249,8 @@
     <string name="cat_tv">Seriale</string>
     <string name="cat_music">Muzică</string>
     <string name="cat_other">Altele</string>
-    <string name="cat_none">Toate torrentele</string>
+    <string name="cat_none">Necategorizat</string>
+    <string name="cat_all">Toate torrentele</string>
     <string name="accessibility_note">Dezactivează serviciul de accesibilitate pentru a opri TorrServer-ul.</string>
     <string name="torrserver_log">Log TorrServer</string>
     <string name="torrserver_log_summary">Vizualizează logul TorrServer-ului local</string>

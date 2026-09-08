@@ -302,7 +302,8 @@
     <string name="cat_tv">电视剧</string>
     <string name="cat_music">音乐</string>
     <string name="cat_other">其他</string>
-    <string name="cat_none">所有种子</string>
+    <string name="cat_none">Uncategorized</string>
+    <string name="cat_all">所有种子</string>
 
     <string name="accessibility_note">禁用无障碍服务以停止 TorrServer</string>
     <string name="torrserver_log">TorrServer 日志</string>
