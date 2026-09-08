@@ -267,6 +267,10 @@
     <string name="switch_accessibility_title">Accessibility Service</string>
     <string name="switch_accessibility_summary_on">Press to disable TorrServe service</string>
 
+    <string name="switch_disable_accessibility_on_server_switch_title">Disable Accessibility Service on server switch</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Accessibility Service will be disabled when switching from local to remote server</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Accessibility Service will not be disabled when switching from local to remote server</string>
+
     <string name="stat_string_added">Torrent added</string>
     <string name="stat_string_info">Getting torrent info</string>
     <string name="stat_string_preload">Preload torrent</string>

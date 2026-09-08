@@ -3,7 +3,6 @@ package ru.yourok.torrserve.ui.fragments.main.servfinder
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +25,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.settings.Settings.isDisableAccessibilityOnServerSwitchOn
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.Accessibility
 import ru.yourok.torrserve.utils.Net.isValidPublicIp4
@@ -130,10 +130,13 @@ class ServerFinderFragment : TSFragment() {
                 if (ServerFile().exists() && TorrService.isLocal())
                     TorrService.start()
                 else { // unload local service in case switch to remote
-                    if (Api.echo().isNotEmpty() && Accessibility.isEnabledService(App.context))
-                        Accessibility.enableService(App.context, false)
-                    TorrService.stop()
-                    ServerFile().stop() // killall 4 sure
+                    if (Api.echo().isNotEmpty() && Accessibility.isEnabledService(App.context)) {
+                        if (isDisableAccessibilityOnServerSwitchOn()) {
+                            Accessibility.enableService(App.context, false)
+                        }
+                        TorrService.stop()
+                        ServerFile().stop() // killall 4 sure
+                    }
                 }
 
                 val lst = Settings.getHosts().toMutableList()

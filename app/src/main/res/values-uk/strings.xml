@@ -250,4 +250,7 @@
     <string name="torrserver_log_summary">Перегляд журналу локального TorrServer</string>
     <string name="torrserver_log_cleared">Журнал TorrServer очищено</string>
     <string name="torrserver_log_trimmed">Лог обрізано (показано останні %s)</string>
+    <string name="switch_disable_accessibility_on_server_switch_title">Вимкнути службу доступності під час перемикання серверів</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Служба доступності буде вимкнена під час переходу з локального сервера на віддалений</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Служба доступності не буде вимкнена під час переходу з локального сервера на віддалений</string>
 </resources>
