@@ -31,10 +31,10 @@ object Api {
     }
 
     /* used for remote server version check */
-    fun remoteEcho(url: String): String {
+    fun remoteEcho(url: String, auth: String? = null): String {
         return try {
             val host = "$url/echo"
-            Net.getAuth(host, 3000) // fast response, in ms
+            Net.getAuth(host, 3000, auth) // fast response, in ms
         } catch (e: Exception) {
             if (BuildConfig.DEBUG) println(e.message)
             ""

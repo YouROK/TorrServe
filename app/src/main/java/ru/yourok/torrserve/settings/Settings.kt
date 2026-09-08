@@ -12,6 +12,7 @@ import ru.yourok.torrserve.app.App
 import java.io.File
 
 object Settings {
+    private const val discoveredServerNamesKey = "discovered_server_names"
     val showFab: Boolean
         get() = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) false // TODO Fix FAB focus
         else
@@ -34,6 +35,21 @@ object Settings {
     fun setHosts(hosts: List<String>) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
         prefs.edit { putStringSet("saved_hosts", hosts.toMutableSet()) }
+    }
+
+    fun getDiscoveredServerName(host: String): String? {
+        return get<Set<String>>(discoveredServerNamesKey, emptySet())
+            .firstOrNull { it.substringBefore('\t') == host }
+            ?.substringAfter('\t')
+            ?.takeIf { it.isNotBlank() }
+    }
+
+    fun setDiscoveredServerName(host: String, name: String) {
+        val names = get<Set<String>>(discoveredServerNamesKey, emptySet())
+            .filterNot { it.substringBefore('\t') == host }
+            .toMutableSet()
+        names.add("$host\t$name")
+        set(discoveredServerNamesKey, names)
     }
 
     fun getLastViewDonate() = get("last_view_donate", 0L)
