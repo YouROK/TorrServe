@@ -15,13 +15,6 @@
     <string name="open_with">Deschide cu</string>
     <string name="show_menu">Afișează meniul principal</string>
     <string name="torrents">Torrente</string>
-    <string name="categories">Categorii</string>
-    <string name="category_all">Toate</string>
-    <string name="category_movies">Filme</string>
-    <string name="category_series">Seriale</string>
-    <string name="category_music">Muzică</string>
-    <string name="category_other">Altele</string>
-    <string name="category_uncategorized">Necategorizat</string>
     <string name="apply">Aplică</string>
     <string name="skip">Omite</string>
     <string name="yes">Da</string>
