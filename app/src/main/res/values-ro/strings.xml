@@ -225,6 +225,9 @@
     <string name="accessibility_service_description">Activarea acestui serviciu poate preveni oprirea TorrServer-ului local de către sistem</string>
     <string name="switch_accessibility_title">Serviciu de accesibilitate</string>
     <string name="switch_accessibility_summary_on">Apasă pentru a dezactiva serviciul TorrServe</string>
+    <string name="switch_disable_accessibility_on_server_switch_title">Disable Accessibility Service on server switch</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Accessibility Service will be disabled when switching from local to remote server</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Accessibility Service will not be disabled when switching from local to remote server</string>
     <string name="stat_string_added">Torrent adăugat</string>
     <string name="stat_string_info">Obținere informații</string>
     <string name="stat_string_preload">Preîncărcare</string>
