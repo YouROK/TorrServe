@@ -170,7 +170,7 @@ class ServerSettingsFragment : TSFragment() {
                         withContext(Dispatchers.Main) {
                             App.toast(R.string.default_sets_applied)
                         }
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         withContext(Dispatchers.Main) {
                             //e.message?.let { msg -> App.Toast(msg) }
                             App.toast(R.string.error_sending_settings)
@@ -240,11 +240,11 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<TextInputEditText>(R.id.etConnectionsDhtLimit)?.setText(sets.DhtConnectionLimit.toString())
                     findViewById<TextInputEditText>(R.id.etPeersListenPort)?.setText(sets.PeersListenPort.toString())
                     findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.isChecked = sets.EnableProxy
-                    findViewById<TextInputEditText>(R.id.etProxyHosts)?.setText(sets.ProxyHosts?.joinToString(", ")?.toString() ?: "")
+                    findViewById<TextInputEditText>(R.id.etProxyHosts)?.setText(sets.ProxyHosts?.joinToString(", ") ?: "")
+                    findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.isChecked = sets.ShowFSActiveTorr
                     findViewById<SwitchMaterial>(R.id.cbEnableLPD)?.isChecked = sets.EnableLPD
                     findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.isChecked = sets.LPDIPv6
                     findViewById<SwitchMaterial>(R.id.cbEnableBonjour)?.isChecked = sets.EnableBonjour
-                    findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.isChecked = sets.ShowFSActiveTorr
                 }
                 if (BuildConfig.DEBUG)
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
@@ -291,13 +291,13 @@ class ServerSettingsFragment : TSFragment() {
                     PeersListenPort = findViewById<TextInputEditText>(R.id.etPeersListenPort)?.text?.toString()?.toInt() ?: 0,
                     EnableProxy = findViewById<SwitchMaterial>(R.id.cbEnableProxy)?.isChecked ?: false, // def false
                     ProxyHosts = findViewById<TextInputEditText>(R.id.etProxyHosts)?.text?.toString()?.split("\n")?.map { it.trim() } ?: listOf(),
+                    // FS (MatriX.137)
+                    ShowFSActiveTorr = findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.isChecked ?: true, // def true
                     // Bonjour (MatriX.141)
                     EnableBonjour = findViewById<SwitchMaterial>(R.id.cbEnableBonjour)?.isChecked ?: true, // def true
                     // LPD (MatriX.142)
                     EnableLPD = findViewById<SwitchMaterial>(R.id.cbEnableLPD)?.isChecked ?: true, // def true
-                    LPDIPv6 = findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.isChecked ?: false, // def false
-                    // FS (MatriX.137)
-                    ShowFSActiveTorr = findViewById<SwitchMaterial>(R.id.cbShowActiveTorrsInFS)?.isChecked ?: true // def true
+                    LPDIPv6 = findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.isChecked ?: false // def false
                 )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {

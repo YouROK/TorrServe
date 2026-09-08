@@ -15,13 +15,6 @@
     <string name="open_with">Отваряне с</string>
     <string name="show_menu">Покажи Главно меню</string>
     <string name="torrents">Торенти</string>
-	<string name="categories">Категории</string>
-    <string name="category_all">Всичко</string>
-    <string name="category_movies">Филми</string>
-    <string name="category_series">Сериали</string>
-    <string name="category_music">Музика</string>
-    <string name="category_other">Други</string>
-    <string name="category_uncategorized">Некатегоризирано</string>
     <string name="apply">Приложи</string>
     <string name="skip">Пропусни</string>
     <string name="yes">Да</string>
@@ -197,6 +190,9 @@
     <string name="webdav_start_sum_on">Стартиране на сървъра: WebDAV е включен</string>
     <string name="webdav_start_sum_off">Стартиране на сървъра: WebDAV е изключен</string>
     <string name="choose_player_title">Избор на Плеър</string>
+    <string name="kodi_playlist_title">Поддръжка на плейлисти Kodi</string>
+    <string name="kodi_playlist_sum_on">Поддръжката на плейлисти Kodi 22+ е активирана</string>
+    <string name="kodi_playlist_sum_off">Поддръжката на плейлисти Kodi 22+ е деактивирана</string>
     <string name="show_banner_title">Покажи банер</string>
     <string name="show_banner_sum_on">Покажи банер при зареждане на торент</string>
     <string name="show_banner_sum_off">Не показвай банер при зареждане на торент</string>
@@ -247,14 +243,19 @@
     <string name="no_updates">Не са намерени ъпдейти</string>
     <string name="not_used">Не се използва</string>
     <string name="not_installed">Не е инсталирано</string>
+    <string name="categories">Категории</string>
     <string name="cat_movie">Филми</string>
     <string name="cat_tv">Сериал</string>
     <string name="cat_music">Музика</string>
     <string name="cat_other">Друго</string>
-    <string name="cat_none">Всички торенти</string>
+    <string name="cat_none">Некатегоризирано</string>
+    <string name="cat_all">Всички торенти</string>
     <string name="accessibility_note">Деактивирайте услугата за достъпност, за да спрете TorrServer</string>
     <string name="torrserver_log">Дневник на TorrServer</string>
     <string name="torrserver_log_summary">Преглед на дневник на локалния TorrServer</string>
     <string name="torrserver_log_cleared">Дневникът на TorrServer е изчистен</string>
     <string name="torrserver_log_trimmed">Лога е съкратен (показва се последните %s)</string>
+    <string name="switch_disable_accessibility_on_server_switch_title">Деактивиране на услугата за достъпност при превключване на сървъра</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Услугата за достъпност ще бъде деактивирана при преминаване от локален към отдалечен сървър</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Услугата за достъпност няма да бъде деактивирана при преминаване от локален към отдалечен сървър</string>
 </resources>

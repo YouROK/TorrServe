@@ -22,14 +22,6 @@
     <string name="show_menu">Show Main Menu</string>
     <string name="torrents">Torrents</string>
 
-	<string name="categories">Categories</string>
-    <string name="category_all">All</string>
-    <string name="category_movies">Movies</string>
-    <string name="category_series">TV Shows</string>
-    <string name="category_music">Music</string>
-    <string name="category_other">Other</string>
-    <string name="category_uncategorized">Uncategorized</string>
-
     <string name="apply">Apply</string>
     <string name="skip">Skip</string>
     <string name="yes">Yes</string>
@@ -241,6 +233,10 @@
 
     <string name="choose_player_title">Choose Player</string>
 
+    <string name="kodi_playlist_title">Kodi playlist support</string>
+    <string name="kodi_playlist_sum_on">Kodi 22+ playlist support is enabled</string>
+    <string name="kodi_playlist_sum_off">Kodi 22+ playlist support is disabled</string>
+
     <string name="show_banner_title">Show Banner</string>
     <string name="show_banner_sum_on">Show banner on load torrent</string>
     <string name="show_banner_sum_off">Don\'t show banner on load torrent</string>
@@ -275,6 +271,10 @@
     <string name="switch_accessibility_title">Accessibility Service</string>
     <string name="switch_accessibility_summary_on">Press to disable TorrServe service</string>
 
+    <string name="switch_disable_accessibility_on_server_switch_title">Disable Accessibility Service on server switch</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Accessibility Service will be disabled when switching from local to remote server</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Accessibility Service will not be disabled when switching from local to remote server</string>
+
     <string name="stat_string_added">Torrent added</string>
     <string name="stat_string_info">Getting torrent info</string>
     <string name="stat_string_preload">Preload torrent</string>
@@ -303,11 +303,13 @@
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
 
+    <string name="categories">Categories</string>
     <string name="cat_movie">Movies</string>
     <string name="cat_tv">Series</string>
     <string name="cat_music">Music</string>
     <string name="cat_other">Other</string>
-    <string name="cat_none">All torrents</string>
+    <string name="cat_none">Uncategorized</string>
+    <string name="cat_all">All torrents</string>
 
     <string name="accessibility_note">Disable Accessibility service to stop TorrServer</string>
     <string name="torrserver_log">TorrServer journal</string>

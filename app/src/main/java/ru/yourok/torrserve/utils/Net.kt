@@ -30,8 +30,7 @@ object Net {
             url + path
     }
 
-    fun getAuthB64(): String {
-        val auth = Settings.getServerAuth()
+    fun getAuthB64(auth: String = Settings.getServerAuth()): String {
         if (auth.isNotEmpty())
             return "Basic " + android.util.Base64.encode(auth.toByteArray(), android.util.Base64.NO_WRAP).toString(Charset.defaultCharset())
         return ""
@@ -92,7 +91,7 @@ object Net {
         }
     }
 
-    fun getAuth(url: String, duration: Int = timeout): String {
+    fun getAuth(url: String, duration: Int = timeout, authValue: String? = null): String {
         val conn = Jsoup.connect(url)
             .userAgent(userAgent)
             .ignoreHttpErrors(true)
@@ -101,7 +100,7 @@ object Net {
         if (!isBrokenTCL)
             conn.sslSocketFactory(TlsSocketFactory())
 
-        val auth = getAuthB64()
+        val auth = getAuthB64(authValue ?: Settings.getServerAuth())
         if (auth.isNotEmpty())
             conn.header("Authorization", auth)
 

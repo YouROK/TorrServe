@@ -6,6 +6,7 @@ import android.content.ContentUris
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.tvprovider.media.tv.Channel
 import androidx.tvprovider.media.tv.ChannelLogoUtils
 import androidx.tvprovider.media.tv.PreviewProgram
@@ -19,11 +20,24 @@ import ru.yourok.torrserve.ui.activities.main.MainActivity
 import ru.yourok.torrserve.utils.Format
 import java.nio.charset.Charset
 import java.util.Locale
-import androidx.core.net.toUri
-import kotlin.math.min
 
 
 class ChannelProvider(private val iName: String, private val dName: String) {
+
+    private val CHANNELS_PROJECTION = arrayOf(
+        TvContractCompat.Channels._ID,
+        TvContractCompat.Channels.COLUMN_DISPLAY_NAME,
+        TvContractCompat.Channels.COLUMN_INTERNAL_PROVIDER_DATA,
+        TvContractCompat.Channels.COLUMN_BROWSABLE
+    )
+
+    @SuppressLint("RestrictedApi")
+    private val PROGRAMS_PROJECTION = arrayOf(
+        TvContractCompat.PreviewPrograms._ID,
+        TvContractCompat.PreviewPrograms.COLUMN_INTERNAL_PROVIDER_ID
+        // TvContractCompat.PreviewPrograms.COLUMN_SHORT_DESCRIPTION
+    )
+
 
     private fun create(): Long {
         var channelId = findChannel()
@@ -86,13 +100,6 @@ class ChannelProvider(private val iName: String, private val dName: String) {
         }
 
     }
-
-    @SuppressLint("RestrictedApi")
-    private val PROGRAMS_PROJECTION = arrayOf(
-        TvContractCompat.PreviewPrograms._ID,
-        TvContractCompat.PreviewPrograms.COLUMN_INTERNAL_PROVIDER_ID
-        // TvContractCompat.PreviewPrograms.COLUMN_SHORT_DESCRIPTION
-    )
 
     @SuppressLint("RestrictedApi")
     fun findProgramHashById(id: Long): String {
@@ -176,13 +183,6 @@ class ChannelProvider(private val iName: String, private val dName: String) {
 
         return preview.build()
     }
-
-    private val CHANNELS_PROJECTION = arrayOf(
-        TvContractCompat.Channels._ID,
-        TvContractCompat.Channels.COLUMN_DISPLAY_NAME,
-        TvContractCompat.Channels.COLUMN_INTERNAL_PROVIDER_DATA,
-        TvContractCompat.Channels.COLUMN_BROWSABLE
-    )
 
     private fun findChannel(): Long {
         val cursor = App.context.contentResolver.query(

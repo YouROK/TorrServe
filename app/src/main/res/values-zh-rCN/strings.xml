@@ -21,13 +21,6 @@
     <string name="open_with">打开方式</string>
     <string name="show_menu">显示主菜单</string>
     <string name="torrents">种子</string>
-	<string name="categories">分类</string>
-    <string name="category_all">全部</string>
-    <string name="category_movies">电影</string>
-    <string name="category_series">系列</string>
-    <string name="category_music">音乐</string>
-    <string name="category_other">其他</string>
-    <string name="category_uncategorized">未分类</string>
 
     <string name="apply">应用</string>
     <string name="skip">跳过</string>
@@ -98,6 +91,9 @@
     <string name="use_as_default">保存为默认</string>
     <string name="default_player">系统默认播放器</string>
     <string name="choose_player">总是询问</string>
+    <string name="kodi_playlist_title">Kodi 播放列表支持</string>
+    <string name="kodi_playlist_sum_on">Kodi 22+ 播放列表支持已启用</string>
+    <string name="kodi_playlist_sum_off">Kodi 22+ 播放列表支持已禁用</string>
     <string name="player_pref_key" translatable="false">player</string>
 
     <string name="app_theme_title">应用主题</string>
@@ -302,15 +298,21 @@
     <string name="not_used">未使用</string>
     <string name="not_installed">未安装</string>
 
+    <string name="categories">分类</string>
     <string name="cat_movie">电影</string>
     <string name="cat_tv">电视剧</string>
     <string name="cat_music">音乐</string>
     <string name="cat_other">其他</string>
-    <string name="cat_none">所有种子</string>
+    <string name="cat_none">未分类</string>
+    <string name="cat_all">所有种子</string>
 
     <string name="accessibility_note">禁用无障碍服务以停止 TorrServer</string>
     <string name="torrserver_log">TorrServer 日志</string>
     <string name="torrserver_log_summary">查看本地 TorrServer 日志</string>
     <string name="torrserver_log_cleared">TorrServer 日志已清除</string>
     <string name="torrserver_log_trimmed">日志内容已截断（显示最后%s）</string>
+
+    <string name="switch_disable_accessibility_on_server_switch_title">在服务器切换时禁用辅助功能服务</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">从本地服务器切换到远程服务器时，辅助功能服务将被禁用</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">从本地服务器切换到远程服务器时，辅助功能服务不会被禁用</string>
 </resources>

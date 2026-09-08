@@ -15,13 +15,6 @@
     <string name="open_with">Відкрити за допомогою</string>
     <string name="show_menu">Показати головне меню</string>
     <string name="torrents">Торренти</string>
-	<string name="categories">Категорії</string>
-    <string name="category_all">Усе</string>
-    <string name="category_movies">Фільми</string>
-    <string name="category_series">Серіали</string>
-    <string name="category_music">Музика</string>
-    <string name="category_other">Інший</string>
-    <string name="category_uncategorized">Без категорії</string>
     <string name="apply">Застосувати</string>
     <string name="skip">Пропустити</string>
     <string name="yes">Так</string>
@@ -188,6 +181,9 @@
     <string name="webdav_start_sum_on">Запустити сервер: WebDAV увімкнено</string>
     <string name="webdav_start_sum_off">Запустити сервер: WebDAV вимкнено</string>
     <string name="choose_player_title">Вибір плеєра</string>
+    <string name="kodi_playlist_title">Підтримка плейлистів Kodi</string>
+    <string name="kodi_playlist_sum_on">Підтримку плейлистів Kodi 22+ увімкнено</string>
+    <string name="kodi_playlist_sum_off">Підтримку плейлистів Kodi 22+ вимкнено</string>
     <string name="show_banner_title">Показувати банер</string>
     <string name="show_banner_sum_on">Показувати банер при завантаженні торрента</string>
     <string name="show_banner_sum_off">Не показувати банер при завантаженні торрента</string>
@@ -247,14 +243,19 @@
     <string name="install_ffprobe">Встановити FFProbe</string>
     <string name="delete_ffprobe">Видалити FFProbe</string>
     <string name="ffprobe_summary">Завантажте FFProbe для отримання даних про відео, таких як тривалість, бітрейт тощо.</string>
+    <string name="categories">Категорії</string>
     <string name="cat_movie">Фільми</string>
     <string name="cat_tv">Серіал</string>
     <string name="cat_music">Музика</string>
     <string name="cat_other">Інше</string>
-    <string name="cat_none">Усі торренти</string>
+    <string name="cat_none">Без категорії</string>
+    <string name="cat_all">Усі торренти</string>
     <string name="accessibility_note">Вимкніть службу доступності, щоб зупинити TorrServer.</string>
     <string name="torrserver_log">Журнал TorrServer</string>
     <string name="torrserver_log_summary">Перегляд журналу локального TorrServer</string>
     <string name="torrserver_log_cleared">Журнал TorrServer очищено</string>
     <string name="torrserver_log_trimmed">Лог обрізано (показано останні %s)</string>
+    <string name="switch_disable_accessibility_on_server_switch_title">Вимкнути службу доступності під час перемикання серверів</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Служба доступності буде вимкнена під час переходу з локального сервера на віддалений</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Служба доступності не буде вимкнена під час переходу з локального сервера на віддалений</string>
 </resources>

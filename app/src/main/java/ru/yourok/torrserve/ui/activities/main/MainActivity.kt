@@ -632,13 +632,17 @@ class MainActivity : AppCompatActivity() {
             closeMenu()
         }
 
-        findViewById<FrameLayout>(R.id.btnCategories)?.setOnClickListener {
-            CategoriesFragment().show(
-                this,
-                R.id.container,
-                true
-            )
-            closeMenu()
+        if (Utils.isTvBox()) {
+            findViewById<FrameLayout>(R.id.btnCategories)?.setOnClickListener {
+                CategoriesFragment().show(
+                    this,
+                    R.id.container,
+                    true
+                )
+                closeMenu()
+            }
+        } else {
+            findViewById<FrameLayout>(R.id.btnCategories)?.visibility = View.GONE
         }
 
         findViewById<FrameLayout>(R.id.btnExit)?.setOnClickListener {

@@ -66,6 +66,13 @@
         app:key="@string/player_pref_key"
         app:title="@string/choose_player_title" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:summaryOff="@string/kodi_playlist_sum_off"
+        android:summaryOn="@string/kodi_playlist_sum_on"
+        app:key="kodi_playlist"
+        app:title="@string/kodi_playlist_title" />
+
     <Preference
         app:key="remove_action"
         app:summary="@string/remove_action_summary"
@@ -128,6 +135,14 @@
         android:summaryOn="@string/switch_accessibility_summary_on"
         app:key="switch_accessibility"
         app:title="@string/switch_accessibility_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:disableDependentsState="true"
+        android:summaryOff="@string/switch_disable_accessibility_on_server_switch_summary_off"
+        android:summaryOn="@string/switch_disable_accessibility_on_server_switch_summary_on"
+        app:key="switch_disable_accessibility_on_server_switch"
+        app:title="@string/switch_disable_accessibility_on_server_switch_title" />
 
     <Preference
         app:key="show_battery_save"

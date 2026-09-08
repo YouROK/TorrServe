@@ -14,32 +14,32 @@ class CategoriesFragment : TSFragment() {
 
     private val categories = listOf(
         Category(
-            R.string.category_all,
+            R.string.cat_all,
             "",
             R.drawable.round_view_list_24
         ),
         Category(
-            R.string.category_movies,
+            R.string.cat_movie,
             "movie",
             R.drawable.round_movie_24
         ),
         Category(
-            R.string.category_series,
+            R.string.cat_tv,
             "tv",
             R.drawable.round_live_tv_24
         ),
         Category(
-            R.string.category_music,
+            R.string.cat_music,
             "music",
             R.drawable.round_music_note_24
         ),
         Category(
-            R.string.category_other,
+            R.string.cat_other,
             "other",
             R.drawable.round_more_horiz_24
         ),
         Category(
-            R.string.category_uncategorized,
+            R.string.cat_none,
             "uncategorized",
             R.drawable.round_uncategorized_24
         )

@@ -18,6 +18,7 @@ object Consts {
         "com.mitv.videoplayer",
         "com.mixplorer.silver",
         "com.opera.browser",
+        "com.rs.explorer.filemanager",
         "com.tcl.browser",
         "com.tcl.ui_mediacenter",
         "nextapp.fx",

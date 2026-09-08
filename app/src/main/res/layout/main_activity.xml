@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@string/cat_none"
+                android:text="@string/cat_all"
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/all_fab"

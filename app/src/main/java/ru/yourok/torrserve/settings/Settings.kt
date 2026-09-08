@@ -12,6 +12,7 @@ import ru.yourok.torrserve.app.App
 import java.io.File
 
 object Settings {
+    private const val discoveredServerNamesKey = "discovered_server_names"
     val showFab: Boolean
         get() = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) false // TODO Fix FAB focus
         else
@@ -36,6 +37,21 @@ object Settings {
         prefs.edit { putStringSet("saved_hosts", hosts.toMutableSet()) }
     }
 
+    fun getDiscoveredServerName(host: String): String? {
+        return get<Set<String>>(discoveredServerNamesKey, emptySet())
+            .firstOrNull { it.substringBefore('\t') == host }
+            ?.substringAfter('\t')
+            ?.takeIf { it.isNotBlank() }
+    }
+
+    fun setDiscoveredServerName(host: String, name: String) {
+        val names = get<Set<String>>(discoveredServerNamesKey, emptySet())
+            .filterNot { it.substringBefore('\t') == host }
+            .toMutableSet()
+        names.add("$host\t$name")
+        set(discoveredServerNamesKey, names)
+    }
+
     fun getLastViewDonate() = get("last_view_donate", 0L)
     fun setLastViewDonate(v: Long) = set("last_view_donate", v)
 
@@ -47,6 +63,7 @@ object Settings {
     fun setChooserAction(v: Int) = set("chooser_action", v)
 
     fun isAccessibilityOn(): Boolean = get("switch_accessibility", false)
+    fun isDisableAccessibilityOnServerSwitchOn(): Boolean = get("switch_disable_accessibility_on_server_switch", true)
     fun isBootStart(): Boolean = get("boot_start", false)
     fun isRootStart(): Boolean = get("root_start", false)
     fun isWebDAVStart(): Boolean = get("webdav_start", false)
@@ -55,6 +72,7 @@ object Settings {
     fun setShowBanner(v: Boolean) = set("show_banner", v)
 
     fun showCover(): Boolean = get("show_cover", true)
+    fun kodiPlaylist(): Boolean = get("kodi_playlist", true)
     fun getTheme(): String = get("theme", "auto")
     fun setTheme(v: String) = set("theme", v)
 

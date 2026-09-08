@@ -254,7 +254,8 @@
         <receiver
             android:name=".server.local.services.HomeWatch"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            tools:targetApi="26">
             <intent-filter>
                 <action android:name="android.media.tv.action.INITIALIZE_PROGRAMS" />
                 <action android:name="android.media.tv.action.PREVIEW_PROGRAM_BROWSABLE_DISABLED" />

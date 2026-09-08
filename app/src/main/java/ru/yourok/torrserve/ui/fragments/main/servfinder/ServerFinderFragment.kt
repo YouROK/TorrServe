@@ -3,7 +3,6 @@ package ru.yourok.torrserve.ui.fragments.main.servfinder
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +25,7 @@ import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Settings
+import ru.yourok.torrserve.settings.Settings.isDisableAccessibilityOnServerSwitchOn
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.Accessibility
 import ru.yourok.torrserve.utils.Net.isValidPublicIp4
@@ -39,6 +39,7 @@ class ServerFinderFragment : TSFragment() {
 
     private val hostAdapter = HostAdapter()
     private var ips = ""
+    private var selectedServer: ServerIp? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +55,8 @@ class ServerFinderFragment : TSFragment() {
         }
 
         hostAdapter.onClick = {
-            vi.findViewById<TextInputEditText>(R.id.etHost)?.setText(it)
+            selectedServer = it
+            vi.findViewById<TextInputEditText>(R.id.etHost)?.setText(it.host)
         }
 
         vi.findViewById<Button>(R.id.btnFindHosts)?.setOnClickListener {
@@ -96,7 +98,17 @@ class ServerFinderFragment : TSFragment() {
         }
     }
 
+    override fun onDestroy() {
+        if (isViewModelInitialized()) {
+            (viewModel as ServerFinderViewModel).stopDiscovery()
+        }
+        super.onDestroy()
+    }
+
     private fun setHost() {
+        if (isViewModelInitialized()) {
+            (viewModel as ServerFinderViewModel).stopDiscovery()
+        }
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 var host = view?.findViewById<TextInputEditText>(R.id.etHost)?.text?.toString() ?: return@launch
@@ -118,11 +130,16 @@ class ServerFinderFragment : TSFragment() {
                     host += ":8090"
 
                 val oldHost = Settings.getHost()
+                val oldAuth = Settings.getServerAuth()
                 Settings.setHost(host)
+                selectedServer?.takeIf { server -> server.isMdns && server.host == host }?.let { server ->
+                    Settings.set("server_auth", server.auth)
+                }
                 if (Api.echo().startsWith("1.1.")) {
                     App.toast(R.string.not_support_old_server, true)
                     if (!TorrService.isLocal()) {
                         Settings.setHost(oldHost)
+                        Settings.set("server_auth", oldAuth)
                         return@launch
                     }
                 }
@@ -130,10 +147,13 @@ class ServerFinderFragment : TSFragment() {
                 if (ServerFile().exists() && TorrService.isLocal())
                     TorrService.start()
                 else { // unload local service in case switch to remote
-                    if (Api.echo().isNotEmpty() && Accessibility.isEnabledService(App.context))
-                        Accessibility.enableService(App.context, false)
-                    TorrService.stop()
-                    ServerFile().stop() // killall 4 sure
+                    if (Api.echo().isNotEmpty() && Accessibility.isEnabledService(App.context)) {
+                        if (isDisableAccessibilityOnServerSwitchOn()) {
+                            Accessibility.enableService(App.context, false)
+                        }
+                        TorrService.stop()
+                        ServerFile().stop() // killall 4 sure
+                    }
                 }
 
                 val lst = Settings.getHosts().toMutableList()
@@ -175,8 +195,10 @@ class ServerFinderFragment : TSFragment() {
             // add saved
             Settings.getHosts().forEach { host ->
                 status = App.context.getString(R.string.saved_server)
-                if (host == Settings.getHost())
-                    status = App.context.getString(R.string.connected_host)
+                if (host == Settings.getHost()) {
+                    val name = Settings.getDiscoveredServerName(host)
+                    status = listOfNotNull(name, App.context.getString(R.string.connected_host)).joinToString(" · ")
+                }
                 val remoteVersion: String = withContext(Dispatchers.IO) {
                     Api.remoteEcho(host) // .also {
 //                        if (it.isNotEmpty()) {
@@ -188,6 +210,7 @@ class ServerFinderFragment : TSFragment() {
             }
             // find on local network
             viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
+            (viewModel as ServerFinderViewModel).getMdnsServers().forEach { hostAdapter.add(it) }
             // java.lang.IllegalStateException: Can't access the Fragment View's LifecycleOwner when getView() is null
             // i.e., before onCreateView() or after onDestroyView()
             (viewModel as ServerFinderViewModel).getStats().observe(this@ServerFinderFragment) {

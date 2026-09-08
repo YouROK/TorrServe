@@ -7,7 +7,7 @@
     <string name="update">Обновление</string>
     <string name="settings">Настройки</string>
     <string name="exit">Выход</string>
-    <string name="exit_title">Хотите завершить приложение?</string>
+    <string name="exit_title">Хотите закрыть приложение?</string>
     <string name="exit_text">Локальный TorrServer будет остановлен после выхода, если не включен сервис специальных возможностей.</string>
     <string name="remove_all_warn">Вы хотите удалить все торренты?</string>
     <string name="share">Отправить</string>
@@ -15,13 +15,6 @@
     <string name="open_with">Открыть с помощью</string>
     <string name="show_menu">Показать главное меню</string>
     <string name="torrents">Торренты</string>
-    <string name="categories">Категории</string>
-    <string name="category_all">Все</string>
-    <string name="category_movies">Фильмы</string>
-    <string name="category_series">Сериалы</string>
-    <string name="category_music">Музыка</string>
-    <string name="category_other">Другое</string>
-    <string name="category_uncategorized">Без категории</string>
     <string name="apply">Применить</string>
     <string name="skip">Пропустить</string>
     <string name="yes">Да</string>
@@ -56,7 +49,7 @@
     <string name="dlna_friendly_name">Имя сервера DLNA</string>
     <string name="dlna_name_hint">Оставьте пустым, чтобы использовать значение по умолчанию.</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
-    <string name="disable_tcp_desc">Не отключайте без включенного μTP</string>
+    <string name="disable_tcp_desc">Не отключайте без включённого μTP</string>
     <string name="disable_utp">μTP - Micro Transport Protocol</string>
     <string name="disable_utp_desc">Не рекомендуется включать на слабых устройствах</string>
     <string name="disable_upnp">UPnP - Universal Plug and Play</string>
@@ -88,6 +81,9 @@
     <string name="use_as_default">Запомнить выбор</string>
     <string name="default_player">Плеер по умолчанию из ОС</string>
     <string name="choose_player">Всегда спрашивать</string>
+    <string name="kodi_playlist_title">Поддержка плейлистов Kodi</string>
+    <string name="kodi_playlist_sum_on">Поддержка плейлистов Kodi 22+ включена</string>
+    <string name="kodi_playlist_sum_off">Поддержка плейлистов Kodi 22+ отключена</string>
     <string name="app_theme_title">Тема оформления</string>
     <string-array name="app_theme_entries">
         <item>Как в системе</item>
@@ -176,7 +172,7 @@
     <string name="host_title">Установить URL-адрес TorrServer</string>
     <string name="host_title_hint">http://localhost:8090 – для сервера на устройстве</string>
     <string name="speedtest_title">Тест скорости до TorrServer</string>
-    <string name="speedtest_title_desc">Проверка cкорости соединения с TorrServer</string>
+    <string name="speedtest_title_desc">Проверка скорости соединения с TorrServer</string>
     <string name="host_authorization">Авторизация на сервере</string>
     <string name="host_authorization_desc">Введите имя и пароль через «:» (user:pass)</string>
     <string name="local_auth_title">Локальный TorrServer с авторизацией</string>
@@ -246,14 +242,19 @@
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
+    <string name="categories">Категории</string>
     <string name="cat_movie">Фильмы</string>
     <string name="cat_tv">Сериалы</string>
     <string name="cat_music">Музыка</string>
     <string name="cat_other">Другое</string>
-    <string name="cat_none">Все торренты</string>
+    <string name="cat_none">Без категории</string>
+    <string name="cat_all">Все торренты</string>
     <string name="accessibility_note">Отключите сервис специальных возможностей, чтобы остановить TorrServer.</string>
     <string name="torrserver_log">Журнал TorrServer</string>
     <string name="torrserver_log_summary">Просмотр журнала локального TorrServer</string>
     <string name="torrserver_log_cleared">Журнал TorrServer очищен</string>
     <string name="torrserver_log_trimmed">Лог обрезан (показаны последние %s)</string>
+    <string name="switch_disable_accessibility_on_server_switch_title">Отключение сервиса специальных возможностей при смене сервера</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Сервис специальных возможностей будет отключён при переключении с локального на удалённый сервер</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Сервис специальных возможностей не будет отключён при переключении с локального на удалённый сервер</string>
 </resources>

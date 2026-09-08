@@ -15,19 +15,26 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvHost"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:paddingStart="12dp"
-            android:paddingLeft="12dp"
-            android:paddingTop="1dp"
-            android:paddingEnd="12dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="3dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="http://localhost:8090" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvHost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:paddingStart="12dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="1dp"
+                android:paddingEnd="4dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="3dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:text="http://localhost:8090" />
+
+        </LinearLayout>
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
@@ -90,5 +97,19 @@
         android:visibility="invisible"
         tools:text="@string/online"
         tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/ivMdns"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_toStartOf="@id/tvOnline"
+        android:layout_toLeftOf="@id/tvOnline"
+        android:contentDescription="@string/find_hosts"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_wifi"
+        app:tint="?attr/colorHost" />
 
 </RelativeLayout>
