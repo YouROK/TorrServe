@@ -61,6 +61,13 @@ class TorrentsFragment : TSFragment() {
         super.onResume()
         lifecycleScope.launch {
             start()
+
+            val category =
+                arguments?.getString("category") ?: ""
+
+            if (category.isNotEmpty()) {
+                filter(category)
+            }
         }
     }
 
@@ -96,7 +103,9 @@ class TorrentsFragment : TSFragment() {
     suspend fun filter(cat: String = "") = withContext(Dispatchers.Main) {
         val data = (viewModel as TorrentsViewModel).getData()
         data.observe(this@TorrentsFragment) { list ->
-            val fltList = if (cat.isNotBlank())
+            val fltList = if (cat == "uncategorized")
+                list.filter { it.category.isNullOrBlank() }
+            else if (cat.isNotBlank())
                 list.filter { it.category?.contains(cat, true) == true }
             else
                 list

@@ -298,6 +298,7 @@
     <string name="not_used">未使用</string>
     <string name="not_installed">未安装</string>
 
+    <string name="categories">分类</string>
     <string name="cat_movie">电影</string>
     <string name="cat_tv">电视剧</string>
     <string name="cat_music">音乐</string>

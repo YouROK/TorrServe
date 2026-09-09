@@ -243,6 +243,7 @@
     <string name="install_ffprobe">Встановити FFProbe</string>
     <string name="delete_ffprobe">Видалити FFProbe</string>
     <string name="ffprobe_summary">Завантажте FFProbe для отримання даних про відео, таких як тривалість, бітрейт тощо.</string>
+    <string name="categories">Категорії</string>
     <string name="cat_movie">Фільми</string>
     <string name="cat_tv">Серіал</string>
     <string name="cat_music">Музика</string>

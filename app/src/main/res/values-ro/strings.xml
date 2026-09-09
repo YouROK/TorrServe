@@ -218,9 +218,9 @@
     <string name="accessibility_service_description">Activarea acestui serviciu poate preveni oprirea TorrServer-ului local de către sistem</string>
     <string name="switch_accessibility_title">Serviciu de accesibilitate</string>
     <string name="switch_accessibility_summary_on">Apasă pentru a dezactiva serviciul TorrServe</string>
-    <string name="switch_disable_accessibility_on_server_switch_title">Disable Accessibility Service on server switch</string>
-    <string name="switch_disable_accessibility_on_server_switch_summary_on">Accessibility Service will be disabled when switching from local to remote server</string>
-    <string name="switch_disable_accessibility_on_server_switch_summary_off">Accessibility Service will not be disabled when switching from local to remote server</string>
+    <string name="switch_disable_accessibility_on_server_switch_title">Dezactivează serviciul de accesibilitate la comutarea serverului</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_on">Serviciul de accesibilitate va fi dezactivat la trecerea de la serverul local la cel de la distanță</string>
+    <string name="switch_disable_accessibility_on_server_switch_summary_off">Serviciul de accesibilitate nu va fi dezactivat la trecerea de la serverul local la serverul de la distanță</string>
     <string name="stat_string_added">Torrent adăugat</string>
     <string name="stat_string_info">Obținere informații</string>
     <string name="stat_string_preload">Preîncărcare</string>
@@ -245,6 +245,7 @@
     <string name="no_updates">Nu există actualizări</string>
     <string name="not_used">Inactiv</string>
     <string name="not_installed">Neinstalat</string>
+    <string name="categories">Categorii</string>
     <string name="cat_movie">Filme</string>
     <string name="cat_tv">Seriale</string>
     <string name="cat_music">Muzică</string>

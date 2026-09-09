@@ -242,6 +242,7 @@
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
+    <string name="categories">Категории</string>
     <string name="cat_movie">Фильмы</string>
     <string name="cat_tv">Сериалы</string>
     <string name="cat_music">Музыка</string>

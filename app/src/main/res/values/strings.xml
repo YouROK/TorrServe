@@ -303,6 +303,7 @@
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>
 
+    <string name="categories">Categories</string>
     <string name="cat_movie">Movies</string>
     <string name="cat_tv">Series</string>
     <string name="cat_music">Music</string>
