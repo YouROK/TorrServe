@@ -235,22 +235,34 @@ class ServerFinderFragment : TSFragment() {
 
     private fun getLocalIP(): String {
         val interfaces: Enumeration<NetworkInterface> = NetworkInterface.getNetworkInterfaces()
-        val ret = mutableListOf<InterfaceAddress>()
+        val ret = mutableListOf<String>()
+        var hasVpn = false
+
         while (interfaces.hasMoreElements()) {
             val networkInterface: NetworkInterface = interfaces.nextElement()
-            if (networkInterface.isLoopback) // skip loopback
-                continue
-            if (networkInterface.isPointToPoint) // skip ptp / vpn
-                continue
+            if (networkInterface.isLoopback) continue // skip loopback
+
+            val name = networkInterface.name
+            if (name.startsWith("tun") || name.startsWith("ppp") ||
+                name.startsWith("tap") || name.startsWith("wg") ||
+                name.startsWith("utun")
+            ) {
+                hasVpn = true
+                continue // don't collect VPN addresses
+            }
+
+            if (networkInterface.isPointToPoint) continue // skip other ptp
+
             for (interfaceAddress in networkInterface.interfaceAddresses) {
                 val ip = interfaceAddress.address
                 if (ip is Inet4Address && !isValidPublicIp4(ip.hostAddress)) {
-                    ret.add(interfaceAddress)
+                    ret.add(ip.hostAddress)
                 }
             }
         }
 
-        return ret.joinToString(", ") { it.address.hostAddress ?: "" }
+        if (hasVpn) ret.add("VPN")
+        return ret.joinToString(", ")
     }
 
 }
