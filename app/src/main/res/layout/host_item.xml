@@ -109,7 +109,7 @@
         android:layout_toLeftOf="@id/tvOnline"
         android:contentDescription="@string/find_hosts"
         android:visibility="gone"
-        app:srcCompat="@drawable/ic_wifi"
+        app:srcCompat="@drawable/ic_mdns"
         app:tint="?attr/colorHost" />
 
 </RelativeLayout>
