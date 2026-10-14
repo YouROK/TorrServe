@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.Build
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,6 +36,7 @@ data class ServerIp(
     val isMdns: Boolean = false,
 ) {
     override fun equals(other: Any?): Boolean = other is ServerIp && other.host == host
+    override fun hashCode(): Int = host.hashCode()
 }
 
 class ServerFinderViewModel : ViewModel() {
@@ -53,13 +55,13 @@ class ServerFinderViewModel : ViewModel() {
     private val nsdLock = Any()
     private val resolvingServices = Collections.synchronizedSet(mutableSetOf<String>())
     private val discoveredHosts = Collections.synchronizedSet(mutableSetOf<String>())
-    private val mdnsServers = Collections.synchronizedMap(mutableMapOf<String, ServerIp>())
     private val pendingServices = ArrayDeque<NsdServiceInfo>()
     private var isResolvingService = false
     private val nsdManager by lazy {
         App.context.getSystemService(Context.NSD_SERVICE) as NsdManager
     }
     private var discoveryListener: NsdManager.DiscoveryListener? = null
+    private val localIps = Collections.synchronizedSet(mutableSetOf<String>())
 
     fun getStats(): LiveData<String> = (stats ?: MutableLiveData<String>().also { stats = it })
 
@@ -72,12 +74,18 @@ class ServerFinderViewModel : ViewModel() {
             if (isWork) return
             isWork = true
         }
+        val ifaces = getIFaces()
+        localIps.clear()
+        ifaces.forEach { iface ->
+            iface.address?.hostAddress?.let { localIps.add(it) }
+        }
         discoveryJob = viewModelScope.launch(Dispatchers.IO) {
             onFinish?.postValue(false)
             resolvingServices.clear()
+            discoveredHosts.clear()
             try {
                 startMdnsDiscovery()
-                getIFaces().forEach { iface -> scanInterface(iface) }
+                ifaces.forEach { iface -> scanInterface(iface) }
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
@@ -99,8 +107,6 @@ class ServerFinderViewModel : ViewModel() {
         discoveryJob = null
         stopMdnsDiscovery()
     }
-
-    fun getMdnsServers(): List<ServerIp> = synchronized(mdnsServers) { mdnsServers.values.toList() }
 
     private suspend fun scanInterface(iface: InterfaceAddress) {
         val local = iface.address?.hostAddress ?: return
@@ -132,8 +138,6 @@ class ServerFinderViewModel : ViewModel() {
             if (discoveryListener != null) return
             pendingServices.clear()
             isResolvingService = false
-            discoveredHosts.clear()
-            mdnsServers.clear()
             val listener = object : NsdManager.DiscoveryListener {
                 override fun onDiscoveryStarted(serviceType: String) = Unit
 
@@ -172,7 +176,6 @@ class ServerFinderViewModel : ViewModel() {
         val listener = synchronized(nsdLock) {
             pendingServices.clear()
             isResolvingService = false
-            mdnsServers.clear()
             discoveryListener.also { discoveryListener = null }
         } ?: return
         try {
@@ -233,15 +236,17 @@ class ServerFinderViewModel : ViewModel() {
     }
 
     private fun publishMdnsServer(host: String, version: String, auth: String, serviceName: String) {
+        // Skip servers that live on one of our own interfaces.
+        val resolvedHost = host.toUri().host   // "192.168.1.50" or "fe80::1"
+        if (resolvedHost != null && resolvedHost in localIps) {
+            return
+        }
         val status = if (host == Settings.getHost()) {
             "$serviceName · ${App.context.getString(R.string.connected_host)}"
         } else {
             serviceName
         }
         Settings.setDiscoveredServerName(host, serviceName)
-        synchronized(mdnsServers) {
-            mdnsServers[host] = ServerIp(host, version, status, auth, isMdns = true)
-        }
         // The IP-range scan may have published this URL already. Emit the mDNS
         // version as well so the UI can upgrade that row with its source and auth.
         discoveredHosts.add(host)
@@ -270,7 +275,7 @@ class ServerFinderViewModel : ViewModel() {
         while (interfaces.hasMoreElements()) {
             val networkInterface = interfaces.nextElement()
             if (networkInterface.isLoopback || networkInterface.isPointToPoint) continue
-            networkInterface.interfaceAddresses.forEach { interfaceAddress ->
+            networkInterface.interfaceAddresses?.forEach { interfaceAddress ->
                 val ip = interfaceAddress.address
                 if (ip is Inet4Address && !isValidPublicIp4(ip.hostAddress)) ret.add(interfaceAddress)
             }
