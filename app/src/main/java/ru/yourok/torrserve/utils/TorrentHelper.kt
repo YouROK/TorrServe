@@ -61,6 +61,11 @@ object TorrentHelper {
         } ?: emptyList()
     }
 
+    fun isSubtitles(path: String): Boolean {
+        val ext = File(path).extension.lowercase()
+        return Mime.extSub.contains(ext)
+    }
+
     fun waitFiles(hash: String): Torrent? {
         var count = 0
         while (true) {

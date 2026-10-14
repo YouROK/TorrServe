@@ -17,6 +17,15 @@ object Mime {
         return "*/*"
     }
 
+    fun subtitleMimeType(extension: String): String {
+        return when (extension) {
+            "ssa", "ass" -> "text/x-ssa"
+            "vtt" -> "text/x-vtt"
+            "ttml", "xml", "dfxp" -> "application/ttml+xml"
+            else -> "application/x-subrip"
+        }
+    }
+
     val extVideo = listOf(
         "3g2",
         "3gp",
@@ -87,5 +96,15 @@ object Mime {
         "wv",
         "wvc",
         "xm",
+    )
+
+    val extSub = listOf(
+        "srt",
+        "ssa",
+        "ass",
+        "vtt",
+        "ttml",
+        "xml",
+        "dfxp"
     )
 }

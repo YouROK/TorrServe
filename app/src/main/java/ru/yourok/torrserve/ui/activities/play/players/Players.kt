@@ -2,9 +2,7 @@ package ru.yourok.torrserve.ui.activities.play.players
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import androidx.core.net.toUri
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
@@ -13,7 +11,6 @@ import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
 import ru.yourok.torrserve.utils.TorrentHelper
-import java.io.File
 import java.util.Locale
 
 object Players {
@@ -65,6 +62,12 @@ object Players {
             if (kodiIntent.resolveActivity(App.context.packageManager) != null)
                 return kodiIntent
         }
+        // Magnet Series player
+        if (player == "com.github.magnetseries.atv") {
+            val msIntent = MagnetSeries.getIntent(player, torrent, index)
+            if (msIntent.resolveActivity(App.context.packageManager) != null)
+                return msIntent
+        }
         // user defined player
         if (player.isNotEmpty()) {
             intent.`package` = player
@@ -78,7 +81,7 @@ object Players {
 
     fun getList(): List<Pair<String, String>> {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp4")), "video/*")
+        intent.setDataAndType("http://localhost/file.mp4".toUri(), "video/*")
         var apps = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
         } else {
@@ -94,7 +97,7 @@ object Players {
             }
         }
 
-        intent.setDataAndType(Uri.fromFile(File(Environment.getExternalStorageDirectory().path, "file.mp3")), "audio/*")
+        intent.setDataAndType("http://localhost/file.mp3".toUri(), "audio/*")
         apps = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
         } else {
