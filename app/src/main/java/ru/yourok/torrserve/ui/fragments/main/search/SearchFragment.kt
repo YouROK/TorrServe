@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
-import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.ui.activities.play.PlayActivity
@@ -52,7 +51,6 @@ class SearchFragment : TSFragment() {
                 intent.putExtra("poster", torr.poster)
                 intent.putExtra("action", "play")
                 App.context.startActivity(intent)
-                popBackStackFragment()
             }
         }
         return vi
