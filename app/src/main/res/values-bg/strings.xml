@@ -243,6 +243,10 @@
     <string name="no_updates">Не са намерени ъпдейти</string>
     <string name="not_used">Не се използва</string>
     <string name="not_installed">Не е инсталирано</string>
+    <string name="search">Търсене</string>
+    <string name="search_hint">Търсене в добавените торенти</string>
+    <string name="nothing_found">Няма намерени резултати</string>
+
     <string name="categories">Категории</string>
     <string name="cat_movie">Филми</string>
     <string name="cat_tv">Сериал</string>
