@@ -24,9 +24,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
@@ -35,6 +40,7 @@ import ru.yourok.torrserve.ext.normalize
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
 import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.server.models.torrent.TorrentDetails
 import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
@@ -47,11 +53,19 @@ class AddFragment : TSFragment() {
 
     private val torrsAdapter = TorrentsAdapter()
     private var jobSearch: Job? = null
+    private var rutorEnabled = false
+    private var torznabEnabled = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.add_fragment, container, false)
+    }
+
+    override fun onDestroyView() {
+        // a search still running is cancelled with the fragment and never hides the progress itself
+        activity?.findViewById<View>(R.id.progressBar)?.visibility = View.GONE
+        super.onDestroyView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,15 +96,21 @@ class AddFragment : TSFragment() {
             // SEARCH and CATEGORY
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
-                    val rutorEnabled = loadSettings()?.EnableRutorSearch == true
+                    val sets = loadSettings()
+                    rutorEnabled = sets?.EnableRutorSearch == true
+                    torznabEnabled = sets?.EnableTorznabSearch == true
                     val categoryEnabled = Api.getMatrixVersionInt() > 131
                     withContext(Dispatchers.Main) {
                         findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
-                            visibility = if (rutorEnabled)
+                            visibility = if (rutorEnabled || torznabEnabled)
                                 View.VISIBLE
                             else
                                 View.GONE
+                            hint = listOfNotNull(getString(R.string.rutor).takeIf { rutorEnabled }, "Torznab".takeIf { torznabEnabled }).joinToString(" + ")
                         }
+                        // search shows up after the form already took focus, move it to the top row
+                        if ((rutorEnabled || torznabEnabled) && findViewById<View>(R.id.etMagnet)?.hasFocus() == true)
+                            findViewById<View>(R.id.etSearch)?.requestFocus()
                         findViewById<TextInputLayout>(R.id.tvCategory)?.apply {
                             visibility = if (categoryEnabled)
                                 View.VISIBLE
@@ -106,14 +126,7 @@ class AddFragment : TSFragment() {
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         jobSearch?.cancel()
                         jobSearch = lifecycleScope.launch(Dispatchers.IO) {
-                            val result = try {
-                                Api.searchTorrents(textView.text.toString().trim())
-                            } catch (e: Exception) {
-                                e.message?.let {
-                                    App.toast(it)
-                                }
-                                null
-                            }
+                            val result = search(textView.text.toString().trim())
                             result?.let {
                                 if (BuildConfig.DEBUG) Log.d("*****", "onTextChanged: ${it.size}")
                                 if (it.isNotEmpty())
@@ -136,15 +149,9 @@ class AddFragment : TSFragment() {
                         if (query.isNotBlank() && query.length >= 3) {
                             jobSearch?.cancel()
                             jobSearch = lifecycleScope.launch(Dispatchers.IO) {
-                                if (BuildConfig.DEBUG) Log.d("*****", "Api.searchTorrents($query)")
-                                val result = try {
-                                    Api.searchTorrents(query)
-                                } catch (e: Exception) {
-                                    e.message?.let {
-                                        App.toast(it)
-                                    }
-                                    null
-                                }
+                                delay(700) // debounce: a cancelled job can't abort a running HTTP request
+                                if (BuildConfig.DEBUG) Log.d("*****", "search($query)")
+                                val result = search(query)
                                 result?.let {
                                     if (BuildConfig.DEBUG) Log.d("*****", "onTextChanged: ${it.size}")
                                     if (it.isNotEmpty())
@@ -167,6 +174,7 @@ class AddFragment : TSFragment() {
             // RESULTS
             findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
                 setHasFixedSize(true)
+                isFocusable = false // only rows take focus, else Tab lands on the empty list behind the form
                 layoutManager = LinearLayoutManager(context)
                 adapter = torrsAdapter
                 addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
@@ -175,7 +183,7 @@ class AddFragment : TSFragment() {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
                         val category = it.Categories.normalize()
-                        val torrent = addTorrent("", it.Magnet, it.Title, "", category, "", true)
+                        val torrent = addTorrent("", it.Magnet.ifBlank { it.Link }, it.Title, "", category, "", true)
                         torrent?.let { App.toast("${App.context.getString(R.string.stat_string_added)}: ${it.title}", true) } ?: App.toast(R.string.error_add_torrent)
                     } catch (e: Exception) {
                         App.toast(e.message ?: App.context.getString(R.string.error_add_torrent))
@@ -187,13 +195,13 @@ class AddFragment : TSFragment() {
                 lifecycleScope.launch(Dispatchers.IO) {
                     val category = it.Categories.normalize()
                     val torrent: Torrent
-                    val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
+                    val torr = addTorrent("", it.Magnet.ifBlank { it.Link }, it.Title, "", category, "", false) ?: let {
                         return@launch
                     }
                     torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
                         return@launch
                     }
-                    TorrentHelper.showFFPInfo(view.context, it.Magnet, torrent)
+                    TorrentHelper.showFFPInfo(view.context, it.Magnet.ifBlank { it.Link }, torrent)
                 }
             }
             // SORT
@@ -223,13 +231,13 @@ class AddFragment : TSFragment() {
                                 lifecycleScope.launch(Dispatchers.IO) {
                                     val category = it.Categories.normalize()
                                     val torrent: Torrent
-                                    val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
+                                    val torr = addTorrent("", it.Magnet.ifBlank { it.Link }, it.Title, "", category, "", false) ?: let {
                                         return@launch
                                     }
                                     torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
                                         return@launch
                                     }
-                                    TorrentHelper.showFFPInfo(rv.context, it.Magnet, torrent)
+                                    TorrentHelper.showFFPInfo(rv.context, it.Magnet.ifBlank { it.Link }, torrent)
                                 }
                             }
                         }
@@ -259,11 +267,11 @@ class AddFragment : TSFragment() {
                 App.toast(R.string.sort_by_name)
             }
 
-            1 -> { // 10.22 GB
+            1 -> { // 10.22 GB (RuTor), 4.7 GCiB (Torznab)
                 val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { td ->
-                    if (td.Size.contains("GB", true))
+                    if (td.Size.contains("G", true))
                         td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 * 1024 }
-                    else if (td.Size.contains("MB", true))
+                    else if (td.Size.contains("M", true))
                         td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 }
                     else
                         td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()
@@ -331,6 +339,28 @@ class AddFragment : TSFragment() {
     private fun hideSortFab() {
         val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
         fab?.hide()
+    }
+
+    // null when every enabled source failed, so the caller keeps the previous results
+    private suspend fun search(query: String): List<TorrentDetails>? = supervisorScope {
+        showProgress()
+        try {
+            listOfNotNull(
+                if (rutorEnabled) async { Api.searchTorrents(query) } else null,
+                if (torznabEnabled) async { Api.searchTorznab(query) } else null,
+            ).mapNotNull {
+                try {
+                    it.await()
+                } catch (e: Exception) {
+                    if (e is CancellationException) throw e
+                    e.message?.let { msg -> App.toast(msg) }
+                    null
+                }
+            }.takeIf { it.isNotEmpty() }?.flatten()
+        } finally {
+            // a cancelled search was replaced by a newer one, which keeps the progress on
+            if (isActive) hideProgress()
+        }
     }
 
     private fun loadSettings(): BTSets? {
