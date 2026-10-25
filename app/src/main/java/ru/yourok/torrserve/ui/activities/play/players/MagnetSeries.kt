@@ -9,6 +9,7 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.local.services.PlaybackPositionReceiver
 import ru.yourok.torrserve.server.local.services.PlaybackPositionReceiver.PlaybackState
+import ru.yourok.torrserve.server.models.torrent.FileStat
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.utils.SubtitlesMatcher
 import ru.yourok.torrserve.utils.TorrentHelper
@@ -26,6 +27,9 @@ object MagnetSeries {
     private const val KEY_POSITION = "position"
     private const val KEY_DURATION = "duration"
 
+    /** Request type telling the player its items are the files of a Blu-ray disc rip. */
+    private const val BLURAY_MIME_TYPE = "application/vnd.magnetseries.bluray"
+
     /**
      * [callback] is the one provided by the app that called TorrServe, so the player reports to it;
      * without it the player reports to TorrServe itself.
@@ -38,6 +42,9 @@ object MagnetSeries {
         callback: PendingIntent? = null,
         viewed: List<Viewed> = emptyList()
     ): Intent {
+        TorrentHelper.findDisc(torrent, index)?.let { disc ->
+            return getDiscIntent(pkg, torrent, index, disc, callback, viewed)
+        }
         val playable = TorrentHelper.getPlayableFiles(torrent)
         if (playable.isEmpty()) {
             return Intent()
@@ -75,18 +82,64 @@ object MagnetSeries {
 
         return Intent(Intent.ACTION_VIEW).apply {
             setDataAndType("http://localhost/file.mp4".toUri(), "video/*")
-            addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
             setPackage(pkg)
-            putExtra("extra_playlist", Bundle().apply {
-                putInt("start_index", startIndex)
-                putLong("start_position", (startPosition * 1000).toLong()) // ms
-                putParcelableArrayList("playlist_items", ArrayList(fileItems))
-            })
-            putExtra(
-                KEY_PLAYBACK_CALLBACK,
-                callback ?: PlaybackPositionReceiver.pendingIntent(App.context, PACKAGE, torrent.hash, playable.map { it.id })
-            )
+            putPlaylist(torrent, playable, fileItems, startIndex, startPosition, callback)
         }
+    }
+
+    /**
+     * A disc rip plays as a disc: the player gets the disc files with their paths and opens the title
+     * menu, or resumes the title (`.mpls`) left part-way. History is reported under the title's index.
+     */
+    private fun getDiscIntent(
+        pkg: String,
+        torrent: Torrent,
+        index: Int,
+        disc: List<FileStat>,
+        callback: PendingIntent?,
+        viewed: List<Viewed>
+    ): Intent {
+        val fileItems = disc.map { f ->
+            Bundle().apply {
+                putString("uri", TorrentHelper.getFileLink(torrent, f))
+                putString("name", File(f.path).name)
+                putString("path", f.path)
+            }
+        }
+        // several titles may have positions, the longest one is most likely the feature
+        val resume = disc.withIndex()
+            .filter { TorrentHelper.isDiscPlaylist(it.value.path) }
+            .mapNotNull { (idx, f) -> viewed.find { it.file_index == f.id }?.timecode?.takeIf { it > 0 }?.let { idx to it } }
+            .maxByOrNull { it.second }
+        // any other disc item opens the title menu; index.bdmv is not one, so fall back to the largest stream
+        val startIndex = resume?.first
+            ?: disc.indexOfFirst { it.id == index }.takeIf { it >= 0 }
+            ?: disc.indices.maxBy { disc[it].length }
+        return Intent(Intent.ACTION_VIEW).apply {
+            type = BLURAY_MIME_TYPE
+            setPackage(pkg)
+            putPlaylist(torrent, disc, fileItems, startIndex, resume?.second ?: 0.0, callback)
+        }
+    }
+
+    private fun Intent.putPlaylist(
+        torrent: Torrent,
+        files: List<FileStat>,
+        fileItems: List<Bundle>,
+        startIndex: Int,
+        startPosition: Double,
+        callback: PendingIntent?
+    ) {
+        addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+        putExtra("extra_playlist", Bundle().apply {
+            putInt("start_index", startIndex)
+            putLong("start_position", (startPosition * 1000).toLong()) // ms
+            putParcelableArrayList("playlist_items", ArrayList(fileItems))
+        })
+        putExtra(
+            KEY_PLAYBACK_CALLBACK,
+            callback ?: PlaybackPositionReceiver.pendingIntent(App.context, PACKAGE, torrent.hash, files.map { it.id })
+        )
     }
 
     /** Last states of the playback session the player filled into the callback intent. */
