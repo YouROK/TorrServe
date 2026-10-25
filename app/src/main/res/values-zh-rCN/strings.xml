@@ -122,6 +122,9 @@
 
     <string name="torrent_link">种子链接</string>
     <string name="torrent_link_help">输入种子 URL / 磁力链接 / 哈希</string>
+    <string name="search_help">您的查询</string>
+    <string name="search">搜索</string>
+    <string name="sort">排序</string>
     <string name="title">标题</string>
     <string name="poster">海报</string>
     <string name="poster_link">海报链接</string>

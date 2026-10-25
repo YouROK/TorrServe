@@ -17,7 +17,11 @@
             android:layout_height="wrap_content"
             android:hint="@string/rutor"
             android:visibility="gone"
-            app:helperText="Venom 2018"
+            app:endIconContentDescription="@string/search"
+            app:endIconDrawable="@drawable/round_search_24"
+            app:endIconMode="custom"
+            app:helperText="@string/search_help"
+            app:suffixText=" "
             app:helperTextEnabled="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,6 +31,7 @@
                 android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -135,22 +140,21 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <!-- same background and tint as the search field's end icon, just left of it -->
+    <ImageButton
         android:id="@+id/sortFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="end|top"
         android:layout_marginTop="22dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:contentDescription="@string/show_menu"
-        android:scaleType="center"
+        android:layout_marginEnd="65dp"
+        android:layout_marginRight="65dp"
+        android:background="?attr/actionBarItemBackground"
+        android:contentDescription="@string/sort"
         android:visibility="gone"
-        app:fabCustomSize="32dp"
-        app:fabSize="mini"
-        app:maxImageSize="24dp"
         app:srcCompat="@drawable/round_sort_24"
-        app:tint="@null"
+        app:tint="@color/mtrl_outlined_icon_tint"
+        tools:ignore="PrivateResource"
         tools:visibility="visible" />
 
     <LinearLayout

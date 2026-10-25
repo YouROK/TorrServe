@@ -119,6 +119,9 @@
 
     <string name="torrent_link">Torrent URL</string>
     <string name="torrent_link_help">Enter Torrent URL / Magnet / Hash</string>
+    <string name="search_help">Your query</string>
+    <string name="search">Search</string>
+    <string name="sort">Sort</string>
     <string name="title">Title</string>
     <string name="poster">Poster</string>
     <string name="poster_link">Poster URL</string>
