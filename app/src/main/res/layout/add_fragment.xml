@@ -21,10 +21,10 @@
             app:endIconDrawable="@drawable/round_search_24"
             app:endIconMode="custom"
             app:helperText="@string/search_help"
-            app:suffixText=" "
             app:helperTextEnabled="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:suffixText=" "
             tools:visibility="visible">
 
             <com.google.android.material.textfield.TextInputEditText

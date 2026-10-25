@@ -269,7 +269,10 @@ class AddFragment : TSFragment() {
             val result = search(query)
             withContext(Dispatchers.Main) {
                 when {
-                    result == null -> { lastQuery = "" } // every source failed, let the same query retry
+                    result == null -> {
+                        lastQuery = "" // every source failed, let the same query retry
+                    }
+
                     result.isNotEmpty() -> {
                         torrsAdapter.set(result)
                         view?.findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.GONE
