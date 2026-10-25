@@ -1,5 +1,6 @@
 package ru.yourok.torrserve.ui.activities.play.players
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -7,6 +8,7 @@ import androidx.core.net.toUri
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.app.Consts.PLAYERS_BLACKLIST
+import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
@@ -15,7 +17,17 @@ import java.util.Locale
 
 object Players {
 
-    fun getIntent(torrent: Torrent, index: Int, selectedPlayer: String?): Intent? {
+    /**
+     * [callback]: playback result callback provided by the app that called TorrServe, if any.
+     * [viewed]: viewed files of [torrent] with stored playback positions, for players that can resume.
+     */
+    fun getIntent(
+        torrent: Torrent,
+        index: Int,
+        selectedPlayer: String?,
+        callback: PendingIntent? = null,
+        viewed: List<Viewed> = emptyList()
+    ): Intent? {
         val file = TorrentHelper.findFile(torrent, index) ?: throw Exception("file in torrent not found")
         val link = TorrentHelper.getTorrentPlayLink(torrent, index)
         var player = Settings.getPlayer()
@@ -63,8 +75,8 @@ object Players {
                 return kodiIntent
         }
         // Magnet Series player
-        if (player == "com.github.magnetseries.atv") {
-            val msIntent = MagnetSeries.getIntent(player, torrent, index)
+        if (player == MagnetSeries.PACKAGE) {
+            val msIntent = MagnetSeries.getIntent(player, torrent, index, callback, viewed)
             if (msIntent.resolveActivity(App.context.packageManager) != null)
                 return msIntent
         }
