@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.yourok.torrserve.server.api.Api
+import ru.yourok.torrserve.ui.activities.play.players.JustPlus
 import ru.yourok.torrserve.ui.activities.play.players.MagnetSeries
 
 /**
@@ -87,7 +88,8 @@ class PlaybackPositionReceiver : BroadcastReceiver() {
 
         /** Result parsers by player id. */
         private val parsers: Map<String, (Intent) -> List<PlaybackState>> = mapOf(
-            MagnetSeries.PACKAGE to MagnetSeries::parseResult
+            MagnetSeries.PACKAGE to MagnetSeries::parseResult,
+            JustPlus.PACKAGE to JustPlus::parseResult
         )
 
         /**

@@ -54,6 +54,12 @@ object Players {
             if (dddIntent.resolveActivity(App.context.packageManager) != null)
                 return dddIntent
         }
+        // Just+ player
+        if (JustPlus.isJustPlus(player)) {
+            val jpIntent = JustPlus.getIntent(player, torrent, index, callback, viewed)
+            if (jpIntent.resolveActivity(App.context.packageManager) != null)
+                return jpIntent
+        }
         // MX player
         if (player.contains("com.mxtech.videoplayer", true)) {
             val mxIntent = MX.getIntent(player, torrent, index)
