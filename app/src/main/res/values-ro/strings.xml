@@ -46,6 +46,8 @@
     <string name="enable_dlna">Server media DLNA</string>
     <string name="enable_bonjour">Bonjour (mDNS)</string>
     <string name="enable_bonjour_desc">Anunțați în rețeaua locală pentru descoperire (mDNS)</string>
+    <string name="track_timecode">Salvați poziția de redare</string>
+    <string name="track_timecode_desc">Memorează poziția la care s-a oprit redarea fișierelor vizionate</string>
     <string name="dlna_friendly_name">Nume server DLNA</string>
     <string name="dlna_name_hint">Lasă gol pentru a folosi valoarea implicită.</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>

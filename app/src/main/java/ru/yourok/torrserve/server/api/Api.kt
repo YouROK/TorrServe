@@ -132,9 +132,10 @@ object Api {
         return Gson().fromJson(resp, Array<Viewed>::class.java).toList()
     }
 
-    fun setViewed(hash: String, index: Int) {
+    /// timecode: playback position in seconds, stored only when the server tracks timecodes
+    fun setViewed(hash: String, index: Int, timecode: Double = 0.0) {
         val host = Net.getHostUrl("/viewed")
-        val req = ViewedReq("set", hash, index).toString()
+        val req = ViewedReq("set", hash, index, timecode).toString()
         postJson(host, req)
     }
 

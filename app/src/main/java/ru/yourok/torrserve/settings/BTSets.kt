@@ -46,4 +46,6 @@ data class BTSets(
     var EnableBonjour: Boolean,
     // FS
     var ShowFSActiveTorr: Boolean,
+    // Viewed
+    var TrackTimecode: Boolean,
 )

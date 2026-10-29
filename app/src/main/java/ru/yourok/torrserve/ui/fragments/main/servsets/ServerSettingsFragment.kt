@@ -128,13 +128,15 @@ class ServerSettingsFragment : TSFragment() {
                     vi.findViewById<TextInputLayout>(R.id.tvProxyList)?.visibility = View.VISIBLE
                 }
             }
-            if (ver > 141) // MatriX.142 add LPD
+            if (ver > 141) // MatriX.142 add LPD / Viewed timecode
             {
                 withContext(Dispatchers.Main) {
                     vi.findViewById<SwitchMaterial>(R.id.cbEnableLPD)?.visibility = View.VISIBLE
                     vi.findViewById<TextView>(R.id.tvEnableLPD)?.visibility = View.VISIBLE
                     vi.findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.visibility = View.VISIBLE
                     vi.findViewById<TextView>(R.id.tvLPDIPv6)?.visibility = View.VISIBLE
+                    vi.findViewById<SwitchMaterial>(R.id.cbTrackTimecode)?.visibility = View.VISIBLE
+                    vi.findViewById<TextView>(R.id.tvTrackTimecode)?.visibility = View.VISIBLE
                 }
             }
             if (ver > 142) // MatriX.143 add Bonjour
@@ -245,6 +247,7 @@ class ServerSettingsFragment : TSFragment() {
                     findViewById<SwitchMaterial>(R.id.cbEnableLPD)?.isChecked = sets.EnableLPD
                     findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.isChecked = sets.LPDIPv6
                     findViewById<SwitchMaterial>(R.id.cbEnableBonjour)?.isChecked = sets.EnableBonjour
+                    findViewById<SwitchMaterial>(R.id.cbTrackTimecode)?.isChecked = sets.TrackTimecode
                 }
                 if (BuildConfig.DEBUG)
                     findViewById<SwitchMaterial>(R.id.cbEnableDebug)?.visibility = View.VISIBLE
@@ -297,7 +300,9 @@ class ServerSettingsFragment : TSFragment() {
                     EnableBonjour = findViewById<SwitchMaterial>(R.id.cbEnableBonjour)?.isChecked ?: true, // def true
                     // LPD (MatriX.142)
                     EnableLPD = findViewById<SwitchMaterial>(R.id.cbEnableLPD)?.isChecked ?: true, // def true
-                    LPDIPv6 = findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.isChecked ?: false // def false
+                    LPDIPv6 = findViewById<SwitchMaterial>(R.id.cbLPDIPv6)?.isChecked ?: false, // def false
+                    // Viewed (MatriX.142)
+                    TrackTimecode = findViewById<SwitchMaterial>(R.id.cbTrackTimecode)?.isChecked ?: false // def false
                 )
                 btsets?.let { sets ->
                     withContext(Dispatchers.IO) {

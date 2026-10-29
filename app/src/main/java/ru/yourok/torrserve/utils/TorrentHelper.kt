@@ -21,6 +21,8 @@ object TorrentHelper {
     const val T_STATE_CLOSED = 4
     const val T_STATE_INDB = 5
 
+    private val DISC_DIRS = setOf("PLAYLIST", "CLIPINF", "STREAM")
+
     fun getPlayableFiles(torr: Torrent): List<FileStat> {
         if (torr.file_stats.isNullOrEmpty())
             return emptyList()
@@ -119,6 +121,43 @@ object TorrentHelper {
                 return it
         }
         return null
+    }
+
+    /**
+     * Blu-ray disc the file [index] belongs to (its `index.bdmv` or a playlist, clip info or stream):
+     * playlists, clip infos and streams of the disc, in torrent order. Null when it is not a disc file.
+     */
+    fun findDisc(torr: Torrent, index: Int): List<FileStat>? {
+        val file = findFile(torr, index) ?: return null
+        val root = discRoot(file.path) ?: indexRoot(file.path) ?: return null
+        return torr.file_stats
+            ?.filter { discRoot(it.path) == root }
+            ?.sortedBy { it.id }
+            ?.takeIf { files -> files.any { isDiscPlaylist(it.path) } }
+    }
+
+    /** A disc title: Blu-ray (`.mpls`) or AVCHD (`.mpl`) playlist. */
+    fun isDiscPlaylist(path: String): Boolean {
+        val ext = File(path).extension.lowercase()
+        return ext == "mpls" || ext == "mpl"
+    }
+
+    /** Path prefix up to the folder holding `BDMV` for a playlist, clip info or stream of a disc. */
+    private fun discRoot(path: String): String? {
+        val parts = path.replace('\\', '/').split('/')
+        if (parts.size < 3) return null
+        if (!parts[parts.size - 3].equals("BDMV", ignoreCase = true)) return null
+        if (parts[parts.size - 2].uppercase() !in DISC_DIRS) return null
+        return parts.dropLast(3).joinToString("") { "$it/" }
+    }
+
+    /** Same prefix for the disc's `BDMV/index.bdmv`. */
+    private fun indexRoot(path: String): String? {
+        val parts = path.replace('\\', '/').split('/')
+        if (parts.size < 2) return null
+        if (!parts[parts.size - 2].equals("BDMV", ignoreCase = true)) return null
+        if (!parts.last().equals("index.bdmv", ignoreCase = true)) return null
+        return parts.dropLast(2).joinToString("") { "$it/" }
     }
 
     fun findIndex(torrent: Torrent, file: FileStat): Int {
