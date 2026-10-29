@@ -1,24 +1,33 @@
 package ru.yourok.torrserve.ui.activities.play.players
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import androidx.core.net.toUri
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.app.Consts.PLAYERS_BLACKLIST
-import ru.yourok.torrserve.ext.getInternalStorageDirectoryPath
+import ru.yourok.torrserve.server.api.Viewed
 import ru.yourok.torrserve.server.models.torrent.Torrent
 import ru.yourok.torrserve.settings.Settings
 import ru.yourok.torrserve.utils.Mime
 import ru.yourok.torrserve.utils.TorrentHelper
-import java.io.File
 import java.util.Locale
 
 object Players {
 
-    fun getIntent(torrent: Torrent, index: Int, selectedPlayer: String?): Intent? {
+    /**
+     * [callback]: playback result callback provided by the app that called TorrServe, if any.
+     * [viewed]: viewed files of [torrent] with stored playback positions, for players that can resume.
+     */
+    fun getIntent(
+        torrent: Torrent,
+        index: Int,
+        selectedPlayer: String?,
+        callback: PendingIntent? = null,
+        viewed: List<Viewed> = emptyList()
+    ): Intent? {
         val file = TorrentHelper.findFile(torrent, index) ?: throw Exception("file in torrent not found")
         val link = TorrentHelper.getTorrentPlayLink(torrent, index)
         var player = Settings.getPlayer()
@@ -45,6 +54,12 @@ object Players {
             if (dddIntent.resolveActivity(App.context.packageManager) != null)
                 return dddIntent
         }
+        // Just+ player
+        if (JustPlus.isJustPlus(player)) {
+            val jpIntent = JustPlus.getIntent(player, torrent, index, callback, viewed)
+            if (jpIntent.resolveActivity(App.context.packageManager) != null)
+                return jpIntent
+        }
         // MX player
         if (player.contains("com.mxtech.videoplayer", true)) {
             val mxIntent = MX.getIntent(player, torrent, index)
@@ -65,6 +80,12 @@ object Players {
             if (kodiIntent.resolveActivity(App.context.packageManager) != null)
                 return kodiIntent
         }
+        // Magnet Series player
+        if (player == MagnetSeries.PACKAGE) {
+            val msIntent = MagnetSeries.getIntent(player, torrent, index, callback, viewed)
+            if (msIntent.resolveActivity(App.context.packageManager) != null)
+                return msIntent
+        }
         // user defined player
         if (player.isNotEmpty()) {
             intent.`package` = player
@@ -78,7 +99,7 @@ object Players {
 
     fun getList(): List<Pair<String, String>> {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(Uri.fromFile(File(App.context.getInternalStorageDirectoryPath(), "file.mp4")), "video/*")
+        intent.setDataAndType("http://localhost/file.mp4".toUri(), "video/*")
         var apps = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
         } else {
@@ -93,8 +114,7 @@ object Players {
                 list.add(a.activityInfo.packageName to name)
             }
         }
-
-        intent.setDataAndType(Uri.fromFile(File(App.context.getInternalStorageDirectoryPath(), "file.mp3")), "audio/*")
+        intent.setDataAndType("http://localhost/file.mp3".toUri(), "audio/*")
         apps = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             App.context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
         } else {

@@ -21,6 +21,8 @@ data class BTSets(
     var FriendlyName: String,
     // Rutor search
     var EnableRutorSearch: Boolean,
+    // Torznab search is configured in the server web UI; null is skipped by Gson, so saving never overwrites it
+    var EnableTorznabSearch: Boolean? = null,
     // BT Config
     var EnableIPv6: Boolean,
     var DisableTCP: Boolean,
@@ -44,4 +46,6 @@ data class BTSets(
     var EnableBonjour: Boolean,
     // FS
     var ShowFSActiveTorr: Boolean,
+    // Viewed
+    var TrackTimecode: Boolean,
 )

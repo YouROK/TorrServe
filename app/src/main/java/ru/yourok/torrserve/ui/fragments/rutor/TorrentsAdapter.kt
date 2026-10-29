@@ -75,7 +75,7 @@ class TorrentsAdapter : RecyclerView.Adapter<TorrentsAdapter.ViewHolder>() {
         } else
             holder.view.findViewById<TextView>(R.id.tvName).text = torr.Title
         holder.view.findViewById<TextView>(R.id.tvInfo1).text = "${torr.Size} ▲${torr.Seed} ▼${torr.Peer}"
-        holder.view.findViewById<TextView>(R.id.tvInfo2).text = sDate // Hash.uppercase()
+        holder.view.findViewById<TextView>(R.id.tvInfo2).text = listOf(torr.Tracker, sDate).filter { it.isNotBlank() }.joinToString(" · ")
     }
 
     override fun getItemCount() = list.size

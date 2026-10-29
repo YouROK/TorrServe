@@ -1,7 +1,5 @@
 package ru.yourok.torrserve.ui.fragments.main.servfinder
 
-import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,15 +29,13 @@ import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.utils.Accessibility
 import ru.yourok.torrserve.utils.Net.isValidPublicIp4
 import java.net.Inet4Address
-import java.net.InterfaceAddress
 import java.net.NetworkInterface
-import java.util.Enumeration
 
 
 class ServerFinderFragment : TSFragment() {
 
     private val hostAdapter = HostAdapter()
-    private var ips = ""
+    private var localIPs = ""
     private var selectedServer: ServerIp? = null
 
     override fun onCreateView(
@@ -79,9 +76,29 @@ class ServerFinderFragment : TSFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch(Dispatchers.Default) {
-            update()
+
+        viewModel = ViewModelProvider(this)[ServerFinderViewModel::class.java]
+        val vm = viewModel as ServerFinderViewModel
+
+        vm.getStats().observe(viewLifecycleOwner) { text ->
+            view.findViewById<Button>(R.id.btnFindHosts)?.text = text
         }
+        vm.getServers().observe(viewLifecycleOwner) {
+            hostAdapter.add(it)
+        }
+        vm.getOnFinish().observe(viewLifecycleOwner) { finished ->
+            if (finished) {
+                view.findViewById<Button>(R.id.btnFindHosts)?.apply {
+                    text = App.context.getString(R.string.find_hosts)
+                    isEnabled = true
+                }
+                lifecycleScope.launch(Dispatchers.Main) {
+                    hideProgress()
+                }
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.Default) { update() }
     }
 
     override fun onStop() {
@@ -112,10 +129,10 @@ class ServerFinderFragment : TSFragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 var host = view?.findViewById<TextInputEditText>(R.id.etHost)?.text?.toString() ?: return@launch
-                var uri = Uri.parse(host)
+                var uri = host.toUri()
                 // Don't allow current local IP as server address
                 uri.host?.let { hst ->
-                    val lst = ips.split(",").map { ip -> ip.trim() }
+                    val lst = localIPs.split(",").map { ip -> ip.trim() }
                     if (lst.contains(hst)) {
                         App.toast(R.string.not_support_local_ip, true)
                         return@launch
@@ -125,7 +142,7 @@ class ServerFinderFragment : TSFragment() {
                 if (uri.scheme == null || !uri.scheme!!.contains("http", true))
                     host = "http://$host"
 
-                uri = Uri.parse(host) // no port, set default
+                uri = host.toUri() // no port, set default
                 if (uri.port == -1)
                     host += ":8090"
 
@@ -168,101 +185,65 @@ class ServerFinderFragment : TSFragment() {
         }
     }
 
-    @SuppressLint("FragmentLiveDataObserve")
     private suspend fun update() = withContext(Dispatchers.Main) {
-        view?.let {
-            showProgress()
-            ips = withContext(Dispatchers.IO) { getLocalIP() }
+        val v = view ?: return@withContext
+        showProgress()
+        localIPs = withContext(Dispatchers.IO) { getLocalIP() }
+        v.findViewById<Button>(R.id.btnFindHosts)?.isEnabled = false
+        v.findViewById<TextView>(R.id.tvCurrentIP)?.text = localIPs
+        hostAdapter.clear()
 
-            val btnFind = view?.findViewById<Button>(R.id.btnFindHosts)
-
-            btnFind?.isEnabled = false
-            view?.findViewById<TextView>(R.id.tvCurrentIP)?.text = ips
-            hostAdapter.clear()
-            // add local
-            val localhost = "http://localhost:8090"
-            var status = App.context.getString(R.string.local_server)
-            if (TorrService.isLocal())
-                status += " · ${App.context.getString(R.string.connected_host)}"
-            val localVersion: String = withContext(Dispatchers.IO) {
-                Api.remoteEcho(localhost) // .also {
-//                    if (it.isNotEmpty()) {
-//                        status += " · ${App.context.getString(R.string.online)}"
-//                    }
-//                }
-            }
-            hostAdapter.add(ServerIp(localhost, localVersion, status))
-            // add saved
-            Settings.getHosts().forEach { host ->
-                status = App.context.getString(R.string.saved_server)
-                if (host == Settings.getHost()) {
-                    val name = Settings.getDiscoveredServerName(host)
-                    status = listOfNotNull(name, App.context.getString(R.string.connected_host)).joinToString(" · ")
-                }
-                val remoteVersion: String = withContext(Dispatchers.IO) {
-                    Api.remoteEcho(host) // .also {
-//                        if (it.isNotEmpty()) {
-//                            status += " · ${App.context.getString(R.string.online)}"
-//                        }
-//                    }
-                }
-                hostAdapter.add(ServerIp(host, remoteVersion, status))
-            }
-            // find on local network
-            viewModel = ViewModelProvider(this@ServerFinderFragment)[ServerFinderViewModel::class.java]
-            (viewModel as ServerFinderViewModel).getMdnsServers().forEach { hostAdapter.add(it) }
-            // java.lang.IllegalStateException: Can't access the Fragment View's LifecycleOwner when getView() is null
-            // i.e., before onCreateView() or after onDestroyView()
-            (viewModel as ServerFinderViewModel).getStats().observe(this@ServerFinderFragment) {
-                btnFind?.text = it
-            }
-            (viewModel as ServerFinderViewModel).getServers().observe(this@ServerFinderFragment) {
-                hostAdapter.add(it)
-            }
-            (viewModel as ServerFinderViewModel).getOnFinish().observe(this@ServerFinderFragment) {
-                if (it) {
-                    btnFind?.text = App.context.getString(R.string.find_hosts)
-                    btnFind?.isEnabled = true
-                    lifecycleScope.launch {
-                        this@ServerFinderFragment.hideProgress()
-                    }
-                }
-            }
-
-            (viewModel as ServerFinderViewModel).find()
+        // add local
+        val localhost = "http://localhost:8090"
+        var status = App.context.getString(R.string.local_server)
+        if (TorrService.isLocal())
+            status += " · ${App.context.getString(R.string.connected_host)}"
+        val localVersion: String = withContext(Dispatchers.IO) {
+            Api.remoteEcho(localhost)
         }
+        hostAdapter.add(ServerIp(localhost, localVersion, status))
+        // add saved servers
+        Settings.getHosts().forEach { host ->
+            status = App.context.getString(R.string.saved_server)
+            if (host == Settings.getHost()) {
+                val name = Settings.getDiscoveredServerName(host)
+                status = listOfNotNull(name, App.context.getString(R.string.connected_host)).joinToString(" · ")
+            }
+            val remoteVersion: String = withContext(Dispatchers.IO) {
+                Api.remoteEcho(host)
+            }
+            hostAdapter.add(ServerIp(host, remoteVersion, status))
+        }
+        // scan network
+        (viewModel as ServerFinderViewModel).find()
     }
 
     private fun getLocalIP(): String {
-        val interfaces: Enumeration<NetworkInterface> = NetworkInterface.getNetworkInterfaces()
-        val ret = mutableListOf<String>()
         var hasVpn = false
+        val ret = mutableListOf<String>()
 
+        val interfaces = NetworkInterface.getNetworkInterfaces()
         while (interfaces.hasMoreElements()) {
-            val networkInterface: NetworkInterface = interfaces.nextElement()
-            if (networkInterface.isLoopback) continue // skip loopback
+            val ni = interfaces.nextElement()
+            if (ni.isLoopback) continue // skip loopback
 
-            val name = networkInterface.name
-            if (name.startsWith("tun") || name.startsWith("ppp") ||
-                name.startsWith("tap") || name.startsWith("wg") ||
-                name.startsWith("utun")
+            val name = ni.name
+            if (name.startsWith("tun") || name.startsWith("tap") ||
+                name.startsWith("wg") || name.startsWith("utun")
             ) {
                 hasVpn = true
                 continue // don't collect VPN addresses
             }
 
-            if (networkInterface.isPointToPoint) continue // skip other ptp
+            if (ni.isPointToPoint) continue // skip other ptp
 
-            for (interfaceAddress in networkInterface.interfaceAddresses) {
-                val ip = interfaceAddress.address
-                if (ip is Inet4Address && !isValidPublicIp4(ip.hostAddress)) {
-                    ret.add(ip.hostAddress)
-                }
-            }
+            ni.interfaceAddresses
+                ?.mapNotNull { it.address as? Inet4Address }
+                ?.filterNot { isValidPublicIp4(it.hostAddress) }
+                ?.mapTo(ret) { it.hostAddress }
         }
 
         if (hasVpn) ret.add("VPN")
         return ret.joinToString(", ")
     }
-
 }

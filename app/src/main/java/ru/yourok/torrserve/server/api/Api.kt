@@ -1,6 +1,8 @@
 package ru.yourok.torrserve.server.api
 
 import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -104,8 +106,14 @@ object Api {
 
     fun setSettings(sets: BTSets) {
         val host = Net.getHostUrl("/settings")
-        val req = SettingsReq("set", sets).toString()
-        postJson(host, req)
+        // server replaces all settings, so overlay ours on the current ones to keep fields this app doesn't know (Torznab, TMDB, ...)
+        val merged = JsonParser.parseString(postJson(host, Request("get").toString())).asJsonObject
+        Gson().toJsonTree(sets).asJsonObject.entrySet().forEach { (k, v) -> merged.add(k, v) }
+        val req = JsonObject().apply {
+            addProperty("action", "set")
+            add("sets", merged)
+        }
+        postJson(host, req.toString())
     }
 
     fun defSettings() {
@@ -124,9 +132,10 @@ object Api {
         return Gson().fromJson(resp, Array<Viewed>::class.java).toList()
     }
 
-    fun setViewed(hash: String, index: Int) {
+    /// timecode: playback position in seconds, stored only when the server tracks timecodes
+    fun setViewed(hash: String, index: Int, timecode: Double = 0.0) {
         val host = Net.getHostUrl("/viewed")
-        val req = ViewedReq("set", hash, index).toString()
+        val req = ViewedReq("set", hash, index, timecode).toString()
         postJson(host, req)
     }
 
@@ -147,6 +156,15 @@ object Api {
     fun searchTorrents(query: String): List<TorrentDetails>? {
         val host = Net.getHostUrl("/search?query=${URLEncoder.encode(query, "UTF-8")}")
         val resp = Net.getAuth(host)
+        if (resp.isBlank())
+            return null
+        return Gson().fromJson(resp, Array<TorrentDetails>::class.java).toList()
+    }
+
+    fun searchTorznab(query: String): List<TorrentDetails>? {
+        val host = Net.getHostUrl("/torznab/search?query=${URLEncoder.encode(query, "UTF-8")}")
+        // Jackett "all" waits up to ~40 s for a dead indexer, and jsoup waits for the response only timeout / 2; in ms
+        val resp = Net.getAuth(host, 100000)
         if (resp.isBlank())
             return null
         return Gson().fromJson(resp, Array<TorrentDetails>::class.java).toList()

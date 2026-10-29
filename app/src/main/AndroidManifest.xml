@@ -256,6 +256,9 @@
             </intent-filter>
         </receiver>
         <receiver
+            android:name=".server.local.services.PlaybackPositionReceiver"
+            android:exported="false" />
+        <receiver
             android:name=".server.local.services.HomeWatch"
             android:enabled="true"
             android:exported="true"

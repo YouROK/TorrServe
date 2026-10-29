@@ -45,6 +45,8 @@
     <string name="enable_dlna">DLNA-медиасервер</string>
     <string name="enable_bonjour">Bonjour (mDNS)</string>
     <string name="enable_bonjour_desc">Оголошувати в локальній мережі для виявлення (mDNS)</string>
+    <string name="track_timecode">Зберігати позицію перегляду</string>
+    <string name="track_timecode_desc">Запам\'ятовувати позицію, на якій зупинено відтворення переглянутих файлів</string>
     <string name="dlna_friendly_name">Ім\'я сервера DLNA</string>
     <string name="dlna_name_hint">Залиште порожнім, щоб використовувати значення за замовчуванням.</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
@@ -95,6 +97,9 @@
     <string name="playlist_continue">Продовжити</string>
     <string name="torrent_link">Торрент</string>
     <string name="torrent_link_help">Введіть URL торрента | Magnet-посилання | Хеш</string>
+    <string name="search_help">Ваш запит</string>
+    <string name="search">Пошук</string>
+    <string name="sort">Сортування</string>
     <string name="title">Назва</string>
     <string name="poster">Постер</string>
     <string name="poster_link">Посилання на постер</string>

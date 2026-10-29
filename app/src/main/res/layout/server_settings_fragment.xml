@@ -487,6 +487,24 @@
                 android:text="@string/show_only_active_torrents_fs"
                 android:visibility="gone"
                 tools:visibility="visible" />
+            <!-- Viewed timecode -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/cbTrackTimecode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/track_timecode"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvTrackTimecode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:labelFor="@+id/cbTrackTimecode"
+                android:text="@string/track_timecode_desc"
+                android:visibility="gone"
+                tools:visibility="visible" />
             <!-- Proxy -->
             <View
                 android:layout_width="match_parent"

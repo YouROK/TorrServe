@@ -55,6 +55,8 @@
     <string name="enable_dlna">DLNA Media Server</string>
     <string name="enable_bonjour">Bonjour (mDNS)</string>
     <string name="enable_bonjour_desc">Advertise on the LAN for local discovery (mDNS)</string>
+    <string name="track_timecode">Save playback position</string>
+    <string name="track_timecode_desc">Store the position where playback stopped for viewed files</string>
     <string name="dlna_friendly_name">DLNA Server Name</string>
     <string name="dlna_name_hint">Leave blank to use default</string>
     <string name="disable_tcp">TCP - Transmission Control Protocol</string>
@@ -119,6 +121,9 @@
 
     <string name="torrent_link">Torrent URL</string>
     <string name="torrent_link_help">Enter Torrent URL / Magnet / Hash</string>
+    <string name="search_help">Your query</string>
+    <string name="search">Search</string>
+    <string name="sort">Sort</string>
     <string name="title">Title</string>
     <string name="poster">Poster</string>
     <string name="poster_link">Poster URL</string>
