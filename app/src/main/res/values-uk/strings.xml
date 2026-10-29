@@ -95,6 +95,9 @@
     <string name="playlist_continue">Продовжити</string>
     <string name="torrent_link">Торрент</string>
     <string name="torrent_link_help">Введіть URL торрента | Magnet-посилання | Хеш</string>
+    <string name="search_help">Ваш запит</string>
+    <string name="search">Пошук</string>
+    <string name="sort">Сортування</string>
     <string name="title">Назва</string>
     <string name="poster">Постер</string>
     <string name="poster_link">Посилання на постер</string>

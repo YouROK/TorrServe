@@ -1,12 +1,10 @@
 package ru.yourok.torrserve.ui.fragments.add
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -15,18 +13,19 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.LinearLayout
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import ru.yourok.torrserve.BuildConfig
 import ru.yourok.torrserve.R
@@ -34,24 +33,32 @@ import ru.yourok.torrserve.app.App
 import ru.yourok.torrserve.ext.normalize
 import ru.yourok.torrserve.ext.popBackStackFragment
 import ru.yourok.torrserve.server.api.Api
-import ru.yourok.torrserve.server.models.torrent.Torrent
+import ru.yourok.torrserve.server.models.torrent.TorrentDetails
 import ru.yourok.torrserve.settings.BTSets
 import ru.yourok.torrserve.ui.activities.play.addTorrent
 import ru.yourok.torrserve.ui.fragments.TSFragment
 import ru.yourok.torrserve.ui.fragments.rutor.TorrentsAdapter
 import ru.yourok.torrserve.utils.Format
-import ru.yourok.torrserve.utils.ThemeUtil
 import ru.yourok.torrserve.utils.TorrentHelper
 
 class AddFragment : TSFragment() {
 
     private val torrsAdapter = TorrentsAdapter()
     private var jobSearch: Job? = null
+    private var lastQuery = ""
+    private var rutorEnabled = false
+    private var torznabEnabled = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.add_fragment, container, false)
+    }
+
+    override fun onDestroyView() {
+        // a search still running is cancelled with the fragment and never hides the progress itself
+        activity?.findViewById<View>(R.id.progressBar)?.visibility = View.GONE
+        super.onDestroyView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,15 +89,21 @@ class AddFragment : TSFragment() {
             // SEARCH and CATEGORY
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
-                    val rutorEnabled = loadSettings()?.EnableRutorSearch == true
+                    val sets = loadSettings()
+                    rutorEnabled = sets?.EnableRutorSearch == true
+                    torznabEnabled = sets?.EnableTorznabSearch == true
                     val categoryEnabled = Api.getMatrixVersionInt() > 131
                     withContext(Dispatchers.Main) {
                         findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
-                            visibility = if (rutorEnabled)
+                            visibility = if (rutorEnabled || torznabEnabled)
                                 View.VISIBLE
                             else
                                 View.GONE
+                            hint = listOfNotNull(getString(R.string.rutor).takeIf { rutorEnabled }, "Torznab".takeIf { torznabEnabled }).joinToString(" + ")
                         }
+                        // search shows up after the form already took focus, move it to the top row
+                        if ((rutorEnabled || torznabEnabled) && findViewById<View>(R.id.etMagnet)?.hasFocus() == true)
+                            findViewById<View>(R.id.etSearch)?.requestFocus()
                         findViewById<TextInputLayout>(R.id.tvCategory)?.apply {
                             visibility = if (categoryEnabled)
                                 View.VISIBLE
@@ -101,101 +114,46 @@ class AddFragment : TSFragment() {
                 }
             }
             findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.VISIBLE
-            findViewById<TextInputEditText>(R.id.etSearch)?.apply {
-                setOnEditorActionListener { textView, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        jobSearch?.cancel()
-                        jobSearch = lifecycleScope.launch(Dispatchers.IO) {
-                            val result = try {
-                                Api.searchTorrents(textView.text.toString().trim())
-                            } catch (e: Exception) {
-                                e.message?.let {
-                                    App.toast(it)
-                                }
-                                null
-                            }
-                            result?.let {
-                                if (BuildConfig.DEBUG) Log.d("*****", "onTextChanged: ${it.size}")
-                                if (it.isNotEmpty())
-                                    withContext(Dispatchers.Main) {
-                                        torrsAdapter.set(it)
-                                        showSortFab()
-                                    }
-                                else {
-                                    App.toast(R.string.no_torrents)
-                                    hideSortFab()
-                                }
-                            }
-                        }
-                    }
-                    true
+            findViewById<TextInputEditText>(R.id.etSearch)?.setOnEditorActionListener { textView, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE ||
+                    (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)
+                )
+                    submitSearch(textView.text.toString().trim())
+                true
+            }
+            findViewById<TextInputLayout>(R.id.tvRutor)?.apply {
+                setEndIconOnClickListener {
+                    submitSearch(findViewById<TextInputEditText>(R.id.etSearch)?.text?.toString()?.trim() ?: "")
                 }
-                addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {
-                        val query = s.toString().trim()
-                        if (query.isNotBlank() && query.length >= 3) {
-                            jobSearch?.cancel()
-                            jobSearch = lifecycleScope.launch(Dispatchers.IO) {
-                                if (BuildConfig.DEBUG) Log.d("*****", "Api.searchTorrents($query)")
-                                val result = try {
-                                    Api.searchTorrents(query)
-                                } catch (e: Exception) {
-                                    e.message?.let {
-                                        App.toast(it)
-                                    }
-                                    null
-                                }
-                                result?.let {
-                                    if (BuildConfig.DEBUG) Log.d("*****", "onTextChanged: ${it.size}")
-                                    if (it.isNotEmpty())
-                                        withContext(Dispatchers.Main) {
-                                            torrsAdapter.set(it)
-                                            view.findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.GONE
-                                            view.findViewById<LinearLayout>(R.id.footer)?.visibility = View.GONE
-                                            showSortFab()
-                                        }
-                                }
-                            }
-                        }
-                    }
-
-                    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-                })
+                // the blank suffix reserves room for the sort button laid over the field; EditText padding is overridden here
+                suffixTextView.minWidth = Format.dp2px(48f)
             }
             // RESULTS
             findViewById<RecyclerView>(R.id.rvRTorrents)?.apply {
                 setHasFixedSize(true)
+                isFocusable = false // only rows take focus, else Tab lands on the empty list behind the form
                 layoutManager = LinearLayoutManager(context)
                 adapter = torrsAdapter
                 addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
             }
             torrsAdapter.onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
+                    showProgress() // a .torrent link goes through the indexer and can take a while
                     try {
                         val category = it.Categories.normalize()
-                        val torrent = addTorrent("", it.Magnet, it.Title, "", category, "", true)
-                        torrent?.let { App.toast("${App.context.getString(R.string.stat_string_added)}: ${it.title}", true) } ?: App.toast(R.string.error_add_torrent)
+                        val torrent = addTorrent("", it.Magnet.ifBlank { it.Link }, it.Title, "", category, "", true)
+                        // on failure stay on the results, so another one can be picked
+                        torrent?.let {
+                            App.toast("${App.context.getString(R.string.stat_string_added)}: ${it.title}", true)
+                            if (isAdded) popBackStackFragment() // the user may have left during a slow .torrent fetch
+                        } ?: App.toast(R.string.error_add_torrent)
                     } catch (e: Exception) {
                         App.toast(e.message ?: App.context.getString(R.string.error_add_torrent))
                     }
-                    popBackStackFragment()
+                    hideProgress()
                 }
             }
-            torrsAdapter.onLongClick = {
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val category = it.Categories.normalize()
-                    val torrent: Torrent
-                    val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
-                        return@launch
-                    }
-                    torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
-                        return@launch
-                    }
-                    TorrentHelper.showFFPInfo(view.context, it.Magnet, torrent)
-                }
-            }
+            torrsAdapter.onLongClick = { showInfo(it, view.context) }
             // SORT
             setupSortFab()
         }
@@ -218,21 +176,8 @@ class AddFragment : TSFragment() {
                 activity?.currentFocus?.let {
                     it.findViewById<RecyclerView>(R.id.rvRTorrents)?.let { rv ->
                         val itemPosition = rv.getChildAdapterPosition(rv.focusedChild)
-                        if (itemPosition in torrsAdapter.list.indices) {
-                            torrsAdapter.list[itemPosition].let {
-                                lifecycleScope.launch(Dispatchers.IO) {
-                                    val category = it.Categories.normalize()
-                                    val torrent: Torrent
-                                    val torr = addTorrent("", it.Magnet, it.Title, "", category, "", false) ?: let {
-                                        return@launch
-                                    }
-                                    torrent = TorrentHelper.waitFiles(torr.hash) ?: let {
-                                        return@launch
-                                    }
-                                    TorrentHelper.showFFPInfo(rv.context, it.Magnet, torrent)
-                                }
-                            }
-                        }
+                        if (itemPosition in torrsAdapter.list.indices)
+                            showInfo(torrsAdapter.list[itemPosition], rv.context)
                     }
                 }
                 return true
@@ -259,14 +204,15 @@ class AddFragment : TSFragment() {
                 App.toast(R.string.sort_by_name)
             }
 
-            1 -> { // 10.22 GB
+            1 -> { // 10.22 GB (RuTor), 4.7 GCiB (Torznab: the server's formatSize writes CiB for iB)
                 val sort = list.sortedWith(compareBy(nullsLast(reverseOrder())) { td ->
-                    if (td.Size.contains("GB", true))
-                        td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 * 1024 }
-                    else if (td.Size.contains("MB", true))
-                        td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()?.let { it * 1024 }
-                    else
-                        td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()
+                    val num = td.Size.filter { it.isDigit() || it == '.' }.toDoubleOrNull()
+                    when {
+                        td.Size.contains("T", true) -> num?.times(1024.0 * 1024 * 1024)
+                        td.Size.contains("G", true) -> num?.times(1024.0 * 1024)
+                        td.Size.contains("M", true) -> num?.times(1024.0)
+                        else -> num
+                    }
                 })
                 torrsAdapter.set(sort) // list.sortedByDescending { it.Size }
                 App.toast(R.string.sort_by_size)
@@ -300,37 +246,79 @@ class AddFragment : TSFragment() {
         if (sortMode == 3) sortMode = 0 else sortMode++
     }
 
-    private fun setupSortFab() { // Sort Fab
-        val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
-        val themedContext = ContextThemeWrapper(App.context, ThemeUtil.selectedTheme)
-        val accentColor = ThemeUtil.getColorFromAttr(themedContext, R.attr.colorAccent)
-        val actionsColor = ThemeUtil.getColorFromAttr(themedContext, R.attr.colorMainMenu)
-
-        fab?.apply {
-            setImageDrawable(AppCompatResources.getDrawable(this.context, R.drawable.round_sort_24))
-            customSize = Format.dp2px(32f)
-            setMaxImageSize(Format.dp2px(24f))
-            setColorFilter(accentColor)
-            setRippleColor(ColorStateList.valueOf(accentColor))
-            backgroundTintList = ColorStateList.valueOf(actionsColor)
-            isFocusable = true
-            isClickable = true
-            setOnClickListener {
-                // TODO: add sort options menu
-                sortResults()
-            }
-            visibility = View.GONE
-        }
+    private fun setupSortFab() {
+        // TODO: add sort options menu
+        requireActivity().findViewById<View>(R.id.sortFab)?.setOnClickListener { sortResults() }
     }
 
     private fun showSortFab() {
-        val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
-        fab?.show()
+        requireActivity().findViewById<View>(R.id.sortFab)?.visibility = View.VISIBLE
     }
 
     private fun hideSortFab() {
-        val fab: FloatingActionButton? = requireActivity().findViewById(R.id.sortFab)
-        fab?.hide()
+        requireActivity().findViewById<View>(R.id.sortFab)?.visibility = View.GONE
+    }
+
+    // search on submit only: Torznab is slow and a cancelled job can't abort its HTTP request
+    private fun submitSearch(query: String) {
+        if (query.isBlank() || query == lastQuery) return
+        lastQuery = query
+        jobSearch?.cancel()
+        jobSearch = lifecycleScope.launch(Dispatchers.IO) {
+            if (BuildConfig.DEBUG) Log.d("*****", "search($query)")
+            val result = search(query)
+            withContext(Dispatchers.Main) {
+                when {
+                    result == null -> {
+                        lastQuery = "" // every source failed, let the same query retry
+                    }
+
+                    result.isNotEmpty() -> {
+                        torrsAdapter.set(result)
+                        view?.findViewById<androidx.constraintlayout.widget.Group>(R.id.adder)?.visibility = View.GONE
+                        view?.findViewById<LinearLayout>(R.id.footer)?.visibility = View.GONE
+                        showSortFab()
+                    }
+
+                    else -> {
+                        lastQuery = "" // let the same query be searched again later
+                        App.toast(R.string.no_torrents)
+                        hideSortFab()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showInfo(td: TorrentDetails, context: Context) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val link = td.Magnet.ifBlank { td.Link }
+            val torr = addTorrent("", link, td.Title, "", td.Categories.normalize(), "", false) ?: return@launch
+            val torrent = TorrentHelper.waitFiles(torr.hash) ?: return@launch
+            TorrentHelper.showFFPInfo(context, link, torrent)
+        }
+    }
+
+    // null when every enabled source failed, so the caller keeps the previous results
+    private suspend fun search(query: String): List<TorrentDetails>? = supervisorScope {
+        showProgress()
+        try {
+            listOfNotNull(
+                if (rutorEnabled) async { Api.searchTorrents(query) } else null,
+                if (torznabEnabled) async { Api.searchTorznab(query) } else null,
+            ).mapNotNull {
+                try {
+                    it.await()
+                } catch (e: Exception) {
+                    if (e is CancellationException) throw e
+                    e.message?.let { msg -> App.toast(msg) }
+                    null
+                }
+            }.takeIf { it.isNotEmpty() }?.flatten()
+        } finally {
+            // a cancelled search was replaced by a newer one, which keeps the progress on
+            if (isActive) hideProgress()
+        }
     }
 
     private fun loadSettings(): BTSets? {

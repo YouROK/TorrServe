@@ -98,6 +98,9 @@
     <string name="playlist_continue">Продължи</string>
     <string name="torrent_link">Торент URL</string>
     <string name="torrent_link_help">Въведете URL адрес към Торент / Магнет / Хеш</string>
+    <string name="search_help">Вашата заявка</string>
+    <string name="search">Търсене</string>
+    <string name="sort">Сортиране</string>
     <string name="title">Заглавие</string>
     <string name="poster">Пострер</string>
     <string name="poster_link">Постер URL</string>

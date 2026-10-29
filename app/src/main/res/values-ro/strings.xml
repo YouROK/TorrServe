@@ -97,6 +97,9 @@
     <string name="playlist_continue">Continuă</string>
     <string name="torrent_link">Torrent</string>
     <string name="torrent_link_help">Introdu URL-ul torrentului, link-ul magnet sau hash-ul</string>
+    <string name="search_help">Căutarea ta</string>
+    <string name="search">Căutare</string>
+    <string name="sort">Sortare</string>
     <string name="title">Nume torrent</string>
     <string name="poster">Poster</string>
     <string name="poster_link">URL poster</string>

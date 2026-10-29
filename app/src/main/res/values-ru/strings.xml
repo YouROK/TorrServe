@@ -100,6 +100,9 @@
     <string name="playlist_continue">Продолжить</string>
     <string name="torrent_link">Торрент</string>
     <string name="torrent_link_help">Укажите URL торрента, magnet-ссылку или хеш</string>
+    <string name="search_help">Ваш запрос</string>
+    <string name="search">Поиск</string>
+    <string name="sort">Сортировка</string>
     <string name="title">Название торрента</string>
     <string name="poster">Постер</string>
     <string name="poster_link">URL постера</string>
