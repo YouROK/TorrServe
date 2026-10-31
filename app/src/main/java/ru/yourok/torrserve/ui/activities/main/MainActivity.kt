@@ -42,6 +42,7 @@ import ru.yourok.torrserve.ui.fragments.add.AddFragment
 import ru.yourok.torrserve.ui.fragments.donate.DonateFragment
 import ru.yourok.torrserve.ui.fragments.donate.DonateMessage
 import ru.yourok.torrserve.ui.fragments.main.servfinder.ServerFinderFragment
+import ru.yourok.torrserve.ui.fragments.main.search.SearchFragment
 import ru.yourok.torrserve.ui.fragments.main.servsets.ServerSettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.settings.SettingsFragment
 import ru.yourok.torrserve.ui.fragments.main.torrents.TorrentsFragment
@@ -559,6 +560,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<FrameLayout>(R.id.btnAdd)?.setOnClickListener {
             AddFragment().show(this@MainActivity, R.id.container, true)
+            closeMenu()
+        }
+
+        findViewById<FrameLayout>(R.id.btnSearch)?.setOnClickListener {
+            SearchFragment().show(this@MainActivity, R.id.container, true)
             closeMenu()
         }
 

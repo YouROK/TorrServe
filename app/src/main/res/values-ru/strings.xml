@@ -247,6 +247,10 @@
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
+    <string name="search">Поиск</string>
+    <string name="search_hint">Поиск по добавленным торрентам</string>
+    <string name="nothing_found">Ничего не найдено</string>
+
     <string name="categories">Категории</string>
     <string name="cat_movie">Фильмы</string>
     <string name="cat_tv">Сериалы</string>

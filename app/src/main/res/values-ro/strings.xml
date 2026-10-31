@@ -250,6 +250,10 @@
     <string name="no_updates">Nu există actualizări</string>
     <string name="not_used">Inactiv</string>
     <string name="not_installed">Neinstalat</string>
+    <string name="search">Căutare</string>
+    <string name="search_hint">Căutare în torrentele adăugate</string>
+    <string name="nothing_found">Nimic găsit</string>
+
     <string name="categories">Categorii</string>
     <string name="cat_movie">Filme</string>
     <string name="cat_tv">Seriale</string>
