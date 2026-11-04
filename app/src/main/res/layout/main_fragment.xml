@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="@string/search"
+        app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/round_search_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <ListView
         android:id="@+id/lvTorrents"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:divider="@drawable/gradient_divider_green"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="84dp"
         android:listSelector="@drawable/action_selector"
-        android:requiresFadingEdge="vertical" />
+        android:requiresFadingEdge="vertical">
+
+        <requestFocus />
+    </ListView>
 
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="@string/no_torrents"
         android:textSize="18sp"
         android:visibility="gone" />
 
-</FrameLayout>
+</LinearLayout>
