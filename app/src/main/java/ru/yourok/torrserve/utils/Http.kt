@@ -12,11 +12,9 @@ import java.net.HttpURLConnection.HTTP_OK
 import java.net.HttpURLConnection.HTTP_PARTIAL
 import java.net.HttpURLConnection.HTTP_SEE_OTHER
 import java.net.URL
-import java.security.GeneralSecurityException
 import java.util.Locale
 import java.util.zip.GZIPInputStream
 import javax.net.ssl.HostnameVerifier
-import javax.net.ssl.HttpsURLConnection
 
 
 /**
@@ -47,25 +45,16 @@ class Http(url: Uri) {
 
             val url = URL(currUrl)
 
-            connection = if (currUrl.startsWith("https"))
-                NetCipher.getHttpsURLConnection(url)
-                    .also {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                            val trustAllHostnames = HostnameVerifier { _, _ ->
-                                true // Just allow them all
-                            }
-                            HttpsURLConnection.setDefaultHostnameVerifier(trustAllHostnames)
-                        }
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-                            try {
-                                // Only TLSv1.2 and TLSv1.3 protocol available and trust all certs (insecure).
-                                HttpsURLConnection.setDefaultSSLSocketFactory(TlsSocketFactory())
-                            } catch (_: GeneralSecurityException) {
-                            }
-                        }
-                    }
-            else
+            connection = if (currUrl.startsWith("https")) {
+                val conn = NetCipher.getHttpsURLConnection(url)
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                    conn.sslSocketFactory = TlsSocketFactory()
+                    conn.hostnameVerifier = HostnameVerifier { _, _ -> true }   // accept any hostname
+                }
+                conn
+            } else {
                 NetCipher.getHttpURLConnection(url)
+            }
             connection!!.connectTimeout = timeout
             connection!!.readTimeout = 15000
             connection!!.requestMethod = "GET"
