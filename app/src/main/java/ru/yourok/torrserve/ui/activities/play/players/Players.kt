@@ -3,6 +3,7 @@ package ru.yourok.torrserve.ui.activities.play.players
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.os.Build
 import androidx.core.net.toUri
 import ru.yourok.torrserve.R
@@ -129,6 +130,26 @@ object Players {
         }
 
         return list.distinctBy { it.first }
+    }
+
+    fun getResolveInfoList(): List<ResolveInfo> {
+        val pm = App.context.packageManager
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType("http://localhost/file.mp4".toUri(), "video/*")
+        val videoApps = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            pm.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+        else
+            pm.queryIntentActivities(intent, 0)
+
+        intent.setDataAndType("http://localhost/file.mp3".toUri(), "audio/*")
+        val audioApps = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            pm.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+        else
+            pm.queryIntentActivities(intent, 0)
+
+        return (videoApps + audioApps)
+            .filter { !PLAYERS_BLACKLIST.contains(it.activityInfo.packageName.lowercase(Locale.getDefault())) }
+            .distinctBy { it.activityInfo.packageName }
     }
 
 }

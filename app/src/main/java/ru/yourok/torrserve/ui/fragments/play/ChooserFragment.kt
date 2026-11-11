@@ -1,9 +1,13 @@
 package ru.yourok.torrserve.ui.fragments.play
 
+import android.content.pm.ResolveInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
@@ -70,16 +74,62 @@ class ChooserFragment : TSFragment() {
                     saveAction(3)
                 }
             }
+//            findViewById<CardView>(R.id.cvPlayer)?.setOnClickListener {
+//                lifecycleScope.launch {
+//                    val list = Players.getList()
+//                    val titles = list.map { it.second }.toTypedArray()
+//
+//                    AlertDialog.Builder(view.context)
+//                        .setTitle(getString(R.string.select_player))
+//                        .setItems(titles) { _, which ->
+//                            val selectedPackage = list[which].first
+//                            Play.tmpPlayerPackage = selectedPackage
+//                        }
+//                        .setNegativeButton(android.R.string.cancel, null)
+//                        .show()
+//                }
+//            }
             findViewById<CardView>(R.id.cvPlayer)?.setOnClickListener {
                 lifecycleScope.launch {
-                    val list = Players.getList()
-                    val titles = list.map { it.second }.toTypedArray()
+                    val apps = Players.getResolveInfoList()
+
+                    // pseudo-entries as a small wrapper
+                    data class Row(val pkg: String, val label: String, val info: ResolveInfo?)
+//                    val rows = mutableListOf(
+//                        Row("", getString(R.string.choose_player), null),
+//                        Row("0", getString(R.string.default_player), null)
+//                    )
+                    val pm = view.context.packageManager
+                    val rows = mutableListOf<Row>()
+                    rows += apps.map { Row(it.activityInfo.packageName, it.loadLabel(pm).toString(), it) }
+
+                    val adapter = object : BaseAdapter() {
+                        private val inflater = LayoutInflater.from(view.context)
+                        override fun getCount() = rows.size
+                        override fun getItem(position: Int) = rows[position]
+                        override fun getItemId(position: Int) = position.toLong()
+                        override fun getView(position: Int, cv: View?, parent: ViewGroup?): View {
+                            val v = cv ?: inflater.inflate(R.layout.app_list_item, parent, false)
+                            val row = rows[position]
+                            v.findViewById<ImageView>(R.id.imageViewIcon).apply {
+                                if (row.info != null) setImageDrawable(row.info.loadIcon(pm))
+                                else setImageResource(R.drawable.ic_done) // setImageDrawable(null)
+                            }
+                            v.findViewById<TextView>(R.id.textViewSecond).apply {
+                                text = row.pkg
+                                visibility = if (row.info != null) View.VISIBLE else View.GONE
+                            }
+                            v.findViewById<TextView>(R.id.textViewMain).apply {
+                                text = row.label
+                            }
+                            return v
+                        }
+                    }
 
                     AlertDialog.Builder(view.context)
                         .setTitle(getString(R.string.select_player))
-                        .setItems(titles) { _, which ->
-                            val selectedPackage = list[which].first
-                            Play.tmpPlayerPackage = selectedPackage
+                        .setAdapter(adapter) { _, which ->
+                            Play.tmpPlayerPackage = rows[which].pkg
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .show()
