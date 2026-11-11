@@ -15,6 +15,7 @@ import ru.yourok.torrserve.utils.Http
 import ru.yourok.torrserve.utils.Net
 import java.io.File
 import java.io.FileOutputStream
+import androidx.core.net.toUri
 
 object UpdaterApk {
     private var versions: ApkVersions? = null
@@ -69,7 +70,7 @@ object UpdaterApk {
                 try {
                     if (file.exists())
                         file.delete()
-                    val conn = Http(Uri.parse(ver.link))
+                    val conn = Http(ver.link.toUri())
                     conn.connect()
                     conn.getInputStream().use { input ->
                         FileOutputStream(file).use { fileOut ->

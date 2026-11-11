@@ -1,6 +1,5 @@
 package ru.yourok.torrserve.ui.fragments.main.update.server
 
-import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
@@ -17,6 +16,7 @@ import ru.yourok.torrserve.utils.Net
 import java.io.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
+import androidx.core.net.toUri
 
 object UpdaterServer {
     private var version: ServVersion? = null
@@ -43,7 +43,7 @@ object UpdaterServer {
     fun updateFromNet(onProgress: ((prc: Int) -> Unit)?) {
         val url = getLink()
         if (url.isNotBlank()) {
-            val http = Http(Uri.parse(url))
+            val http = Http(url.toUri())
             http.connect()
             if (TorrService.isLocal() && Api.echo().isNotEmpty()) {
 //                if (Accessibility.isEnabledService(App.context))
@@ -163,7 +163,7 @@ object UpdaterServer {
             "386" -> link = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v4.4.1/ffprobe-4.4.1-linux-32.zip"
             "amd64" -> link = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v4.4.1/ffprobe-4.4.1-linux-64.zip"
         }
-        val http = Http(Uri.parse(link))
+        val http = Http(link.toUri())
         http.connect()
         http.getInputStream().also { content ->
             content ?: let {
