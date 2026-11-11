@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ListView
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -63,12 +64,14 @@ class TorrentsFragment : TSFragment() {
         category = arguments?.getString("category") ?: ""
         viewModel = ViewModelProvider(this)[TorrentsViewModel::class.java]
         (viewModel as TorrentsViewModel).getData().observe(viewLifecycleOwner) { updateList() }
+        applySearchBarVisibility()
         view.findViewById<EditText>(R.id.etSearch).doAfterTextChanged { updateList() }
     }
 
     override fun onResume() {
         super.onResume()
         (viewModel as TorrentsViewModel).setUpdate(true)
+        applySearchBarVisibility()
     }
 
     override fun onPause() {
@@ -79,7 +82,7 @@ class TorrentsFragment : TSFragment() {
 
     fun sort(mode: Boolean = sortMode) {
         val list = torrentAdapter!!.list
-        if (list.size > 0) {
+        if (list.isNotEmpty()) {
             sortMode = !mode
             Settings.set("sort_torrents", sortMode)
             updateList()
@@ -96,12 +99,16 @@ class TorrentsFragment : TSFragment() {
         updateList()
     }
 
+    private fun applySearchBarVisibility() {
+        view?.findViewById<View>(R.id.search_bar)?.isVisible = Settings.showSearchBar
+    }
+
     private fun updateList() {
         val query = view?.findViewById<EditText>(R.id.etSearch)?.text?.toString()?.trim().orEmpty()
         val list = (viewModel as TorrentsViewModel).getData().value.orEmpty().filter {
             (if (category == "uncategorized") it.category.isNullOrBlank()
             else category.isBlank() || it.category?.contains(category, true) == true) &&
-                (query.isEmpty() || it.title.orEmpty().contains(query, true) || it.name.orEmpty().contains(query, true))
+                    (query.isEmpty() || it.title.orEmpty().contains(query, true) || it.name.orEmpty().contains(query, true))
         }
         torrentAdapter?.update(if (sortMode) list.sortedBy { it.title } else list.sortedByDescending { it.timestamp })
     }

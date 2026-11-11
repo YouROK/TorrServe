@@ -120,6 +120,13 @@
         app:key="show_cat_fab"
         app:title="@string/show_cat_fab_title" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:summaryOff="@string/show_search_bar_sum_off"
+        android:summaryOn="@string/show_search_bar_sum_on"
+        app:key="show_search_bar"
+        app:title="@string/show_search_bar_title" />
+
     <ListPreference
         android:defaultValue="auto"
         app:entries="@array/app_theme_entries"
