@@ -148,7 +148,7 @@ object JustPlus {
                 background?.let { putString("background", it) }
                 putInt("start_index", startIndex)
                 // TorrServe has no resume setting: the player asks Resume / Start over for the start item
-                if (position(playable[startIndex].id) > 0) putBoolean("ask_resume", true)
+                // if (position(playable[startIndex].id) > 0) putBoolean("ask_resume", true)
                 // TorrServer with a login: the player fetches the stream itself
                 Net.getAuthB64().takeIf { it.isNotEmpty() }
                     ?.let { putStringArray("headers", arrayOf("Authorization", it)) }
