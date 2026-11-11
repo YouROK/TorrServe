@@ -269,6 +269,10 @@
     <string name="show_cat_fab_sum_on">显示浮动分类按钮</string>
     <string name="show_cat_fab_sum_off">不显示浮动分类按钮</string>
 
+    <string name="show_search_bar_title">显示搜索栏</string>
+    <string name="show_search_bar_sum_on">在种子列表中显示搜索栏</string>
+    <string name="show_search_bar_sum_off">不在种子列表中显示搜索栏</string>
+
     <string name="accessibility_manual_on">在设备首选项/无障碍部分启用服务 %1$s</string>
     <string name="accessibility_manual_off">在设备首选项/无障碍部分禁用服务 %1$s</string>
     <string name="accessibility_service_description">启用此服务可以防止操作系统关闭本地 TorrServer</string>

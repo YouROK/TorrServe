@@ -218,6 +218,9 @@
     <string name="show_cat_fab_title">Кнопка фильтра по категории</string>
     <string name="show_cat_fab_sum_on">Показать кнопку фильтра категорий</string>
     <string name="show_cat_fab_sum_off">Не показывать кнопку фильтра категорий</string>
+    <string name="show_search_bar_title">Показать строку поиска</string>
+    <string name="show_search_bar_sum_on">Показывать строку поиска в списке торрентов</string>
+    <string name="show_search_bar_sum_off">Не показывать строку поиска в списке торрентов</string>
     <string name="accessibility_manual_on">Включите сервис «%1$s» в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_manual_off">Отключите сервис «%1$s» в разделе «Настройки устройства» / «Специальные возможности»</string>
     <string name="accessibility_service_description">Включение этого сервиса может предотвратить завершение локального TorrServer системой</string>

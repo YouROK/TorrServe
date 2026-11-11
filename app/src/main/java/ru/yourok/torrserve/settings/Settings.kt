@@ -21,6 +21,9 @@ object Settings {
     val showSortFab: Boolean
         get() = get("show_sort_fab", false)
 
+    val showSearchBar: Boolean
+        get() = get("show_search_bar", false)
+
     val sortTorrByTitle: Boolean
         get() = get("sort_torrents", false)
 

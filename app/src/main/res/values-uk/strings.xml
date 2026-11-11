@@ -210,6 +210,9 @@
     <string name="show_cat_fab_title">Кнопка категорій в портретній орієнтації</string>
     <string name="show_cat_fab_sum_on">Показати кнопку категорій</string>
     <string name="show_cat_fab_sum_off">Не показувати кнопку категорій</string>
+    <string name="show_search_bar_title">Показати рядок пошуку</string>
+    <string name="show_search_bar_sum_on">Показувати рядок пошуку у списку торентів</string>
+    <string name="show_search_bar_sum_off">Не показувати рядок пошуку у списку торентів</string>
     <string name="accessibility_manual_on">Увімкнути службу «%1$s» в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_manual_off">Вимкнути службу «%1$s» в розділі «Параметри пристрою» / «Спеціальні можливості»</string>
     <string name="accessibility_service_description">Включення цього сервісу може запобігти завершення локального TorrServer системою</string>

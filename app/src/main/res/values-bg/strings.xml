@@ -219,6 +219,9 @@
     <string name="show_cat_fab_title">Бутон за категории във вертикална ориентация</string>
     <string name="show_cat_fab_sum_on">Показване на бутона за плаващи категории</string>
     <string name="show_cat_fab_sum_off">Не показвай бутона за плаващи категории</string>
+    <string name="show_search_bar_title">Показване на лентата за търсене</string>
+    <string name="show_search_bar_sum_on">Показване на лентата за търсене в списъка с торенти</string>
+    <string name="show_search_bar_sum_off">Без показване на лентата за търсене в списъка с торенти</string>
     <string name="accessibility_manual_on">Активирайте услугата %1$s в секцията Предпочитания на устройството / Достъпност</string>
     <string name="accessibility_manual_off">Деактивирайте услугата %1$s в секцията Предпочитания на устройството / Достъпност</string>
     <string name="accessibility_service_description">Активирането на тази услуга може да предотврати изключване на локалният TorrServer от операционната система</string>

@@ -218,6 +218,9 @@
     <string name="show_cat_fab_title">Buton de filtrare după categorie</string>
     <string name="show_cat_fab_sum_on">Afișează butonul de filtrare a categoriilor</string>
     <string name="show_cat_fab_sum_off">Nu afișa butonul de filtrare a categoriilor</string>
+    <string name="show_search_bar_title">Afișează bara de căutare</string>
+    <string name="show_search_bar_sum_on">Afișează bara de căutare în lista de torrente</string>
+    <string name="show_search_bar_sum_off">Nu afișa bara de căutare în lista de torrente</string>
     <string name="accessibility_manual_on">Activează serviciul «%1$s» în «Setări dispozitiv» / «Accesibilitate»</string>
     <string name="accessibility_manual_off">Dezactivează serviciul «%1$s» în «Setări dispozitiv» / «Accesibilitate»</string>
     <string name="accessibility_service_description">Activarea acestui serviciu poate preveni oprirea TorrServer-ului local de către sistem</string>

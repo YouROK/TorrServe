@@ -270,6 +270,10 @@
     <string name="show_cat_fab_sum_on">Show floating categories button</string>
     <string name="show_cat_fab_sum_off">Don\'t show floating categories button</string>
 
+    <string name="show_search_bar_title">Show Search Bar</string>
+    <string name="show_search_bar_sum_on">Show search bar in torrents list</string>
+    <string name="show_search_bar_sum_off">Don\'t show search bar in torrents list</string>
+
     <string name="accessibility_manual_on">Enable service %1$s in Device Preferences / Accessibility section</string>
     <string name="accessibility_manual_off">Disable service %1$s in Device Preferences / Accessibility section</string>
     <string name="accessibility_service_description">Enabling this service can prevent local TorrServer shutdown by OS</string>
