@@ -154,9 +154,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvPlayer"
@@ -182,20 +182,19 @@
                 android:gravity="center"
                 android:minWidth="120dp"
                 android:minHeight="48dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvNamePlayer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingLeft="12dp"
                     android:paddingStart="12dp"
-                    android:paddingRight="12dp"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="6dp"
                     android:paddingEnd="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="6dp"
                     android:text="@string/select_player"
                     android:textAllCaps="true"
                     android:textColor="?attr/colorPrimary" />
@@ -206,24 +205,24 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center_vertical|end">
+            android:gravity="center_vertical|end"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="@string/make_as_def"
                 android:textAllCaps="true"
-                android:textColor="?attr/colorAccent"
-                android:layout_marginEnd="8dp" />
+                android:textColor="?attr/colorAccent" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/cbSaveChooseAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                />
+                android:layout_marginRight="16dp" />
 
         </LinearLayout>
     </LinearLayout>
