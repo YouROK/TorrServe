@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.ServerFinder
 import ru.yourok.torrserve.server.api.SiloApi
+import ru.yourok.torrserve.server.local.FfprobeDownloader
 import ru.yourok.torrserve.server.local.ServerDownloader
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
@@ -35,6 +36,7 @@ class SettingsFragment : Fragment() {
     private val ui = Handler(Looper.getMainLooper())
     private lateinit var address: EditText
     private lateinit var serverState: TextView
+    private lateinit var ffprobeState: TextView
     private lateinit var account: TextView
 
     /** Разрешение на чтение папки Download (запрашивается при нажатии «Из папки»). */
@@ -51,6 +53,7 @@ class SettingsFragment : Fragment() {
         prefs = Prefs(requireContext())
         address = view.findViewById(R.id.settings_address)
         serverState = view.findViewById(R.id.settings_server_state)
+        ffprobeState = view.findViewById(R.id.settings_ffprobe_state)
         account = view.findViewById(R.id.settings_account)
         address.setText(prefs.serverUrl)
 
@@ -85,6 +88,7 @@ class SettingsFragment : Fragment() {
         view.findViewById<View>(R.id.settings_download).setOnClickListener { downloadServer() }
         view.findViewById<View>(R.id.settings_from_folder).setOnClickListener { installFromFolder() }
         view.findViewById<View>(R.id.settings_delete).setOnClickListener { confirmDeleteServer() }
+        view.findViewById<View>(R.id.settings_download_ffprobe).setOnClickListener { downloadFfprobe() }
         view.findViewById<View>(R.id.settings_start).setOnClickListener {
             TorrService.start(requireContext().applicationContext)
             toast(getString(R.string.settings_starting))
@@ -141,6 +145,7 @@ class SettingsFragment : Fragment() {
         } else {
             getString(R.string.settings_server_missing)
         }
+        updateFfprobeState()
         bindOwnerPasswordField()
         updateAccountChips()
         updateAddAction()
@@ -344,9 +349,10 @@ class SettingsFragment : Fragment() {
         serverState.text = getString(R.string.settings_downloading)
         thread {
             try {
-                ServerDownloader.download(requireContext().applicationContext) { p ->
+                val release = ServerDownloader.download(requireContext().applicationContext) { p ->
                     ui.post { if (isAdded) serverState.text = "${getString(R.string.settings_downloading)} $p%" }
                 }
+                android.util.Log.i("SiloSrv", "downloaded " + release.tag + " -> " + release.assets.keys)
                 prefs.serverUrl = Prefs.LOCAL_URL
                 TorrService.start(requireContext().applicationContext)
                 ui.post {
@@ -356,8 +362,49 @@ class SettingsFragment : Fragment() {
                     serverState.text = getString(R.string.settings_download_done)
                 }
             } catch (e: Exception) {
+                android.util.Log.e("SiloSrv", "download failed: " + e.message, e)
                 ui.post {
                     if (isAdded) serverState.text = getString(R.string.settings_download_error, e.message ?: "")
+                }
+            }
+        }
+    }
+
+    /** Состояние ffprobe: установлен ли и какая версия. */
+    private fun updateFfprobeState() {
+        val ctx = requireContext().applicationContext
+        if (!FfprobeDownloader.isInstalled(ctx)) {
+            ffprobeState.text = getString(R.string.settings_ffprobe_missing)
+            return
+        }
+        val version = FfprobeDownloader.version(ctx)
+        ffprobeState.text = if (version != null) {
+            getString(R.string.settings_ffprobe_installed, version.substringBefore(" Copyright").trim())
+        } else {
+            getString(R.string.settings_ffprobe_missing)
+        }
+    }
+
+    /** Кнопка «Скачать ffprobe»: кладём ffprobe рядом с бинарником сервера. */
+    private fun downloadFfprobe() {
+        val ctx = requireContext().applicationContext
+        ffprobeState.text = getString(R.string.settings_ffprobe_downloading, 0)
+        thread {
+            try {
+                FfprobeDownloader.download(ctx) { p ->
+                    ui.post { if (isAdded) ffprobeState.text = getString(R.string.settings_ffprobe_downloading, p) }
+                }
+                ui.post {
+                    if (!isAdded) return@post
+                    updateFfprobeState()
+                    toast(getString(R.string.settings_ffprobe_done))
+                }
+            } catch (e: Exception) {
+                android.util.Log.e("SiloFfprobe", "download failed: " + e.message, e)
+                ui.post {
+                    if (!isAdded) return@post
+                    // Ошибку не затираем обновлением состояния, показываем причину
+                    ffprobeState.text = getString(R.string.settings_ffprobe_error, e.message ?: "")
                 }
             }
         }

@@ -4,9 +4,10 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
-// Версия клиента: X в имени TorrServe_Silo.X.Client.apk. Меняется вручную.
-def appVersionCode = 0
-def appVersionName = "Silo.0.Client"
+// Версия клиента: X в имени TorrServe_Silo.X.Client.apk.
+// Локально - значения по умолчанию; CI передаёт версию из тега: -PversionName=... -PversionCode=...
+def appVersionCode = (project.findProperty("versionCode") ?: 0).toString().toInteger()
+def appVersionName = (project.findProperty("versionName") ?: "Silo.0.Client").toString()
 
 // Ключи подписи лежат в папке keys/ (см. keys/README.md).
 def keystoreFile = rootProject.file("keys/freekeys.jks")

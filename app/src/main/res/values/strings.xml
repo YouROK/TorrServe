@@ -36,19 +36,7 @@
     <string name="choose_player">Открыть в плеере</string>
 
     <!-- Онбординг -->
-    <string name="onboarding_title">Как будете использовать сервер?</string>
-    <string name="onboarding_single">Одиночный режим (без пароля)</string>
-    <string name="onboarding_multi">Многопользовательский режим</string>
 
-    <!-- Пароль владельца -->
-    <string name="owner_title">Пароль владельца (owner)</string>
-    <string name="owner_hint">Пароль</string>
-    <string name="owner_hint_confirm">Повторите пароль</string>
-    <string name="owner_submit">Продолжить</string>
-    <string name="owner_err_empty">Введите пароль</string>
-    <string name="owner_err_mismatch">Пароли не совпадают</string>
-    <string name="owner_err_login">Не удалось войти под owner</string>
-    <string name="owner_err_server">Сервер не отвечает. Попробуйте ещё раз</string>
 
     <!-- Вход пользователя -->
     <string name="login_title">Вход на сервер</string>
@@ -160,6 +148,11 @@
     <string name="settings_download_error">Не удалось скачать сервер: %1$s</string>
     <string name="settings_server_installed">Установлен: %1$s (звук и видео через ffmpeg — если он есть в системе)</string>
     <string name="settings_server_missing">Локальный сервер не скачан</string>
+    <string name="server_update_available">Доступна новая версия сервера: %1$s. Обновите в настройках.</string>
+    <string name="app_update_title">Обновление приложения</string>
+    <string name="app_update_message">Доступна новая версия: %1$s. У вас установлена %2$s.</string>
+    <string name="app_update_download">Скачать</string>
+    <string name="app_update_later">Позже</string>
     <string name="settings_delete_server">Удалить</string>
     <string name="settings_install_from_folder">Из папки</string>
     <string name="settings_delete_title">Удалить локальный сервер?</string>
@@ -171,6 +164,12 @@
     <string name="settings_install_done">Сервер установлен и запущен</string>
     <string name="settings_installing">Установка…</string>
     <string name="settings_install_error">Не удалось установить сервер: %1$s</string>
+    <string name="settings_download_ffprobe">Скачать ffprobe</string>
+    <string name="settings_ffprobe_missing">ffprobe не установлен (серверу нужен для анализа файлов)</string>
+    <string name="settings_ffprobe_installed">ffprobe установлен рядом с сервером: %1$s</string>
+    <string name="settings_ffprobe_downloading">Скачивание ffprobe… %1$d%%</string>
+    <string name="settings_ffprobe_done">ffprobe установлен</string>
+    <string name="settings_ffprobe_error">Не удалось скачать ffprobe: %1$s</string>
     <string name="settings_account_section">Аккаунт</string>
     <string name="settings_account_current">Вы вошли как %1$s</string>
     <string name="settings_logout">Выйти из всех аккаунтов</string>

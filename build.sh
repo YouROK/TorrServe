@@ -15,12 +15,16 @@ usage() {
 }
 
 MODE="release"
-case "${1:-}" in
-    --debug) MODE="debug" ;;
-    --release|"") MODE="release" ;;
-    -h|--help) usage; exit 0 ;;
-    *) usage; exit 1 ;;
-esac
+EXTRA_ARGS=()
+for arg in "$@"; do
+    case "$arg" in
+        --debug) MODE="debug" ;;
+        --release) MODE="release" ;;
+        -h|--help) usage; exit 0 ;;
+        -P*) EXTRA_ARGS+=("$arg") ;;
+        *) usage; exit 1 ;;
+    esac
+done
 
 export ANDROID_USER_HOME="$PWD/.android-home"
 export GRADLE_USER_HOME="$PWD/.gradle-home"
@@ -55,7 +59,7 @@ else
     OUT_DIR="app/build/outputs/apk/debug"
 fi
 
-./gradlew "$TASK" --no-daemon "${GRADLE_ARGS[@]}"
+./gradlew "$TASK" --no-daemon "${GRADLE_ARGS[@]}" "${EXTRA_ARGS[@]}"
 
 APK=""
 for candidate in $(ls -1t "$OUT_DIR"/*.apk 2>/dev/null || true); do

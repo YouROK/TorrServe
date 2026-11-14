@@ -23,3 +23,8 @@ local.properties
 keys/keystore.properties
 
 .DS_Store
+
+# Артефакты сборки ffmpeg и промежуточные файлы
+/artifacts
+/.build-ffmpeg
+/.tmp-research

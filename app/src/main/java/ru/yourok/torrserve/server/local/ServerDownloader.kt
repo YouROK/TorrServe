@@ -2,20 +2,21 @@ package ru.yourok.torrserve.server.local
 
 import android.content.Context
 import android.os.Build
+import ru.yourok.torrserve.server.api.GithubReleases
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
 /**
- * Скачивание бинарника Silo с сайта по архитектуре устройства.
- * Файл кладётся в filesDir как `silo` и получает права на исполнение (как в старом клиенте).
- * Источник: SERVER_BASE_URL (сейчас yourok.ru/share, позже GitHub release).
+ * Скачивание бинарника сервера Silo с GitHub Releases проекта YouROK/TorrServer.
+ *
+ * В релизах репозитория лежат и клиентские сборки MatriX / Silo.*.Client, и серверные
+ * Silo.*. Нам нужны только теги `Silo.*` без суффикса `.Client` — берём последний
+ * по номеру версии и качаем ассет под архитектуру устройства
+ * (`TorrServer-android-<arch>`). Файл кладётся в filesDir как `silo`.
  */
 object ServerDownloader {
-
-    /** Базовый адрес, откуда берётся бинарник. Меняется при переезде на GitHub. */
-    const val SERVER_BASE_URL = "https://yourok.ru/share"
 
     /** Суффикс файла по архитектуре устройства. */
     fun archSuffix(): String {
@@ -29,20 +30,42 @@ object ServerDownloader {
         }
     }
 
-    /** Имя файла на сервере для текущей архитектуры. */
+    /** Имя файла в релизе для текущей архитектуры. */
     fun remoteName(): String = "TorrServer-android-${archSuffix()}"
 
+    /** true, если версия [candidate] новее установленной [installed]. */
+    fun isNewer(candidate: String, installed: String): Boolean =
+        GithubReleases.isNewer(candidate, installed)
+
+    /** Релиз сервера (не клиент). */
+    private fun isServer(release: GithubReleases.Release): Boolean =
+        release.tag.startsWith(GithubReleases.TAG_PREFIX) && !release.isClient
+
+    /** Последний релиз сервера Silo (MatriX.* и *.Client игнорируются). */
+    fun latest(): GithubReleases.Release {
+        val releases = GithubReleases.all().filter(::isServer)
+        return releases.maxWithOrNull { a, b ->
+            GithubReleases.compare(
+                GithubReleases.versionOf(a.tag) ?: emptyList(),
+                GithubReleases.versionOf(b.tag) ?: emptyList(),
+            )
+        } ?: throw IllegalStateException("на GitHub нет релизов Silo")
+    }
+
     /**
-     * Скачивает бинарник в filesDir/silo. [onProgress] получает проценты 0..100.
-     * Бросает исключение при ошибке; при успехе файл готов к запуску.
+     * Скачивает бинарник последнего релиза Silo в filesDir/silo, ставит права на исполнение.
+     * [onProgress] получает проценты 0..100. Возвращает скачанный релиз.
      */
-    fun download(context: Context, onProgress: (Int) -> Unit = {}) {
-        val url = URL("$SERVER_BASE_URL/${remoteName()}")
+    fun download(context: Context, onProgress: (Int) -> Unit = {}): GithubReleases.Release {
+        val release = latest()
+        val url = release.assets[remoteName()]
+            ?: throw IllegalStateException("в ${release.tag} нет ${remoteName()}")
         val target = File(context.filesDir, ServerFile.BIN_NAME)
         val tmp = File(context.filesDir, "${ServerFile.BIN_NAME}.part")
-        val conn = (url.openConnection() as HttpURLConnection).apply {
+
+        val conn = (URL(url).openConnection() as HttpURLConnection).apply {
             connectTimeout = 15000
-            readTimeout = 30000
+            readTimeout = 60000
             instanceFollowRedirects = true
         }
         try {
@@ -65,6 +88,7 @@ object ServerDownloader {
             if (!tmp.renameTo(target)) throw IllegalStateException("cannot move downloaded file")
             if (!target.setExecutable(true, true)) throw IllegalStateException("cannot set exec permission")
             onProgress(100)
+            return release
         } finally {
             conn.disconnect()
             if (tmp.exists()) tmp.delete()

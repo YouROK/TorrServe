@@ -24,11 +24,6 @@ class Prefs(context: Context) {
         get() = serverUrl.contains("127.0.0.1") || serverUrl.contains("localhost")
 
 
-    /** true - режим многопользовательский (у owner задан пароль). */
-    var multiUser: Boolean
-        get() = prefs.getBoolean(KEY_MULTI_USER, false)
-        set(value) = prefs.edit().putBoolean(KEY_MULTI_USER, value).apply()
-
     /**
      * Пароль owner, который записывается в config.yaml локального сервера (auth.owner_password).
      * Пусто - одиночный режим, сервер открыт.
@@ -103,6 +98,11 @@ class Prefs(context: Context) {
         get() = activeSession()?.token ?: ""
 
 
+    /** Когда последний раз проверяли обновления (сервер и клиент) на GitHub (мс). */
+    var updateCheckedAt: Long
+        get() = prefs.getLong(KEY_UPDATE_AT, 0L)
+        set(value) = prefs.edit().putLong(KEY_UPDATE_AT, value).apply()
+
     /** Плеер по умолчанию (пусто - спрашивать каждый раз). */
     var playerPkg: String
         get() = prefs.getString(KEY_PLAYER, "") ?: ""
@@ -146,22 +146,15 @@ class Prefs(context: Context) {
     fun setLastFile(hash: String, fileId: Int) =
         prefs.edit().putInt("last_file|$hash", fileId).apply()
 
-    /** Онбординг пройден (выбран режим работы). */
-    val onboardingDone: Boolean
-        get() = prefs.getBoolean(KEY_ONBOARDING_DONE, false)
-
-    fun markOnboardingDone() = prefs.edit().putBoolean(KEY_ONBOARDING_DONE, true).apply()
-
     companion object {
         private const val NAME = "silo_client"
         private const val KEY_SERVER_URL = "server_url"
-        private const val KEY_MULTI_USER = "multi_user"
-        private const val KEY_ONBOARDING_DONE = "onboarding_done"
         private const val KEY_OWNER_PASSWORD = "owner_password"
         private const val KEY_OWNER_TOKEN = "owner_token"
         private const val KEY_SESSIONS = "sessions"
         private const val KEY_ACTIVE_USER = "active_user"
         private const val KEY_PLAYER = "player_pkg"
+        private const val KEY_UPDATE_AT = "update_checked_at"
         private const val KEY_SORT = "sort_mode"
         private const val KEY_MAGNET_ACTION = "magnet_action"
         private const val KEY_MAGNET_REMEMBER = "magnet_remember"

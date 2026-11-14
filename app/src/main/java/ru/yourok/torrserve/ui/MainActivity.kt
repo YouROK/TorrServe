@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import ru.yourok.torrserve.R
+import ru.yourok.torrserve.server.api.GithubReleases
 import ru.yourok.torrserve.server.api.SiloApi
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.settings.Prefs
@@ -43,6 +44,9 @@ class MainActivity : AppCompatActivity() {
 
     /** Панель в компактном режиме (телефон): подписи и состояние скрыты. */
     private var compactSidebar = false
+
+    /** Проверка обновления сервера выполняется один раз за запуск приложения. */
+    private var updateChecked = false
 
     /** Возврат с экрана входа: успешный вход сразу открывает список торрентов. */
     private val loginLauncher = registerForActivityResult(
@@ -246,6 +250,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         updateSidebarState()
         loadPluginMenu()
+        checkUpdates()
     }
 
     /** Переключение активного пользователя без выхода из приложения. */
@@ -438,9 +443,94 @@ class MainActivity : AppCompatActivity() {
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
+    /**
+     * Проверка обновлений сервера и приложения на GitHub (не чаще раза в 5 минут).
+     * Один запрос к API отдаёт и серверные релизы Silo.*, и клиентские Silo.*.Client.
+     */
+    private fun checkUpdates() {
+        if (updateChecked) return
+        updateChecked = true
+        val now = System.currentTimeMillis()
+        if (now - prefs.updateCheckedAt < UPDATE_INTERVAL_MS) return
+        prefs.updateCheckedAt = now
+
+        val url = prefs.serverUrl
+        val localServer = hasServer() && prefs.isLocalServer
+        val currentApp = appVersionName()
+
+        Thread {
+            val releases = try {
+                GithubReleases.all()
+            } catch (e: Exception) {
+                emptyList()
+            }
+
+            if (localServer) {
+                val installed = SiloApi(url).version()
+                val server = latestTag(releases) { !it.isClient }
+                if (installed != null && server != null && GithubReleases.isNewer(server.tag, installed)) {
+                    runOnUiThread {
+                        if (!isFinishing) {
+                            Toast.makeText(
+                                this,
+                                getString(R.string.server_update_available, server.tag),
+                                Toast.LENGTH_LONG,
+                            ).show()
+                        }
+                    }
+                }
+            }
+
+            val app = latestTag(releases) { it.isClient }
+            if (app != null && AppUpdater.isNewer(app.tag, currentApp)) {
+                runOnUiThread { if (!isFinishing) showAppUpdateDialog(app) }
+            }
+        }.start()
+    }
+
+    /** Самый новый релиз из ленты по фильтру (сервер или клиент). */
+    private fun latestTag(
+        releases: List<GithubReleases.Release>,
+        filter: (GithubReleases.Release) -> Boolean,
+    ): GithubReleases.Release? =
+        releases.filter { it.tag.startsWith(GithubReleases.TAG_PREFIX) && filter(it) }
+            .maxWithOrNull { a, b ->
+                GithubReleases.compare(
+                    GithubReleases.versionOf(a.tag) ?: emptyList(),
+                    GithubReleases.versionOf(b.tag) ?: emptyList(),
+                )
+            }
+
+    /** Версия установленного приложения ("Silo.0.Client"). */
+    private fun appVersionName(): String = try {
+        packageManager.getPackageInfo(packageName, 0).versionName ?: ""
+    } catch (e: Exception) {
+        ""
+    }
+
+    /** Диалог о новой версии приложения со ссылкой на релиз. */
+    private fun showAppUpdateDialog(release: GithubReleases.Release) {
+        android.app.AlertDialog.Builder(this)
+            .setTitle(R.string.app_update_title)
+            .setMessage(getString(R.string.app_update_message, release.tag, appVersionName()))
+            .setPositiveButton(R.string.app_update_download) { _, _ ->
+                runCatching {
+                    startActivity(android.content.Intent(
+                        android.content.Intent.ACTION_VIEW,
+                        android.net.Uri.parse(release.htmlUrl),
+                    ))
+                }
+            }
+            .setNegativeButton(R.string.app_update_later, null)
+            .show()
+    }
+
     companion object {
         /** Порог ширины, после которого панель показывается с подписями. */
         const val WIDE_DP = 600
+
+        /** Как часто проверять обновления на GitHub (5 минут, один запрос API). */
+        private const val UPDATE_INTERVAL_MS = 5 * 60 * 1000L
     }
 }
 

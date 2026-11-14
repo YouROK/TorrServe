@@ -39,8 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.OnboardingActivity" />
-        <activity android:name=".ui.OwnerPasswordActivity" />
         <activity
             android:name=".ui.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|uiMode"

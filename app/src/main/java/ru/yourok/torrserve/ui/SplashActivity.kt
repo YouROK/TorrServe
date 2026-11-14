@@ -11,9 +11,8 @@ import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Prefs
 
 /**
- * Первый экран: анимация и решение, куда идти дальше.
- * - Есть сохранённый сервер -> подключаемся (локальный поднимаем сервисом).
- * - Нет сервера -> онбординг (скачивание сервера добавим позже).
+ * Первый экран: короткая анимация логотипа, затем сразу главное окно.
+ * Локальный сервер поднимается сервисом до перехода.
  */
 class SplashActivity : AppCompatActivity() {
 
@@ -35,18 +34,14 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun next() {
-        val target = if (prefs.serverUrl.isBlank() || !prefs.onboardingDone) {
-            OnboardingActivity::class.java
-        } else {
-            MainActivity::class.java
-        }
+        // Приветственного экрана больше нет: сразу главное окно.
+        // На чистой установке по умолчанию выставляем адрес локального сервера.
+        if (prefs.serverUrl.isBlank()) prefs.serverUrl = Prefs.LOCAL_URL
 
         // Локальный сервер поднимаем сервисом до перехода
-        if (prefs.isLocalServer && prefs.serverUrl.isNotBlank()) {
-            TorrService.start(this)
-        }
+        if (prefs.isLocalServer) TorrService.start(this)
 
-        startActivity(Intent(this, target))
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

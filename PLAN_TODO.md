@@ -120,3 +120,47 @@
 - [x] Устранены блокеры `lintVitalRelease`: `super.onBackPressed()` в PluginActivity, guard для `startForegroundService` (API 25), `paddingVertical/Horizontal` -> top/bottom/start/end, `android:tint` -> `app:tint`, отключён `ExpiredTargetSdkVersion` (targetSdk 28 осознанно).
 - [x] Проверено: release-сборка на временном ключе -> `TorrServe_Silo.0.Client.apk`, `apksigner verify` OK; исходный keystore восстановлен.
 - [x] Проверено: `./build.sh --debug` -> `TorrServe_Silo.0.Client-debug.apk`, установка на приставку, разметка после правок в порядке.
+
+## ffmpeg/ffprobe под Android (итерация 20)
+
+- [x] Выяснено: portab-сборок jellyfin-ffmpeg под Android нет (glibc), для armv7 portable отсутствует вовсе; prebuilt CLI под bionic только 2018 г. (ffmpeg 3.3, без ffprobe и mediacodec).
+- [x] `tools/build-ffmpeg-android.sh`: сборка из исходников jellyfin-ffmpeg v7.1.1-2 + x264 статически под bionic (NDK 27, API 25), арх. armv7/arm64.
+- [x] Собрано: `artifacts/ffmpeg-android-armv7/{ffmpeg,ffprobe}` (по 20 МБ), ffmpeg 7.1.1, libx264 + mediacodec + v4l2_m2m в конфигурации.
+- [x] В настройках кнопка «Скачать ffmpeg» + состояние (версия/не установлен), загрузчик `server/local/FfmpegDownloader.kt`.
+- [x] Проверено на приставке: скачивание -> файлы в filesDir рядом с сервером, `silo.log`: `Using ffmpeg 7.1.1`, `Transcoding enabled`.
+- [x] Ускорение на этой прошивке: `h264_mediacodec` кодирует 320x240, но 480p/720p -> «nothing was encoded»; `h264_v4l2m2m` -> EINVAL; libx264 (софт) работает стабильно.
+
+## Только ffprobe, источник из старого клиента (итерация 21)
+
+- [x] Скачивание только ffprobe (ffmpeg не качаем): `server/local/FfprobeDownloader.kt`, кнопка «Скачать ffprobe» + состояние в настройках.
+- [x] Источник из старого клиента (`UpdaterServer.downloadFFProbe`): ffbinaries-prebuilt v4.4.1, статические сборки — на Android запускаются (проверено: `ffprobe version 4.4.1-static`).
+- [x] Но Serвер отвергает старую версию: `ffprobe rejected: ffmpeg version is too old: 4.4.1 is below minimum 6.0`.
+- [x] Поэтому взяты те же статические сборки johnvansickle, но свежие: ffmpeg-static b6.1.1 (`ffprobe-linux-arm.gz`, внутри 7.0.2-static), распаковка gzip.
+- [x] Проверено на приставке: скачалось (31,6 МБ), файл запускается, `silo.log`: `[FFmpeg:Probe] ffprobe 7.0.2 at .../files/ffprobe`; транскодинг ожидаемо выключен («ffmpeg not installed»).
+
+## Загрузка сервера с GitHub и проверка обновлений (итерация 22)
+
+- [x] `ServerDownloader`: релизы с GitHub `YouROK/TorrServer`, фильтр тегов только `Silo.*` (MatriX игнорируется), выбор последней версии числовым сравнением (Silo.2 > Silo.1, поддержка Silo.2.1).
+- [x] Ассет под устройство: `TorrServer-android-<arch>` (имена совпали с прежним yourok.ru/share), скачивание в filesDir/silo с прогрессом.
+- [x] `SiloApi.version()` - версия сервера из `/api/system/version` ("Silo.2").
+- [x] Тост при открытии главного окна, если на GitHub новее установленной версии; проверка не чаще раза в 6 часов (`Prefs.serverUpdateCheckedAt`) из-за лимита GitHub 60 запросов/час без токена.
+- [x] Проверено: скачивание Silo.2 с GitHub (35 810 924 байт = размер ассета), сервер отвечает `"version":"Silo.2"`, ffprobe 7.0.2 подхватывается.
+- [x] Проверено: тост «Доступна новая версия сервера: Silo.2. Обновите в настройках.» (тестовая сборка с искусственно старой версией).
+
+## Удаление приветственного окна (итерация 23)
+
+- [x] `SplashActivity` всегда открывает `MainActivity`; на чистой установке выставляет `Prefs.LOCAL_URL`, если адрес пуст.
+- [x] Удалены `OnboardingActivity`, `activity_onboarding.xml`, строки `onboarding_*`, запись в манифесте, `Prefs.onboardingDone`.
+- [x] Проверено полным удалением и установкой APK: приветственного экрана нет, сразу главное окно; при отсутствии сервера меню «Настройки / Донат / Закрыть».
+- [x] После чистой установки сервер (Silo.2 с GitHub) и ffprobe 7.0.2 загружены заново, сервер отвечает `"version":"Silo.2"`.
+- [x] `OwnerPasswordActivity` удалён вместе с layout и строками; неиспользуемый `Prefs.multiUser` тоже убран.
+
+## Обновление APK и сборка в GitHub Actions (итерация 24)
+
+- [x] Общая лента релизов `GithubReleases`: один запрос к GitHub на сервер и клиент, кеш 5 минут; сервер - теги `Silo.N`, клиент - `Silo.N.Client`.
+- [x] `AppUpdater`: последний клиентский релиз и сравнение с версией установленного APK (`versionName` из PackageManager).
+- [x] Проверка обновлений при открытии главного окна: сервер - тост, клиент - диалог «Обновление приложения» с кнопками «Скачать» (ссылка на релиз) и «Позже»; интервал 5 минут (`Prefs.updateCheckedAt`).
+- [x] `build.gradle`: версия из `-PversionName` / `-PversionCode`; `build.sh` пропускает `-P` аргументы в Gradle. Проверено: `-PversionName=Silo.9.Client -PversionCode=9` -> `TorrServe_Silo.9.Client-debug.apk`, versionCode 9 в манифесте.
+- [x] Workflow `.github/workflows/release-apk.yml`: пуш тега `Silo.N.Client` -> сборка подписанного APK, SHA256 и релиз на GitHub; ключ из секретов (KEYSTORE_BASE64, KEYSTORE_PASSWORD, KEY_PASSWORD, KEY_ALIAS).
+- [x] `keys/README.md`: как сгенерировать base64 ключа, какие секреты завести, как повторить сборку CI локально.
+- [x] Проверено на приставке: диалог обновления APK показывается (тестовая сборка с фиктивным релизом), повторный запуск в течение 5 минут диалог не повторяет.

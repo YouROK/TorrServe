@@ -19,6 +19,14 @@ class SiloApi(private val baseUrl: String) {
         false
     }
 
+    /** Версия сервера из /api/system/version ("Silo.2") или null. */
+    fun version(): String? = try {
+        val (code, resp) = request("GET", "/api/system/version", null, null)
+        if (code != 200) null else JSONObject(resp).optString("version").takeIf { it.isNotBlank() }
+    } catch (e: Exception) {
+        null
+    }
+
     /** Вход пользователя. */
     fun login(username: String, password: String): LoginResult {
         val body = JSONObject().put("username", username).put("password", password).toString()
