@@ -3,6 +3,7 @@ package ru.yourok.torrserve.server.local
 import android.content.Context
 import android.os.Build
 import ru.yourok.torrserve.server.api.GithubReleases
+import ru.yourok.torrserve.server.api.ReleaseFeed
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
@@ -57,9 +58,14 @@ object ServerDownloader {
      * [onProgress] получает проценты 0..100. Возвращает скачанный релиз.
      */
     fun download(context: Context, onProgress: (Int) -> Unit = {}): GithubReleases.Release {
+        // Основной источник версии и ссылки - JSON автора (не кешируется провайдером),
+        // запасной - лента GitHub
+        val feed = ReleaseFeed.server()
         val release = latest()
-        val url = release.assets[remoteName()]
-            ?: throw IllegalStateException("в ${release.tag} нет ${remoteName()}")
+        val tag = feed?.version ?: release.tag
+        val url = feed?.links?.get("android-${archSuffix()}")
+            ?: release.assets[remoteName()]
+            ?: "https://github.com/${GithubReleases.REPO}/releases/download/$tag/${remoteName()}"
         val target = File(context.filesDir, ServerFile.BIN_NAME)
         val tmp = File(context.filesDir, "${ServerFile.BIN_NAME}.part")
 
@@ -88,7 +94,7 @@ object ServerDownloader {
             if (!tmp.renameTo(target)) throw IllegalStateException("cannot move downloaded file")
             if (!target.setExecutable(true, true)) throw IllegalStateException("cannot set exec permission")
             onProgress(100)
-            return release
+            return feed?.let { GithubReleases.Release(it.version, "", emptyMap()) } ?: release
         } finally {
             conn.disconnect()
             if (tmp.exists()) tmp.delete()

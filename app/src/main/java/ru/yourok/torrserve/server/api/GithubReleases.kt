@@ -25,6 +25,9 @@ object GithubReleases {
     }
 
     private const val API = "https://api.github.com/repos/$REPO/releases?per_page=100"
+
+    /** Atom-лента релизов: отдаётся github.com, без лимитов API и без кеша api-хоста. */
+    private const val ATOM = "https://github.com/$REPO/releases.atom"
     private const val TTL_MS = 5 * 60 * 1000L
 
     private var cached: List<Release>? = null
@@ -37,7 +40,20 @@ object GithubReleases {
         val fresh = cached
         if (fresh != null && now - cachedAt < TTL_MS) return fresh
 
-        val body = request(API)
+        // На ТВ api.github.com может отдавать устаревший ответ (кеш провайдера),
+        // поэтому сначала пробуем Atom-ленту github.com, а к API идём только если не вышло
+        val fromAtom = try {
+            parseAtom(request(ATOM + "?t=" + System.currentTimeMillis()))
+        } catch (e: Exception) {
+            emptyList()
+        }
+        if (fromAtom.isNotEmpty()) {
+            cached = fromAtom
+            cachedAt = now
+            return fromAtom
+        }
+
+        val body = request(API + (if (API.contains('?')) "&" else "?") + "t=" + System.currentTimeMillis())
         val array = JSONArray(body)
         val result = ArrayList<Release>(array.length())
         for (i in 0 until array.length()) {
@@ -88,11 +104,26 @@ object GithubReleases {
         return compare(a, b) > 0
     }
 
+    /** Теги из Atom-ленты релизов (ассетов там нет, только тег и ссылка на страницу). */
+    private fun parseAtom(xml: String): List<Release> {
+        val result = ArrayList<Release>()
+        val regex = Regex("href=\"https://github\\.com/$REPO/releases/tag/([^\"]+)\"")
+        regex.findAll(xml).forEach { match ->
+            val tag = match.groupValues[1]
+            if (result.none { it.tag == tag }) {
+                result += Release(tag, "https://github.com/$REPO/releases/tag/$tag", emptyMap())
+            }
+        }
+        return result
+    }
+
     private fun request(url: String): String {
         val conn = (URL(url).openConnection() as HttpURLConnection).apply {
             connectTimeout = 15000
             readTimeout = 30000
             setRequestProperty("Accept", "application/vnd.github+json")
+            setRequestProperty("Cache-Control", "no-cache")
+            setRequestProperty("Pragma", "no-cache")
         }
         try {
             if (conn.responseCode != 200) throw IllegalStateException("GitHub HTTP ${conn.responseCode}")

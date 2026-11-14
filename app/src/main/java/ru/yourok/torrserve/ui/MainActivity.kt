@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.GithubReleases
+import ru.yourok.torrserve.server.api.ReleaseFeed
 import ru.yourok.torrserve.server.api.SiloApi
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.settings.Prefs
@@ -462,18 +463,27 @@ class MainActivity : AppCompatActivity() {
             val releases = try {
                 GithubReleases.all()
             } catch (e: Exception) {
+                android.util.Log.e("SiloUpd", "releases failed", e)
                 emptyList()
             }
 
+            val feedServer = ReleaseFeed.server()
+            val feedApp = ReleaseFeed.app()
+            android.util.Log.i(
+                "SiloUpd",
+                "feed server=" + feedServer?.version + " app=" + feedApp?.version +
+                    " releases=" + releases.size + " current=" + currentApp,
+            )
+
             if (localServer) {
                 val installed = SiloApi(url).version()
-                val server = latestTag(releases) { !it.isClient }
-                if (installed != null && server != null && GithubReleases.isNewer(server.tag, installed)) {
+                val server = feedServer?.version ?: latestTag(releases) { !it.isClient }?.tag
+                if (installed != null && server != null && GithubReleases.isNewer(server, installed)) {
                     runOnUiThread {
                         if (!isFinishing) {
                             Toast.makeText(
                                 this,
-                                getString(R.string.server_update_available, server.tag),
+                                getString(R.string.server_update_available, server),
                                 Toast.LENGTH_LONG,
                             ).show()
                         }
@@ -481,7 +491,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            val app = latestTag(releases) { it.isClient }
+            val app = feedApp?.let { GithubReleases.Release(it.version, it.link, emptyMap()) }
+                ?: latestTag(releases) { it.isClient }
             if (app != null && AppUpdater.isNewer(app.tag, currentApp)) {
                 runOnUiThread { if (!isFinishing) showAppUpdateDialog(app) }
             }
