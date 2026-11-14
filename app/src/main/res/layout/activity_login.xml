@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Вход: компактная карточка по центру (не на всю ширину ТВ) -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silo_bg">
+
+    <LinearLayout
+        android:layout_width="440dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_dialog"
+        android:orientation="vertical"
+        android:padding="28dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title"
+            android:textColor="@color/silo_steel_bright"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/login_subtitle"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/login_user"
+            style="@style/SiloField"
+            android:layout_marginTop="20dp"
+            android:hint="@string/login_hint_user"
+            android:inputType="text"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/login_password"
+            style="@style/SiloField"
+            android:layout_marginTop="12dp"
+            android:hint="@string/login_hint_password"
+            android:inputType="textPassword"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/login_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/silo_danger"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/login_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/login_submit"
+            style="@style/SiloButtonPrimary"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_submit" />
+
+        <TextView
+            android:id="@+id/login_cancel"
+            style="@style/SiloButton"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/card_selector"
+            android:gravity="center"
+            android:text="@string/back" />
+
+    </LinearLayout>
+</FrameLayout>

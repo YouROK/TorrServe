@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_server_section"
+            android:textColor="@color/silo_amber"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/settings_server_url"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/settings_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:hint="@string/settings_address_hint"
+            android:inputType="textUri"
+            android:padding="12dp"
+            android:textColor="@color/silo_text"
+            android:textColorHint="@color/silo_text_faint"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/settings_save"
+                style="@style/SiloButton"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_save" />
+
+            <TextView
+                android:id="@+id/settings_local"
+                style="@style/SiloButton"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_use_local" />
+
+            <TextView
+                android:id="@+id/settings_search"
+                style="@style/SiloButton"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_search_server" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="22dp"
+            android:background="@color/silo_border" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_server_file_section"
+            android:textColor="@color/silo_amber"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/settings_server_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/settings_download"
+                style="@style/SiloButton"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_download_server" />
+
+            <TextView
+                android:id="@+id/settings_start"
+                style="@style/SiloButton"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_start_server" />
+
+            <TextView
+                android:id="@+id/settings_stop"
+                style="@style/SiloButton"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_stop_server" />
+        </LinearLayout>
+
+        <!-- Установка сервера из файла в Download и полное удаление сервера -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/settings_from_folder"
+                style="@style/SiloButton"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_install_from_folder" />
+
+            <TextView
+                android:id="@+id/settings_delete"
+                style="@style/SiloButton"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_delete_server"
+                android:textColor="@color/silo_danger" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/settings_owner_password"
+            android:textColor="@color/silo_text_faint"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/settings_owner_password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_field"
+            android:hint="@string/settings_owner_password_hint"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/silo_text"
+            android:textColorHint="@color/silo_text_faint" />
+
+        <TextView
+            android:id="@+id/settings_owner_password_apply"
+            style="@style/SiloButton"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/card_selector"
+            android:text="@string/settings_owner_password_apply" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="22dp"
+            android:background="@color/silo_border" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/players_section"
+            android:textColor="@color/silo_amber"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/settings_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/settings_player_choose"
+                style="@style/SiloButton"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/card_selector"
+                android:text="@string/players_choose" />
+
+            <TextView
+                android:id="@+id/settings_player_options"
+                style="@style/SiloButton"
+                android:background="@drawable/card_selector"
+                android:text="@string/players_settings" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="22dp"
+            android:background="@color/silo_border" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_add_section"
+            android:textColor="@color/silo_amber"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/settings_add_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/settings_add_reset"
+            style="@style/SiloButton"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/card_selector"
+            android:text="@string/settings_add_reset" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="22dp"
+            android:background="@color/silo_border" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_account_section"
+            android:textColor="@color/silo_amber"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/settings_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+
+        <!-- Плашки уже авторизованных пользователей -->
+        <LinearLayout
+            android:id="@+id/settings_account_chips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/settings_accounts"
+                style="@style/SiloButton"
+                android:background="@drawable/card_selector"
+                android:text="@string/accounts_manage" />
+
+            <TextView
+                android:id="@+id/settings_logout"
+                style="@style/SiloButton"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/card_selector"
+                android:text="@string/settings_logout"
+                android:textColor="@color/silo_danger" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

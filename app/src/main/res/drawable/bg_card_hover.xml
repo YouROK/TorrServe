@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Плитка под курсором мыши: подложка без рамки (как .card:hover в вебе) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/silo_surface" />
+    <corners android:radius="10dp" />
+</shape>

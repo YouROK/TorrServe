@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_hint"
+        android:textColor="@color/silo_text_muted"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/add_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_card"
+        android:hint="@string/add_link_hint"
+        android:inputType="textUri"
+        android:minLines="2"
+        android:padding="12dp"
+        android:textColor="@color/silo_text"
+        android:textColorHint="@color/silo_text_faint"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/add_paste"
+        style="@style/SiloButton"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/card_selector"
+        android:text="@string/add_from_clipboard" />
+
+</LinearLayout>

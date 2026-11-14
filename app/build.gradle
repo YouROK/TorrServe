@@ -1,0 +1,96 @@
+import java.util.Properties
+
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+// Версия клиента: X в имени TorrServe_Silo.X.Client.apk. Меняется вручную.
+def appVersionCode = 0
+def appVersionName = "Silo.0.Client"
+
+// Ключи подписи лежат в папке keys/ (см. keys/README.md).
+def keystoreFile = rootProject.file("keys/freekeys.jks")
+def keystoreProps = new Properties()
+def propsFile = rootProject.file("keys/keystore.properties")
+if (propsFile.exists()) {
+    propsFile.withInputStream { keystoreProps.load(it) }
+}
+def storePass = project.findProperty("storePassword") ?: keystoreProps.getProperty("storePassword")
+def keyAliasValue = project.findProperty("keyAlias") ?: keystoreProps.getProperty("keyAlias") ?: "freekeys"
+def keyPass = project.findProperty("keyPassword") ?: keystoreProps.getProperty("keyPassword") ?: storePass
+def canSign = keystoreFile.exists() && storePass
+
+android {
+    namespace 'ru.yourok.torrserve'
+    compileSdk {
+        version = release(37)
+    }
+
+    defaultConfig {
+        applicationId "ru.yourok.torrserve.silo"
+        minSdk 25
+        targetSdk 28
+        versionCode 1
+        versionName appVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    if (canSign) {
+        signingConfigs {
+            release {
+                storeFile keystoreFile
+                storePassword storePass
+                keyAlias keyAliasValue
+                keyPassword keyPass
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            optimization {
+                enable false
+            }
+            if (canSign) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    lint {
+        // targetSdk 28 выбран осознанно: на Android 10+ приложение с новым targetSdk
+        // не может запускать бинарник сервера из своего каталога данных.
+        disable 'ExpiredTargetSdkVersion'
+    }
+}
+
+// Имя файла: TorrServe_Silo.0.Client.apk (release) и ...-debug.apk (debug)
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.outputs.forEach { output ->
+            def suffix = variant.buildType == "debug" ? "-debug" : ""
+            output.outputFileName.set("TorrServe_${appVersionName}${suffix}.apk")
+            output.versionCode.set(appVersionCode)
+        }
+    }
+}
+
+dependencies {
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.core.ktx
+    implementation libs.material
+    // RecyclerView для списка торрентов (по умолчанию не подтянут appcompat/material в этом проекте)
+    implementation "androidx.recyclerview:recyclerview:1.3.2"
+    // DrawerLayout для боковой панели в стиле веб-версии
+    implementation "androidx.drawerlayout:drawerlayout:1.2.0"
+    // libsu 3.2.1 - версия из старого клиента (последняя, совместимая с API 16)
+    implementation "com.github.topjohnwu.libsu:core:3.2.1"
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.espresso.core
+    androidTestImplementation libs.androidx.junit
+}

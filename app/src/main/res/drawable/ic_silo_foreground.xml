@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Иконка приложения: янтарная сетка на тёмном фоне (в стиле логотипа Silo) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#F0A832"
+        android:pathData="M34,34h17v17h-17zM57,34h17v17h-17zM34,57h17v17h-17zM57,57h17v17h-17z" />
+</vector>

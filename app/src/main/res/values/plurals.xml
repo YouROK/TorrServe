@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="peers_count">
+        <item quantity="one">%1$d пир</item>
+        <item quantity="few">%1$d пира</item>
+        <item quantity="many">%1$d пиров</item>
+        <item quantity="other">%1$d пира</item>
+    </plurals>
+    <plurals name="seeders_count">
+        <item quantity="one">%1$d сид</item>
+        <item quantity="few">%1$d сида</item>
+        <item quantity="many">%1$d сидов</item>
+        <item quantity="other">%1$d сида</item>
+    </plurals>
+    <plurals name="files_count">
+        <item quantity="one">%1$d файл</item>
+        <item quantity="few">%1$d файла</item>
+        <item quantity="many">%1$d файлов</item>
+        <item quantity="other">%1$d файла</item>
+    </plurals>
+</resources>

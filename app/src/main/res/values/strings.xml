@@ -1,0 +1,208 @@
+<resources>
+    <string name="app_name">Silo</string>
+
+    <!-- Навигация -->
+    <string name="nav_torrents">Торренты</string>
+    <string name="nav_delete_all">Удалить все</string>
+    <string name="nav_category">Категории</string>
+    <string name="sort">Сортировка</string>
+    <string name="category_all">Все категории</string>
+    <string name="delete_all_confirm">Удалить все торренты пользователя из списка?</string>
+    <string name="delete_all_done">Удалено: %1$d</string>
+    <string name="sort_title">Сортировка</string>
+    <string name="sort_by_date">По дате добавления</string>
+    <string name="sort_by_title">По названию</string>
+    <string name="sort_by_size">По размеру</string>
+    <string name="sort_by_speed">По скорости</string>
+
+    <string name="nav_add">Добавить</string>
+    <string name="nav_donate">Донат</string>
+    <string name="nav_exit">Закрыть</string>
+    <string name="donate_title">Поддержать проект</string>
+    <string name="donate_text">Если проект полезен — можно поддержать автора:</string>
+    <string name="exit_title">Выход</string>
+    <string name="exit_message">Остановить локальный сервер и закрыть приложение?</string>
+    <string name="exit_done">Сервер остановлен</string>
+    <string name="accounts_title">Аккаунты</string>
+    <string name="accounts_manage">Войти под другим</string>
+    <string name="nav_users">Пользователи</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="nav_login">Вход</string>
+    <string name="sidebar_plugins">ПЛАГИНЫ</string>
+    <string name="search">Поиск</string>
+    <string name="refresh">Обновить</string>
+    <string name="back">Назад</string>
+    <string name="sidebar_no_user">Вход не выполнен</string>
+    <string name="choose_player">Открыть в плеере</string>
+
+    <!-- Онбординг -->
+    <string name="onboarding_title">Как будете использовать сервер?</string>
+    <string name="onboarding_single">Одиночный режим (без пароля)</string>
+    <string name="onboarding_multi">Многопользовательский режим</string>
+
+    <!-- Пароль владельца -->
+    <string name="owner_title">Пароль владельца (owner)</string>
+    <string name="owner_hint">Пароль</string>
+    <string name="owner_hint_confirm">Повторите пароль</string>
+    <string name="owner_submit">Продолжить</string>
+    <string name="owner_err_empty">Введите пароль</string>
+    <string name="owner_err_mismatch">Пароли не совпадают</string>
+    <string name="owner_err_login">Не удалось войти под owner</string>
+    <string name="owner_err_server">Сервер не отвечает. Попробуйте ещё раз</string>
+
+    <!-- Вход пользователя -->
+    <string name="login_title">Вход на сервер</string>
+    <string name="login_hint_user">Логин</string>
+    <string name="login_hint_password">Пароль</string>
+    <string name="login_submit">Войти</string>
+    <string name="login_subtitle">Логин и пароль пользователя сервера Silo</string>
+    <string name="login_err_user">Введите логин</string>
+    <string name="login_err_wrong">Неверный логин или пароль</string>
+    <string name="login_err_server">Сервер не отвечает</string>
+
+    <!-- Список торрентов -->
+    <string name="main_empty">Торрентов пока нет. Нажмите «Добавить» или откройте magnet-ссылку в другом приложении.</string>
+    <string name="main_load_error">Не удалось загрузить список. Проверьте, что сервер запущен.</string>
+    <string name="main_need_login">Требуется вход на сервер.\nНажмите здесь, чтобы войти.</string>
+    <string name="main_not_logged">Не выполнен вход. Войдите под пользователем сервера.</string>
+    <string name="torrents_nothing_found">Ничего не найдено</string>
+    <string name="stat_added">Добавлен</string>
+    <string name="stat_getting_info">Получение данных</string>
+    <string name="stat_closed">Закрыт</string>
+    <string name="stat_in_db">В базе</string>
+    <string name="card_seeders_peers">%1$d/%2$d</string>
+    <string name="stat_preload">Предзагрузка</string>
+    <string name="stat_working">Загрузка</string>
+    <string name="stat_ready">Готово</string>
+
+    <!-- Карточка торрента -->
+    <string name="tab_video">Видео</string>
+    <string name="tab_audio">Аудио</string>
+    <string name="tab_subtitles">Субтитры</string>
+    <string name="tab_other">Остальные</string>
+    <string name="detail_files">Файлы</string>
+    <string name="detail_no_files">Метаданные ещё не получены — файлов пока нет</string>
+    <string name="detail_play_first">Смотреть</string>
+    <string name="detail_play_audio">Слушать</string>
+    <string name="torrent_load_error">Не удалось загрузить торрент</string>
+    <string name="torrent_no_player">Нет приложения для видео</string>
+    <string name="player_choose">Плеер</string>
+    <string name="player_ask">Спрашивать каждый раз</string>
+    <string name="player_remember">Запомнить выбор</string>
+    <string name="player_current">текущий</string>
+    <string name="players_section">Воспроизведение</string>
+    <string name="players_default">Плеер по умолчанию: %1$s</string>
+    <string name="players_choose">Выбрать плеер</string>
+    <string name="players_settings">Настройки плеера</string>
+    <string name="player_send_title">Передавать название раздачи</string>
+    <string name="player_send_poster">Передавать постер</string>
+    <string name="player_none_selected">Плеер не выбран</string>
+    <string name="card_open">Открыть</string>
+    <string name="card_viewed_all">Отметить всё просмотренным</string>
+    <string name="card_copy_torrs">Копировать ссылку</string>
+    <string name="card_viewed_done">Отмечено просмотренным</string>
+    <string name="card_copied">Ссылка скопирована</string>
+    <string name="torrent_delete">Удалить торрент</string>
+    <string name="torrent_delete_confirm">Удалить торрент с сервера?</string>
+    <string name="file_viewed">просмотрено</string>
+    <string name="prep_activating">Активируем раздачу на сервере…</string>
+    <string name="prep_activate_failed">Не удалось активировать раздачу, пробуем предзагрузку</string>
+    <string name="prep_preloading">Предзагрузка файла…</string>
+    <string name="prep_ready">Готово, запускаем плеер</string>
+    <string name="prep_getting_info">Получаем данные…</string>
+    <string name="preparing_file">Готовим файл…</string>
+    <string name="preload_slow">Файл ещё загружается, открываем плеер</string>
+
+
+    <!-- Добавление -->
+    <string name="add_title">Добавить торрент</string>
+    <string name="add_hint">Вставьте magnet-ссылку, info-hash или ссылку torrs://</string>
+    <string name="add_link_hint">magnet:?xt=urn:btih:…</string>
+    <string name="add_from_clipboard">Из буфера</string>
+    <string name="add_button">Добавить</string>
+    <string name="magnet_added">Торрент добавлен на сервер</string>
+    <string name="magnet_error">Не удалось добавить: %1$s</string>
+    <string name="magnet_no_link">Ссылка не распознана</string>
+    <string name="magnet_no_server">Сервер не настроен</string>
+    <string name="magnet_pick_user">Добавить на сервер от имени:</string>
+
+    <!-- Пользователи -->
+    <string name="users_empty">Никто не вошёл. Войдите, чтобы работать с сервером.</string>
+    <string name="users_add">Войти под другим</string>
+    <string name="users_active">активный</string>
+    <string name="users_logout">Выйти</string>
+    <string name="users_logout_active">Выйти из активного</string>
+    <string name="users_logout_confirm">Выйти из %1$s на этом устройстве?</string>
+
+    <!-- Настройки -->
+    <string name="settings_server_section">Сервер</string>
+    <string name="settings_server_url">Адрес сервера</string>
+    <string name="settings_address_hint">http://127.0.0.1:8090</string>
+    <string name="settings_save">Сохранить</string>
+    <string name="settings_use_local">Локальный</string>
+    <string name="settings_search_server">Поиск в сети</string>
+    <string name="server_search_starting">Сканируем локальную сеть…</string>
+    <string name="server_search_progress">Проверено %1$d%%</string>
+    <string name="server_search_found">Найдено серверов: %1$d</string>
+    <string name="server_search_none">Серверы не найдены</string>
+    <string name="server_search_title">Серверы в сети</string>
+    <string name="server_search_version">Версия: %1$s</string>
+
+    <string name="settings_server_saved">Сохранено</string>
+    <string name="settings_server_file_section">Локальный сервер</string>
+    <string name="settings_download_server">Скачать сервер</string>
+    <string name="settings_start_server">Запустить</string>
+    <string name="settings_stop_server">Остановить</string>
+    <string name="settings_starting">Запуск сервера…</string>
+    <string name="settings_stopping">Остановка сервера…</string>
+    <string name="settings_downloading">Скачивание…</string>
+    <string name="settings_download_done">Сервер установлен и запущен</string>
+    <string name="settings_download_error">Не удалось скачать сервер: %1$s</string>
+    <string name="settings_server_installed">Установлен: %1$s (звук и видео через ffmpeg — если он есть в системе)</string>
+    <string name="settings_server_missing">Локальный сервер не скачан</string>
+    <string name="settings_delete_server">Удалить</string>
+    <string name="settings_install_from_folder">Из папки</string>
+    <string name="settings_delete_title">Удалить локальный сервер?</string>
+    <string name="settings_delete_message">Сервер будет остановлен, файл сервера и его настройки удалены.</string>
+    <string name="settings_server_deleted">Локальный сервер удалён</string>
+    <string name="settings_folder_title">Файлы сервера в Download</string>
+    <string name="settings_folder_empty">В папке Download нет файлов с именем torrserver</string>
+    <string name="settings_folder_no_access">Нет доступа к папке Download</string>
+    <string name="settings_install_done">Сервер установлен и запущен</string>
+    <string name="settings_installing">Установка…</string>
+    <string name="settings_install_error">Не удалось установить сервер: %1$s</string>
+    <string name="settings_account_section">Аккаунт</string>
+    <string name="settings_account_current">Вы вошли как %1$s</string>
+    <string name="settings_logout">Выйти из всех аккаунтов</string>
+    <string name="magnet_title">TorrServe Silo</string>
+    <string name="magnet_as_user">От чьего имени добавить</string>
+    <string name="magnet_action">Что сделать</string>
+    <string name="magnet_action_add">Добавить</string>
+    <string name="magnet_action_play">Играть</string>
+    <string name="magnet_action_add_play">Играть и добавить</string>
+    <string name="magnet_remember">Запомнить действие и пользователя</string>
+    <string name="magnet_run">Выполнить</string>
+    <string name="magnet_adding">Добавляем раздачу…</string>
+    <string name="magnet_metadata">Получаем метаданные…</string>
+    <string name="magnet_pick_file">Выберите файл</string>
+    <string name="magnet_no_playable">В раздаче нет видео или аудио</string>
+    <string name="prep_open_now">Открыть сейчас</string>
+    <string name="prep_status">Предзагрузка %1$s из %2$s · %3$s</string>
+    <string name="prep_no_peers">Пиров нет — данные не приходят. Можно открыть сейчас.</string>
+    <string name="settings_add_section">Новая раздача</string>
+    <string name="settings_add_action">Действие из окна добавления: %1$s</string>
+    <string name="settings_add_reset">Сбросить по умолчанию</string>
+    <string name="settings_add_reset_done">Настройки добавления сброшены</string>
+    <string name="magnet_action_add_short">Добавить</string>
+    <string name="magnet_action_play_short">Играть</string>
+    <string name="magnet_action_add_play_short">Играть и добавить</string>
+    <string name="accounts_switch">Войти под другим</string>
+    <string name="accounts_switched">Пользователь: %1$s</string>
+    <string name="prep_file_size">файл %1$s</string>
+    <string name="main_local_need_login">Локальный сервер запущен, но нужен вход. Пароль владельца задаётся в настройках — нажмите здесь, чтобы перейти.</string>
+    <string name="settings_owner_password">Пароль владельца локального сервера</string>
+    <string name="settings_owner_password_hint">Пусто — сервер без пароля</string>
+    <string name="settings_owner_password_apply">Применить и перезапустить</string>
+    <string name="settings_owner_password_saved">Пароль сохранён, сервер перезапускается</string>
+    <string name="sidebar_local_no_login">Нужен вход в локальный сервер</string>
+</resources>

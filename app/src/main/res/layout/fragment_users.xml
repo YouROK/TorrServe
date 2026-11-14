@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/users_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/users_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/users_empty"
+        android:textColor="@color/silo_text_muted"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/users_add"
+            style="@style/SiloButton"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/card_selector"
+            android:text="@string/users_add" />
+
+        <TextView
+            android:id="@+id/users_logout"
+            style="@style/SiloButton"
+            android:background="@drawable/card_selector"
+            android:text="@string/users_logout_active"
+            android:textColor="@color/silo_danger" />
+    </LinearLayout>
+
+</LinearLayout>

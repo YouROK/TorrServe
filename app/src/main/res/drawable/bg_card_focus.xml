@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Плитка в фокусе (пульт): подложка без рамки, «всплывает» тенью и масштабом -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/silo_surface_hover" />
+    <corners android:radius="10dp" />
+</shape>

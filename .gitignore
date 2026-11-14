@@ -1,0 +1,25 @@
+# Gradle / Android
+*.iml
+.gradle
+/build
+/app/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+/.gradle-home
+/.android-home
+
+# IDE
+/.idea
+/.kotlin
+
+# Локальные артефакты разработки (тестовые данные, скриншоты, бэкапы)
+/.backup
+/.shots
+/.silo-test
+
+# Пароли подписи (см. keys/README.md)
+keys/keystore.properties
+
+.DS_Store

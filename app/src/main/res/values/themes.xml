@@ -1,0 +1,28 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Тема в стиле веб-версии Silo: тёмная, с янтарным акцентом -->
+    <style name="Theme.TorrServe" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/silo_amber</item>
+        <item name="colorPrimaryVariant">@color/silo_amber_deep</item>
+        <item name="colorOnPrimary">@color/silo_bg</item>
+        <item name="colorSecondary">@color/silo_teal_bright</item>
+        <item name="colorSecondaryVariant">@color/silo_teal</item>
+        <item name="colorOnSecondary">@color/silo_steel_bright</item>
+        <item name="colorSurface">@color/silo_surface</item>
+        <item name="colorOnSurface">@color/silo_text</item>
+        <item name="android:colorBackground">@color/silo_bg</item>
+        <item name="android:textColorPrimary">@color/silo_text</item>
+        <item name="android:textColorSecondary">@color/silo_text_muted</item>
+        <item name="android:statusBarColor">@color/silo_bg</item>
+        <item name="android:navigationBarColor">@color/silo_bg</item>
+        <item name="android:windowBackground">@color/silo_bg</item>
+        <item name="android:editTextColor">@color/silo_text</item>
+        <item name="android:textColorHint">@color/silo_text_faint</item>
+    </style>
+
+    <!-- Прозрачная тема для MagnetActivity: открывается поверх, не мешая приложению-источнику -->
+    <style name="Theme.TorrServe.Magnet" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>

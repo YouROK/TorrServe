@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Палитра веб-версии Silo (internal/web/static/css/style.css) -->
+<resources>
+    <color name="silo_bg">#FF14171A</color>
+    <color name="silo_bg_raised">#FF1A1F23</color>
+    <color name="silo_surface">#FF22282D</color>
+    <color name="silo_surface_hover">#FF2A3138</color>
+    <color name="silo_border">#FF333B42</color>
+    <color name="silo_border_strong">#FF46505A</color>
+    <color name="silo_steel">#FFB6BDC2</color>
+    <color name="silo_steel_bright">#FFE3E7EA</color>
+    <color name="silo_amber">#FFF0A832</color>
+    <color name="silo_amber_bright">#FFFFC861</color>
+    <color name="silo_amber_deep">#FFC07D18</color>
+    <color name="silo_teal">#FF24504E</color>
+    <color name="silo_teal_bright">#FF4E8F89</color>
+    <color name="silo_danger">#FFCF5B3A</color>
+    <color name="silo_text">#FFE7EAEA</color>
+    <color name="silo_text_muted">#FF98A2A9</color>
+    <color name="silo_text_faint">#FF67717A</color>
+</resources>

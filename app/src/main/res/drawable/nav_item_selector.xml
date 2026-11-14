@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Пункт бокового меню: подсветка при фокусе (ТВ) и нажатии + янтарная полоса слева -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/silo_surface" />
+                    <corners android:radius="8dp" />
+                </shape>
+            </item>
+            <item android:width="3dp" android:gravity="start">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/silo_amber" />
+                    <corners android:radius="2dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_selected="true">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/silo_surface" />
+                    <corners android:radius="8dp" />
+                </shape>
+            </item>
+            <item android:width="3dp" android:gravity="start">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/silo_amber" />
+                    <corners android:radius="2dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/silo_surface" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</selector>

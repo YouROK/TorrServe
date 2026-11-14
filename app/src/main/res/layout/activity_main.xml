@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Главный экран: постоянная боковая панель (как sidebar веб-версии) + область контента.
+     Меню и плагины прокручиваются, бренд и состояние аккаунта закреплены. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silo_bg"
+    android:orientation="horizontal">
+
+    <!-- ================= Боковая панель ================= -->
+    <LinearLayout
+        android:id="@+id/sidebar"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:background="@color/silo_bg_raised"
+        android:orientation="vertical"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+        <!-- Логотип -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/brand_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.08"
+                android:paddingStart="12dp"
+                android:text="SILO"
+                android:textColor="@color/silo_steel_bright"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Прокручиваемая часть: пункты меню и плагины -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:descendantFocusability="afterDescendants"
+            android:fadeScrollbars="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:scrollbarStyle="outsideOverlay">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/nav_torrents"
+                    style="@style/SiloNavItem">
+
+                    <ImageView
+                        style="@style/SiloNavIcon"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_nav_torrents" />
+
+                    <TextView
+                        android:id="@+id/nav_torrents_label"
+                        style="@style/SiloNavLabel"
+                        android:text="@string/nav_torrents" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nav_add"
+                    style="@style/SiloNavItem">
+
+                    <ImageView
+                        style="@style/SiloNavIcon"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_nav_add" />
+
+                    <TextView
+                        android:id="@+id/nav_add_label"
+                        style="@style/SiloNavLabel"
+                        android:text="@string/nav_add" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nav_delete_all"
+                    style="@style/SiloNavItem">
+
+                    <ImageView
+                        style="@style/SiloNavIcon"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_delete" />
+
+                    <TextView
+                        android:id="@+id/nav_delete_all_label"
+                        style="@style/SiloNavLabel"
+                        android:text="@string/nav_delete_all" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nav_category"
+                    style="@style/SiloNavItem">
+
+                    <ImageView
+                        style="@style/SiloNavIcon"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_category" />
+
+                    <TextView
+                        android:id="@+id/nav_category_label"
+                        style="@style/SiloNavLabel"
+                        android:text="@string/nav_category" />
+                </LinearLayout>
+
+                <!-- Показывается, когда сервер требует пароль, а входа нет -->
+                <LinearLayout
+                    android:id="@+id/nav_login"
+                    style="@style/SiloNavItem"
+                    android:visibility="gone">
+
+                    <ImageView
+                        style="@style/SiloNavIcon"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_nav_users" />
+
+                    <TextView
+                        android:id="@+id/nav_login_label"
+                        style="@style/SiloNavLabel"
+                        android:text="@string/nav_login" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nav_settings"
+                    style="@style/SiloNavItem">
+
+                    <ImageView
+                        style="@style/SiloNavIcon"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_nav_settings" />
+
+                    <TextView
+                        android:id="@+id/nav_settings_label"
+                        style="@style/SiloNavLabel"
+                        android:text="@string/nav_settings" />
+                </LinearLayout>
+
+<!-- Секция плагинов (заполняется из /api/ui/menu) -->
+                <TextView
+                    android:id="@+id/sidebar_plugins_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.08"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/sidebar_plugins"
+                    android:textColor="@color/silo_text_faint"
+                    android:textSize="11sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/sidebar_plugins"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Закреплено внизу: донат, выход, пользователь и адрес сервера -->
+        <LinearLayout
+            android:id="@+id/nav_donate"
+            style="@style/SiloNavItem">
+
+            <ImageView
+                style="@style/SiloNavIcon"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_donate" />
+
+            <TextView
+                android:id="@+id/nav_donate_label"
+                style="@style/SiloNavLabel"
+                android:text="@string/nav_donate" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nav_exit"
+            style="@style/SiloNavItem">
+
+            <ImageView
+                style="@style/SiloNavIcon"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_exit" />
+
+            <TextView
+                android:id="@+id/nav_exit_label"
+                style="@style/SiloNavLabel"
+                android:text="@string/nav_exit" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sidebar_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/silo_text"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/sidebar_server"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/silo_text_faint"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- ================= Контент ================= -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/silo_bg_raised"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <ImageButton
+                android:id="@+id/header_back"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/back"
+                android:padding="10dp"
+                android:src="@drawable/ic_back"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:textColor="@color/silo_steel_bright"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/header_sort"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/sort"
+                android:padding="10dp"
+                android:src="@drawable/ic_sort" />
+
+            <ImageButton
+                android:id="@+id/header_search"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/search"
+                android:padding="10dp"
+                android:src="@drawable/ic_search" />
+
+            <ImageButton
+                android:id="@+id/header_refresh"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/refresh"
+                android:padding="10dp"
+                android:src="@drawable/ic_refresh" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/silo_bg_raised"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="12dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/silo_text"
+                android:textColorHint="@color/silo_text_faint" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Домашний сервер Silo обычно доступен по HTTP в локальной сети (192.168.x.x),
+  поэтому открытый HTTP разрешён. Решение принято владельцем проекта:
+  клиент для домашнего использования, не публикуется в Google Play.
+  См. PLAN_SILO_CLIENT.md.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
