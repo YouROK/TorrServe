@@ -22,11 +22,15 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      # На ubuntu-latest Android SDK уже предустановлен; отдельный экшен не нужен
       - name: Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Accept SDK licenses
-        run: yes | sdkmanager --licenses > /dev/null 2>&1 || true
+        run: |
+          SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
+          echo "SDK=$SDK"
+          SDKM="$(command -v sdkmanager || echo "$SDK/cmdline-tools/latest/bin/sdkmanager")"
+          echo "sdkmanager=$SDKM"
+          yes | "$SDKM" --licenses > /dev/null 2>&1 || true
+          "$SDKM" --list_installed 2>/dev/null | head -20 || true
 
       - name: Keystore from secrets
         env:
