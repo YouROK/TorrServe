@@ -78,6 +78,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ steps.version.outputs.name }}
+          tag_name: ${{ steps.version.outputs.name }}
+          # Текст релиза попадает в Atom-ленту и показывается в приложении как «что нового»
+          generate_release_notes: true
           files: |
             app/build/outputs/apk/release/*.apk
             app/build/outputs/apk/release/SHA256SUMS.txt
