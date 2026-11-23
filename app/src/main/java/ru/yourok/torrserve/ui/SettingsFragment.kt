@@ -56,12 +56,14 @@ class SettingsFragment : Fragment() {
         ffprobeState = view.findViewById(R.id.settings_ffprobe_state)
         account = view.findViewById(R.id.settings_account)
         address.setText(prefs.serverUrl)
+        reflowButtonRows(view)
 
         view.findViewById<View>(R.id.settings_save).setOnClickListener {
             val value = address.text.toString().trim()
             if (value.isEmpty()) return@setOnClickListener
             prefs.serverUrl = if (value.startsWith("http")) value else "http://$value"
             (activity as? MainActivity)?.updateSidebarState()
+            (activity as? MainActivity)?.refreshServerState()
             toast(getString(R.string.settings_server_saved))
             updateState()
         }
@@ -70,6 +72,7 @@ class SettingsFragment : Fragment() {
             prefs.serverUrl = Prefs.LOCAL_URL
             address.setText(prefs.serverUrl)
             (activity as? MainActivity)?.updateSidebarState()
+            (activity as? MainActivity)?.refreshServerState()
             updateState()
         }
 
@@ -98,7 +101,10 @@ class SettingsFragment : Fragment() {
                     Thread.sleep(400)
                     if (SiloApi(prefs.serverUrl).ping()) {
                         LocalAuth.ensureSession(requireContext(), prefs)
-                        ui.post { updateState() }
+                        ui.post {
+                            (activity as? MainActivity)?.refreshServerState()
+                            updateState()
+                        }
                         return@thread
                     }
                 }
@@ -108,7 +114,10 @@ class SettingsFragment : Fragment() {
         view.findViewById<View>(R.id.settings_stop).setOnClickListener {
             TorrService.stop(requireContext().applicationContext)
             toast(getString(R.string.settings_stopping))
-            ui.postDelayed({ updateState() }, 1000)
+            ui.postDelayed({
+                (activity as? MainActivity)?.refreshServerState()
+                updateState()
+            }, 1200)
         }
         view.findViewById<View>(R.id.settings_owner_password_apply)?.setOnClickListener {
             val input = view.findViewById<EditText>(R.id.settings_owner_password_input)
@@ -120,6 +129,7 @@ class SettingsFragment : Fragment() {
             LocalAuth.restartService(requireContext().applicationContext)
             // Сессии сброшены: если пароль задан, меню должно перейти в состояние «Вход»
             (activity as? MainActivity)?.updateSidebarState()
+            (activity as? MainActivity)?.refreshServerState()
             ui.postDelayed({ updateState() }, 2500)
         }
         view.findViewById<View>(R.id.settings_logout).setOnClickListener {
@@ -161,11 +171,17 @@ class SettingsFragment : Fragment() {
         }
 
         val session = prefs.activeSession()
-        account.text = if (session != null) {
-            getString(R.string.settings_account_current, session.username)
-        } else {
-            getString(R.string.sidebar_no_user)
+        account.text = when {
+            prefs.isOpenLocalMode -> getString(R.string.open_mode_hint)
+            session != null -> getString(R.string.settings_account_current, session.username)
+            else -> getString(R.string.sidebar_no_user)
         }
+        // В открытом режиме вход/выход не имеют смысла: всё выполняется как owner
+        val openMode = prefs.isOpenLocalMode
+        view?.findViewById<View>(R.id.settings_accounts)?.visibility =
+            if (openMode) View.GONE else View.VISIBLE
+        view?.findViewById<View>(R.id.settings_logout)?.visibility =
+            if (openMode) View.GONE else View.VISIBLE
     }
 
     /** Поле пароля владельца локального сервера. */
@@ -180,24 +196,20 @@ class SettingsFragment : Fragment() {
         container.removeAllViews()
         val sessions = prefs.getSessions()
         if (sessions.isEmpty()) return
+        if (prefs.isOpenLocalMode) {
+            // Открытый режим: показываем owner, переключать нечего
+            container.addView(SiloChip(requireContext()).apply {
+                bind(LocalAuth.OWNER_ID, true)
+                isClickable = false
+                isFocusable = false
+            })
+            return
+        }
         val active = prefs.activeUserId
         sessions.forEach { session ->
-            val chip = TextView(requireContext()).apply {
-                text = session.username
-                setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        if (session.id == active) R.color.silo_amber else R.color.silo_text,
-                    )
-                )
-                textSize = 14f
-                setPadding(dp(16), dp(8), dp(16), dp(8))
-                background = ContextCompat.getDrawable(
-                    requireContext(),
-                    if (session.id == active) R.drawable.bg_tab else R.drawable.card_selector,
-                )
-                isFocusable = true
-                isClickable = true
+            // Плашки аккаунтов - тот же компонент выбора (docs/STYLE.md)
+            val chip = SiloChip(requireContext()).apply {
+                bind(session.username, session.id == active)
                 setOnClickListener {
                     if (session.id != active) {
                         toast(getString(R.string.accounts_switched, session.username))
@@ -223,6 +235,36 @@ class SettingsFragment : Fragment() {
             else -> getString(R.string.player_ask)
         }
         view.text = getString(R.string.settings_add_action, action)
+    }
+
+    /**
+     * Телефон: горизонтальные ряды кнопок не влезают в ширину экрана -
+     * раскладываем их столбиком на всю ширину. На ТВ/планшете оставляем как есть.
+     */
+    private fun reflowButtonRows(root: View) {
+        if (resources.configuration.screenWidthDp >= MainActivity.WIDE_DP) return
+        val rows = mutableListOf<LinearLayout>()
+        fun collect(v: View) {
+            if (v is LinearLayout && v.tag == "button_row") rows += v
+            if (v is ViewGroup) for (i in 0 until v.childCount) collect(v.getChildAt(i))
+        }
+        collect(root)
+        rows.forEach { row ->
+            row.orientation = LinearLayout.VERTICAL
+            (row.layoutParams as? ViewGroup.MarginLayoutParams)?.let {
+                it.width = ViewGroup.LayoutParams.MATCH_PARENT
+                row.layoutParams = it
+            }
+            for (i in 0 until row.childCount) {
+                val child = row.getChildAt(i)
+                val lp = child.layoutParams as? ViewGroup.MarginLayoutParams ?: continue
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT
+                lp.marginStart = 0
+                lp.marginEnd = 0
+                lp.topMargin = if (i == 0) 0 else dp(8)
+                child.layoutParams = lp
+            }
+        }
     }
 
     private fun dp(value: Int): Int =
@@ -274,6 +316,7 @@ class SettingsFragment : Fragment() {
         val found = mutableListOf<ServerFinder.Found>()
         val adapter = ServersAdapter(found) { server ->
             prefs.serverUrl = server.url
+            (activity as? MainActivity)?.refreshServerState()
             address.setText(server.url)
             (activity as? MainActivity)?.updateSidebarState()
             toast(getString(R.string.settings_server_saved))

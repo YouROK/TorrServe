@@ -23,6 +23,7 @@ class UsersFragment : Fragment() {
     private lateinit var prefs: Prefs
     private lateinit var list: RecyclerView
     private lateinit var empty: TextView
+    private lateinit var openModeHint: TextView
     private val adapter = UsersAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved: Bundle?): View =
@@ -32,6 +33,10 @@ class UsersFragment : Fragment() {
         prefs = Prefs(requireContext())
         list = view.findViewById(R.id.users_list)
         empty = view.findViewById(R.id.users_empty)
+        openModeHint = view.findViewById(R.id.users_open_mode_hint)
+        openModeHint.setOnClickListener {
+            (activity as? MainActivity)?.showScreen(MainActivity.Screen.SETTINGS)
+        }
         list.layoutManager = LinearLayoutManager(requireContext())
         list.adapter = adapter
 
@@ -60,12 +65,21 @@ class UsersFragment : Fragment() {
     private fun render() {
         val sessions = prefs.getSessions()
         val active = prefs.activeSession()?.id
+        val openMode = prefs.isOpenLocalMode
+        openModeHint.visibility = if (openMode) View.VISIBLE else View.GONE
+        // В открытом режиме добавлять/выходить нечего - сервер всё равно owner
+        view?.findViewById<View>(R.id.users_add)?.visibility = if (openMode) View.GONE else View.VISIBLE
+        view?.findViewById<View>(R.id.users_logout)?.visibility = if (openMode) View.GONE else View.VISIBLE
         adapter.submit(sessions, active)
         empty.visibility = if (sessions.isEmpty()) View.VISIBLE else View.GONE
         list.visibility = if (sessions.isEmpty()) View.GONE else View.VISIBLE
     }
 
     private fun setActive(s: Session) {
+        if (prefs.isOpenLocalMode) {
+            android.widget.Toast.makeText(requireContext(), R.string.open_mode_switch_denied, android.widget.Toast.LENGTH_LONG).show()
+            return
+        }
         prefs.activeUserId = s.id
         render()
         (activity as? MainActivity)?.updateSidebarState()

@@ -5,6 +5,18 @@
     android:orientation="vertical"
     android:padding="20dp">
 
+    <TextView
+        android:id="@+id/users_open_mode_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_card"
+        android:padding="14dp"
+        android:text="@string/users_open_mode_hint"
+        android:textColor="@color/silo_amber"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/users_list"
         android:layout_width="match_parent"

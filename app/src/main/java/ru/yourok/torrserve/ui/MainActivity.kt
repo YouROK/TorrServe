@@ -11,6 +11,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.GithubReleases
@@ -20,6 +22,7 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.settings.Prefs
 import android.widget.Toast
 import java.io.File
+import kotlin.concurrent.thread
 
 /**
  * Единая Activity: постоянная боковая панель + область контента.
@@ -43,8 +46,13 @@ class MainActivity : AppCompatActivity() {
     private var current: Screen = Screen.TORRENTS
     private var inDetail = false
 
-    /** Панель в компактном режиме (телефон): подписи и состояние скрыты. */
-    private var compactSidebar = false
+    /** На телефоне боковая панель - выдвижной ящик; на ТВ/планшете её нет. */
+    private var drawer: DrawerLayout? = null
+
+    /** null - ещё не проверяли, true/false - сервер отвечает/не отвечает. */
+    private var serverOnline: Boolean? = null
+    private var serverCheck = 0
+    private var headerMenu: ImageButton? = null
 
     /** Проверка обновления сервера выполняется один раз за запуск приложения. */
     private var updateChecked = false
@@ -74,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         sidebarUser = findViewById(R.id.sidebar_user)
         sidebarServer = findViewById(R.id.sidebar_server)
 
+        setupDrawer()
         applyResponsiveSidebar()
         setupNavigation()
 
@@ -128,8 +137,9 @@ class MainActivity : AppCompatActivity() {
      * есть рабочий сервер и сессия - полное меню.
      */
     private fun applyNavAvailability() {
-        val available = hasServer()
-        val loginRequired = needsLogin()
+        // Сервер не отвечает - меню как «сервера нет»
+        val available = hasServer() && serverOnline != false
+        val loginRequired = available && needsLogin()
         val ready = available && !loginRequired
 
         listOf(R.id.nav_torrents, R.id.nav_add, R.id.nav_delete_all, R.id.nav_category).forEach {
@@ -139,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.sidebar_plugins).visibility = if (ready) View.VISIBLE else View.GONE
         // Заголовок секции плагинов прячем, пока нечего показывать (иначе висит пустым)
         if (!ready) findViewById<View>(R.id.sidebar_plugins_header).visibility = View.GONE
-        val showStatus = ready && !compactSidebar
+        val showStatus = ready
         sidebarUser.visibility = if (showStatus) View.VISIBLE else View.GONE
         sidebarServer.visibility = if (showStatus) View.VISIBLE else View.GONE
         findViewById<View>(R.id.header_sort).visibility = if (ready) View.VISIBLE else View.GONE
@@ -147,38 +157,64 @@ class MainActivity : AppCompatActivity() {
         if (!ready) headerSearch.visibility = View.GONE
     }
 
-    /** Панель: на широком экране с подписями, на телефоне - только иконки. */
+    /**
+     * Телефон (activity_main с DrawerLayout): панель - выдвижной ящик по гамбургеру,
+     * контент занимает всю ширину. ТВ/планшет (layout-sw600dp): панель закреплена слева.
+     */
+    private fun setupDrawer() {
+        drawer = findViewById(R.id.main_drawer)
+        headerMenu = findViewById(R.id.header_menu)
+        val d = drawer
+        if (d != null) {
+            val sidebar = findViewById<View>(R.id.sidebar)
+            val width = minOf(dp(320), (resources.displayMetrics.widthPixels * 0.86f).toInt())
+            sidebar.layoutParams = DrawerLayout.LayoutParams(
+                width.coerceAtLeast(dp(240)),
+                ViewGroup.LayoutParams.MATCH_PARENT,
+            ).apply { gravity = GravityCompat.START }
+            d.setScrimColor(0x99000000.toInt())
+            headerMenu?.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    if (d.isDrawerOpen(GravityCompat.START)) {
+                        d.closeDrawer(GravityCompat.START)
+                    } else {
+                        d.openDrawer(GravityCompat.START)
+                    }
+                }
+            }
+        } else {
+            headerMenu?.visibility = View.GONE
+        }
+    }
+
+    /** На широком экране панель фиксированной ширины; на телефоне шириной управляет ящик. */
     private fun applyResponsiveSidebar() {
-        val compact = resources.configuration.screenWidthDp < WIDE_DP
-        compactSidebar = compact
         val sidebar = findViewById<LinearLayout>(R.id.sidebar)
-        sidebar.layoutParams.width = if (compact) dp(84) else dp(260)
-        if (compact) {
-            findViewById<View>(R.id.brand_name).visibility = View.GONE
-            listOf(
-                R.id.nav_torrents_label, R.id.nav_add_label,
-                R.id.nav_login_label, R.id.nav_settings_label,
-            ).forEach { findViewById<View>(it).visibility = View.GONE }
-            sidebarUser.visibility = View.GONE
-            sidebarServer.visibility = View.GONE
+        if (drawer == null) sidebar.layoutParams.width = dp(260)
+    }
+
+    /** Действие пункта меню: на телефоне сначала закрываем ящик. */
+    private fun nav(id: Int, action: () -> Unit) {
+        findViewById<View>(id).setOnClickListener {
+            drawer?.closeDrawers()
+            action()
         }
     }
 
     private fun setupNavigation() {
-        findViewById<View>(R.id.nav_torrents).setOnClickListener { showScreen(Screen.TORRENTS) }
-        findViewById<View>(R.id.nav_add).setOnClickListener {
+        nav(R.id.nav_torrents) { showScreen(Screen.TORRENTS) }
+        nav(R.id.nav_add) {
             AddTorrentDialog.show(this) {
                 (currentFragment() as? TorrentsFragment)?.onTorrentAdded()
             }
         }
-        findViewById<View>(R.id.nav_donate).setOnClickListener { showDonate() }
-        findViewById<View>(R.id.nav_exit).setOnClickListener { confirmExit() }
-        findViewById<View>(R.id.nav_delete_all).setOnClickListener { confirmDeleteAll() }
-        findViewById<View>(R.id.nav_category).setOnClickListener { chooseCategory() }
-        findViewById<View>(R.id.nav_settings).setOnClickListener { showScreen(Screen.SETTINGS) }
-        findViewById<View>(R.id.nav_login).setOnClickListener {
-            loginLauncher.launch(LoginActivity.intent(this))
-        }
+        nav(R.id.nav_donate) { showDonate() }
+        nav(R.id.nav_exit) { confirmExit() }
+        nav(R.id.nav_delete_all) { confirmDeleteAll() }
+        nav(R.id.nav_category) { chooseCategory() }
+        nav(R.id.nav_settings) { showScreen(Screen.SETTINGS) }
+        nav(R.id.nav_login) { loginLauncher.launch(LoginActivity.intent(this)) }
     }
 
     fun showScreen(screen: Screen) {
@@ -223,7 +259,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (inDetail) {
+        if (drawer?.isDrawerOpen(GravityCompat.START) == true) {
+            drawer?.closeDrawers()
+        } else if (overlay != null) {
+            preloader?.cancel()
+            preloader = null
+            pendingPlay = null
+            hideOverlay()
+        } else if (inDetail) {
             showScreen(Screen.TORRENTS)
         } else if (searchBar.visibility == View.VISIBLE) {
             searchBar.visibility = View.GONE
@@ -251,16 +294,55 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         updateSidebarState()
         loadPluginMenu()
+        refreshServerState()
         checkUpdates()
     }
 
     /** Переключение активного пользователя без выхода из приложения. */
     fun switchUser(id: String) {
+        if (prefs.isOpenLocalMode) {
+            // Открытый сервер всегда owner: переключение ни на что не влияет
+            Toast.makeText(this, R.string.open_mode_switch_denied, Toast.LENGTH_LONG).show()
+            return
+        }
         prefs.activeUserId = id
         updateSidebarState()
         // Меню плагинов зависит от прав пользователя - перечитываем
         loadPluginMenu()
         showScreen(current)
+    }
+
+    /**
+     * Проверка живости сервера: если не отвечает - меню сворачивается до состояния
+     * «сервера нет» (только настройки/донат/закрыть). Проверка в фоне, UI не блокируем.
+     */
+    fun refreshServerState() {
+        if (!hasServer()) {
+            setServerOnline(false)
+            return
+        }
+        val gen = ++serverCheck
+        val url = prefs.serverUrl
+        Thread {
+            val ok = SiloApi(url).ping()
+            runOnUiThread {
+                if (isFinishing || gen != serverCheck) return@runOnUiThread
+                setServerOnline(ok)
+            }
+        }.start()
+    }
+
+    /** Список загрузился - сервер точно жив. */
+    fun onServerReachable() = setServerOnline(true)
+
+    /** Сеть/соединение упало - показываем меню как без сервера. */
+    fun onServerUnreachable() = setServerOnline(false)
+
+    private fun setServerOnline(ok: Boolean) {
+        if (serverOnline == ok) return
+        serverOnline = ok
+        applyNavAvailability()
+        if (ok) loadPluginMenu()
     }
 
     /** Донат: ссылки как в веб-версии. */
@@ -281,6 +363,17 @@ class MainActivity : AppCompatActivity() {
             .setView(view)
             .setNegativeButton(android.R.string.cancel, null)
             .create()
+        // На телефоне три кнопки в строку не влезают - столбиком
+        if (resources.configuration.screenWidthDp < WIDE_DP) {
+            val row = view.findViewById<LinearLayout>(R.id.donate_row)
+            row.orientation = LinearLayout.VERTICAL
+            buttons.forEachIndexed { index, button ->
+                button.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                ).apply { if (index > 0) topMargin = dp(8) }
+            }
+        }
         buttons.forEachIndexed { index, button ->
             button.setOnClickListener {
                 val intent = android.content.Intent(
@@ -387,7 +480,6 @@ class MainActivity : AppCompatActivity() {
         val header = findViewById<View>(R.id.sidebar_plugins_header)
         container.removeAllViews()
         header.visibility = if (menu.isEmpty()) View.GONE else View.VISIBLE
-        val wide = resources.configuration.screenWidthDp >= WIDE_DP
         menu.forEach { entry ->
             val item = layoutInflater.inflate(R.layout.item_nav_plugin, container, false)
             val title = entry.title.ifBlank { entry.pluginName }
@@ -401,19 +493,16 @@ class MainActivity : AppCompatActivity() {
             item.setOnClickListener {
                 startActivity(PluginActivity.intent(this, entry.href, title))
             }
-            if (!wide) {
-                // На телефоне панель сжата: подписи скрываем, остаются иконки
-                item.findViewById<TextView>(R.id.plugin_item_title).visibility = View.GONE
-            }
             container.addView(item)
         }
     }
 
     fun updateSidebarState() {
         val session = prefs.activeSession()
-        sidebarUser.text = session?.username ?: when {
-            // Открытый режим локального сервера - это работа под owner без пароля
-            hasServer() && prefs.isLocalServer && prefs.ownerPassword.isEmpty() -> LocalAuth.OWNER_ID
+        sidebarUser.text = when {
+            // Открытый режим: сервер выполняет всё как owner, токены пользователей не действуют
+            prefs.isOpenLocalMode -> LocalAuth.OWNER_ID
+            session != null -> session.username
             prefs.isLocalServer -> getString(R.string.sidebar_local_no_login)
             else -> getString(R.string.sidebar_no_user)
         }
@@ -534,6 +623,164 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton(R.string.app_update_later, null)
             .show()
+    }
+
+    // ------------------------------------------------------------ предзагрузка
+
+    /** Данные запуска: что играем, когда предзагрузка закончится. */
+    private data class PendingPlay(
+        val api: SiloApi,
+        val token: String,
+        val hash: String,
+        val title: String,
+        val poster: String,
+        val file: SiloApi.TorrentFile,
+        val playable: List<SiloApi.TorrentFile>,
+        val forceAsk: Boolean,
+    )
+
+    private var overlay: View? = null
+    private var preloader: Preloader? = null
+    private var pendingPlay: PendingPlay? = null
+
+    /**
+     * Запуск файла из карточки: предзагрузка идёт поверх этого же окна
+     * (затемнение + панель), без отдельного окна-диалога.
+     */
+    fun startPlayback(
+        api: SiloApi,
+        token: String,
+        hash: String,
+        details: SiloApi.TorrentDetails,
+        file: SiloApi.TorrentFile,
+        playable: List<SiloApi.TorrentFile>,
+        forceAsk: Boolean,
+    ) {
+        // Повторное нажатие не запускает вторую предзагрузку поверх первой
+        if (overlay != null) return
+        pendingPlay = PendingPlay(
+            api = api,
+            token = token,
+            hash = hash,
+            title = details.title.ifBlank { details.hash },
+            poster = details.poster,
+            file = file,
+            playable = playable,
+            forceAsk = forceAsk,
+        )
+
+        val panel = PreloadPanel(
+            context = this,
+            onCancel = {
+                preloader?.cancel()
+                preloader = null
+                pendingPlay = null
+                hideOverlay()
+            },
+            onOpenNow = { preloader?.openNow() },
+        )
+        panel.bind(file.name)
+        showOverlay(panel.view)
+
+        val loader = Preloader(this, api, token, hash, file, panel)
+        preloader = loader
+        loader.start {
+            if (isFinishing || isDestroyed) return@start
+            panel.done()
+            preloader = null
+            afterPreload()
+        }
+    }
+
+    /** После предзагрузки: сразу плеер или выбор плеера поверх того же окна. */
+    private fun afterPreload() {
+        val pending = pendingPlay ?: return hideOverlay()
+        if (pending.forceAsk || prefs.playerPkg.isBlank()) {
+            showPlayersOverlay(pending)
+        } else {
+            launchPlayer(pending, prefs.playerPkg)
+        }
+    }
+
+    private fun showPlayersOverlay(pending: PendingPlay) {
+        val content = layoutInflater.inflate(R.layout.view_players, null)
+        val list = content.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.players_list)
+        val remember = content.findViewById<android.widget.CheckBox>(R.id.players_remember)
+        remember.isChecked = true
+        PlayerPicker.bind(
+            context = this,
+            list = list,
+            remember = remember,
+            url = pending.api.streamUrl(pending.token, pending.hash, pending.file.id),
+            mime = Players.mimeOf(pending.file.name),
+        ) { pkg ->
+            // «Спрашивать каждый раз» - просто остаёмся на списке
+            if (pkg.isNotBlank()) launchPlayer(pending, pkg)
+        }
+        showOverlay(content, initialFocus = list)
+    }
+
+    private fun launchPlayer(pending: PendingPlay, pkg: String) {
+        val playable = pending.playable
+        val startIndex = playable.indexOfFirst { it.id == pending.file.id }.coerceAtLeast(0)
+        val playlist = playable.map {
+            pending.api.streamUrl(pending.token, pending.hash, it.id) to it.name
+        }
+        thread {
+            runCatching {
+                pending.api.setFileViewed(pending.token, pending.hash, pending.file.id, true)
+            }
+        }
+        Players.launch(
+            context = this,
+            url = pending.api.streamUrl(pending.token, pending.hash, pending.file.id),
+            mime = Players.mimeOf(pending.file.name),
+            title = pending.title,
+            poster = pending.poster,
+            pkg = pkg,
+            playlist = playlist,
+            startIndex = startIndex,
+        )
+        pendingPlay = null
+        hideOverlay()
+    }
+
+    /** Оверлей внутри главного окна: та же Activity, отдельного окна не появляется. */
+    private fun showOverlay(content: View, initialFocus: View? = null) {
+        hideOverlay()
+        val root = layoutInflater.inflate(R.layout.overlay_panel, null)
+        val container = root.findViewById<android.widget.LinearLayout>(R.id.overlay_panel_container)
+        container.addView(content)
+        addContentView(root, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        val width = minOf(dp(600), resources.displayMetrics.widthPixels - dp(48))
+        container.layoutParams = (container.layoutParams as android.widget.FrameLayout.LayoutParams)
+            .apply { this.width = width.coerceAtLeast(dp(260)) }
+        overlay = root
+        // Фокус остаётся в оверлее: кнопки под затемнением не должны срабатывать
+        val target = initialFocus ?: root
+        target.post { target.requestFocus() }
+    }
+
+    fun hideOverlay() {
+        overlay?.let { view -> (view.parent as? ViewGroup)?.removeView(view) }
+        overlay = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Ушли из приложения во время предзагрузки - не запускаем плеер «из фона»
+        if (overlay != null && preloader != null && !isChangingConfigurations) {
+            preloader?.cancel()
+            preloader = null
+            pendingPlay = null
+            hideOverlay()
+        }
+    }
+
+    override fun onDestroy() {
+        preloader?.cancel()
+        preloader = null
+        super.onDestroy()
     }
 
     companion object {

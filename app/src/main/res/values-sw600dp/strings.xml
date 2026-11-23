@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ТВ/планшет: на широком экране кнопка предзагрузки может быть длиннее -->
+<resources>
+    <string name="prep_open_now">Открыть сейчас</string>
+</resources>

@@ -86,18 +86,20 @@
         <item name="android:clickable">true</item>
     </style>
 
-    <!-- Вкладка типа файлов -->
-    <style name="SiloFileTab">
+    <!-- Кнопка выбора одного значения (chips): XML-вариант компонента SiloChip.
+         Правило: выбранная - янтарная, фокус - толстая янтарная рамка (docs/STYLE.md). -->
+    <style name="SiloChoice">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingStart">18dp</item>
-        <item name="android:paddingEnd">18dp</item>
+        <item name="android:background">@drawable/silo_choice_bg</item>
+        <item name="android:textColor">@color/silo_choice_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingTop">9dp</item>
         <item name="android:paddingBottom">9dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:background">@drawable/bg_tab</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/silo_text_muted</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
     </style>

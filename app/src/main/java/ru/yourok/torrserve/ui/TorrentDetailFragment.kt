@@ -50,13 +50,20 @@ class TorrentDetailFragment : Fragment(), Refreshable {
         play = view.findViewById(R.id.detail_play)
         delete = view.findViewById(R.id.detail_delete)
 
-        // Название рядом с постером - одна строка с прокруткой (бегущая строка)
-        titleView.isSingleLine = true
-        titleView.ellipsize = android.text.TextUtils.TruncateAt.MARQUEE
-        titleView.marqueeRepeatLimit = -1
-        titleView.isSelected = true
-        titleView.isHorizontalFadingEdgeEnabled = true
-        titleView.setHorizontallyScrolling(true)
+        // На ТВ название бежит одной строкой; на телефоне переносим на две без обрезки
+        val wide = resources.configuration.screenWidthDp >= MainActivity.WIDE_DP
+        if (wide) {
+            titleView.isSingleLine = true
+            titleView.ellipsize = android.text.TextUtils.TruncateAt.MARQUEE
+            titleView.marqueeRepeatLimit = -1
+            titleView.isSelected = true
+            titleView.isHorizontalFadingEdgeEnabled = true
+            titleView.setHorizontallyScrolling(true)
+        } else {
+            titleView.isSingleLine = false
+            titleView.maxLines = 2
+            titleView.ellipsize = android.text.TextUtils.TruncateAt.END
+        }
 
         filesSection = FilesSection(
             context = requireContext(),
@@ -156,33 +163,24 @@ class TorrentDetailFragment : Fragment(), Refreshable {
             ?: details?.files?.firstOrNull()
 
     private fun playFile(file: SiloApi.TorrentFile, forceAsk: Boolean = false) {
+        val d = details ?: run {
+            toast(getString(R.string.torrent_load_error))
+            return
+        }
         prefs.setLastFile(hash, file.id)
         val api = SiloApi(prefs.serverUrl)
         val token = prefs.activeToken
-        val d = details
-        val url = api.streamUrl(token, hash, file.id)
-        val playable = filesSection.videoFiles().ifEmpty { d?.files.orEmpty() }
-        val playlist = playable.map { api.streamUrl(token, hash, it.id) to it.name }
-        val startIndex = playable.indexOfFirst { it.id == file.id }.coerceAtLeast(0)
-        val mime = Players.mimeOf(file.name)
-        val title = d?.title.orEmpty()
-        val poster = d?.poster.orEmpty()
-
-        PreloadDialog.prepare(requireContext(), api, token, hash, file) {
-            if (!isAdded) return@prepare
-            // Отмечаем файл просмотренным (для раздач в библиотеке)
-            thread { runCatching { api.setFileViewed(token, hash, file.id, true) } }
-            Players.play(
-                context = requireContext(),
-                url = url,
-                mime = mime,
-                title = title,
-                poster = poster,
-                forceAsk = forceAsk,
-                playlist = playlist,
-                startIndex = startIndex,
-            )
-        }
+        val playable = filesSection.videoFiles().ifEmpty { d.files }
+        // Предзагрузка и выбор плеера - поверх этого же окна (MainActivity)
+        (activity as? MainActivity)?.startPlayback(
+            api = api,
+            token = token,
+            hash = hash,
+            details = d,
+            file = file,
+            playable = playable,
+            forceAsk = forceAsk,
+        )
     }
 
     private fun toggleViewed(file: SiloApi.TorrentFile) {

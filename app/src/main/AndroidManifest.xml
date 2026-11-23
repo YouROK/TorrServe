@@ -51,8 +51,10 @@
         <!-- Открытие magnet-ссылок из других приложений (NUM и т.п.) -->
         <activity
             android:name=".ui.MagnetActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|uiMode"
             android:exported="true"
             android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:noHistory="true"
             android:theme="@style/Theme.TorrServe.Magnet">
             <intent-filter>

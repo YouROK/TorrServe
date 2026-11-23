@@ -12,6 +12,8 @@
     <color name="silo_amber">#FFF0A832</color>
     <color name="silo_amber_bright">#FFFFC861</color>
     <color name="silo_amber_deep">#FFC07D18</color>
+    <!-- Янтарная подложка выбранной кнопки (полупрозрачная) -->
+    <color name="silo_amber_soft">#4DF0A832</color>
     <color name="silo_teal">#FF24504E</color>
     <color name="silo_teal_bright">#FF4E8F89</color>
     <color name="silo_danger">#FFCF5B3A</color>

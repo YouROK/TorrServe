@@ -29,8 +29,11 @@
     <string name="nav_settings">Настройки</string>
     <string name="nav_login">Вход</string>
     <string name="sidebar_plugins">ПЛАГИНЫ</string>
+    <string name="plugin_webview_missing_title">WebView не найден</string>
+    <string name="plugin_webview_missing_message">На устройстве нет рабочего WebView, поэтому страницу плагина открыть нельзя. Установите Android System WebView и повторите попытку.</string>
     <string name="search">Поиск</string>
     <string name="refresh">Обновить</string>
+    <string name="menu">Меню</string>
     <string name="back">Назад</string>
     <string name="sidebar_no_user">Вход не выполнен</string>
     <string name="choose_player">Открыть в плеере</string>
@@ -171,6 +174,10 @@
     <string name="settings_ffprobe_done">ffprobe установлен</string>
     <string name="settings_ffprobe_error">Не удалось скачать ffprobe: %1$s</string>
     <string name="settings_account_section">Аккаунт</string>
+    <string name="open_mode_hint">Открытый режим сервера: все действия выполняются как owner, права пользователей не действуют. Чтобы включить права, задайте пароль владельца выше и нажмите «Применить».</string>
+    <string name="open_mode_switch_denied">Открытый режим сервера: переключение пользователей не действует. Задайте пароль владельца в настройках.</string>
+    <string name="users_open_mode_hint">Открытый режим сервера: все запросы идут как owner. Задайте пароль владельца в настройках, чтобы включить права пользователей.</string>
+
     <string name="settings_account_current">Вы вошли как %1$s</string>
     <string name="settings_logout">Выйти из всех аккаунтов</string>
     <string name="magnet_title">TorrServe Silo</string>
@@ -185,9 +192,16 @@
     <string name="magnet_metadata">Получаем метаданные…</string>
     <string name="magnet_pick_file">Выберите файл</string>
     <string name="magnet_no_playable">В раздаче нет видео или аудио</string>
-    <string name="prep_open_now">Открыть сейчас</string>
+    <string name="prep_open_now">Открыть</string>
     <string name="prep_status">Предзагрузка %1$s из %2$s · %3$s</string>
     <string name="prep_no_peers">Пиров нет — данные не приходят. Можно открыть сейчас.</string>
+    <string name="prep_reading_stream">Загружаем начало файла…</string>
+    <string name="prep_no_data">Ждём данные от раздачи…</string>
+    <string name="prep_stalled">Данные не приходят — ждём или можно открыть сейчас</string>
+    <string name="prep_speed">%1$s МБ/с</string>
+    <string name="prep_error">Не удалось подготовить раздачу: %1$s</string>
+    <string name="prep_cancel">Отмена</string>
+    <string name="prep_done">Готово, открываем плеер…</string>
     <string name="settings_add_section">Новая раздача</string>
     <string name="settings_add_action">Действие из окна добавления: %1$s</string>
     <string name="settings_add_reset">Сбросить по умолчанию</string>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Заголовок, поиск и контент: общие для ТВ и телефона -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/silo_bg_raised"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <ImageButton
+                android:id="@+id/header_back"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/back"
+                android:padding="10dp"
+                android:src="@drawable/ic_back"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/header_menu"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/menu"
+                android:padding="10dp"
+                android:src="@drawable/ic_menu"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingStart="8dp"
+                android:singleLine="true"
+                android:textColor="@color/silo_steel_bright"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/header_sort"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/sort"
+                android:padding="10dp"
+                android:src="@drawable/ic_sort" />
+
+            <ImageButton
+                android:id="@+id/header_search"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/search"
+                android:padding="10dp"
+                android:src="@drawable/ic_search" />
+
+            <ImageButton
+                android:id="@+id/header_refresh"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/nav_item_selector"
+                android:contentDescription="@string/refresh"
+                android:padding="10dp"
+                android:src="@drawable/ic_refresh" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/silo_bg_raised"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="12dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/silo_text"
+                android:textColorHint="@color/silo_text_faint" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>

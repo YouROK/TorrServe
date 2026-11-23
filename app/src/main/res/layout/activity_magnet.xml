@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Окно добавления раздачи: две страницы - выбор действия и выбор файла -->
+<!-- Окно раздачи из другого приложения: одно окно, страницы меняются внутри.
+     действие → ожидание → файлы → предзагрузка → выбор плеера -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#B3000000"
-    android:fillViewport="true">
+    android:descendantFocusability="afterDescendants"
+    android:fillViewport="true"
+    android:focusable="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,6 +17,7 @@
         android:padding="16dp">
 
         <LinearLayout
+            android:id="@+id/magnet_window"
             android:layout_width="680dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_dialog"
@@ -55,12 +59,20 @@
                     android:textColor="@color/silo_text_faint"
                     android:textSize="12sp" />
 
-                <LinearLayout
-                    android:id="@+id/magnet_users"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:orientation="horizontal" />
+                    android:descendantFocusability="afterDescendants"
+                    android:focusable="false"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/magnet_users"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
 
                 <TextView
                     android:id="@+id/magnet_action_label"
@@ -71,12 +83,20 @@
                     android:textColor="@color/silo_text_faint"
                     android:textSize="12sp" />
 
-                <LinearLayout
-                    android:id="@+id/magnet_actions_row"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:orientation="horizontal" />
+                    android:descendantFocusability="afterDescendants"
+                    android:focusable="false"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/magnet_actions_row"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
 
                 <CheckBox
                     android:id="@+id/magnet_remember"
@@ -94,7 +114,34 @@
                     android:text="@string/magnet_run" />
             </LinearLayout>
 
-            <!-- ============ Страница 2: файлы ============ -->
+            <!-- ============ Страница 2: ожидание (добавление, метаданные) ============ -->
+            <LinearLayout
+                android:id="@+id/magnet_page_busy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/magnet_busy_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:indeterminate="true"
+                    android:max="100" />
+
+                <TextView
+                    android:id="@+id/magnet_busy_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/magnet_adding"
+                    android:textColor="@color/silo_text_muted"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- ============ Страница 3: файлы ============ -->
             <LinearLayout
                 android:id="@+id/magnet_page_files"
                 android:layout_width="match_parent"
@@ -110,12 +157,14 @@
                     android:orientation="horizontal"
                     android:visibility="gone" />
 
+                <!-- Высоту списка задаёт MagnetActivity: карточка должна влезать в экран,
+                     а прокручиваться должен только список файлов, не всё окно. -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/magnet_files"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:maxHeight="300dp" />
+                    android:scrollbars="vertical" />
 
                 <TextView
                     android:id="@+id/magnet_status"
@@ -125,6 +174,26 @@
                     android:textColor="@color/silo_text_muted"
                     android:textSize="13sp"
                     android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- ============ Страница 4: предзагрузка (панель добавляется кодом) ============ -->
+            <FrameLayout
+                android:id="@+id/magnet_preload_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:visibility="gone" />
+
+            <!-- ============ Страница 5: выбор плеера ============ -->
+            <LinearLayout
+                android:id="@+id/magnet_page_players"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <include layout="@layout/view_players" />
             </LinearLayout>
 
         </LinearLayout>

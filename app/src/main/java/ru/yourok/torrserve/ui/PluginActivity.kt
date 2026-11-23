@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.InflateException
 import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.settings.Prefs
@@ -20,13 +23,26 @@ import ru.yourok.torrserve.settings.Prefs
  */
 class PluginActivity : AppCompatActivity() {
 
-    private lateinit var web: WebView
+    private var web: WebView? = null
     private lateinit var titleView: TextView
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_plugin)
+
+        // Без рабочего WebView раздувание layout падает с MissingWebViewPackageException
+        // (например, на AOSP-эмуляторе), поэтому проверяем провайдера до setContentView.
+        if (!hasWebView()) {
+            showWebViewMissing()
+            return
+        }
+
+        try {
+            setContentView(R.layout.activity_plugin)
+        } catch (e: InflateException) {
+            showWebViewMissing()
+            return
+        }
 
         val prefs = Prefs(this)
         val href = intent.getStringExtra(EXTRA_HREF).orEmpty()
@@ -37,8 +53,9 @@ class PluginActivity : AppCompatActivity() {
         titleView.text = name
         findViewById<android.view.View>(R.id.plugin_back).setOnClickListener { goBack() }
 
-        web = findViewById(R.id.plugin_web)
-        web.settings.apply {
+        val webView = findViewById<WebView>(R.id.plugin_web)
+        web = webView
+        webView.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
             databaseEnabled = true
@@ -55,7 +72,7 @@ class PluginActivity : AppCompatActivity() {
             CookieManager.getInstance().flush()
         }
 
-        web.webViewClient = object : WebViewClient() {
+        webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 val target = request.url
                 // Внешние ссылки открываем в браузере
@@ -72,21 +89,45 @@ class PluginActivity : AppCompatActivity() {
             }
         }
 
-        web.loadUrl(url)
+        webView.loadUrl(url)
+    }
+
+    /** Есть ли на устройстве рабочий провайдер WebView. */
+    private fun hasWebView(): Boolean = try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // API 26+: системный сервис знает, какой пакет WebView выбран (или что его нет)
+            WebView.getCurrentWebViewPackage() != null
+        } else {
+            // API 25: публичного API нет - проверяем фактическим созданием WebView
+            WebView(this).destroy()
+            true
+        }
+    } catch (t: Throwable) {
+        false
+    }
+
+    /** WebView нет (AOSP-эмулятор, урезанная прошивка): объясняем причину вместо падения. */
+    private fun showWebViewMissing() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.plugin_webview_missing_title)
+            .setMessage(R.string.plugin_webview_missing_message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
+            .setOnCancelListener { finish() }
+            .show()
     }
 
     private fun goBack() {
-        if (web.canGoBack()) web.goBack() else finish()
+        if (web?.canGoBack() == true) web?.goBack() else finish()
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // Есть история в WebView - шаг назад, иначе отдаём обработку системе
-        if (web.canGoBack()) web.goBack() else super.onBackPressed()
+        if (web?.canGoBack() == true) web?.goBack() else super.onBackPressed()
     }
 
     override fun onDestroy() {
-        web.destroy()
+        web?.destroy()
         super.onDestroy()
     }
 

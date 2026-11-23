@@ -23,6 +23,14 @@ class Prefs(context: Context) {
     val isLocalServer: Boolean
         get() = serverUrl.contains("127.0.0.1") || serverUrl.contains("localhost")
 
+    /**
+     * Локальный сервер в открытом режиме: пароль владельца не задан.
+     * Сервер выполняет все запросы как owner и игнорирует токены пользователей -
+     * права пользователей в этом режиме не действуют.
+     */
+    val isOpenLocalMode: Boolean
+        get() = isLocalServer && ownerPassword.isEmpty()
+
 
     /**
      * Пароль owner, который записывается в config.yaml локального сервера (auth.owner_password).

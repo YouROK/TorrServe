@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.yourok.torrserve.R
@@ -105,25 +104,13 @@ class FilesSection(
         }
         tabs.visibility = View.VISIBLE
         groups.forEach { (kind, files) ->
-            val tab = TextView(context).apply {
-                text = context.getString(labelRes(kind)) + " " + files.size
-                textSize = 14f
-                val selectedNow = kind == selected
-                setTextColor(
-                    ContextCompat.getColor(
-                        context,
-                        if (selectedNow) R.color.silo_amber else R.color.silo_text_muted,
-                    )
-                )
-                setPadding(dp(18), dp(9), dp(18), dp(9))
-                background = ContextCompat.getDrawable(
-                    context,
-                    if (selectedNow) R.drawable.bg_tab else R.drawable.bg_tab_unselected,
-                )
+            // Вкладки - тот же компонент выбора, что и плашки действий (docs/STYLE.md)
+            val tab = SiloChip(context).apply {
+                useCompactPadding()
+                bind(context.getString(labelRes(kind)) + " " + files.size, kind == selected)
                 // Одна группа - вкладка-подпись, фокус не ставим
                 isFocusable = many
                 isClickable = many
-                if (selectedNow) isSelected = true
                 if (many) {
                     setOnClickListener { select(kind) }
                     setOnKeyListener { _, keyCode, event ->

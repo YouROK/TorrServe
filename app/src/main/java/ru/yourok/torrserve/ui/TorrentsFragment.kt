@@ -57,6 +57,10 @@ class TorrentsFragment : Fragment(), Refreshable {
         list.layoutManager = GridLayoutManager(requireContext(), spanCount())
         list.clipChildren = false
         list.clipToPadding = false
+        // Фокус всегда на плитках: сам RecyclerView фокуса не берёт (иначе
+        // getChildAdapterPosition падает на его собственных LayoutParams)
+        list.isFocusable = false
+        list.descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS
         (list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
         list.itemAnimator = null
         list.adapter = adapter
@@ -180,12 +184,15 @@ class TorrentsFragment : Fragment(), Refreshable {
                 val result = SiloApi(url).listTorrents(token)
                 ui.post {
                     if (!isAdded) return@post
+                    (activity as? MainActivity)?.onServerReachable()
                     mergeAll(result)
                     render()
                 }
             } catch (e: Exception) {
+                val network = e is java.io.IOException
                 ui.post {
                     if (!isAdded) return@post
+                    if (network) (activity as? MainActivity)?.onServerUnreachable()
                     if (items.isEmpty()) {
                         val unauthorized = e.message?.contains("401") == true ||
                             e.message?.contains("404") == true
@@ -412,7 +419,7 @@ class TorrentsFragment : Fragment(), Refreshable {
             list.postDelayed({
                 if (!isAdded || data.isEmpty()) return@postDelayed
                 val index = pos.coerceIn(0, data.size - 1)
-                val focused = list.findFocus()
+                val focused = list.findFocus()?.let { list.findContainingItemView(it) }
                 if (focused != null && list.getChildAdapterPosition(focused) == index) return@postDelayed
                 val view = list.findViewHolderForAdapterPosition(index)?.itemView
                     ?: list.layoutManager?.findViewByPosition(index)
@@ -434,11 +441,14 @@ class TorrentsFragment : Fragment(), Refreshable {
         }
 
         fun submit(newItems: List<SiloApi.TorrentItem>) {
-            // Где сейчас фокус: внутри списка, снаружи или нигде
-            val focusedChild = list.findFocus()
-            val focusInList = focusedChild != null
-            val focusOutside = !focusInList && activity?.currentFocus != null
-            val pos = if (focusInList) list.getChildAdapterPosition(focusedChild!!) else lastFocusPos
+            // Где сейчас фокус: внутри списка, снаружи или нигде.
+            // findContainingItemView отсекает сам RecyclerView: getChildAdapterPosition
+            // работает только с его дочерними view (иначе ClassCastException).
+            val focusedItem = list.findFocus()?.let { list.findContainingItemView(it) }
+            val focusInList = focusedItem != null
+            val activityFocus = activity?.currentFocus
+            val focusOutside = !focusInList && activityFocus != null && activityFocus !== list
+            val pos = if (focusInList) list.getChildAdapterPosition(focusedItem!!) else lastFocusPos
 
             val oldHashes = data.map { it.hash }
             val newHashes = newItems.map { it.hash }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ТВ/планшет: постоянная боковая панель (как sidebar веб-версии) + контент -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silo_bg"
+    android:orientation="horizontal">
+
+    <include
+        layout="@layout/sidebar"
+        android:layout_width="260dp"
+        android:layout_height="match_parent" />
+
+    <include
+        layout="@layout/main_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+</LinearLayout>
