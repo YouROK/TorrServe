@@ -36,6 +36,8 @@
     <string name="menu">Меню</string>
     <string name="back">Назад</string>
     <string name="sidebar_no_user">Вход не выполнен</string>
+    <!-- Строка под адресом сервера: адрес и версия запущенного сервера в скобках -->
+    <string name="sidebar_server_address">%1$s (%2$s)</string>
     <string name="choose_player">Открыть в плеере</string>
 
     <!-- Онбординг -->
@@ -151,7 +153,8 @@
     <string name="settings_downloading">Скачивание…</string>
     <string name="settings_download_done">Сервер установлен и запущен</string>
     <string name="settings_download_error">Не удалось скачать сервер: %1$s</string>
-    <string name="settings_server_installed">Установлен: %1$s (звук и видео через ffmpeg — если он есть в системе)</string>
+    <string name="settings_server_installed">Установлен: %1$s (%2$s)</string>
+    <string name="server_version_unknown">версия неизвестна</string>
     <string name="settings_server_missing">Локальный сервер не скачан</string>
     <string name="server_update_available">Доступна новая версия сервера: %1$s. Обновите в настройках.</string>
     <string name="app_update_title">Обновление приложения</string>

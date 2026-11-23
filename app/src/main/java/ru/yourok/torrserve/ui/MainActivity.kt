@@ -313,7 +313,8 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Проверка живости сервера: если не отвечает - меню сворачивается до состояния
-     * «сервера нет» (только настройки/донат/закрыть). Проверка в фоне, UI не блокируем.
+     * «сервера нет» (только настройки/донат/закрыть). Заодно запоминаем версию сервера
+     * для подписи адреса в меню. Проверка в фоне, UI не блокируем.
      */
     fun refreshServerState() {
         if (!hasServer()) {
@@ -323,10 +324,15 @@ class MainActivity : AppCompatActivity() {
         val gen = ++serverCheck
         val url = prefs.serverUrl
         Thread {
-            val ok = SiloApi(url).ping()
+            val api = SiloApi(url)
+            val ok = api.ping()
+            // Версия отдаётся только по токену: без него защищённый сервер отвечает 401
+            val version = if (ok) api.version(prefs.activeToken) else null
+            if (!version.isNullOrBlank()) prefs.setServerVersion(version, url)
             runOnUiThread {
                 if (isFinishing || gen != serverCheck) return@runOnUiThread
                 setServerOnline(ok)
+                renderServerLine()
             }
         }.start()
     }
@@ -505,10 +511,28 @@ class MainActivity : AppCompatActivity() {
             prefs.isLocalServer -> getString(R.string.sidebar_local_no_login)
             else -> getString(R.string.sidebar_no_user)
         }
-        sidebarServer.text = prefs.serverUrl
+        renderServerLine()
         applyNavAvailability()
         // Работать не с чем (сервера нет или нужен вход) - показываем настройки
         if ((!hasServer() || needsLogin()) && current == Screen.TORRENTS) showScreen(Screen.SETTINGS)
+    }
+
+    /**
+     * Строка под именем пользователя: адрес сервера и в скобках его версия (`Silo.3`).
+     * Версия известна из кеша (`Prefs.serverVersion`) или из проверки живости сервера.
+     */
+    private fun renderServerLine() {
+        val url = prefs.serverUrl
+        if (url.isBlank()) {
+            sidebarServer.text = ""
+            return
+        }
+        val version = prefs.serverVersion(url)
+        sidebarServer.text = if (version.isBlank()) {
+            url
+        } else {
+            getString(R.string.sidebar_server_address, url, version)
+        }
     }
 
     private fun highlightNav(screen: Screen) {

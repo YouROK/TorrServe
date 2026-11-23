@@ -44,6 +44,9 @@ class SettingsFragment : Fragment() {
     private lateinit var ffprobeState: TextView
     private lateinit var account: TextView
 
+    /** Идёт скачивание или установка: строку «Установлен:» не перерисовываем, чтобы не затереть прогресс. */
+    private var serverBusy = false
+
     /** Разрешение на чтение папки Download (запрашивается при нажатии «Из папки»). */
     private val storagePermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -111,6 +114,7 @@ class SettingsFragment : Fragment() {
                         ui.post {
                             (activity as? MainActivity)?.refreshServerState()
                             updateState()
+                            refreshServerVersion()
                         }
                         return@thread
                     }
@@ -151,6 +155,8 @@ class SettingsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         updateState()
+        // Версия сервера могла измениться: спрашиваем запущенный сервер при каждом открытии экрана
+        refreshServerVersion()
         (activity as? MainActivity)?.updateSidebarState()
     }
 
@@ -159,11 +165,7 @@ class SettingsFragment : Fragment() {
         val installed = binary.exists()
         // Подсказка для ручной установки сервера: архитектура устройства и суффикс файла релиза
         arch.text = getString(R.string.settings_arch, deviceArch(), ServerDownloader.archSuffix())
-        serverState.text = if (installed) {
-            getString(R.string.settings_server_installed, ServerDownloader.remoteName())
-        } else {
-            getString(R.string.settings_server_missing)
-        }
+        if (installed) renderServerState() else serverState.text = getString(R.string.settings_server_missing)
         updateFfprobeState()
         updateAppState()
         bindOwnerPasswordField()
@@ -192,6 +194,45 @@ class SettingsFragment : Fragment() {
             if (openMode) View.GONE else View.VISIBLE
         view?.findViewById<View>(R.id.settings_logout)?.visibility =
             if (openMode) View.GONE else View.VISIBLE
+    }
+
+    /**
+     * Строка «Установлен: TorrServer-android-arm7 (Silo.3)»: имя файла релиза и версия
+     * установленного сервера (пояснения про ffmpeg здесь больше нет, у ffprobe своя строка).
+     */
+    private fun renderServerState() {
+        if (serverBusy) return
+        val binary = File(requireContext().filesDir, ServerFile.BIN_NAME)
+        if (!binary.exists()) {
+            serverState.text = getString(R.string.settings_server_missing)
+            return
+        }
+        val version = prefs.serverVersion(Prefs.LOCAL_URL)
+            .ifBlank { getString(R.string.server_version_unknown) }
+        serverState.text =
+            getString(R.string.settings_server_installed, ServerDownloader.remoteName(), version)
+    }
+
+    /**
+     * Версия установленного локального сервера из `/api/system/version`; кешируем для строки
+     * «Установлен:» и подписи адреса в меню. Сервер после старта отвечает не сразу - до 4 секунд.
+     */
+    private fun refreshServerVersion() {
+        // Сервера нет - спрашивать некого, в строке будет «версия неизвестна»
+        if (!File(requireContext().filesDir, ServerFile.BIN_NAME).exists()) return
+        // Токен подходит только к текущему серверу: к локальному идём с ним лишь в локальном режиме
+        val token = if (prefs.isLocalServer) prefs.activeToken else null
+        thread {
+            repeat(6) { attempt ->
+                val version = SiloApi(Prefs.LOCAL_URL).version(token)
+                if (!version.isNullOrBlank()) {
+                    prefs.setServerVersion(version, Prefs.LOCAL_URL)
+                    ui.post { if (isAdded) renderServerState() }
+                    return@thread
+                }
+                if (attempt < 5) Thread.sleep(700)
+            }
+        }
     }
 
     /** Раздел «Приложение»: установленная версия и время последней проверки обновлений. */
@@ -449,6 +490,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun downloadServer() {
+        serverBusy = true
         serverState.text = getString(R.string.settings_downloading)
         thread {
             try {
@@ -457,17 +499,24 @@ class SettingsFragment : Fragment() {
                 }
                 android.util.Log.i("SiloSrv", "downloaded server " + release.tag)
                 prefs.serverUrl = Prefs.LOCAL_URL
+                // Скачали именно этот релиз - версия бинарника известна до запуска
+                prefs.setServerVersion(release.tag, Prefs.LOCAL_URL)
                 TorrService.start(requireContext().applicationContext)
                 ui.post {
                     if (!isAdded) return@post
                     address.setText(prefs.serverUrl)
                     (activity as? MainActivity)?.updateSidebarState()
-                    serverState.text = getString(R.string.settings_download_done)
+                    serverBusy = false
+                    updateState()
+                    toast(getString(R.string.settings_download_done))
+                    refreshServerVersion()
                 }
             } catch (e: Exception) {
                 android.util.Log.e("SiloSrv", "download failed: " + e.message, e)
                 ui.post {
-                    if (isAdded) serverState.text = getString(R.string.settings_download_error, e.message ?: "")
+                    if (!isAdded) return@post
+                    serverBusy = false
+                    serverState.text = getString(R.string.settings_download_error, e.message ?: "")
                 }
             }
         }
@@ -558,26 +607,30 @@ class SettingsFragment : Fragment() {
     }
 
     private fun installServer(source: File) {
+        serverBusy = true
         serverState.text = getString(R.string.settings_installing)
         val context = requireContext().applicationContext
         thread {
             try {
                 ServerFile(context).installFrom(source)
                 prefs.serverUrl = Prefs.LOCAL_URL
+                // Бинарник заменён: прежняя версия из кеша больше не верна
+                prefs.setServerVersion("", Prefs.LOCAL_URL)
                 TorrService.start(context)
                 ui.post {
                     if (!isAdded) return@post
                     address.setText(prefs.serverUrl)
                     (activity as? MainActivity)?.updateSidebarState()
-                    serverState.text = getString(R.string.settings_install_done)
-                    toast(getString(R.string.settings_install_done))
+                    serverBusy = false
                     updateState()
+                    toast(getString(R.string.settings_install_done))
+                    refreshServerVersion()
                 }
             } catch (e: Exception) {
                 ui.post {
                     if (!isAdded) return@post
+                    serverBusy = false
                     serverState.text = getString(R.string.settings_install_error, e.message ?: "")
-                    updateState()
                 }
             }
         }
@@ -599,6 +652,7 @@ class SettingsFragment : Fragment() {
         TorrService.stop(context)
         thread {
             ServerFile(context).uninstall()
+            prefs.setServerVersion("", Prefs.LOCAL_URL)
             ui.post {
                 if (!isAdded) return@post
                 toast(getString(R.string.settings_server_deleted))

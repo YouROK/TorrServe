@@ -106,6 +106,18 @@ class Prefs(context: Context) {
         get() = activeSession()?.token ?: ""
 
 
+    /**
+     * Версия сервера для адреса [url] из `/api/system/version` (`Silo.3`), пусто - неизвестна.
+     * Кеш нужен для подписи адреса в меню и строки «Установлен:»: сервер может быть
+     * остановлен, а установленная версия всё равно должна быть видна.
+     */
+    fun serverVersion(url: String = serverUrl): String =
+        prefs.getString("$KEY_SERVER_VERSION|$url", "") ?: ""
+
+    fun setServerVersion(version: String, url: String = serverUrl) {
+        prefs.edit().putString("$KEY_SERVER_VERSION|$url", version).apply()
+    }
+
     /** Когда последний раз проверяли обновления (сервер и клиент) на GitHub (мс). */
     var updateCheckedAt: Long
         get() = prefs.getLong(KEY_UPDATE_AT, 0L)
@@ -168,6 +180,7 @@ class Prefs(context: Context) {
         private const val KEY_ACTIVE_USER = "active_user"
         private const val KEY_PLAYER = "player_pkg"
         private const val KEY_UPDATE_AT = "update_checked_at"
+        private const val KEY_SERVER_VERSION = "server_version"
         private const val KEY_UPDATE_TAG = "update_latest_tag"
         private const val KEY_SORT = "sort_mode"
         private const val KEY_MAGNET_ACTION = "magnet_action"

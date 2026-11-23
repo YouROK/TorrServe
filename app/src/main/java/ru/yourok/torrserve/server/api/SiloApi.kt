@@ -19,9 +19,13 @@ class SiloApi(private val baseUrl: String) {
         false
     }
 
-    /** Версия сервера из /api/system/version ("Silo.2") или null. */
-    fun version(): String? = try {
-        val (code, resp) = request("GET", "/api/system/version", null, null)
+    /**
+     * Версия сервера из /api/system/version ("Silo.3") или null.
+     * Эндпоинт защищённый (AuthMiddleware): с паролем владельца нужен [token],
+     * иначе сервер отвечает 401 и версии не видно.
+     */
+    fun version(token: String? = null): String? = try {
+        val (code, resp) = request("GET", "/api/system/version", null, token)
         if (code != 200) null else JSONObject(resp).optString("version").takeIf { it.isNotBlank() }
     } catch (e: Exception) {
         null
