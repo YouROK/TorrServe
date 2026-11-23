@@ -79,11 +79,20 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
+        <!-- Подсказка для ручной установки: архитектура устройства -->
+        <TextView
+            android:id="@+id/settings_arch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+
         <TextView
             android:id="@+id/settings_server_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:textColor="@color/silo_text_muted"
             android:textSize="13sp" />
 

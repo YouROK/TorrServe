@@ -2,6 +2,7 @@ package ru.yourok.torrserve.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
@@ -35,6 +36,7 @@ class SettingsFragment : Fragment() {
     private lateinit var prefs: Prefs
     private val ui = Handler(Looper.getMainLooper())
     private lateinit var address: EditText
+    private lateinit var arch: TextView
     private lateinit var serverState: TextView
     private lateinit var ffprobeState: TextView
     private lateinit var account: TextView
@@ -52,6 +54,7 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         prefs = Prefs(requireContext())
         address = view.findViewById(R.id.settings_address)
+        arch = view.findViewById(R.id.settings_arch)
         serverState = view.findViewById(R.id.settings_server_state)
         ffprobeState = view.findViewById(R.id.settings_ffprobe_state)
         account = view.findViewById(R.id.settings_account)
@@ -150,6 +153,8 @@ class SettingsFragment : Fragment() {
     private fun updateState() {
         val binary = File(requireContext().filesDir, ServerFile.BIN_NAME)
         val installed = binary.exists()
+        // Подсказка для ручной установки сервера: архитектура устройства и суффикс файла релиза
+        arch.text = getString(R.string.settings_arch, deviceArch(), ServerDownloader.archSuffix())
         serverState.text = if (installed) {
             getString(R.string.settings_server_installed, ServerDownloader.remoteName())
         } else {
@@ -183,6 +188,12 @@ class SettingsFragment : Fragment() {
         view?.findViewById<View>(R.id.settings_logout)?.visibility =
             if (openMode) View.GONE else View.VISIBLE
     }
+
+    /**
+     * ABI устройства: подсказка тем, кто ставит сервер вручную
+     * (arm64-v8a, armeabi-v7a, x86_64, x86); в скобках - суффикс файла релиза.
+     */
+    private fun deviceArch(): String = Build.SUPPORTED_ABIS.firstOrNull() ?: "armeabi-v7a"
 
     /** Поле пароля владельца локального сервера. */
     private fun bindOwnerPasswordField() {

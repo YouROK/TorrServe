@@ -141,6 +141,8 @@
 
     <string name="settings_server_saved">Сохранено</string>
     <string name="settings_server_file_section">Локальный сервер</string>
+    <!-- Подсказка для ручной установки: архитектура устройства и суффикс файла релиза -->
+    <string name="settings_arch">Архитектура: %1$s (%2$s)</string>
     <string name="settings_download_server">Скачать сервер</string>
     <string name="settings_start_server">Запустить</string>
     <string name="settings_stop_server">Остановить</string>
