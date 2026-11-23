@@ -18,6 +18,11 @@
          targetSdk 28 => legacy-доступ, поэтому достаточно READ_EXTERNAL_STORAGE. -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- Установка скачанного обновления APK через системный установщик -->
+    <uses-permission
+        android:name="android.permission.REQUEST_INSTALL_PACKAGES"
+        tools:ignore="RequestInstallPackagesPolicy" />
+
     <application
         android:allowBackup="true"
         android:banner="@mipmap/ic_banner"
@@ -64,6 +69,17 @@
                 <data android:scheme="magnet" />
             </intent-filter>
         </activity>
+
+        <!-- Скачанный APK обновления отдаётся установщику через FileProvider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <!-- Локальный сервер Silo: бинарник запускается в foreground-сервисе -->
         <service

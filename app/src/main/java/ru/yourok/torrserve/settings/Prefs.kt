@@ -111,6 +111,11 @@ class Prefs(context: Context) {
         get() = prefs.getLong(KEY_UPDATE_AT, 0L)
         set(value) = prefs.edit().putLong(KEY_UPDATE_AT, value).apply()
 
+    /** Тег последнего известного клиентского релиза (для проверки в пределах минуты). */
+    var appUpdateLatestTag: String
+        get() = prefs.getString(KEY_UPDATE_TAG, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_UPDATE_TAG, value).apply()
+
     /** Плеер по умолчанию (пусто - спрашивать каждый раз). */
     var playerPkg: String
         get() = prefs.getString(KEY_PLAYER, "") ?: ""
@@ -163,6 +168,7 @@ class Prefs(context: Context) {
         private const val KEY_ACTIVE_USER = "active_user"
         private const val KEY_PLAYER = "player_pkg"
         private const val KEY_UPDATE_AT = "update_checked_at"
+        private const val KEY_UPDATE_TAG = "update_latest_tag"
         private const val KEY_SORT = "sort_mode"
         private const val KEY_MAGNET_ACTION = "magnet_action"
         private const val KEY_MAGNET_REMEMBER = "magnet_remember"

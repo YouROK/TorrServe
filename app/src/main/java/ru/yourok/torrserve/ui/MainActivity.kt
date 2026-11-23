@@ -16,7 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import ru.yourok.torrserve.R
 import ru.yourok.torrserve.server.api.GithubReleases
-import ru.yourok.torrserve.server.api.ReleaseFeed
 import ru.yourok.torrserve.server.api.SiloApi
 import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.settings.Prefs
@@ -534,95 +533,49 @@ class MainActivity : AppCompatActivity() {
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     /**
-     * Проверка обновлений сервера и приложения на GitHub (не чаще раза в 5 минут).
-     * Один запрос к API отдаёт и серверные релизы Silo.*, и клиентские Silo.*.Client.
+     * Проверка обновлений сервера и приложения на GitHub.
+     *
+     * Всё берётся из Atom-лент релизов: клиент - YouROK/TorrServe, сервер - YouROK/TorrServer.
+     * Клиент проверяется один раз за запуск, результат кешируется на 6 часов
+     * (`Prefs.updateCheckedAt`), чтобы не дёргать GitHub на каждом открытии окна.
      */
     private fun checkUpdates() {
         if (updateChecked) return
         updateChecked = true
-        val now = System.currentTimeMillis()
-        if (now - prefs.updateCheckedAt < UPDATE_INTERVAL_MS) return
-        prefs.updateCheckedAt = now
 
-        val url = prefs.serverUrl
         val localServer = hasServer() && prefs.isLocalServer
-        val currentApp = appVersionName()
-
         Thread {
-            val releases = try {
-                GithubReleases.all()
-            } catch (e: Exception) {
-                android.util.Log.e("SiloUpd", "releases failed", e)
-                emptyList()
-            }
-
-            val feedServer = ReleaseFeed.server()
-            val feedApp = ReleaseFeed.app()
-            android.util.Log.i(
-                "SiloUpd",
-                "feed server=" + feedServer?.version + " app=" + feedApp?.version +
-                    " releases=" + releases.size + " current=" + currentApp,
-            )
-
-            if (localServer) {
-                val installed = SiloApi(url).version()
-                val server = feedServer?.version ?: latestTag(releases) { !it.isClient }?.tag
-                if (installed != null && server != null && GithubReleases.isNewer(server, installed)) {
-                    runOnUiThread {
-                        if (!isFinishing) {
-                            Toast.makeText(
-                                this,
-                                getString(R.string.server_update_available, server),
-                                Toast.LENGTH_LONG,
-                            ).show()
-                        }
-                    }
+            if (localServer) checkServerUpdate()
+            when (val result = AppUpdater.check(this)) {
+                is AppUpdater.Result.Available -> runOnUiThread {
+                    if (!isFinishing && !isDestroyed) UpdateDialog.show(this, result.update)
                 }
-            }
-
-            val app = feedApp?.let { GithubReleases.Release(it.version, it.link, emptyMap()) }
-                ?: latestTag(releases) { it.isClient }
-            if (app != null && AppUpdater.isNewer(app.tag, currentApp)) {
-                runOnUiThread { if (!isFinishing) showAppUpdateDialog(app) }
+                is AppUpdater.Result.Failed ->
+                    android.util.Log.w("SiloUpd", "app update check: " + result.error)
+                else -> Unit
             }
         }.start()
     }
 
-    /** Самый новый релиз из ленты по фильтру (сервер или клиент). */
-    private fun latestTag(
-        releases: List<GithubReleases.Release>,
-        filter: (GithubReleases.Release) -> Boolean,
-    ): GithubReleases.Release? =
-        releases.filter { it.tag.startsWith(GithubReleases.TAG_PREFIX) && filter(it) }
-            .maxWithOrNull { a, b ->
-                GithubReleases.compare(
-                    GithubReleases.versionOf(a.tag) ?: emptyList(),
-                    GithubReleases.versionOf(b.tag) ?: emptyList(),
-                )
-            }
-
-    /** Версия установленного приложения ("Silo.0.Client"). */
-    private fun appVersionName(): String = try {
-        packageManager.getPackageInfo(packageName, 0).versionName ?: ""
-    } catch (e: Exception) {
-        ""
-    }
-
-    /** Диалог о новой версии приложения со ссылкой на релиз. */
-    private fun showAppUpdateDialog(release: GithubReleases.Release) {
-        android.app.AlertDialog.Builder(this)
-            .setTitle(R.string.app_update_title)
-            .setMessage(getString(R.string.app_update_message, release.tag, appVersionName()))
-            .setPositiveButton(R.string.app_update_download) { _, _ ->
-                runCatching {
-                    startActivity(android.content.Intent(
-                        android.content.Intent.ACTION_VIEW,
-                        android.net.Uri.parse(release.htmlUrl),
-                    ))
+    /** Тост, если на GitHub лежит сервер новее запущенного локального. */
+    private fun checkServerUpdate() {
+        try {
+            val installed = SiloApi(prefs.serverUrl).version() ?: return
+            val latest = GithubReleases.latestServer() ?: return
+            if (GithubReleases.isNewer(latest.tag, installed)) {
+                runOnUiThread {
+                    if (!isFinishing) {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.server_update_available, latest.tag),
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
                 }
             }
-            .setNegativeButton(R.string.app_update_later, null)
-            .show()
+        } catch (e: Exception) {
+            android.util.Log.w("SiloUpd", "server update check failed", e)
+        }
     }
 
     // ------------------------------------------------------------ предзагрузка

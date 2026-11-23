@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Диалог обновления приложения: версии, «что нового», прогресс загрузки и установка -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="520dp"
+    android:orientation="vertical"
+    android:paddingStart="22dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="22dp"
+    android:paddingBottom="6dp">
+
+    <TextView
+        android:id="@+id/update_versions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/silo_text"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/update_notes_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/app_update_notes"
+        android:textColor="@color/silo_amber"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/update_notes_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="6dp"
+        android:fadeScrollbars="false"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="24dp"
+        android:requiresFadingEdge="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/update_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/update_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/silo_amber"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/update_percent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/silo_text_muted"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/update_now"
+            style="@style/SiloButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/card_selector"
+            android:gravity="center"
+            android:text="@string/app_update_download" />
+
+        <TextView
+            android:id="@+id/update_later"
+            style="@style/SiloButton"
+            android:layout_width="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/card_selector"
+            android:gravity="center"
+            android:text="@string/app_update_later" />
+    </LinearLayout>
+
+</LinearLayout>

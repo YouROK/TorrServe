@@ -1,81 +1,90 @@
 package ru.yourok.torrserve.server.api
 
-import org.json.JSONArray
+import android.util.Log
+import android.util.Xml
+import org.xmlpull.v1.XmlPullParser
+import java.io.StringReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 /**
- * Лента релизов GitHub-репозитория YouROK/TorrServer.
+ * Релизы GitHub через Atom-ленту `<repo>/releases.atom`.
  *
- * В репозитории лежат три вида тегов: MatriX.* (старый клиент), Silo.* (сервер)
- * и Silo.*.Client (наш клиент). Список берётся одним запросом и кешируется на 5 минут:
- * у GitHub без токена лимит 60 запросов в час на IP, а проверка выполняется при
- * открытии главного окна.
+ * API `api.github.com` не используется: на части ТВ-сетей провайдер отдаёт из кеша
+ * устаревший список релизов, а без токена у API лимит 60 запросов в час на IP.
+ * Atom-лента отдаёт актуальные теги и текст релиза и не имеет такого лимита.
+ *
+ * Клиент и сервер выпускаются в разных репозиториях:
+ *  - клиент: github.com/YouROK/TorrServe, теги `Silo.N.Client`, ассет `TorrServe_Silo.N.Client.apk`;
+ *  - сервер: github.com/YouROK/TorrServer, теги `Silo.N`, ассет `TorrServer-android-<arch>`.
+ *
+ * Имена ассетов известны заранее, поэтому ссылки строятся без запроса списка ассетов.
  */
 object GithubReleases {
 
-    const val REPO = "YouROK/TorrServer"
+    const val CLIENT_REPO = "YouROK/TorrServe"
+    const val SERVER_REPO = "YouROK/TorrServer"
     const val TAG_PREFIX = "Silo."
     const val CLIENT_SUFFIX = ".Client"
 
-    data class Release(val tag: String, val htmlUrl: String, val assets: Map<String, String>) {
+    /** Репозиторий, из которого берутся релизы. */
+    enum class Repo(val slug: String) {
+        CLIENT(CLIENT_REPO),
+        SERVER(SERVER_REPO),
+    }
+
+    data class Release(
+        val tag: String,
+        val pageUrl: String,
+        val notesHtml: String,
+        val publishedAt: Long,
+    ) {
         /** true, если это релиз нашего клиента (Silo.N.Client), а не сервера. */
         val isClient: Boolean
             get() = tag.startsWith(TAG_PREFIX) && tag.endsWith(CLIENT_SUFFIX)
     }
 
-    private const val API = "https://api.github.com/repos/$REPO/releases?per_page=100"
+    private const val TAG = "SiloUpd"
+    private const val TTL_MS = 15 * 60 * 1000L
 
-    /** Atom-лента релизов: отдаётся github.com, без лимитов API и без кеша api-хоста. */
-    private const val ATOM = "https://github.com/$REPO/releases.atom"
-    private const val TTL_MS = 5 * 60 * 1000L
+    /** Базовый адрес релизов; в тестовых сборках подменяется на локальный сервер. */
+    private const val BASE = "https://github.com"
 
-    private var cached: List<Release>? = null
-    private var cachedAt = 0L
+    /** Кеш на репозиторий: время получения и список релизов. */
+    private val cache = HashMap<Repo, Pair<Long, List<Release>>>()
 
-    /** Все релизы репозитория (из кеша, если он свежий). */
+    fun atomUrl(repo: Repo): String = "$BASE/${repo.slug}/releases.atom"
+
+    /** Прямая ссылка на файл релиза: имя ассета в релизе известно заранее. */
+    fun downloadUrl(repo: Repo, tag: String, asset: String): String =
+        "$BASE/${repo.slug}/releases/download/$tag/$asset"
+
+    /** Релизы репозитория (из кеша, если он свежий). [force] - обойти кеш в памяти. */
     @Synchronized
-    fun all(): List<Release> {
+    fun releases(repo: Repo, force: Boolean = false): List<Release> {
         val now = System.currentTimeMillis()
-        val fresh = cached
-        if (fresh != null && now - cachedAt < TTL_MS) return fresh
-
-        // На ТВ api.github.com может отдавать устаревший ответ (кеш провайдера),
-        // поэтому сначала пробуем Atom-ленту github.com, а к API идём только если не вышло
-        val fromAtom = try {
-            parseAtom(request(ATOM + "?t=" + System.currentTimeMillis()))
-        } catch (e: Exception) {
-            emptyList()
-        }
-        if (fromAtom.isNotEmpty()) {
-            cached = fromAtom
-            cachedAt = now
-            return fromAtom
-        }
-
-        val body = request(API + (if (API.contains('?')) "&" else "?") + "t=" + System.currentTimeMillis())
-        val array = JSONArray(body)
-        val result = ArrayList<Release>(array.length())
-        for (i in 0 until array.length()) {
-            val release = array.getJSONObject(i)
-            val assets = HashMap<String, String>()
-            val list = release.optJSONArray("assets")
-            if (list != null) {
-                for (j in 0 until list.length()) {
-                    val asset = list.getJSONObject(j)
-                    assets[asset.optString("name")] = asset.optString("browser_download_url")
-                }
-            }
-            result += Release(
-                tag = release.optString("tag_name"),
-                htmlUrl = release.optString("html_url"),
-                assets = assets,
-            )
-        }
-        cached = result
-        cachedAt = now
-        return result
+        val cached = cache[repo]
+        if (!force && cached != null && now - cached.first in 0 until TTL_MS) return cached.second
+        val list = parseAtom(repo, request(atomUrl(repo)))
+        cache[repo] = now to list
+        return list
     }
+
+    /** Последний релиз клиента или null, если клиентских релизов нет. */
+    fun latestClient(force: Boolean = false): Release? =
+        releases(Repo.CLIENT, force).filter { it.isClient }.maxWithOrNull { a, b ->
+            compare(versionOf(a.tag) ?: emptyList(), versionOf(b.tag) ?: emptyList())
+        }
+
+    /** Последний релиз сервера Silo или null. */
+    fun latestServer(force: Boolean = false): Release? =
+        releases(Repo.SERVER, force).filter { it.tag.startsWith(TAG_PREFIX) && !it.isClient }
+            .maxWithOrNull { a, b ->
+                compare(versionOf(a.tag) ?: emptyList(), versionOf(b.tag) ?: emptyList())
+            }
 
     /** Версия из тега: "Silo.2" -> [2], "Silo.2.1" -> [2, 1], "Silo.1.Client" -> [1]. */
     fun versionOf(tag: String): List<Int>? {
@@ -104,24 +113,14 @@ object GithubReleases {
         return compare(a, b) > 0
     }
 
-    /** Теги из Atom-ленты релизов (ассетов там нет, только тег и ссылка на страницу). */
-    private fun parseAtom(xml: String): List<Release> {
-        val result = ArrayList<Release>()
-        val regex = Regex("href=\"https://github\\.com/$REPO/releases/tag/([^\"]+)\"")
-        regex.findAll(xml).forEach { match ->
-            val tag = match.groupValues[1]
-            if (result.none { it.tag == tag }) {
-                result += Release(tag, "https://github.com/$REPO/releases/tag/$tag", emptyMap())
-            }
-        }
-        return result
-    }
-
     private fun request(url: String): String {
-        val conn = (URL(url).openConnection() as HttpURLConnection).apply {
+        // Метка времени: на стороне провайдера бывает кеш
+        val full = url + (if (url.contains('?')) "&" else "?") + "t=" + System.currentTimeMillis()
+        val conn = (URL(full).openConnection() as HttpURLConnection).apply {
             connectTimeout = 15000
             readTimeout = 30000
-            setRequestProperty("Accept", "application/vnd.github+json")
+            instanceFollowRedirects = true
+            setRequestProperty("Accept", "application/atom+xml, application/xml")
             setRequestProperty("Cache-Control", "no-cache")
             setRequestProperty("Pragma", "no-cache")
         }
@@ -131,5 +130,66 @@ object GithubReleases {
         } finally {
             conn.disconnect()
         }
+    }
+
+    /** Разбор Atom: по записи на релиз (тег, ссылка на страницу, текст, дата). */
+    private fun parseAtom(repo: Repo, xml: String): List<Release> {
+        val result = ArrayList<Release>()
+        val parser = Xml.newPullParser()
+        parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+        parser.setInput(StringReader(xml))
+
+        var tag: String? = null
+        var page = ""
+        var notes = ""
+        var published = 0L
+        var inEntry = false
+
+        var event = parser.eventType
+        while (event != XmlPullParser.END_DOCUMENT) {
+            when (event) {
+                XmlPullParser.START_TAG -> when (parser.name) {
+                    "entry" -> {
+                        inEntry = true
+                        tag = null
+                        page = ""
+                        notes = ""
+                        published = 0L
+                    }
+                    "title" -> if (inEntry) tag = parser.nextText().trim()
+                    "content" -> if (inEntry) notes = parser.nextText()
+                    "updated" -> if (inEntry) published = parseDate(parser.nextText())
+                    "link" -> if (inEntry) {
+                        val rel = parser.getAttributeValue(null, "rel")
+                        val href = parser.getAttributeValue(null, "href")
+                        if ((rel == null || rel == "alternate") && !href.isNullOrBlank()) page = href
+                    }
+                }
+                XmlPullParser.END_TAG -> if (inEntry && parser.name == "entry") {
+                    val entryTag = tag
+                    if (!entryTag.isNullOrBlank()) {
+                        result += Release(
+                            tag = entryTag,
+                            pageUrl = page.ifBlank { "$BASE/${repo.slug}/releases/tag/$entryTag" },
+                            notesHtml = notes,
+                            publishedAt = published,
+                        )
+                    }
+                    inEntry = false
+                }
+            }
+            event = parser.next()
+        }
+        return result
+    }
+
+    private fun parseDate(value: String): Long = try {
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+        format.timeZone = TimeZone.getTimeZone("UTC")
+        format.isLenient = false
+        format.parse(value.trim())?.time ?: 0L
+    } catch (e: Exception) {
+        Log.w(TAG, "bad date: $value", e)
+        0L
     }
 }

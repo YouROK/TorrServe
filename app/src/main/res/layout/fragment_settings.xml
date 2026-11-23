@@ -322,5 +322,42 @@
                 android:textColor="@color/silo_danger" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="22dp"
+            android:background="@color/silo_border" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_app_section"
+            android:textColor="@color/silo_amber"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/settings_app_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/silo_text_muted"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/settings_app_checked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/silo_text_faint"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/settings_app_check"
+            style="@style/SiloButton"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/card_selector"
+            android:text="@string/settings_app_check" />
+
     </LinearLayout>
 </ScrollView>

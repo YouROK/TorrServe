@@ -26,6 +26,9 @@ import ru.yourok.torrserve.server.local.ServerFile
 import ru.yourok.torrserve.server.local.TorrService
 import ru.yourok.torrserve.settings.Prefs
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.concurrent.thread
 
 /**
@@ -95,6 +98,7 @@ class SettingsFragment : Fragment() {
         view.findViewById<View>(R.id.settings_from_folder).setOnClickListener { installFromFolder() }
         view.findViewById<View>(R.id.settings_delete).setOnClickListener { confirmDeleteServer() }
         view.findViewById<View>(R.id.settings_download_ffprobe).setOnClickListener { downloadFfprobe() }
+        view.findViewById<View>(R.id.settings_app_check).setOnClickListener { checkAppUpdate() }
         view.findViewById<View>(R.id.settings_start).setOnClickListener {
             TorrService.start(requireContext().applicationContext)
             toast(getString(R.string.settings_starting))
@@ -161,6 +165,7 @@ class SettingsFragment : Fragment() {
             getString(R.string.settings_server_missing)
         }
         updateFfprobeState()
+        updateAppState()
         bindOwnerPasswordField()
         updateAccountChips()
         updateAddAction()
@@ -187,6 +192,50 @@ class SettingsFragment : Fragment() {
             if (openMode) View.GONE else View.VISIBLE
         view?.findViewById<View>(R.id.settings_logout)?.visibility =
             if (openMode) View.GONE else View.VISIBLE
+    }
+
+    /** Раздел «Приложение»: установленная версия и время последней проверки обновлений. */
+    private fun updateAppState() {
+        val ctx = context ?: return
+        view?.findViewById<TextView>(R.id.settings_app_version)?.text =
+            getString(R.string.settings_app_version, AppUpdater.installedVersion(ctx))
+        val checkedAt = prefs.updateCheckedAt
+        view?.findViewById<TextView>(R.id.settings_app_checked)?.text = if (checkedAt > 0) {
+            getString(
+                R.string.settings_app_checked,
+                SimpleDateFormat("dd.MM HH:mm", Locale.getDefault()).format(Date(checkedAt)),
+            )
+        } else {
+            getString(R.string.settings_app_never_checked)
+        }
+    }
+
+    /**
+     * Кнопка «Проверить обновление»: принудительная проверка GitHub (кеш обходим,
+     * но чаще раза в минуту не спрашиваем - чтобы не исчерпать лимиты).
+     */
+    private fun checkAppUpdate() {
+        val button = view?.findViewById<View>(R.id.settings_app_check) ?: return
+        val ctx = requireContext().applicationContext
+        button.isEnabled = false
+        thread {
+            val result = AppUpdater.check(ctx, force = true)
+            ui.post {
+                if (isAdded) {
+                    button.isEnabled = true
+                    when (result) {
+                        is AppUpdater.Result.Available ->
+                            UpdateDialog.show(requireActivity(), result.update)
+                        is AppUpdater.Result.UpToDate -> toast(getString(R.string.settings_app_up_to_date))
+                        is AppUpdater.Result.Failed -> toast(
+                            getString(R.string.settings_app_check_failed, result.error)
+                        )
+                        is AppUpdater.Result.Throttled -> Unit
+                    }
+                    updateState()
+                }
+            }
+        }
     }
 
     /**
@@ -406,7 +455,7 @@ class SettingsFragment : Fragment() {
                 val release = ServerDownloader.download(requireContext().applicationContext) { p ->
                     ui.post { if (isAdded) serverState.text = "${getString(R.string.settings_downloading)} $p%" }
                 }
-                android.util.Log.i("SiloSrv", "downloaded " + release.tag + " -> " + release.assets.keys)
+                android.util.Log.i("SiloSrv", "downloaded server " + release.tag)
                 prefs.serverUrl = Prefs.LOCAL_URL
                 TorrService.start(requireContext().applicationContext)
                 ui.post {
