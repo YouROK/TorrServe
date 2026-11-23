@@ -53,8 +53,11 @@ class MainActivity : AppCompatActivity() {
     private var serverCheck = 0
     private var headerMenu: ImageButton? = null
 
-    /** Проверка обновления сервера выполняется один раз за запуск приложения. */
+    /** Проверка обновления клиента выполняется один раз за запуск приложения. */
     private var updateChecked = false
+
+    /** Проверка обновления сервера - один раз за запуск и только когда сервер уже отвечает. */
+    private var serverUpdateChecked = false
 
     /** Возврат с экрана входа: успешный вход сразу открывает список торрентов. */
     private val loginLauncher = registerForActivityResult(
@@ -344,6 +347,8 @@ class MainActivity : AppCompatActivity() {
     fun onServerUnreachable() = setServerOnline(false)
 
     private fun setServerOnline(ok: Boolean) {
+        // Сервер ответил - только теперь можно спросить его версию (на старте он ещё поднимается)
+        if (ok) checkServerUpdateOnce()
         if (serverOnline == ok) return
         serverOnline = ok
         applyNavAvailability()
@@ -567,9 +572,7 @@ class MainActivity : AppCompatActivity() {
         if (updateChecked) return
         updateChecked = true
 
-        val localServer = hasServer() && prefs.isLocalServer
         Thread {
-            if (localServer) checkServerUpdate()
             when (val result = AppUpdater.check(this)) {
                 is AppUpdater.Result.Available -> runOnUiThread {
                     if (!isFinishing && !isDestroyed) UpdateDialog.show(this, result.update)
@@ -581,10 +584,25 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
-    /** Тост, если на GitHub лежит сервер новее запущенного локального. */
+    /**
+     * Проверка версии локального сервера: один раз за запуск и только после того,
+     * как сервер ответил. Приложение само поднимает сервер на старте, поэтому проверка
+     * сразу из `onResume` всегда попадала на ещё не запущенный сервер и молча пропускалась.
+     */
+    private fun checkServerUpdateOnce() {
+        if (serverUpdateChecked) return
+        if (!hasServer() || !prefs.isLocalServer) return
+        serverUpdateChecked = true
+        Thread { checkServerUpdate() }.start()
+    }
+
+    /** Версия установленного сервера и тост, если на GitHub лежит новее. */
     private fun checkServerUpdate() {
         try {
-            val installed = SiloApi(prefs.serverUrl).version() ?: return
+            val installed = SiloApi(prefs.serverUrl).version(prefs.activeToken) ?: return
+            // Версия запущенного сервера - она же установленная: подписываем адрес в меню
+            prefs.setServerVersion(installed)
+            runOnUiThread { if (!isFinishing && !isDestroyed) renderServerLine() }
             val latest = GithubReleases.latestServer() ?: return
             if (GithubReleases.isNewer(latest.tag, installed)) {
                 runOnUiThread {
@@ -763,9 +781,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         /** Порог ширины, после которого панель показывается с подписями. */
         const val WIDE_DP = 600
-
-        /** Как часто проверять обновления на GitHub (5 минут, один запрос API). */
-        private const val UPDATE_INTERVAL_MS = 5 * 60 * 1000L
     }
 }
 
